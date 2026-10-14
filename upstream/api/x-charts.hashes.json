@@ -1,0 +1,2790 @@
+[
+  {
+    "path": "BarChart/AnimatedBarElement.d.ts",
+    "sha256": "a062c974798f05cc7ae463f60ce25f5a63d7d19a42635c594d9e3212ad29687a"
+  },
+  {
+    "path": "BarChart/BarChart.d.ts",
+    "sha256": "67e49bfae6bed3a874acdc7f1a33926107305d955149ecaceaa35a931dddeb4e"
+  },
+  {
+    "path": "BarChart/BarChart.plugins.d.ts",
+    "sha256": "6e0225bf39ce93646f018a470b9860726086890946862a0f8e080926b0d3dba9"
+  },
+  {
+    "path": "BarChart/BarClipPath.d.ts",
+    "sha256": "27a7ee9a06edb3ee1d66a0b648733b04e19e0e7c11c18776162fc16c5029b2a8"
+  },
+  {
+    "path": "BarChart/BarElement.d.ts",
+    "sha256": "4a01ff82fc5820a52154319d174be825a18de43266260bb8a796fd7076939d94"
+  },
+  {
+    "path": "BarChart/BarLabel/BarLabel.d.ts",
+    "sha256": "0e1ccb10b2ecfc354563e2a67da5f4ce36fe532e2a9e3d114cedc40f4e81a7f9"
+  },
+  {
+    "path": "BarChart/BarLabel/BarLabel.types.d.ts",
+    "sha256": "e0779a50ecea5b3597108919e17eee829a2f7d3fed44d8416e76aab0262fd28f"
+  },
+  {
+    "path": "BarChart/BarLabel/BarLabelItem.d.ts",
+    "sha256": "0fcfbcee3f5e77b101dc1bd7e0040128cd33dc22a35510432478e3d7fa0817fb"
+  },
+  {
+    "path": "BarChart/BarLabel/BarLabelPlot.d.ts",
+    "sha256": "8c4740ec3808cf206f847497408df2e88b26885dfacbe8dbf336ca264e4b8c21"
+  },
+  {
+    "path": "BarChart/BarLabel/getBarLabel.d.ts",
+    "sha256": "4362e9f19f12097f672c8e6689cd8a78eacbe8a2631354bcb021195b8e93d444"
+  },
+  {
+    "path": "BarChart/BarLabel/index.d.ts",
+    "sha256": "4756313f8f20b600130df77ac8894b15cfed5f2368650a67644b965733b3911c"
+  },
+  {
+    "path": "BarChart/BarPlot.d.ts",
+    "sha256": "912ee7c336b8889499f2e9db989c1f939be361f3501edd2daf33be5d41af5f2f"
+  },
+  {
+    "path": "BarChart/BatchBarPlot/BarGroup.d.ts",
+    "sha256": "943c372589fa3fae1cefb580826203938a1a707cdd975a8379b3e68854c0ef2b"
+  },
+  {
+    "path": "BarChart/BatchBarPlot/BatchBarPlot.d.ts",
+    "sha256": "fbcaba9121a388e74f878cb53afea2f75505a5d688d3ca389c55b82aaf8ccf32"
+  },
+  {
+    "path": "BarChart/BatchBarPlot/index.d.ts",
+    "sha256": "ae268db541152d25e8d46d2925252def95a3cd909735ed076d7d813e6b406298"
+  },
+  {
+    "path": "BarChart/BatchBarPlot/useCreateBarPaths.d.ts",
+    "sha256": "ba07c1f23396226e0c1ed8ec18396a4878865a2044646923facdf7862444e869"
+  },
+  {
+    "path": "BarChart/FocusedBar.d.ts",
+    "sha256": "9239968b1d48f82b9ad1e0f8a9437ff1f66ed3f9745b3e7479a091dcd77e3d12"
+  },
+  {
+    "path": "BarChart/IndividualBarPlot.d.ts",
+    "sha256": "97140ca4c0a74280f2cf9b5498f87893e17fbf8aa4d170004d0e39e991ff7cd8"
+  },
+  {
+    "path": "BarChart/barClasses.d.ts",
+    "sha256": "d142e04424cdb42822078355ce5ba2a1396ce27e8628f1f6342e1e0c9279b540"
+  },
+  {
+    "path": "BarChart/checkBarChartScaleErrors.d.ts",
+    "sha256": "2fce0319e735990138fc0e212f4f8085ad3f0aac0cb959dbbe12f2630547c68b"
+  },
+  {
+    "path": "BarChart/index.d.ts",
+    "sha256": "8e9154aa22d86e3658dc5f99d50f15633c11caf3c78bd71d863c70da9f3ad657"
+  },
+  {
+    "path": "BarChart/seriesConfig/bar/descriptionGetter.d.ts",
+    "sha256": "dc199ebd451624f7f6dac53d029e02c06fa9ede42d9700bef911b6428ebf676d"
+  },
+  {
+    "path": "BarChart/seriesConfig/bar/extremums.d.ts",
+    "sha256": "906653b11f0f56f6dc76235345d40d61367b0914d7e998b3a8c8abecfa98ca71"
+  },
+  {
+    "path": "BarChart/seriesConfig/bar/getColor.d.ts",
+    "sha256": "cedbb668521137d149fb6b96a52e9395cc9389f03818ab31b499404578f28137"
+  },
+  {
+    "path": "BarChart/seriesConfig/bar/getSeriesWithDefaultValues.d.ts",
+    "sha256": "4cb659ce0fa27c6276be0798580e03d25580efcbb8b033843e90915b8c6d3b16"
+  },
+  {
+    "path": "BarChart/seriesConfig/bar/keyboardFocusHandler.d.ts",
+    "sha256": "bbd02a0567ab1ff965e897a546a3f6cf3689ef3853bd1c612928044a6a9675a8"
+  },
+  {
+    "path": "BarChart/seriesConfig/bar/legend.d.ts",
+    "sha256": "3ad6aed5c4d0b41bd0e8554d833daaf5c2f08a1638832de996b9bb3e6038e726"
+  },
+  {
+    "path": "BarChart/seriesConfig/bar/seriesProcessor.d.ts",
+    "sha256": "f24bcd4838e87cc0ff89d10de2141e5a4316bdd8bb861ef847a8fb1edd5f3c05"
+  },
+  {
+    "path": "BarChart/seriesConfig/bar/tooltip.d.ts",
+    "sha256": "84a417904be96f40b25c5ceb21a304cdf134d3a0e2d1574986613f3afbef67ae"
+  },
+  {
+    "path": "BarChart/seriesConfig/bar/tooltipPosition.d.ts",
+    "sha256": "b9371b9c780deb1ced17cf6f50e05e5ee570f212ad313164635e621e49aac06e"
+  },
+  {
+    "path": "BarChart/seriesConfig/index.d.ts",
+    "sha256": "01b108a760c4ade4ec6b6b630ec5dfe49c0aa7be77adbc96c90ee8cc51d5be19"
+  },
+  {
+    "path": "BarChart/types.d.ts",
+    "sha256": "bfee2d4691d1b405d8910f98179e3cfca9792e9377041a8a078a5a078e65381d"
+  },
+  {
+    "path": "BarChart/useBarChartProps.d.ts",
+    "sha256": "fd018cb87cf99e4c60b8ee88fbb8fbb3a271f737f7c7bada4f3ee1f1950a0739"
+  },
+  {
+    "path": "BarChart/useBarPlotData.d.ts",
+    "sha256": "b4bfb705635eed821d133aa9feeecf515fe006e05cfc486becfe6801c32a494e"
+  },
+  {
+    "path": "BarChart/useRegisterItemClickHandlers.d.ts",
+    "sha256": "bdff0a563483a3e401278c3383bb361ada35863562bb37acfa87048fc1be1601"
+  },
+  {
+    "path": "ChartsAxis/ChartsAxis.d.ts",
+    "sha256": "ead198870601a47da7edd3172a9ee7f66da6335d0719c75c58c039c34e86e78f"
+  },
+  {
+    "path": "ChartsAxis/axisClasses.d.ts",
+    "sha256": "714e0d6381b844305801f1ce357b2c71645d3e82f6f14c3601a8f02d5556a8a1"
+  },
+  {
+    "path": "ChartsAxis/index.d.ts",
+    "sha256": "cdeb2e2729e349fcf62ea859e8820d3b454f91fac73ad97a8f7968946f829931"
+  },
+  {
+    "path": "ChartsAxisHighlight/ChartsAxisHighlight.d.ts",
+    "sha256": "6b7d6c3b86faadfda133632979aecfd3481da7a90a9b5b17336fba8ebe36c54d"
+  },
+  {
+    "path": "ChartsAxisHighlight/ChartsAxisHighlight.types.d.ts",
+    "sha256": "916a1509b1b43a71aae7f0c81418c87cd7af395b16554a752a80b3dc76c6f426"
+  },
+  {
+    "path": "ChartsAxisHighlight/ChartsAxisHighlightPath.d.ts",
+    "sha256": "ff6f073ab204622615f8dd5baf68f87e065b90870fef970bc7eb0c2cc1c0dbc8"
+  },
+  {
+    "path": "ChartsAxisHighlight/ChartsXAxisHighlight.d.ts",
+    "sha256": "90827e7f062bcb1c615ed7dcc88afa3b934f21be610015fff20b0d1c6201ae74"
+  },
+  {
+    "path": "ChartsAxisHighlight/ChartsYAxisHighlight.d.ts",
+    "sha256": "cfab1ba923ca433356b324dcf755bcf42eee6119dd24a606ab7d277e910a200e"
+  },
+  {
+    "path": "ChartsAxisHighlight/chartsAxisHighlightClasses.d.ts",
+    "sha256": "e93809c3f73d827f8f47e1779f5ca05c55776de81298eaf08771d6026178fc09"
+  },
+  {
+    "path": "ChartsAxisHighlight/getSampledBandHighlight.d.ts",
+    "sha256": "8d9023cfc6256e532c40aa4dcc518f46b3a4097a235daa8392c8ca4834869427"
+  },
+  {
+    "path": "ChartsAxisHighlight/index.d.ts",
+    "sha256": "61d23789462bf387c5324615b4d693fbe44c82cbb9146fadec7b4d983b71c83e"
+  },
+  {
+    "path": "ChartsAxisHighlightValue/ChartsAxisHighlightValue.d.ts",
+    "sha256": "cbc08fe3ef47e68502d03dd636704e36dc4849a9d268a93b31a441a54bad339d"
+  },
+  {
+    "path": "ChartsAxisHighlightValue/ChartsAxisHighlightValueItem.d.ts",
+    "sha256": "8ba1029ee71626d857d9330f9e8f37c1a76ad64ffd2ce949495843e68d63b4f5"
+  },
+  {
+    "path": "ChartsAxisHighlightValue/chartsAxisHighlightValueClasses.d.ts",
+    "sha256": "fe4dc7bed7fa040b609c6e2d0c71e259155ae8de07ef158185f8429563f5d2b1"
+  },
+  {
+    "path": "ChartsAxisHighlightValue/index.d.ts",
+    "sha256": "8988c89ec3a7a792a1ffcc945f2aa5362d0a07d5c7cc5bb46f641b98831a1b80"
+  },
+  {
+    "path": "ChartsAxisHighlightValue/useAxisHighlightValue.d.ts",
+    "sha256": "d4bcc1c074e88542f3f9dff52ee5fd670c949f6cf38ffd81694b73cfa1ca3e57"
+  },
+  {
+    "path": "ChartsBrushOverlay/ChartsBrushOverlay.classes.d.ts",
+    "sha256": "1148c37a459ff6d7238df80a96a8ce3bbb0bbaf2b0f017e357ff0ec15607e77c"
+  },
+  {
+    "path": "ChartsBrushOverlay/ChartsBrushOverlay.d.ts",
+    "sha256": "ef3bfa6220c26f64072c40f177f043af11a1a7344ec69d88d41ef72dd1202580"
+  },
+  {
+    "path": "ChartsBrushOverlay/index.d.ts",
+    "sha256": "f1c0b98bf494c352cd12e7340d7a72876d855f90e6efd127d17f08e7603e60de"
+  },
+  {
+    "path": "ChartsClipPath/ChartsClipPath.d.ts",
+    "sha256": "699329b4519a6e0e1c96d98c4d98892ada6c118b3b7203a3ea0de46ef480b9c2"
+  },
+  {
+    "path": "ChartsClipPath/index.d.ts",
+    "sha256": "0967a3c64ba2a2b441d62e771f3c5fb220b565e9e365c22fdab28d36ebd5486e"
+  },
+  {
+    "path": "ChartsContainer/ChartsContainer.d.ts",
+    "sha256": "ed0e23f7f9cc68d38deafe224e4ecdf63877b2e78a7004f0a0738e950b6df094"
+  },
+  {
+    "path": "ChartsContainer/index.d.ts",
+    "sha256": "6a0c30f7427dc8bb1abd309be4bb79362a67c2f5f3c46ffe1d1648c7e390ddbf"
+  },
+  {
+    "path": "ChartsContainer/useChartsContainerProps.d.ts",
+    "sha256": "2b887b84c2e583a02931c65f3d920cd3e85ad0d6f09a1317a72b221089285dd5"
+  },
+  {
+    "path": "ChartsDataProvider/ChartsDataProvider.d.ts",
+    "sha256": "67fec1c4f1add65c32680ad1828246f7e166c38c4334f256d9ee001e9c86882c"
+  },
+  {
+    "path": "ChartsDataProvider/index.d.ts",
+    "sha256": "bc5d9dda1018ef16a45b60c56f687e88a34bca0799ffed87dcabee86e7ef83f7"
+  },
+  {
+    "path": "ChartsDataProvider/useChartsDataProviderProps.d.ts",
+    "sha256": "dd430b832012c6e1218fd9fb3f4a6e649894d4b837cf54c2c2277de9aaf4801b"
+  },
+  {
+    "path": "ChartsGrid/ChartsGrid.d.ts",
+    "sha256": "d1847a23eca3f5619665cdc07be2ca9de1e2749a5737711e0f5a7bf0bbf2cd9e"
+  },
+  {
+    "path": "ChartsGrid/ChartsHorizontalGrid.d.ts",
+    "sha256": "7e02d32069944c4a8bb3af14d3aed88a93be993de1985729ea53d8d71b7b9913"
+  },
+  {
+    "path": "ChartsGrid/ChartsVerticalGrid.d.ts",
+    "sha256": "2b87b94db8622dfbc3bbaa2f94de0971be796492b295d02813d7e576a9710459"
+  },
+  {
+    "path": "ChartsGrid/chartsGridClasses.d.ts",
+    "sha256": "0666bfb37d00862bbc649043059743c2fd5c09ff068930ff3191882490510afe"
+  },
+  {
+    "path": "ChartsGrid/index.d.ts",
+    "sha256": "559165b4a5ae80d23c341af13562419ab8f4e9703dcebb3d502ac326b417afdb"
+  },
+  {
+    "path": "ChartsGrid/styledComponents.d.ts",
+    "sha256": "6295653e326de62038e2cc69e77124024e5510608a3475037ee6f84012f254bd"
+  },
+  {
+    "path": "ChartsLabel/ChartsLabel.d.ts",
+    "sha256": "4ea8590585a2b05798029cd34a9099c04436bd4ec764f1e088e023fedfeab644"
+  },
+  {
+    "path": "ChartsLabel/ChartsLabelGradient.d.ts",
+    "sha256": "5b8aa2cc2b0f5b77537c3ac6ec004e8670055b3613737e12f6b61bcd2b8d15c4"
+  },
+  {
+    "path": "ChartsLabel/ChartsLabelMark.d.ts",
+    "sha256": "6678b7167866490e62ad82e17f4e314c1d59d2fc5dad8c132b1308de8a3468cf"
+  },
+  {
+    "path": "ChartsLabel/index.d.ts",
+    "sha256": "e42a09c1a391501ca02c5221921fea90b80f7a1738ac5f3ab0842f76399c6121"
+  },
+  {
+    "path": "ChartsLabel/labelClasses.d.ts",
+    "sha256": "0cbc2c4f94d69f601930993208b55a8f6747a4e0023bdcffeb64aa6b23cb29ad"
+  },
+  {
+    "path": "ChartsLabel/labelGradientClasses.d.ts",
+    "sha256": "d97d4240020de533a6e59688786002b2af860dcb9ba92efb4970436824565769"
+  },
+  {
+    "path": "ChartsLabel/labelMarkClasses.d.ts",
+    "sha256": "a8ad2115c4231865b25ce5a42f6536b98c221d49be7a74d8ac0b3d4fddc58cf2"
+  },
+  {
+    "path": "ChartsLayerContainer/ChartsLayerContainer.d.ts",
+    "sha256": "e82b39beb8cfe49bc038d5d740f6870d3b945e05ae590eaf6b0c846cb25f7150"
+  },
+  {
+    "path": "ChartsLayerContainer/chartsLayerContainerClasses.d.ts",
+    "sha256": "661d1251883d8be2b144b9dfd1d7b9e4a4b6ae43021d5868b101b45739f2ec0a"
+  },
+  {
+    "path": "ChartsLayerContainer/index.d.ts",
+    "sha256": "9bb6d92880e01c2e583371234e797ab071031536685b0b9ce876c86409d142e4"
+  },
+  {
+    "path": "ChartsLegend/ChartsLegend.d.ts",
+    "sha256": "8801556efe3b9d76b635f46a57a60b30d9ef3be4b04ee84b12b7630e7b8990af"
+  },
+  {
+    "path": "ChartsLegend/ContinuousColorLegend.d.ts",
+    "sha256": "58b0be1c39aaf0f123eaba35855232dd47ce3dbcf6e3fbaa4a8a588e6d1de920"
+  },
+  {
+    "path": "ChartsLegend/PiecewiseColorLegend.d.ts",
+    "sha256": "19b82ff857d0956db51167718606ad108dbad715308e2ba2632ff07fc13eaa3c"
+  },
+  {
+    "path": "ChartsLegend/chartsLegend.types.d.ts",
+    "sha256": "4c60e45bbead85093e5fef258c899497ac371a58b75722510d1425521d343cc4"
+  },
+  {
+    "path": "ChartsLegend/chartsLegendClasses.d.ts",
+    "sha256": "97965a2159c3b40108cc743a9f6f1f819a6a006c01ce61424c691adc92a4e0e3"
+  },
+  {
+    "path": "ChartsLegend/colorLegend.types.d.ts",
+    "sha256": "8880baeb0e850438519d3e4e28b481377f76ab0a6bd4ce811b377f09c35aa359"
+  },
+  {
+    "path": "ChartsLegend/continuousColorLegendClasses.d.ts",
+    "sha256": "529a5a49462814d3a2c7088bcab5a89b9706144af04612e46d79e37452bda3de"
+  },
+  {
+    "path": "ChartsLegend/direction.d.ts",
+    "sha256": "6f05f13b3edcb1d33e10c13b907b1f92df8f76bf316b3fee666ef326893934a2"
+  },
+  {
+    "path": "ChartsLegend/index.d.ts",
+    "sha256": "c92569501c053c0f5a03e7337a41614a4743cd5579367fea3d0ce461e43b3720"
+  },
+  {
+    "path": "ChartsLegend/legend.types.d.ts",
+    "sha256": "4cc7f311ea0cbe81010a041b68505e16ac3b3dfb62dd165045b354e28e5565e5"
+  },
+  {
+    "path": "ChartsLegend/legendContext.types.d.ts",
+    "sha256": "16e90d470f8e4773a8183b477e6637c104b5b161bc0a3412fb79377be15abfea"
+  },
+  {
+    "path": "ChartsLegend/onClickContextBuilder.d.ts",
+    "sha256": "68349f2bcc670c5785ccede1870ef762628dd52edc9d8a0f4bedbc613e5c8f6a"
+  },
+  {
+    "path": "ChartsLegend/piecewiseColorDefaultLabelFormatter.d.ts",
+    "sha256": "6b08a96c5d48c5a48c8aa39269973df6c7f576b9b7c770be6da963d11508a688"
+  },
+  {
+    "path": "ChartsLegend/piecewiseColorLegend.types.d.ts",
+    "sha256": "c1989fa40baa6be050aba4eceeb56dea1409adc969d8aae22e7ccdc85e4afaa2"
+  },
+  {
+    "path": "ChartsLegend/piecewiseColorLegendClasses.d.ts",
+    "sha256": "fa847590ceaf18426cb3b38fd9952d52c0dbbda2faa16d5b3df5172965ea763a"
+  },
+  {
+    "path": "ChartsLegend/useAxis.d.ts",
+    "sha256": "9a86e9c1cff59a911b338ec5409921c96403b7e00f230a703dcc3e1ebf05abe3"
+  },
+  {
+    "path": "ChartsLocalizationProvider/ChartsLocalizationProvider.d.ts",
+    "sha256": "1a11eb1282bf692d4ff28adc4df7c9c35a36e60ad5e9e8dd2917bca4967e5bb8"
+  },
+  {
+    "path": "ChartsLocalizationProvider/index.d.ts",
+    "sha256": "1e97c6dc6a82a85181ebfec7ed45e0f589558f5fb01fe91a37740781f41efb38"
+  },
+  {
+    "path": "ChartsOverlay/ChartsLoadingOverlay.d.ts",
+    "sha256": "fd4de816b85574805f25bf1f7221c3e1ef90db8159268288e8b22448684daf70"
+  },
+  {
+    "path": "ChartsOverlay/ChartsNoDataOverlay.d.ts",
+    "sha256": "85b528140798fd76862458ea335cc0930205609c2a37ea827b08cc7e2cff04eb"
+  },
+  {
+    "path": "ChartsOverlay/ChartsOverlay.d.ts",
+    "sha256": "0fbe7ab124d4a8ac0e112b43d4b8655a6a40f4f3398066064122e38b95a2223c"
+  },
+  {
+    "path": "ChartsOverlay/common.d.ts",
+    "sha256": "47e1c58dc22a721728844cb1a9afb29c872e4a14e5d005bdbbede92509fce5d7"
+  },
+  {
+    "path": "ChartsOverlay/index.d.ts",
+    "sha256": "7de51f42c3e442ac571ed9231660b24dbda0f3d7c3fe82afb061ebee29fe2eeb"
+  },
+  {
+    "path": "ChartsRadialAxisHighlight/ChartsRadialAxisHighlight.d.ts",
+    "sha256": "239c230d9cf758dbe6b6300e575ac57a9a25d3f49235246caa4f1b644fcd0219"
+  },
+  {
+    "path": "ChartsRadialAxisHighlight/ChartsRadialAxisHighlight.types.d.ts",
+    "sha256": "8e4df87add8124c817fbd895ffea6c8039ab6acf70dfaa96738acaf210093fdf"
+  },
+  {
+    "path": "ChartsRadialAxisHighlight/ChartsRadialAxisHighlightPath.d.ts",
+    "sha256": "2498a541ed2df09485aa2fd6dc8d4e7b0f5b029d9e2f3b36b040b56b735a4bb4"
+  },
+  {
+    "path": "ChartsRadialAxisHighlight/ChartsRadiusAxisHighlight.d.ts",
+    "sha256": "c7011db3af868067e30e968184c1f5d42675dc592d21d803803e9a0cb965b9c6"
+  },
+  {
+    "path": "ChartsRadialAxisHighlight/ChartsRotationAxisHighlight.d.ts",
+    "sha256": "682fe545b243c901f13d182ba33971afc599fe1ca93f0a554e0861eeb97adfb5"
+  },
+  {
+    "path": "ChartsRadialAxisHighlight/chartsRadialAxisHighlightClasses.d.ts",
+    "sha256": "00907199bc7d9d24ef1215d3789d9d63d0e5fe16c01553b95e6302371b9a7e12"
+  },
+  {
+    "path": "ChartsRadialAxisHighlight/index.d.ts",
+    "sha256": "aa21031934e022159eea47d67c18fa7714ca8ee3a5d3997bb1ab55e0e916b208"
+  },
+  {
+    "path": "ChartsRadialDataProvider/ChartsRadialDataProvider.d.ts",
+    "sha256": "4adbcd6eafeb23d65ee271d8b8e51cfd3d8ab1f55b9fb247bcc7180b8a1edd4b"
+  },
+  {
+    "path": "ChartsRadialDataProvider/ChartsRadialDataProvider.plugins.d.ts",
+    "sha256": "fbf084914160d5ce544b3a20df76476ecf7748a33329cab0a66a2ddb83c9fda9"
+  },
+  {
+    "path": "ChartsRadialDataProvider/index.d.ts",
+    "sha256": "d837c85d3ca97733d471d2a0f9be6cfd43b75819cb247a5bf2b3ba2973fd88a9"
+  },
+  {
+    "path": "ChartsRadialDataProvider/useChartsRadialDataProviderProps.d.ts",
+    "sha256": "9d05e8a00556ec70a060a14b6ee265fca6845ef7e3d1f2b2dcdc662e99ffb8c8"
+  },
+  {
+    "path": "ChartsRadialGrid/ChartsRadialGrid.d.ts",
+    "sha256": "d5a09750fa29bfbe2964e47971af3d573c9c70e5731755bc1b365b2c534d310a"
+  },
+  {
+    "path": "ChartsRadialGrid/ChartsRadiusGrid.d.ts",
+    "sha256": "43c0219124aa68606b76585b19c870b83900b05d962e8fcab7ebe615383f400a"
+  },
+  {
+    "path": "ChartsRadialGrid/ChartsRotationGrid.d.ts",
+    "sha256": "9dfa86b2af6a5b2e61c7b040d76935511551041a154f4edccb8656e0396c79c9"
+  },
+  {
+    "path": "ChartsRadialGrid/chartsRadialGridClasses.d.ts",
+    "sha256": "e0a1c68d149408d12236e79487b3b04b3ea0ddd1620ebf0d131b8a7739a8fe86"
+  },
+  {
+    "path": "ChartsRadialGrid/index.d.ts",
+    "sha256": "2e49c26478f2a2e8c8dc50cb76940edc5251fcf1fe1b62c1b4b54b435d6126be"
+  },
+  {
+    "path": "ChartsRadialGrid/styledComponents.d.ts",
+    "sha256": "411ba7d4c9f1c6eb06b7f4643ff2d722017ee55b9c5cd21bc822bf6e0d9d7348"
+  },
+  {
+    "path": "ChartsRadiusAxis/ChartsRadiusAxis.d.ts",
+    "sha256": "5cbc56fb98d1786b533c448bcae541a936b482731cff5812977fcd5654fa6abf"
+  },
+  {
+    "path": "ChartsRadiusAxis/chartsRadiusAxisClasses.d.ts",
+    "sha256": "3315fe1a0ecd183ddbc315e6058ae2bcd5b1350474cec3967ad9baf5c999d6ff"
+  },
+  {
+    "path": "ChartsRadiusAxis/createGetLabelTextAnchors.d.ts",
+    "sha256": "9ff3dd1c9bfdd9bbc8a82cac358f985ba135e0af165417be43b1211c93b354e3"
+  },
+  {
+    "path": "ChartsRadiusAxis/getLabelTransform.d.ts",
+    "sha256": "bb05e8b3b543780ad04950ea445599862006e03df1f9549516204b288e12f693"
+  },
+  {
+    "path": "ChartsRadiusAxis/index.d.ts",
+    "sha256": "c924ab48aad592f6fb3622afd3d32b09181eca92d8fad1369a8e8b8b06aeca82"
+  },
+  {
+    "path": "ChartsRadiusAxis/sharedRadialAxisClasses.d.ts",
+    "sha256": "819f1958580e8a1b43a968881286625c1afb81c986c082fe019020b216710a28"
+  },
+  {
+    "path": "ChartsReferenceLine/ChartsReferenceLine.d.ts",
+    "sha256": "ac4fcc42740420b46dfeed7962e61d574d721276ebe0d4b741186c9b0ee9b48c"
+  },
+  {
+    "path": "ChartsReferenceLine/ChartsXReferenceLine.d.ts",
+    "sha256": "c881b89b47e26ae82b161255ea8c4ea01dcdf07334041a0809e71f343f709a2a"
+  },
+  {
+    "path": "ChartsReferenceLine/ChartsYReferenceLine.d.ts",
+    "sha256": "01a0b1d22f3ec48f2c509520bf250ffa967a8de27c9458b18c7495a9f973def9"
+  },
+  {
+    "path": "ChartsReferenceLine/chartsReferenceLineClasses.d.ts",
+    "sha256": "ddc5ce384ee11e7c307f00b0fe03e4d37f85b7903461cd9707a24faf95f1b493"
+  },
+  {
+    "path": "ChartsReferenceLine/common.d.ts",
+    "sha256": "e91f63bcef3e6eeac47fe0b4c3d9d04a2cfa5a561270dfaabbfcea97b738ff59"
+  },
+  {
+    "path": "ChartsReferenceLine/index.d.ts",
+    "sha256": "ccae4d3c6a5daad5570cbdf04c8f052a5657c4d11c59a44c2d3623a07c5f1a91"
+  },
+  {
+    "path": "ChartsRotationAxis/ChartsRotationAxis.d.ts",
+    "sha256": "8d1d20fa292c76127476aa424ba30206c879e653ccdcde44a64bf2f7e7f54f65"
+  },
+  {
+    "path": "ChartsRotationAxis/chartsRotationAxisClasses.d.ts",
+    "sha256": "c34b5352a9a457172c000ee89a85ef3cedd912b4f996522626d5404d40f5aa45"
+  },
+  {
+    "path": "ChartsRotationAxis/getLabelTransform.d.ts",
+    "sha256": "bb05e8b3b543780ad04950ea445599862006e03df1f9549516204b288e12f693"
+  },
+  {
+    "path": "ChartsRotationAxis/index.d.ts",
+    "sha256": "4742d26c8d6a67f3c7d4d89a3133c4e075564dc2ca327b1e6e222953070da7dc"
+  },
+  {
+    "path": "ChartsSurface/ChartsSurface.d.ts",
+    "sha256": "feefeb0efc55096b1b435987f3f379f665a79d55556298811047c98a2a998375"
+  },
+  {
+    "path": "ChartsSurface/chartsSurfaceClasses.d.ts",
+    "sha256": "52636fab526ac15d07e7ceed3ab9c4af3af6461c72f00a913350956a67b65bc8"
+  },
+  {
+    "path": "ChartsSurface/index.d.ts",
+    "sha256": "a435ad41765b48220b369ffd4377b6d74b0fb000c4385edfad1b1b8c9dc21aed"
+  },
+  {
+    "path": "ChartsSvgLayer/ChartsSvgLayer.d.ts",
+    "sha256": "d209a36f3dd95fa18b96aa500f2cee387323535de1b70f9e50c086c2c7137ba2"
+  },
+  {
+    "path": "ChartsSvgLayer/chartsSvgLayerClasses.d.ts",
+    "sha256": "57c440cdbb5e211100bb6b53dcd86054b916d964ea05d1adca61153b40caf818"
+  },
+  {
+    "path": "ChartsSvgLayer/index.d.ts",
+    "sha256": "6b911bbd1d06e0fe68f4e6616b8989aa577efb607f70e77dd9ec64cbeca6d9b0"
+  },
+  {
+    "path": "ChartsText/ChartsText.d.ts",
+    "sha256": "3bb383870eb906d2468334baf148fe7901bd45649b81837eeac861cf0d6d82a3"
+  },
+  {
+    "path": "ChartsText/defaultTextPlacement.d.ts",
+    "sha256": "cf9e8a3308a336dfb5954032142f08c3e915a2b458a2c4d731ca2c23813cd09e"
+  },
+  {
+    "path": "ChartsText/index.d.ts",
+    "sha256": "ce634c2930640012b2c9a86fd8c76fbcbc57034fcb457bb728b09f22a19ee544"
+  },
+  {
+    "path": "ChartsTooltip/ChartTooltip.types.d.ts",
+    "sha256": "6d7288dad4842e7100f9073e51314d889c0b209faef11528704d2bdc54cb4b33"
+  },
+  {
+    "path": "ChartsTooltip/ChartsAxisTooltipContent.d.ts",
+    "sha256": "e4fbfd9aa23ae32f6039ba23eeabbe76875e7133b3117fb3d0c3b6b526b8d271"
+  },
+  {
+    "path": "ChartsTooltip/ChartsItemTooltipContent.d.ts",
+    "sha256": "8bca6037ef8c9f4063e63bebc51fa658b8a4aa6090d500fa152802a747cfd2cf"
+  },
+  {
+    "path": "ChartsTooltip/ChartsTooltip.d.ts",
+    "sha256": "cf6834f9891dd37c74fa3e440c066f13ca77f561929b3f87ad7018e24de0e583"
+  },
+  {
+    "path": "ChartsTooltip/ChartsTooltipContainer.d.ts",
+    "sha256": "c9719dceb5a13d6d1830c184dd2a372c5a00e456590739fd5bc5883cb4f3a046"
+  },
+  {
+    "path": "ChartsTooltip/ChartsTooltipTable.d.ts",
+    "sha256": "406eae17f7611cacd32d7a6f90a5cf151d21392220905a0eb6d03426fce4d0e1"
+  },
+  {
+    "path": "ChartsTooltip/chartsTooltipClasses.d.ts",
+    "sha256": "e76761987d48ba30f8e61a1dd7fe88a1af24872a7e0eeaacc386d2cbd87da3f3"
+  },
+  {
+    "path": "ChartsTooltip/index.d.ts",
+    "sha256": "8e46b7b07348064c1fd20f32c909c73e70f6d63e4b05a79a8ec0a093613b7014"
+  },
+  {
+    "path": "ChartsTooltip/useAxesTooltip.d.ts",
+    "sha256": "fef24ce2ab36eaa29ae5ceef69bbd273c3d6d066f54745384c5dbeb6995f3d85"
+  },
+  {
+    "path": "ChartsTooltip/useItemTooltip.d.ts",
+    "sha256": "c445a2cd0940532c9a41d6d646bd4b7631a6fa9fc1de33227dbd5c32665c6936"
+  },
+  {
+    "path": "ChartsTooltip/utils.d.ts",
+    "sha256": "b9468b923f933427a2bb186ca16ae85d655ad26b4b8fab69b09461b5a546cfdb"
+  },
+  {
+    "path": "ChartsWrapper/ChartsWrapper.d.ts",
+    "sha256": "7789e8a6989fbfe19ac0e7d18ed0f85d878cfec946b99af6c5afd617b295cbb4"
+  },
+  {
+    "path": "ChartsWrapper/index.d.ts",
+    "sha256": "652e6b9b8640a5707758966104399173f93d8dfcf82d7470576b8d0502c8077a"
+  },
+  {
+    "path": "ChartsXAxis/ChartsGroupedXAxisTicks.d.ts",
+    "sha256": "922a18ed5cee40da2241c841bc78bf974845ec403f90972f3f3eb93aba5011f3"
+  },
+  {
+    "path": "ChartsXAxis/ChartsSingleXAxisTicks.d.ts",
+    "sha256": "fc246558286848b27780e995d4a6b3b630786c899500f7089df9e62f68490e24"
+  },
+  {
+    "path": "ChartsXAxis/ChartsXAxis.d.ts",
+    "sha256": "a01ea6b25513854b2ccf4e1517c9f749f85f088f454da39c6d1313d97d475cd3"
+  },
+  {
+    "path": "ChartsXAxis/ChartsXAxisImpl.d.ts",
+    "sha256": "d260417eb51e39528ea0214b11583ea382925a37d85533a193d0a735c4dd45f5"
+  },
+  {
+    "path": "ChartsXAxis/getVisibleLabels.d.ts",
+    "sha256": "66d6040ddbf6dd9ff5f4c66ae354c7b4e5d87f02b2b1fbf176398f94cf1e53a3"
+  },
+  {
+    "path": "ChartsXAxis/index.d.ts",
+    "sha256": "b06adc53a0f7e213baf54831e093de5e8f12a070bf3e9d09ecc7952a0d8f5f1b"
+  },
+  {
+    "path": "ChartsXAxis/shortenLabels.d.ts",
+    "sha256": "a6b70d7b3a0eeb77f9daa21525fbab799da632f2a9ae000428a06e98a60a2f1a"
+  },
+  {
+    "path": "ChartsXAxis/useAxisTicksProps.d.ts",
+    "sha256": "bf6555d51a08c7e65f35817bc028a02d3eb0f4ee556764f81fc083990a23d25c"
+  },
+  {
+    "path": "ChartsXAxis/utilities.d.ts",
+    "sha256": "86649bfa634e76b4fafd105660f0b33bd1e0d734e6f58f78ea7325bda9972ae0"
+  },
+  {
+    "path": "ChartsYAxis/ChartsGroupedYAxisTicks.d.ts",
+    "sha256": "a4077ea0dda7ca43f59b5c575d938b275f8cec08f239ee7b8181f07d4043f455"
+  },
+  {
+    "path": "ChartsYAxis/ChartsSingleYAxisTicks.d.ts",
+    "sha256": "539ce5ae09e62f7fb73d7d99b2819dbe1aa795d1374081d440347f5b8318420f"
+  },
+  {
+    "path": "ChartsYAxis/ChartsYAxis.d.ts",
+    "sha256": "37f2ef2bf49c69d41cab052b8daf755c87aed741d4216bec74f64065125a9728"
+  },
+  {
+    "path": "ChartsYAxis/ChartsYAxisImpl.d.ts",
+    "sha256": "51f8bcbf7fb67ed087415658b00b308fd448cad8f9e24f65c1ee2bd1b4c7cfac"
+  },
+  {
+    "path": "ChartsYAxis/index.d.ts",
+    "sha256": "ecfec37b3e1e3b908eded22bcf7719478424338fb8019d33568e5e30619296e9"
+  },
+  {
+    "path": "ChartsYAxis/shortenLabels.d.ts",
+    "sha256": "ec5579fdd069657659bb70400d9ed7759f0e56c12e7219dba9fc9b39f0d6dd2a"
+  },
+  {
+    "path": "ChartsYAxis/useAxisTicksProps.d.ts",
+    "sha256": "b8c1f028636946f20c09f351678aa57398516ae2bb158bb80373dd487f078206"
+  },
+  {
+    "path": "ChartsYAxis/utilities.d.ts",
+    "sha256": "82b17474c1998b7f90a2182aa016cd681dbbe74b21f43d6f940b574202568694"
+  },
+  {
+    "path": "Gauge/Gauge.d.ts",
+    "sha256": "4ab194f8d76ca196b1b8934aae3342022a1cee8fd04b20ab621fdb8bc1ab479a"
+  },
+  {
+    "path": "Gauge/GaugeContainer.d.ts",
+    "sha256": "b7793868f73fb7b1fa400bf45d3290a611d3397830d218fb025ba046c9cb1ee0"
+  },
+  {
+    "path": "Gauge/GaugeProvider.d.ts",
+    "sha256": "a6cb0154f7b58c393a15630e33af3df502069531232219d431199a84c10c5713"
+  },
+  {
+    "path": "Gauge/GaugeReferenceArc.d.ts",
+    "sha256": "8f46d41d0ec8a059f7fb0e5a0037a6ff6453135b2e94528a99e509035b9babb5"
+  },
+  {
+    "path": "Gauge/GaugeValueArc.d.ts",
+    "sha256": "50d64fa8798d81bf12a74d5b88cfd9df9c80e979747ed2838c59cbc6ff2cc5ca"
+  },
+  {
+    "path": "Gauge/GaugeValueText.d.ts",
+    "sha256": "89c04e5a8f03f3cbbca6f004e9eb12034e071099a5094171bad6dca40b9410b8"
+  },
+  {
+    "path": "Gauge/gaugeClasses.d.ts",
+    "sha256": "b2c7e82f27737c4d560fe0f4c6306ca66ae5b921a542fc7f1e4563c6fc377aad"
+  },
+  {
+    "path": "Gauge/index.d.ts",
+    "sha256": "f25dcab7d26545b176de1b182107409fd5b1628a1456cac7be938942821ecb11"
+  },
+  {
+    "path": "Gauge/utils.d.ts",
+    "sha256": "7efbea09e22f88621271bb51ddda2eaa0053526e84a495b84c852ea397064a90"
+  },
+  {
+    "path": "LineChart/AnimatedArea.d.ts",
+    "sha256": "496e723640147d823ccaf9d39c262962051140abdd2cbac668ef520d8437dd61"
+  },
+  {
+    "path": "LineChart/AnimatedLine.d.ts",
+    "sha256": "ccaee8f364a55fef0b7a97dee2daa13155745aa982d0e89fd2e04c653609a118"
+  },
+  {
+    "path": "LineChart/AppearingMask.d.ts",
+    "sha256": "432e95f1f48f8d7f1df8195f9b141621dfeb72904a652ca41fcea552ea1d855b"
+  },
+  {
+    "path": "LineChart/AreaElement.d.ts",
+    "sha256": "037f21e7118bef4c4f91fc375116f738b14697447ae36f1ef0015da2e9ce9156"
+  },
+  {
+    "path": "LineChart/AreaPlot.d.ts",
+    "sha256": "76722ebbf10952cc4d28bd4553a3d7be0eff2894042680d1c75ed0b076dcc1db"
+  },
+  {
+    "path": "LineChart/CircleMarkElement.d.ts",
+    "sha256": "15aad034526119afa16fddad8227eb93d0d77dbd9bc4b8851117707912f6343e"
+  },
+  {
+    "path": "LineChart/FocusedLineMark.d.ts",
+    "sha256": "27606c6a4f670b9fd483ffbf7b1ccf36d8c85df47459f1cf746c0cbc6d6a4a0b"
+  },
+  {
+    "path": "LineChart/LineChart.d.ts",
+    "sha256": "3956846dbff96f1ba1e4286762c832d20499bc0ec425aaaf5a7df36319306abd"
+  },
+  {
+    "path": "LineChart/LineChart.plugins.d.ts",
+    "sha256": "438193b6b7edeb17e7d2830f2e4db164215c11704465da60d1a7af9e080f1a74"
+  },
+  {
+    "path": "LineChart/LineElement.d.ts",
+    "sha256": "e6991acf575b9187d2f30654efbf3483d4d42d25aa46258544e00054317c4f34"
+  },
+  {
+    "path": "LineChart/LineHighlightElement.d.ts",
+    "sha256": "ba0a9d28981ed6f50cb65df5b59d4d6b7e1384be56579211953e84608845d1ee"
+  },
+  {
+    "path": "LineChart/LineHighlightPlot.d.ts",
+    "sha256": "495448fc04c31491ae370770a0a42a29d7507c1dce6df7d5afbefb71ae5807e1"
+  },
+  {
+    "path": "LineChart/LinePlot.d.ts",
+    "sha256": "6bbc66d4a549b11ec2bc46f73986f69bd02609fefe8aec010aeff360b293815d"
+  },
+  {
+    "path": "LineChart/MarkElement.d.ts",
+    "sha256": "6e0fc5fe24205bb8a7d26a34f43e95fd41a8ac7868d4edeb6d337ce1b3199f2a"
+  },
+  {
+    "path": "LineChart/MarkPlot.d.ts",
+    "sha256": "1c50d3b826e57c09498eda8d3ef3ff026f25a5ed5b2735286a19559f639cd48d"
+  },
+  {
+    "path": "LineChart/index.d.ts",
+    "sha256": "e815e0e2fd5cb7d583d0a8967b80f0f3a11d5df6ac454b34e18b343d0e742f64"
+  },
+  {
+    "path": "LineChart/lineClasses.d.ts",
+    "sha256": "12c201995e3f92e4bb1fb48c6d6fcd20fe1c2ee348bd8d3c64ad7127f48ba386"
+  },
+  {
+    "path": "LineChart/seriesConfig/curveEvaluation.d.ts",
+    "sha256": "dc2aecb3ba52710daee57cf965a25ffc683bb63c3b97a3002f19edf9b4bb6910"
+  },
+  {
+    "path": "LineChart/seriesConfig/descriptionGetter.d.ts",
+    "sha256": "04869aedd6bbe2b5ec9a94897c86bccdbd0107155d649592760bca64bbba874a"
+  },
+  {
+    "path": "LineChart/seriesConfig/extremums.d.ts",
+    "sha256": "a668886dd8b49375c5601713b95d5613a5713c2b5ff1c9daf89635a4de58a3b4"
+  },
+  {
+    "path": "LineChart/seriesConfig/getColor.d.ts",
+    "sha256": "d8f383ed101d1120a1fd8076390ee7db87d12dbcf1871ba497e6e0a4d8bdbbe3"
+  },
+  {
+    "path": "LineChart/seriesConfig/getItemAtPosition.d.ts",
+    "sha256": "8ecac982490324085113f02a4c1383150e873cc33ff7de6dc9c1f7848089fda3"
+  },
+  {
+    "path": "LineChart/seriesConfig/getSeriesWithDefaultValues.d.ts",
+    "sha256": "318590a95928f21e22f3797aa3300356a226b97556956954a423b227920c51e8"
+  },
+  {
+    "path": "LineChart/seriesConfig/index.d.ts",
+    "sha256": "765ebb7ec7c433763d7344a1e810cdabb7aa79b1115ea60e3b570f15448a1cc3"
+  },
+  {
+    "path": "LineChart/seriesConfig/keyboardFocusHandler.d.ts",
+    "sha256": "8bdc3b25fa275c8fcc410b7eb4ed474609a62f831122201ae1eaf43541034998"
+  },
+  {
+    "path": "LineChart/seriesConfig/legend.d.ts",
+    "sha256": "41595c02c53545aca4daae759f78cee9b73104549b1c69fb7867969de18d7d6a"
+  },
+  {
+    "path": "LineChart/seriesConfig/seriesProcessor.d.ts",
+    "sha256": "4b266049687eb2039329cc2726f7faa14171458c5444a8d0cf86433ab0a4d5ce"
+  },
+  {
+    "path": "LineChart/seriesConfig/tooltip.d.ts",
+    "sha256": "fb926081e43562e7b226892983e3f86f9dec553cd0dce879209dad68153a6eba"
+  },
+  {
+    "path": "LineChart/seriesConfig/tooltipPosition.d.ts",
+    "sha256": "4b239ea505e18a14350a8ce3924c2c6e217f1cec321326bc4efd3c264f392db7"
+  },
+  {
+    "path": "LineChart/useAreaPlotData.d.ts",
+    "sha256": "8e204286dedc0b30410d54c46a53054ccdaf17e945548feadefa02c7dafb7076"
+  },
+  {
+    "path": "LineChart/useLineChartProps.d.ts",
+    "sha256": "bd212b4a69a6c729b080e838db3215798503dd6ed5d21f5a46b26a547760edff"
+  },
+  {
+    "path": "LineChart/useLineItemClickHandler.d.ts",
+    "sha256": "ebdce3dccf71d6baff5b932affdf12edd792c812e4c4d6739e448f6d4effb543"
+  },
+  {
+    "path": "LineChart/useLinePlotData.d.ts",
+    "sha256": "0a51f34ec4cd776e9636db61197191042223fb145edd3fdc653005a7566c9992"
+  },
+  {
+    "path": "LineChart/useMarkPlotData.d.ts",
+    "sha256": "f4f9f27621eae284a6e707c9ef6fac5a6bdafab363dbed2bbb902a6335a57c0d"
+  },
+  {
+    "path": "PieChart/FocusedPieArc.d.ts",
+    "sha256": "41f151c4ada7416ec229055c2e808f775ee997ae919dfc1e00e285075bc44eb6"
+  },
+  {
+    "path": "PieChart/PieArc.d.ts",
+    "sha256": "52d8a9e00e8397e303fb8ba7197ae30752f3316bcc22bb9c524f51d0863e2197"
+  },
+  {
+    "path": "PieChart/PieArcLabel.d.ts",
+    "sha256": "a3f273689523ad9ea965654016c08671fdece1790465e3817e6d9550f98a0c83"
+  },
+  {
+    "path": "PieChart/PieArcLabelPlot.d.ts",
+    "sha256": "b01c1148037b72a8569b6200e622de60182cde6566f88718f4ba677b73b9d2c2"
+  },
+  {
+    "path": "PieChart/PieArcPlot.d.ts",
+    "sha256": "aaeba187393ebe78bc5886d770a2a18d01490f202ceff824281e536d3423d779"
+  },
+  {
+    "path": "PieChart/PieChart.d.ts",
+    "sha256": "73ed5a0731dd010f810c53eae764f5ce2b172090285a6a2c45b7244417aaa3b9"
+  },
+  {
+    "path": "PieChart/PieChart.plugins.d.ts",
+    "sha256": "2acb5c99d9813ee02ecea2a799b2980dde76abe59935a7cf35621c1dbc6a5f95"
+  },
+  {
+    "path": "PieChart/PiePlot.d.ts",
+    "sha256": "10b5ce20b8e0e1701b6f26f4c2aaa43755a7e329f52a55cac1d5ea1aa45d1780"
+  },
+  {
+    "path": "PieChart/dataTransform/getModifiedArcProperties.d.ts",
+    "sha256": "05e2309d7c83c74188a619525e86d6c739486171ad6559cb1c8fd2eedfcaa888"
+  },
+  {
+    "path": "PieChart/dataTransform/useTransformData.d.ts",
+    "sha256": "9a5855ad3ef1de1b1b103bc41f637d1ad0645b76f87682b004f70ee6dcd75aa8"
+  },
+  {
+    "path": "PieChart/getPieCoordinates.d.ts",
+    "sha256": "2e326560081b6809f2f45cd538341a398f2f2379bf38761bd8f08075717a912f"
+  },
+  {
+    "path": "PieChart/index.d.ts",
+    "sha256": "87140df6ea67847d99e3f6dd2137119f0df26ff0c47bc352db670e356387880c"
+  },
+  {
+    "path": "PieChart/pieClasses.d.ts",
+    "sha256": "67bb012eb1c70dad5ae8f7ce78dc7de768b09f99201180aa077bd66b29d28635"
+  },
+  {
+    "path": "PieChart/seriesConfig/descriptionGetter.d.ts",
+    "sha256": "38de077dca644d730367dc953ef39408f1f289a63829eb73e1401d2ded09c489"
+  },
+  {
+    "path": "PieChart/seriesConfig/getColor.d.ts",
+    "sha256": "91322a63f70c6d3d0e47e7c1f6bab87a4346689662e850b74754aa2d3c912f88"
+  },
+  {
+    "path": "PieChart/seriesConfig/getSeriesWithDefaultValues.d.ts",
+    "sha256": "585f3877bc7d2cd27cb6b708068cf8ee94c75ecdf32ef675dda0cdf463ebf664"
+  },
+  {
+    "path": "PieChart/seriesConfig/index.d.ts",
+    "sha256": "07c63847b5767841388fc80bdfe0c215d77bf99f2f5fd67f52c5e92da04b296c"
+  },
+  {
+    "path": "PieChart/seriesConfig/keyboardFocusHandler.d.ts",
+    "sha256": "ac0b437900828dd04d73659a59688abd13299cafe324c3685f07ee04be73f016"
+  },
+  {
+    "path": "PieChart/seriesConfig/legend.d.ts",
+    "sha256": "200ac9a6581d6a7fad1557eb15c3ae773c21985f0254a1e7fd954b280b85de7c"
+  },
+  {
+    "path": "PieChart/seriesConfig/seriesLayout.d.ts",
+    "sha256": "26f150ae29f28f45e20819b5ca49a87d4bc99c33925c2704ffc67f42d8573835"
+  },
+  {
+    "path": "PieChart/seriesConfig/seriesProcessor.d.ts",
+    "sha256": "6c1d7e131f7b12e62bc00ba4ac2a31887a194dc351d12e8d14f6d027ba6296b6"
+  },
+  {
+    "path": "PieChart/seriesConfig/tooltip.d.ts",
+    "sha256": "81643d9e3755b4bb3464e8eb535fff52dd3e23fc1779a400d606a5adafe5b2c9"
+  },
+  {
+    "path": "PieChart/seriesConfig/tooltipPosition.d.ts",
+    "sha256": "c544d889ac47d58805dfb464a8cec89f71807605cb539379a06921a0cc898d65"
+  },
+  {
+    "path": "RadarChart/FocusedRadarMark.d.ts",
+    "sha256": "a52fbb8d7fc265d201481ac28d82c5502a7767389f4477dc6449802839f8ae84"
+  },
+  {
+    "path": "RadarChart/RadarAxis/RadarAxis.d.ts",
+    "sha256": "074c306d89d4f685f52a5ad597f69473a270f507c934c5d44d1188d47b7e8b1b"
+  },
+  {
+    "path": "RadarChart/RadarAxis/RadarAxis.utils.d.ts",
+    "sha256": "56f29dabe704b05ae582d3e71eb014c5a38c405dd8f59730b122206c61f815b2"
+  },
+  {
+    "path": "RadarChart/RadarAxis/index.d.ts",
+    "sha256": "63fb811cb12a4c30874843dbdd890e5340cd28ffa25fe3f89cf916c1d367aed9"
+  },
+  {
+    "path": "RadarChart/RadarAxis/useRadarAxis.d.ts",
+    "sha256": "0a3cb83e753356f1270db49627727afa8e9604e52e2c27172e53122a57d1ddb6"
+  },
+  {
+    "path": "RadarChart/RadarAxisHighlight/RadarAxisHighlight.d.ts",
+    "sha256": "52a057af533f7324cb8fe4f64e2290730324436fbf2485950826630bb79be44d"
+  },
+  {
+    "path": "RadarChart/RadarAxisHighlight/index.d.ts",
+    "sha256": "405289d4b93706d6ae7a282af2edf516f89344510ddcc2c7d14809b3c364d555"
+  },
+  {
+    "path": "RadarChart/RadarAxisHighlight/useRadarAxisHighlight.d.ts",
+    "sha256": "954cd48c103aae5590b352026ac54fa64c23f6356a90dc0bbfcfc9583a8b4769"
+  },
+  {
+    "path": "RadarChart/RadarChart.d.ts",
+    "sha256": "612bdacfb0051ca44873a65a15eb507599e47f3b51e5b8d3158aba52e8c7e17c"
+  },
+  {
+    "path": "RadarChart/RadarChart.plugins.d.ts",
+    "sha256": "ce5d5f18f29bb21bfb79944a529d7b9f60a450f9e9ad39b6ef8ac65e128ad13d"
+  },
+  {
+    "path": "RadarChart/RadarDataProvider/RadarDataProvider.d.ts",
+    "sha256": "e0076347816732a7f55a5d95107e7d11ae420fefb5ecd78f77832ecaf70b20a9"
+  },
+  {
+    "path": "RadarChart/RadarDataProvider/index.d.ts",
+    "sha256": "1f3428b4566facdba8c2058d3e139a58a5094d7ceb5e8bca556f28585859f718"
+  },
+  {
+    "path": "RadarChart/RadarDataProvider/radar.types.d.ts",
+    "sha256": "f42ee6e60ca0de1292743681a24b839eb61a28e01652f058e507e144ff758514"
+  },
+  {
+    "path": "RadarChart/RadarGrid/CircularRadarGrid.d.ts",
+    "sha256": "755681479a917a6b4afcefc9efdd9a12bed69d9d42618168a6204cfd6ff9cfe2"
+  },
+  {
+    "path": "RadarChart/RadarGrid/CircularRadarStripes.d.ts",
+    "sha256": "d1bf4fd3ce54ddb003a637760011e07c4875b3d60c65c774787b27dec9ce9420"
+  },
+  {
+    "path": "RadarChart/RadarGrid/RadarGrid.d.ts",
+    "sha256": "ba65eddcf0cb7c57d005106d4508e661b7495438e534019c82bb68c9ea5d0093"
+  },
+  {
+    "path": "RadarChart/RadarGrid/RadarGrid.types.d.ts",
+    "sha256": "18b098baebdcb040379e1809ab874f1d6722bc8c0bf8c9441444bdd13aa3f379"
+  },
+  {
+    "path": "RadarChart/RadarGrid/SharpRadarGrid.d.ts",
+    "sha256": "44b4e821c23a868dc2ebdfbbc6b72930eabe0dd8dbe7f3838a8a712b255656a1"
+  },
+  {
+    "path": "RadarChart/RadarGrid/SharpRadarStripes.d.ts",
+    "sha256": "e6b56bb45cf4f3e1a7eeb5abaa5eafb4361bbb20a813603c6e88dee0f87d446d"
+  },
+  {
+    "path": "RadarChart/RadarGrid/index.d.ts",
+    "sha256": "e44d29e24a561ff1c6d4ca0a1b3e9ebcf88783619d90b152a1752943b691de25"
+  },
+  {
+    "path": "RadarChart/RadarGrid/useRadarGridData.d.ts",
+    "sha256": "1587edf38f109b2fe3d1d07ce7664fe46904efaaccfaf6ecec652d886e500585"
+  },
+  {
+    "path": "RadarChart/RadarMetricLabels/RadarMetricLabels.d.ts",
+    "sha256": "caca3f88999a29e2ca625012446c005020a432a9ce6c2461d9bd9b4f9fd974c4"
+  },
+  {
+    "path": "RadarChart/RadarMetricLabels/index.d.ts",
+    "sha256": "e01f9e0df6e39a96828dc620758342fb680b341cf1cc8be977cb4e034d56754e"
+  },
+  {
+    "path": "RadarChart/RadarMetricLabels/useRadarMetricData.d.ts",
+    "sha256": "5300a7440b1efa9e2a7e4478df32c0cb7a359bb90de4db208f2d256d615a04ce"
+  },
+  {
+    "path": "RadarChart/RadarSeriesPlot/RadarSeriesArea.d.ts",
+    "sha256": "96c3b51e562c1365150b86a2fa0f6a811d7b39ed5e68eabbe8e7de96844fdcf4"
+  },
+  {
+    "path": "RadarChart/RadarSeriesPlot/RadarSeriesMarks.d.ts",
+    "sha256": "2c63771e61a2f65048ca57772d0c33ada78cce0f451ecd2fd61dca5c156e6309"
+  },
+  {
+    "path": "RadarChart/RadarSeriesPlot/RadarSeriesPlot.d.ts",
+    "sha256": "7b97796f63c356b4cbee281bb1c0023a6764d716d452de241c563b4ab939f18c"
+  },
+  {
+    "path": "RadarChart/RadarSeriesPlot/RadarSeriesPlot.types.d.ts",
+    "sha256": "a2d179f484fa32900f616985bdb37b3ac776c912560bcd8c0dce8c9e34661647"
+  },
+  {
+    "path": "RadarChart/RadarSeriesPlot/getAreaPath.d.ts",
+    "sha256": "2ec8bfca1640d9622718a58235cef52cc0bb48bd5bc91e0181b2d2834aaf99b2"
+  },
+  {
+    "path": "RadarChart/RadarSeriesPlot/index.d.ts",
+    "sha256": "289c7c03815dd34606b679de22e3f7e4d6c0b1ae8cd23d2b7f7066ed68c3cd24"
+  },
+  {
+    "path": "RadarChart/RadarSeriesPlot/useInteractionAllItemProps.d.ts",
+    "sha256": "1b85ffc1a6b28ee8ed5a0d9aa87a89ac126491b2648bce6b8eb8271598cfe304"
+  },
+  {
+    "path": "RadarChart/RadarSeriesPlot/useRadarRotationIndex.d.ts",
+    "sha256": "bb9db7cdec55f3d41b734b1a6bef37f139f82c0db0feb81f631cf12faa6533d3"
+  },
+  {
+    "path": "RadarChart/RadarSeriesPlot/useRadarSeriesData.d.ts",
+    "sha256": "3fcc8d51072748d8305f3c9dcfde441bb83fc322a38548fe981a8817926eab05"
+  },
+  {
+    "path": "RadarChart/RadarSeriesPlot/useRegisterRadarItemActivation.d.ts",
+    "sha256": "f0b711232c558cdac77be202a192aea84168805fb075d4e0ea5cee086e486a14"
+  },
+  {
+    "path": "RadarChart/index.d.ts",
+    "sha256": "73caaaa55d70be0c3a9366b469af4d2efe9ffd1decacfc725966f02789f99b5d"
+  },
+  {
+    "path": "RadarChart/radarClasses.d.ts",
+    "sha256": "3d8f6387bf141c37bafafea4e1eba448ad033dba380f6846eb3578cd5f3f7613"
+  },
+  {
+    "path": "RadarChart/seriesConfig/descriptionGetter.d.ts",
+    "sha256": "8114810cd44c3a6b7c8cf55c09f25616ccd74680c7f11bfbe62fcf805f963b4f"
+  },
+  {
+    "path": "RadarChart/seriesConfig/extremums.d.ts",
+    "sha256": "e392ce6be29565fac3b36cdf6544a2366f3858151262ee0cea02eb193795e51e"
+  },
+  {
+    "path": "RadarChart/seriesConfig/getColor.d.ts",
+    "sha256": "eee8d92469412d7f955e9b7eda8aaab5a53c325b53f76a3fb6661e41ce436b2c"
+  },
+  {
+    "path": "RadarChart/seriesConfig/getSeriesWithDefaultValues.d.ts",
+    "sha256": "0355b66d1a267dd84f7f778f648d56c0cff5521c264019498dfa53d1ee6fda2d"
+  },
+  {
+    "path": "RadarChart/seriesConfig/index.d.ts",
+    "sha256": "10ef02a2b3f855b7586e5d69e07b6798574f19c426057a2fbcd01498b2426760"
+  },
+  {
+    "path": "RadarChart/seriesConfig/keyboardFocusHandler.d.ts",
+    "sha256": "29b583ef32df870efbbaa54907303c1353dcc81b3971a2517b2060a0dd49cbc6"
+  },
+  {
+    "path": "RadarChart/seriesConfig/legend.d.ts",
+    "sha256": "fd55399ce813e3a3ef75630ebd3ac52be5688c7c23fa893a02077faedf2730d0"
+  },
+  {
+    "path": "RadarChart/seriesConfig/seriesProcessor.d.ts",
+    "sha256": "9f6ded52c2bbd316a2795217d8bcdca21fbe33d2be9277d96b809d314ad1f818"
+  },
+  {
+    "path": "RadarChart/seriesConfig/tooltip.d.ts",
+    "sha256": "7fe41edceb09b42c38cc69324dc64323719d1d8a215c36a1e652e0b7db340487"
+  },
+  {
+    "path": "RadarChart/seriesConfig/tooltipPosition.d.ts",
+    "sha256": "1fb70e166d4103e792bbe823fad7be19b61587299f636402f0a4862ef8ed0fbf"
+  },
+  {
+    "path": "RadarChart/useRadarChartProps.d.ts",
+    "sha256": "2a95e15f12b8d044b4374d200bab4d420cf66c06cf27919172ec4195c27a842f"
+  },
+  {
+    "path": "ScatterChart/BatchScatter.d.ts",
+    "sha256": "f190a11fe51417ef3d4e4b6691a3be0968f9bead0fe3fbbe46ea83795674bdf4"
+  },
+  {
+    "path": "ScatterChart/FocusedScatterMark.d.ts",
+    "sha256": "ca06ee2786c791053d4152f07e3051b02c081bd719f5c404fc970f4c905dd4fd"
+  },
+  {
+    "path": "ScatterChart/HighlightedScatterMark.d.ts",
+    "sha256": "4bde885f132273a58c2ad3f6f0c92ffdee2e53fd55add3e33b5b437883af2724"
+  },
+  {
+    "path": "ScatterChart/Scatter.d.ts",
+    "sha256": "989766b7b963381eb8ca9b064b88735ab38ec89da757999b172693708917974d"
+  },
+  {
+    "path": "ScatterChart/ScatterChart.d.ts",
+    "sha256": "d408d15af4d80e45350203cdb26a611f8df1373a33158baeda8393fdf719b889"
+  },
+  {
+    "path": "ScatterChart/ScatterChart.plugins.d.ts",
+    "sha256": "47c170f0f011d9771e8d9c0b4c0ecf36e69f520ee0436f50447fc64d20b5c596"
+  },
+  {
+    "path": "ScatterChart/ScatterMarker.d.ts",
+    "sha256": "90f148812f9d5f812987de26996f5ffcaaa882c1571aac36b78f12ff55f8f9eb"
+  },
+  {
+    "path": "ScatterChart/ScatterMarker.types.d.ts",
+    "sha256": "64ee3991573d716f6d67f1d57fc4669264627dc7a61a1299744a1ccf97357caf"
+  },
+  {
+    "path": "ScatterChart/ScatterPlot.d.ts",
+    "sha256": "5c9df10c25c70f5d17b2998fbeab1c1cd0966a15167f83e6c08a45b0a1ae270c"
+  },
+  {
+    "path": "ScatterChart/async/ScatterAsync.d.ts",
+    "sha256": "cb0f017d9fd9e885a5f26946c7fee55a9df71f21c49ef0a4512599a31640beb1"
+  },
+  {
+    "path": "ScatterChart/async/ScatterAsyncBatch.d.ts",
+    "sha256": "41e74b15102c02a5df84864c3196defbfbdf133cfba012df2d00489754aea601"
+  },
+  {
+    "path": "ScatterChart/async/scatterRenderData.selectors.d.ts",
+    "sha256": "1e3427084940372d17b96672e60a507f434f75bad950b33e77970b25a44de3a4"
+  },
+  {
+    "path": "ScatterChart/index.d.ts",
+    "sha256": "1c3968ae85ea8b1f09eafc0df52a9a34ad317486ea25616aee406b6ddc7b61ae"
+  },
+  {
+    "path": "ScatterChart/scatterClasses.d.ts",
+    "sha256": "bc33c667db07ee9d1eae1ff97ec57bf7e23a13fae93ba9f5355fa950e3010a31"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/descriptionGetter.d.ts",
+    "sha256": "bf1cda06a81b9373cfeeafcb0c3e095fd5f74ee8dfac04e56ffc852e91db9fb6"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/extremums.d.ts",
+    "sha256": "f297ce32f099f1cd5cb543fa59e9a609221829da9972d53b1d52b1007029d591"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/getColor.d.ts",
+    "sha256": "e52c19ad35d67c780dbec96fbc0066d434d310759a8ad4295915fe6e3b848a2c"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/getMarkerSize.d.ts",
+    "sha256": "bde90e7eed714ceb523144c26243d8d3d436b1fb32a6d515cee278e60fcaa30f"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/getSeriesWithDefaultValues.d.ts",
+    "sha256": "e1da993594774d6a6e8dcab5256c845052b1b6c5aabe909131adcd664dab8b54"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/index.d.ts",
+    "sha256": "4f850688bd0f2035f766317d6f47efa6e8e4b70d0cd1c6f5b1877d829ea1ede3"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/keyboardFocusHandler.d.ts",
+    "sha256": "2944bb89161d3dca9cac0458684f198168746f1fe4534d5b25003e84ae27cd20"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/legend.d.ts",
+    "sha256": "a851d2c907a536b2cd638e35997932457fa4f76965881fc83734844caf410096"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/seriesProcessor.d.ts",
+    "sha256": "8bc13e181fa479f61691c3361cb3f383c91f83c758f86256ec8dcecf273811e3"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/tooltip.d.ts",
+    "sha256": "0f3cee7a4ed2ff4afd1f9b6dac98ae4dadea99ac932647fbd42dd78eeedc4de6"
+  },
+  {
+    "path": "ScatterChart/seriesConfig/tooltipPosition.d.ts",
+    "sha256": "00c7cd412bb14b219925d4967dc2aa691fa104b1bff171a8e02e0e231b3b99a4"
+  },
+  {
+    "path": "ScatterChart/useScatterChartProps.d.ts",
+    "sha256": "7a01cac3b11c66c870048b46c63861e5e2317783b7c7173419dd965b2eaa1b04"
+  },
+  {
+    "path": "ScatterChart/useScatterItemPosition.d.ts",
+    "sha256": "deb66ecf58f52f986de0edb294f859ff9669720f15282446d9953822f2a862a2"
+  },
+  {
+    "path": "ScatterChart/useScatterPlotData.d.ts",
+    "sha256": "8fe9af6396fadc4c15dcd502aa914c36018dfc18fdb1e005dd4bafd2ac05a000"
+  },
+  {
+    "path": "SparkLineChart/SparkLineChart.d.ts",
+    "sha256": "8d33a85abc95df3ffb1aa102a90909be50c83b58522c22b514f8db0d9be41629"
+  },
+  {
+    "path": "SparkLineChart/index.d.ts",
+    "sha256": "13044c00e6fc1aabbb7a194a2ee06b99ad319de6a20a57f9edcf405f3f2b4e85"
+  },
+  {
+    "path": "Toolbar/Toolbar.d.ts",
+    "sha256": "80d6359fcfcae80a546725751b9a5d0431092a5593df68733b08af568b39b691"
+  },
+  {
+    "path": "Toolbar/Toolbar.types.d.ts",
+    "sha256": "17c1c3d04ad31efe1ddfc9542108c5cd6784842df746cd133a11b48cec5cd71e"
+  },
+  {
+    "path": "Toolbar/ToolbarButton.d.ts",
+    "sha256": "706211ac62602789db026587b385344ff28584f1e64729c41514581453f2b155"
+  },
+  {
+    "path": "Toolbar/chartToolbarClasses.d.ts",
+    "sha256": "22d5957db4f396f7f2293f0b6203f27e769f32398159df17e55f64d1be97757a"
+  },
+  {
+    "path": "Toolbar/index.d.ts",
+    "sha256": "0f01ae20393d006e724ce18c5cc7df98830f81e3a16e5dd9c6965cc760e03216"
+  },
+  {
+    "path": "colorPalettes/categorical/blueberryTwilight.d.ts",
+    "sha256": "052ab564194d3c820a502226f077b5ed1917cf64877cb11b46a1855660acc434"
+  },
+  {
+    "path": "colorPalettes/categorical/cheerfulFiesta.d.ts",
+    "sha256": "4d397d99e528b95df4dba018022e67b3c8d29a052f86b8a6dc667fda008adea5"
+  },
+  {
+    "path": "colorPalettes/categorical/mangoFusion.d.ts",
+    "sha256": "c511911ad8c530818ed73d33b208ded866c82a8c1d8b528f97b69a2c89818b27"
+  },
+  {
+    "path": "colorPalettes/categorical/rainbowSurge.d.ts",
+    "sha256": "44a90aa032565cfaf79ac5451b5bf393a145e7781d9fe8b5c750a9edc14bf459"
+  },
+  {
+    "path": "colorPalettes/index.d.ts",
+    "sha256": "88d47ad021f156334bf1de8c163055c9b70ebe3698f92be8cd1e7137d5898b76"
+  },
+  {
+    "path": "colorPalettes/sequential/blue.d.ts",
+    "sha256": "cd681079f6a0d8cdc75cb70f38aad63ced2037e196c2fb673acbbaad4c33eac0"
+  },
+  {
+    "path": "colorPalettes/sequential/cyan.d.ts",
+    "sha256": "014856020b44160b3e2c909f5e0d6189a94447f14003b465c57eb3c75cd0696f"
+  },
+  {
+    "path": "colorPalettes/sequential/green.d.ts",
+    "sha256": "433fe75622c47c07936b293677abcfdc33091631ec88a7980f83ec79f103f41f"
+  },
+  {
+    "path": "colorPalettes/sequential/orange.d.ts",
+    "sha256": "d90c7e98ad18a5e656144c39fd578102ebbb243f0774e016b37c16f5c266974e"
+  },
+  {
+    "path": "colorPalettes/sequential/pink.d.ts",
+    "sha256": "15a25ed2c6e041fe9c5e5ea6e18879e37c4e232b45fe0a9dbd0047c4ca8390db"
+  },
+  {
+    "path": "colorPalettes/sequential/purple.d.ts",
+    "sha256": "653eb313982de345d0457c730ccda4a47e2a56adfc4cf5b044c40fcb20f8d23d"
+  },
+  {
+    "path": "colorPalettes/sequential/red.d.ts",
+    "sha256": "3c43d30831793ca1ff365bf6c8cd68e18d4bd7fa6b4b0a32f54582beac4bbea1"
+  },
+  {
+    "path": "colorPalettes/sequential/strawberrySky.d.ts",
+    "sha256": "22624cf9f2bce6b62e34bc7fb1f3e3b1e48afe6faf3d392d7ed01c10bf788a9d"
+  },
+  {
+    "path": "colorPalettes/sequential/yellow.d.ts",
+    "sha256": "d95e0621afca2df31783a77d03154b7ca88e4db88aa268c435d732131c91e15f"
+  },
+  {
+    "path": "colorPalettes/types.d.ts",
+    "sha256": "8fa0382b7148e4f98be0d19c6a258198aa12d15eb21f1a6c0d63dcc35b151b82"
+  },
+  {
+    "path": "constants/index.d.ts",
+    "sha256": "14c5a452911277f3988fca3e79ffbb37ef274a9f21c5b143960742c554cff673"
+  },
+  {
+    "path": "context/ChartApi.d.ts",
+    "sha256": "fb53d7e2b1b61cf7efc42c9f0510a790f6891037999d28d85caa634c6bfeb378"
+  },
+  {
+    "path": "context/ChartsProvider/ChartsContext.d.ts",
+    "sha256": "477cb8acbf6622c31726b6a6ce2f6d7a3be21daa0af1886dfda9f75bf193c5da"
+  },
+  {
+    "path": "context/ChartsProvider/ChartsProvider.d.ts",
+    "sha256": "ee31fe64a5a349746a7234e3bf0898ddbbdbf9cc2f900804537f3ff2d7a9363d"
+  },
+  {
+    "path": "context/ChartsProvider/ChartsProvider.types.d.ts",
+    "sha256": "b89648531ab24f722357e693576959ac33052a9cf1c591feeb73166303f3549a"
+  },
+  {
+    "path": "context/ChartsProvider/index.d.ts",
+    "sha256": "fa919ae0cf2dce20cc29c5285d70a6dc5b4041599b60288eee8d1e96bfbcc254"
+  },
+  {
+    "path": "context/ChartsProvider/useChartsContext.d.ts",
+    "sha256": "ebd5f6c5a88bd4e75a9cce17391ced3c34260003f2a647cee316f8a2dce03422"
+  },
+  {
+    "path": "context/ChartsSlotsContext.d.ts",
+    "sha256": "e63e5211e113129a12e9b7d527e846cc6e62c00cdaf12fc824908e1d79998dc3"
+  },
+  {
+    "path": "context/index.d.ts",
+    "sha256": "435521ccdcf78080d06a3578f124d363360bbadbe774fe8961f974172bdc8f7c"
+  },
+  {
+    "path": "context/useChartApiContext.d.ts",
+    "sha256": "5b1422ee1d5985290fb78d39bd99e4321349681b532848f7e954c275d67ec9da"
+  },
+  {
+    "path": "hooks/animation/index.d.ts",
+    "sha256": "54d88a3239b1689237ce29b1f7e9b9be394e5895483f3bb6b805a20b089605df"
+  },
+  {
+    "path": "hooks/animation/useAnimate.d.ts",
+    "sha256": "a8c93fa7f0fa375a41776032ffd7ff8fd9afb609b12f438c58fdb3150e625c25"
+  },
+  {
+    "path": "hooks/animation/useAnimateArea.d.ts",
+    "sha256": "4abc21addcfdfee70d3dc039ad47f4296ff60af636586ff701aff6e6547d36bc"
+  },
+  {
+    "path": "hooks/animation/useAnimateBar.d.ts",
+    "sha256": "1ea93560e8acac9749e1081118383c9653de36a731649ff6d3cb6f69e03f7689"
+  },
+  {
+    "path": "hooks/animation/useAnimateBarLabel.d.ts",
+    "sha256": "e6a582465a6823f876b8acb8676a321ace95b48061a917b61d3e3628ebcafac9"
+  },
+  {
+    "path": "hooks/animation/useAnimateGaugeValueArc.d.ts",
+    "sha256": "1bc2fa92d27076733ab49820214b47b475ff4299aa2e3b403a2a4130a3fa6ea3"
+  },
+  {
+    "path": "hooks/animation/useAnimateLine.d.ts",
+    "sha256": "e31176015994910d0c316b0badb72819d16266b2746564da2b4e497916d01dea"
+  },
+  {
+    "path": "hooks/animation/useAnimateMark.d.ts",
+    "sha256": "1f4849fe04cfb65556fcea96068350308923b34d93848a5c812991549050e73c"
+  },
+  {
+    "path": "hooks/animation/useAnimatePieArc.d.ts",
+    "sha256": "b189639564eb285291f18016b254d274f97447458a2363be491bc65258e7ac79"
+  },
+  {
+    "path": "hooks/animation/useAnimatePieArcLabel.d.ts",
+    "sha256": "3546572330e08609cd1dadcd6e7aa912edc64b7b8f9425587e7d0fa98b049a9d"
+  },
+  {
+    "path": "hooks/getValueToPositionMapper.d.ts",
+    "sha256": "26c66fcd041ebbe31bf7b905c4fe665190b289c65c2e52af2d2b7cae491aafc0"
+  },
+  {
+    "path": "hooks/index.d.ts",
+    "sha256": "5940c09ae682abf2fc8d5bcb85dd3a683959b03e9db36f92199f96c92d48d915"
+  },
+  {
+    "path": "hooks/useAxis.d.ts",
+    "sha256": "010da21ca507484000739bbb261fddcb684e51a2d30e14ac94dad2ff19b7a2be"
+  },
+  {
+    "path": "hooks/useAxisCoordinates.d.ts",
+    "sha256": "f2ed141a543d904f37001dcdfd9c95969dbd2ac68119b9186e33105732cf7cd2"
+  },
+  {
+    "path": "hooks/useAxisSystem.d.ts",
+    "sha256": "525093e1eeeef250f661a8e5e5b6c736ca7b1633deb9937b8e9ccb5c60a47807"
+  },
+  {
+    "path": "hooks/useAxisTicks.d.ts",
+    "sha256": "a58bd15f882226165ab67f7392860cafcd8a9734087048aa4b3952ba8a5ace5d"
+  },
+  {
+    "path": "hooks/useBarSeries.d.ts",
+    "sha256": "30f60345b26179572f0f522e36036735aa3def3bd894e7285cd676a93236db00"
+  },
+  {
+    "path": "hooks/useBrush.d.ts",
+    "sha256": "b858fe086ba9aa5c53fd580f0cb1b1b54341e450d0185b3451b85720053a1d52"
+  },
+  {
+    "path": "hooks/useChartGradientId.d.ts",
+    "sha256": "f29819281e5069ea570b5c08a35b06de24ee30a8d2b8519b874e0763b689d1bc"
+  },
+  {
+    "path": "hooks/useChartId.d.ts",
+    "sha256": "08cd1d33741597e62b0cd29624bf090807109119f226710e8074eb8aebec7cc1"
+  },
+  {
+    "path": "hooks/useChartRootRef.d.ts",
+    "sha256": "b488ee7c52b34bf8ef43d423450209e9e69fb0245eef10fcd4422f28778ef8b2"
+  },
+  {
+    "path": "hooks/useChartsLayerContainerRef.d.ts",
+    "sha256": "275fbfce9aab19e1b74857bfb5f860bf358d80b6ad6aaf8a8c59757e8df71358"
+  },
+  {
+    "path": "hooks/useChartsLocalization.d.ts",
+    "sha256": "51b659e58d675d7e2a346267fd3b5ebe69bfe86a12bc7fbca4b1f0d9b8676a52"
+  },
+  {
+    "path": "hooks/useColorScale.d.ts",
+    "sha256": "6ce8ad67eea400985cce8175f3e2bc156d959ccc4290a9b247a364fa26eb6534"
+  },
+  {
+    "path": "hooks/useDataset.d.ts",
+    "sha256": "26ee74d8c017a1411e54b5b93d6febdd0af5baefb4e22ab183e6247091d1eb45"
+  },
+  {
+    "path": "hooks/useDrawingArea.d.ts",
+    "sha256": "d5920f5bf4e5081cddeb3d03f50132d3605d783f7cf28d9e9fb4899b95dede56"
+  },
+  {
+    "path": "hooks/useFocusedItem.d.ts",
+    "sha256": "3a88e3bf77810ae7ec1df59756f5872963f5a931c0b13726c794afee7e53b5be"
+  },
+  {
+    "path": "hooks/useInteractionItemProps.d.ts",
+    "sha256": "54f9cfec367387399dd0f5f620600b6067df71086fc95a916a3dbf9faf313c05"
+  },
+  {
+    "path": "hooks/useIsItemFocused.d.ts",
+    "sha256": "8e1a3d61e38f8a6accad7d48542cfcfbaff8c60a7b68a7d043b3eea886714469"
+  },
+  {
+    "path": "hooks/useIsItemFocusedGetter.d.ts",
+    "sha256": "134dcf015a3fcfb570624921829eadeb47d15edbd62e6efe9fc4d168d3497c08"
+  },
+  {
+    "path": "hooks/useItemHighlightState.d.ts",
+    "sha256": "3627b5e429b09b899f22934e8eb8814929ab880129b4ac8b7257a17f9fe7a9e2"
+  },
+  {
+    "path": "hooks/useItemHighlightStateGetter.d.ts",
+    "sha256": "ae3043f74e134a389cbe33de633d605e2558ad36be0bd244f6f30965278d2b7f"
+  },
+  {
+    "path": "hooks/useLegend.d.ts",
+    "sha256": "f59a47651c86ade87158eed6518add73934eeabfae256b4b1a94be36724cc06a"
+  },
+  {
+    "path": "hooks/useLineSeries.d.ts",
+    "sha256": "535a376b480310762b694ccb6ce6d74113719a6b953841f2ba8678c6688d4b5c"
+  },
+  {
+    "path": "hooks/useMounted.d.ts",
+    "sha256": "ea51660120584f2fdc7f13b0b43430d7a725fe6bf227902b8d14d180123d00ec"
+  },
+  {
+    "path": "hooks/usePieSeries.d.ts",
+    "sha256": "6a5c6d6cf2b3e0250cb4eeb0928667d1fc6bee260d2ce50c7cda04d7463ebbc9"
+  },
+  {
+    "path": "hooks/usePolarGeometry.d.ts",
+    "sha256": "94dc576e8234791d16b1445db1b661b89d185e57b8635144b115e6b5fae1fb47"
+  },
+  {
+    "path": "hooks/useRadarSeries.d.ts",
+    "sha256": "4911c0c5f7bca42f25097eb40d1c3ffb78bafc401ea9fa58382162a2180c8627"
+  },
+  {
+    "path": "hooks/useScale.d.ts",
+    "sha256": "2fcbe77d261edac0629d7bd76e06d1e23c9fd653ca1b61fc398d2efc42d2af79"
+  },
+  {
+    "path": "hooks/useScatterSeries.d.ts",
+    "sha256": "7f90188b71c80dad32b3cf9ab77b573b4703c637f3f4db5f04221e87a4a36d4f"
+  },
+  {
+    "path": "hooks/useSeries.d.ts",
+    "sha256": "00a46454faf4ba2448524996aebb521bb34f9827775bf917f1b1a9041889867c"
+  },
+  {
+    "path": "hooks/useSkipAnimation.d.ts",
+    "sha256": "a5865633431fb8a5626cbf44d67024bf47232b777c539cacd1d899940f3af606"
+  },
+  {
+    "path": "hooks/useTicks.d.ts",
+    "sha256": "40e75081bf9110dbe83676f0f75960dbe32a16a00d85f90a7b2d27601c71092a"
+  },
+  {
+    "path": "hooks/useTicksGrouped.d.ts",
+    "sha256": "e92611b6110a13c5fb07f7a515541bdf5908ad45e569c0da1d12bb2108c3540a"
+  },
+  {
+    "path": "hooks/useZAxis.d.ts",
+    "sha256": "ee13a5255c4cdd2537e37922af31aeb62432d447b8ac25a00affcee57fbf713a"
+  },
+  {
+    "path": "index.d.ts",
+    "sha256": "34cbcafeb3f3f5134f8fabab94291c2755be6b5ce158879a74515e7e72c371e2"
+  },
+  {
+    "path": "internals/Flatbush.d.ts",
+    "sha256": "2bee7831f2ad472a79d9b55d08f5c40892d2da961974cbc00d878e8a5be12ea6"
+  },
+  {
+    "path": "internals/angleConversion.d.ts",
+    "sha256": "f22a47ba5f45147aed81acfc7704799fd6e91b93c685b1d4c592fec1d226c06b"
+  },
+  {
+    "path": "internals/animation/Transition.d.ts",
+    "sha256": "3dc63e947f9c387b9b3e6e3c9a264ebe40727960e08fea1dd761414c9307378f"
+  },
+  {
+    "path": "internals/animation/animation.d.ts",
+    "sha256": "552255e1298f5f89708f66bf9630b375bf0b89ea1e48e8342f49a2da74351b98"
+  },
+  {
+    "path": "internals/animation/useAnimateInternal.d.ts",
+    "sha256": "b15c95856fdc3b1b0284fac5e5e9cc19067ed894edf3ee489d9b6a3dfc0e00c5"
+  },
+  {
+    "path": "internals/appendAtKey.d.ts",
+    "sha256": "b803dd029c9d91a9b91237fe8574f994e7c305e4653ecc835e1b3541ebc845ef"
+  },
+  {
+    "path": "internals/clampAngle.d.ts",
+    "sha256": "725154eeebdacf61e588697c5d69e4fca89d837b3e5fe0cd0070e2e45cded3c9"
+  },
+  {
+    "path": "internals/cleanId.d.ts",
+    "sha256": "f5366cd5a735c36dcb76744580a07e0f015f191ca9737b948ef9a74903bd5a4d"
+  },
+  {
+    "path": "internals/colorScale.d.ts",
+    "sha256": "fd37fae280a6f3a4205587bb3320b980cbca2530b5aeb669a15e990d1f3c2b83"
+  },
+  {
+    "path": "internals/commonNextFocusItem.d.ts",
+    "sha256": "dc0b3ec7d08dcd35f89488b254de226c4a57cb61c6329330181902038d9a1cea"
+  },
+  {
+    "path": "internals/components/AxisSharedComponents.d.ts",
+    "sha256": "93d7cfb8e3f367792c44cbc0a2e61330d6b9ff5c2a5ade3fe9fb8752d8fee106"
+  },
+  {
+    "path": "internals/components/ChartsAccessibilityProxy/ChartsAccessibilityProxy.d.ts",
+    "sha256": "c8a3c7f312313b80a2cc64a483506a67aff4449ad19110ddec92dd1c58e953c6"
+  },
+  {
+    "path": "internals/components/ChartsAccessibilityProxy/focusAccessibilityProxy.d.ts",
+    "sha256": "b01c2173ff2edfc212dffa1533ffe2916fd1f844b3cd78018b35bf34565add3a"
+  },
+  {
+    "path": "internals/components/ChartsAccessibilityProxy/index.d.ts",
+    "sha256": "5a2f63144542591b5109e542beedc259886e83b5064b1f27b5f132206251f512"
+  },
+  {
+    "path": "internals/components/ChartsAccessibilityProxy/useDescription.d.ts",
+    "sha256": "234c0dda4082e9c2ee1f6ec4005f61b441ea55dbaa7e01a6e1f6b91370c61d20"
+  },
+  {
+    "path": "internals/components/ChartsAccessibilityProxy/useZoomAnnouncement.d.ts",
+    "sha256": "927d4e7b40d1f5a459293db7bafb0185458cd7b580945f5e291a4b5cc946e97a"
+  },
+  {
+    "path": "internals/components/ChartsAxesGradients/ChartsAxesGradients.d.ts",
+    "sha256": "aad5c0adc97bab93998472b2302f9846d716f88e94a9ba0f9399d0bea4ae790d"
+  },
+  {
+    "path": "internals/components/ChartsAxesGradients/ChartsContinuousGradient.d.ts",
+    "sha256": "e8498e8e904a6a383532015b7a5de70c9f78a0e5460c85b35f6b784c0be75300"
+  },
+  {
+    "path": "internals/components/ChartsAxesGradients/ChartsContinuousGradientObjectBound.d.ts",
+    "sha256": "c69a93201c76568a79e5b8d268c08a310756611b5859d796dfa15fa80f561cfa"
+  },
+  {
+    "path": "internals/components/ChartsAxesGradients/ChartsPiecewiseGradient.d.ts",
+    "sha256": "e72807016a4fcf3217d6940a300a82af7ea9846d15d26cb4e3e2a2710b385e21"
+  },
+  {
+    "path": "internals/components/ChartsAxesGradients/index.d.ts",
+    "sha256": "786ee048cc91457247bb3d439eb2b6f2e00f623d9c2fe830387c7f4333409550"
+  },
+  {
+    "path": "internals/components/NotRendered.d.ts",
+    "sha256": "1680fd07333c73a787b7ff04dcb07db0fd8e519443c8c446d773d7bf65c26954"
+  },
+  {
+    "path": "internals/configInit.d.ts",
+    "sha256": "8a69c23b7536566300871c52dac427da7ee2b741c97fa72ca6aacfe9865f8ebf"
+  },
+  {
+    "path": "internals/constants.d.ts",
+    "sha256": "5be67b906e16c769e1eddf1478d670b5efdd6947bdc9ec4e823866b75c0057d6"
+  },
+  {
+    "path": "internals/consumeSlots.d.ts",
+    "sha256": "33ae0b79a5f7311e680acc365ea8de9533e1b1918aafc683c8a0a98c9d850cf2"
+  },
+  {
+    "path": "internals/consumeThemeProps.d.ts",
+    "sha256": "263033a8e1c3fe9339b6079a49401068e7573e9da6b5c184a0d90483de1875ba"
+  },
+  {
+    "path": "internals/createCommonKeyboardFocusHandler.d.ts",
+    "sha256": "05fd1722f7a51e35dd118d79db4ad6070baf2e974bbc204d91b1aefbf8cfdabd"
+  },
+  {
+    "path": "internals/createGetBarDimensions.d.ts",
+    "sha256": "2c37c50ed3bd613961be5d4a5c95a4b802a751a3e8dd674a13db4ffe71fe2b6a"
+  },
+  {
+    "path": "internals/createSvgIcon.d.ts",
+    "sha256": "b4ce30c386084337380e70ef5eafd88cb12c6f04af63da136d9c58c872fdbfff"
+  },
+  {
+    "path": "internals/cubiqSolver.d.ts",
+    "sha256": "295c9ad45e5872c18e00da5f92c6555aa5d6545c1f18aaa24ab7d342332f10b8"
+  },
+  {
+    "path": "internals/dateHelpers.d.ts",
+    "sha256": "eb573d1b3f9abb6c646a4e5227b66d519765bb506bd5df3a68a16f28460d27c3"
+  },
+  {
+    "path": "internals/defaultValueFormatters.d.ts",
+    "sha256": "79d56d4cf8f8a620cc03193c6413d8020ad5d1bdad2ef407e179680c771e3762"
+  },
+  {
+    "path": "internals/defaultizeMargin.d.ts",
+    "sha256": "3b710743e2f8c0df0a8d07a0b48f037439784107442dfa0b3524694498c48563"
+  },
+  {
+    "path": "internals/degToRad.d.ts",
+    "sha256": "0377a3be52c318c75997b130d3783680d5dd4baa9bf1508ef4dc98869c53c394"
+  },
+  {
+    "path": "internals/domUtils.d.ts",
+    "sha256": "a18903361dea8dbe1e66cf42ac634386962c64c7c0f17997542d378398197a4e"
+  },
+  {
+    "path": "internals/ellipsize.d.ts",
+    "sha256": "3dbdea31fcaa095186b74522b71d16229db5b7ab15b33f9f0b5634b6f751e705"
+  },
+  {
+    "path": "internals/findClosestIndex.d.ts",
+    "sha256": "0125237a290d5d30d7d55ff407ebbff2b82b2b93c917da4096ad070b769406b1"
+  },
+  {
+    "path": "internals/findMinMax.d.ts",
+    "sha256": "ae93569a4e49e0222050d52541b908acff7c61774c04ce6888078f36a3fe338e"
+  },
+  {
+    "path": "internals/geometry.d.ts",
+    "sha256": "346d42a7854cf9927dd0bb446fbb03a23207a8de68c757beea6f8da40a7541bd"
+  },
+  {
+    "path": "internals/getAsNumber.d.ts",
+    "sha256": "6a993567c386f6e7d3aac154e9446cbc9f0650dfc824c6535294caf446b2616b"
+  },
+  {
+    "path": "internals/getBandSize.d.ts",
+    "sha256": "2a3713fa18367f12d298f27985a9571f9d5ee33d0c480c443568a7266a115ad3"
+  },
+  {
+    "path": "internals/getChartPoint.d.ts",
+    "sha256": "65e5e96601e14bb6c3862de381f7039804457f3437a06db65f42e8c90b8b2001"
+  },
+  {
+    "path": "internals/getCurve.d.ts",
+    "sha256": "d90a2cccf32e12facb296a71a031f9653b3cbbee407ba87ad0e55ec12ed4347c"
+  },
+  {
+    "path": "internals/getGraphemeCount.d.ts",
+    "sha256": "e2ddab7197ad29a210ae0eb49b453e8330dfd3cf5a1ffd375f6205e5cccc9f10"
+  },
+  {
+    "path": "internals/getGroupingConfig.d.ts",
+    "sha256": "9e6d7554d431f23be8ba95e853d71bd9faae691e918ec35c143b331989e8432e"
+  },
+  {
+    "path": "internals/getInlineTypographyStyle.d.ts",
+    "sha256": "4b6a8609690e26f489c6c8fbad56eb3cd54682117e913e7874ed453dd2d751fe"
+  },
+  {
+    "path": "internals/getLabel.d.ts",
+    "sha256": "911f9235664e74e0ed21e031707243f1b1d154065f135683f0069b15c7594b2b"
+  },
+  {
+    "path": "internals/getLineLikeTooltip.d.ts",
+    "sha256": "505623b5bedf21b0d5253aec15471c4fdfaf43bf6d4e4527f1d0832b965922d1"
+  },
+  {
+    "path": "internals/getPercentageValue.d.ts",
+    "sha256": "05f614121cf8b9c97c9c4f48f602c9b5bf0f31f78f209b5ff732704232854d4e"
+  },
+  {
+    "path": "internals/getRingPath.d.ts",
+    "sha256": "1ecc3b85cc2aa361af24b76a52a1659d0be5cf5d9cca47d7132a72ab62af7542"
+  },
+  {
+    "path": "internals/getSampledBucketRegion.d.ts",
+    "sha256": "a7303e338edb6806498b57d1bde587a0de9d9c03f6d471589a4af9df03fe055c"
+  },
+  {
+    "path": "internals/getScale.d.ts",
+    "sha256": "e16eb12a12d1d72c77cb959236d2347e3e265d0ce7c82a1ee8fa9c6cfbe04685"
+  },
+  {
+    "path": "internals/getSeriesColorFn.d.ts",
+    "sha256": "765a8c15bb95641047488480a3729c5a86526f8b7f6a9b660e126c4b3744b9d0"
+  },
+  {
+    "path": "internals/getSurfacePoint.d.ts",
+    "sha256": "31f89e7cb78d1496c8fa0e7e9af3914a31d5a77a0cd198459dac3d0e67f04b01"
+  },
+  {
+    "path": "internals/getSymbol.d.ts",
+    "sha256": "5f181de7662eafa6d153a5d0c8b6fe460d8d31c4fcebcaa215db8cf8fd1b2f15"
+  },
+  {
+    "path": "internals/getWordsByLines.d.ts",
+    "sha256": "2c9f5a1436b863189b2421bcf4e758802f926e070d391129caa2c54bbe43b7de"
+  },
+  {
+    "path": "internals/identifierCleaner.d.ts",
+    "sha256": "124fa74126114853ce7e8643e8b3b30b8b48155bf2c82cda65be9dfdc8f8b7aa"
+  },
+  {
+    "path": "internals/identifierSerializer.d.ts",
+    "sha256": "6ec564b4f02b69469a11e9578034f18b2a492852d02cd3cf5e93b312d2682ce0"
+  },
+  {
+    "path": "internals/incompleteDatasetKeysError.d.ts",
+    "sha256": "3cc6980a2e05b38c5eed37b924054f9c7b7b37b5ffaf102d1953618160d71119"
+  },
+  {
+    "path": "internals/index.d.ts",
+    "sha256": "f335215e37710bef27bf0752542f90eedfa4b7a6d47b3f24a343d2891c4621cb"
+  },
+  {
+    "path": "internals/invertScale.d.ts",
+    "sha256": "99b128928e9248733defd7887250fbcb496979bfb237cb15393ca99ae0c4b393"
+  },
+  {
+    "path": "internals/invertTextAnchor.d.ts",
+    "sha256": "a21d2eac101e9e2da484a172667894f5f0ae403c6a6c47e2667b632b5c2c7b21"
+  },
+  {
+    "path": "internals/isCartesian.d.ts",
+    "sha256": "6c894396767f15d1149870f917c37f1d978d83bd49481a7701ca9d0eb3cbd19d"
+  },
+  {
+    "path": "internals/isDefined.d.ts",
+    "sha256": "d28508909c0592217ced08161c4d88c39b7a25f3d665575e356e40f008f7cdfe"
+  },
+  {
+    "path": "internals/isInfinity.d.ts",
+    "sha256": "58f65015a6b097ac3043e7e477f8a96658eaab1a772fef5ebbf664c36f89b2ee"
+  },
+  {
+    "path": "internals/isPolar.d.ts",
+    "sha256": "4effb23d9c763662e3c5ec6876f221feeed911acfa671efb65ac1bd1ad18d22e"
+  },
+  {
+    "path": "internals/legendUtils.d.ts",
+    "sha256": "9a3fcc4358660cda3b445330d2326b2010ae55e2e2bcd64fddefc3c680af3ba6"
+  },
+  {
+    "path": "internals/material/index.d.ts",
+    "sha256": "d256aaec74a79b8a547409c1c845ad21828dbc31b44179a67255b5ef82b61077"
+  },
+  {
+    "path": "internals/plugins/allPlugins.d.ts",
+    "sha256": "9f88fe757e5b66b4e5027918cc883101541505ff4cbe60b2bd679b68dd69d56f"
+  },
+  {
+    "path": "internals/plugins/corePlugins/corePlugins.d.ts",
+    "sha256": "a732077908bf8d277a21434a5597ce32935dfe3b514d2a61d7ed40834a180e3a"
+  },
+  {
+    "path": "internals/plugins/corePlugins/index.d.ts",
+    "sha256": "b3fcbbe396688cc6375ac1e3c4763f6aee4e2c21a330ca9dfddb02704f89027f"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartAnimation/index.d.ts",
+    "sha256": "28e1e900336c69184de5eb32959926ed263c8fe1e0df3ae099a934ce8be7c9ef"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartAnimation/useChartAnimation.d.ts",
+    "sha256": "5668443027c559c14d1fe5af93824db1fddfb3bb9585437ad30c3d50ec2aa52f"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartAnimation/useChartAnimation.selectors.d.ts",
+    "sha256": "a7f45029158ea86fb1e42d5f2f6db59d04cc1d10797fa07717607402b6d0c93c"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartAnimation/useChartAnimation.types.d.ts",
+    "sha256": "26c6294ea31fb4963e15156813d4d5526dbef28196d26700daab267a56254ea8"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartDimensions/index.d.ts",
+    "sha256": "fc325d0a83e3e4cddcbaed9e6edbe2f6fbda2efc237f3c5d24eb9d4401e5a5af"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartDimensions/useChartDimensions.d.ts",
+    "sha256": "82a21f0b7e28a2ff36f02659d91f57bafb86af9192f7b8bbc8c5656b401041ba"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartDimensions/useChartDimensions.selectors.d.ts",
+    "sha256": "b4f4c6598c3ed3314fb195dbb5c4d52d6b50d743bfa26ff2c30462425c275e5d"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartDimensions/useChartDimensions.types.d.ts",
+    "sha256": "df398e519888f9715ce0e0ff950467263ebda6dfbcd2eec9ecc1aa4458d71349"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartElementRef/index.d.ts",
+    "sha256": "c6b271ac061058ee897b88689c76430f9680142eda336f87cd756b5066f94526"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartElementRef/useChartElementRef.d.ts",
+    "sha256": "70b930cd9a1d173f7599014b19fcaee9746732994b67ba99fc41c033b32976ab"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartElementRef/useChartElementRef.types.d.ts",
+    "sha256": "cb2b468a17266f003a70d6e1f96f01decd4e0684046fce99c26a8cd4854ac842"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartExperimentalFeature/index.d.ts",
+    "sha256": "db4d2aab82dee0c6932a5a6fad673de68f88cf35fb7f17199a33574601c4db38"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartExperimentalFeature/useChartExperimentalFeature.d.ts",
+    "sha256": "9ce8e25ab57e7171472389a69a5f7fc7b369d438f175ae5c4de088697a2e4d3a"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartExperimentalFeature/useChartExperimentalFeature.selectors.d.ts",
+    "sha256": "03a6fee61909f67ab2b6e5e9c93aa0e3ac6a20db18cf18d626ab54c1c445ca51"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartExperimentalFeature/useChartExperimentalFeature.types.d.ts",
+    "sha256": "72567c0f976a121f135d81c2d3476fbad31dd2b805eca9f269efa55f9fc2b75a"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartId/index.d.ts",
+    "sha256": "c0c4b9b14adac6a7eeefeb6f5a2751b39cad51da72c1adb918018277a8e11b1e"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartId/useChartId.d.ts",
+    "sha256": "152040afa669b6d770e1a7355016ee60d120135323568372f46f2c8a6b820f1c"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartId/useChartId.selectors.d.ts",
+    "sha256": "f63f483a451c64cb378c893ab6c697a829b6399393146aaa9ff0e093d144c9f4"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartId/useChartId.types.d.ts",
+    "sha256": "c8083b70c4224e44250aac3cf35411191bbd293bf8c79a3f793e94ab312a68de"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartId/useChartId.utils.d.ts",
+    "sha256": "a7d928521d5866cc0da92675109ad044a1ae7bfb48ab7d326cce8348f713d19b"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartInteractionListener/index.d.ts",
+    "sha256": "97f1576dc6c0fb929b03d0e32f954c4f42cefb34cba5241a2fbaeaabfc0ac0e4"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartInteractionListener/useChartInteractionListener.d.ts",
+    "sha256": "8ff51e5b2d8bd2f3610464254150ad928c87a9b0da81fffad792619bbf0a2289"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartInteractionListener/useChartInteractionListener.types.d.ts",
+    "sha256": "02aa608f5ddab7f8ad254f047b0362de785d5704138d415a53ce59cc7105a37e"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeries/index.d.ts",
+    "sha256": "1da4a6efbb110bc21bae210eae68cab3f1d8a760880cdad7ea8113f5273ae7b6"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeries/processSeries.d.ts",
+    "sha256": "b68e76850abd329365dcb8b37be3154fc467a3fa5b20c854e15a529e5ca04ed4"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeries/useChartSeries.d.ts",
+    "sha256": "233aa7de38820dd8f75fe5956876ef50e6be2e3853933b17a7b6a37b866b03ca"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeries/useChartSeries.selectors.d.ts",
+    "sha256": "3779f540b36bb21545ee5c7ac9a6adf7ce56ff04576dc9f0163189a8526122f0"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeries/useChartSeries.types.d.ts",
+    "sha256": "925b71edc74a765996c55c226c5fe8e2754c62a540dbf9b659a0e452fdd1175c"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeries/useChartSeriesLayout.selectors.d.ts",
+    "sha256": "af1717157b08637687d5884890107dd83e69e3b6d949452ac28d25804492ef23"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeries/useColorProcessor.d.ts",
+    "sha256": "3addceb4abbd7c6488bcfc636de7343faa8399bf46181f2cb80b69126f4111c1"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/index.d.ts",
+    "sha256": "dd9098265f1802b618526bbce6a0d889ea95e000f628a082891d962c3dc30d39"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/TooltipContent.types.d.ts",
+    "sha256": "e29bb5dab3417f629bd10e7ea37a52c061ab2d79d238159e2e7a1bcb3cbfd8c4"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/cartesianExtremumGetter.types.d.ts",
+    "sha256": "770c8145c307dcaf5a724dec94a1345dac51d5d7085064617801b9b92687e81c"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/colorProcessor.types.d.ts",
+    "sha256": "3c59a16027c8de64b3b8ca42ed5f82267d42bea1ea5474c24f631d78f17849e7"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/descriptionGetter.types.d.ts",
+    "sha256": "2ee647b9f6890d489c8ac2a4fc7ccacccd840efc6f63cef3d2059655b21d60dd"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/getItemAtPosition.types.d.ts",
+    "sha256": "77b3a453b2db86b299f91b83449af2c263671f2c4e07083a24a1aafe1c4b68f9"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/getItemWithData.types.d.ts",
+    "sha256": "13a6ca0e8884a8d1e027d763594a38041563c29ffccb7ba31b2bbf20128c3b79"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/getSeriesWithDefaultValues.types.d.ts",
+    "sha256": "945d0841988549e90740347c5b6e5b1da80fc78fe8aa4a9d5163205024afdc6d"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/identifierCleaner.types.d.ts",
+    "sha256": "6ed2a6ba416c3fd7df16f746fcd419f1de25142b354f383b98f93a2436d775c6"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/identifierSerializer.types.d.ts",
+    "sha256": "7f6d14406a007717964299a1bcf1ae26eb8ba027c1fd0a7d6463acfbde081bff"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/index.d.ts",
+    "sha256": "39a560a73d63f93cc9310531bc875fb1f942f9a584c61a0bf7d1e3bd514bcece"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/legendGetter.types.d.ts",
+    "sha256": "355aad3211c51bafc3de6530853a4d796f7473c6972c86fda09eb70e529ac74c"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/polarExtremumGetter.types.d.ts",
+    "sha256": "3c4e11c906f845d7b8a3d84a4e62c8efd1d87a46417d797fb234044132043937"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/seriesConfig.types.d.ts",
+    "sha256": "4743a33a499e287fcf99dc14dfb184ee433f89d8651a04f683566547e51cf94a"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/seriesLayout.types.d.ts",
+    "sha256": "ccbfc086a4deb4f36961bb7f22e8946a64c3dd9036ac6211ad267c16c961f095"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/seriesProcessor.types.d.ts",
+    "sha256": "658baa20d2777386b1944873777e080198caf96fec4f5bfb021f5aa83ebe114d"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/tooltipGetter.types.d.ts",
+    "sha256": "31fc3de025c486c144c1fd6b8e5def139ed916f5ba35711e441d17222eba0ab5"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/types/tooltipItemPositionSelector.types.d.ts",
+    "sha256": "2f570dd75b9ee9d48db7c2f47e52acc2844a6e0e38a69c7315fb88fd7a6d984b"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/useChartSeriesConfig.d.ts",
+    "sha256": "9d053430b11952d8d89f6825cb82ca55ec5bcb775bf86295f2a2619a09349e94"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/useChartSeriesConfig.selectors.d.ts",
+    "sha256": "a280ce6cac712b4a6e298cf0c05490dd474136cbf8d7cf10bb30f7b6c257f8aa"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/useChartSeriesConfig.types.d.ts",
+    "sha256": "e987a61348fb5f37057f03c6e96520d991b32ef08075383f2f9ae31adfe1e2a0"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/utils/cleanIdentifier.d.ts",
+    "sha256": "a0e3619c7c46150ffcf1c0cbda61f614fb677024826c7f7ae81c339034475a14"
+  },
+  {
+    "path": "internals/plugins/corePlugins/useChartSeriesConfig/utils/serializeIdentifier.d.ts",
+    "sha256": "7e92c9ffbff486420d84de62b885734fd6a00cca977556797161a5f6f27c2ea6"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/shared/useRegisterPointerInteractions.d.ts",
+    "sha256": "dac542ebadbccbe378a62bd4519c56951327a1e50a9d7d24343250211864226e"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartBrush/index.d.ts",
+    "sha256": "2890574d833b3902d3d58778a11b531ba5dea7396cf411dbb88218d456f209b1"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartBrush/useChartBrush.d.ts",
+    "sha256": "2a7d19f35ed3fb75d92faccbe63d4ed505487a735a5f74a39426de7cdb67d096"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartBrush/useChartBrush.selectors.d.ts",
+    "sha256": "3e0383f4a0ad08160b0a08e3c85339bc8527f3a0acd07f9a8c689e935bafdc72"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartBrush/useChartBrush.types.d.ts",
+    "sha256": "fed853da0ea42842c007435af1bafb7fb539ed40a335e025e50fcb809218387e"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/autoSizeConstants.d.ts",
+    "sha256": "a5eeb9c999a6427be1777b5810cdaf2af12fae1811175acc65211a9d732f2862"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/computeAxisAutoSize.d.ts",
+    "sha256": "3cf866745416c386884f7bcd8a08ab7a0990ee4c3fc509fe2dfaf4c42c680e48"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/computeAxisValue.d.ts",
+    "sha256": "6146ae57829f81354577250c7d67b18be9ca55e0b3278bb029d624daa5dda725"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/createAxisFilterMapper.d.ts",
+    "sha256": "14b02cd81796b59d1e97d5f285066bf42b4e6d559fbeef2316bb9ccf997dc1dd"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/createZoomLookup.d.ts",
+    "sha256": "c6f39705ef8b6b59fca10f36cd7bda7344eb325022c0fae5270156682c2c770a"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/defaultizeAxis.d.ts",
+    "sha256": "542f5a66ac16a81054c9402405804c24109d6db02c093b31fc8b410ebf2ca261"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/defaultizeZoom.d.ts",
+    "sha256": "ba996b23b1e2e6e028dec32602feceba69037fc15af28085bbf6f51c5d6b868c"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/domain.d.ts",
+    "sha256": "2da9f601cd44e896ad4ee6bf9a3e1f3a7ac78ddca013651d30ccbc64365559ca"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/getAxisClickPayload.d.ts",
+    "sha256": "f4a8a501395c16930ecba71fed68feb81922804712a21cbcf7d77647a7b1b3b8"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/getAxisDomainLimit.d.ts",
+    "sha256": "0442741b379159f8ce0e7704d490dd9c41f18f7170608b9fae717050adb693db"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/getAxisExtrema.d.ts",
+    "sha256": "99aee69cd2cd05e4e250c511a77e9adc217fa9175a1985da5c1f54118e64114e"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/getAxisScale.d.ts",
+    "sha256": "c81c6c570a5896cdb2f62d922640c801ec1e52e3e08d18601df1b534b34beda3"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/getAxisTriggerTooltip.d.ts",
+    "sha256": "041a014ab880e7e981cdde280b1560bd8eb1c8b1c65df95183c5f08b02590115"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/getAxisValue.d.ts",
+    "sha256": "6c6a7f521375a830316d92e54a30f1eb257b4bada5823360881c60ff55511792"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/index.d.ts",
+    "sha256": "e4de1a37343124d813729f3692c8f8cbe2dfc9909ae6aa415f2d32d9ca47e7c3"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/sampling.selectors.d.ts",
+    "sha256": "eb807e983919784b2c6e24c352cc97b0b9791f51682d08957909d7eba2681f27"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/sampling.types.d.ts",
+    "sha256": "d0f01e6024c7680e872661dce6efe5eb25d88e21ba3fde8adbec7e034af95dac"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartAxisAutoSize.selectors.d.ts",
+    "sha256": "a4cbcb0d6fb54db374e1bd38c84648f73dacd98d8622230b40b30af40342e710"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartAxisDomains.selectors.d.ts",
+    "sha256": "b402635be106cf9d867edbb4f9652aa62689de13d009ddaf111fdb3d37a55211"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartAxisExtrema.selectors.d.ts",
+    "sha256": "fc3a33166be5acc40656c854ccb97e8b72157aae14c0b04b6dfe505134f884c8"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartAxisSize.selectors.d.ts",
+    "sha256": "f9d557feeac293ed61b81d549207574146d1b27bf88c25dfb8dde61bee29be1e"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartCartesianAxis.d.ts",
+    "sha256": "6500f6fdd34818cf19f368517692c0c71b74ac20cb27563f5445b53ed62461fb"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartCartesianAxis.types.d.ts",
+    "sha256": "42bcd5862b1266cbc7e0b50532d7b34c89618922457387243587b8aa5b4995d4"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartCartesianAxisLayout.selectors.d.ts",
+    "sha256": "03566ef1d697c47432e6beea4bf0705851acebac10da2f1e8d32c788bb0beb03"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartCartesianAxisPosition.selectors.d.ts",
+    "sha256": "99aa2af6fb4bed65050f8048c6180bec6783805b960cd90ab337de99466a7932"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartCartesianAxisPreview.selectors.d.ts",
+    "sha256": "059d79875a78448bb4a735757741b55981646822076497fd3f158599734cb499"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartCartesianAxisRendering.selectors.d.ts",
+    "sha256": "e50c9c8b333f123c4947b6636f4a103ae33ad9965541da3ffd92f0cecc47d4c5"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartCartesianHighlight.selectors.d.ts",
+    "sha256": "85100fcc3457489a1a91fa15731fc64984e2e955b5d1cca68c1658219f502b02"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartCartesianInteraction.selectors.d.ts",
+    "sha256": "2958b4a38afbfdc8be793e2e2d3ec68972d060094e03dbc664aa8b081dcba067"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useChartCartesianTooltip.selectors.d.ts",
+    "sha256": "b8c1e08e8b8435cf52d264d60dcd2321c0f477ad76d8b84ebb792a9077f6f137"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/useInternalIsZoomInteracting.d.ts",
+    "sha256": "fe9007e6ed744159fd2de484305d44aca8efc4a1c37f229ec59dde2008bb9d25"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/zoom.d.ts",
+    "sha256": "dc0f48ee2ba6db75df0cc1ba35e433a11a64a701a8bb20252718719bcfc981af"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartCartesianAxis/zoom.types.d.ts",
+    "sha256": "24590f0a2c1449d2f449377f2ca5b33a8141d72beb371cad7dcd0f7573ded85d"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartClosestPoint/findClosestPoints.d.ts",
+    "sha256": "c4fc8f2c3b705736c5dddbe73a1ea8a4b91407aeac826b757cdc17c9bf78df7e"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartClosestPoint/index.d.ts",
+    "sha256": "a4e9fae762c30e258e04634db64efc4a4bf9d0945caba1b9d7893b5724ac907b"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartClosestPoint/useChartClosestPoint.d.ts",
+    "sha256": "fa2cafc2e08e75cd8771ca12fe3cdcf48eaed4c2a34b82b62e8e5f23e07ff6f5"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartClosestPoint/useChartClosestPoint.selectors.d.ts",
+    "sha256": "8572da1ba421bbad7086004e0b226335aa4fc48e99de6d794dc4b79796e9c124"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartClosestPoint/useChartClosestPoint.types.d.ts",
+    "sha256": "f62c7118862d0d0b4380160315033fce3b629ddf0b41fdcdaeb415e66a5bdf71"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartHighlight/createIsFaded.d.ts",
+    "sha256": "b604a903df9d365e87ac998258033d447b417fba3ae769b26753360939beeadc"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartHighlight/createIsHighlighted.d.ts",
+    "sha256": "c20bfca794478ec773b6ce565bab4a401ffa9437b6d02d7e3b31909da1a16a7e"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartHighlight/highlightConfig.types.d.ts",
+    "sha256": "fd3e0ffeded030bd1e3a9a53742513379362561f7ad2cd90379d86d912470951"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartHighlight/highlightCreator.types.d.ts",
+    "sha256": "2abdd721ac768c7df4b536c605813ab5469903a29806d73f949d75e0bc7b3f8f"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartHighlight/highlightStates.d.ts",
+    "sha256": "cb31ed3ee4da82cc120cd04f43f29fc6b7e4e80a8344433056e2f0247adaf37f"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartHighlight/index.d.ts",
+    "sha256": "9b926441d7a228e5167221885d3d91a335f4e75c8b738769f12bf534dcaca6bd"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartHighlight/useChartHighlight.d.ts",
+    "sha256": "048e5f3cb788a262eec422441685fb631db7d6340094ddee9e1441acd299a6b4"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartHighlight/useChartHighlight.selectors.d.ts",
+    "sha256": "4b24fb431bf8d831c3abfd506bc1f389bb285051af8a1556d094922acaaefd99"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartHighlight/useChartHighlight.types.d.ts",
+    "sha256": "c40f9dc09c2ccbdba11ec30a74ed2b689055fc11629bb52231a96315da68d5ce"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartInteraction/checkHasInteractionPlugin.d.ts",
+    "sha256": "8c27a01e69097e5708983adfdac3008f5664df35393935291189119e925834d4"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartInteraction/index.d.ts",
+    "sha256": "f5c8ec32a4b2e5f7f8ddf28ae601a09e177be29248c83c5dda5593b98291b494"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartInteraction/useChartInteraction.d.ts",
+    "sha256": "16726d487a2bdddda5bccb611d331643a79285b0564215fb5e1ab429baa4eaaf"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartInteraction/useChartInteraction.selectors.d.ts",
+    "sha256": "129db5b27a864053b30f67b7a5589e1c3cc4e865464b6a200315b36fad8ccc1f"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartInteraction/useChartInteraction.types.d.ts",
+    "sha256": "72c2e511355def9486acbb0bd78cd8996f3676152368fb2ad41f5ec7ebd45f10"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartItemClick/index.d.ts",
+    "sha256": "19cb210821745d9d50a5ab9df1de0d1f254cc000659aacd18e9737f1f9658b05"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartItemClick/useChartItemClick.d.ts",
+    "sha256": "a80f6302fc919d0dd9286ea746478749b54666c0be9f27c9237fe7e0802bb1a8"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartItemClick/useChartItemClick.types.d.ts",
+    "sha256": "fa53f60edcf997e25ab761deb9aa4f8238e18a085c811b909eb74a1df599484f"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/index.d.ts",
+    "sha256": "eb333642ff462889e19e6cc63a3fd1a6efdda4283a3254697ad5d44a3f8039a4"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/itemActivation.d.ts",
+    "sha256": "d06203fe565b2c6f7685e9b41a48805be18ef109574f277a55578c23241ead65"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/keyboardFocusHandler.types.d.ts",
+    "sha256": "aa470e14665f6e6e4f61dbb34678fdec641ea8bcd587d30152df99f8de8205ca"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/useChartKeyboardNavigation.d.ts",
+    "sha256": "5ca678111e21aaaaa5b144b5460d4113da620197044e2212e4fa882b3ba89638"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/useChartKeyboardNavigation.selectors.d.ts",
+    "sha256": "470e3b43242e692f978a31cd2965267483532f0580c40ee6a7b4d57ef27833be"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/useChartKeyboardNavigation.types.d.ts",
+    "sha256": "b145ec66c58f2bafef191bc2b72ddd21390b2a4c0c845e96debc5649ba4f0121"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/utils/findVisibleDataIndex.d.ts",
+    "sha256": "65e8ff8d16c62414a396f03140dad45194a38ac4e0591c28e35805593502e0cb"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/utils/getItemAtAxisPosition.d.ts",
+    "sha256": "6d10f3a8685c4f9e860be5507474ccb43d8f84b2a5c6836b2ffaa236f8393c1a"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/utils/getItemAtRotationIndex.d.ts",
+    "sha256": "283dced64af247e3d943385a5206b84260171ac1e2e8a65e0c7790ca37d70b37"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/utils/getMaxSeriesLength.d.ts",
+    "sha256": "7f445be0a7be3ee246b690851fc17799fb1ade47b98970477d551c1cfb84fab8"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/utils/getNextNonEmptySeries.d.ts",
+    "sha256": "9a0c84b4765fd5ed1d26bdc38cb1c8259df2f80978c0f565ee19f87a9e56da42"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/utils/getNonEmptySeriesArray.d.ts",
+    "sha256": "202a40c06f0b940d267f8769c5504b37ceb7e8dff1c8bda6b6365ab3410e16a3"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartKeyboardNavigation/utils/getPreviousNonEmptySeries.d.ts",
+    "sha256": "984812a3a6807314edf56e584008dfb5de1ef8d457e7306f2e7000c9b958bd18"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/computeAxisValue.d.ts",
+    "sha256": "2562bcbd43f696537b33bbdc4378eaf596efbe2ba346274f30555a6a798d055c"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/coordinateTransformation.d.ts",
+    "sha256": "e6796584eae9f47de1151382d2a9d232a66ce834b40e69a1a8d7287106ff8b03"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/defaultizeAxis.d.ts",
+    "sha256": "0f83250a054144019eddd8627f4cc6641e11332eb8ad4297a6c60be028e1b5d0"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/getAxisExtremum.d.ts",
+    "sha256": "22e55a75f1777f416ca13eec95e17a018fb40c9bb53ac513bc990961191b3128"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/getAxisIndex.d.ts",
+    "sha256": "fc22b0af831acd41423ba11737440850541d787c553f594fb745e8db0c221532"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/getAxisTriggerTooltip.d.ts",
+    "sha256": "7efe9eea97a2bfb4c0862c436fb705695085bffa0589e95d527f8f717c23939e"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/getPolarAxisClickPayload.d.ts",
+    "sha256": "4e6b325d1f23b69d171fa4dedab674c9bcce45f71ebf80d76e0be7f20bf31eea"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/index.d.ts",
+    "sha256": "45b2b2b51a434e8de10b4fa33b60df5892afafa57b73d84b62eb04fa05828092"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/useChartPolarAxis.d.ts",
+    "sha256": "56588d992a0f975aff48f12475eb0109cadb6982fbd0457e49ccd3fd6c80936f"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/useChartPolarAxis.selectors.d.ts",
+    "sha256": "44d8c2a180daa19f5d24119df3142750fc37e60c1c1160c65312d864910060c2"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/useChartPolarAxis.types.d.ts",
+    "sha256": "f94a3e121de0791689367fd291459d604da069d1f2ee4c9d0532a235514ecba6"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartPolarAxis/useChartPolarInteraction.selectors.d.ts",
+    "sha256": "910831e7c6d08277bb16c22d921d27ce69da298e4840db7cb2553e1d1dda1391"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartTooltip/index.d.ts",
+    "sha256": "e1c92008f42695aefdfd2c0719bb967a477b5cdd6f1bd9280f8d639a920394eb"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartTooltip/useChartTooltip.d.ts",
+    "sha256": "b2e8ae7bf6e4a6036cd5a38692918adb7d0aa80f75f71a909667121956f1241d"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartTooltip/useChartTooltip.selectors.d.ts",
+    "sha256": "a03e88b01c4a01bba41581bf21f90318f400e4a11263203c056b84db70084695"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartTooltip/useChartTooltip.types.d.ts",
+    "sha256": "950d74a7c7523d990ed89295bea4bba240b0c3e09f8f7fa0fb78eabd04788423"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartVisibilityManager/index.d.ts",
+    "sha256": "c3619a4a97d38a588c0db7484a7beac1a9f35f7ece7e026596ba7752584c1b6f"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartVisibilityManager/useChartVisibilityManager.d.ts",
+    "sha256": "8ac785c3f7e5125c48a19a41d3c338f05742e8a2d7af3192320ceebc0c6fabc8"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartVisibilityManager/useChartVisibilityManager.selectors.d.ts",
+    "sha256": "093de6997884c2cf5439996b7b0dd7232074fc35d0a5712dafb278571e07ef3d"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartVisibilityManager/useChartVisibilityManager.types.d.ts",
+    "sha256": "bc2bbe27a324dc4f19f4b3b490d5154b78435b87abf1e34a780d1dd9bbfafd75"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartVisibilityManager/visibilityParamToMap.d.ts",
+    "sha256": "4a84d5f454fdc04897837580390c6cb187a93946d90926cff533759da4242eac"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartZAxis/index.d.ts",
+    "sha256": "b9ead5b680a1cda7f2870d6abc14cf876c130fa286acada7744fe146cf3bca10"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartZAxis/useChartZAxis.d.ts",
+    "sha256": "1443a9d14a10d559bb732216b34ba73d3ccc360bb8570a5eacdd2731a57e2451"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartZAxis/useChartZAxis.selectors.d.ts",
+    "sha256": "3ec8adfd37d85e1d0bd709635df59a091501f303541c8590300008e2c770b107"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useChartZAxis/useChartZAxis.types.d.ts",
+    "sha256": "7b0f6b610f50c76387d0ea42b60284fa762b1ec9c12b1807b1d5d80e2f1cece8"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useProgressiveRendering/index.d.ts",
+    "sha256": "f4cc11da15f696aa75764385d1f444aab5f6880c13b04e0282bd2372f5ee3518"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useProgressiveRendering/useProgressiveRendering.d.ts",
+    "sha256": "ed7c7671f30517068c2c500fbdd541bfe90bacd769dabaa412caf1dd4e10383e"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useProgressiveRendering/useProgressiveRendering.selectors.d.ts",
+    "sha256": "56a01d70b7764b8cad1ff29151e50ca303caa0095bdf86303ef5641656ddb7df"
+  },
+  {
+    "path": "internals/plugins/featurePlugins/useProgressiveRendering/useProgressiveRendering.types.d.ts",
+    "sha256": "b79cb4991ea24cd413c65b0538fd6f503518c2df6a96b14739551f0e1ef45815"
+  },
+  {
+    "path": "internals/plugins/models/chart.d.ts",
+    "sha256": "1cb6472ecb072a8d0397d519e16559f5a5ca40b5af5615e2729ea4d0e0711e63"
+  },
+  {
+    "path": "internals/plugins/models/helpers.d.ts",
+    "sha256": "a6643b9491f2aed7050ea96f8b22f8802a5d0115db8d91be975ee6b532139ba4"
+  },
+  {
+    "path": "internals/plugins/models/index.d.ts",
+    "sha256": "aa9e4a6e8fa8ffef09c8a27e908060c60d119e13af1ed7ced0d1c067ec7b4235"
+  },
+  {
+    "path": "internals/plugins/models/plugin.d.ts",
+    "sha256": "65f199484213736e3675f7638720ca1beeaba33af2f0fec3817d6c9c2a6ceeba"
+  },
+  {
+    "path": "internals/plugins/utils/defaultSeriesConfig.d.ts",
+    "sha256": "ebe3872077787ec16b1f9899c705d035b8f2829ac8eb81edd6cb7cac9f0819e2"
+  },
+  {
+    "path": "internals/plugins/utils/selectors.d.ts",
+    "sha256": "d467b7b0705add513ca75d301f052cebef2c111100a0658c6fde706d7eb726cf"
+  },
+  {
+    "path": "internals/plugins/utils/useLazySelectorEffect.d.ts",
+    "sha256": "82ca6a92a3977d254386e53ecc1eb506942688d21554a2cae365fb14c12d0e9e"
+  },
+  {
+    "path": "internals/processLineLikeSeries.d.ts",
+    "sha256": "ea0419eca0aad396901769ab9a4d3c9c0fd35d939245715241c6d1d5c739a2a2"
+  },
+  {
+    "path": "internals/resolveColorProcessor.d.ts",
+    "sha256": "8ac68853d951eb388107063df1de3964012d7fbe183082a77ea2689f4b757332"
+  },
+  {
+    "path": "internals/scaleGuards.d.ts",
+    "sha256": "cdf2628d4fde65403fe455baa37633c662adf17cbe7bf91fb47ebf2cd1bde5c2"
+  },
+  {
+    "path": "internals/scales/index.d.ts",
+    "sha256": "2f68790f9c782119336e9f8b627a76332efb63559fa44a046112fa59c3b71f3a"
+  },
+  {
+    "path": "internals/scales/scaleBand.d.ts",
+    "sha256": "937f5c911c90810402fd7112cb571ebbfa9cf6f792dd7a39e28812d9ca40e0eb"
+  },
+  {
+    "path": "internals/scales/scalePoint.d.ts",
+    "sha256": "b68152acadc67e261f6af0323b0c19d7c18453e51e8da2a62a28cc26996da134"
+  },
+  {
+    "path": "internals/scales/scaleSymlog.d.ts",
+    "sha256": "b2a10930325b87d854015b6cb683ddadb261676bd1b01dca3292c755c7e72158"
+  },
+  {
+    "path": "internals/seriesHasData.d.ts",
+    "sha256": "2e2bce045e98aca52a1676e2d8f5d8aedce2b41bbab50dff2f844b01a56776e3"
+  },
+  {
+    "path": "internals/seriesSelectorOfType.d.ts",
+    "sha256": "aae5c0520c7443ba291e10ce8eac9d00e2d5db3796f6c8e1ec91fe296c8c3054"
+  },
+  {
+    "path": "internals/shallowEqual.d.ts",
+    "sha256": "4d658fbac00d37563aff6cfad7c851fc62b210ca3df1268c91a8b4ebf8f6976b"
+  },
+  {
+    "path": "internals/sizeScale.d.ts",
+    "sha256": "d076609684e6df7194acb168af53883cea4d05ab767829bfc9ebebf582aa9277"
+  },
+  {
+    "path": "internals/sliceUntil.d.ts",
+    "sha256": "eb6ef0b4371043887da1c727c6f16110a82372d95d5137ce1907b0871c562c5f"
+  },
+  {
+    "path": "internals/snapEndAngleToFullCircle.d.ts",
+    "sha256": "e46dda226045d90d4e79b6712145dbc0d57f3b3f1910976cc9d4344aab8d3cd6"
+  },
+  {
+    "path": "internals/stacking/index.d.ts",
+    "sha256": "8d9a0334b648da935d3054b4b73dbe311c80a5fff40b58aff1664f8de2a8b797"
+  },
+  {
+    "path": "internals/stacking/offset/index.d.ts",
+    "sha256": "398b7df043a816a860ebf97ada883e2870d9d24d5e3889b68dd1956398fff03b"
+  },
+  {
+    "path": "internals/stacking/offset/offsetDiverging.d.ts",
+    "sha256": "c31d42fc4d47505487bf5823d10bfa961e11fb2b0379dda69f2687093591506d"
+  },
+  {
+    "path": "internals/stacking/stackSeries.d.ts",
+    "sha256": "474f4587fb0976c212cc3e2d995996bb16d8958765c1189ba2a366f7120889ac"
+  },
+  {
+    "path": "internals/store/extractPluginParamsFromProps.d.ts",
+    "sha256": "4b4b82c994f4cf049de09999d13c0d8a58d5caa568e9aa72cafecad8581bb959"
+  },
+  {
+    "path": "internals/store/useCharts.d.ts",
+    "sha256": "ef9752d1730d76c88b4f8fbe830776a4048cad03425a790e6fc615c0c545b582"
+  },
+  {
+    "path": "internals/store/useCharts.types.d.ts",
+    "sha256": "39e27bee357da8335fc7357ecccbaffe4e0401e34252d553ba296bd7c4c1071d"
+  },
+  {
+    "path": "internals/store/useStore.d.ts",
+    "sha256": "00e7ff8e5d2657e9254c1332d25af19ed5b3fdf578a87c6380c5494cee52653a"
+  },
+  {
+    "path": "internals/ticks.d.ts",
+    "sha256": "42c279591d48a512be95c7e90869f6c3f2f13c02630bb936193713cba46e729a"
+  },
+  {
+    "path": "internals/ts-generic.d.ts",
+    "sha256": "bb6eefbbbab129f3b667f86f9882f95a3a3c764776741fdd46e843e4fdcd4803"
+  },
+  {
+    "path": "internals/useDefaultTickLabelStyle.d.ts",
+    "sha256": "986aa4ed7a3d3b61f108062a78519fc90506463238033f5f37f5ce58b3e6332f"
+  },
+  {
+    "path": "internals/useRegisterItemActivation.d.ts",
+    "sha256": "ca6ac8252f3b9de2ef5eb10a3632721e45d57d846e66686cc14e07a9d7b7a65d"
+  },
+  {
+    "path": "locales/elGR.d.ts",
+    "sha256": "b53a666cd37dcf5dc7ffc6316f363c6a4fb552ed7b42c1966195f13ae46da7d5"
+  },
+  {
+    "path": "locales/enUS.d.ts",
+    "sha256": "4f36f9ea3e9846235d7a854271f2dd5dbb8ba216e479ae704fc178c27c102c09"
+  },
+  {
+    "path": "locales/frFR.d.ts",
+    "sha256": "07aedd4b602e3fe028007428af3bda659ac537cdfa9a17fc826c7cb9a678e985"
+  },
+  {
+    "path": "locales/index.d.ts",
+    "sha256": "47e65cc29ba249d1bf6cc64cafecf3c7eed30af6b760e11248a1c7f32e6589eb"
+  },
+  {
+    "path": "locales/nbNO.d.ts",
+    "sha256": "9ec067e05560039fc6e6acce96fff2938a9fc444fc004efcbb5b54a047acb5ea"
+  },
+  {
+    "path": "locales/ptBR.d.ts",
+    "sha256": "9ea2d7809665b3eccf49a49a1af672c0e687333185c0d8ec1c386b6bf6ea3dcd"
+  },
+  {
+    "path": "locales/ptPT.d.ts",
+    "sha256": "f8e85d4884eb9b4ada6b49bdcae884aaf5621cbf42d161383ebfb8e646d60de2"
+  },
+  {
+    "path": "locales/svSE.d.ts",
+    "sha256": "bac9bb91405cd9d0241584ec969ca2245b70b513d740abf77c507096dd8a6305"
+  },
+  {
+    "path": "locales/utils/chartsLocaleTextApi.d.ts",
+    "sha256": "28faa872405b116686c69606944af2cb92b16a3f5e1b562fdf81ea496e44199e"
+  },
+  {
+    "path": "locales/utils/getChartsLocalization.d.ts",
+    "sha256": "da8b4583a9f2105c96cc88db3fee81a1fb31c51a338378e0e3457419bd528325"
+  },
+  {
+    "path": "locales/utils/imageMimeTypes.d.ts",
+    "sha256": "22650f3bbded7c9eee31cc521a14af574d6a3ac298a0a6e58fb7f84f03dff6af"
+  },
+  {
+    "path": "models/axis.d.ts",
+    "sha256": "4e61c0f41037c7e2bab348c1799a93df7f67bcab6c17b526e715e857fcf6d566"
+  },
+  {
+    "path": "models/chartsSlotsComponentsProps.d.ts",
+    "sha256": "bea149dd8d8494ae32fcffc864b42512d272a27a461191302b729b2d9403894c"
+  },
+  {
+    "path": "models/colorMapping.d.ts",
+    "sha256": "898a4b6858a7325d4cd698436c1696fb92d3ccf0c1a971a10a8752f9130b23bb"
+  },
+  {
+    "path": "models/curve.d.ts",
+    "sha256": "109f0d564b305acc935d62eb39a08a23a5056f7a80633f2b17025f261c60ecf3"
+  },
+  {
+    "path": "models/events.d.ts",
+    "sha256": "73a688475dbacb3fbe33633752c24be6c4912c39f81400f3686465a5aec5c92a"
+  },
+  {
+    "path": "models/featureFlags.d.ts",
+    "sha256": "1445158d5ce750f4512755ccab15f7203dfceee8c06c187dbb63a6d2786dbad6"
+  },
+  {
+    "path": "models/index.d.ts",
+    "sha256": "16473a17c670afbfb4e9560fded88b9c6c47bbb63368367c567eb2bd289ebd2e"
+  },
+  {
+    "path": "models/position.d.ts",
+    "sha256": "21e06cc2cf75e589599625d498e0874b9df13cf573774d601e26544218fa8221"
+  },
+  {
+    "path": "models/seriesType/bar.d.ts",
+    "sha256": "a8e727287f69b094cfddce3bd5f8cc0c5f294df7851840c6805e54999e4e6fcf"
+  },
+  {
+    "path": "models/seriesType/common.d.ts",
+    "sha256": "8bdb52dc4e277f67c2f7f4f673921fcf84328563125ab372e6116658bbec0537"
+  },
+  {
+    "path": "models/seriesType/composition.d.ts",
+    "sha256": "9cc9939be404d1e48a82085e32674f8b1eea40fbdc4e6f58f56583d24d5d420e"
+  },
+  {
+    "path": "models/seriesType/config.d.ts",
+    "sha256": "a97159276f5931fb01a7229a84f1fe8726204d8ba0c96638a76e49dd15b290f3"
+  },
+  {
+    "path": "models/seriesType/index.d.ts",
+    "sha256": "c0ad5eeb86c05423ffbe266058870d3fa36a1f81374a80ec971277097a14e968"
+  },
+  {
+    "path": "models/seriesType/line.d.ts",
+    "sha256": "085c8b22d25859e1ca58454cefb72712408932065eb387073a8d8d51a774b42f"
+  },
+  {
+    "path": "models/seriesType/pie.d.ts",
+    "sha256": "fc7afb9141131956a2077330fb8aaccb3666ab8db99cdd972320e430869582d0"
+  },
+  {
+    "path": "models/seriesType/radar.d.ts",
+    "sha256": "bae5aa53b7d33adebd89ae596a6cb028afbed49137466998a4e360983d1271d5"
+  },
+  {
+    "path": "models/seriesType/scatter.d.ts",
+    "sha256": "c46ab4b598a34cbde26d97771faca530242094f3d1dcca88a178f8856301d6a7"
+  },
+  {
+    "path": "models/sizeMapping.d.ts",
+    "sha256": "f5d1c93f783d7978f943f56f47ae68fbcf502f3a2cf772385a55c1120222e4c1"
+  },
+  {
+    "path": "models/slots/chartsBaseSlotProps.d.ts",
+    "sha256": "1e7c287f85544000e06e7de1f31cb03a79d32d16f687f4290ab43cd551cd5026"
+  },
+  {
+    "path": "models/slots/chartsBaseSlots.d.ts",
+    "sha256": "0f94ce9d7b4d3742789f0393f442342e02b22488655eac268b552e1f832b00ce"
+  },
+  {
+    "path": "models/slots/chartsIconSlots.d.ts",
+    "sha256": "6fd00c354cf840ea2ffd9ebfc48a2caa66afb00cb3b582d6c5b2f82c9006152e"
+  },
+  {
+    "path": "models/slots/index.d.ts",
+    "sha256": "fd187d154298724edf4b7a2bb95ae8b45cd67b43ee827d677ec8b3270fa50b70"
+  },
+  {
+    "path": "models/stacking.d.ts",
+    "sha256": "84cb8da0b44d8d9a23cbd7d4a8ae0f759e86c47c26018fd87016b3560d32becb"
+  },
+  {
+    "path": "models/timeTicks.d.ts",
+    "sha256": "c5c4c85902b66e0efa1e8082efe53df35dcf39daf556a5f20e09246b486aa866"
+  },
+  {
+    "path": "models/z-axis.d.ts",
+    "sha256": "d3af1ace0249fcfc99ae1f2afbf096efc4a50b7dbf6da2dccb8ab47534e0dbfd"
+  },
+  {
+    "path": "moduleAugmentation/barChartBatchRendererOnItemClick.d.ts",
+    "sha256": "0c73a3a40137629f172a02d87c77b18eca993811a2048b8f3fe9641b347a3860"
+  },
+  {
+    "path": "moduleAugmentation/keyboardActivation.d.ts",
+    "sha256": "d52e9b6e87176135559ec708c4165b10250050b1a09a69c08899359f4a2f4148"
+  },
+  {
+    "path": "plugins/index.d.ts",
+    "sha256": "679a8ddfe1a1392e8e08ff797d19303600c83b94e07f5eab0fd4a659c9012889"
+  },
+  {
+    "path": "themeAugmentation/components.d.ts",
+    "sha256": "d6fb7eafbd8b545f89eab0ecb04e5f69cc8837770157a6410f0fabb44bb6e454"
+  },
+  {
+    "path": "themeAugmentation/index.d.ts",
+    "sha256": "4c2b98f5d0949502894ad03b4b90e961c82b7b6e88aab75d1fe1088c6cdb2987"
+  },
+  {
+    "path": "themeAugmentation/overrides.d.ts",
+    "sha256": "43ccf3058cffb008dab5e3c2e46fd2a70ca5e2f3b33baabc6c528533d80be015"
+  },
+  {
+    "path": "themeAugmentation/props.d.ts",
+    "sha256": "f5e066d9b936b61999193973b65981936ed4146024ed1f2c4c520873e86186fd"
+  },
+  {
+    "path": "utils/epsilon.d.ts",
+    "sha256": "26bfb343ce0b38f427241b56a62071ddde2d2ebf6a0cfee7ad865cea658fd36e"
+  },
+  {
+    "path": "utils/index.d.ts",
+    "sha256": "b68f02bd3000653b6afc714d7885e2d36e0977d9140edfdf63d1a1de8adaad11"
+  },
+  {
+    "path": "utils/niceDomain.d.ts",
+    "sha256": "67a53715f5db0716c50a7644e7e02325f47aff9f71c450694d3b227c8e91d513"
+  },
+  {
+    "path": "utils/timeTicks.d.ts",
+    "sha256": "d6ee4f39f6b4858c8e6b268db9c74c12db6a011e8c1a26b475bd80253ca91ba7"
+  }
+]

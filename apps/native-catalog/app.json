@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "MUI Native Catalog",
+    "slug": "mui-native-catalog",
+    "version": "0.0.1",
+    "orientation": "default",
+    "ios": {
+      "bundleIdentifier": "dev.altroo.muinative.catalog",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "dev.altroo.muinative.catalog"
+    }
+  }
+}

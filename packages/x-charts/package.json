@@ -1,0 +1,43 @@
+{
+  "name": "@altroo/mui-native-x-charts",
+  "version": "0.0.0-dev.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "react-native": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./BarChart": {
+      "types": "./dist/BarChart/index.d.ts",
+      "react-native": "./src/BarChart/index.ts",
+      "default": "./dist/BarChart/index.js"
+    },
+    "./LineChart": {
+      "types": "./dist/LineChart/index.d.ts",
+      "react-native": "./src/LineChart/index.ts",
+      "default": "./dist/LineChart/index.js"
+    }
+  },
+  "dependencies": {
+    "@altroo/mui-native": "workspace:*",
+    "@altroo/mui-native-system": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=19.2.3 <20",
+    "react-native": ">=0.86.3 <0.87",
+    "react-native-svg": ">=15.15.4 <16"
+  },
+  "private": true
+}

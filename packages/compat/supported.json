@@ -1,0 +1,60 @@
+{
+  "@mui/material": {
+    "target": "@altroo/mui-native",
+    "subpaths": [
+      "styles",
+      "Box",
+      "Stack",
+      "Typography",
+      "Divider",
+      "Paper",
+      "Card",
+      "CardContent",
+      "CardActions",
+      "DialogTitle",
+      "DialogContent",
+      "DialogActions",
+      "Button",
+      "IconButton",
+      "TextField",
+      "FormControl",
+      "FormLabel",
+      "InputLabel",
+      "FormHelperText",
+      "Checkbox",
+      "Switch",
+      "Radio",
+      "RadioGroup",
+      "FormControlLabel",
+      "Dialog",
+      "Alert",
+      "CircularProgress",
+      "LinearProgress",
+      "Snackbar"
+    ]
+  },
+  "@mui/system": {
+    "target": "@altroo/mui-native-system",
+    "subpaths": []
+  },
+  "@mui/icons-material": {
+    "target": "@altroo/mui-native-icons",
+    "subpaths": ["Close", "Add", "Remove", "Check"]
+  },
+  "@mui/x-tree-view": {
+    "target": "@altroo/mui-native-x-tree-view",
+    "subpaths": ["RichTreeView"]
+  },
+  "@mui/x-data-grid": {
+    "target": "@altroo/mui-native-x-data-grid",
+    "subpaths": ["DataGrid"]
+  },
+  "@mui/x-charts": {
+    "target": "@altroo/mui-native-x-charts",
+    "subpaths": ["BarChart", "LineChart"]
+  },
+  "@mui/x-date-pickers": {
+    "target": "@altroo/mui-native-x-date-pickers",
+    "subpaths": ["LocalizationProvider", "DateField", "DateCalendar", "DatePicker", "AdapterDayjs"]
+  }
+}

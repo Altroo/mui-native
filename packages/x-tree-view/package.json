@@ -1,0 +1,37 @@
+{
+  "name": "@altroo/mui-native-x-tree-view",
+  "version": "0.0.0-dev.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "react-native": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./RichTreeView": {
+      "types": "./dist/RichTreeView/index.d.ts",
+      "react-native": "./src/RichTreeView/index.ts",
+      "default": "./dist/RichTreeView/index.js"
+    }
+  },
+  "dependencies": {
+    "@altroo/mui-native": "workspace:*",
+    "@altroo/mui-native-system": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=19.2.3 <20",
+    "react-native": ">=0.86.3 <0.87"
+  },
+  "private": true
+}

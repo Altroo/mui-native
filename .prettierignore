@@ -1,0 +1,10 @@
+.tools
+.cache
+artifacts
+node_modules
+**/dist
+pnpm-lock.yaml
+upstream/api
+upstream/licenses
+
+.playwright-mcp/

@@ -1,0 +1,58 @@
+{
+  "name": "@altroo/mui-native-x-date-pickers",
+  "version": "0.0.0-dev.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "react-native": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./LocalizationProvider": {
+      "types": "./dist/LocalizationProvider/index.d.ts",
+      "react-native": "./src/LocalizationProvider/index.ts",
+      "default": "./dist/LocalizationProvider/index.js"
+    },
+    "./DateField": {
+      "types": "./dist/DateField/index.d.ts",
+      "react-native": "./src/DateField/index.ts",
+      "default": "./dist/DateField/index.js"
+    },
+    "./DateCalendar": {
+      "types": "./dist/DateCalendar/index.d.ts",
+      "react-native": "./src/DateCalendar/index.ts",
+      "default": "./dist/DateCalendar/index.js"
+    },
+    "./DatePicker": {
+      "types": "./dist/DatePicker/index.d.ts",
+      "react-native": "./src/DatePicker/index.ts",
+      "default": "./dist/DatePicker/index.js"
+    },
+    "./AdapterDayjs": {
+      "types": "./dist/AdapterDayjs/index.d.ts",
+      "react-native": "./src/AdapterDayjs/index.ts",
+      "default": "./dist/AdapterDayjs/index.js"
+    }
+  },
+  "dependencies": {
+    "@altroo/mui-native": "workspace:*",
+    "@altroo/mui-native-system": "workspace:*",
+    "dayjs": "1.11.13"
+  },
+  "peerDependencies": {
+    "react": ">=19.2.3 <20",
+    "react-native": ">=0.86.3 <0.87"
+  },
+  "private": true
+}

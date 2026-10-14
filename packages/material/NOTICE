@@ -1,0 +1,16 @@
+MUI Native is an independent project by Altroo. It is not an official MUI
+product and is not affiliated with or endorsed by MUI.
+
+Material UI and MUI X are names used to identify upstream compatibility targets.
+Native implementation code is independently authored. Upstream public declaration
+snapshots and license texts are retained under upstream/. Their applicable MIT
+notices are preserved in upstream/licenses/. No Pro or Premium source, assets,
+license checks, or paid-only feature implementations are included.
+
+Upstream source references, package integrity values, and source commits are
+recorded in upstream/state.json. copiedFiles lists source reuse; an empty list
+means no upstream implementation source was copied into that package.
+
+Material UI: Copyright (c) 2014 Call-Em-All
+MUI X Community: Copyright (c) 2020 Material-UI SAS
+See the exact per-package license files for full upstream notices.

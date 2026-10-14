@@ -1,0 +1,61 @@
+{
+  "name": "@altroo/mui-native-icons",
+  "version": "0.0.0-dev.0",
+  "description": "Independent native compatibility for @mui/icons-material",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Altroo/mui-native.git",
+    "directory": "packages/icons"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./Close": {
+      "types": "./dist/Close/index.d.ts",
+      "react-native": "./src/Close/index.ts",
+      "default": "./dist/Close/index.js"
+    },
+    "./Add": {
+      "types": "./dist/Add/index.d.ts",
+      "react-native": "./src/Add/index.ts",
+      "default": "./dist/Add/index.js"
+    },
+    "./Remove": {
+      "types": "./dist/Remove/index.d.ts",
+      "react-native": "./src/Remove/index.ts",
+      "default": "./dist/Remove/index.js"
+    },
+    "./Check": {
+      "types": "./dist/Check/index.d.ts",
+      "react-native": "./src/Check/index.ts",
+      "default": "./dist/Check/index.js"
+    }
+  },
+  "dependencies": {
+    "@altroo/mui-native-system": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=19.2.3 <20",
+    "react-native": ">=0.86.3 <0.87",
+    "react-native-svg": ">=15.15.4 <16"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
+}

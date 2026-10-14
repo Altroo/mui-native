@@ -1,0 +1,818 @@
+[
+  {
+    "path": "agenda-view/AgendaView.d.ts",
+    "sha256": "bf713d963e7679b6b5e12265b7a0aa2ceb04d6e837ad1c566c58bd351c460f69"
+  },
+  {
+    "path": "agenda-view/AgendaView.types.d.ts",
+    "sha256": "a378ecc8f56aa7d013fb0fc19779bc1bcfc2a79eb5605348c4f229d429598086"
+  },
+  {
+    "path": "agenda-view/StandaloneAgendaView.d.ts",
+    "sha256": "fc57ae84ef9ea30e6ee2022084304ba64a1389dabff16c61cc88a124145d66cf"
+  },
+  {
+    "path": "agenda-view/index.d.ts",
+    "sha256": "1cfeb3ed243e61aec2ec692868dcda288b078710bfe6f4894ce99e993e61ed31"
+  },
+  {
+    "path": "compact-day-view/CompactDayView.d.ts",
+    "sha256": "ca981aef535fc4356ff1839ba13c660c88ff00ef7a5da037e3d5e3f75b7dc544"
+  },
+  {
+    "path": "compact-day-view/CompactDayView.types.d.ts",
+    "sha256": "05b02a1de09bdf23e1f8fefc277f7a1eaeb98a57203f077c5c896d8fd8bb6eff"
+  },
+  {
+    "path": "compact-day-view/StandaloneCompactDayView.d.ts",
+    "sha256": "d5decd2c53c85d723bddca267bd16d9ef482e187f5db22591e22a961d2edd4ec"
+  },
+  {
+    "path": "compact-day-view/index.d.ts",
+    "sha256": "946b8984ea409484d9c098860835e48508f8b2696150c6835ec02bf904bb32ea"
+  },
+  {
+    "path": "compact-three-day-view/CompactThreeDayView.d.ts",
+    "sha256": "8da89516d30d38e251741e5c517ad072ffdc0d7bd0c236b78c265885395aaaf9"
+  },
+  {
+    "path": "compact-three-day-view/CompactThreeDayView.types.d.ts",
+    "sha256": "f844e208385fc894a45dda6a77874d62bc47e251a16283ad200849f71a0f8acd"
+  },
+  {
+    "path": "compact-three-day-view/StandaloneCompactThreeDayView.d.ts",
+    "sha256": "0f4cc72cdb9ff4742dd650af7f737dd95f0fc06d9d72b1147ee2601026280cc3"
+  },
+  {
+    "path": "compact-three-day-view/index.d.ts",
+    "sha256": "0bda3be27438b765b504cecf70f9fcfc94ab621306d51646b62d9139947511b3"
+  },
+  {
+    "path": "compact-week-view/CompactWeekView.d.ts",
+    "sha256": "e323c2b04201bea89a831bdd2e88dd287d864200ef2353992fb3e9bce787039b"
+  },
+  {
+    "path": "compact-week-view/CompactWeekView.types.d.ts",
+    "sha256": "d8942881dbc53c26a6e69047f8e32522dd9cf1fa6b1a54c08e219003c31ce057"
+  },
+  {
+    "path": "compact-week-view/StandaloneCompactWeekView.d.ts",
+    "sha256": "3a158c68254575eaef002fe771055a1af79179b785985cb33b529b100eb75b24"
+  },
+  {
+    "path": "compact-week-view/index.d.ts",
+    "sha256": "db72b3d2e382b85beadb8ead0844d0153fa94cbbf525dcbbc5daadb8f2f43a96"
+  },
+  {
+    "path": "day-view/DayView.d.ts",
+    "sha256": "d867dfe25edbcdf1a1a016447b41692d744d96a641f3019a915477e419a1b036"
+  },
+  {
+    "path": "day-view/DayView.types.d.ts",
+    "sha256": "273c4fae87a656ee39cc2cd14a4445281e835c30fa3566b7b5732af7f66bea7c"
+  },
+  {
+    "path": "day-view/StandaloneDayView.d.ts",
+    "sha256": "213efe19e5f34be629e142ba121271b432c78fa480a6f9f82d05880bc75c6cf6"
+  },
+  {
+    "path": "day-view/index.d.ts",
+    "sha256": "312b29584bf60d3693b36ff9d601043217b1c270e13f33fe963f8186034c7e56"
+  },
+  {
+    "path": "event-calendar/EventCalendar.d.ts",
+    "sha256": "d89551f5736919bf77a09c0d2b760605fd185f16e9f68eed303f219ebdb0166d"
+  },
+  {
+    "path": "event-calendar/EventCalendar.types.d.ts",
+    "sha256": "a711646152dd6d5759b6081b662032e247ec1b208a056e59c35034e276698930"
+  },
+  {
+    "path": "event-calendar/EventCalendarRoot.d.ts",
+    "sha256": "4cf0275d2dbbc25201913477e53d2cc36732f7d25d741f7be901ed1d926876e9"
+  },
+  {
+    "path": "event-calendar/EventCalendarStyledContext.d.ts",
+    "sha256": "a0ce531f40f70e18f5b1f30d0e80485cdbd2196360e11192e0225ec1b3937a4f"
+  },
+  {
+    "path": "event-calendar/eventCalendarClasses.d.ts",
+    "sha256": "430f091e0b0c07bcc13acc918eacbbd76f960a942ac9bd56fe2ace22566eba18"
+  },
+  {
+    "path": "event-calendar/header-toolbar/HeaderToolbar.d.ts",
+    "sha256": "3313be324a0a1476d80235248920ea1a41550ccff8daa57460c283ca33da1d2b"
+  },
+  {
+    "path": "event-calendar/header-toolbar/HeaderToolbar.types.d.ts",
+    "sha256": "ad966480d19e13929f51a798456f88b5ae1e5e232a9fd8dea340788bd689cac4"
+  },
+  {
+    "path": "event-calendar/header-toolbar/index.d.ts",
+    "sha256": "b3ef59d0f880abac545b42f2d3f89577192ddd932e14f73d317b1df5fbb09c8e"
+  },
+  {
+    "path": "event-calendar/header-toolbar/preferences-menu/PreferencesMenu.d.ts",
+    "sha256": "4eebc609d188008c4b250888958336f14bc03a919924a91b1b18efd5542c69d3"
+  },
+  {
+    "path": "event-calendar/header-toolbar/preferences-menu/PreferencesMenuItems.d.ts",
+    "sha256": "f7cfa23b0c2f44871d3dadb1c400cf42d70f5a000c4839ddb27ed3a214d182a1"
+  },
+  {
+    "path": "event-calendar/header-toolbar/preferences-menu/index.d.ts",
+    "sha256": "bd2e761e9a53f3a9e40575cbe5505a0a0825ecab73ae1235f38cd599273dd5a7"
+  },
+  {
+    "path": "event-calendar/header-toolbar/view-switcher/ViewSwitcher.d.ts",
+    "sha256": "bfb4e4ff5d888356aa27ccceb04d640c1ad044d0d0db28af8229661a6848365c"
+  },
+  {
+    "path": "event-calendar/header-toolbar/view-switcher/index.d.ts",
+    "sha256": "c5b2d1c56f4c0b497536bb4158c8ee37e79f24c1631d989fdbf06f0e9705d323"
+  },
+  {
+    "path": "event-calendar/index.d.ts",
+    "sha256": "a31deef16aaaac973ce8590d772cc6dc85fd1bbc38a7c898b3e83570bc7a310f"
+  },
+  {
+    "path": "event-calendar/mini-calendar/MiniCalendar.d.ts",
+    "sha256": "33f0108f328880f2b8a5d980fb04f27e283656292f7d5e938fde3a32771350c9"
+  },
+  {
+    "path": "event-calendar/mini-calendar/MiniCalendar.types.d.ts",
+    "sha256": "a01aeca6f4fede66d27a2fdc5484b7b7f3e5e8784c51ab51f3d0ea28ec025d98"
+  },
+  {
+    "path": "event-calendar/mini-calendar/index.d.ts",
+    "sha256": "2a067bdd7813f91b2232587a0a718b82fb74a66ce1b9eed0ceaca48f7df0072e"
+  },
+  {
+    "path": "event-calendar/resources-tree/ResourcesTree.d.ts",
+    "sha256": "4afc616c7e5f9f905c235773f6129999dbab1058a015f2d91613abfe61cb9a69"
+  },
+  {
+    "path": "event-calendar/resources-tree/ResourcesTree.types.d.ts",
+    "sha256": "a7c679fe83773d01776a2f8681f3c0b70697fe6480b98b7f094a7387f4b73ab7"
+  },
+  {
+    "path": "event-calendar/resources-tree/index.d.ts",
+    "sha256": "9a483d6aa5994edea8b2f577f07810b056cee68d1b164b6a9b13d2c614306ebe"
+  },
+  {
+    "path": "event-calendar/side-panel-drawer/SidePanelDrawer.d.ts",
+    "sha256": "7cd21c2bb514f6ce82b1c57073a5e1cfa25fba79b6f7c8a638242b0128a82cc5"
+  },
+  {
+    "path": "event-calendar/side-panel-drawer/SidePanelDrawer.types.d.ts",
+    "sha256": "776a4c6e229d7cb09812b6b3064d9e8368fe5c0957495dc9718298f82a249c86"
+  },
+  {
+    "path": "event-calendar/side-panel-drawer/index.d.ts",
+    "sha256": "8a7b5b6a3222e1a21df2c9cedcf3347a67421edf003532d33755795d808b4a08"
+  },
+  {
+    "path": "event-dialog/EventDialogDateTimeSection.d.ts",
+    "sha256": "e1319c515b9fd057edb4500528c4b59064f3727e9c81ef5a4b05a0fc42bb748b"
+  },
+  {
+    "path": "event-dialog/EventDialogDescriptionSection.d.ts",
+    "sha256": "210c8621aecc75778664186af40aa3029c5b3b6036ae4e7e9666754308f31db0"
+  },
+  {
+    "path": "event-dialog/EventDialogGeneralTabContent.d.ts",
+    "sha256": "940a734e9ca38afb58cac925e2b708d346c1c896f1c673d44142f58d19843097"
+  },
+  {
+    "path": "event-dialog/EventDialogResourceAndColorSection.d.ts",
+    "sha256": "6158533ddaa65f4230de879d68f433c783a4836213dddb43808bfc177ad9aeff"
+  },
+  {
+    "path": "event-dialog/EventDialogSectionFieldset.d.ts",
+    "sha256": "a84cf167b4a3d0981e64e9d14f1fec6f14fb5140b1a4703cf9eca1fa79e99fae"
+  },
+  {
+    "path": "event-dialog/EventDialogSectionHeaderTitle.d.ts",
+    "sha256": "6ab807e41dc96a4d0c5435b53e9eec3d77ccb101a2d0637788228f6dd7ee4636"
+  },
+  {
+    "path": "event-dialog/index.d.ts",
+    "sha256": "bc78ca398021d17d03ce9a43f028d45b7ded8ddac3fccd2238301c3fdb5117ed"
+  },
+  {
+    "path": "event-dialog/useEventDialogFormField.d.ts",
+    "sha256": "0622355cce317d7d27fd77b43a0a5324a28de91d5438bd5537615b793c89b266"
+  },
+  {
+    "path": "event-dialog/useEventDialogOccurrence.d.ts",
+    "sha256": "51f0fe176cdd5908bd06bfaea40aa0b4c3df02682a224bc3dfa285789f91bf23"
+  },
+  {
+    "path": "index.d.ts",
+    "sha256": "cc37e733c544c61155130c4a9f0e404bdca7f42fdf44596be7ae5d64d9a9d9c2"
+  },
+  {
+    "path": "internals/components/EventCalendarProvider.d.ts",
+    "sha256": "66c1dc61613cc8f352da5dff90e06c357c7e625b86e804b2eb3b0948bdf35b5e"
+  },
+  {
+    "path": "internals/components/ResponsiveTypographyContainer.d.ts",
+    "sha256": "30f2dd2850abc627f9cae4cad870dfd86d18f62bcb7f04ea255e8e8e12471e6b"
+  },
+  {
+    "path": "internals/components/SchedulerSlotsContext.d.ts",
+    "sha256": "b4fdb748cce8e353f5b328f87aab527549a17df51724c8003f99bfc1e0339ba3"
+  },
+  {
+    "path": "internals/components/SharedComponentsStyledContext.d.ts",
+    "sha256": "6853818e305554186a09d0026ca6a1cd9d724251f3231b2385d2aa48beb8687f"
+  },
+  {
+    "path": "internals/components/armed-occurrence/index.d.ts",
+    "sha256": "2a44da042141c95c466a1c82291d1603bfb3e615ebe83734a060a71142f9b950"
+  },
+  {
+    "path": "internals/components/armed-occurrence/useBlockScrollWhileArmed.d.ts",
+    "sha256": "d87ccf445e23133c02a637a619c91c59c788137d91434b3061076c86edf3a2f3"
+  },
+  {
+    "path": "internals/components/armed-occurrence/useDisarmOnEscape.d.ts",
+    "sha256": "48d9cb5826bb4491c95e554785e8e7ef9c30b4b2416b9644fa82a3e6f49314d2"
+  },
+  {
+    "path": "internals/components/armed-occurrence/useDisarmOnOutsidePointer.d.ts",
+    "sha256": "4f6e97c6d42139b2bdbb2364cd9b2078504c57f1f15179aae7df900e9109ebf0"
+  },
+  {
+    "path": "internals/components/compact-day-time-grid/CompactDayTimeGrid.d.ts",
+    "sha256": "9811f30a9574791670f51b06c34eeadc5a91f03a4507bab8a766d643eaa48492"
+  },
+  {
+    "path": "internals/components/compact-day-time-grid/index.d.ts",
+    "sha256": "b66ae1d35840c756fe620fe3490ac7276129a7d86ae03a6efa32c1d856cd7fd3"
+  },
+  {
+    "path": "internals/components/compact-event-drawer/CompactEventDrawer.d.ts",
+    "sha256": "b145f4ea99547b85e16ee43635b579d60ccb7b3eddcfcc9b2fb53fa8e3132fce"
+  },
+  {
+    "path": "internals/components/compact-event-drawer/CompactReadonlyContent.d.ts",
+    "sha256": "1906e1dde878b008c2762341ca8adab7930555e6b353deab9c4f374e009b345b"
+  },
+  {
+    "path": "internals/components/compact-event-drawer/index.d.ts",
+    "sha256": "30da8b1db89c1d8ed29d3c2b247f88b327734a4cf9210d2ee89bb2b937eba54c"
+  },
+  {
+    "path": "internals/components/day-time-grid/DayGridCell.d.ts",
+    "sha256": "5b1af08970e7ca9d3e2fa9533345c4a050ad26a9fb9f1d3d1e8f5eb9a7fe45bc"
+  },
+  {
+    "path": "internals/components/day-time-grid/DayTimeGrid.d.ts",
+    "sha256": "ae37151b4dc6997afec712ea67eb8ddd22fb67a0e4895adef58084bdb43a1617"
+  },
+  {
+    "path": "internals/components/day-time-grid/DayTimeGrid.types.d.ts",
+    "sha256": "71b72c0b6036e84de5f8d3cadbebda0eb677d6c0ff8d8d779f3c142d4c0f2813"
+  },
+  {
+    "path": "internals/components/day-time-grid/TimeGridColumn.d.ts",
+    "sha256": "1624969992b82442bc6d30e47b23f353504373fa5bf4f6ff3434dc8399c6b771"
+  },
+  {
+    "path": "internals/components/day-time-grid/index.d.ts",
+    "sha256": "0147558e803b1359fd4bbde0e53ac933b9ad5bd2ca74615cf36b27a0c424fdb2"
+  },
+  {
+    "path": "internals/components/error-container/ErrorContainer.d.ts",
+    "sha256": "f55a268a152cd167aa6fc3ddac8ce5345e4df44cd5e0619c1a00007735e254ce"
+  },
+  {
+    "path": "internals/components/error-container/errorContainerClasses.d.ts",
+    "sha256": "b70b48c884190534719df9b2cfa11f168560ee3ad84e5ab06ee1afec4e24cfbb"
+  },
+  {
+    "path": "internals/components/error-container/index.d.ts",
+    "sha256": "0409aff7648e0838cd1527eb0743211cc91197916d7c50d2ed449ad61d4397d2"
+  },
+  {
+    "path": "internals/components/event-context-menu/EventContextMenu.d.ts",
+    "sha256": "017d20b7046e3a316cfb3e535eb1efc4876a4c22be4c912728c3bee3b89e8493"
+  },
+  {
+    "path": "internals/components/event-context-menu/EventContextMenu.types.d.ts",
+    "sha256": "b77349584de45ae33a0ad5802614bd36ee4cb5c5da586bbccbed8b8bbed039b7"
+  },
+  {
+    "path": "internals/components/event-context-menu/EventContextMenuContext.d.ts",
+    "sha256": "4a82735a5a304fd2bea46a61372ded7ae3eec059d427474edccb58fbac23b576"
+  },
+  {
+    "path": "internals/components/event-context-menu/EventContextMenuItems.d.ts",
+    "sha256": "383e5ef2bd9beba19c3d1b788555b68de577021d692222f545a7846027583a36"
+  },
+  {
+    "path": "internals/components/event-context-menu/eventContextMenuClasses.d.ts",
+    "sha256": "36979b0b5a20b4737e72e13f4ad488384ec03c0e98da69f690f40726e492b707"
+  },
+  {
+    "path": "internals/components/event-context-menu/index.d.ts",
+    "sha256": "da7e0829ff709c4a9e60accb95c91b9ce22d759e9ac70847fddc7890b9584c15"
+  },
+  {
+    "path": "internals/components/event-dialog/EventDialog.d.ts",
+    "sha256": "8101ca462066874e8201ba03c3dcbc5f3a7603820beab4f4b9229c3f484f5496"
+  },
+  {
+    "path": "internals/components/event-dialog/EventDialog.types.d.ts",
+    "sha256": "5f341a13ed439b05e35a1eb4240337efe4f662ef1efeb54864f7facf8bb51aa1"
+  },
+  {
+    "path": "internals/components/event-dialog/EventDialogHeader.d.ts",
+    "sha256": "0ce72b590bc73744d87a362f221846398361616cdae273c2116220373c8dd64a"
+  },
+  {
+    "path": "internals/components/event-dialog/EventDialogTabPanel.d.ts",
+    "sha256": "f7d09532292054019690ad9368e4ed60d3c66f3d080170fd55377f94322e2434"
+  },
+  {
+    "path": "internals/components/event-dialog/GeneralTab.d.ts",
+    "sha256": "7287f01656debf2a477c62e61ba5855088ea1cee8c101a09ecebf08cd0c6ff52"
+  },
+  {
+    "path": "internals/components/event-dialog/ReadonlyContent.d.ts",
+    "sha256": "fdc858106598bc842cbd4f853985ef4bfd2ff95b70f8d68e17364f7f9cf88e89"
+  },
+  {
+    "path": "internals/components/event-dialog/TitleSection.d.ts",
+    "sha256": "58d35f92571c0eb4ded017eb840e2ddd3f98f4f2400dac9a5d37bb8e16bfc32a"
+  },
+  {
+    "path": "internals/components/event-dialog/eventDialogClasses.d.ts",
+    "sha256": "e04062ea68100ac9112a214eff498f5598e82b461f12240f5a6f829edc42f389"
+  },
+  {
+    "path": "internals/components/event-dialog/form/EventDialogFormContext.d.ts",
+    "sha256": "fb7c34b5d9a4393e1fc1caabb94b1b20a3607d4a8d9e5f6538ac826cc0dd0c13"
+  },
+  {
+    "path": "internals/components/event-dialog/form/EventDialogFormStore.d.ts",
+    "sha256": "9e691806d22cbc817382e19d2247d20d51a5c14f274451216ae5aec1c678fa72"
+  },
+  {
+    "path": "internals/components/event-dialog/index.d.ts",
+    "sha256": "e524a4fea4a1ec0f9b221c7beb8d0ea44e1c2e0ef25a4aa7d99af60c4edd83db"
+  },
+  {
+    "path": "internals/components/event-dialog/usePushPlaceholder.d.ts",
+    "sha256": "d71a8ebdaaa3e64fd9e10d67340e6399b0d4171fdeaf0e6af27d49d43ff520ef"
+  },
+  {
+    "path": "internals/components/event-dialog/utils.d.ts",
+    "sha256": "8545b3fb231acf2666e510457421be985fbd6e4557b7270d3cedca82d76b2970"
+  },
+  {
+    "path": "internals/components/event-drag-preview/EventDragPreview.d.ts",
+    "sha256": "5df69b872eb9aa1380a95a9286306708de7ccb7707b468c37bf387008c8bcfe7"
+  },
+  {
+    "path": "internals/components/event-drag-preview/index.d.ts",
+    "sha256": "330fff678a7f5ebcc9448580c073c123544f98e72dcd6b5076fdbc157b0228a8"
+  },
+  {
+    "path": "internals/components/event-editing/EventEditing.types.d.ts",
+    "sha256": "a08924daca3774f532e5670c55ff227fb05f8c3e0f4ed05f05598199acf66436"
+  },
+  {
+    "path": "internals/components/event-editing/EventEditingContext.d.ts",
+    "sha256": "f396a2e3b8362fde50fcd644d4688634360d12ec9c0fec9b3e43d1d79db6ab59"
+  },
+  {
+    "path": "internals/components/event-editing/EventEditingOptionalRenderersContext.d.ts",
+    "sha256": "d39518e9fd8cd02145984a947a4181a0be7be4974ab82d531d4c205db4773194"
+  },
+  {
+    "path": "internals/components/event-editing/EventEditingStyledContext.d.ts",
+    "sha256": "0bd392283292a56a7bfc65709c09abc1ef946c4c81e674c86726625e07561beb"
+  },
+  {
+    "path": "internals/components/event-editing/FormContent.d.ts",
+    "sha256": "6f6f4c5c656248c4a27e29342eb1d64f1f1af379c696fea26bb31ee2a58f952c"
+  },
+  {
+    "path": "internals/components/event-editing/ReadonlyEventDetails.d.ts",
+    "sha256": "29b5c087e166ad5977eab2eab15e90e6a19651f4526fa95f574f0a103f3c02d4"
+  },
+  {
+    "path": "internals/components/event-editing/editingModePolicy.d.ts",
+    "sha256": "111a562f2c2f7e9f403cd5f0d419ebd112152457bcbd628806332670e7482185"
+  },
+  {
+    "path": "internals/components/event-editing/index.d.ts",
+    "sha256": "d96607870ed8bed78b565c787146101f99176e535e087b5a5e5850bed18f3071"
+  },
+  {
+    "path": "internals/components/event-skeleton/EventSkeleton.d.ts",
+    "sha256": "aa9763d7c4690345793269c4dd5dc2d7b2d24f7d8c2ef92f2a028219c47546c0"
+  },
+  {
+    "path": "internals/components/event-skeleton/eventSkeletonClasses.d.ts",
+    "sha256": "0a73f059c0d46585843887fda5abfe16b2aaec9cc5ad34f1f2fb0d5e646288ce"
+  },
+  {
+    "path": "internals/components/event-skeleton/index.d.ts",
+    "sha256": "ffb496d8463d9fcd4ead59728882ad53b38ef727c7403743659723c3d1e066a6"
+  },
+  {
+    "path": "internals/components/event-toolbar/AnchoredEventToolbar.d.ts",
+    "sha256": "f4e2e8eb102aeea100fcb992aad88da1fe3699f3236904e3d8b24f68ae91e62a"
+  },
+  {
+    "path": "internals/components/event-toolbar/EventToolbar.d.ts",
+    "sha256": "1664b892279d1133947c8bcbdfb60944dfab08413908b10d89ec1f5ab408691d"
+  },
+  {
+    "path": "internals/components/event-toolbar/index.d.ts",
+    "sha256": "d12ab91183666d73d82d40c5396c4ac92323dc488fcbd1b77cc321e96fdd03cd"
+  },
+  {
+    "path": "internals/components/event/arrowClips.d.ts",
+    "sha256": "63d397b4d5ee5ab16d0a38860fdc14b9c88172ba35867fcc90a2b17436ecd797"
+  },
+  {
+    "path": "internals/components/event/day-grid-event/DayGridEvent.d.ts",
+    "sha256": "23a0274354f474acea547b40831e6c4ef4eb452513ac7f5a55ba4bbd60bc02da"
+  },
+  {
+    "path": "internals/components/event/day-grid-event/DayGridEvent.types.d.ts",
+    "sha256": "519e549de650df82d404370c7829c8f5c70027b4b5662233a5ec2884e0491fa8"
+  },
+  {
+    "path": "internals/components/event/event-item/EventItem.d.ts",
+    "sha256": "5df81299bd808a562d30b9b0580aebd91fe3374f7cfca5b66bbb42c79f4b66f2"
+  },
+  {
+    "path": "internals/components/event/event-item/EventItem.types.d.ts",
+    "sha256": "2c036edf124cd5c078c35357448a8c257478ead54b4445f15bdd53dcfda755ad"
+  },
+  {
+    "path": "internals/components/event/index.d.ts",
+    "sha256": "e8f81c91ce4f254ea3a5fbdf640a21065f272faa3a32b65abf478dc5190182be"
+  },
+  {
+    "path": "internals/components/event/time-grid-event/TimeGridEvent.d.ts",
+    "sha256": "da3cc9f17d95012c6e276fdfacf9ff39bf2bdc98027e7c93692ca7a14c6d9f57"
+  },
+  {
+    "path": "internals/components/event/time-grid-event/TimeGridEvent.types.d.ts",
+    "sha256": "46f0f3f20a35a9ff23e491102dcf85de4ea20f7f062356453ecf00854686a26a"
+  },
+  {
+    "path": "internals/components/event/time-grid-event/useTimeGridEvent.d.ts",
+    "sha256": "ac223cf0b55b3b2ca20ea8a0cbb06648e7485a560763ac41a72ee6d6d676a30a"
+  },
+  {
+    "path": "internals/components/index.d.ts",
+    "sha256": "a124a26747813dcbf012119cbf46eb6b96e8e84cf6568600a409ef1a70bc9d73"
+  },
+  {
+    "path": "internals/components/more-events-popover/MoreEventsPopover.d.ts",
+    "sha256": "b0da869ca6186f26d214b0d810b416ab79b3007bfe27ed1406d591a63520df3e"
+  },
+  {
+    "path": "internals/components/more-events-popover/MoreEventsPopover.types.d.ts",
+    "sha256": "5a47dbc69f4c33f273b521eb1f9ddb6a05573468dff2984dc867e2a68f990a4e"
+  },
+  {
+    "path": "internals/components/more-events-popover/index.d.ts",
+    "sha256": "3ef4ae585a14414813001032419f85c3a4d69629c6cab540f0d040b8680a1f24"
+  },
+  {
+    "path": "internals/constants/defaultLocaleText.d.ts",
+    "sha256": "9f94b29fac88989336d0ce92b0107973d621873b4507e90805efa2cc195fda67"
+  },
+  {
+    "path": "internals/constants/index.d.ts",
+    "sha256": "bda6180a573a77d65396f7acf74a9d4f7f1488c9aed9392de880287bb2244331"
+  },
+  {
+    "path": "internals/constants/responsiveTypography.d.ts",
+    "sha256": "fee7b5faa3a2dd90ca7e25d6cd152496e8ee41c3345b0821db59879456069830"
+  },
+  {
+    "path": "internals/hooks/index.d.ts",
+    "sha256": "9167c2f015811c696c9e28cc8ab4ed63686bacbb3293e86861d528fb605360cc"
+  },
+  {
+    "path": "internals/hooks/useAnchoredPosition.d.ts",
+    "sha256": "f67c652b47c8962ab873c85dbb320a4fd5efd786c2c039a5e16884067fd029e8"
+  },
+  {
+    "path": "internals/hooks/useEventAccessibleName.d.ts",
+    "sha256": "914c4d3deea766c34a0b80484079a42a281b71fd19bf3e591392351a94f40d9a"
+  },
+  {
+    "path": "internals/hooks/useFormatTime.d.ts",
+    "sha256": "56c4c1b362d7ebe6729bacaa8455429f3dbf71d3f38ed187edc92603d7aa56e2"
+  },
+  {
+    "path": "internals/index.d.ts",
+    "sha256": "905630b371c7104fcf095265583d8ab8f6c8987fa08e8a55635a11895b184c09"
+  },
+  {
+    "path": "internals/utils/date-utils.d.ts",
+    "sha256": "0d4251a97220b10da2302e6e1793ef6fe5ae9abbcf1549ffa6a5f9a5cb3a15dc"
+  },
+  {
+    "path": "internals/utils/day-time-grid-view-definition.d.ts",
+    "sha256": "29d91724f0ed13d73cbb466638c69365c92ec551f285995dffb9ad48588ee704"
+  },
+  {
+    "path": "internals/utils/dialog-utils.d.ts",
+    "sha256": "c93e332e044586507617273cba457971fc0596e1aed23efddd99d024443b8771"
+  },
+  {
+    "path": "internals/utils/event-accessible-name.d.ts",
+    "sha256": "38b2720ca753417f8c6c72b2d960cf2c93134931ccdcd35d8dc72930a4348373"
+  },
+  {
+    "path": "internals/utils/event-utils.d.ts",
+    "sha256": "cc0e9d9616f4823e8f24563dd2abd69d2abb428018a63bf25b8bb7826be05fd8"
+  },
+  {
+    "path": "internals/utils/index.d.ts",
+    "sha256": "3da5e1457a958f3996c6abf3c2d0854c5bd11c50110300e4a12d7491ce873ae5"
+  },
+  {
+    "path": "internals/utils/test-utils.d.ts",
+    "sha256": "0f6b92d7df9611ea100330a26704a9b4e196be994c7e57ea0c9a5c4f1a6dc2e4"
+  },
+  {
+    "path": "internals/utils/tokens.d.ts",
+    "sha256": "d397673a25b9ce027e8915d1354104c3c2bea9b5e808c6f9d953495b78844f56"
+  },
+  {
+    "path": "locales/arSD.d.ts",
+    "sha256": "801a3d0831de9ab2ab3bd8929f2a818e544fa458ae62bd41a808de10b5c4e225"
+  },
+  {
+    "path": "locales/beBY.d.ts",
+    "sha256": "8fe0e50d1ee3359a81821830c02e84e69ffc904cc15d29ed4bd1ac32943fdd57"
+  },
+  {
+    "path": "locales/bgBG.d.ts",
+    "sha256": "bbde5e7d23ca659b8f201f5309d09275625e35c5ee76c538fc1baab84fccc2fb"
+  },
+  {
+    "path": "locales/bnBD.d.ts",
+    "sha256": "ad4a82e200c38f8eca39941093cbb53762b2227b6f9818bb1c4ce1b8f13ebd7e"
+  },
+  {
+    "path": "locales/caES.d.ts",
+    "sha256": "e7c003ce175e2852ef0d1d2bb716cc8e3f5a2fd60d42967c40cf60c1bd77575a"
+  },
+  {
+    "path": "locales/csCZ.d.ts",
+    "sha256": "1832c1111ab703d12e9e712beac12630b1a1b8379e4630d4898d2c40edc87d52"
+  },
+  {
+    "path": "locales/daDK.d.ts",
+    "sha256": "f262b484d4b84e7e43ac846618e95f5a3889b9d5ac8047da8eac0056fb564e47"
+  },
+  {
+    "path": "locales/deDE.d.ts",
+    "sha256": "ce1c2468ca1fd3d1d7034a63613d0c256eba063eab2016372c90bb35a87d54f5"
+  },
+  {
+    "path": "locales/elGR.d.ts",
+    "sha256": "4dc594352231d1c1bc37b06bce8d4ea6c0504eb8861fd6306dd23967c20ba891"
+  },
+  {
+    "path": "locales/enUS.d.ts",
+    "sha256": "7df7f67804a524b2cc555fdb2c62ae2df793775f9037b9276454384fb176920d"
+  },
+  {
+    "path": "locales/esES.d.ts",
+    "sha256": "87d8329566cd8c9a091bf076dcb880d88b9b27b1437ee2e0b13681e268468630"
+  },
+  {
+    "path": "locales/faIR.d.ts",
+    "sha256": "3905e6e2b13710e9de6163981fa349d6a7f09f6249525ca4ca7b54e43613339c"
+  },
+  {
+    "path": "locales/fiFI.d.ts",
+    "sha256": "4ece9845b989b254f4d73d754d6d4092fbfe8460a958b7e6d53361d81bf7a14c"
+  },
+  {
+    "path": "locales/frFR.d.ts",
+    "sha256": "b4ff15325c9362bf0e535ad0606b6e8491236d00c440b09758d7c3a18abda3f9"
+  },
+  {
+    "path": "locales/heIL.d.ts",
+    "sha256": "e60607b39620ee48bc82fb20b7c7e504ba8677c3f72fc8043fefec4f89e2cbe5"
+  },
+  {
+    "path": "locales/hrHR.d.ts",
+    "sha256": "86cc3e87d073b1b523dee9cb20f3d9913390957a63e1a92c203b152c240e7e05"
+  },
+  {
+    "path": "locales/huHU.d.ts",
+    "sha256": "4c2750509b7761391586dd61f54c5b9f1cfba91d76784bebce787a23efa9c49e"
+  },
+  {
+    "path": "locales/hyAM.d.ts",
+    "sha256": "6efc4422b6ddc65444b0d27740f3a557d4c46605105be68f88483cb0ee3181e0"
+  },
+  {
+    "path": "locales/idID.d.ts",
+    "sha256": "40aec22a59cd88b45249f06d257afbdcf73a3e586b99494962573a6d5f799036"
+  },
+  {
+    "path": "locales/index.d.ts",
+    "sha256": "da2f3af9a43e49ede7d4bdb738466d118c3e08554ec228876b20054455ab0bd0"
+  },
+  {
+    "path": "locales/isIS.d.ts",
+    "sha256": "e1795f819b2f9aab41fd014f1e18028ae416433dbd43bf35970f24ae1c524300"
+  },
+  {
+    "path": "locales/itIT.d.ts",
+    "sha256": "a9378eae186f2d45896c6a687f8675ec5acf5cb0a424335216ae8b7efbafbf63"
+  },
+  {
+    "path": "locales/jaJP.d.ts",
+    "sha256": "4df69e39bfe73376bc559104c5d585cb951709d365f82c388780ca929562b52e"
+  },
+  {
+    "path": "locales/koKR.d.ts",
+    "sha256": "079563036e25bfc164bf9bc684901b7ae9b1708f85545fb46c7f2966ff2fa870"
+  },
+  {
+    "path": "locales/nbNO.d.ts",
+    "sha256": "6ef51d74ca4cd1d6d6c01ff5a8923af3d4f6f8b5c91c49f1105dd3d3ef4d56da"
+  },
+  {
+    "path": "locales/nlNL.d.ts",
+    "sha256": "58c635e769714861c937ab2dfe960517a1001455629be6b722fc747ea6c352f8"
+  },
+  {
+    "path": "locales/nnNO.d.ts",
+    "sha256": "edf1a7dae28a4294420751477a9f6c571901dc1bb8744f650587b3bc9aeb686b"
+  },
+  {
+    "path": "locales/plPL.d.ts",
+    "sha256": "483efa049136796f27ec12ea061a68c0275298df5de12331e870b7e119837749"
+  },
+  {
+    "path": "locales/ptBR.d.ts",
+    "sha256": "81df7d4fd07428a91d0fdba422ef6bdd14f1ed94944503394211e3292bef3954"
+  },
+  {
+    "path": "locales/ptPT.d.ts",
+    "sha256": "1e0c68836f85d356c6bd7a492818bedf28628063626ad031c0a782001db6f7ef"
+  },
+  {
+    "path": "locales/roRO.d.ts",
+    "sha256": "730c1ffb01250b2a9f62eb4d429493954410e48ded1b1ecb802a6afb907b8a45"
+  },
+  {
+    "path": "locales/ruRU.d.ts",
+    "sha256": "4c9a061c0dca589c845982e675f1f7a9dd2da3e1c2acad8aeb2a52bbe8d871d4"
+  },
+  {
+    "path": "locales/skSK.d.ts",
+    "sha256": "12418e40ebaf3de79a48afd6a67e6c487d80394a56110445a4ef88f9c4908072"
+  },
+  {
+    "path": "locales/svSE.d.ts",
+    "sha256": "8fa19ab7637983971dc614c45440b459a1af104cf9e95bec4239c7b50db2494c"
+  },
+  {
+    "path": "locales/thTH.d.ts",
+    "sha256": "17158f6b7c1b0b3a7ec7a1938934c6a9958a615ac3b0764576c9b49af4647fba"
+  },
+  {
+    "path": "locales/trTR.d.ts",
+    "sha256": "c4216faf9f102c934d2998667bfe915e500bc50db3889d919abaa34db5e8552a"
+  },
+  {
+    "path": "locales/ukUA.d.ts",
+    "sha256": "9ac8e817bf1a104449127e0242768bbe761a9227f6524fe457fcfec74f85ccd0"
+  },
+  {
+    "path": "locales/urPK.d.ts",
+    "sha256": "c9bede51a574c5eb0e4517ba7df83c68c858fecf9d76bc199b547cb8b01a830f"
+  },
+  {
+    "path": "locales/viVN.d.ts",
+    "sha256": "8f8e74d9ccb904fe93a907e405ab38793b72a8d503d455cc2d11cffd6998667e"
+  },
+  {
+    "path": "locales/zhCN.d.ts",
+    "sha256": "0c35983551b7021231a7bb3fad124729dd7a2db1757cd0a57f4b00beb2e90880"
+  },
+  {
+    "path": "locales/zhHK.d.ts",
+    "sha256": "eb3788e0d3ec1a6a0bb37b92645c6968378d70725dfddad0536d272856206197"
+  },
+  {
+    "path": "locales/zhTW.d.ts",
+    "sha256": "a882072326be3bc81fa510158f06902154f08ee36308767153f67c7122ec5f66"
+  },
+  {
+    "path": "models/index.d.ts",
+    "sha256": "a5610fc3a5169fdd10c9a1a084e79db3721ec728310365bb0b4ff7d1aed4d73a"
+  },
+  {
+    "path": "models/slots.d.ts",
+    "sha256": "b826b8c9640acadb2cc4758b89201164b5aaef3d520759d258c9e8c8c2103eed"
+  },
+  {
+    "path": "models/translations.d.ts",
+    "sha256": "8ee1fa21229d50fab7e46e993334cf4e1263def518c46d5f196c36386214bce7"
+  },
+  {
+    "path": "month-view/MonthView.d.ts",
+    "sha256": "40bb4a163a27d68231883dbb923f27d8166127ae3c3bbaf97450842c135d7b95"
+  },
+  {
+    "path": "month-view/MonthView.types.d.ts",
+    "sha256": "6ef85d466306b42de99ae2c65c851d3e57f843d40cbcbf91d7092b0b2ce52980"
+  },
+  {
+    "path": "month-view/StandaloneMonthView.d.ts",
+    "sha256": "1295ed8885ea9b1c6ed3fa2aa0838f18970f07d243b99ecd50d73d4e522dcf33"
+  },
+  {
+    "path": "month-view/index.d.ts",
+    "sha256": "a4b0ac138d7c3d5230dcc6969a77071bdc22c147edfe74eb07bcaedf12d2f011"
+  },
+  {
+    "path": "month-view/month-view-row/MonthViewCell.d.ts",
+    "sha256": "aad5de197015d094639ec2906fb7d4bfc3be875d2115bbaf30af5dfb48b0197e"
+  },
+  {
+    "path": "month-view/month-view-row/MonthViewWeekRow.d.ts",
+    "sha256": "b960b74f779b79c1e7aaaf2fbc6a045f2663343b23ed960b336c933972313229"
+  },
+  {
+    "path": "month-view/month-view-row/MonthViewWeekRow.types.d.ts",
+    "sha256": "05fe821a7a4426c0d7685e9fbdfc7db2aba1785d674fa82e4ee593c7f39b78d4"
+  },
+  {
+    "path": "standalone-event/StandaloneEvent.d.ts",
+    "sha256": "c9edc5f99c3ff2d8bf6d3b02571883adc667ab2458bb0c4d858b9c07065d071d"
+  },
+  {
+    "path": "standalone-event/StandaloneEvent.types.d.ts",
+    "sha256": "7bfbd75114095914c4daad06dce37edee4f3566345b8e829bee8bf69d0726db4"
+  },
+  {
+    "path": "standalone-event/index.d.ts",
+    "sha256": "fcd49c6631521e15e0504559d28c517d9f4cf8cf73865d9f47119691cd06f36e"
+  },
+  {
+    "path": "theme-augmentation/components.d.ts",
+    "sha256": "c7adb80484bd4330c32fe04e36338448f0d768ba1fb734a4f1851e715ae718be"
+  },
+  {
+    "path": "theme-augmentation/index.d.ts",
+    "sha256": "4c2b98f5d0949502894ad03b4b90e961c82b7b6e88aab75d1fe1088c6cdb2987"
+  },
+  {
+    "path": "theme-augmentation/overrides.d.ts",
+    "sha256": "4aeb650c1f852cd19cd63982b907069661e21a36d7ed9b43edc6ecdd6f08c2e2"
+  },
+  {
+    "path": "theme-augmentation/props.d.ts",
+    "sha256": "3104d2845a59daf2c20dabcc0e9d37cc3dc9dea6cf6c0f19b3c00bc75030dcfb"
+  },
+  {
+    "path": "use-event-calendar-api-ref/index.d.ts",
+    "sha256": "5b0733448e6e50840d7810db0b2808ce8fece3ca192cb469c9bda37d5b103c0a"
+  },
+  {
+    "path": "utils/createDateLocaleTheme.d.ts",
+    "sha256": "9bc31810b265656847aecd4afcc24fae7d137a1eaca5ac85327137a44411dabe"
+  },
+  {
+    "path": "utils/getSchedulerLocalization.d.ts",
+    "sha256": "30273749bbb8798ed3788d928192191844190b122655ec0cf384345ea4f43cdc"
+  },
+  {
+    "path": "week-view/StandaloneWeekView.d.ts",
+    "sha256": "4be7881124adc86546bda78cd722053d824fca321b2353c2aea500e33135d14c"
+  },
+  {
+    "path": "week-view/WeekView.d.ts",
+    "sha256": "3fac25b9d2057ae827928c0c4a1b80aae6cbbcd88450a630e6012214b6a53c7e"
+  },
+  {
+    "path": "week-view/WeekView.types.d.ts",
+    "sha256": "eff2080b2ebccf6f4dc2c11f7c69ac3eeb52586cdd96baf604e47d665ee67bed"
+  },
+  {
+    "path": "week-view/index.d.ts",
+    "sha256": "145174a5df2a0587860879f288a943b15b700c0fa6b649bfab451053db9d5fa3"
+  }
+]

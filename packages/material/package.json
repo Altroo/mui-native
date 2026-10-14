@@ -1,0 +1,185 @@
+{
+  "name": "@altroo/mui-native",
+  "version": "0.0.0-dev.0",
+  "description": "Independent native compatibility for @mui/material",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Altroo/mui-native.git",
+    "directory": "packages/material"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./Box": {
+      "types": "./dist/Box/index.d.ts",
+      "react-native": "./src/Box/index.ts",
+      "default": "./dist/Box/index.js"
+    },
+    "./Stack": {
+      "types": "./dist/Stack/index.d.ts",
+      "react-native": "./src/Stack/index.ts",
+      "default": "./dist/Stack/index.js"
+    },
+    "./Typography": {
+      "types": "./dist/Typography/index.d.ts",
+      "react-native": "./src/Typography/index.ts",
+      "default": "./dist/Typography/index.js"
+    },
+    "./Divider": {
+      "types": "./dist/Divider/index.d.ts",
+      "react-native": "./src/Divider/index.ts",
+      "default": "./dist/Divider/index.js"
+    },
+    "./Paper": {
+      "types": "./dist/Paper/index.d.ts",
+      "react-native": "./src/Paper/index.ts",
+      "default": "./dist/Paper/index.js"
+    },
+    "./Card": {
+      "types": "./dist/Card/index.d.ts",
+      "react-native": "./src/Card/index.ts",
+      "default": "./dist/Card/index.js"
+    },
+    "./CardContent": {
+      "types": "./dist/CardContent/index.d.ts",
+      "react-native": "./src/CardContent/index.ts",
+      "default": "./dist/CardContent/index.js"
+    },
+    "./CardActions": {
+      "types": "./dist/CardActions/index.d.ts",
+      "react-native": "./src/CardActions/index.ts",
+      "default": "./dist/CardActions/index.js"
+    },
+    "./DialogTitle": {
+      "types": "./dist/DialogTitle/index.d.ts",
+      "react-native": "./src/DialogTitle/index.ts",
+      "default": "./dist/DialogTitle/index.js"
+    },
+    "./DialogContent": {
+      "types": "./dist/DialogContent/index.d.ts",
+      "react-native": "./src/DialogContent/index.ts",
+      "default": "./dist/DialogContent/index.js"
+    },
+    "./DialogActions": {
+      "types": "./dist/DialogActions/index.d.ts",
+      "react-native": "./src/DialogActions/index.ts",
+      "default": "./dist/DialogActions/index.js"
+    },
+    "./Button": {
+      "types": "./dist/Button/index.d.ts",
+      "react-native": "./src/Button/index.ts",
+      "default": "./dist/Button/index.js"
+    },
+    "./IconButton": {
+      "types": "./dist/IconButton/index.d.ts",
+      "react-native": "./src/IconButton/index.ts",
+      "default": "./dist/IconButton/index.js"
+    },
+    "./TextField": {
+      "types": "./dist/TextField/index.d.ts",
+      "react-native": "./src/TextField/index.ts",
+      "default": "./dist/TextField/index.js"
+    },
+    "./FormControl": {
+      "types": "./dist/FormControl/index.d.ts",
+      "react-native": "./src/FormControl/index.ts",
+      "default": "./dist/FormControl/index.js"
+    },
+    "./FormLabel": {
+      "types": "./dist/FormLabel/index.d.ts",
+      "react-native": "./src/FormLabel/index.ts",
+      "default": "./dist/FormLabel/index.js"
+    },
+    "./InputLabel": {
+      "types": "./dist/InputLabel/index.d.ts",
+      "react-native": "./src/InputLabel/index.ts",
+      "default": "./dist/InputLabel/index.js"
+    },
+    "./FormHelperText": {
+      "types": "./dist/FormHelperText/index.d.ts",
+      "react-native": "./src/FormHelperText/index.ts",
+      "default": "./dist/FormHelperText/index.js"
+    },
+    "./Checkbox": {
+      "types": "./dist/Checkbox/index.d.ts",
+      "react-native": "./src/Checkbox/index.ts",
+      "default": "./dist/Checkbox/index.js"
+    },
+    "./Switch": {
+      "types": "./dist/Switch/index.d.ts",
+      "react-native": "./src/Switch/index.ts",
+      "default": "./dist/Switch/index.js"
+    },
+    "./Radio": {
+      "types": "./dist/Radio/index.d.ts",
+      "react-native": "./src/Radio/index.ts",
+      "default": "./dist/Radio/index.js"
+    },
+    "./RadioGroup": {
+      "types": "./dist/RadioGroup/index.d.ts",
+      "react-native": "./src/RadioGroup/index.ts",
+      "default": "./dist/RadioGroup/index.js"
+    },
+    "./FormControlLabel": {
+      "types": "./dist/FormControlLabel/index.d.ts",
+      "react-native": "./src/FormControlLabel/index.ts",
+      "default": "./dist/FormControlLabel/index.js"
+    },
+    "./Dialog": {
+      "types": "./dist/Dialog/index.d.ts",
+      "react-native": "./src/Dialog/index.ts",
+      "default": "./dist/Dialog/index.js"
+    },
+    "./Alert": {
+      "types": "./dist/Alert/index.d.ts",
+      "react-native": "./src/Alert/index.ts",
+      "default": "./dist/Alert/index.js"
+    },
+    "./CircularProgress": {
+      "types": "./dist/CircularProgress/index.d.ts",
+      "react-native": "./src/CircularProgress/index.ts",
+      "default": "./dist/CircularProgress/index.js"
+    },
+    "./LinearProgress": {
+      "types": "./dist/LinearProgress/index.d.ts",
+      "react-native": "./src/LinearProgress/index.ts",
+      "default": "./dist/LinearProgress/index.js"
+    },
+    "./Snackbar": {
+      "types": "./dist/Snackbar/index.d.ts",
+      "react-native": "./src/Snackbar/index.ts",
+      "default": "./dist/Snackbar/index.js"
+    },
+    "./styles": {
+      "types": "./dist/styles/index.d.ts",
+      "react-native": "./src/styles/index.ts",
+      "default": "./dist/styles/index.js"
+    }
+  },
+  "dependencies": {
+    "@altroo/mui-native-system": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=19.2.3 <20",
+    "react-native": ">=0.86.3 <0.87"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
+}

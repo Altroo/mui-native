@@ -1,0 +1,358 @@
+[
+  {
+    "path": "ChatBox/ChatBox.d.ts",
+    "sha256": "ae0cabc7538eeb42acb4520ea30fe832b9c685ce294ef675e1b998c16bea44e3"
+  },
+  {
+    "path": "ChatBox/ChatBox.types.d.ts",
+    "sha256": "0a4ce0afd5868dfb830b592faee3cb8f20359bae2bae2b2e09e933776abf38a6"
+  },
+  {
+    "path": "ChatBox/ChatBoxContent.d.ts",
+    "sha256": "a04fd06fd6fceed95a0a25310fd4b475667a788d998e7c0da87a5c6e4d7eb013"
+  },
+  {
+    "path": "ChatBox/chatBoxClasses.d.ts",
+    "sha256": "d935a2b46757eb95825d8973e04c53815c1bfa04bb7f6159bbe0429f8c496cf5"
+  },
+  {
+    "path": "ChatBox/index.d.ts",
+    "sha256": "48c202e92e51bd3982d7240d68d5a8348cfae1a620a0e34dd42dae2dd615b1dc"
+  },
+  {
+    "path": "ChatCodeBlock/ChatCodeBlock.d.ts",
+    "sha256": "ab03892d14fd3f6b0441149a714006e760445723f657e419655d5ce839a5633b"
+  },
+  {
+    "path": "ChatCodeBlock/chatCodeBlockClasses.d.ts",
+    "sha256": "2b2e176b17994799416f9b2388541e6a1c85106004152298e310017023b4dac9"
+  },
+  {
+    "path": "ChatCodeBlock/index.d.ts",
+    "sha256": "d9a7b3bb9070dae41d04fa321a87178486cfe7f4e8319146bcb0210eff00c172"
+  },
+  {
+    "path": "ChatComposer/ChatComposer.d.ts",
+    "sha256": "5cbd392d63578f90f0cb5702a55cd2df062682203c01b33f07fd39e62c7eb755"
+  },
+  {
+    "path": "ChatComposer/ChatComposerAttachButton.d.ts",
+    "sha256": "a39e0cd883d20afc8c0d82d34f72a7d6e61a51a84d7983303a847d89720b90af"
+  },
+  {
+    "path": "ChatComposer/ChatComposerAttachmentList.d.ts",
+    "sha256": "a2a7052f60924b803d1eec9d273552e50fcf0439b1dad54486385bc59e82c122"
+  },
+  {
+    "path": "ChatComposer/ChatComposerHelperText.d.ts",
+    "sha256": "df35b99a0cb68b12384a9466261759ea5617265aa8b0b339204cca9b2650a166"
+  },
+  {
+    "path": "ChatComposer/ChatComposerLabel.d.ts",
+    "sha256": "1302ac25fd49759447a4b2659b4662adb48c701ae3667c72a0b20e4aa4fd493a"
+  },
+  {
+    "path": "ChatComposer/ChatComposerSendButton.d.ts",
+    "sha256": "cdcbab3b4a1e502d073989c34db4d134418af28ccfadddf9267176634ba32c2d"
+  },
+  {
+    "path": "ChatComposer/ChatComposerTextArea.d.ts",
+    "sha256": "0f38c3b7c87a8ad27634946ea5587631038bce6924c9edd8a4afa06b74beb718"
+  },
+  {
+    "path": "ChatComposer/ChatComposerToolbar.d.ts",
+    "sha256": "57b4c66f8894e3529aa903375210ad3ffe1d6afb24199966d708afd6acc673f9"
+  },
+  {
+    "path": "ChatComposer/chatComposerClasses.d.ts",
+    "sha256": "427acab5338e3c1a57edba5f05c184b07cb52f874fe23b7f7b6ee8e341e4e5c6"
+  },
+  {
+    "path": "ChatComposer/index.d.ts",
+    "sha256": "a53c0f1bb94af6ce92e8866d0e3e2a0a2cacef708fc29f67e9786098ebef03d0"
+  },
+  {
+    "path": "ChatConfirmation/ChatConfirmation.d.ts",
+    "sha256": "8a45cabdc370a5f61af07c0294829f4222638c18034f857d7b8b33af8a1c35a0"
+  },
+  {
+    "path": "ChatConfirmation/chatConfirmationClasses.d.ts",
+    "sha256": "05d572a7bde13e7ced0ac43a56f8dac3aa5454d878968c32bbf91239e23a08b9"
+  },
+  {
+    "path": "ChatConfirmation/index.d.ts",
+    "sha256": "9f89d8554ed9c3aa69ab43444a9685e624f9e504549efcdc2d8ad77af911f9b2"
+  },
+  {
+    "path": "ChatConversation/ChatConversation.d.ts",
+    "sha256": "6cd9c38ee393c47be21e1c45082c0d999778a26341f6a990e7bd176aa7a4a617"
+  },
+  {
+    "path": "ChatConversation/ChatConversationHeader.d.ts",
+    "sha256": "f09830af42dc5c09564af02b756bce899f5e0ab1d29edbf1580f77ddc17579ce"
+  },
+  {
+    "path": "ChatConversation/ChatConversationHeaderActions.d.ts",
+    "sha256": "dc1a3b936f97b6750a6764bc631face4fafca77f94bac605838136d156e2a610"
+  },
+  {
+    "path": "ChatConversation/ChatConversationHeaderInfo.d.ts",
+    "sha256": "801e69649c0c1a106fa04258301ded4145b55c6d5bb880417cb2655dc659f20b"
+  },
+  {
+    "path": "ChatConversation/ChatConversationSubtitle.d.ts",
+    "sha256": "e5e529cfa7b73d8d1f67af6154493816061c5e41ebbec568ba0849bf373ab2cb"
+  },
+  {
+    "path": "ChatConversation/ChatConversationTitle.d.ts",
+    "sha256": "1734228af08e2dc4bcfccf6d4562b004c167f40a5daeca4133bf94d0969c2ac9"
+  },
+  {
+    "path": "ChatConversation/chatConversationClasses.d.ts",
+    "sha256": "adcb09bc095054de8ea779341e686eba8885b4070957fd682a6fe3ad197b0650"
+  },
+  {
+    "path": "ChatConversation/index.d.ts",
+    "sha256": "44fa422f9aa040f4d88f843ca54686fd3aa33069b55f7d591891ac2eab48ac65"
+  },
+  {
+    "path": "ChatConversationList/ChatConversationList.d.ts",
+    "sha256": "a9bceaae6a341e2a8d5b9c443d2258b6d866b20e8600f34e22f10be07e9d24ae"
+  },
+  {
+    "path": "ChatConversationList/chatConversationListClasses.d.ts",
+    "sha256": "8dfb759972bec0ea49dc03bc4b2500372a6c56cad59355f2acd929f2bb6b6bde"
+  },
+  {
+    "path": "ChatConversationList/index.d.ts",
+    "sha256": "c7eb2d4f0320420217710764b77be4829379856e52d165d27e37e7eabf364b2d"
+  },
+  {
+    "path": "ChatIndicators/ChatScrollToBottomAffordance.d.ts",
+    "sha256": "a17938c5be6f3c17065446e3eadac0ce9759586ffdc1f9fa416159a70cb81e4c"
+  },
+  {
+    "path": "ChatIndicators/ChatStreamingIndicator.d.ts",
+    "sha256": "4a6d4753d000121d6709e6b3dedf9b9d442f1cfed724b1bcb0dbe67cc4e32455"
+  },
+  {
+    "path": "ChatIndicators/ChatStreamingIndicatorRow.d.ts",
+    "sha256": "efbcb970ff95c89ba49b0ea198f581271a5c751e8fae04000f5fb0f00d9757ab"
+  },
+  {
+    "path": "ChatIndicators/ChatTypingIndicator.d.ts",
+    "sha256": "667664f0345d0a4a8bdfd9709c21e1f5e7caea7e167bb5f6a01a4386e1f2a3d2"
+  },
+  {
+    "path": "ChatIndicators/ChatUnreadMarker.d.ts",
+    "sha256": "4741be72462d0265335169f61b4a99be300f4abe18a0f03ebc655ab64bd2bc7a"
+  },
+  {
+    "path": "ChatIndicators/chatScrollToBottomAffordanceClasses.d.ts",
+    "sha256": "7d19673b69351dc75960220632fff3d3313f21c7544ffa56890069dd544767ce"
+  },
+  {
+    "path": "ChatIndicators/chatStreamingIndicatorClasses.d.ts",
+    "sha256": "27901050ecfc2fef89cd253f974c5dd3c9cbe9ae841972a758e47786fc522136"
+  },
+  {
+    "path": "ChatIndicators/chatTypingIndicatorClasses.d.ts",
+    "sha256": "460af8abe59c2e166ee8d2f5858cf9c2181baa8842f40e70bd8959ae27a50259"
+  },
+  {
+    "path": "ChatIndicators/chatUnreadMarkerClasses.d.ts",
+    "sha256": "639a45582bd24ffce4d25d49d02bc05fa37b1b26695d2051688c37cf22b2ca0d"
+  },
+  {
+    "path": "ChatIndicators/index.d.ts",
+    "sha256": "2f0c1ef7255d554c9fe1fa657b353c30f12cb13cb07eb04f1fc0a79b9a55651b"
+  },
+  {
+    "path": "ChatMessage/ChatDateDivider.d.ts",
+    "sha256": "b2b184eba45c553b00e893f38cd517d99c4e70fe62e34f34959279997436ed08"
+  },
+  {
+    "path": "ChatMessage/ChatMessage.d.ts",
+    "sha256": "bca467888af9357ead7b06420b2aa4b20452ca2f825b8c37fca527cc6db486ae"
+  },
+  {
+    "path": "ChatMessage/ChatMessageActions.d.ts",
+    "sha256": "699e3723ede03b0c5099f9aaf676216f786cc5b7095261dd4e3d1a961dabed4c"
+  },
+  {
+    "path": "ChatMessage/ChatMessageAuthorLabel.d.ts",
+    "sha256": "9d9313c0c61881ae7792b1eeeb246a892106c22644d4905e0e43bc5ab06ef99a"
+  },
+  {
+    "path": "ChatMessage/ChatMessageAvatar.d.ts",
+    "sha256": "eaf1d104c08dd75e4e057c0454719be57033ecebc1fbcb4f2f813705a5024f25"
+  },
+  {
+    "path": "ChatMessage/ChatMessageContent.d.ts",
+    "sha256": "f8d39e5c4d9947cfad4f5664a100580936bd08bb525097498de4563bd7296658"
+  },
+  {
+    "path": "ChatMessage/ChatMessageGroup.d.ts",
+    "sha256": "1aaa20a410e73740355ddaa88363c2ee90733b1ecc3fb2d53a3461a688b63bfb"
+  },
+  {
+    "path": "ChatMessage/ChatMessageInlineMeta.d.ts",
+    "sha256": "7d84c331e314d72fb822fee1b8c7ce931e1d88a3289695d080569f80d4d6f897"
+  },
+  {
+    "path": "ChatMessage/ChatMessageMeta.d.ts",
+    "sha256": "cc6f49d30fec4ad0f534af097974146c31d79dd2291f48585ee65d6502c32842"
+  },
+  {
+    "path": "ChatMessage/chatMessageClasses.d.ts",
+    "sha256": "314264b56c9207ceaadbd6c7c10e42cc50131c46efaa27b1130a1e7f57d8d0d3"
+  },
+  {
+    "path": "ChatMessage/index.d.ts",
+    "sha256": "e022af62c5c7f642a3f1d24613d994b9d9c3514e118f727b16d61508357be37a"
+  },
+  {
+    "path": "ChatMessage/renderMarkdown.d.ts",
+    "sha256": "6195cc37e1f2e66daf43ec82ae4427b6f80ac8d0716dd142c5095ccafcf62961"
+  },
+  {
+    "path": "ChatMessageError/ChatMessageError.d.ts",
+    "sha256": "48b3a9aab8edab0d9e38a16db9bf88f4e6c788e02b7665b67c8ddcc27251ba17"
+  },
+  {
+    "path": "ChatMessageError/chatMessageErrorClasses.d.ts",
+    "sha256": "a760dc069e49ed3b7e0bb2ebbb59407d3119d5535836114cc1033f1f90335041"
+  },
+  {
+    "path": "ChatMessageError/index.d.ts",
+    "sha256": "6962954b926b120b80b6ebd2f212b9359cc7332361a8d1c49eaf5fd9f48ab76f"
+  },
+  {
+    "path": "ChatMessageList/ChatMessageList.d.ts",
+    "sha256": "c9d37457242c2d54ead2560b8b0653adf2a9d7ea0c3d481b9712270cc49b35c1"
+  },
+  {
+    "path": "ChatMessageList/DefaultMessageItem.d.ts",
+    "sha256": "2ae810020bbea901bf646a370ff435f618df5df5331da66614d8222a78ba71e9"
+  },
+  {
+    "path": "ChatMessageList/chatMessageListClasses.d.ts",
+    "sha256": "cec2b045fd9aa8c86ea3983766f352679026d9368811db2e2e793969be49e2c6"
+  },
+  {
+    "path": "ChatMessageList/index.d.ts",
+    "sha256": "334c7e300f2c8b5e66e6cc10b27277c720cf593b42cb51cb26b84e1fc3bdb9dc"
+  },
+  {
+    "path": "ChatMessageSkeleton/ChatMessageSkeleton.d.ts",
+    "sha256": "3953d1307ca99a28de9ee0c641e1e4056c72c6924dc86f3597be3b2a6c087018"
+  },
+  {
+    "path": "ChatMessageSkeleton/chatMessageSkeletonClasses.d.ts",
+    "sha256": "26d4066f6a6f4791efaaccdb295d7fd6e3bffa409a63e13ecf9d613bfd0d2d79"
+  },
+  {
+    "path": "ChatMessageSkeleton/index.d.ts",
+    "sha256": "289a746c465fb7ce8a0f1c5cc60c858d2f0a63bdd3c873c238ceb3839857241c"
+  },
+  {
+    "path": "ChatMessageSources/ChatMessageSource.d.ts",
+    "sha256": "cce5b112dcc25005a1541be4f4ac3ec25fd9296dcb458fb05ae2c8f019270020"
+  },
+  {
+    "path": "ChatMessageSources/ChatMessageSources.d.ts",
+    "sha256": "f7c14799826a5f9b727292954a88cc2d18fdf7dd6b2dd3b3fb53cc51b54a729f"
+  },
+  {
+    "path": "ChatMessageSources/chatMessageSourceClasses.d.ts",
+    "sha256": "696d4d7b0ed4223f04cf1237e03bc1f5c36497989ecfa91f416ac6f817e1272d"
+  },
+  {
+    "path": "ChatMessageSources/chatMessageSourcesClasses.d.ts",
+    "sha256": "14b274e95b9ce8eca0becb6b8516a5e0fd1d38011feac25c895618e76e041148"
+  },
+  {
+    "path": "ChatMessageSources/index.d.ts",
+    "sha256": "efef478632e2cd4c734aba539a3677a8711b2c6d3c2d6c5fca67151d6a20ace7"
+  },
+  {
+    "path": "ChatSuggestions/ChatSuggestions.d.ts",
+    "sha256": "2abc7bbcfa8e61f2af6afd1a2102891ac7b958ad8cee48e8175cf54b268b5a2e"
+  },
+  {
+    "path": "ChatSuggestions/chatSuggestionsClasses.d.ts",
+    "sha256": "157b19aa24d236cdc6a489b9c1d0e67623c560ec1cb53e33fc6bb65618fc0f11"
+  },
+  {
+    "path": "ChatSuggestions/index.d.ts",
+    "sha256": "f7b593589ea5ac7147b577987e28ebf836cd5cff1b118313ec0f9b9935f35e61"
+  },
+  {
+    "path": "core/index.d.ts",
+    "sha256": "e8deb5fc3c4b2e882e25ca95d79863c80c079b3e3ddf37a0b696175e75d998a2"
+  },
+  {
+    "path": "headless/index.d.ts",
+    "sha256": "9a272097b9c52f83d85be0b3017ad08eb48ab460bbfda08e98e34c5b025ca50c"
+  },
+  {
+    "path": "icons/icons.d.ts",
+    "sha256": "a5b7608effa458c6964626e931f0606c762b758dfcec4ed8daeb4c6c4d475315"
+  },
+  {
+    "path": "index.d.ts",
+    "sha256": "bb32d3cde22ac99a89961683204546a26f8432c919474c7e5197abbb610f590a"
+  },
+  {
+    "path": "internals/ChatSlotsContext.d.ts",
+    "sha256": "04be0bd9c05b748b3febb22a865ae0ec1dec1e34b292ec9ee96c72b5095cf0a5"
+  },
+  {
+    "path": "internals/mergeSlotProps.d.ts",
+    "sha256": "456632f541c2397eca384a191b50681082441a94704f5c4a76a387a599ba9968"
+  },
+  {
+    "path": "internals/remendUnavailable.d.ts",
+    "sha256": "393241052f2b05851412d0f32988d018c40746d0ef257397b308815f585e2dbb"
+  },
+  {
+    "path": "internals/streamingMarkdownRepair.d.ts",
+    "sha256": "1eb8fb0215ae4320344e482d54bcb6000b8d60cdd8ce0addd9a2810332fb3242"
+  },
+  {
+    "path": "internals/useCopyToClipboard.d.ts",
+    "sha256": "d87039fbbdc5fac9603fa385435f7f5077045e077a367788243a4f5f352f1072"
+  },
+  {
+    "path": "internals/zero-styled/index.d.ts",
+    "sha256": "c32056cbf57cced0bf9cc2da4c6f22ed7f4c09a7bf449c005b0e74e849b3cb41"
+  },
+  {
+    "path": "locales/enUS.d.ts",
+    "sha256": "89206b153321ce24075fd0cb316b7a4fdc056ec77986953977dd6c97d77b3cbf"
+  },
+  {
+    "path": "locales/index.d.ts",
+    "sha256": "a616e68cc6f82923be338d2f36a070038ce510533272c9a57b85ec23e3e9e9cb"
+  },
+  {
+    "path": "themeAugmentation/components.d.ts",
+    "sha256": "91150f70f20ab50c080b83be8b278c2cc3922b253f16d8fc7954afa5bbcd5c93"
+  },
+  {
+    "path": "themeAugmentation/index.d.ts",
+    "sha256": "4c2b98f5d0949502894ad03b4b90e961c82b7b6e88aab75d1fe1088c6cdb2987"
+  },
+  {
+    "path": "themeAugmentation/overrides.d.ts",
+    "sha256": "5bcb6c471f2716a6d445d502a246f4e28d7bf6a68a6ac7ca93d55b62a7b33fd8"
+  },
+  {
+    "path": "themeAugmentation/props.d.ts",
+    "sha256": "1c9f7af8914ebc81324389899d1508b87e6ab87561f3cf3a003aa3a6ce372dd9"
+  },
+  {
+    "path": "types/index.d.ts",
+    "sha256": "7745bf7aeaf413fabce3d91c02832588bbbd717b737690cb841f77164180b8d3"
+  }
+]

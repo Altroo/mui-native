@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "packages",
+    "outDir": ".cache/types",
+    "emitDeclarationOnly": true,
+    "declaration": true
+  },
+  "include": ["packages/**/*.ts", "packages/**/*.tsx"],
+  "exclude": ["**/dist", "node_modules"]
+}

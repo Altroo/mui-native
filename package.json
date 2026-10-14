@@ -1,0 +1,44 @@
+{
+  "name": "mui-native-workspace",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=22.13.0 <23"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "jest --runInBand && node --test scripts/upstream/*.test.mjs packages/compat/*.test.cjs",
+    "check": "pnpm typecheck && pnpm test && pnpm build",
+    "upstream:check": "node scripts/upstream/detect.mjs",
+    "upstream:baseline": "node scripts/upstream/baseline.mjs",
+    "catalog": "pnpm --filter native-catalog start",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "pack:all": "node scripts/pack.mjs",
+    "test:consumer": "node scripts/test-consumer.mjs"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@react-native/babel-preset": "0.86.3",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "~19.2.0",
+    "@types/react-test-renderer": "^19.0.0",
+    "@testing-library/react-native": "13.3.3",
+    "react-test-renderer": "19.2.3",
+    "react": "19.2.3",
+    "react-native": "0.86.3",
+    "react-native-svg": "15.15.4",
+    "jest": "30.5.2",
+    "babel-jest": "30.5.2",
+    "typescript": "7.0.2",
+    "esbuild": "^0.25.0",
+    "semver": "^7.7.0",
+    "@react-native/jest-preset": "0.86.3",
+    "prettier": "3.6.2",
+    "@shopify/flash-list": "2.0.2",
+    "dayjs": "1.11.13"
+  }
+}

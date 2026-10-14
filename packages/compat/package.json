@@ -1,0 +1,17 @@
+{
+  "name": "@altroo/mui-native-compat",
+  "version": "0.0.0-dev.0",
+  "license": "MIT",
+  "main": "index.cjs",
+  "files": [
+    "index.cjs",
+    "supported.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": "./index.cjs",
+    "./metro": "./index.cjs"
+  },
+  "private": true
+}
