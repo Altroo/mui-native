@@ -8,3 +8,6 @@ upstream/api
 upstream/licenses
 
 .playwright-mcp/
+
+# Deterministic generated declaration records; use pnpm coverage:generate.
+compatibility/inventory/

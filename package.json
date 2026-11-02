@@ -9,8 +9,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "typecheck": "tsc --noEmit && tsc --noEmit -p apps/native-catalog/tsconfig.json",
-    "test": "jest --runInBand && node --test scripts/upstream/*.test.mjs packages/compat/*.test.cjs",
-    "check": "pnpm typecheck && pnpm test && pnpm build",
+    "test": "jest --runInBand && node --test scripts/inventory/*.test.mjs scripts/upstream/*.test.mjs packages/compat/*.test.cjs",
+    "check": "pnpm typecheck && pnpm test && pnpm coverage:verify && pnpm build",
     "upstream:check": "node scripts/upstream/detect.mjs",
     "upstream:baseline": "node scripts/upstream/baseline.mjs",
     "catalog": "pnpm --filter native-catalog start",
@@ -18,7 +18,10 @@
     "format:check": "prettier --check .",
     "pack:all": "node scripts/pack.mjs",
     "test:consumer": "node scripts/test-consumer.mjs",
-    "upstream:simulate": "node scripts/upstream/simulate.mjs"
+    "upstream:simulate": "node scripts/upstream/simulate.mjs",
+    "coverage:generate": "node scripts/inventory/generate.mjs",
+    "coverage:check": "node scripts/inventory/generate.mjs --check",
+    "coverage:verify": "node scripts/inventory/freshness.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",

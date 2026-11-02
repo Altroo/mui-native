@@ -1,5 +1,7 @@
 # Compatibility contract
 
+The [generated declaration inventory](coverage.md) records baseline imports, export origins and direct contract members. It does not establish parity; unresolved dependencies and inherited contracts remain explicit gaps.
+
 Current status: prototypes. All implemented components are **adapted subsets**, not exact equivalents. `upstream/state.json` deliberately leaves `portedAndVerified` and `releasedSupport` empty.
 
 ## Currently exercised

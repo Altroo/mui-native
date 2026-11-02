@@ -24,7 +24,8 @@ Each feature needs appropriate local checks and independent review of hidden bug
 - [x] Preserve available MIT notices and flag missing license text.
 - [x] Implement release detection, deduplication, candidate preparation, explicit candidate CI dispatch, and support-state separation.
 - [ ] Validate the scheduled workflow and dashboard on GitHub with repository permissions.
-- [ ] Complete transitive dependency/license audit and exported-symbol/prop/slot inventory.
+- [x] Generate an integrity-checked declaration inventory with import targets, export origins, direct props/events/slots and native declaration candidates. See [coverage](docs/coverage.md); this is not a compatibility claim.
+- [ ] Resolve external re-exports and inherited/generic contracts, attach behavior evidence, and complete the transitive dependency/license audit.
 
 Material UI baseline: 9.5.0. Stable X baseline: 9.15.0. Scheduler: 9.0.0-beta.13. Chat: 9.0.0-alpha.19, blocked for missing license text. These are references, not support claims. See `upstream/state.json` for exact commits and provenance.
 
