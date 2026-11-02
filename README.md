@@ -94,6 +94,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Native input variants and adornments](docs/inputs.md)
 - [Native labels, helper text and floating fields](docs/form-labels.md)
 - [Nested and scoped theme providers](docs/theme-providers.md)
+- [Native Modal, Backdrop and Dialog coordination](docs/modals.md)
 - [Spacing, breakpoints and responsive styles](docs/layout-system.md)
 - [Native Button loading](docs/button.md)
 - [Native form controls and calendar behavior](docs/native-controls.md)

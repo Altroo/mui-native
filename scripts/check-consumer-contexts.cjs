@@ -48,6 +48,9 @@ try {
   assert.notEqual(material.ThemeProvider, root.ThemeProvider);
   assert.notEqual(material.useTheme, root.useTheme);
   for (const name of [
+    'Modal',
+    'Backdrop',
+    'Dialog',
     'FormControl',
     'FormLabel',
     'InputLabel',

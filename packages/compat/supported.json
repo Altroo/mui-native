@@ -42,7 +42,9 @@
       "styles/useTheme",
       "styles/useThemeProps",
       "styles/identifier",
-      "styles/styled"
+      "styles/styled",
+      "Modal",
+      "Backdrop"
     ]
   },
   "@mui/system": {

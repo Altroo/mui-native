@@ -414,6 +414,88 @@
         "Material ThemeProvider and hooks select the public $$material scope. Native Material, icon and X renderers consume scoped tokens and styles; System hooks retain the raw envelope.",
         "The no-vars object marker is retained. CSS variable generation, browser storage and color-scheme providers remain unsupported; native transforms/styles do not introduce DOM layers."
       ]
+    },
+    {
+      "localFile": "packages/material/src/modal.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Modal/Modal.js": "65c24666bc6e9692285494738cb1835fe8c7cdc2a38efb0a1262d212c25e4a39",
+          "Modal/Modal.d.ts": "07e30d682277e9061565c6d75785923ba7ca0db13b1b561c20f96212d9381ed5",
+          "Modal/useModal.js": "f3f6b8f5b62a100218b9941cabd105e0216241e46c96024be3fa78f82c8412d4",
+          "Modal/ModalManager.js": "6616f7f7caf3d83ed4f085cb7980f93783d38b09cac7b977d2d5287174a7686b",
+          "Modal/ModalManager.d.ts": "b8c88c140b0fbc4294012d014bee35d9da40f554cccc79a265dee4caf736bf49",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7",
+          "Unstable_TrapFocus/FocusTrap.js": "47cbf47298f1488395db11ad11b58023d2ff358ccf70dc4156cd962306052a0e",
+          "Unstable_TrapFocus/FocusTrap.types.d.ts": "c2043b6cddf15439ba19f3293a7d8626ac8f31be86d9d8998c3323af94feeb8c"
+        }
+      },
+      "adaptations": [
+        "Native Modal windows and inline native Views replace DOM portals, root/backdrop nodes and browser focus handling. Native root/backdrop refs, controlled dismissal reasons, slots and transition wiring follow the selected pinned contracts.",
+        "Native stack ownership guards dismissal and deferred focus work. Text-input capture, explicit native focus refs and public native-node containment replace browser activeElement queries. Full tab trapping, DOM containers, scroll locking and CSS transitions remain unfinished.",
+        "Inline keepMounted preserves state. React Native window dismissal unmounts children and emits a usage diagnostic when keepMounted is requested; native window presentation and screen readers still require device validation."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/nativeModalManager.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Modal/Modal.js": "65c24666bc6e9692285494738cb1835fe8c7cdc2a38efb0a1262d212c25e4a39",
+          "Modal/Modal.d.ts": "07e30d682277e9061565c6d75785923ba7ca0db13b1b561c20f96212d9381ed5",
+          "Modal/useModal.js": "f3f6b8f5b62a100218b9941cabd105e0216241e46c96024be3fa78f82c8412d4",
+          "Modal/ModalManager.js": "6616f7f7caf3d83ed4f085cb7980f93783d38b09cac7b977d2d5287174a7686b",
+          "Modal/ModalManager.d.ts": "b8c88c140b0fbc4294012d014bee35d9da40f554cccc79a265dee4caf736bf49",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7",
+          "Unstable_TrapFocus/FocusTrap.js": "47cbf47298f1488395db11ad11b58023d2ff358ccf70dc4156cd962306052a0e",
+          "Unstable_TrapFocus/FocusTrap.types.d.ts": "c2043b6cddf15439ba19f3293a7d8626ac8f31be86d9d8998c3323af94feeb8c"
+        }
+      },
+      "adaptations": [
+        "A native stack replaces DOM containers, sibling aria mutation and body scroll locking. Ancestor ordering handles child-first React layout registration.",
+        "Deferred restoration follows top focus ownership; unrelated background removals preserve restoration, while a new top owner invalidates it. Native-window and inline rendering retain explicit physical accessibility and focus-validation gates."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/dialog.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Modal/Modal.js": "65c24666bc6e9692285494738cb1835fe8c7cdc2a38efb0a1262d212c25e4a39",
+          "Modal/Modal.d.ts": "07e30d682277e9061565c6d75785923ba7ca0db13b1b561c20f96212d9381ed5",
+          "Modal/useModal.js": "f3f6b8f5b62a100218b9941cabd105e0216241e46c96024be3fa78f82c8412d4",
+          "Modal/ModalManager.js": "6616f7f7caf3d83ed4f085cb7980f93783d38b09cac7b977d2d5287174a7686b",
+          "Modal/ModalManager.d.ts": "b8c88c140b0fbc4294012d014bee35d9da40f554cccc79a265dee4caf736bf49",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7",
+          "Unstable_TrapFocus/FocusTrap.js": "47cbf47298f1488395db11ad11b58023d2ff358ccf70dc4156cd962306052a0e",
+          "Unstable_TrapFocus/FocusTrap.types.d.ts": "c2043b6cddf15439ba19f3293a7d8626ac8f31be86d9d8998c3323af94feeb8c"
+        }
+      },
+      "adaptations": [
+        "Dialog composes the reusable native Modal with keyboard avoidance, native paper sizing and four implemented native slots. Root props and conflicting root-slot precedence follow pinned Dialog routing; paper props are explicit slots.",
+        "The keyboard container forwards its public native view ref and lets background touches reach the backdrop. Native styles/events replace CSS classes, DOM roles and browser transitions; complete Dialog contracts remain open."
+      ]
     }
   ]
 }

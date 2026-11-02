@@ -33,3 +33,17 @@ export {
 export type { ThemeProviderProps } from './themeProvider';
 
 export type { ThemeWithProps, ThemedProps } from './themeProvider';
+
+export { Modal, Backdrop } from './modal';
+export type {
+  ModalProps,
+  ModalOwnProps,
+  ModalRootProps,
+  ModalOwnerState,
+  ModalSlots,
+  ModalComponentsPropsOverrides,
+  ModalCloseEvent,
+  BackdropProps,
+  BackdropComponentsPropsOverrides,
+  NativeFocusTarget,
+} from './modal';

@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Reusable Modal/Backdrop, top-layer dismissal, guarded native focus work, custom transition lifecycle wiring and Dialog slots/root routing. See [native modals](modals.md).
+
 - Shallow nested themes, callback replacement, System scopes, Material THEME_ID selection, shared original imports and RTL context. See [theme providers](theme-providers.md).
 
 - Dedicated FormLabel/InputLabel/FormHelperText contracts, floating/stacked fields, scoped focus/name/helper links and reduced-motion-aware native transforms. See [forms and labels](form-labels.md).
@@ -20,7 +22,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 - Palette shade/contrast derivation, light/dark defaults, augmentColor, color helpers and Palette/PaletteOptions augmentation. See [native theming](theming.md) for tested inputs and limitations.
 - Button loading positions, custom indicators, disabled presses and native busy state. See [native Button loading](button.md); screen-reader behavior remains unverified.
 - Controlled/uncontrolled form state, value/name change adapters, disabled buttons, native handler precedence, checkbox/radio selection.
-- Native modal backdrop and Android back-request close reasons; snackbar timeout cleanup.
+- Native modal backdrop and Android back-request close reasons; snackbar timeout cleanup. Full overlay/focus/transition/device contracts remain open.
 - Optional native grid cards, automatic switching at 600 dp of container width, explicit table mode and application-composed card content. See [native grid layouts](adaptive-grid.md).
 - Grid identity validation, single-column sorting/filtering, fixed-width columns, page size up to 100, include/exclude selection models. Row recycling uses FlashList. Server-mode inputs remain application-owned.
 - Rich tree expansion and selection, including validation of duplicate IDs in collapsed branches.

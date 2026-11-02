@@ -229,6 +229,16 @@
       "types": "./dist/styles/styled/index.d.ts",
       "react-native": "./src/styles/styled/index.ts",
       "default": "./dist/styles/styled/index.js"
+    },
+    "./Modal": {
+      "types": "./dist/Modal/index.d.ts",
+      "react-native": "./src/Modal/index.ts",
+      "default": "./dist/Modal/index.js"
+    },
+    "./Backdrop": {
+      "types": "./dist/Backdrop/index.d.ts",
+      "react-native": "./src/Backdrop/index.ts",
+      "default": "./dist/Backdrop/index.js"
     }
   },
   "dependencies": {

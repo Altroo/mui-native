@@ -193,7 +193,7 @@ test('radio labels use group state and do not reselect the same value', () => {
 test('dialog fullScreen ignores the default maxWidth and back requests respect the guard', () => {
   const close = jest.fn();
   const { rerender } = render(
-    <Dialog open fullScreen testID="dialog" onClose={close}>
+    <Dialog open fullScreen slotProps={{ paper: { testID: 'dialog' } }} onClose={close}>
       <Button>Save</Button>
     </Dialog>,
   );

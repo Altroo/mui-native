@@ -220,7 +220,7 @@ test('Dialog resolves custom breakpoint widths, missing defaults and the xs mini
     <ThemeProvider theme={custom}>
       <Dialog
         open
-        testID="dialog"
+        slotProps={{ paper: { testID: 'dialog' } }}
         maxWidth={'tablet' as Parameters<typeof custom.breakpoints.up>[0] & string}
       />
     </ThemeProvider>,
@@ -228,13 +228,13 @@ test('Dialog resolves custom breakpoint widths, missing defaults and the xs mini
   expect(screen.getByTestId('dialog')).toHaveStyle({ maxWidth: Math.min(available, 640) });
   rerender(
     <ThemeProvider theme={custom}>
-      <Dialog open testID="dialog" />
+      <Dialog open slotProps={{ paper: { testID: 'dialog' } }} />
     </ThemeProvider>,
   );
   expect(screen.getByTestId('dialog')).toHaveStyle({ maxWidth: available });
   rerender(
     <ThemeProvider theme={createTheme()}>
-      <Dialog open testID="dialog" maxWidth="xs" />
+      <Dialog open slotProps={{ paper: { testID: 'dialog' } }} maxWidth="xs" />
     </ThemeProvider>,
   );
   expect(screen.getByTestId('dialog')).toHaveStyle({ maxWidth: Math.min(available, 444) });
@@ -302,9 +302,8 @@ test('Dialog respects sx radius, clamps minimum width to small custom caps and c
     <ThemeProvider theme={tiny}>
       <Dialog
         open
-        testID="dialog"
+        slotProps={{ paper: { testID: 'dialog', sx: { borderRadius: 3 } } }}
         maxWidth={'tiny' as Parameters<typeof tiny.breakpoints.up>[0] & string}
-        sx={{ borderRadius: 3 }}
       />
     </ThemeProvider>,
   );
@@ -321,7 +320,7 @@ test('Dialog respects sx radius, clamps minimum width to small custom caps and c
     <ThemeProvider theme={rem}>
       <Dialog
         open
-        testID="dialog"
+        slotProps={{ paper: { testID: 'dialog' } }}
         maxWidth={'tablet' as Parameters<typeof rem.breakpoints.up>[0] & string}
       />
     </ThemeProvider>,

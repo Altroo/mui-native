@@ -1,0 +1,666 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Modal/Modal.js": "65c24666bc6e9692285494738cb1835fe8c7cdc2a38efb0a1262d212c25e4a39",
+      "Modal/Modal.d.ts": "07e30d682277e9061565c6d75785923ba7ca0db13b1b561c20f96212d9381ed5",
+      "Modal/useModal.js": "f3f6b8f5b62a100218b9941cabd105e0216241e46c96024be3fa78f82c8412d4",
+      "Modal/ModalManager.js": "6616f7f7caf3d83ed4f085cb7980f93783d38b09cac7b977d2d5287174a7686b",
+      "Modal/ModalManager.d.ts": "b8c88c140b0fbc4294012d014bee35d9da40f554cccc79a265dee4caf736bf49",
+      "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+      "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+      "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+      "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7",
+      "Unstable_TrapFocus/FocusTrap.js": "47cbf47298f1488395db11ad11b58023d2ff358ccf70dc4156cd962306052a0e",
+      "Unstable_TrapFocus/FocusTrap.types.d.ts": "c2043b6cddf15439ba19f3293a7d8626ac8f31be86d9d8998c3323af94feeb8c"
+    }
+  },
+  "fixtures": [
+    {
+      "props": { "open": false },
+      "transition": false,
+      "defaults": {},
+      "output": {
+        "root": false,
+        "backdrop": false,
+        "ownerState": null,
+        "tabIndex": null,
+        "transitionHooks": false,
+        "trace": []
+      }
+    },
+    {
+      "props": { "open": false },
+      "transition": true,
+      "defaults": {},
+      "output": {
+        "root": false,
+        "backdrop": false,
+        "ownerState": null,
+        "tabIndex": null,
+        "transitionHooks": false,
+        "trace": []
+      }
+    },
+    {
+      "props": { "open": false, "keepMounted": true },
+      "transition": false,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": true,
+        "ownerState": {
+          "open": false,
+          "exited": true,
+          "closeAfterTransition": false,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": false,
+          "keepMounted": true
+        },
+        "tabIndex": "-1",
+        "transitionHooks": false,
+        "trace": []
+      }
+    },
+    {
+      "props": { "open": false, "keepMounted": true },
+      "transition": true,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": true,
+        "ownerState": {
+          "open": false,
+          "exited": true,
+          "closeAfterTransition": false,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": false,
+          "keepMounted": true
+        },
+        "tabIndex": "-1",
+        "transitionHooks": true,
+        "trace": []
+      }
+    },
+    {
+      "props": { "open": true },
+      "transition": false,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": true,
+        "ownerState": {
+          "open": true,
+          "exited": false,
+          "closeAfterTransition": false,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": false,
+          "keepMounted": false
+        },
+        "tabIndex": "-1",
+        "transitionHooks": false,
+        "trace": ["slot", "slot", "backdropClick"]
+      }
+    },
+    {
+      "props": { "open": true },
+      "transition": true,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": true,
+        "ownerState": {
+          "open": true,
+          "exited": false,
+          "closeAfterTransition": false,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": false,
+          "keepMounted": false
+        },
+        "tabIndex": "-1",
+        "transitionHooks": true,
+        "trace": ["slot", "slot", "backdropClick"]
+      }
+    },
+    {
+      "props": { "open": true, "hideBackdrop": true },
+      "transition": false,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": false,
+        "ownerState": {
+          "open": true,
+          "exited": false,
+          "closeAfterTransition": false,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": true,
+          "keepMounted": false
+        },
+        "tabIndex": "-1",
+        "transitionHooks": false,
+        "trace": []
+      }
+    },
+    {
+      "props": { "open": true, "hideBackdrop": true },
+      "transition": true,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": false,
+        "ownerState": {
+          "open": true,
+          "exited": false,
+          "closeAfterTransition": false,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": true,
+          "keepMounted": false
+        },
+        "tabIndex": "-1",
+        "transitionHooks": true,
+        "trace": []
+      }
+    },
+    {
+      "props": {
+        "open": true,
+        "disableAutoFocus": true,
+        "disableEnforceFocus": true,
+        "disableRestoreFocus": true
+      },
+      "transition": false,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": true,
+        "ownerState": {
+          "open": true,
+          "exited": false,
+          "closeAfterTransition": false,
+          "disableAutoFocus": true,
+          "disableEnforceFocus": true,
+          "disablePortal": true,
+          "disableRestoreFocus": true,
+          "hideBackdrop": false,
+          "keepMounted": false
+        },
+        "tabIndex": "-1",
+        "transitionHooks": false,
+        "trace": ["slot", "slot", "backdropClick"]
+      }
+    },
+    {
+      "props": {
+        "open": true,
+        "disableAutoFocus": true,
+        "disableEnforceFocus": true,
+        "disableRestoreFocus": true
+      },
+      "transition": true,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": true,
+        "ownerState": {
+          "open": true,
+          "exited": false,
+          "closeAfterTransition": false,
+          "disableAutoFocus": true,
+          "disableEnforceFocus": true,
+          "disablePortal": true,
+          "disableRestoreFocus": true,
+          "hideBackdrop": false,
+          "keepMounted": false
+        },
+        "tabIndex": "-1",
+        "transitionHooks": true,
+        "trace": ["slot", "slot", "backdropClick"]
+      }
+    },
+    {
+      "props": { "open": true, "closeAfterTransition": true },
+      "transition": false,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": true,
+        "ownerState": {
+          "open": true,
+          "exited": false,
+          "closeAfterTransition": true,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": false,
+          "keepMounted": false
+        },
+        "tabIndex": "-1",
+        "transitionHooks": false,
+        "trace": ["slot", "slot", "backdropClick"]
+      }
+    },
+    {
+      "props": { "open": true, "closeAfterTransition": true },
+      "transition": true,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": true,
+        "ownerState": {
+          "open": true,
+          "exited": false,
+          "closeAfterTransition": true,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": false,
+          "keepMounted": false
+        },
+        "tabIndex": "-1",
+        "transitionHooks": true,
+        "trace": ["slot", "slot", "backdropClick"]
+      }
+    },
+    {
+      "props": { "open": false, "keepMounted": true, "hideBackdrop": true },
+      "transition": false,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": false,
+        "ownerState": {
+          "open": false,
+          "exited": true,
+          "closeAfterTransition": false,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": true,
+          "keepMounted": true
+        },
+        "tabIndex": "-1",
+        "transitionHooks": false,
+        "trace": []
+      }
+    },
+    {
+      "props": { "open": false, "keepMounted": true, "hideBackdrop": true },
+      "transition": true,
+      "defaults": {},
+      "output": {
+        "root": true,
+        "backdrop": false,
+        "ownerState": {
+          "open": false,
+          "exited": true,
+          "closeAfterTransition": false,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": true,
+          "keepMounted": true
+        },
+        "tabIndex": "-1",
+        "transitionHooks": true,
+        "trace": []
+      }
+    },
+    {
+      "props": { "open": true, "hideBackdrop": false },
+      "transition": false,
+      "defaults": { "hideBackdrop": true, "keepMounted": true },
+      "output": {
+        "root": true,
+        "backdrop": true,
+        "ownerState": {
+          "open": true,
+          "exited": false,
+          "closeAfterTransition": false,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": false,
+          "keepMounted": true
+        },
+        "tabIndex": "-1",
+        "transitionHooks": false,
+        "trace": ["slot", "slot", "backdropClick"]
+      }
+    },
+    {
+      "props": { "open": true, "hideBackdrop": false },
+      "transition": true,
+      "defaults": { "hideBackdrop": true, "keepMounted": true },
+      "output": {
+        "root": true,
+        "backdrop": true,
+        "ownerState": {
+          "open": true,
+          "exited": false,
+          "closeAfterTransition": false,
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disablePortal": true,
+          "disableRestoreFocus": false,
+          "hideBackdrop": false,
+          "keepMounted": true
+        },
+        "tabIndex": "-1",
+        "transitionHooks": true,
+        "trace": ["slot", "slot", "backdropClick"]
+      }
+    }
+  ],
+  "dialogRouting": [
+    {
+      "name": "top-level routing",
+      "props": {
+        "open": true,
+        "id": "dialog-root",
+        "style": { "opacity": 0.7 },
+        "sx": { "zIndex": 17 },
+        "slotProps": {
+          "paper": {
+            "id": "dialog-paper",
+            "style": { "margin": 4 },
+            "sx": { "borderRadius": "5px" }
+          }
+        }
+      },
+      "output": {
+        "rootOpen": true,
+        "controls": {
+          "disableAutoFocus": null,
+          "disableEnforceFocus": null,
+          "disableRestoreFocus": null,
+          "disablePortal": null,
+          "hideBackdrop": null,
+          "keepMounted": null
+        },
+        "rootId": "dialog-root",
+        "paperId": "dialog-paper",
+        "rootOpacity": 0.7,
+        "rootPadding": null,
+        "paperOpacity": null,
+        "paperMargin": 4,
+        "rootSx": { "zIndex": 17 },
+        "paperSx": { "borderRadius": "5px" }
+      }
+    },
+    {
+      "name": "top-level values replace conflicting root slots",
+      "props": {
+        "open": true,
+        "id": "dialog-root",
+        "style": { "opacity": 0.7 },
+        "sx": { "zIndex": 17 },
+        "slotProps": {
+          "root": {
+            "id": "slot-root",
+            "style": { "opacity": 0.2, "padding": 9 },
+            "sx": { "borderRadius": 11 }
+          },
+          "paper": { "id": "dialog-paper", "style": { "margin": 4 } }
+        }
+      },
+      "output": {
+        "rootOpen": true,
+        "controls": {
+          "disableAutoFocus": null,
+          "disableEnforceFocus": null,
+          "disableRestoreFocus": null,
+          "disablePortal": null,
+          "hideBackdrop": null,
+          "keepMounted": null
+        },
+        "rootId": "dialog-root",
+        "paperId": "dialog-paper",
+        "rootOpacity": 0.7,
+        "rootPadding": null,
+        "paperOpacity": null,
+        "paperMargin": 4,
+        "rootSx": { "zIndex": 17 },
+        "paperSx": null
+      }
+    },
+    {
+      "name": "root slot values without top-level values",
+      "props": {
+        "open": true,
+        "slotProps": {
+          "root": {
+            "id": "slot-root",
+            "style": { "opacity": 0.2, "padding": 9 },
+            "sx": { "borderRadius": 11 }
+          },
+          "paper": { "id": "dialog-paper", "style": { "margin": 4 } }
+        }
+      },
+      "output": {
+        "rootOpen": true,
+        "controls": {
+          "disableAutoFocus": null,
+          "disableEnforceFocus": null,
+          "disableRestoreFocus": null,
+          "disablePortal": null,
+          "hideBackdrop": null,
+          "keepMounted": null
+        },
+        "rootId": "slot-root",
+        "paperId": "dialog-paper",
+        "rootOpacity": 0.2,
+        "rootPadding": 9,
+        "paperOpacity": null,
+        "paperMargin": 4,
+        "rootSx": { "borderRadius": 11 },
+        "paperSx": null
+      }
+    },
+    {
+      "name": "explicit undefined top-level values replace root slots",
+      "explicitUndefined": true,
+      "props": {
+        "open": true,
+        "slotProps": {
+          "root": {
+            "id": "slot-root",
+            "style": { "opacity": 0.2, "padding": 9 },
+            "sx": { "borderRadius": 11 }
+          },
+          "paper": { "id": "dialog-paper", "style": { "margin": 4 } }
+        }
+      },
+      "output": {
+        "rootOpen": true,
+        "controls": {
+          "disableAutoFocus": null,
+          "disableEnforceFocus": null,
+          "disableRestoreFocus": null,
+          "disablePortal": null,
+          "hideBackdrop": null,
+          "keepMounted": null
+        },
+        "rootId": null,
+        "paperId": "dialog-paper",
+        "rootOpacity": null,
+        "rootPadding": null,
+        "paperOpacity": null,
+        "paperMargin": 4,
+        "rootSx": null,
+        "paperSx": null
+      }
+    },
+    {
+      "name": "top-level inherited controls replace root slots",
+      "props": {
+        "open": true,
+        "disableAutoFocus": false,
+        "disableEnforceFocus": false,
+        "disableRestoreFocus": false,
+        "disablePortal": false,
+        "hideBackdrop": false,
+        "keepMounted": false,
+        "slotProps": {
+          "root": {
+            "disableAutoFocus": true,
+            "disableEnforceFocus": true,
+            "disableRestoreFocus": true,
+            "disablePortal": true,
+            "hideBackdrop": true,
+            "keepMounted": true
+          },
+          "paper": { "id": "dialog-paper", "style": { "margin": 4 } }
+        }
+      },
+      "output": {
+        "rootOpen": true,
+        "controls": {
+          "disableAutoFocus": false,
+          "disableEnforceFocus": false,
+          "disableRestoreFocus": false,
+          "disablePortal": false,
+          "hideBackdrop": false,
+          "keepMounted": false
+        },
+        "rootId": null,
+        "paperId": "dialog-paper",
+        "rootOpacity": null,
+        "rootPadding": null,
+        "paperOpacity": null,
+        "paperMargin": 4,
+        "rootSx": null,
+        "paperSx": null
+      }
+    },
+    {
+      "name": "inherited root controls remain when top-level controls absent",
+      "props": {
+        "open": true,
+        "slotProps": {
+          "root": {
+            "disableAutoFocus": true,
+            "disableEnforceFocus": true,
+            "disableRestoreFocus": true,
+            "disablePortal": true,
+            "hideBackdrop": true,
+            "keepMounted": true
+          },
+          "paper": { "id": "dialog-paper", "style": { "margin": 4 } }
+        }
+      },
+      "output": {
+        "rootOpen": true,
+        "controls": {
+          "disableAutoFocus": true,
+          "disableEnforceFocus": true,
+          "disableRestoreFocus": true,
+          "disablePortal": true,
+          "hideBackdrop": true,
+          "keepMounted": true
+        },
+        "rootId": null,
+        "paperId": "dialog-paper",
+        "rootOpacity": null,
+        "rootPadding": null,
+        "paperOpacity": null,
+        "paperMargin": 4,
+        "rootSx": null,
+        "paperSx": null
+      }
+    },
+    {
+      "name": "explicit undefined inherited controls replace root slots",
+      "explicitUndefinedControls": true,
+      "props": {
+        "open": true,
+        "slotProps": {
+          "root": {
+            "disableAutoFocus": true,
+            "disableEnforceFocus": true,
+            "disableRestoreFocus": true,
+            "disablePortal": true,
+            "hideBackdrop": true,
+            "keepMounted": true
+          },
+          "paper": { "id": "dialog-paper", "style": { "margin": 4 } }
+        }
+      },
+      "output": {
+        "rootOpen": true,
+        "controls": {
+          "disableAutoFocus": null,
+          "disableEnforceFocus": null,
+          "disableRestoreFocus": null,
+          "disablePortal": null,
+          "hideBackdrop": null,
+          "keepMounted": null
+        },
+        "rootId": null,
+        "paperId": "dialog-paper",
+        "rootOpacity": null,
+        "rootPadding": null,
+        "paperOpacity": null,
+        "paperMargin": 4,
+        "rootSx": null,
+        "paperSx": null
+      }
+    },
+    {
+      "name": "own open control keeps its distinct root-slot precedence",
+      "props": {
+        "open": true,
+        "slotProps": {
+          "root": { "open": false },
+          "paper": { "id": "dialog-paper", "style": { "margin": 4 } }
+        }
+      },
+      "output": {
+        "rootOpen": false,
+        "controls": {
+          "disableAutoFocus": null,
+          "disableEnforceFocus": null,
+          "disableRestoreFocus": null,
+          "disablePortal": null,
+          "hideBackdrop": null,
+          "keepMounted": null
+        },
+        "rootId": null,
+        "paperId": "dialog-paper",
+        "rootOpacity": null,
+        "rootPadding": null,
+        "paperOpacity": null,
+        "paperMargin": 4,
+        "rootSx": null,
+        "paperSx": null
+      }
+    }
+  ]
+}

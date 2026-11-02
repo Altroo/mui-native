@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "d4b164cb1217540f2c8bef23eea5ebc3c09fd71fe5e46a4555cb71ee1716ce17",
+  "nativeSourceSha256": "3aece3a20cc0a4177caa8092d38930559f5f1d4e12622f4aaac822ecf57a6c19",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -2545,7 +2545,7 @@
           "file": "Backdrop/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/Badge",
@@ -4735,7 +4735,7 @@
           "file": "Modal/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/NativeSelect",
@@ -9325,7 +9325,7 @@
           "line": 83
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -9401,7 +9401,7 @@
           "line": 22
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -9458,7 +9458,7 @@
           "line": 84
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14512,7 +14512,7 @@
           "line": 166
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14588,7 +14588,7 @@
           "line": 11
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -23081,7 +23081,7 @@
           "line": 169
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -23157,7 +23157,7 @@
           "line": 10
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -23195,7 +23195,7 @@
           "line": 11
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -23214,7 +23214,7 @@
           "line": 25
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -23233,7 +23233,7 @@
           "line": 170
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -23271,7 +23271,7 @@
           "line": 14
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35487,6 +35487,39 @@
       ]
     },
     {
+      "name": "ModalCloseEvent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/modal.tsx",
+          "name": "ModalCloseEvent",
+          "kind": "type",
+          "line": 43
+        }
+      ]
+    },
+    {
+      "name": "ModalRootProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/modal.tsx",
+          "name": "ModalRootProps",
+          "kind": "type",
+          "line": 113
+        }
+      ]
+    },
+    {
+      "name": "NativeFocusTarget",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/nativeModalManager.ts",
+          "name": "NativeFocusTarget",
+          "kind": "type",
+          "line": 1
+        }
+      ]
+    },
+    {
       "name": "NativeStyle",
       "origins": [
         {
@@ -35636,7 +35669,7 @@
           "module": "@altroo/mui-native:src/feedback.tsx",
           "name": "ProgressProps",
           "kind": "type",
-          "line": 165
+          "line": 51
         }
       ]
     },
@@ -38249,7 +38282,7 @@
         {
           "name": "AlertProps",
           "file": "src/feedback.tsx",
-          "line": 123,
+          "line": 9,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38643,7 +38676,7 @@
         {
           "name": "AlertProps",
           "file": "src/feedback.tsx",
-          "line": 123,
+          "line": 9,
           "package": "@altroo/mui-native"
         }
       ]
@@ -44421,7 +44454,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "BackdropComponentsPropsOverrides",
+          "file": "src/modal.tsx",
+          "line": 44,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "BackdropTransitionSlotPropsOverrides",
@@ -44495,7 +44535,7 @@
           "line": 50,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -44508,7 +44548,7 @@
           "line": 54,
           "kind": "property",
           "type": "boolean",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -44521,7 +44561,7 @@
           "line": 58,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -44550,7 +44590,14 @@
         "TransitionProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "BackdropProps",
+          "file": "src/modal.tsx",
+          "line": 45,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "BackdropTypeMap",
@@ -44624,7 +44671,7 @@
           "line": 85,
           "kind": "property",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -44636,7 +44683,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "BackdropProps",
+          "file": "src/modal.tsx",
+          "line": 45,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "BackdropOwnerState",
@@ -44697,7 +44751,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "BackdropComponentsPropsOverrides",
+          "file": "src/modal.tsx",
+          "line": 44,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "BackdropTransitionSlotPropsOverrides",
@@ -44771,7 +44832,7 @@
           "line": 50,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -44784,7 +44845,7 @@
           "line": 54,
           "kind": "property",
           "type": "boolean",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -44797,7 +44858,7 @@
           "line": 58,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -44826,7 +44887,14 @@
         "TransitionProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "BackdropProps",
+          "file": "src/modal.tsx",
+          "line": 45,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "BackdropTypeMap",
@@ -44900,7 +44968,7 @@
           "line": 85,
           "kind": "property",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -44912,7 +44980,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "BackdropProps",
+          "file": "src/modal.tsx",
+          "line": 45,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "BackdropOwnerState",
@@ -60775,7 +60850,7 @@
           "line": 35,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -60788,7 +60863,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ContainerProps",
+          "file": "src/dialog.tsx",
+          "line": 36,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ContainerTypeMap",
@@ -60860,7 +60942,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ContainerProps",
+          "file": "src/dialog.tsx",
+          "line": 36,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ContainerOwnProps",
@@ -60943,7 +61032,7 @@
           "line": 35,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -60956,7 +61045,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ContainerProps",
+          "file": "src/dialog.tsx",
+          "line": 36,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ContainerTypeMap",
@@ -61028,7 +61124,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ContainerProps",
+          "file": "src/dialog.tsx",
+          "line": 36,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CssBaselineProps",
@@ -61139,7 +61242,7 @@
           "line": 22,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -61152,7 +61255,7 @@
           "line": 26,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -61165,7 +61268,7 @@
           "line": 30,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -61178,7 +61281,7 @@
           "line": 34,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -61186,7 +61289,14 @@
         "React.ElementType"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogSlots",
+          "file": "src/dialog.tsx",
+          "line": 38,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTransitionSlotPropsOverrides",
@@ -61206,7 +61316,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogPaperSlotPropsOverrides",
+          "file": "src/dialog.tsx",
+          "line": 25,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogContainerSlotPropsOverrides",
@@ -61216,7 +61333,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogContainerSlotPropsOverrides",
+          "file": "src/dialog.tsx",
+          "line": 26,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogBackdropSlotPropsOverrides",
@@ -61226,7 +61350,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogBackdropSlotPropsOverrides",
+          "file": "src/dialog.tsx",
+          "line": 27,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogRootSlotPropsOverrides",
@@ -61236,7 +61367,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogRootSlotPropsOverrides",
+          "file": "src/dialog.tsx",
+          "line": 28,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogSlotsAndSlotProps",
@@ -61384,7 +61522,7 @@
           "line": 116,
           "kind": "event",
           "type": "ModalProps['onClose'] | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -61397,7 +61535,7 @@
           "line": 120,
           "kind": "property",
           "type": "ModalProps['open']",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -61484,8 +61622,8 @@
       "nativeCandidates": [
         {
           "name": "DialogProps",
-          "file": "src/feedback.tsx",
-          "line": 23,
+          "file": "src/dialog.tsx",
+          "line": 44,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61501,7 +61639,14 @@
         "Omit"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogOwnerState",
+          "file": "src/dialog.tsx",
+          "line": 29,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogSlots",
@@ -61532,7 +61677,7 @@
           "line": 22,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -61545,7 +61690,7 @@
           "line": 26,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -61558,7 +61703,7 @@
           "line": 30,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -61571,7 +61716,7 @@
           "line": 34,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -61579,7 +61724,14 @@
         "React.ElementType"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogSlots",
+          "file": "src/dialog.tsx",
+          "line": 38,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTransitionSlotPropsOverrides",
@@ -61599,7 +61751,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogPaperSlotPropsOverrides",
+          "file": "src/dialog.tsx",
+          "line": 25,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogContainerSlotPropsOverrides",
@@ -61609,7 +61768,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogContainerSlotPropsOverrides",
+          "file": "src/dialog.tsx",
+          "line": 26,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogBackdropSlotPropsOverrides",
@@ -61619,7 +61785,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogBackdropSlotPropsOverrides",
+          "file": "src/dialog.tsx",
+          "line": 27,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogRootSlotPropsOverrides",
@@ -61629,7 +61802,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogRootSlotPropsOverrides",
+          "file": "src/dialog.tsx",
+          "line": 28,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogSlotsAndSlotProps",
@@ -61777,7 +61957,7 @@
           "line": 116,
           "kind": "event",
           "type": "ModalProps['onClose'] | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -61790,7 +61970,7 @@
           "line": 120,
           "kind": "property",
           "type": "ModalProps['open']",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -61877,8 +62057,8 @@
       "nativeCandidates": [
         {
           "name": "DialogProps",
-          "file": "src/feedback.tsx",
-          "line": 23,
+          "file": "src/dialog.tsx",
+          "line": 44,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61894,7 +62074,14 @@
         "Omit"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogOwnerState",
+          "file": "src/dialog.tsx",
+          "line": 29,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogContextValue",
@@ -86656,7 +86843,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalComponentsPropsOverrides",
+          "file": "src/modal.tsx",
+          "line": 112,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalOwnerState",
@@ -86674,7 +86868,7 @@
           "line": 12,
           "kind": "property",
           "type": "boolean",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -86682,7 +86876,14 @@
         "ModalProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalOwnerState",
+          "file": "src/modal.tsx",
+          "line": 118,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalSlots",
@@ -86700,7 +86901,7 @@
           "line": 19,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86713,7 +86914,7 @@
           "line": 23,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -86721,7 +86922,14 @@
         "React.ElementType"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalSlots",
+          "file": "src/modal.tsx",
+          "line": 122,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalOwnProps",
@@ -86739,7 +86947,7 @@
           "line": 29,
           "kind": "property",
           "type": "React.ReactElement<unknown>",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86778,7 +86986,7 @@
           "line": 42,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86908,7 +87116,7 @@
           "line": 113,
           "kind": "event",
           "type": "(() => void) | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86921,7 +87129,7 @@
           "line": 117,
           "kind": "event",
           "type": "(() => void) | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86947,7 +87155,7 @@
           "line": 127,
           "kind": "slot",
           "type": "ModalSlots | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86960,7 +87168,7 @@
           "line": 132,
           "kind": "slot",
           "type": "{\n    root?: SlotComponentProps<'div', ModalComponentsPropsOverrides, ModalOwnerState> | undefined;\n    backdrop?: SlotComponentProps<typeof Backdrop, ModalComponentsPropsOverrides, ModalOwnerState> | undefined;\n  } | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86973,7 +87181,7 @@
           "line": 133,
           "kind": "slot",
           "type": "SlotComponentProps<'div', ModalComponentsPropsOverrides, ModalOwnerState> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86986,7 +87194,7 @@
           "line": 134,
           "kind": "slot",
           "type": "SlotComponentProps<typeof Backdrop, ModalComponentsPropsOverrides, ModalOwnerState> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86999,7 +87207,7 @@
           "line": 139,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -87016,7 +87224,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalProps",
+          "file": "src/modal.tsx",
+          "line": 128,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "ModalOwnProps",
+          "file": "src/modal.tsx",
+          "line": 146,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalTypeMap",
@@ -87071,7 +87292,14 @@
         "NonNullable"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalRootProps",
+          "file": "src/modal.tsx",
+          "line": 113,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalProps",
@@ -87089,7 +87317,7 @@
           "line": 171,
           "kind": "property",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -87101,7 +87329,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalProps",
+          "file": "src/modal.tsx",
+          "line": 128,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalComponentsPropsOverrides",
@@ -87111,7 +87346,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalComponentsPropsOverrides",
+          "file": "src/modal.tsx",
+          "line": 112,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalOwnerState",
@@ -87129,7 +87371,7 @@
           "line": 12,
           "kind": "property",
           "type": "boolean",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -87137,7 +87379,14 @@
         "ModalProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalOwnerState",
+          "file": "src/modal.tsx",
+          "line": 118,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalSlots",
@@ -87155,7 +87404,7 @@
           "line": 19,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -87168,7 +87417,7 @@
           "line": 23,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -87176,7 +87425,14 @@
         "React.ElementType"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalSlots",
+          "file": "src/modal.tsx",
+          "line": 122,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalOwnProps",
@@ -87194,7 +87450,7 @@
           "line": 29,
           "kind": "property",
           "type": "React.ReactElement<unknown>",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -87233,7 +87489,7 @@
           "line": 42,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -87363,7 +87619,7 @@
           "line": 113,
           "kind": "event",
           "type": "(() => void) | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -87376,7 +87632,7 @@
           "line": 117,
           "kind": "event",
           "type": "(() => void) | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -87402,7 +87658,7 @@
           "line": 127,
           "kind": "slot",
           "type": "ModalSlots | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -87415,7 +87671,7 @@
           "line": 132,
           "kind": "slot",
           "type": "{\n    root?: SlotComponentProps<'div', ModalComponentsPropsOverrides, ModalOwnerState> | undefined;\n    backdrop?: SlotComponentProps<typeof Backdrop, ModalComponentsPropsOverrides, ModalOwnerState> | undefined;\n  } | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -87428,7 +87684,7 @@
           "line": 133,
           "kind": "slot",
           "type": "SlotComponentProps<'div', ModalComponentsPropsOverrides, ModalOwnerState> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -87441,7 +87697,7 @@
           "line": 134,
           "kind": "slot",
           "type": "SlotComponentProps<typeof Backdrop, ModalComponentsPropsOverrides, ModalOwnerState> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -87454,7 +87710,7 @@
           "line": 139,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -87471,7 +87727,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalProps",
+          "file": "src/modal.tsx",
+          "line": 128,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "ModalOwnProps",
+          "file": "src/modal.tsx",
+          "line": 146,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalTypeMap",
@@ -87526,7 +87795,14 @@
         "NonNullable"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalRootProps",
+          "file": "src/modal.tsx",
+          "line": 113,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ModalProps",
@@ -87544,7 +87820,7 @@
           "line": 171,
           "kind": "property",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -87556,7 +87832,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ModalProps",
+          "file": "src/modal.tsx",
+          "line": 128,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ManagedModalProps",
@@ -108629,7 +108912,7 @@
         {
           "name": "SnackbarProps",
           "file": "src/feedback.tsx",
-          "line": 223,
+          "line": 109,
           "package": "@altroo/mui-native"
         }
       ]
@@ -109020,7 +109303,7 @@
         {
           "name": "SnackbarProps",
           "file": "src/feedback.tsx",
-          "line": 223,
+          "line": 109,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175792,44 +176075,227 @@
       "package": "@altroo/mui-native"
     },
     {
-      "name": "DialogProps",
-      "file": "src/feedback.tsx",
-      "line": 23,
+      "name": "DialogPaperSlotPropsOverrides",
+      "file": "src/dialog.tsx",
+      "line": 25,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogContainerSlotPropsOverrides",
+      "file": "src/dialog.tsx",
+      "line": 26,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogBackdropSlotPropsOverrides",
+      "file": "src/dialog.tsx",
+      "line": 27,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogRootSlotPropsOverrides",
+      "file": "src/dialog.tsx",
+      "line": 28,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogOwnerState",
+      "file": "src/dialog.tsx",
+      "line": 29,
       "kind": "type",
       "members": [
         {
-          "name": "open",
+          "name": "fullWidth",
           "optional": false,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "open: boolean;",
-          "line": 24,
+          "declaration": "fullWidth: boolean;",
+          "line": 30,
           "kind": "property",
           "type": "boolean"
         },
         {
-          "name": "onClose",
-          "optional": true,
+          "name": "fullScreen",
+          "optional": false,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "onClose?: (\n    event: GestureResponderEvent | null,\n    reason: 'backdropClick' | 'escapeKeyDown',\n  ) => void;",
-          "line": 25,
-          "kind": "event",
-          "type": "(\n    event: GestureResponderEvent | null,\n    reason: 'backdropClick' | 'escapeKeyDown',\n  ) => void"
-        },
-        {
-          "name": "disableEscapeKeyDown",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "disableEscapeKeyDown?: boolean;",
-          "line": 29,
+          "declaration": "fullScreen: boolean;",
+          "line": 31,
           "kind": "property",
           "type": "boolean"
         },
+        {
+          "name": "maxWidth",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "maxWidth: Breakpoint | false;",
+          "line": 32,
+          "kind": "property",
+          "type": "Breakpoint | false"
+        }
+      ],
+      "references": [
+        "Breakpoint",
+        "NativeModalControlProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PaperSlotProps",
+      "file": "src/dialog.tsx",
+      "line": 34,
+      "kind": "type",
+      "members": [
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>",
+          "line": 35,
+          "kind": "slot",
+          "type": "React.Ref<ViewInstance>"
+        }
+      ],
+      "references": [
+        "DialogPaperSlotPropsOverrides",
+        "PaperProps",
+        "React.Ref",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ContainerProps",
+      "file": "src/dialog.tsx",
+      "line": 36,
+      "kind": "type",
+      "members": [
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>;",
+          "line": 37,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps",
+          "line": 37,
+          "kind": "property",
+          "type": "SxProps"
+        }
+      ],
+      "references": [
+        "DialogContainerSlotPropsOverrides",
+        "KeyboardAvoidingViewProps",
+        "React.Ref",
+        "SxProps",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogSlots",
+      "file": "src/dialog.tsx",
+      "line": 38,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: React.ComponentType<ModalProps>;",
+          "line": 39,
+          "kind": "slot",
+          "type": "React.ComponentType<ModalProps>"
+        },
+        {
+          "name": "paper",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "paper?: React.ComponentType<PaperSlotProps>;",
+          "line": 40,
+          "kind": "slot",
+          "type": "React.ComponentType<PaperSlotProps>"
+        },
+        {
+          "name": "container",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "container?: React.ComponentType<ContainerProps>;",
+          "line": 41,
+          "kind": "slot",
+          "type": "React.ComponentType<ContainerProps>"
+        },
+        {
+          "name": "backdrop",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "backdrop?: React.ComponentType<BackdropProps & React.RefAttributes<ViewInstance>>;",
+          "line": 42,
+          "kind": "slot",
+          "type": "React.ComponentType<BackdropProps & React.RefAttributes<ViewInstance>>"
+        }
+      ],
+      "references": [
+        "BackdropProps",
+        "ContainerProps",
+        "ModalProps",
+        "PaperSlotProps",
+        "React.ComponentType",
+        "React.RefAttributes",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogProps",
+      "file": "src/dialog.tsx",
+      "line": 44,
+      "kind": "type",
+      "members": [
         {
           "name": "fullWidth",
           "optional": true,
@@ -175837,7 +176303,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullWidth?: boolean;",
-          "line": 30,
+          "line": 45,
           "kind": "property",
           "type": "boolean"
         },
@@ -175848,7 +176314,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullScreen?: boolean;",
-          "line": 31,
+          "line": 46,
           "kind": "property",
           "type": "boolean"
         },
@@ -175859,15 +176325,93 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "maxWidth?: Breakpoint | false;",
-          "line": 32,
+          "line": 47,
           "kind": "property",
           "type": "Breakpoint | false"
+        },
+        {
+          "name": "slots",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slots?: DialogSlots;",
+          "line": 48,
+          "kind": "slot",
+          "type": "DialogSlots"
+        },
+        {
+          "name": "slotProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slotProps?: {\n    root?: SlotProps<\n      Partial<ModalProps> & DialogRootSlotPropsOverrides & { ref?: React.Ref<ViewInstance> },\n      DialogOwnerState\n    >;\n    paper?: SlotProps<PaperSlotProps, DialogOwnerState>;\n    container?: SlotProps<ContainerProps, DialogOwnerState>;\n    backdrop?: SlotProps<\n      Partial<BackdropProps> & DialogBackdropSlotPropsOverrides,\n      DialogOwnerState\n    >;\n  };",
+          "line": 49,
+          "kind": "slot",
+          "type": "{\n    root?: SlotProps<\n      Partial<ModalProps> & DialogRootSlotPropsOverrides & { ref?: React.Ref<ViewInstance> },\n      DialogOwnerState\n    >;\n    paper?: SlotProps<PaperSlotProps, DialogOwnerState>;\n    container?: SlotProps<ContainerProps, DialogOwnerState>;\n    backdrop?: SlotProps<\n      Partial<BackdropProps> & DialogBackdropSlotPropsOverrides,\n      DialogOwnerState\n    >;\n  }"
+        },
+        {
+          "name": "slotProps.root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: SlotProps<\n      Partial<ModalProps> & DialogRootSlotPropsOverrides & { ref?: React.Ref<ViewInstance> },\n      DialogOwnerState\n    >;",
+          "line": 50,
+          "kind": "slot",
+          "type": "SlotProps<\n      Partial<ModalProps> & DialogRootSlotPropsOverrides & { ref?: React.Ref<ViewInstance> },\n      DialogOwnerState\n    >"
+        },
+        {
+          "name": "slotProps.paper",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "paper?: SlotProps<PaperSlotProps, DialogOwnerState>;",
+          "line": 54,
+          "kind": "slot",
+          "type": "SlotProps<PaperSlotProps, DialogOwnerState>"
+        },
+        {
+          "name": "slotProps.container",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "container?: SlotProps<ContainerProps, DialogOwnerState>;",
+          "line": 55,
+          "kind": "slot",
+          "type": "SlotProps<ContainerProps, DialogOwnerState>"
+        },
+        {
+          "name": "slotProps.backdrop",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "backdrop?: SlotProps<\n      Partial<BackdropProps> & DialogBackdropSlotPropsOverrides,\n      DialogOwnerState\n    >;",
+          "line": 56,
+          "kind": "slot",
+          "type": "SlotProps<\n      Partial<BackdropProps> & DialogBackdropSlotPropsOverrides,\n      DialogOwnerState\n    >"
         }
       ],
       "references": [
+        "BackdropProps",
         "BoxProps",
         "Breakpoint",
-        "GestureResponderEvent"
+        "ContainerProps",
+        "DialogBackdropSlotPropsOverrides",
+        "DialogOwnerState",
+        "DialogRootSlotPropsOverrides",
+        "DialogSlots",
+        "ModalProps",
+        "NativeModalControlProps",
+        "PaperSlotProps",
+        "Partial",
+        "React.Ref",
+        "SlotProps",
+        "ViewInstance"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -175875,7 +176419,7 @@
     {
       "name": "AlertProps",
       "file": "src/feedback.tsx",
-      "line": 123,
+      "line": 9,
       "kind": "type",
       "members": [
         {
@@ -175885,7 +176429,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "severity?: 'error' | 'warning' | 'info' | 'success';",
-          "line": 124,
+          "line": 10,
           "kind": "property",
           "type": "'error' | 'warning' | 'info' | 'success'"
         },
@@ -175896,7 +176440,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClose?: () => void;",
-          "line": 125,
+          "line": 11,
           "kind": "event",
           "type": "() => void"
         },
@@ -175907,7 +176451,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "action?: React.ReactNode;",
-          "line": 126,
+          "line": 12,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -175922,7 +176466,7 @@
     {
       "name": "ProgressProps",
       "file": "src/feedback.tsx",
-      "line": 165,
+      "line": 51,
       "kind": "type",
       "members": [
         {
@@ -175932,7 +176476,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: 'indeterminate' | 'determinate';",
-          "line": 166,
+          "line": 52,
           "kind": "property",
           "type": "'indeterminate' | 'determinate'"
         },
@@ -175943,7 +176487,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: number;",
-          "line": 167,
+          "line": 53,
           "kind": "property",
           "type": "number"
         },
@@ -175954,7 +176498,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size?: number;",
-          "line": 168,
+          "line": 54,
           "kind": "property",
           "type": "number"
         },
@@ -175965,7 +176509,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 169,
+          "line": 55,
           "kind": "property",
           "type": "SxProps"
         },
@@ -175976,7 +176520,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-label'?: string;",
-          "line": 170,
+          "line": 56,
           "kind": "property",
           "type": "string"
         }
@@ -175990,7 +176534,7 @@
     {
       "name": "SnackbarProps",
       "file": "src/feedback.tsx",
-      "line": 223,
+      "line": 109,
       "kind": "type",
       "members": [
         {
@@ -176000,7 +176544,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "open: boolean;",
-          "line": 224,
+          "line": 110,
           "kind": "property",
           "type": "boolean"
         },
@@ -176011,7 +176555,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "message?: React.ReactNode;",
-          "line": 225,
+          "line": 111,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -176022,7 +176566,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "action?: React.ReactNode;",
-          "line": 226,
+          "line": 112,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -176033,7 +176577,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "autoHideDuration?: number | null;",
-          "line": 227,
+          "line": 113,
           "kind": "property",
           "type": "number | null"
         },
@@ -176044,7 +176588,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClose?: (event: null, reason: 'timeout') => void;",
-          "line": 228,
+          "line": 114,
           "kind": "event",
           "type": "(event: null, reason: 'timeout') => void"
         },
@@ -176055,7 +176599,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 229,
+          "line": 115,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -179053,6 +179597,740 @@
       ],
       "references": [
         "BoxProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeKeyEvent",
+      "file": "src/modal.tsx",
+      "line": 42,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NonNullable",
+        "Parameters",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ModalCloseEvent",
+      "file": "src/modal.tsx",
+      "line": 43,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "GestureResponderEvent",
+        "NativeKeyEvent"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "BackdropComponentsPropsOverrides",
+      "file": "src/modal.tsx",
+      "line": 44,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "BackdropProps",
+      "file": "src/modal.tsx",
+      "line": 45,
+      "kind": "type",
+      "members": [
+        {
+          "name": "open",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "open: boolean;",
+          "line": 46,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "invisible",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "invisible?: boolean;",
+          "line": 47,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps;",
+          "line": 48,
+          "kind": "property",
+          "type": "SxProps"
+        },
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: PressableProps['style'];",
+          "line": 49,
+          "kind": "property",
+          "type": "PressableProps['style']"
+        },
+        {
+          "name": "onClick",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onClick?: (event: GestureResponderEvent) => void;",
+          "line": 50,
+          "kind": "event",
+          "type": "(event: GestureResponderEvent) => void"
+        },
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: React.ComponentType<PressableProps & React.RefAttributes<ViewInstance>>;",
+          "line": 51,
+          "kind": "property",
+          "type": "React.ComponentType<PressableProps & React.RefAttributes<ViewInstance>>"
+        }
+      ],
+      "references": [
+        "GestureResponderEvent",
+        "Omit",
+        "PressableProps",
+        "React.ComponentType",
+        "React.RefAttributes",
+        "SxProps",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeModalControlProps",
+      "file": "src/modal.tsx",
+      "line": 92,
+      "kind": "type",
+      "members": [
+        {
+          "name": "open",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "open: boolean;",
+          "line": 93,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "onClose",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onClose?: (event: ModalCloseEvent, reason: 'backdropClick' | 'escapeKeyDown') => void;",
+          "line": 94,
+          "kind": "event",
+          "type": "(event: ModalCloseEvent, reason: 'backdropClick' | 'escapeKeyDown') => void"
+        },
+        {
+          "name": "disableEscapeKeyDown",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableEscapeKeyDown?: boolean;",
+          "line": 96,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableAutoFocus",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableAutoFocus?: boolean;",
+          "line": 97,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableEnforceFocus",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableEnforceFocus?: boolean;",
+          "line": 98,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableRestoreFocus",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableRestoreFocus?: boolean;",
+          "line": 99,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disablePortal",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disablePortal?: boolean;",
+          "line": 100,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "hideBackdrop",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "hideBackdrop?: boolean;",
+          "line": 101,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "keepMounted",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "keepMounted?: boolean;",
+          "line": 102,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "initialFocusRef",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "initialFocusRef?: React.RefObject<NativeFocusTarget | null>;",
+          "line": 103,
+          "kind": "property",
+          "type": "React.RefObject<NativeFocusTarget | null>"
+        },
+        {
+          "name": "returnFocusRef",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "returnFocusRef?: React.RefObject<NativeFocusTarget | null>;",
+          "line": 104,
+          "kind": "property",
+          "type": "React.RefObject<NativeFocusTarget | null>"
+        },
+        {
+          "name": "nativeModalProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "nativeModalProps?: Omit<\n    NativeWindowProps,\n    'children' | 'visible' | 'onRequestClose' | 'onShow' | 'onDismiss'\n  >;",
+          "line": 105,
+          "kind": "property",
+          "type": "Omit<\n    NativeWindowProps,\n    'children' | 'visible' | 'onRequestClose' | 'onShow' | 'onDismiss'\n  >"
+        },
+        {
+          "name": "onShow",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onShow?: NativeWindowProps['onShow'];",
+          "line": 109,
+          "kind": "event",
+          "type": "NativeWindowProps['onShow']"
+        },
+        {
+          "name": "onDismiss",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onDismiss?: NativeWindowProps['onDismiss'];",
+          "line": 110,
+          "kind": "event",
+          "type": "NativeWindowProps['onDismiss']"
+        }
+      ],
+      "references": [
+        "ModalCloseEvent",
+        "NativeFocusTarget",
+        "NativeWindowProps",
+        "Omit",
+        "React.RefObject"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ModalComponentsPropsOverrides",
+      "file": "src/modal.tsx",
+      "line": 112,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ModalRootProps",
+      "file": "src/modal.tsx",
+      "line": 113,
+      "kind": "type",
+      "members": [
+        {
+          "name": "ownerState",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ownerState?: ModalOwnerState;",
+          "line": 114,
+          "kind": "property",
+          "type": "ModalOwnerState"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps;",
+          "line": 115,
+          "kind": "property",
+          "type": "SxProps"
+        },
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>;",
+          "line": 116,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        }
+      ],
+      "references": [
+        "ModalComponentsPropsOverrides",
+        "ModalOwnerState",
+        "React.Ref",
+        "SxProps",
+        "ViewInstance",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ModalOwnerState",
+      "file": "src/modal.tsx",
+      "line": 118,
+      "kind": "type",
+      "members": [
+        {
+          "name": "exited",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "exited: boolean;",
+          "line": 119,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "closeAfterTransition",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "closeAfterTransition?: boolean;",
+          "line": 120,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "NativeModalControlProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ModalSlots",
+      "file": "src/modal.tsx",
+      "line": 122,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: React.ComponentType<ModalRootProps>;",
+          "line": 123,
+          "kind": "slot",
+          "type": "React.ComponentType<ModalRootProps>"
+        },
+        {
+          "name": "backdrop",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "backdrop?: React.ComponentType<\n    BackdropProps & React.RefAttributes<ViewInstance> & { ownerState?: ModalOwnerState }\n  >;",
+          "line": 124,
+          "kind": "slot",
+          "type": "React.ComponentType<\n    BackdropProps & React.RefAttributes<ViewInstance> & { ownerState?: ModalOwnerState }\n  >"
+        }
+      ],
+      "references": [
+        "BackdropProps",
+        "ModalOwnerState",
+        "ModalRootProps",
+        "React.ComponentType",
+        "React.RefAttributes",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ModalProps",
+      "file": "src/modal.tsx",
+      "line": 128,
+      "kind": "type",
+      "members": [
+        {
+          "name": "children",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children: React.ReactElement<any>;",
+          "line": 131,
+          "kind": "property",
+          "type": "React.ReactElement<any>"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps;",
+          "line": 132,
+          "kind": "property",
+          "type": "SxProps"
+        },
+        {
+          "name": "closeAfterTransition",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "closeAfterTransition?: boolean;",
+          "line": 133,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "onTransitionEnter",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onTransitionEnter?: () => void;",
+          "line": 134,
+          "kind": "event",
+          "type": "() => void"
+        },
+        {
+          "name": "onTransitionExited",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onTransitionExited?: () => void;",
+          "line": 135,
+          "kind": "event",
+          "type": "() => void"
+        },
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: React.ComponentType<ModalRootProps>;",
+          "line": 136,
+          "kind": "property",
+          "type": "React.ComponentType<ModalRootProps>"
+        },
+        {
+          "name": "slots",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slots?: ModalSlots;",
+          "line": 137,
+          "kind": "slot",
+          "type": "ModalSlots"
+        },
+        {
+          "name": "slotProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slotProps?: {\n    root?: SlotProps<ModalRootProps, ModalOwnerState>;\n    backdrop?: SlotProps<\n      Partial<BackdropProps> & React.RefAttributes<ViewInstance> & ModalComponentsPropsOverrides,\n      ModalOwnerState\n    >;\n  };",
+          "line": 138,
+          "kind": "slot",
+          "type": "{\n    root?: SlotProps<ModalRootProps, ModalOwnerState>;\n    backdrop?: SlotProps<\n      Partial<BackdropProps> & React.RefAttributes<ViewInstance> & ModalComponentsPropsOverrides,\n      ModalOwnerState\n    >;\n  }"
+        },
+        {
+          "name": "slotProps.root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: SlotProps<ModalRootProps, ModalOwnerState>;",
+          "line": 139,
+          "kind": "slot",
+          "type": "SlotProps<ModalRootProps, ModalOwnerState>"
+        },
+        {
+          "name": "slotProps.backdrop",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "backdrop?: SlotProps<\n      Partial<BackdropProps> & React.RefAttributes<ViewInstance> & ModalComponentsPropsOverrides,\n      ModalOwnerState\n    >;",
+          "line": 140,
+          "kind": "slot",
+          "type": "SlotProps<\n      Partial<BackdropProps> & React.RefAttributes<ViewInstance> & ModalComponentsPropsOverrides,\n      ModalOwnerState\n    >"
+        }
+      ],
+      "references": [
+        "BackdropProps",
+        "ModalComponentsPropsOverrides",
+        "ModalOwnerState",
+        "ModalRootProps",
+        "ModalSlots",
+        "NativeModalControlProps",
+        "Omit",
+        "Partial",
+        "React.ComponentType",
+        "React.ReactElement",
+        "React.RefAttributes",
+        "SlotProps",
+        "SxProps",
+        "ViewInstance",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ModalOwnProps",
+      "file": "src/modal.tsx",
+      "line": 146,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ModalProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeFocusTarget",
+      "file": "src/nativeModalManager.ts",
+      "line": 1,
+      "kind": "type",
+      "members": [
+        {
+          "name": "focus",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "focus(): void;",
+          "line": 2,
+          "kind": "property",
+          "type": "focus(): void;"
+        },
+        {
+          "name": "isConnected",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly isConnected?: boolean;",
+          "line": 3,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeModalEntry",
+      "file": "src/nativeModalManager.ts",
+      "line": 5,
+      "kind": "type",
+      "members": [
+        {
+          "name": "id",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "id: symbol;",
+          "line": 6,
+          "kind": "property",
+          "type": "symbol"
+        },
+        {
+          "name": "parent",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "parent?: symbol;",
+          "line": 7,
+          "kind": "property",
+          "type": "symbol"
+        },
+        {
+          "name": "host",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "host: symbol;",
+          "line": 8,
+          "kind": "property",
+          "type": "symbol"
+        },
+        {
+          "name": "open",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "open: boolean;",
+          "line": 9,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "restore",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "restore: boolean;",
+          "line": 10,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "restoreTarget",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "restoreTarget?: NativeFocusTarget | null;",
+          "line": 11,
+          "kind": "property",
+          "type": "NativeFocusTarget | null"
+        },
+        {
+          "name": "explicitRestore",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "explicitRestore?: () => NativeFocusTarget | null | undefined;",
+          "line": 12,
+          "kind": "property",
+          "type": "() => NativeFocusTarget | null | undefined"
+        },
+        {
+          "name": "contains",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "contains(target: NativeFocusTarget): boolean;",
+          "line": 13,
+          "kind": "property",
+          "type": "contains(target: NativeFocusTarget): boolean;"
+        },
+        {
+          "name": "focus",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "focus(): void;",
+          "line": 14,
+          "kind": "property",
+          "type": "focus(): void;"
+        },
+        {
+          "name": "escape",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "escape(event: unknown): void;",
+          "line": 15,
+          "kind": "property",
+          "type": "escape(event: unknown): void;"
+        }
+      ],
+      "references": [
+        "NativeFocusTarget"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
