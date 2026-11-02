@@ -49,7 +49,7 @@ test('unsupported selectors and CSS units emit actionable diagnostics', () => {
     expect(
       resolveSx({ '&:hover': { color: 'red' }, height: '100vh', p: 1 }, createTheme()),
     ).toEqual({ padding: 8 });
-    expect(collect.mock.calls.map(([x]) => x.code)).toEqual(['selector', 'css-unit']);
+    expect(collect.mock.calls.map(([x]) => x.code).sort()).toEqual(['css-unit', 'selector']);
   } finally {
     reset();
   }

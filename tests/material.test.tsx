@@ -1,4 +1,5 @@
 import React from 'react';
+import { Modal } from 'react-native';
 import { render, screen, fireEvent, act } from '@testing-library/react-native';
 import {
   Button,
@@ -187,6 +188,27 @@ test('radio labels use group state and do not reselect the same value', () => {
   expect(screen.getByRole('radio', { name: 'One' })).not.toBeChecked();
   fireEvent.press(screen.getByText('Two'), { nativeEvent: {} });
   expect(radioChange).toHaveBeenCalledTimes(1);
+});
+
+test('dialog fullScreen ignores the default maxWidth and back requests respect the guard', () => {
+  const close = jest.fn();
+  const { rerender } = render(
+    <Dialog open fullScreen testID="dialog" onClose={close}>
+      <Button>Save</Button>
+    </Dialog>,
+  );
+  expect(screen.getByTestId('dialog')).not.toHaveStyle({ maxWidth: 600 });
+  fireEvent(screen.UNSAFE_getByType(Modal), 'requestClose');
+  expect(close).toHaveBeenCalledWith(null, 'escapeKeyDown');
+  rerender(
+    <Dialog open disableEscapeKeyDown onClose={close}>
+      <Button>Save</Button>
+    </Dialog>,
+  );
+  fireEvent(screen.UNSAFE_getByType(Modal), 'requestClose');
+  expect(close).toHaveBeenCalledTimes(1);
+  fireEvent.press(screen.getByLabelText('Dismiss dialog'), { nativeEvent: {} });
+  expect(close.mock.calls[1][1]).toBe('backdropClick');
 });
 
 test.each([

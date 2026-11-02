@@ -87,6 +87,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Installation and native import mapping](docs/installation.md)
 - [Compatibility boundaries](docs/compatibility.md)
 - [Native palette and color helpers](docs/theming.md)
+- [Spacing, breakpoints and responsive styles](docs/layout-system.md)
 - [Native Button loading](docs/button.md)
 - [Native form controls and calendar behavior](docs/native-controls.md)
 - [Validation evidence](docs/validation.md)

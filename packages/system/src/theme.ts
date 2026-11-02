@@ -1,6 +1,15 @@
 import type { TextStyle } from 'react-native';
 import type { SxProps, SxObject } from './sx';
 import { darken, lighten, getContrastRatio } from './colorManipulator';
+import { createSpacing, type Spacing, type SpacingOptions } from './spacing';
+import { createBreakpoints, type Breakpoints, type BreakpointsOptions } from './breakpoints';
+export type { Spacing, SpacingOptions, SpacingArgument } from './spacing';
+export type {
+  Breakpoint,
+  BreakpointOverrides,
+  Breakpoints,
+  BreakpointsOptions,
+} from './breakpoints';
 
 // Palette defaults and augmentation adapted from @mui/material 9.5.0 (MIT).
 // Copyright (c) 2014 Call-Em-All. See NOTICE and upstream/reuse.json.
@@ -134,11 +143,11 @@ export interface ComponentConfig {
 }
 export interface Theme {
   palette: Palette;
-  spacing: (...values: number[]) => string;
+  spacing: Spacing;
   shape: { borderRadius: number };
   direction: 'ltr' | 'rtl';
   typography: Record<TypographyVariant, TextStyle> & { fontFamily: string; htmlFontSize: number };
-  breakpoints: { values: Record<string, number> };
+  breakpoints: Breakpoints;
   components: Record<string, ComponentConfig>;
 }
 type DeepPartial<T> = {
@@ -150,11 +159,11 @@ type DeepPartial<T> = {
 };
 export interface ThemeOptions {
   palette?: PaletteOptions;
-  spacing?: number | ((value: number) => number | string);
+  spacing?: SpacingOptions;
   shape?: Partial<Theme['shape']>;
   direction?: Theme['direction'];
   typography?: DeepPartial<Theme['typography']>;
-  breakpoints?: DeepPartial<Theme['breakpoints']>;
+  breakpoints?: BreakpointsOptions;
   components?: Theme['components'];
 }
 export function merge<T>(base: T, value: unknown): T {
@@ -290,8 +299,6 @@ function createPalette(options: PaletteOptions = {}): Palette {
   return merge(base, other);
 }
 export function createTheme(options: ThemeOptions = {}, ...overrides: ThemeOptions[]): Theme {
-  const scale = options.spacing ?? 8;
-  const space = typeof scale === 'function' ? scale : (v: number) => v * scale;
   const typography = Object.fromEntries(
     Object.entries({
       h1: [96, 112, 300],
@@ -314,19 +321,13 @@ export function createTheme(options: ThemeOptions = {}, ...overrides: ThemeOptio
   );
   const base: Theme = {
     palette: createPalette(options.palette),
-    spacing: (...values) =>
-      (values.length ? values : [1])
-        .map((v) => {
-          const n = space(v);
-          return typeof n === 'number' ? `${n}px` : n;
-        })
-        .join(' '),
+    spacing: createSpacing(options.spacing),
     shape: { borderRadius: 4 },
     direction: 'ltr',
     typography: { ...typography, fontFamily: 'System', htmlFontSize: 16 } as Theme['typography'],
-    breakpoints: { values: { xs: 0, sm: 600, md: 900, lg: 1200, xl: 1536 } },
+    breakpoints: createBreakpoints(options.breakpoints),
     components: {},
   };
-  const { spacing: _spacing, palette: _palette, ...rest } = options;
+  const { spacing: _spacing, palette: _palette, breakpoints: _breakpoints, ...rest } = options;
   return overrides.reduce<Theme>((theme, next) => merge(theme, next), merge(base, rest));
 }

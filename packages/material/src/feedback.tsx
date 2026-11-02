@@ -7,9 +7,10 @@ import {
   Platform,
   ActivityIndicator,
   AppState,
+  useWindowDimensions,
   type GestureResponderEvent,
 } from 'react-native';
-import { useTheme, type SxProps } from '@altroo/mui-native-system';
+import { useTheme, diagnostic, type SxProps, type Breakpoint } from '@altroo/mui-native-system';
 import { Box, Paper, Typography, Stack, type BoxProps } from './layout';
 import { Button } from './buttons';
 export interface DialogProps extends BoxProps {
@@ -21,7 +22,7 @@ export interface DialogProps extends BoxProps {
   disableEscapeKeyDown?: boolean;
   fullWidth?: boolean;
   fullScreen?: boolean;
-  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | false;
+  maxWidth?: Breakpoint | false;
 }
 export function Dialog({
   open,
@@ -29,12 +30,35 @@ export function Dialog({
   disableEscapeKeyDown,
   fullWidth,
   fullScreen,
-  maxWidth = 'sm',
+  maxWidth = 'sm' as Breakpoint,
   children,
   sx,
   ...props
 }: DialogProps) {
   const theme = useTheme();
+  const { width } = useWindowDimensions();
+  const availableWidth = Math.max(0, width - 48);
+  const unit = theme.breakpoints.unit ?? 'px';
+  const multiplier =
+    unit === 'px'
+      ? 1
+      : unit === 'rem'
+        ? theme.typography.htmlFontSize
+        : unit === 'em'
+          ? (theme.typography.body1.fontSize ?? 16)
+          : undefined;
+  const configuredWidth = maxWidth ? theme.breakpoints.values[maxWidth] : undefined;
+  if (maxWidth && configuredWidth !== undefined && multiplier === undefined)
+    diagnostic('breakpoint-unit', `Unsupported native Dialog breakpoint unit: ${unit}`);
+  const scaledWidth =
+    configuredWidth !== undefined && multiplier !== undefined
+      ? configuredWidth * multiplier
+      : availableWidth;
+  const maximumWidth = Number.isFinite(scaledWidth)
+    ? maxWidth === 'xs'
+      ? Math.max(scaledWidth, 444)
+      : Math.max(0, scaledWidth)
+    : availableWidth;
   return (
     <Modal
       visible={open}
@@ -71,9 +95,10 @@ export function Dialog({
           style={[
             {
               margin: fullScreen ? 0 : 24,
-              width: fullScreen ? '100%' : fullWidth ? '90%' : undefined,
-              minWidth: 280,
-              maxWidth: maxWidth ? theme.breakpoints.values[maxWidth] : undefined,
+              width: fullScreen ? '100%' : fullWidth ? availableWidth : undefined,
+              minWidth: fullScreen ? undefined : Math.min(280, availableWidth, maximumWidth),
+              maxWidth: fullScreen ? undefined : Math.min(availableWidth, maximumWidth),
+              ...(fullScreen ? { borderRadius: 0 } : {}),
               alignSelf: fullScreen ? 'stretch' : undefined,
               flex: fullScreen ? 1 : undefined,
             },

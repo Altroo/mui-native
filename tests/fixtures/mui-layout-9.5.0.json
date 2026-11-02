@@ -1,0 +1,508 @@
+{
+  "reference": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "createTheme/createSpacing.js": "324a4f7b1648eb675eb01fb997b64b78e807fbd5e4149ac2c951e6336df12739",
+      "spacing/spacing.js": "cc62e1613e70b006c5ca55f57939b95a4340033c624c2c0e6e46bf64628d9434",
+      "createBreakpoints/createBreakpoints.js": "412f158e7a6cc3806a39e67b3cc7e62a9b47768cec52b728f9312ba9af5aa79f",
+      "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf",
+      "breakpoints/breakpoints.js": "7aca2df4ac9182dd138ed3c1b3ca738ad8a370769b1d5a81b2aa04f143c507c2"
+    }
+  },
+  "spacing": [
+    { "input": 8, "args": [], "output": "8px" },
+    { "input": 8, "args": [0], "output": "0px" },
+    { "input": 8, "args": [1], "output": "8px" },
+    { "input": 8, "args": [-2], "output": "-16px" },
+    { "input": 8, "args": [0.5], "output": "4px" },
+    { "input": 8, "args": [1, "auto"], "output": "8px auto" },
+    { "input": 8, "args": ["2rem", -1, 0, 2], "output": "2rem -8px 0px 16px" },
+    { "input": 0, "args": [], "output": "0px" },
+    { "input": 0, "args": [0], "output": "0px" },
+    { "input": 0, "args": [1], "output": "0px" },
+    { "input": 0, "args": [-2], "output": "0px" },
+    { "input": 0, "args": [0.5], "output": "0px" },
+    { "input": 0, "args": [1, "auto"], "output": "0px auto" },
+    { "input": 0, "args": ["2rem", -1, 0, 2], "output": "2rem 0px 0px 0px" },
+    { "input": 4.5, "args": [], "output": "4.5px" },
+    { "input": 4.5, "args": [0], "output": "0px" },
+    { "input": 4.5, "args": [1], "output": "4.5px" },
+    { "input": 4.5, "args": [-2], "output": "-9px" },
+    { "input": 4.5, "args": [0.5], "output": "2.25px" },
+    { "input": 4.5, "args": [1, "auto"], "output": "4.5px auto" },
+    { "input": 4.5, "args": ["2rem", -1, 0, 2], "output": "2rem -4.5px 0px 9px" },
+    { "input": [0, 4, 10, 24], "args": [], "output": "4px" },
+    { "input": [0, 4, 10, 24], "args": [0], "output": "0px" },
+    { "input": [0, 4, 10, 24], "args": [1], "output": "4px" },
+    { "input": [0, 4, 10, 24], "args": [-1], "output": "-4px" },
+    { "input": [0, 4, 10, 24], "args": [2, "auto"], "output": "10px auto" },
+    { "input": [0, 4, 10, 24], "args": [0, 1, 2, -2], "output": "0px 4px 10px -10px" },
+    { "input": ["0px", "0.25rem", "1rem"], "args": [], "output": "0.25rem" },
+    { "input": ["0px", "0.25rem", "1rem"], "args": [0], "output": "0px" },
+    { "input": ["0px", "0.25rem", "1rem"], "args": [1], "output": "0.25rem" },
+    { "input": ["0px", "0.25rem", "1rem"], "args": [-1], "output": "-0.25rem" },
+    { "input": ["0px", "0.25rem", "1rem"], "args": [2, "auto"], "output": "1rem auto" },
+    {
+      "input": ["0px", "0.25rem", "1rem"],
+      "args": [0, 1, 2, -2],
+      "output": "0px 0.25rem 1rem -1rem"
+    },
+    { "input": "0.5rem", "args": [], "output": "calc(1 * 0.5rem)" },
+    { "input": "0.5rem", "args": [0], "output": "calc(0 * 0.5rem)" },
+    { "input": "0.5rem", "args": [1], "output": "calc(1 * 0.5rem)" },
+    { "input": "0.5rem", "args": [-2], "output": "calc(-2 * 0.5rem)" },
+    { "input": "0.5rem", "args": [0.5], "output": "calc(0.5 * 0.5rem)" },
+    { "input": "0.5rem", "args": [1, "auto"], "output": "calc(1 * 0.5rem) auto" },
+    {
+      "input": "0.5rem",
+      "args": ["2rem", -1, 0, 2],
+      "output": "2rem calc(-1 * 0.5rem) calc(0 * 0.5rem) calc(2 * 0.5rem)"
+    },
+    { "input": "var(--space)", "args": [], "output": "var(--space)" },
+    { "input": "var(--space)", "args": [0], "output": "0px" },
+    { "input": "var(--space)", "args": [1], "output": "var(--space)" },
+    { "input": "var(--space)", "args": [-2], "output": "calc(-2 * var(--space))" },
+    { "input": "var(--space)", "args": [0.5], "output": "calc(0.5 * var(--space))" },
+    { "input": "var(--space)", "args": [1, "auto"], "output": "var(--space) auto" },
+    {
+      "input": "var(--space)",
+      "args": ["2rem", -1, 0, 2],
+      "output": "2rem calc(-1 * var(--space)) 0px calc(2 * var(--space))"
+    }
+  ],
+  "breakpoints": [
+    {
+      "input": {},
+      "values": { "xs": 0, "sm": 600, "md": 900, "lg": 1200, "xl": 1536 },
+      "keys": ["xs", "sm", "md", "lg", "xl"],
+      "unit": "px",
+      "mediaKeys": [
+        "@media (min-width:0px)",
+        "@media (min-width:600px)",
+        "@media (min-width:900px)",
+        "@media (min-width:1200px)",
+        "@media (min-width:1536px)"
+      ],
+      "calls": [
+        { "method": "up", "args": ["xs"], "output": "@media (min-width:0px)" },
+        { "method": "down", "args": ["xs"], "output": "@media (max-width:-0.05px)" },
+        {
+          "method": "only",
+          "args": ["xs"],
+          "output": "@media (min-width:0px) and (max-width:599.95px)"
+        },
+        { "method": "not", "args": ["xs"], "output": "@media (min-width:600px)" },
+        { "method": "up", "args": ["sm"], "output": "@media (min-width:600px)" },
+        { "method": "down", "args": ["sm"], "output": "@media (max-width:599.95px)" },
+        {
+          "method": "only",
+          "args": ["sm"],
+          "output": "@media (min-width:600px) and (max-width:899.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["sm"],
+          "output": "@media not all and (min-width:600px) and (max-width:899.95px)"
+        },
+        { "method": "up", "args": ["md"], "output": "@media (min-width:900px)" },
+        { "method": "down", "args": ["md"], "output": "@media (max-width:899.95px)" },
+        {
+          "method": "only",
+          "args": ["md"],
+          "output": "@media (min-width:900px) and (max-width:1199.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["md"],
+          "output": "@media not all and (min-width:900px) and (max-width:1199.95px)"
+        },
+        { "method": "up", "args": ["lg"], "output": "@media (min-width:1200px)" },
+        { "method": "down", "args": ["lg"], "output": "@media (max-width:1199.95px)" },
+        {
+          "method": "only",
+          "args": ["lg"],
+          "output": "@media (min-width:1200px) and (max-width:1535.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["lg"],
+          "output": "@media not all and (min-width:1200px) and (max-width:1535.95px)"
+        },
+        { "method": "up", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        { "method": "down", "args": ["xl"], "output": "@media (max-width:1535.95px)" },
+        { "method": "only", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        { "method": "not", "args": ["xl"], "output": "@media (max-width:1535.95px)" },
+        {
+          "method": "between",
+          "args": [320, 768],
+          "output": "@media (min-width:320px) and (max-width:767.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", "xl"],
+          "output": "@media (min-width:0px) and (max-width:1535.95px)"
+        },
+        { "method": "up", "args": [640], "output": "@media (min-width:640px)" }
+      ]
+    },
+    {
+      "input": { "step": 10 },
+      "values": { "xs": 0, "sm": 600, "md": 900, "lg": 1200, "xl": 1536 },
+      "keys": ["xs", "sm", "md", "lg", "xl"],
+      "unit": "px",
+      "mediaKeys": [
+        "@media (min-width:0px)",
+        "@media (min-width:600px)",
+        "@media (min-width:900px)",
+        "@media (min-width:1200px)",
+        "@media (min-width:1536px)"
+      ],
+      "calls": [
+        { "method": "up", "args": ["xs"], "output": "@media (min-width:0px)" },
+        { "method": "down", "args": ["xs"], "output": "@media (max-width:-0.1px)" },
+        {
+          "method": "only",
+          "args": ["xs"],
+          "output": "@media (min-width:0px) and (max-width:599.9px)"
+        },
+        { "method": "not", "args": ["xs"], "output": "@media (min-width:600px)" },
+        { "method": "up", "args": ["sm"], "output": "@media (min-width:600px)" },
+        { "method": "down", "args": ["sm"], "output": "@media (max-width:599.9px)" },
+        {
+          "method": "only",
+          "args": ["sm"],
+          "output": "@media (min-width:600px) and (max-width:899.9px)"
+        },
+        {
+          "method": "not",
+          "args": ["sm"],
+          "output": "@media not all and (min-width:600px) and (max-width:899.9px)"
+        },
+        { "method": "up", "args": ["md"], "output": "@media (min-width:900px)" },
+        { "method": "down", "args": ["md"], "output": "@media (max-width:899.9px)" },
+        {
+          "method": "only",
+          "args": ["md"],
+          "output": "@media (min-width:900px) and (max-width:1199.9px)"
+        },
+        {
+          "method": "not",
+          "args": ["md"],
+          "output": "@media not all and (min-width:900px) and (max-width:1199.9px)"
+        },
+        { "method": "up", "args": ["lg"], "output": "@media (min-width:1200px)" },
+        { "method": "down", "args": ["lg"], "output": "@media (max-width:1199.9px)" },
+        {
+          "method": "only",
+          "args": ["lg"],
+          "output": "@media (min-width:1200px) and (max-width:1535.9px)"
+        },
+        {
+          "method": "not",
+          "args": ["lg"],
+          "output": "@media not all and (min-width:1200px) and (max-width:1535.9px)"
+        },
+        { "method": "up", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        { "method": "down", "args": ["xl"], "output": "@media (max-width:1535.9px)" },
+        { "method": "only", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        { "method": "not", "args": ["xl"], "output": "@media (max-width:1535.9px)" },
+        {
+          "method": "between",
+          "args": [320, 768],
+          "output": "@media (min-width:320px) and (max-width:767.9px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", "xl"],
+          "output": "@media (min-width:0px) and (max-width:1535.9px)"
+        },
+        { "method": "up", "args": [640], "output": "@media (min-width:640px)" }
+      ]
+    },
+    {
+      "input": { "step": 0 },
+      "values": { "xs": 0, "sm": 600, "md": 900, "lg": 1200, "xl": 1536 },
+      "keys": ["xs", "sm", "md", "lg", "xl"],
+      "unit": "px",
+      "mediaKeys": [
+        "@media (min-width:0px)",
+        "@media (min-width:600px)",
+        "@media (min-width:900px)",
+        "@media (min-width:1200px)",
+        "@media (min-width:1536px)"
+      ],
+      "calls": [
+        { "method": "up", "args": ["xs"], "output": "@media (min-width:0px)" },
+        { "method": "down", "args": ["xs"], "output": "@media (max-width:0px)" },
+        {
+          "method": "only",
+          "args": ["xs"],
+          "output": "@media (min-width:0px) and (max-width:600px)"
+        },
+        { "method": "not", "args": ["xs"], "output": "@media (min-width:600px)" },
+        { "method": "up", "args": ["sm"], "output": "@media (min-width:600px)" },
+        { "method": "down", "args": ["sm"], "output": "@media (max-width:600px)" },
+        {
+          "method": "only",
+          "args": ["sm"],
+          "output": "@media (min-width:600px) and (max-width:900px)"
+        },
+        {
+          "method": "not",
+          "args": ["sm"],
+          "output": "@media not all and (min-width:600px) and (max-width:900px)"
+        },
+        { "method": "up", "args": ["md"], "output": "@media (min-width:900px)" },
+        { "method": "down", "args": ["md"], "output": "@media (max-width:900px)" },
+        {
+          "method": "only",
+          "args": ["md"],
+          "output": "@media (min-width:900px) and (max-width:1200px)"
+        },
+        {
+          "method": "not",
+          "args": ["md"],
+          "output": "@media not all and (min-width:900px) and (max-width:1200px)"
+        },
+        { "method": "up", "args": ["lg"], "output": "@media (min-width:1200px)" },
+        { "method": "down", "args": ["lg"], "output": "@media (max-width:1200px)" },
+        {
+          "method": "only",
+          "args": ["lg"],
+          "output": "@media (min-width:1200px) and (max-width:1536px)"
+        },
+        {
+          "method": "not",
+          "args": ["lg"],
+          "output": "@media not all and (min-width:1200px) and (max-width:1536px)"
+        },
+        { "method": "up", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        { "method": "down", "args": ["xl"], "output": "@media (max-width:1536px)" },
+        { "method": "only", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        { "method": "not", "args": ["xl"], "output": "@media (max-width:1536px)" },
+        {
+          "method": "between",
+          "args": [320, 768],
+          "output": "@media (min-width:320px) and (max-width:768px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", "xl"],
+          "output": "@media (min-width:0px) and (max-width:1536px)"
+        },
+        { "method": "up", "args": [640], "output": "@media (min-width:640px)" }
+      ]
+    },
+    {
+      "input": { "values": { "desktop": 1200, "mobile": 0, "tablet": 640 } },
+      "values": { "mobile": 0, "tablet": 640, "desktop": 1200 },
+      "keys": ["mobile", "tablet", "desktop"],
+      "unit": "px",
+      "mediaKeys": [
+        "@media (min-width:0px)",
+        "@media (min-width:640px)",
+        "@media (min-width:1200px)"
+      ],
+      "calls": [
+        { "method": "up", "args": ["mobile"], "output": "@media (min-width:0px)" },
+        { "method": "down", "args": ["mobile"], "output": "@media (max-width:-0.05px)" },
+        {
+          "method": "only",
+          "args": ["mobile"],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        { "method": "not", "args": ["mobile"], "output": "@media (min-width:640px)" },
+        { "method": "up", "args": ["tablet"], "output": "@media (min-width:640px)" },
+        { "method": "down", "args": ["tablet"], "output": "@media (max-width:639.95px)" },
+        {
+          "method": "only",
+          "args": ["tablet"],
+          "output": "@media (min-width:640px) and (max-width:1199.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["tablet"],
+          "output": "@media not all and (min-width:640px) and (max-width:1199.95px)"
+        },
+        { "method": "up", "args": ["desktop"], "output": "@media (min-width:1200px)" },
+        { "method": "down", "args": ["desktop"], "output": "@media (max-width:1199.95px)" },
+        { "method": "only", "args": ["desktop"], "output": "@media (min-width:1200px)" },
+        { "method": "not", "args": ["desktop"], "output": "@media (max-width:1199.95px)" },
+        {
+          "method": "between",
+          "args": [320, 768],
+          "output": "@media (min-width:320px) and (max-width:767.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["mobile", "desktop"],
+          "output": "@media (min-width:0px) and (max-width:1199.95px)"
+        },
+        { "method": "up", "args": [640], "output": "@media (min-width:640px)" }
+      ]
+    },
+    {
+      "input": { "values": { "desktop": 75, "mobile": 0, "tablet": 40 }, "unit": "em" },
+      "values": { "mobile": 0, "tablet": 40, "desktop": 75 },
+      "keys": ["mobile", "tablet", "desktop"],
+      "unit": "em",
+      "mediaKeys": ["@media (min-width:0em)", "@media (min-width:40em)", "@media (min-width:75em)"],
+      "calls": [
+        { "method": "up", "args": ["mobile"], "output": "@media (min-width:0em)" },
+        { "method": "down", "args": ["mobile"], "output": "@media (max-width:-0.05em)" },
+        {
+          "method": "only",
+          "args": ["mobile"],
+          "output": "@media (min-width:0em) and (max-width:39.95em)"
+        },
+        { "method": "not", "args": ["mobile"], "output": "@media (min-width:40em)" },
+        { "method": "up", "args": ["tablet"], "output": "@media (min-width:40em)" },
+        { "method": "down", "args": ["tablet"], "output": "@media (max-width:39.95em)" },
+        {
+          "method": "only",
+          "args": ["tablet"],
+          "output": "@media (min-width:40em) and (max-width:74.95em)"
+        },
+        {
+          "method": "not",
+          "args": ["tablet"],
+          "output": "@media not all and (min-width:40em) and (max-width:74.95em)"
+        },
+        { "method": "up", "args": ["desktop"], "output": "@media (min-width:75em)" },
+        { "method": "down", "args": ["desktop"], "output": "@media (max-width:74.95em)" },
+        { "method": "only", "args": ["desktop"], "output": "@media (min-width:75em)" },
+        { "method": "not", "args": ["desktop"], "output": "@media (max-width:74.95em)" },
+        {
+          "method": "between",
+          "args": [320, 768],
+          "output": "@media (min-width:320em) and (max-width:767.95em)"
+        },
+        {
+          "method": "between",
+          "args": ["mobile", "desktop"],
+          "output": "@media (min-width:0em) and (max-width:74.95em)"
+        },
+        { "method": "up", "args": [640], "output": "@media (min-width:640em)" }
+      ]
+    },
+    {
+      "input": { "values": { "only": 0 } },
+      "values": { "only": 0 },
+      "keys": ["only"],
+      "unit": "px",
+      "mediaKeys": ["@media (min-width:0px)"],
+      "calls": [
+        { "method": "up", "args": ["only"], "output": "@media (min-width:0px)" },
+        { "method": "down", "args": ["only"], "output": "@media (max-width:-0.05px)" },
+        { "method": "only", "args": ["only"], "output": "@media (min-width:0px)" },
+        { "method": "not", "args": ["only"], "output": "@media (min-width:undefinedpx)" },
+        {
+          "method": "between",
+          "args": [320, 768],
+          "output": "@media (min-width:320px) and (max-width:767.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["only", "only"],
+          "output": "@media (min-width:0px) and (max-width:-0.05px)"
+        },
+        { "method": "up", "args": [640], "output": "@media (min-width:640px)" }
+      ]
+    }
+  ],
+  "sx": [
+    {
+      "input": { "@media (min-width:600px)": { "p": 3 }, "p": 1 },
+      "output": { "@media (min-width:600px)": { "padding": "24px" }, "padding": "8px" }
+    },
+    {
+      "input": { "p": { "md": 3, "xs": 1 }, "px": { "sm": 2 } },
+      "output": {
+        "@media (min-width:0px)": { "padding": "8px" },
+        "@media (min-width:600px)": { "paddingLeft": "16px", "paddingRight": "16px" },
+        "@media (min-width:900px)": { "padding": "24px" }
+      }
+    },
+    {
+      "input": { "p": { "sm": 2 }, "@media (min-width:600px)": { "px": 3 } },
+      "output": { "@media (min-width:600px)": { "paddingLeft": "24px", "paddingRight": "24px" } }
+    },
+    {
+      "input": { "@media (min-width:600px)": { "px": 3 }, "p": { "sm": 2 } },
+      "output": {
+        "@media (min-width:600px)": {
+          "paddingLeft": "24px",
+          "paddingRight": "24px",
+          "padding": "16px"
+        }
+      }
+    },
+    {
+      "input": { "px": 2, "p": 1 },
+      "output": { "paddingLeft": "16px", "paddingRight": "16px", "padding": "8px" }
+    },
+    {
+      "input": { "p": 1, "px": 2 },
+      "output": { "padding": "8px", "paddingLeft": "16px", "paddingRight": "16px" }
+    },
+    {
+      "input": { "p": 1, "pl": 2, "padding": 3 },
+      "output": { "padding": "24px", "paddingLeft": "16px" }
+    },
+    {
+      "input": { "p": { "sm": 1 }, "pl": { "sm": 2 }, "padding": { "sm": 3 } },
+      "output": { "@media (min-width:600px)": { "padding": "24px", "paddingLeft": "16px" } }
+    },
+    {
+      "input": { "@media (min-width:600px)": false, "p": { "sm": 1 } },
+      "output": { "@media (min-width:600px)": { "padding": "8px" } }
+    },
+    {
+      "input": { "@media (min-width:600px)": [], "p": { "sm": 1 } },
+      "output": { "@media (min-width:600px)": { "padding": "8px" } }
+    },
+    {
+      "input": { "px": { "sm": 2 }, "pl": [1, null, 3] },
+      "output": {
+        "@media (min-width:0px)": { "paddingLeft": "8px" },
+        "@media (min-width:600px)": { "paddingLeft": null, "paddingRight": "16px" },
+        "@media (min-width:900px)": { "paddingLeft": "24px" }
+      }
+    },
+    {
+      "input": { "@media (min-width:600px)": { "p": 3 }, "p": [1, null, 4] },
+      "output": {
+        "@media (min-width:0px)": { "padding": "8px" },
+        "@media (min-width:600px)": { "padding": null },
+        "@media (min-width:900px)": { "padding": "32px" }
+      }
+    },
+    {
+      "input": {
+        "@media (min-width:600px)": { "opacity": 0.5, "color": "red", "borderRadius": 2 },
+        "opacity": [0.2, null, 0.8],
+        "color": ["blue", null, "green"],
+        "borderRadius": [1, null, 3]
+      },
+      "output": {
+        "@media (min-width:0px)": { "opacity": 0.2, "color": "blue", "borderRadius": 4 },
+        "@media (min-width:600px)": { "opacity": null, "color": null, "borderRadius": null },
+        "@media (min-width:900px)": { "opacity": 0.8, "color": "green", "borderRadius": 12 }
+      }
+    },
+    {
+      "input": {
+        "@media not all and (min-width:600px) and (max-width:899.95px)": { "mt": 2 },
+        "@media (min-width:600px) and (max-width:899.95px)": { "mt": 1 }
+      },
+      "output": {
+        "@media not all and (min-width:600px) and (max-width:899.95px)": { "marginTop": "16px" },
+        "@media (min-width:600px) and (max-width:899.95px)": { "marginTop": "8px" }
+      }
+    }
+  ]
+}

@@ -45,6 +45,55 @@
         "recomposeColor leaves input channels unmodified.",
         "Diagnostic wording identifies MUI Native."
       ]
+    },
+    {
+      "localFile": "packages/system/src/spacing.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "createTheme/createSpacing.js": "324a4f7b1648eb675eb01fb997b64b78e807fbd5e4149ac2c951e6336df12739",
+          "spacing/spacing.js": "cc62e1613e70b006c5ca55f57939b95a4340033c624c2c0e6e46bf64628d9434"
+        }
+      },
+      "adaptations": [
+        "Typed standalone spacing transformation; native diagnostics identify unsupported array indices."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/breakpoints.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "createBreakpoints/createBreakpoints.js": "412f158e7a6cc3806a39e67b3cc7e62a9b47768cec52b728f9312ba9af5aa79f"
+        }
+      },
+      "adaptations": ["Typed standalone breakpoint helpers and augmentation interfaces."]
+    },
+    {
+      "localFile": "packages/system/src/sx.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf",
+          "breakpoints/breakpoints.js": "7aca2df4ac9182dd138ed3c1b3ca738ad8a370769b1d5a81b2aa04f143c507c2"
+        }
+      },
+      "adaptations": [
+        "Native width-query evaluation and style normalization follow the upstream breakpoint rule ordering.",
+        "No DOM, CSS engine, arbitrary media query or container-query implementation is included."
+      ]
     }
   ]
 }

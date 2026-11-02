@@ -16,6 +16,8 @@ import {
   useSx,
   type SxProps,
   type TypographyVariant,
+  type SpacingArgument,
+  type ResponsiveStyleValue,
 } from '@altroo/mui-native-system';
 export interface BoxProps extends ViewProps {
   sx?: SxProps;
@@ -32,7 +34,7 @@ export const Box: React.ForwardRefExoticComponent<
 });
 export interface StackProps extends BoxProps {
   direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
-  spacing?: number;
+  spacing?: ResponsiveStyleValue<SpacingArgument>;
   divider?: React.ReactNode;
 }
 export const Stack: React.ForwardRefExoticComponent<
@@ -41,15 +43,12 @@ export const Stack: React.ForwardRefExoticComponent<
   { direction = 'column', spacing = 0, divider, children, sx, ...props },
   ref,
 ) {
-  const theme = useTheme();
-  const gap = parseFloat(theme.spacing(spacing));
   const items = React.Children.toArray(children);
   return (
     <Box
       {...props}
       ref={ref}
-      sx={[{ flexDirection: direction }, ...(Array.isArray(sx) ? sx : [sx])]}
-      style={[{ gap }, props.style]}
+      sx={[{ flexDirection: direction, gap: spacing }, ...(Array.isArray(sx) ? sx : [sx])]}
     >
       {items.map((child, index) => (
         <React.Fragment key={React.isValidElement(child) ? child.key : index}>

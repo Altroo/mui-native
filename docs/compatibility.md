@@ -5,6 +5,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 ## Currently exercised
 
 - Object, function, and array `sx`; palette paths; spacing; fractional sizing; `px`/`rem`; responsive values; selected `&.Mui-state` selectors; root overrides and variants.
+- Spacing arrays/functions/strings and multi-value helpers, breakpoint methods and custom keys, native width media rules, responsive Stack spacing and Dialog widths. See [layout system](layout-system.md) for supported units, ordering and limitations.
 - Palette shade/contrast derivation, light/dark defaults, augmentColor, color helpers and Palette/PaletteOptions augmentation. See [native theming](theming.md) for tested inputs and limitations.
 - Button loading positions, custom indicators, disabled presses and native busy state. See [native Button loading](button.md); screen-reader behavior remains unverified.
 - Controlled/uncontrolled form state, value/name change adapters, disabled buttons, native handler precedence, checkbox/radio selection.
@@ -18,8 +19,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 Do not assume unlisted props work. Public TypeScript interfaces describe the implemented subset. JavaScript callers should run migration diagnostics and review source usage before adoption.
 
-- Full Material UI export coverage, all icon variants, slot replacement, classes/className, arbitrary CSS, CSS variables, media queries, arbitrary descendant selectors, browser refs/events, transitions, ripple behavior.
-- Full `styled` semantics, nested theme merging, typography inheritance, complete breakpoint utilities, all upstream augmentation interfaces. The installed-consumer fixture verifies custom Theme, ThemeOptions, Palette and PaletteOptions augmentation through @mui/material/styles.
+- Full Material UI export coverage, all icon variants, slot replacement, classes/className, arbitrary CSS, CSS variables, non-width media queries, arbitrary descendant selectors, browser refs/events, transitions, ripple behavior.
+- Full `styled` semantics, nested theme merging, typography inheritance, the full responsive/style utility export set, all upstream augmentation interfaces. The installed-consumer fixture verifies custom Theme, ThemeOptions, Palette, PaletteOptions and BreakpointOverrides augmentation through @mui/material/styles.
 - Nested modal/focus restoration, keyboard avoidance on all devices, VoiceOver/TalkBack workflows, RTL and large-font layouts.
 - Grid cell editing, column virtualization, apiRef, column menus, flexible/dynamic sizing, keyboard navigation, comprehensive filtering operators and callback detail arguments.
 - SimpleTreeView/TreeItem composition, complete tree apiRef, all Community hooks and loading/disabled semantics.

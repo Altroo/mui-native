@@ -8,12 +8,23 @@ import { BarChart } from '@mui/x-charts';
 import { DatePicker, LocalizationProvider, AdapterDayjs } from '@mui/x-date-pickers';
 import { alpha, type PaletteColor, type PaletteColorOptions } from '@mui/material/styles';
 import { darken } from '@mui/system/colorManipulator';
+import { createSpacing, createBreakpoints, type Breakpoint } from '@mui/system';
 declare module '@mui/material/styles' {
   interface Theme {
     status: { danger: string };
   }
   interface ThemeOptions {
     status?: { danger: string };
+  }
+  interface BreakpointOverrides {
+    xs: false;
+    sm: false;
+    md: false;
+    lg: false;
+    xl: false;
+    mobile: true;
+    tablet: true;
+    desktop: true;
   }
   interface Palette {
     brand: PaletteColor;
@@ -23,6 +34,8 @@ declare module '@mui/material/styles' {
   }
 }
 const base = createTheme({
+  spacing: [0, 4, 8, 16],
+  breakpoints: { values: { mobile: 0, tablet: 640, desktop: 1200 } },
   palette: {
     primary: { main: '#123456' },
     tonalOffset: { light: 0.1, dark: 0.4 },
@@ -67,3 +80,12 @@ const badLoadingPosition = <Button loadingPosition="left" />;
 const bad = <Button ref={React.createRef<{ innerHTML: string }>()} />;
 // @ts-expect-error Unsupported commercial imports must not resolve.
 import { DataGridPremium } from '@mui/x-data-grid-premium';
+
+const breakpoint: Breakpoint = 'tablet';
+const query: string = theme.breakpoints.between('mobile', breakpoint);
+const customBreakpoints = createBreakpoints({ values: { mobile: 0, tablet: 640, desktop: 1200 } });
+const spacing: string = createSpacing([0, 4, '1rem'])(1, 'auto', 2);
+// @ts-expect-error Disabled default breakpoint names must not remain in the public type.
+theme.breakpoints.up('sm');
+// @ts-expect-error Spacing exposes at most four arguments.
+theme.spacing(1, 2, 3, 4, 5);

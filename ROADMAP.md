@@ -48,6 +48,8 @@ Palette derivation and color helpers have pinned upstream reference fixtures and
 
 Button loading positions, custom indicators and disabled/busy state have scoped component and installed-consumer checks. See [native Button loading](docs/button.md). Full Button and native accessibility verification remain open.
 
+Spacing, breakpoint helpers, native width rules, responsive Stack spacing and Dialog widths have scoped upstream fixtures and component checks. See [layout boundaries](docs/layout-system.md). Device resize, typography normalization, RTL and full styling parity remain open.
+
 ## 3. Verified alpha
 
 Core scope: Box, Stack, Typography, Divider, Paper, Card, Button, IconButton, initial icons, TextField/FormControl parts, Checkbox, Radio, Switch, Dialog, Alert, progress and Snackbar.
