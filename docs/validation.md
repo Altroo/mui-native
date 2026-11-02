@@ -54,3 +54,11 @@ Independent review found conflicting native readOnly/editable aliases, hidden no
 The preceding SDK-only commit `f218060` passed hosted [Validate #4](https://github.com/Altroo/mui-native/actions/runs/41457988607), and SDK issue #6 is closed.
 
 The follow-up independent review found no remaining actionable defects within this increment. A standalone probe compiled against the installed React Native Yoga engine changed a synthetic horizontal label from 0 dp to its 120 dp content width; column layout stayed unchanged. This is layout-engine evidence, not a simulator screenshot or a performance benchmark. Fresh installed-consumer checks and formatting passed after the fixes.
+
+## 2026-11-02 Actions runtime upgrade
+
+The validation and upstream workflows pin checkout 7.0.1, setup-node 7.1.0, pnpm/action-setup 6.1.0, upload-artifact 7.0.2 and download-artifact 8.0.2 to verified release commit SHAs. All five use the supported Node 24 action runtime; application tests still use the Node version in `.nvmrc`.
+
+A parsed comparison verified all ten action references changed while triggers, runners, commands, permissions, credential persistence, cache settings, artifact settings and disabled automatic PR preparation stayed identical. Independent review checked each pinned action's supported inputs and migration behavior. The named archive remains compatible with the download extraction path; digest mismatch now fails the download.
+
+An isolated frozen-lockfile installation passed 32 Jest and 25 Node tests, including updater publication simulations with no network writes, root/catalog types, seven package builds, a fresh eight-package consumer and formatting. Hosted validation is tracked in [issue #8](https://github.com/Altroo/mui-native/issues/8). Validate does not exercise upstream report transfer; record the next scheduled upstream result separately. No extra upstream dispatch was used for this upgrade.
