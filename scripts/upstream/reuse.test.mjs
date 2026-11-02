@@ -103,3 +103,16 @@ test('artifact inspector hashes requested implementation files without extractin
     await rm(directory, { recursive: true, force: true });
   }
 });
+
+test('supporting MIT references are monitored without becoming native compatibility targets', async () => {
+  const { assertEligible, assertSourceEligible, monitoredPackages, packages } = await import(
+    './config.mjs'
+  );
+  assertSourceEligible('@mui/utils');
+  assert.ok(
+    monitoredPackages.some((p) => p.name === '@mui/utils' && p.role === 'reference-dependency'),
+  );
+  assert.ok(!packages.some((p) => p.name === '@mui/utils'));
+  assert.throws(() => assertEligible('@mui/utils'), /allowlist/);
+  assert.throws(() => assertSourceEligible('@mui/x-data-grid-premium'), /allowlist/);
+});

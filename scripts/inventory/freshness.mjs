@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFile, readdir, mkdir, writeFile, unlink } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { packages as scope } from '../upstream/config.mjs';
+import { monitoredPackages as scope } from '../upstream/config.mjs';
 
 export const sha256 = (value) => createHash('sha256').update(value).digest('hex');
 const inventoryDirectory = 'compatibility/inventory';
@@ -26,10 +26,10 @@ async function filesBelow(root, directory, accept) {
   return ordered(files);
 }
 export function baselineProjection(state, configs = scope) {
-  return configs.map(({ name, channel }) => {
+  return configs.map(({ name, channel, role = 'port' }) => {
     const baseline = state.packages[name]?.baseline;
     if (!baseline) throw new Error(`Missing pinned baseline: ${name}`);
-    return { name, channel, baseline };
+    return { name, channel, role, baseline };
   });
 }
 
@@ -95,7 +95,30 @@ export async function verifyInventory(root = process.cwd(), configs = scope) {
   if (manifest.status !== 'declaration-inventory-not-parity')
     throw new Error('Invalid inventory verification status.');
   const state = JSON.parse(await readFile(inside(root, 'upstream/state.json'), 'utf8'));
-  const baselines = baselineProjection(state, configs);
+  const projection = baselineProjection(state, configs);
+  const references = projection.filter((item) => item.role === 'reference-dependency');
+  if (
+    !sameList(
+      (manifest.referenceDependencies ?? []).map((item) => item.name),
+      references.map((item) => item.name),
+    )
+  )
+    throw new Error('Supporting source reference set does not match reviewed baselines.');
+  for (const { name, baseline } of references) {
+    if (baseline.license !== 'MIT' || baseline.licenseReview)
+      throw new Error(`Supporting source dependency is blocked: ${name}`);
+    const recorded = manifest.referenceDependencies.find((item) => item.name === name);
+    for (const key of [
+      'version',
+      'sourceCommit',
+      'integrity',
+      'apiSnapshotSha256',
+      'licenseSha256',
+    ])
+      if (recorded[key] !== baseline[key])
+        throw new Error(`Supporting source reference mismatch: ${name}`);
+  }
+  const baselines = projection.filter((item) => item.role !== 'reference-dependency');
   const eligible = baselines.filter(
     ({ baseline }) => baseline.license === 'MIT' && !baseline.licenseReview,
   );

@@ -21,9 +21,11 @@ import {
 } from 'react-native';
 import {
   useTheme,
-  useThemeProps,
+  useDefaultProps,
   useComponentStyle,
   useSx,
+  resolveSlotProps,
+  type SlotProps,
   type SxProps,
 } from '@altroo/mui-native-system';
 import { Box, Stack, Typography, type BoxProps, type TypographyProps } from './layout';
@@ -76,14 +78,12 @@ function useLabelActivation(activate: LabelActivation) {
 export interface FormControlProps extends BoxProps, FormState {
   fullWidth?: boolean;
 }
-export function FormControl({
-  disabled,
-  error,
-  required,
-  fullWidth,
-  children,
-  ...props
-}: FormControlProps) {
+export function FormControl(inProps: FormControlProps) {
+  const { disabled, error, required, fullWidth, children, ...props } = useDefaultProps({
+    props: inProps,
+    name: 'MuiFormControl',
+  });
+
   return (
     <FormContext.Provider value={{ disabled, error, required }}>
       <Box {...props} style={[fullWidth ? { alignSelf: 'stretch' } : undefined, props.style]}>
@@ -92,25 +92,35 @@ export function FormControl({
     </FormContext.Provider>
   );
 }
-export function FormLabel({ children, ...props }: TypographyProps) {
+export function FormLabel(inProps: TypographyProps) {
+  const { children, ...props } = useDefaultProps({ props: inProps, name: 'MuiFormLabel' });
+
   const state = useContext(FormContext);
   return (
-    <Typography {...props} color={state.error ? 'error.main' : 'text.secondary'}>
+    <Typography {...props} color={state.error ? 'error.main' : (props.color ?? 'text.secondary')}>
       {children}
       {state.required ? ' *' : ''}
     </Typography>
   );
 }
-export const InputLabel = FormLabel;
-export function FormHelperText(props: TypographyProps) {
+export function InputLabel(inProps: TypographyProps) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiInputLabel' });
+  return <FormLabel {...props} />;
+}
+export function FormHelperText(inProps: TypographyProps) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiFormHelperText' });
+
   const state = useContext(FormContext);
   return (
     <Typography
       {...props}
-      variant="caption"
-      color={state.error ? 'error.main' : 'text.secondary'}
+      variant={props.variant ?? 'caption'}
+      color={state.error ? 'error.main' : (props.color ?? 'text.secondary')}
     />
   );
+}
+export interface TextFieldOwnerState extends Omit<TextFieldProps, 'slotProps'> {
+  focused: boolean;
 }
 export interface TextFieldProps
   extends Omit<TextInputProps, 'onChange' | 'value' | 'defaultValue' | 'style'> {
@@ -132,23 +142,23 @@ export interface TextFieldProps
   inputRef?: React.Ref<TextInputInstance>;
   'aria-label'?: string;
   slotProps?: {
-    htmlInput?: TextInputProps;
-    inputLabel?: TypographyProps;
-    formHelperText?: TypographyProps;
+    htmlInput?: SlotProps<TextInputProps, TextFieldOwnerState>;
+    inputLabel?: SlotProps<TypographyProps, TextFieldOwnerState>;
+    formHelperText?: SlotProps<TypographyProps, TextFieldOwnerState>;
   };
 }
 export const TextField: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<TextFieldProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, TextFieldProps>(function TextField(inProps, ref) {
-  const props = useThemeProps({ props: inProps, name: 'MuiTextField' });
+  const props = useDefaultProps({ props: inProps, name: 'MuiTextField' });
   const form = useContext(FormContext);
   const {
     sx,
     label,
     helperText,
-    error = form.error,
-    disabled = form.disabled,
-    required = form.required,
+    error = form.error ?? false,
+    disabled = form.disabled ?? false,
+    required = form.required ?? false,
     fullWidth,
     variant = 'outlined',
     size = 'medium',
@@ -167,19 +177,18 @@ export const TextField: React.ForwardRefExoticComponent<
   const [text, setText] = useControlled(value, defaultValue);
   const [focused, setFocused] = useState(false);
   const theme = useTheme();
-  const resolved = useComponentStyle(
-    'MuiTextField',
-    { ...props, variant, size, error, disabled },
-    sx,
-    {
-      states: [
-        ...(focused ? ['focused'] : []),
-        ...(error ? ['error'] : []),
-        ...(disabled ? ['disabled'] : []),
-      ],
-    },
-  );
-  const input = { ...native, ...slotProps?.htmlInput };
+  const ownerState = { ...props, variant, size, error, disabled, required, focused };
+  const htmlInputProps = resolveSlotProps(slotProps?.htmlInput, ownerState) ?? {};
+  const inputLabelProps = resolveSlotProps(slotProps?.inputLabel, ownerState);
+  const helperProps = resolveSlotProps(slotProps?.formHelperText, ownerState);
+  const resolved = useComponentStyle('MuiTextField', ownerState, sx, {
+    states: [
+      ...(focused ? ['focused'] : []),
+      ...(error ? ['error'] : []),
+      ...(disabled ? ['disabled'] : []),
+    ],
+  });
+  const input = { ...native, ...htmlInputProps };
   const inputTypography = useSx(
     { typography: 'body1' },
     { nativeStyle: StyleSheet.flatten(input.style) ?? undefined },
@@ -196,22 +205,24 @@ export const TextField: React.ForwardRefExoticComponent<
     const target = { value: next, name, id };
     onChange?.({ target, currentTarget: target, nativeEvent: event.nativeEvent });
     onChangeText?.(next);
-    slotProps?.htmlInput?.onChange?.(event);
-    if (slotProps?.htmlInput?.onChangeText !== onChangeText)
-      slotProps?.htmlInput?.onChangeText?.(next);
+    htmlInputProps.onChange?.(event);
+    if (htmlInputProps.onChangeText !== onChangeText) htmlInputProps.onChangeText?.(next);
   };
   return (
     <View ref={ref} style={[{ alignSelf: fullWidth ? 'stretch' : undefined, gap: 4 }, resolved]}>
       <FormControl disabled={disabled} error={error} required={required}>
         {label != null ? (
-          <InputLabel {...slotProps?.inputLabel} nativeID={id ? `${id}-label` : undefined}>
+          <InputLabel
+            {...inputLabelProps}
+            nativeID={id ? `${id}-label` : inputLabelProps?.nativeID}
+          >
             {label}
           </InputLabel>
         ) : null}
         <TextInput
           {...input}
           ref={inputRef}
-          nativeID={id}
+          nativeID={id ?? input.nativeID}
           accessibilityLabel={
             ariaLabel ?? input.accessibilityLabel ?? (typeof label === 'string' ? label : undefined)
           }
@@ -238,13 +249,12 @@ export const TextField: React.ForwardRefExoticComponent<
           onFocus={(e) => {
             setFocused(true);
             native.onFocus?.(e);
-            if (slotProps?.htmlInput?.onFocus !== native.onFocus)
-              slotProps?.htmlInput?.onFocus?.(e);
+            if (htmlInputProps.onFocus !== native.onFocus) htmlInputProps.onFocus?.(e);
           }}
           onBlur={(e) => {
             setFocused(false);
             native.onBlur?.(e);
-            if (slotProps?.htmlInput?.onBlur !== native.onBlur) slotProps?.htmlInput?.onBlur?.(e);
+            if (htmlInputProps.onBlur !== native.onBlur) htmlInputProps.onBlur?.(e);
           }}
           style={[
             inputTypography,
@@ -259,12 +269,10 @@ export const TextField: React.ForwardRefExoticComponent<
               borderBottomWidth: variant === 'outlined' ? 1 : focused ? 2 : 1,
               backgroundColor: variant === 'filled' ? theme.palette.action.hover : 'transparent',
             },
-            slotProps?.htmlInput?.style,
+            htmlInputProps.style,
           ]}
         />
-        {helperText != null ? (
-          <FormHelperText {...slotProps?.formHelperText}>{helperText}</FormHelperText>
-        ) : null}
+        {helperText != null ? <FormHelperText {...helperProps}>{helperText}</FormHelperText> : null}
       </FormControl>
     </View>
   );
@@ -283,19 +291,21 @@ export interface CheckboxProps {
   'aria-label'?: string;
   testID?: string;
 }
-export function Checkbox({
-  checked,
-  defaultChecked = false,
-  disabled,
-  indeterminate,
-  value,
-  name,
-  onChange,
-  sx,
-  inputProps,
-  'aria-label': label,
-  testID,
-}: CheckboxProps) {
+export function Checkbox(inProps: CheckboxProps) {
+  const {
+    checked,
+    defaultChecked = false,
+    disabled,
+    indeterminate,
+    value,
+    name,
+    onChange,
+    sx,
+    inputProps,
+    'aria-label': label,
+    testID,
+  } = useDefaultProps({ props: inProps, name: 'MuiCheckbox' });
+
   const [selected, setSelected] = useControlled(checked, defaultChecked);
   const theme = useTheme();
   const style = useComponentStyle('MuiCheckbox', { checked: selected, disabled }, sx);
@@ -333,16 +343,18 @@ export function Checkbox({
     </Pressable>
   );
 }
-export function Switch({
-  checked,
-  defaultChecked = false,
-  disabled,
-  onChange,
-  name,
-  value,
-  'aria-label': label,
-  testID,
-}: CheckboxProps) {
+export function Switch(inProps: CheckboxProps) {
+  const {
+    checked,
+    defaultChecked = false,
+    disabled,
+    onChange,
+    name,
+    value,
+    'aria-label': label,
+    testID,
+  } = useDefaultProps({ props: inProps, name: 'MuiSwitch' });
+
   const [selected, setSelected] = useControlled(checked, defaultChecked);
   const theme = useTheme();
   const change = (next: boolean) => {
@@ -376,15 +388,17 @@ export interface RadioGroupProps extends Omit<BoxProps, 'onChange'> {
   row?: boolean;
   onChange?: (e: CheckChangeEvent, value: string) => void;
 }
-export function RadioGroup({
-  value,
-  defaultValue = '',
-  name,
-  onChange,
-  row,
-  children,
-  ...props
-}: RadioGroupProps) {
+export function RadioGroup(inProps: RadioGroupProps) {
+  const {
+    value,
+    defaultValue = '',
+    name,
+    onChange,
+    row,
+    children,
+    ...props
+  } = useDefaultProps({ props: inProps, name: 'MuiRadioGroup' });
+
   const [selected, setSelected] = useControlled(value, defaultValue);
   return (
     <RadioContext.Provider
@@ -403,15 +417,17 @@ export function RadioGroup({
     </RadioContext.Provider>
   );
 }
-export function Radio({
-  value = '',
-  checked,
-  defaultChecked = false,
-  onChange,
-  disabled,
-  'aria-label': label,
-  testID,
-}: CheckboxProps) {
+export function Radio(inProps: CheckboxProps) {
+  const {
+    value = '',
+    checked,
+    defaultChecked = false,
+    onChange,
+    disabled,
+    'aria-label': label,
+    testID,
+  } = useDefaultProps({ props: inProps, name: 'MuiRadio' });
+
   const group = useContext(RadioContext);
   const [local, setLocal] = useControlled(checked, defaultChecked);
   const selected = group.value !== undefined ? group.value === value : local;
@@ -467,15 +483,16 @@ function labelText(label: React.ReactNode): string | undefined {
     return labelText(label.props.children);
   return undefined;
 }
-export function FormControlLabel({
-  control,
-  label,
-  disabled,
-}: {
+export function FormControlLabel(inProps: {
   control: React.ReactElement<CheckboxProps>;
   label: React.ReactNode;
   disabled?: boolean;
 }) {
+  const { control, label, disabled } = useDefaultProps({
+    props: inProps,
+    name: 'MuiFormControlLabel',
+  });
+
   const activate = useRef<LabelActivation | null>(null);
   const form = useContext(FormContext);
   const inactive = disabled ?? control.props.disabled ?? form.disabled;

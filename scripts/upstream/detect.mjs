@@ -1,7 +1,7 @@
 import { readFile, mkdir, writeFile, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { packages } from './config.mjs';
+import { monitoredPackages as packages } from './config.mjs';
 import { request, pages } from './http.mjs';
 import { releaseResolver } from './source.mjs';
 import { inspectArtifact } from './artifact.mjs';

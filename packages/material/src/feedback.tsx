@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {
   useTheme,
+  useDefaultProps,
   resolveSx,
   diagnostic,
   type SxProps,
@@ -30,17 +31,19 @@ export interface DialogProps extends BoxProps {
   fullScreen?: boolean;
   maxWidth?: Breakpoint | false;
 }
-export function Dialog({
-  open,
-  onClose,
-  disableEscapeKeyDown,
-  fullWidth,
-  fullScreen,
-  maxWidth = 'sm' as Breakpoint,
-  children,
-  sx,
-  ...props
-}: DialogProps) {
+export function Dialog(inProps: DialogProps) {
+  const {
+    open,
+    onClose,
+    disableEscapeKeyDown,
+    fullWidth,
+    fullScreen,
+    maxWidth = 'sm' as Breakpoint,
+    children,
+    sx,
+    ...props
+  } = useDefaultProps({ props: inProps, name: 'MuiDialog' });
+
   const theme = useTheme();
   const { width } = useWindowDimensions();
   const availableWidth = Math.max(0, width - 48);
@@ -122,7 +125,15 @@ export interface AlertProps extends BoxProps {
   onClose?: () => void;
   action?: React.ReactNode;
 }
-export function Alert({ severity = 'success', children, onClose, action, ...props }: AlertProps) {
+export function Alert(inProps: AlertProps) {
+  const {
+    severity = 'success',
+    children,
+    onClose,
+    action,
+    ...props
+  } = useDefaultProps({ props: inProps, name: 'MuiAlert' });
+
   const theme = useTheme();
   return (
     <Stack
@@ -158,10 +169,12 @@ export interface ProgressProps {
   sx?: SxProps;
   'aria-label'?: string;
 }
-export function CircularProgress({
-  size = 40,
-  'aria-label': label = 'Loading',
-}: Omit<ProgressProps, 'variant' | 'value'>) {
+export function CircularProgress(inProps: Omit<ProgressProps, 'variant' | 'value'>) {
+  const { size = 40, 'aria-label': label = 'Loading' } = useDefaultProps({
+    props: inProps,
+    name: 'MuiCircularProgress',
+  });
+
   const theme = useTheme();
   return (
     <ActivityIndicator
@@ -172,12 +185,14 @@ export function CircularProgress({
     />
   );
 }
-export function LinearProgress({
-  variant = 'indeterminate',
-  value = 0,
-  sx,
-  'aria-label': label = 'Loading',
-}: ProgressProps) {
+export function LinearProgress(inProps: ProgressProps) {
+  const {
+    variant = 'indeterminate',
+    value = 0,
+    sx,
+    'aria-label': label = 'Loading',
+  } = useDefaultProps({ props: inProps, name: 'MuiLinearProgress' });
+
   const theme = useTheme();
   return (
     <Box
@@ -213,14 +228,16 @@ export interface SnackbarProps {
   onClose?: (event: null, reason: 'timeout') => void;
   children?: React.ReactNode;
 }
-export function Snackbar({
-  open,
-  message,
-  action,
-  autoHideDuration = null,
-  onClose,
-  children,
-}: SnackbarProps) {
+export function Snackbar(inProps: SnackbarProps) {
+  const {
+    open,
+    message,
+    action,
+    autoHideDuration = null,
+    onClose,
+    children,
+  } = useDefaultProps({ props: inProps, name: 'MuiSnackbar' });
+
   useEffect(() => {
     if (!open || autoHideDuration == null) return;
     let timer: ReturnType<typeof setTimeout> | undefined;

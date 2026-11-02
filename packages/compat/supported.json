@@ -30,12 +30,14 @@
       "Alert",
       "CircularProgress",
       "LinearProgress",
-      "Snackbar"
+      "Snackbar",
+      "DefaultPropsProvider",
+      "utils"
     ]
   },
   "@mui/system": {
     "target": "@altroo/mui-native-system",
-    "subpaths": ["colorManipulator"]
+    "subpaths": ["colorManipulator", "DefaultPropsProvider", "useThemeProps"]
   },
   "@mui/icons-material": {
     "target": "@altroo/mui-native-icons",

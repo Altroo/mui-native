@@ -89,6 +89,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Generated declaration inventory and remaining gaps](docs/coverage.md)
 - [Native palette and color helpers](docs/theming.md)
 - [Typography themes, native units and inheritance](docs/typography.md)
+- [Theme defaults and slot prop composition](docs/default-props.md)
 - [Spacing, breakpoints and responsive styles](docs/layout-system.md)
 - [Native Button loading](docs/button.md)
 - [Native form controls and calendar behavior](docs/native-controls.md)

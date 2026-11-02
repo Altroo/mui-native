@@ -56,6 +56,8 @@ Spacing, breakpoint helpers, native width rules, responsive Stack spacing and Di
 
 Typography theme values and native normalization now have pinned upstream fixtures, component regressions and installed-consumer augmentation checks. See [typography](docs/typography.md). Font availability, native visual/accessibility evidence, arbitrary CSS and remaining utilities are still open.
 
+Default-prop context, deferred slot callbacks and explicit slot composition have pinned reference cases and native consumer checks. See [defaults](docs/default-props.md). Complete slot mounting, ref composition, nested/scoped theme providers and remaining contracts stay open.
+
 ## 3. Verified alpha
 
 Core scope: Box, Stack, Typography, Divider, Paper, Card, Button, IconButton, initial icons, TextField/FormControl parts, Checkbox, Radio, Switch, Dialog, Alert, progress and Snackbar.

@@ -29,6 +29,16 @@
       "types": "./dist/colorManipulator/index.d.ts",
       "react-native": "./src/colorManipulator/index.ts",
       "default": "./dist/colorManipulator/index.js"
+    },
+    "./DefaultPropsProvider": {
+      "types": "./dist/DefaultPropsProvider/index.d.ts",
+      "react-native": "./src/DefaultPropsProvider/index.ts",
+      "default": "./dist/DefaultPropsProvider/index.js"
+    },
+    "./useThemeProps": {
+      "types": "./dist/useThemeProps/index.d.ts",
+      "react-native": "./src/useThemeProps/index.ts",
+      "default": "./dist/useThemeProps/index.js"
     }
   },
   "dependencies": {},

@@ -138,6 +138,10 @@ export interface ComponentConfig {
     style: SxProps;
   }>;
 }
+export interface Components {
+  [name: string]: ComponentConfig | boolean | undefined;
+  mergeClassNameAndStyle?: boolean;
+}
 export interface Theme {
   palette: Palette;
   spacing: Spacing;
@@ -145,7 +149,7 @@ export interface Theme {
   direction: 'ltr' | 'rtl';
   typography: TypographyVariants;
   breakpoints: Breakpoints;
-  components: Record<string, ComponentConfig>;
+  components: Components;
 }
 export interface ThemeOptions {
   palette?: PaletteOptions;

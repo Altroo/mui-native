@@ -1,7 +1,7 @@
 import semver from 'semver';
-import { assertEligible } from './config.mjs';
+import { assertSourceEligible } from './config.mjs';
 export function detectPackage(config, registry, previous) {
-  assertEligible(config.name);
+  assertSourceEligible(config.name);
   if (registry.name !== config.name || !registry.versions || !registry.time)
     throw new Error(`Invalid registry response for ${config.name}`);
   const versions = Object.keys(registry.versions)

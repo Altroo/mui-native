@@ -2,7 +2,7 @@ import React, { createContext, forwardRef, useContext } from 'react';
 import { Text, StyleSheet, type TextInstance, type TextProps, type TextStyle } from 'react-native';
 import {
   useTheme,
-  useThemeProps,
+  useDefaultProps,
   useComponentStyle,
   getTextStyleInheritance,
   nativeStyleTextMetrics,
@@ -58,7 +58,7 @@ const textTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div'
 export const Typography: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<TypographyProps> & React.RefAttributes<TextInstance>
 > = forwardRef<TextInstance, TypographyProps>(function Typography(inProps, ref) {
-  const props = useThemeProps({ props: inProps, name: 'MuiTypography' });
+  const props = useDefaultProps({ props: inProps, name: 'MuiTypography' });
   const {
     sx,
     variant = 'body1',

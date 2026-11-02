@@ -55,6 +55,9 @@ execFileSync(
   ['--project', 'tsconfig.native.json', '--noEmit'],
   { cwd: consumer, stdio: 'inherit' },
 );
+execFileSync(process.execPath, ['scripts/check-consumer-contexts.cjs', consumer], {
+  stdio: 'inherit',
+});
 const lock = JSON.parse(await readFile(`${consumer}/package-lock.json`, 'utf8'));
 if (
   Object.keys(lock.packages).some(

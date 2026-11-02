@@ -4,6 +4,17 @@ import { readFile, readdir, mkdir, cp, rm } from 'node:fs/promises';
 import path from 'node:path';
 await rm('.cache/types', { recursive: true, force: true });
 execFileSync('pnpm', ['exec', 'tsc', '-p', 'tsconfig.build.json'], { stdio: 'inherit' });
+async function runtimeSources(directory) {
+  const files = [];
+  for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) =>
+    a.name.localeCompare(b.name, 'en'),
+  )) {
+    const file = path.join(directory, entry.name);
+    if (entry.isDirectory()) files.push(...(await runtimeSources(file)));
+    else if (/\.tsx?$/.test(file) && !file.endsWith('.d.ts')) files.push(file);
+  }
+  return files;
+}
 for (const directory of await readdir('packages')) {
   const folder = `packages/${directory}`;
   const pkg = JSON.parse(await readFile(`${folder}/package.json`, 'utf8'));
@@ -14,13 +25,13 @@ for (const directory of await readdir('packages')) {
     .filter((key) => key !== './package.json')
     .map((key) => (key === '.' ? 'index' : key.slice(2) + '/index'));
   await build({
-    entryPoints: entries.map((entry) => `${folder}/src/${entry}.ts`),
+    entryPoints: await runtimeSources(`${folder}/src`),
     outbase: `${folder}/src`,
     outdir: `${folder}/dist`,
     platform: 'neutral',
     format: 'cjs',
-    bundle: true,
-    packages: 'external',
+    // Keep one module instance for context-owning internals across public entry points.
+    bundle: false,
     sourcemap: true,
   });
   await cp(`.cache/types/${directory}/src`, `${folder}/dist`, { recursive: true });

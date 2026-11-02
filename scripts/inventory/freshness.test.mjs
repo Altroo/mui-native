@@ -198,3 +198,39 @@ test('included license notices must be retained and match their reviewed baselin
   await unlink(path.join(root, 'upstream/licenses/system.txt'));
   await assert.rejects(verifyInventory(root, configs), /ENOENT/);
 });
+
+test('supporting dependencies are input-checked but never become native report targets', async (t) => {
+  const { root, state, manifest } = await fixture(t);
+  const reference = {
+    ...state.packages['@mui/system'].baseline,
+    sourceCommit: 'c'.repeat(40),
+    integrity: 'sha512-test',
+  };
+  state.packages['@mui/utils'] = { baseline: reference };
+  await put(root, 'upstream/state.json', json(state));
+  await put(root, 'upstream/licenses/utils.txt', 'MIT fixture');
+  const all = [...configs, { name: '@mui/utils', channel: 'stable', role: 'reference-dependency' }];
+  manifest.inputs = await collectInputs(root, all);
+  manifest.referenceDependencies = [
+    {
+      name: '@mui/utils',
+      version: reference.version,
+      sourceCommit: reference.sourceCommit,
+      integrity: reference.integrity,
+      apiSnapshotSha256: reference.apiSnapshotSha256,
+      licenseSha256: reference.licenseSha256,
+    },
+  ];
+  await put(root, manifestPath, json(manifest));
+  assert.equal(await verifyInventory(root, all), 1);
+  manifest.referenceDependencies[0].version = '2.0.0';
+  await put(root, manifestPath, json(manifest));
+  await assert.rejects(verifyInventory(root, all), /reference mismatch/);
+  reference.licenseReview = 'hold';
+  manifest.inputs = await collectInputs(root, all);
+  state.packages['@mui/utils'].baseline = reference;
+  await put(root, 'upstream/state.json', json(state));
+  manifest.inputs = await collectInputs(root, all);
+  await put(root, manifestPath, json(manifest));
+  await assert.rejects(verifyInventory(root, all), /dependency is blocked/);
+});

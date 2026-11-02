@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useMemo, forwardRef } from 'react';
 import { useWindowDimensions, StyleSheet, type StyleProp } from 'react-native';
 import { createTheme, type Theme } from './theme';
+import { DefaultPropsProvider, getThemeProps } from './defaultProps';
 import { nativeStyleTextMetrics, applyNativeTextMetrics } from './nativeText';
 import {
   componentStyle,
@@ -11,7 +12,7 @@ import {
   type NativeStyle,
 } from './sx';
 const defaultTheme = createTheme();
-const Context = createContext(defaultTheme);
+const Context = createContext<Theme | undefined>(undefined);
 export function ThemeProvider({
   theme,
   children,
@@ -21,17 +22,31 @@ export function ThemeProvider({
 }) {
   const outer = useTheme();
   const value = useMemo(() => (typeof theme === 'function' ? theme(outer) : theme), [outer, theme]);
-  return <Context.Provider value={value}>{children}</Context.Provider>;
+  return (
+    <Context.Provider value={value}>
+      <DefaultPropsProvider value={value.components}>{children}</DefaultPropsProvider>
+    </Context.Provider>
+  );
 }
-export function useTheme(): Theme {
-  return useContext(Context);
+export function useTheme(fallback: Theme = defaultTheme): Theme {
+  return useContext(Context) ?? fallback;
 }
-export function useThemeProps<P extends object>({ props, name }: { props: P; name: string }): P {
-  const theme = useTheme();
-  const result = { ...theme.components[name]?.defaultProps } as Record<string, unknown>;
-  for (const [key, value] of Object.entries(props)) if (value !== undefined) result[key] = value;
-  return result as P;
+export function useThemeProps<P extends object>({
+  props,
+  name,
+  defaultTheme: fallback,
+  themeId,
+}: {
+  props: P;
+  name: string;
+  defaultTheme?: Theme;
+  themeId?: string;
+}): P {
+  const theme = useTheme(fallback);
+  const scoped = themeId ? (theme as unknown as Record<string, unknown>)[themeId] || theme : theme;
+  return getThemeProps({ theme: scoped as Theme, props, name });
 }
+
 export function useSx(sx?: SxProps, context: StyleContext = {}) {
   const theme = useTheme();
   const { width } = useWindowDimensions();

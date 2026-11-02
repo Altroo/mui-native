@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Theme/default-prop contexts, named slot default merging, TextField owner-state callbacks and explicit slot prop composition. See [defaults](default-props.md) for replacement rules and native differences.
+
 - MUI-shaped typography themes, callbacks/conversion, native text normalization, custom variants, heading mapping and tracked text inheritance. See [typography](typography.md) for native differences and explicit limits.
 
 - Object, function, and array `sx`; palette paths; spacing; fractional sizing; `px`/`rem`; responsive values; selected `&.Mui-state` selectors; root overrides and variants.

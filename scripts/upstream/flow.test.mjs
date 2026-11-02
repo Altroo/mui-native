@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { packages } from './config.mjs';
+import { monitoredPackages as packages } from './config.mjs';
 import { detect } from './detect.mjs';
 import { publishReport } from './publish-report.mjs';
 import { simulatePublication } from './simulate.mjs';
@@ -246,4 +246,57 @@ test('default issue-only operation never requests PR permissions or dispatches c
   assert.equal(summary.drafts, 0);
   assert.equal(summary.dispatches, 0);
   assert.equal(summary.networkWrites, 0);
+});
+
+test('supporting Utils releases publish with native updates but never become native candidates', async () => {
+  const { report, state } = await fixture();
+  const utility = {
+    ...report.changes.find((change) => change.name === '@mui/material'),
+    name: '@mui/utils',
+    adaptedSourceChanges: [
+      {
+        path: 'resolveProps/resolveProps.js',
+        status: 'changed',
+        localFiles: ['packages/system/src/defaultProps.tsx'],
+      },
+    ],
+  };
+  report.changes.push(utility);
+  report.nextState.packages['@mui/utils'].latestDetected = utility.version;
+  report.nextState.packages['@mui/utils'].observedVersions.push(utility.version);
+  const previous = globalThis.fetch;
+  try {
+    for (const prepareDrafts of [false, true]) {
+      const remote = simulatedGitHub(state);
+      globalThis.fetch = remote.fetch;
+      await publishReport({
+        report: structuredClone(report),
+        repository: remote.repository,
+        token: 'simulation-token',
+        prepareDrafts,
+      });
+      assert.ok(
+        remote.issues.some(
+          (issue) =>
+            issue.body.includes('@mui/utils@1.0.1') &&
+            issue.body.includes('resolveProps/resolveProps.js'),
+        ),
+      );
+      assert.ok(remote.issues.some((issue) => issue.body.includes('@mui/material@1.0.1')));
+      assert.equal(remote.state().packages['@mui/utils'].latestDetected, '1.0.1');
+      assert.equal(remote.state().packages['@mui/utils'].portedAndVerified, null);
+      assert.equal(remote.state().packages['@mui/utils'].candidate, null);
+      assert.equal(remote.pulls.length, prepareDrafts ? 1 : 0);
+      assert.equal(remote.dispatches.length, prepareDrafts ? 1 : 0);
+      if (prepareDrafts) {
+        const file = remote.branches
+          .get('upstream/core/stable/v1')
+          .get('upstream/candidates/core-stable-v1.json');
+        const candidate = JSON.parse(Buffer.from(file.content, 'base64').toString());
+        assert.ok(candidate.changes.every((change) => change.name !== '@mui/utils'));
+      }
+    }
+  } finally {
+    globalThis.fetch = previous;
+  }
 });

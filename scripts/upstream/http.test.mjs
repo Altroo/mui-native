@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { request, pages } from './http.mjs';
 import { detect } from './detect.mjs';
-import { packages } from './config.mjs';
+import { monitoredPackages as packages } from './config.mjs';
 test('GitHub workflow dispatch accepts an empty 204 response', async () => {
   const original = globalThis.fetch;
   globalThis.fetch = async () => new Response(null, { status: 204 });

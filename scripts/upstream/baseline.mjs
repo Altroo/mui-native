@@ -1,6 +1,6 @@
 import { mkdir, writeFile, access } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { packages } from './config.mjs';
+import { monitoredPackages as packages } from './config.mjs';
 import { request, pages, commitForTag } from './http.mjs';
 import { inspectArtifact } from './artifact.mjs';
 try {

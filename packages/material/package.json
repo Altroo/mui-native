@@ -169,6 +169,16 @@
       "types": "./dist/styles/index.d.ts",
       "react-native": "./src/styles/index.ts",
       "default": "./dist/styles/index.js"
+    },
+    "./DefaultPropsProvider": {
+      "types": "./dist/DefaultPropsProvider/index.d.ts",
+      "react-native": "./src/DefaultPropsProvider/index.ts",
+      "default": "./dist/DefaultPropsProvider/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "react-native": "./src/utils/index.ts",
+      "default": "./dist/utils/index.js"
     }
   },
   "dependencies": {

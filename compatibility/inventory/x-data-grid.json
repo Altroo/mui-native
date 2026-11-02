@@ -12948,6 +12948,25 @@
       "verified": false
     },
     {
+      "name": "useOnMount",
+      "origins": [
+        {
+          "module": "@mui/utils:useOnMount/useOnMount.d.mts",
+          "name": "useOnMount",
+          "kind": "value",
+          "line": 5
+        },
+        {
+          "module": "@mui/utils:useOnMount/useOnMount.d.ts",
+          "name": "useOnMount",
+          "kind": "value",
+          "line": 5
+        }
+      ],
+      "native": "not-declared",
+      "verified": false
+    },
+    {
       "name": "useRunOncePerLoop",
       "origins": [
         {
@@ -96262,36 +96281,6 @@
       "imported": "RenderProp"
     },
     {
-      "from": "@mui/x-data-grid:hooks/utils/useLazyRef.d.mts",
-      "source": "@mui/utils/useLazyRef",
-      "imported": "default"
-    },
-    {
-      "from": "@mui/x-data-grid:hooks/utils/useLazyRef.d.ts",
-      "source": "@mui/utils/useLazyRef",
-      "imported": "default"
-    },
-    {
-      "from": "@mui/x-data-grid:hooks/utils/useOnMount.d.mts",
-      "source": "@mui/utils/useOnMount",
-      "imported": "default"
-    },
-    {
-      "from": "@mui/x-data-grid:hooks/utils/useOnMount.d.ts",
-      "source": "@mui/utils/useOnMount",
-      "imported": "default"
-    },
-    {
-      "from": "@mui/x-data-grid:hooks/utils/useTimeout.d.mts",
-      "source": "@mui/utils/useTimeout",
-      "imported": "default"
-    },
-    {
-      "from": "@mui/x-data-grid:hooks/utils/useTimeout.d.ts",
-      "source": "@mui/utils/useTimeout",
-      "imported": "default"
-    },
-    {
       "from": "@mui/x-data-grid:internals/index.d.mts",
       "source": "use-sync-external-store/shim",
       "imported": "useSyncExternalStore"
@@ -96350,16 +96339,6 @@
       "from": "@mui/x-data-grid:utils/roundToDecimalPlaces.d.ts",
       "source": "@mui/x-internals/math",
       "imported": "roundToDecimalPlaces"
-    },
-    {
-      "from": "@mui/x-data-grid:internals/index.d.mts",
-      "source": "@mui/x-data-grid:hooks/utils/useTimeout.d.mts",
-      "imported": "useTimeout"
-    },
-    {
-      "from": "@mui/x-data-grid:internals/index.d.ts",
-      "source": "@mui/x-data-grid:hooks/utils/useTimeout.d.ts",
-      "imported": "useTimeout"
     }
   ],
   "syntaxReview": [

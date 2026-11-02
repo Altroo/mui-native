@@ -350,7 +350,8 @@ export function componentStyle(
   sx?: SxProps,
   context: StyleContext = {},
 ): NativeStyle {
-  const config = theme.components[name];
+  const entry = theme.components[name];
+  const config = entry && typeof entry === 'object' ? entry : undefined;
   const bases = ['root', ...(context.overrideKeys ?? [])].flatMap((key) => {
     const override = config?.styleOverrides?.[key];
     const style =

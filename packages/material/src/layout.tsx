@@ -4,7 +4,7 @@ export * from './typography';
 import { View, type ViewInstance, type ViewProps } from 'react-native';
 import {
   useTheme,
-  useThemeProps,
+  useDefaultProps,
   useComponentStyle,
   useSx,
   type SxProps,
@@ -31,10 +31,16 @@ export interface StackProps extends BoxProps {
 }
 export const Stack: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<StackProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, StackProps>(function Stack(
-  { direction = 'column', spacing = 0, divider, children, sx, ...props },
-  ref,
-) {
+> = forwardRef<ViewInstance, StackProps>(function Stack(inProps, ref) {
+  const {
+    direction = 'column',
+    spacing = 0,
+    divider,
+    children,
+    sx,
+    ...props
+  } = useDefaultProps({ props: inProps, name: 'MuiStack' });
+
   const items = React.Children.toArray(children);
   return (
     <Box
@@ -59,7 +65,7 @@ export interface PaperProps extends BoxProps {
 export const Paper: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<PaperProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, PaperProps>(function Paper(inProps, ref) {
-  const props = useThemeProps({ props: inProps, name: 'MuiPaper' });
+  const props = useDefaultProps({ props: inProps, name: 'MuiPaper' });
   const { elevation = 1, variant = 'elevation', square = false, sx, style, ...rest } = props;
   const theme = useTheme();
   const shadow = useSx({ boxShadow: variant === 'elevation' ? elevation : 0 });
@@ -83,7 +89,9 @@ export const Paper: React.ForwardRefExoticComponent<
 });
 export const Card: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<PaperProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, PaperProps>(function Card(props, ref) {
+> = forwardRef<ViewInstance, PaperProps>(function Card(inProps, ref) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiCard' });
+
   const resolved = useComponentStyle('MuiCard', props, props.sx);
   return (
     <Paper
@@ -96,12 +104,16 @@ export const Card: React.ForwardRefExoticComponent<
 });
 export const CardContent: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<BoxProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, BoxProps>(function CardContent(props, ref) {
+> = forwardRef<ViewInstance, BoxProps>(function CardContent(inProps, ref) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiCardContent' });
+
   return <Box {...props} ref={ref} style={[{ padding: 16, paddingBottom: 24 }, props.style]} />;
 });
 export const CardActions: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<BoxProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, BoxProps>(function CardActions(props, ref) {
+> = forwardRef<ViewInstance, BoxProps>(function CardActions(inProps, ref) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiCardActions' });
+
   return (
     <Stack
       {...props}
@@ -115,13 +127,15 @@ export interface DividerProps extends BoxProps {
   orientation?: 'horizontal' | 'vertical';
   flexItem?: boolean;
 }
-export function Divider({
-  orientation = 'horizontal',
-  flexItem,
-  sx,
-  style,
-  ...props
-}: DividerProps) {
+export function Divider(inProps: DividerProps) {
+  const {
+    orientation = 'horizontal',
+    flexItem,
+    sx,
+    style,
+    ...props
+  } = useDefaultProps({ props: inProps, name: 'MuiDivider' });
+
   const theme = useTheme();
   return (
     <Box
@@ -139,15 +153,25 @@ export function Divider({
     />
   );
 }
-export function DialogTitle(props: TypographyProps) {
+export function DialogTitle(inProps: TypographyProps) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiDialogTitle' });
+
   return (
-    <Typography {...props} variant="h6" style={[{ padding: 24, paddingBottom: 16 }, props.style]} />
+    <Typography
+      {...props}
+      variant={props.variant ?? 'h6'}
+      style={[{ padding: 24, paddingBottom: 16 }, props.style]}
+    />
   );
 }
-export function DialogContent(props: BoxProps) {
+export function DialogContent(inProps: BoxProps) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiDialogContent' });
+
   return <Box {...props} style={[{ paddingHorizontal: 24, paddingBottom: 20 }, props.style]} />;
 }
-export function DialogActions(props: BoxProps) {
+export function DialogActions(inProps: BoxProps) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiDialogActions' });
+
   return (
     <Stack
       {...props}

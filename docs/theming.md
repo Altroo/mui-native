@@ -38,12 +38,13 @@ Download the pinned artifacts and install the reference packages separately from
 
 ```sh
 mkdir -p .cache/upstream .cache/palette-reference
-npm pack @mui/material@9.5.0 @mui/system@9.5.0 --ignore-scripts --pack-destination .cache/upstream
+npm pack @mui/material@9.5.0 @mui/system@9.5.0 @mui/utils@9.5.0 --ignore-scripts --pack-destination .cache/upstream
 mv .cache/upstream/mui-material-9.5.0.tgz .cache/upstream/material-9.5.0.tgz
 mv .cache/upstream/mui-system-9.5.0.tgz .cache/upstream/system-9.5.0.tgz
+mv .cache/upstream/mui-utils-9.5.0.tgz .cache/upstream/utils-9.5.0.tgz
 cd .cache/palette-reference
 npm init -y
-npm install --ignore-scripts --no-audit --no-fund ../upstream/material-9.5.0.tgz ../upstream/system-9.5.0.tgz react@19.3.0 react-dom@19.3.0
+npm install --ignore-scripts --no-audit --no-fund ../upstream/material-9.5.0.tgz ../upstream/system-9.5.0.tgz ../upstream/utils-9.5.0.tgz react@19.3.0 react-dom@19.3.0
 cd ../..
 node scripts/reference/palette.mjs --check
 ```

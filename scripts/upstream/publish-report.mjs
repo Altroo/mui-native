@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
-import { assertEligible } from './config.mjs';
+import { assertSourceEligible, referenceDependencies } from './config.mjs';
 import { request, pages } from './http.mjs';
 export async function publishReport({
   report,
@@ -43,7 +43,7 @@ export async function publishReport({
   const state = JSON.parse(Buffer.from(before.content, 'base64').toString());
   if (createHash('sha256').update(JSON.stringify(state)).digest('hex') !== report.baseStateHash)
     throw new Error('Baseline changed during detection; rerun without advancing state');
-  for (const change of report.changes) assertEligible(change.name);
+  for (const change of report.changes) assertSourceEligible(change.name);
   // Search all issue states, including closed ones, to avoid duplicate release issues after outages.
   const issues = (await pages(root + '/issues?state=all', { token })).filter(
     (issue) => !issue.pull_request,
@@ -111,7 +111,8 @@ export async function publishReport({
   }
   if (prepareDrafts) {
     const groups = new Map();
-    for (const change of report.changes.filter((c) => !c.blocked)) {
+    const sourceOnly = new Set(referenceDependencies.map((config) => config.name));
+    for (const change of report.changes.filter((c) => !c.blocked && !sourceOnly.has(c.name))) {
       const key = `${change.family}/${change.channel}/v${change.version.split('.')[0]}`;
       groups.set(key, [...(groups.get(key) ?? []), change]);
     }

@@ -13,3 +13,13 @@ export {
   applyNativeTextMetrics,
   isNativeTextStyleProperty,
 } from './nativeText';
+
+export {
+  DefaultPropsProvider,
+  useDefaultProps,
+  getThemeProps,
+  resolveSlotProps,
+  joinClassNames,
+  mergeNativeStyles,
+} from './defaultProps';
+export type { DefaultPropsMap, SlotProps } from './defaultProps';

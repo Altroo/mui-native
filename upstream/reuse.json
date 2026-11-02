@@ -133,6 +133,73 @@
         "Typography defaults, variant mapping, color names and override ordering use native Text and accessibility semantics instead of DOM/CSS rendering.",
         "Native style and text inheritance are platform extensions; browser elements, CSS classes and DOM refs are not rendered."
       ]
+    },
+    {
+      "localFile": "packages/system/src/defaultProps.tsx",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "resolveProps/resolveProps.js": "f1ca742842ec733f23b40eda4bcbfff608300144f46cf928e1e0f8ab604c36c4",
+          "resolveProps/resolveProps.d.ts": "b6d7523ea6bd19505b77bebd8c40221ee6ac4a71025269fa0a43786ad11f4d88"
+        }
+      },
+      "adaptations": [
+        "Typed native default resolution and deferred callbacks; native style arrays/callbacks preserve React Native semantics under the opt-in merge flag.",
+        "Own special keys are defined as data properties without changing object prototypes."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/defaultProps.tsx",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "useThemeProps/getThemeProps.js": "a766955dd15117cbe7bfb26cf43d793b3f57694563507c23ffed10d1cd4b60d6",
+          "DefaultPropsProvider/DefaultPropsProvider.js": "6234e618376c90c75eadd92dc0af9e078a946cf57d6adb15b473163932fbc739"
+        }
+      },
+      "adaptations": [
+        "Native theme/default contexts and legacy/raw configuration selection; no browser styling context is imported."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/utils/mergeSlotProps.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "utils/mergeSlotProps.js": "b06b97432a9aaccfb3fb3aa2d0843466878d5ea86d876dfded99c91ffaa0ad5e",
+          "utils/mergeSlotProps.d.ts": "dcf64894451cde209d632119dec1e8fce24e4904b284b940d90435a92a2c6385"
+        }
+      },
+      "adaptations": [
+        "Native style arrays/callbacks are composed rather than spread as CSS objects.",
+        "Absent callback results and absent default objects resolve safely to empty props."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/utils/mergeSlotProps.ts",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "isEventHandler/isEventHandler.js": "d778bfa9472845b59c66b5e66846b605b6b8daa1ff2ecfcc6dec0bb0a2a53f1e"
+        }
+      },
+      "adaptations": ["Native event-key detection uses the same uppercase onX convention."]
     }
   ]
 }

@@ -1539,6 +1539,32 @@
         "9.0.0-alpha.20",
         "9.0.0-alpha.21"
       ]
+    },
+    "@mui/utils": {
+      "baseline": {
+        "version": "9.5.0",
+        "publishedAt": "2026-10-09T09:10:28.764Z",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "tag": "v9.5.0",
+        "license": "MIT",
+        "licensePath": "LICENSE",
+        "licenseSource": "npm-artifact",
+        "licenseReview": null,
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "apiSnapshot": "upstream/api/utils.hashes.json",
+        "apiSnapshotSha256": "c491e8f47ba5bdcb2b2360998fbe0fcd83f00a3890444140a70e33b262116b09",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "tarball": "https://registry.npmjs.org/@mui/utils/-/utils-9.5.0.tgz",
+        "repository": "mui/material-ui",
+        "directory": "packages/mui-utils",
+        "copiedFiles": [],
+        "role": "reference-dependency"
+      },
+      "latestDetected": "9.5.0",
+      "candidate": null,
+      "portedAndVerified": null,
+      "releasedSupport": null,
+      "observedVersions": ["9.5.0"]
     }
   },
   "lastSuccessfulCheck": "2026-11-02T10:58:12.471Z"

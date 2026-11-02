@@ -1,11 +1,11 @@
-import { assertEligible } from './config.mjs';
+import { assertSourceEligible } from './config.mjs';
 
 export function reusedFiles(reuse, name) {
   if (!reuse || reuse.schemaVersion !== 1 || !Array.isArray(reuse.entries))
     throw new Error('Invalid source reuse record');
   const files = new Map();
   for (const entry of reuse.entries) {
-    assertEligible(entry.reference?.name);
+    assertSourceEligible(entry.reference?.name);
     if (entry.reference.name !== name) continue;
     if (!entry.localFile || !entry.reference.sourceFiles)
       throw new Error('Incomplete source reuse record');

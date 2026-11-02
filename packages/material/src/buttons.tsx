@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {
   useTheme,
-  useThemeProps,
+  useDefaultProps,
   useComponentStyle,
   isNativeTextStyleProperty,
   type SxProps,
@@ -51,7 +51,7 @@ function expandNativePadding(style: Readonly<Partial<ViewStyle>> | null | undefi
 export const Button: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ButtonProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ButtonProps>(function Button(inProps, ref) {
-  const props = useThemeProps({ props: inProps, name: 'MuiButton' });
+  const props = useDefaultProps({ props: inProps, name: 'MuiButton' });
   const {
     children,
     sx,
@@ -237,7 +237,9 @@ export const Button: React.ForwardRefExoticComponent<
 });
 export const IconButton: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ButtonProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, ButtonProps>(function IconButton(props, ref) {
+> = forwardRef<ViewInstance, ButtonProps>(function IconButton(inProps, ref) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiIconButton' });
+
   return (
     <Button
       {...props}
