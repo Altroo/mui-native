@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "6d3a02bc9ef42b50cbe5bd92fa878b6b69a0bf23511c19ec36491f9a82a4dce5",
+  "nativeSourceSha256": "72641bd74aaaabc5fa71be98cb2aa505a52b83b82efc288dd0acadbaaa55b2df",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -1443,7 +1443,7 @@
           "file": "RtlProvider/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/system/shadows",
@@ -1683,7 +1683,7 @@
           "file": "ThemeProvider/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/system/typography",
@@ -1773,7 +1773,7 @@
           "file": "useTheme/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/system/useThemeProps",
@@ -1833,7 +1833,7 @@
           "file": "useThemeWithoutDefault/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/system/version",
@@ -5360,7 +5360,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -6063,7 +6063,7 @@
           "line": 18
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -6234,7 +6234,7 @@
           "line": 3
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -6766,7 +6766,7 @@
           "line": 6
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -6823,7 +6823,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -7284,6 +7284,17 @@
       ]
     },
     {
+      "name": "RtlProviderProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/RtlProvider/index.tsx",
+          "name": "RtlProviderProps",
+          "kind": "type",
+          "line": 3
+        }
+      ]
+    },
+    {
       "name": "SimplePaletteColorOptions",
       "origins": [
         {
@@ -7466,7 +7477,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentStyle",
           "kind": "value",
-          "line": 55
+          "line": 81
         }
       ]
     },
@@ -7488,7 +7499,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useSx",
           "kind": "value",
-          "line": 50
+          "line": 76
         }
       ]
     }
@@ -9988,7 +9999,7 @@
           "line": 3,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -10001,7 +10012,7 @@
           "line": 4,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -10009,7 +10020,14 @@
         "React.ReactNode"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "RtlProviderProps",
+          "file": "src/RtlProvider/index.tsx",
+          "line": 3,
+          "package": "@altroo/mui-native-system"
+        }
+      ]
     },
     {
       "name": "RtlProviderProps",
@@ -10027,7 +10045,7 @@
           "line": 3,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -10040,7 +10058,7 @@
           "line": 4,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -10048,7 +10066,14 @@
         "React.ReactNode"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "RtlProviderProps",
+          "file": "src/RtlProvider/index.tsx",
+          "line": 3,
+          "package": "@altroo/mui-native-system"
+        }
+      ]
     },
     {
       "name": "StackBaseProps",
@@ -10680,7 +10705,7 @@
           "line": 7,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -10693,7 +10718,7 @@
           "line": 11,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -10706,7 +10731,7 @@
           "line": 15,
           "kind": "property",
           "type": "Partial<Theme> | ((outerTheme: Theme) => Theme)",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -10717,7 +10742,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemeProviderProps",
+          "file": "src/provider.tsx",
+          "line": 19,
+          "package": "@altroo/mui-native-system"
+        }
+      ]
     },
     {
       "name": "ThemeProviderProps",
@@ -10735,7 +10767,7 @@
           "line": 7,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -10748,7 +10780,7 @@
           "line": 11,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -10761,7 +10793,7 @@
           "line": 15,
           "kind": "property",
           "type": "Partial<Theme> | ((outerTheme: Theme) => Theme)",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -10772,7 +10804,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemeProviderProps",
+          "file": "src/provider.tsx",
+          "line": 19,
+          "package": "@altroo/mui-native-system"
+        }
+      ]
     },
     {
       "name": "BordersProps",
@@ -17524,6 +17563,90 @@
       "references": [
         "Record",
         "TextStyle"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "ThemeProviderProps",
+      "file": "src/provider.tsx",
+      "line": 19,
+      "kind": "type",
+      "members": [
+        {
+          "name": "theme",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "theme: Partial<T> | ((outer: T) => T);",
+          "line": 20,
+          "kind": "property",
+          "type": "Partial<T> | ((outer: T) => T)"
+        },
+        {
+          "name": "themeId",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "themeId?: string;",
+          "line": 21,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 22,
+          "kind": "property",
+          "type": "React.ReactNode"
+        }
+      ],
+      "references": [
+        "Partial",
+        "React.ReactNode",
+        "T",
+        "Theme"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "RtlProviderProps",
+      "file": "src/RtlProvider/index.tsx",
+      "line": 3,
+      "kind": "type",
+      "members": [
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 4,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "value",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "value?: boolean;",
+          "line": 5,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "React.ReactNode"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native-system"

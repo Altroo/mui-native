@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "94b5b2e60e0d9524071be7ccd273b7ae4405115aee79f7141715c529a363d8c0",
+  "nativeSourceSha256": "d4b164cb1217540f2c8bef23eea5ebc3c09fd71fe5e46a4555cb71ee1716ce17",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -33075,7 +33075,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -33132,7 +33132,7 @@
           "line": 6
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -33189,7 +33189,7 @@
           "line": 31
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -33227,7 +33227,7 @@
           "line": 3
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35229,7 +35229,7 @@
           "module": "@altroo/mui-native:src/forms.tsx",
           "name": "CheckChangeEvent",
           "kind": "type",
-          "line": 62
+          "line": 60
         }
       ]
     },
@@ -35416,7 +35416,7 @@
           "module": "@altroo/mui-native:src/inputs.tsx",
           "name": "InputBaseOwnerState",
           "kind": "type",
-          "line": 55
+          "line": 53
         }
       ]
     },
@@ -35438,7 +35438,7 @@
           "module": "@altroo/mui-native:src/inputs.tsx",
           "name": "InputRootProps",
           "kind": "type",
-          "line": 50
+          "line": 48
         }
       ]
     },
@@ -35515,7 +35515,7 @@
           "module": "@altroo/mui-native:src/forms.tsx",
           "name": "NativeTextFieldInput",
           "kind": "value",
-          "line": 369
+          "line": 367
         }
       ]
     },
@@ -35526,7 +35526,7 @@
           "module": "@altroo/mui-native:src/forms.tsx",
           "name": "NativeTextFieldInputProps",
           "kind": "type",
-          "line": 318
+          "line": 316
         }
       ]
     },
@@ -35537,7 +35537,7 @@
           "module": "@altroo/mui-native:src/typography.tsx",
           "name": "NativeTypographyComponent",
           "kind": "type",
-          "line": 26
+          "line": 25
         }
       ]
     },
@@ -35548,7 +35548,7 @@
           "module": "@altroo/mui-native:src/inputs.tsx",
           "name": "NotchedOutlineProps",
           "kind": "type",
-          "line": 114
+          "line": 112
         }
       ]
     },
@@ -35674,6 +35674,28 @@
       ]
     },
     {
+      "name": "RtlProvider",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/RtlProvider/index.tsx",
+          "name": "RtlProvider",
+          "kind": "value",
+          "line": 7
+        }
+      ]
+    },
+    {
+      "name": "RtlProviderProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/RtlProvider/index.tsx",
+          "name": "RtlProviderProps",
+          "kind": "type",
+          "line": 3
+        }
+      ]
+    },
+    {
       "name": "Spacing",
       "origins": [
         {
@@ -35729,13 +35751,24 @@
       ]
     },
     {
+      "name": "systemDefaultTheme",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/provider.tsx",
+          "name": "systemDefaultTheme",
+          "kind": "value",
+          "line": 16
+        }
+      ]
+    },
+    {
       "name": "TextFieldHelperTextSlotProps",
       "origins": [
         {
           "module": "@altroo/mui-native:src/forms.tsx",
           "name": "TextFieldHelperTextSlotProps",
           "kind": "type",
-          "line": 313
+          "line": 311
         }
       ]
     },
@@ -35746,7 +35779,7 @@
           "module": "@altroo/mui-native:src/forms.tsx",
           "name": "TextFieldHtmlInputSlotProps",
           "kind": "type",
-          "line": 314
+          "line": 312
         }
       ]
     },
@@ -35757,7 +35790,7 @@
           "module": "@altroo/mui-native:src/forms.tsx",
           "name": "TextFieldInputSlotProps",
           "kind": "type",
-          "line": 330
+          "line": 328
         }
       ]
     },
@@ -35768,7 +35801,7 @@
           "module": "@altroo/mui-native:src/forms.tsx",
           "name": "TextFieldLabelSlotProps",
           "kind": "type",
-          "line": 312
+          "line": 310
         }
       ]
     },
@@ -35779,7 +35812,7 @@
           "module": "@altroo/mui-native:src/forms.tsx",
           "name": "TextFieldRootSlotProps",
           "kind": "type",
-          "line": 311
+          "line": 309
         }
       ]
     },
@@ -35834,7 +35867,7 @@
           "module": "@altroo/mui-native:src/typography.tsx",
           "name": "TypographyVariantProp",
           "kind": "type",
-          "line": 22
+          "line": 21
         }
       ]
     },
@@ -35842,10 +35875,10 @@
       "name": "useComponentStyle",
       "origins": [
         {
-          "module": "@altroo/mui-native-system:src/provider.tsx",
+          "module": "@altroo/mui-native:src/themeProvider.tsx",
           "name": "useComponentStyle",
           "kind": "value",
-          "line": 55
+          "line": 64
         }
       ]
     },
@@ -35861,11 +35894,33 @@
       ]
     },
     {
+      "name": "useRtl",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/RtlProvider/index.tsx",
+          "name": "useRtl",
+          "kind": "value",
+          "line": 10
+        }
+      ]
+    },
+    {
       "name": "useSx",
       "origins": [
         {
-          "module": "@altroo/mui-native-system:src/provider.tsx",
+          "module": "@altroo/mui-native:src/themeProvider.tsx",
           "name": "useSx",
+          "kind": "value",
+          "line": 61
+        }
+      ]
+    },
+    {
+      "name": "useThemeWithoutDefault",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/provider.tsx",
+          "name": "useThemeWithoutDefault",
           "kind": "value",
           "line": 50
         }
@@ -47892,7 +47947,7 @@
         {
           "name": "BoxProps",
           "file": "src/layout.tsx",
-          "line": 14,
+          "line": 12,
           "package": "@altroo/mui-native"
         }
       ]
@@ -47930,7 +47985,7 @@
         {
           "name": "BoxProps",
           "file": "src/layout.tsx",
-          "line": 14,
+          "line": 12,
           "package": "@altroo/mui-native"
         }
       ]
@@ -48988,7 +49043,7 @@
         {
           "name": "ButtonProps",
           "file": "src/buttons.tsx",
-          "line": 21,
+          "line": 20,
           "package": "@altroo/mui-native"
         }
       ]
@@ -49098,7 +49153,7 @@
         {
           "name": "ButtonProps",
           "file": "src/buttons.tsx",
-          "line": 21,
+          "line": 20,
           "package": "@altroo/mui-native"
         }
       ]
@@ -49364,7 +49419,7 @@
         {
           "name": "ButtonProps",
           "file": "src/buttons.tsx",
-          "line": 21,
+          "line": 20,
           "package": "@altroo/mui-native"
         }
       ]
@@ -49474,7 +49529,7 @@
         {
           "name": "ButtonProps",
           "file": "src/buttons.tsx",
-          "line": 21,
+          "line": 20,
           "package": "@altroo/mui-native"
         }
       ]
@@ -56955,7 +57010,7 @@
         {
           "name": "CheckboxProps",
           "file": "src/forms.tsx",
-          "line": 632,
+          "line": 630,
           "package": "@altroo/mui-native"
         }
       ]
@@ -57291,7 +57346,7 @@
         {
           "name": "CheckboxProps",
           "file": "src/forms.tsx",
-          "line": 632,
+          "line": 630,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63558,7 +63613,7 @@
         {
           "name": "DividerProps",
           "file": "src/layout.tsx",
-          "line": 126,
+          "line": 124,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63637,7 +63692,7 @@
         {
           "name": "DividerProps",
           "file": "src/layout.tsx",
-          "line": 126,
+          "line": 124,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63777,7 +63832,7 @@
         {
           "name": "DividerProps",
           "file": "src/layout.tsx",
-          "line": 126,
+          "line": 124,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63856,7 +63911,7 @@
         {
           "name": "DividerProps",
           "file": "src/layout.tsx",
-          "line": 126,
+          "line": 124,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66194,7 +66249,7 @@
         {
           "name": "FilledInputProps",
           "file": "src/inputs.tsx",
-          "line": 111,
+          "line": 109,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66284,7 +66339,7 @@
         {
           "name": "FilledInputProps",
           "file": "src/inputs.tsx",
-          "line": 111,
+          "line": 109,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66859,7 +66914,7 @@
         {
           "name": "FormControlProps",
           "file": "src/forms.tsx",
-          "line": 78,
+          "line": 76,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66938,7 +66993,7 @@
         {
           "name": "FormControlProps",
           "file": "src/forms.tsx",
-          "line": 78,
+          "line": 76,
           "package": "@altroo/mui-native"
         }
       ]
@@ -67155,7 +67210,7 @@
         {
           "name": "FormControlProps",
           "file": "src/forms.tsx",
-          "line": 78,
+          "line": 76,
           "package": "@altroo/mui-native"
         }
       ]
@@ -67234,7 +67289,7 @@
         {
           "name": "FormControlProps",
           "file": "src/forms.tsx",
-          "line": 78,
+          "line": 76,
           "package": "@altroo/mui-native"
         }
       ]
@@ -68743,7 +68798,7 @@
         {
           "name": "FormHelperTextPropsVariantOverrides",
           "file": "src/labels.tsx",
-          "line": 35,
+          "line": 29,
           "package": "@altroo/mui-native"
         }
       ]
@@ -68899,13 +68954,13 @@
         {
           "name": "FormHelperTextProps",
           "file": "src/labels.tsx",
-          "line": 72,
+          "line": 66,
           "package": "@altroo/mui-native"
         },
         {
           "name": "FormHelperTextOwnProps",
           "file": "src/labels.tsx",
-          "line": 76,
+          "line": 70,
           "package": "@altroo/mui-native"
         }
       ]
@@ -68984,7 +69039,7 @@
         {
           "name": "FormHelperTextProps",
           "file": "src/labels.tsx",
-          "line": 72,
+          "line": 66,
           "package": "@altroo/mui-native"
         }
       ]
@@ -69001,7 +69056,7 @@
         {
           "name": "FormHelperTextPropsVariantOverrides",
           "file": "src/labels.tsx",
-          "line": 35,
+          "line": 29,
           "package": "@altroo/mui-native"
         }
       ]
@@ -69157,13 +69212,13 @@
         {
           "name": "FormHelperTextProps",
           "file": "src/labels.tsx",
-          "line": 72,
+          "line": 66,
           "package": "@altroo/mui-native"
         },
         {
           "name": "FormHelperTextOwnProps",
           "file": "src/labels.tsx",
-          "line": 76,
+          "line": 70,
           "package": "@altroo/mui-native"
         }
       ]
@@ -69242,7 +69297,7 @@
         {
           "name": "FormHelperTextProps",
           "file": "src/labels.tsx",
-          "line": 72,
+          "line": 66,
           "package": "@altroo/mui-native"
         }
       ]
@@ -69513,7 +69568,7 @@
         {
           "name": "FormLabelPropsColorOverrides",
           "file": "src/labels.tsx",
-          "line": 33,
+          "line": 27,
           "package": "@altroo/mui-native"
         }
       ]
@@ -69533,7 +69588,7 @@
         {
           "name": "FormLabelBaseProps",
           "file": "src/labels.tsx",
-          "line": 62,
+          "line": 56,
           "package": "@altroo/mui-native"
         }
       ]
@@ -69677,13 +69732,13 @@
         {
           "name": "FormLabelProps",
           "file": "src/labels.tsx",
-          "line": 49,
+          "line": 43,
           "package": "@altroo/mui-native"
         },
         {
           "name": "FormLabelOwnProps",
           "file": "src/labels.tsx",
-          "line": 63,
+          "line": 57,
           "package": "@altroo/mui-native"
         }
       ]
@@ -69805,7 +69860,7 @@
         {
           "name": "FormLabelProps",
           "file": "src/labels.tsx",
-          "line": 49,
+          "line": 43,
           "package": "@altroo/mui-native"
         }
       ]
@@ -69822,7 +69877,7 @@
         {
           "name": "FormLabelPropsColorOverrides",
           "file": "src/labels.tsx",
-          "line": 33,
+          "line": 27,
           "package": "@altroo/mui-native"
         }
       ]
@@ -69842,7 +69897,7 @@
         {
           "name": "FormLabelBaseProps",
           "file": "src/labels.tsx",
-          "line": 62,
+          "line": 56,
           "package": "@altroo/mui-native"
         }
       ]
@@ -69986,13 +70041,13 @@
         {
           "name": "FormLabelProps",
           "file": "src/labels.tsx",
-          "line": 49,
+          "line": 43,
           "package": "@altroo/mui-native"
         },
         {
           "name": "FormLabelOwnProps",
           "file": "src/labels.tsx",
-          "line": 63,
+          "line": 57,
           "package": "@altroo/mui-native"
         }
       ]
@@ -70114,7 +70169,7 @@
         {
           "name": "FormLabelProps",
           "file": "src/labels.tsx",
-          "line": 49,
+          "line": 43,
           "package": "@altroo/mui-native"
         }
       ]
@@ -74859,7 +74914,7 @@
         {
           "name": "InputProps",
           "file": "src/inputs.tsx",
-          "line": 108,
+          "line": 106,
           "package": "@altroo/mui-native"
         }
       ]
@@ -74936,7 +74991,7 @@
         {
           "name": "InputProps",
           "file": "src/inputs.tsx",
-          "line": 108,
+          "line": 106,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75409,7 +75464,7 @@
         {
           "name": "InputAdornmentProps",
           "file": "src/inputs.tsx",
-          "line": 724,
+          "line": 722,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75488,7 +75543,7 @@
         {
           "name": "InputAdornmentProps",
           "file": "src/inputs.tsx",
-          "line": 724,
+          "line": 722,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75603,7 +75658,7 @@
         {
           "name": "InputAdornmentProps",
           "file": "src/inputs.tsx",
-          "line": 724,
+          "line": 722,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75682,7 +75737,7 @@
         {
           "name": "InputAdornmentProps",
           "file": "src/inputs.tsx",
-          "line": 724,
+          "line": 722,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75979,7 +76034,7 @@
         {
           "name": "InputBasePropsSizeOverrides",
           "file": "src/inputs.tsx",
-          "line": 31,
+          "line": 29,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75996,7 +76051,7 @@
         {
           "name": "InputBasePropsColorOverrides",
           "file": "src/inputs.tsx",
-          "line": 32,
+          "line": 30,
           "package": "@altroo/mui-native"
         }
       ]
@@ -76632,7 +76687,7 @@
         {
           "name": "InputBaseProps",
           "file": "src/inputs.tsx",
-          "line": 69,
+          "line": 67,
           "package": "@altroo/mui-native"
         }
       ]
@@ -76667,7 +76722,7 @@
         {
           "name": "InputBaseComponentProps",
           "file": "src/inputs.tsx",
-          "line": 51,
+          "line": 49,
           "package": "@altroo/mui-native"
         }
       ]
@@ -76684,7 +76739,7 @@
         {
           "name": "InputBasePropsSizeOverrides",
           "file": "src/inputs.tsx",
-          "line": 31,
+          "line": 29,
           "package": "@altroo/mui-native"
         }
       ]
@@ -76701,7 +76756,7 @@
         {
           "name": "InputBasePropsColorOverrides",
           "file": "src/inputs.tsx",
-          "line": 32,
+          "line": 30,
           "package": "@altroo/mui-native"
         }
       ]
@@ -77337,7 +77392,7 @@
         {
           "name": "InputBaseProps",
           "file": "src/inputs.tsx",
-          "line": 69,
+          "line": 67,
           "package": "@altroo/mui-native"
         }
       ]
@@ -77372,7 +77427,7 @@
         {
           "name": "InputBaseComponentProps",
           "file": "src/inputs.tsx",
-          "line": 51,
+          "line": 49,
           "package": "@altroo/mui-native"
         }
       ]
@@ -77825,7 +77880,7 @@
         {
           "name": "InputLabelPropsSizeOverrides",
           "file": "src/labels.tsx",
-          "line": 34,
+          "line": 28,
           "package": "@altroo/mui-native"
         }
       ]
@@ -78008,13 +78063,13 @@
         {
           "name": "InputLabelProps",
           "file": "src/labels.tsx",
-          "line": 64,
+          "line": 58,
           "package": "@altroo/mui-native"
         },
         {
           "name": "InputLabelOwnProps",
           "file": "src/labels.tsx",
-          "line": 71,
+          "line": 65,
           "package": "@altroo/mui-native"
         }
       ]
@@ -78067,7 +78122,7 @@
         {
           "name": "InputLabelProps",
           "file": "src/labels.tsx",
-          "line": 64,
+          "line": 58,
           "package": "@altroo/mui-native"
         }
       ]
@@ -78084,7 +78139,7 @@
         {
           "name": "InputLabelPropsSizeOverrides",
           "file": "src/labels.tsx",
-          "line": 34,
+          "line": 28,
           "package": "@altroo/mui-native"
         }
       ]
@@ -78267,13 +78322,13 @@
         {
           "name": "InputLabelProps",
           "file": "src/labels.tsx",
-          "line": 64,
+          "line": 58,
           "package": "@altroo/mui-native"
         },
         {
           "name": "InputLabelOwnProps",
           "file": "src/labels.tsx",
-          "line": 71,
+          "line": 65,
           "package": "@altroo/mui-native"
         }
       ]
@@ -78326,7 +78381,7 @@
         {
           "name": "InputLabelProps",
           "file": "src/labels.tsx",
-          "line": 64,
+          "line": 58,
           "package": "@altroo/mui-native"
         }
       ]
@@ -89682,7 +89737,7 @@
         {
           "name": "NotchedOutlineProps",
           "file": "src/inputs.tsx",
-          "line": 114,
+          "line": 112,
           "package": "@altroo/mui-native"
         }
       ]
@@ -89783,7 +89838,7 @@
         {
           "name": "NotchedOutlineProps",
           "file": "src/inputs.tsx",
-          "line": 114,
+          "line": 112,
           "package": "@altroo/mui-native"
         }
       ]
@@ -89955,7 +90010,7 @@
         {
           "name": "OutlinedInputProps",
           "file": "src/inputs.tsx",
-          "line": 115,
+          "line": 113,
           "package": "@altroo/mui-native"
         }
       ]
@@ -90127,7 +90182,7 @@
         {
           "name": "OutlinedInputProps",
           "file": "src/inputs.tsx",
-          "line": 115,
+          "line": 113,
           "package": "@altroo/mui-native"
         }
       ]
@@ -92862,7 +92917,7 @@
         {
           "name": "PaperProps",
           "file": "src/layout.tsx",
-          "line": 60,
+          "line": 58,
           "package": "@altroo/mui-native"
         }
       ]
@@ -92984,7 +93039,7 @@
         {
           "name": "PaperProps",
           "file": "src/layout.tsx",
-          "line": 60,
+          "line": 58,
           "package": "@altroo/mui-native"
         }
       ]
@@ -93098,7 +93153,7 @@
         {
           "name": "PaperProps",
           "file": "src/layout.tsx",
-          "line": 60,
+          "line": 58,
           "package": "@altroo/mui-native"
         }
       ]
@@ -93220,7 +93275,7 @@
         {
           "name": "PaperProps",
           "file": "src/layout.tsx",
-          "line": 60,
+          "line": 58,
           "package": "@altroo/mui-native"
         }
       ]
@@ -98571,7 +98626,7 @@
         {
           "name": "RadioGroupProps",
           "file": "src/forms.tsx",
-          "line": 736,
+          "line": 734,
           "package": "@altroo/mui-native"
         }
       ]
@@ -98646,7 +98701,7 @@
         {
           "name": "RadioGroupProps",
           "file": "src/forms.tsx",
-          "line": 736,
+          "line": 734,
           "package": "@altroo/mui-native"
         }
       ]
@@ -111981,7 +112036,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 27,
+          "line": 25,
           "package": "@altroo/mui-native"
         }
       ]
@@ -112060,7 +112115,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 27,
+          "line": 25,
           "package": "@altroo/mui-native"
         }
       ]
@@ -112161,7 +112216,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 27,
+          "line": 25,
           "package": "@altroo/mui-native"
         }
       ]
@@ -112240,7 +112295,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 27,
+          "line": 25,
           "package": "@altroo/mui-native"
         }
       ]
@@ -128556,7 +128611,7 @@
         {
           "name": "TextFieldProps",
           "file": "src/forms.tsx",
-          "line": 331,
+          "line": 329,
           "package": "@altroo/mui-native"
         }
       ]
@@ -128575,7 +128630,7 @@
         {
           "name": "TextFieldOwnerState",
           "file": "src/forms.tsx",
-          "line": 308,
+          "line": 306,
           "package": "@altroo/mui-native"
         }
       ]
@@ -129307,7 +129362,7 @@
         {
           "name": "TextFieldProps",
           "file": "src/forms.tsx",
-          "line": 331,
+          "line": 329,
           "package": "@altroo/mui-native"
         }
       ]
@@ -129326,7 +129381,7 @@
         {
           "name": "TextFieldOwnerState",
           "file": "src/forms.tsx",
-          "line": 308,
+          "line": 306,
           "package": "@altroo/mui-native"
         }
       ]
@@ -133163,7 +133218,7 @@
         {
           "name": "TypographyPropsVariantOverrides",
           "file": "src/typography.tsx",
-          "line": 15,
+          "line": 14,
           "package": "@altroo/mui-native"
         }
       ]
@@ -133180,7 +133235,7 @@
         {
           "name": "TypographyPropsColorOverrides",
           "file": "src/typography.tsx",
-          "line": 16,
+          "line": 15,
           "package": "@altroo/mui-native"
         }
       ]
@@ -133328,7 +133383,7 @@
         {
           "name": "TypographyProps",
           "file": "src/typography.tsx",
-          "line": 29,
+          "line": 28,
           "package": "@altroo/mui-native"
         }
       ]
@@ -133407,7 +133462,7 @@
         {
           "name": "TypographyProps",
           "file": "src/typography.tsx",
-          "line": 29,
+          "line": 28,
           "package": "@altroo/mui-native"
         }
       ]
@@ -133424,7 +133479,7 @@
         {
           "name": "TypographyPropsVariantOverrides",
           "file": "src/typography.tsx",
-          "line": 15,
+          "line": 14,
           "package": "@altroo/mui-native"
         }
       ]
@@ -133441,7 +133496,7 @@
         {
           "name": "TypographyPropsColorOverrides",
           "file": "src/typography.tsx",
-          "line": 16,
+          "line": 15,
           "package": "@altroo/mui-native"
         }
       ]
@@ -133589,7 +133644,7 @@
         {
           "name": "TypographyProps",
           "file": "src/typography.tsx",
-          "line": 29,
+          "line": 28,
           "package": "@altroo/mui-native"
         }
       ]
@@ -133668,7 +133723,7 @@
         {
           "name": "TypographyProps",
           "file": "src/typography.tsx",
-          "line": 29,
+          "line": 28,
           "package": "@altroo/mui-native"
         }
       ]
@@ -136866,7 +136921,14 @@
         "Window"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemeProviderProps",
+          "file": "src/themeProvider.tsx",
+          "line": 17,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ThemeProviderCssVariablesProps",
@@ -137029,7 +137091,14 @@
         "Window"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemeProviderProps",
+          "file": "src/themeProvider.tsx",
+          "line": 17,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ThemeProviderNoVarsProps",
@@ -169217,7 +169286,7 @@
           "line": 4,
           "kind": "property",
           "type": "Components<Omit<Theme, 'components'>> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -169227,7 +169296,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemeWithProps",
+          "file": "src/themeProvider.tsx",
+          "line": 40,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ThemedProps",
@@ -169242,7 +169318,14 @@
         "ThemeInput"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemedProps",
+          "file": "src/themeProvider.tsx",
+          "line": 43,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ThemeWithProps",
@@ -169260,7 +169343,7 @@
           "line": 4,
           "kind": "property",
           "type": "Components<Omit<Theme, 'components'>> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -169270,7 +169353,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemeWithProps",
+          "file": "src/themeProvider.tsx",
+          "line": 40,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ThemedProps",
@@ -169285,7 +169375,14 @@
         "ThemeInput"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemedProps",
+          "file": "src/themeProvider.tsx",
+          "line": 43,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ComponentsVariants",
@@ -175504,7 +175601,7 @@
     {
       "name": "ButtonProps",
       "file": "src/buttons.tsx",
-      "line": 21,
+      "line": 20,
       "kind": "type",
       "members": [
         {
@@ -175514,7 +175611,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 22,
+          "line": 21,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -175525,7 +175622,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 23,
+          "line": 22,
           "kind": "property",
           "type": "SxProps"
         },
@@ -175536,7 +175633,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: PressableProps['style'];",
-          "line": 24,
+          "line": 23,
           "kind": "property",
           "type": "PressableProps['style']"
         },
@@ -175547,7 +175644,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClick?: (event: GestureResponderEvent) => void;",
-          "line": 25,
+          "line": 24,
           "kind": "event",
           "type": "(event: GestureResponderEvent) => void"
         },
@@ -175558,7 +175655,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onPress?: (event: GestureResponderEvent) => void;",
-          "line": 26,
+          "line": 25,
           "kind": "event",
           "type": "(event: GestureResponderEvent) => void"
         },
@@ -175569,7 +175666,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: 'text' | 'outlined' | 'contained';",
-          "line": 27,
+          "line": 26,
           "kind": "property",
           "type": "'text' | 'outlined' | 'contained'"
         },
@@ -175580,7 +175677,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | 'inherit';",
-          "line": 28,
+          "line": 27,
           "kind": "property",
           "type": "'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | 'inherit'"
         },
@@ -175591,7 +175688,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size?: 'small' | 'medium' | 'large';",
-          "line": 29,
+          "line": 28,
           "kind": "property",
           "type": "'small' | 'medium' | 'large'"
         },
@@ -175602,7 +175699,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullWidth?: boolean;",
-          "line": 30,
+          "line": 29,
           "kind": "property",
           "type": "boolean"
         },
@@ -175613,7 +175710,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "startIcon?: React.ReactNode;",
-          "line": 31,
+          "line": 30,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -175624,7 +175721,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "endIcon?: React.ReactNode;",
-          "line": 32,
+          "line": 31,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -175635,7 +175732,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "loading?: boolean | null;",
-          "line": 33,
+          "line": 32,
           "kind": "property",
           "type": "boolean | null"
         },
@@ -175646,7 +175743,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "loadingIndicator?: React.ReactNode;",
-          "line": 34,
+          "line": 33,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -175657,7 +175754,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "loadingPosition?: 'start' | 'end' | 'center';",
-          "line": 35,
+          "line": 34,
           "kind": "property",
           "type": "'start' | 'end' | 'center'"
         },
@@ -175668,7 +175765,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableElevation?: boolean;",
-          "line": 36,
+          "line": 35,
           "kind": "property",
           "type": "boolean"
         },
@@ -175679,7 +175776,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-label'?: string;",
-          "line": 37,
+          "line": 36,
           "kind": "property",
           "type": "string"
         }
@@ -175972,7 +176069,7 @@
     {
       "name": "CheckChangeEvent",
       "file": "src/forms.tsx",
-      "line": 62,
+      "line": 60,
       "kind": "type",
       "members": [
         {
@@ -175982,7 +176079,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "target: { checked: boolean; value?: string; name?: string };",
-          "line": 63,
+          "line": 61,
           "kind": "property",
           "type": "{ checked: boolean; value?: string; name?: string }"
         },
@@ -175993,7 +176090,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "checked: boolean;",
-          "line": 63,
+          "line": 61,
           "kind": "property",
           "type": "boolean"
         },
@@ -176004,7 +176101,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: string;",
-          "line": 63,
+          "line": 61,
           "kind": "property",
           "type": "string"
         },
@@ -176015,7 +176112,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string",
-          "line": 63,
+          "line": 61,
           "kind": "property",
           "type": "string"
         },
@@ -176026,7 +176123,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeEvent: GestureResponderEvent['nativeEvent'] | null;",
-          "line": 64,
+          "line": 62,
           "kind": "property",
           "type": "GestureResponderEvent['nativeEvent'] | null"
         }
@@ -176040,7 +176137,7 @@
     {
       "name": "LabelActivation",
       "file": "src/forms.tsx",
-      "line": 66,
+      "line": 64,
       "kind": "type",
       "members": [],
       "references": [
@@ -176052,7 +176149,7 @@
     {
       "name": "FormControlProps",
       "file": "src/forms.tsx",
-      "line": 78,
+      "line": 76,
       "kind": "type",
       "members": [
         {
@@ -176062,7 +176159,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullWidth?: boolean;",
-          "line": 92,
+          "line": 90,
           "kind": "property",
           "type": "boolean"
         },
@@ -176073,7 +176170,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "margin?: 'none' | 'dense' | 'normal';",
-          "line": 93,
+          "line": 91,
           "kind": "property",
           "type": "'none' | 'dense' | 'normal'"
         },
@@ -176084,7 +176181,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: BoxProps['component'] | 'div' | 'fieldset';",
-          "line": 94,
+          "line": 92,
           "kind": "property",
           "type": "BoxProps['component'] | 'div' | 'fieldset'"
         }
@@ -176101,7 +176198,7 @@
     {
       "name": "TextFieldOwnerState",
       "file": "src/forms.tsx",
-      "line": 308,
+      "line": 306,
       "kind": "type",
       "members": [
         {
@@ -176111,7 +176208,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focused: boolean;",
-          "line": 309,
+          "line": 307,
           "kind": "property",
           "type": "boolean"
         }
@@ -176126,7 +176223,7 @@
     {
       "name": "TextFieldRootSlotProps",
       "file": "src/forms.tsx",
-      "line": 311,
+      "line": 309,
       "kind": "type",
       "members": [],
       "references": [
@@ -176140,7 +176237,7 @@
     {
       "name": "TextFieldLabelSlotProps",
       "file": "src/forms.tsx",
-      "line": 312,
+      "line": 310,
       "kind": "type",
       "members": [],
       "references": [
@@ -176154,7 +176251,7 @@
     {
       "name": "TextFieldHelperTextSlotProps",
       "file": "src/forms.tsx",
-      "line": 313,
+      "line": 311,
       "kind": "type",
       "members": [],
       "references": [
@@ -176168,7 +176265,7 @@
     {
       "name": "TextFieldHtmlInputSlotProps",
       "file": "src/forms.tsx",
-      "line": 314,
+      "line": 312,
       "kind": "type",
       "members": [],
       "references": [
@@ -176180,7 +176277,7 @@
     {
       "name": "NativeSlot",
       "file": "src/forms.tsx",
-      "line": 315,
+      "line": 313,
       "kind": "type",
       "members": [],
       "references": [
@@ -176193,7 +176290,7 @@
     {
       "name": "NativeTextFieldInputProps",
       "file": "src/forms.tsx",
-      "line": 318,
+      "line": 316,
       "kind": "type",
       "members": [
         {
@@ -176203,7 +176300,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: 'outlined' | 'filled' | 'standard';",
-          "line": 320,
+          "line": 318,
           "kind": "property",
           "type": "'outlined' | 'filled' | 'standard'"
         },
@@ -176214,7 +176311,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputProps?: TextFieldHtmlInputSlotProps;",
-          "line": 321,
+          "line": 319,
           "kind": "property",
           "type": "TextFieldHtmlInputSlotProps"
         },
@@ -176225,7 +176322,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: OutlinedInputProps['slots'];",
-          "line": 322,
+          "line": 320,
           "kind": "slot",
           "type": "OutlinedInputProps['slots']"
         },
@@ -176236,7 +176333,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: OutlinedInputProps['slotProps'];",
-          "line": 323,
+          "line": 321,
           "kind": "slot",
           "type": "OutlinedInputProps['slotProps']"
         },
@@ -176247,7 +176344,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: TextFieldOwnerState;",
-          "line": 324,
+          "line": 322,
           "kind": "property",
           "type": "TextFieldOwnerState"
         },
@@ -176258,7 +176355,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: React.ReactNode;",
-          "line": 325,
+          "line": 323,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -176269,7 +176366,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notched?: boolean;",
-          "line": 326,
+          "line": 324,
           "kind": "property",
           "type": "boolean"
         },
@@ -176280,7 +176377,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableUnderline?: boolean;",
-          "line": 327,
+          "line": 325,
           "kind": "property",
           "type": "boolean"
         },
@@ -176291,7 +176388,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "hiddenLabel?: boolean;",
-          "line": 328,
+          "line": 326,
           "kind": "property",
           "type": "boolean"
         }
@@ -176310,7 +176407,7 @@
     {
       "name": "TextFieldInputSlotProps",
       "file": "src/forms.tsx",
-      "line": 330,
+      "line": 328,
       "kind": "type",
       "members": [],
       "references": [
@@ -176324,7 +176421,7 @@
     {
       "name": "TextFieldProps",
       "file": "src/forms.tsx",
-      "line": 331,
+      "line": 329,
       "kind": "type",
       "members": [
         {
@@ -176334,7 +176431,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 333,
+          "line": 331,
           "kind": "property",
           "type": "SxProps"
         },
@@ -176345,7 +176442,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<ViewStyle>;",
-          "line": 334,
+          "line": 332,
           "kind": "property",
           "type": "StyleProp<ViewStyle>"
         },
@@ -176356,7 +176453,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: React.ReactNode;",
-          "line": 335,
+          "line": 333,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -176367,7 +176464,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "helperText?: React.ReactNode;",
-          "line": 336,
+          "line": 334,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -176378,7 +176475,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "error?: boolean;",
-          "line": 337,
+          "line": 335,
           "kind": "property",
           "type": "boolean"
         },
@@ -176389,7 +176486,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean;",
-          "line": 338,
+          "line": 336,
           "kind": "property",
           "type": "boolean"
         },
@@ -176400,7 +176497,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "required?: boolean;",
-          "line": 339,
+          "line": 337,
           "kind": "property",
           "type": "boolean"
         },
@@ -176411,7 +176508,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullWidth?: boolean;",
-          "line": 340,
+          "line": 338,
           "kind": "property",
           "type": "boolean"
         },
@@ -176422,7 +176519,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "labelDisplay?: 'floating' | 'stacked';",
-          "line": 341,
+          "line": 339,
           "kind": "property",
           "type": "'floating' | 'stacked'"
         },
@@ -176433,7 +176530,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: 'outlined' | 'filled' | 'standard';",
-          "line": 342,
+          "line": 340,
           "kind": "property",
           "type": "'outlined' | 'filled' | 'standard'"
         },
@@ -176444,7 +176541,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size?: 'small' | 'medium';",
-          "line": 343,
+          "line": 341,
           "kind": "property",
           "type": "'small' | 'medium'"
         },
@@ -176455,7 +176552,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: string | number;",
-          "line": 344,
+          "line": 342,
           "kind": "property",
           "type": "string | number"
         },
@@ -176466,7 +176563,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultValue?: string | number;",
-          "line": 345,
+          "line": 343,
           "kind": "property",
           "type": "string | number"
         },
@@ -176477,7 +176574,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 346,
+          "line": 344,
           "kind": "property",
           "type": "string"
         },
@@ -176488,7 +176585,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id?: string;",
-          "line": 347,
+          "line": 345,
           "kind": "property",
           "type": "string"
         },
@@ -176499,7 +176596,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "type?: 'text' | 'password' | 'email' | 'number';",
-          "line": 348,
+          "line": 346,
           "kind": "property",
           "type": "'text' | 'password' | 'email' | 'number'"
         },
@@ -176510,7 +176607,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onChange?: (event: InputChangeEvent) => void;",
-          "line": 349,
+          "line": 347,
           "kind": "event",
           "type": "(event: InputChangeEvent) => void"
         },
@@ -176521,7 +176618,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputRef?: React.Ref<TextInputInstance>;",
-          "line": 350,
+          "line": 348,
           "kind": "property",
           "type": "React.Ref<TextInputInstance>"
         },
@@ -176532,7 +176629,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-label'?: string;",
-          "line": 351,
+          "line": 349,
           "kind": "property",
           "type": "string"
         },
@@ -176543,7 +176640,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: {\n    root?: NativeSlot<TextFieldRootSlotProps>;\n    input?: NativeSlot<TextFieldInputSlotProps>;\n    htmlInput?: NativeSlot<TextFieldHtmlInputSlotProps>;\n    inputLabel?: NativeSlot<TextFieldLabelSlotProps>;\n    formHelperText?: NativeSlot<TextFieldHelperTextSlotProps>;\n  };",
-          "line": 352,
+          "line": 350,
           "kind": "slot",
           "type": "{\n    root?: NativeSlot<TextFieldRootSlotProps>;\n    input?: NativeSlot<TextFieldInputSlotProps>;\n    htmlInput?: NativeSlot<TextFieldHtmlInputSlotProps>;\n    inputLabel?: NativeSlot<TextFieldLabelSlotProps>;\n    formHelperText?: NativeSlot<TextFieldHelperTextSlotProps>;\n  }"
         },
@@ -176554,7 +176651,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: NativeSlot<TextFieldRootSlotProps>;",
-          "line": 353,
+          "line": 351,
           "kind": "slot",
           "type": "NativeSlot<TextFieldRootSlotProps>"
         },
@@ -176565,7 +176662,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "input?: NativeSlot<TextFieldInputSlotProps>;",
-          "line": 354,
+          "line": 352,
           "kind": "slot",
           "type": "NativeSlot<TextFieldInputSlotProps>"
         },
@@ -176576,7 +176673,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "htmlInput?: NativeSlot<TextFieldHtmlInputSlotProps>;",
-          "line": 355,
+          "line": 353,
           "kind": "slot",
           "type": "NativeSlot<TextFieldHtmlInputSlotProps>"
         },
@@ -176587,7 +176684,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputLabel?: NativeSlot<TextFieldLabelSlotProps>;",
-          "line": 356,
+          "line": 354,
           "kind": "slot",
           "type": "NativeSlot<TextFieldLabelSlotProps>"
         },
@@ -176598,7 +176695,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "formHelperText?: NativeSlot<TextFieldHelperTextSlotProps>;",
-          "line": 357,
+          "line": 355,
           "kind": "slot",
           "type": "NativeSlot<TextFieldHelperTextSlotProps>"
         },
@@ -176609,7 +176706,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: {\n    root?: SlotProps<TextFieldRootSlotProps, TextFieldOwnerState>;\n    input?: SlotProps<TextFieldInputSlotProps, TextFieldOwnerState>;\n    htmlInput?: SlotProps<TextFieldHtmlInputSlotProps, TextFieldOwnerState>;\n    inputLabel?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;\n    formHelperText?: SlotProps<TextFieldHelperTextSlotProps, TextFieldOwnerState>;\n  };",
-          "line": 359,
+          "line": 357,
           "kind": "slot",
           "type": "{\n    root?: SlotProps<TextFieldRootSlotProps, TextFieldOwnerState>;\n    input?: SlotProps<TextFieldInputSlotProps, TextFieldOwnerState>;\n    htmlInput?: SlotProps<TextFieldHtmlInputSlotProps, TextFieldOwnerState>;\n    inputLabel?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;\n    formHelperText?: SlotProps<TextFieldHelperTextSlotProps, TextFieldOwnerState>;\n  }"
         },
@@ -176620,7 +176717,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: SlotProps<TextFieldRootSlotProps, TextFieldOwnerState>;",
-          "line": 360,
+          "line": 358,
           "kind": "slot",
           "type": "SlotProps<TextFieldRootSlotProps, TextFieldOwnerState>"
         },
@@ -176631,7 +176728,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "input?: SlotProps<TextFieldInputSlotProps, TextFieldOwnerState>;",
-          "line": 361,
+          "line": 359,
           "kind": "slot",
           "type": "SlotProps<TextFieldInputSlotProps, TextFieldOwnerState>"
         },
@@ -176642,7 +176739,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "htmlInput?: SlotProps<TextFieldHtmlInputSlotProps, TextFieldOwnerState>;",
-          "line": 362,
+          "line": 360,
           "kind": "slot",
           "type": "SlotProps<TextFieldHtmlInputSlotProps, TextFieldOwnerState>"
         },
@@ -176653,7 +176750,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputLabel?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;",
-          "line": 363,
+          "line": 361,
           "kind": "slot",
           "type": "SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>"
         },
@@ -176664,7 +176761,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "formHelperText?: SlotProps<TextFieldHelperTextSlotProps, TextFieldOwnerState>;",
-          "line": 364,
+          "line": 362,
           "kind": "slot",
           "type": "SlotProps<TextFieldHelperTextSlotProps, TextFieldOwnerState>"
         }
@@ -176694,7 +176791,7 @@
     {
       "name": "CheckboxProps",
       "file": "src/forms.tsx",
-      "line": 632,
+      "line": 630,
       "kind": "type",
       "members": [
         {
@@ -176704,7 +176801,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "checked?: boolean;",
-          "line": 633,
+          "line": 631,
           "kind": "property",
           "type": "boolean"
         },
@@ -176715,7 +176812,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultChecked?: boolean;",
-          "line": 634,
+          "line": 632,
           "kind": "property",
           "type": "boolean"
         },
@@ -176726,7 +176823,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean;",
-          "line": 635,
+          "line": 633,
           "kind": "property",
           "type": "boolean"
         },
@@ -176737,7 +176834,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "indeterminate?: boolean;",
-          "line": 636,
+          "line": 634,
           "kind": "property",
           "type": "boolean"
         },
@@ -176748,7 +176845,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: string;",
-          "line": 637,
+          "line": 635,
           "kind": "property",
           "type": "string"
         },
@@ -176759,7 +176856,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 638,
+          "line": 636,
           "kind": "property",
           "type": "string"
         },
@@ -176770,7 +176867,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onChange?: (event: CheckChangeEvent, checked: boolean) => void;",
-          "line": 639,
+          "line": 637,
           "kind": "event",
           "type": "(event: CheckChangeEvent, checked: boolean) => void"
         },
@@ -176781,7 +176878,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size?: 'small' | 'medium';",
-          "line": 640,
+          "line": 638,
           "kind": "property",
           "type": "'small' | 'medium'"
         },
@@ -176792,7 +176889,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 641,
+          "line": 639,
           "kind": "property",
           "type": "SxProps"
         },
@@ -176803,7 +176900,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputProps?: { 'aria-label'?: string };",
-          "line": 642,
+          "line": 640,
           "kind": "property",
           "type": "{ 'aria-label'?: string }"
         },
@@ -176814,7 +176911,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-label'?: string",
-          "line": 642,
+          "line": 640,
           "kind": "property",
           "type": "string"
         },
@@ -176825,7 +176922,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-label'?: string;",
-          "line": 643,
+          "line": 641,
           "kind": "property",
           "type": "string"
         },
@@ -176836,7 +176933,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "testID?: string;",
-          "line": 644,
+          "line": 642,
           "kind": "property",
           "type": "string"
         }
@@ -176851,7 +176948,7 @@
     {
       "name": "RadioGroupProps",
       "file": "src/forms.tsx",
-      "line": 736,
+      "line": 734,
       "kind": "type",
       "members": [
         {
@@ -176861,7 +176958,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: string;",
-          "line": 737,
+          "line": 735,
           "kind": "property",
           "type": "string"
         },
@@ -176872,7 +176969,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultValue?: string;",
-          "line": 738,
+          "line": 736,
           "kind": "property",
           "type": "string"
         },
@@ -176883,7 +176980,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 739,
+          "line": 737,
           "kind": "property",
           "type": "string"
         },
@@ -176894,7 +176991,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "row?: boolean;",
-          "line": 740,
+          "line": 738,
           "kind": "property",
           "type": "boolean"
         },
@@ -176905,7 +177002,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onChange?: (e: CheckChangeEvent, value: string) => void;",
-          "line": 741,
+          "line": 739,
           "kind": "event",
           "type": "(e: CheckChangeEvent, value: string) => void"
         }
@@ -177436,7 +177533,7 @@
     {
       "name": "InputBasePropsSizeOverrides",
       "file": "src/inputs.tsx",
-      "line": 31,
+      "line": 29,
       "kind": "type",
       "members": [],
       "references": [],
@@ -177446,7 +177543,7 @@
     {
       "name": "InputBasePropsColorOverrides",
       "file": "src/inputs.tsx",
-      "line": 32,
+      "line": 30,
       "kind": "type",
       "members": [],
       "references": [],
@@ -177456,7 +177553,7 @@
     {
       "name": "OverrideUnion",
       "file": "src/inputs.tsx",
-      "line": 33,
+      "line": 31,
       "kind": "type",
       "members": [],
       "references": [
@@ -177473,7 +177570,7 @@
     {
       "name": "InputSize",
       "file": "src/inputs.tsx",
-      "line": 45,
+      "line": 43,
       "kind": "type",
       "members": [],
       "references": [
@@ -177486,7 +177583,7 @@
     {
       "name": "InputColor",
       "file": "src/inputs.tsx",
-      "line": 46,
+      "line": 44,
       "kind": "type",
       "members": [],
       "references": [
@@ -177499,7 +177596,7 @@
     {
       "name": "InputRootProps",
       "file": "src/inputs.tsx",
-      "line": 50,
+      "line": 48,
       "kind": "type",
       "members": [
         {
@@ -177509,7 +177606,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps",
-          "line": 50,
+          "line": 48,
           "kind": "property",
           "type": "SxProps"
         }
@@ -177526,7 +177623,7 @@
     {
       "name": "InputBaseComponentProps",
       "file": "src/inputs.tsx",
-      "line": 51,
+      "line": 49,
       "kind": "type",
       "members": [
         {
@@ -177536,7 +177633,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 52,
+          "line": 50,
           "kind": "property",
           "type": "SxProps"
         },
@@ -177547,7 +177644,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-describedby'?: string;",
-          "line": 53,
+          "line": 51,
           "kind": "property",
           "type": "string"
         }
@@ -177564,7 +177661,7 @@
     {
       "name": "InputBaseOwnerState",
       "file": "src/inputs.tsx",
-      "line": 55,
+      "line": 53,
       "kind": "type",
       "members": [
         {
@@ -177574,7 +177671,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color: string;",
-          "line": 57,
+          "line": 55,
           "kind": "property",
           "type": "string"
         },
@@ -177585,7 +177682,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size: string;",
-          "line": 58,
+          "line": 56,
           "kind": "property",
           "type": "string"
         },
@@ -177596,7 +177693,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focused: boolean;",
-          "line": 59,
+          "line": 57,
           "kind": "property",
           "type": "boolean"
         },
@@ -177607,7 +177704,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "filled: boolean;",
-          "line": 60,
+          "line": 58,
           "kind": "property",
           "type": "boolean"
         },
@@ -177618,7 +177715,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 61,
+          "line": 59,
           "kind": "property",
           "type": "boolean"
         },
@@ -177629,7 +177726,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "error: boolean;",
-          "line": 62,
+          "line": 60,
           "kind": "property",
           "type": "boolean"
         },
@@ -177640,7 +177737,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "required: boolean;",
-          "line": 63,
+          "line": 61,
           "kind": "property",
           "type": "boolean"
         }
@@ -177655,7 +177752,7 @@
     {
       "name": "RootSlot",
       "file": "src/inputs.tsx",
-      "line": 65,
+      "line": 63,
       "kind": "type",
       "members": [],
       "references": [
@@ -177669,7 +177766,7 @@
     {
       "name": "InputSlot",
       "file": "src/inputs.tsx",
-      "line": 66,
+      "line": 64,
       "kind": "type",
       "members": [],
       "references": [
@@ -177683,7 +177780,7 @@
     {
       "name": "InputBaseProps",
       "file": "src/inputs.tsx",
-      "line": 69,
+      "line": 67,
       "kind": "type",
       "members": [
         {
@@ -177693,7 +177790,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 74,
+          "line": 72,
           "kind": "property",
           "type": "SxProps"
         },
@@ -177704,7 +177801,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<ViewStyle>;",
-          "line": 75,
+          "line": 73,
           "kind": "property",
           "type": "StyleProp<ViewStyle>"
         },
@@ -177715,7 +177812,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: RootSlot;",
-          "line": 76,
+          "line": 74,
           "kind": "property",
           "type": "RootSlot"
         },
@@ -177726,7 +177823,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color?: InputColor;",
-          "line": 77,
+          "line": 75,
           "kind": "property",
           "type": "InputColor"
         },
@@ -177737,7 +177834,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size?: InputSize;",
-          "line": 78,
+          "line": 76,
           "kind": "property",
           "type": "InputSize"
         },
@@ -177748,7 +177845,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean;",
-          "line": 79,
+          "line": 77,
           "kind": "property",
           "type": "boolean"
         },
@@ -177759,7 +177856,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "error?: boolean;",
-          "line": 80,
+          "line": 78,
           "kind": "property",
           "type": "boolean"
         },
@@ -177770,7 +177867,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "required?: boolean;",
-          "line": 81,
+          "line": 79,
           "kind": "property",
           "type": "boolean"
         },
@@ -177781,7 +177878,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullWidth?: boolean;",
-          "line": 82,
+          "line": 80,
           "kind": "property",
           "type": "boolean"
         },
@@ -177792,7 +177889,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "margin?: 'dense' | 'none';",
-          "line": 83,
+          "line": 81,
           "kind": "property",
           "type": "'dense' | 'none'"
         },
@@ -177803,7 +177900,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: string | number;",
-          "line": 84,
+          "line": 82,
           "kind": "property",
           "type": "string | number"
         },
@@ -177814,7 +177911,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultValue?: string | number;",
-          "line": 85,
+          "line": 83,
           "kind": "property",
           "type": "string | number"
         },
@@ -177825,7 +177922,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 86,
+          "line": 84,
           "kind": "property",
           "type": "string"
         },
@@ -177836,7 +177933,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id?: string;",
-          "line": 87,
+          "line": 85,
           "kind": "property",
           "type": "string"
         },
@@ -177847,7 +177944,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "type?: 'text' | 'password' | 'email' | 'number';",
-          "line": 88,
+          "line": 86,
           "kind": "property",
           "type": "'text' | 'password' | 'email' | 'number'"
         },
@@ -177858,7 +177955,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onChange?: (event: InputChangeEvent) => void;",
-          "line": 89,
+          "line": 87,
           "kind": "event",
           "type": "(event: InputChangeEvent) => void"
         },
@@ -177869,7 +177966,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClick?: (event: GestureResponderEvent) => void;",
-          "line": 90,
+          "line": 88,
           "kind": "event",
           "type": "(event: GestureResponderEvent) => void"
         },
@@ -177880,7 +177977,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputRef?: React.Ref<TextInputInstance>;",
-          "line": 91,
+          "line": 89,
           "kind": "property",
           "type": "React.Ref<TextInputInstance>"
         },
@@ -177891,7 +177988,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputProps?: InputBaseComponentProps;",
-          "line": 92,
+          "line": 90,
           "kind": "property",
           "type": "InputBaseComponentProps"
         },
@@ -177902,7 +177999,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputComponent?: InputSlot;",
-          "line": 93,
+          "line": 91,
           "kind": "property",
           "type": "InputSlot"
         },
@@ -177913,7 +178010,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "startAdornment?: React.ReactNode;",
-          "line": 94,
+          "line": 92,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -177924,7 +178021,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "endAdornment?: React.ReactNode;",
-          "line": 95,
+          "line": 93,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -177935,7 +178032,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "renderSuffix?: (state: InputBaseOwnerState) => React.ReactNode;",
-          "line": 96,
+          "line": 94,
           "kind": "property",
           "type": "(state: InputBaseOwnerState) => React.ReactNode"
         },
@@ -177946,7 +178043,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rows?: number | string;",
-          "line": 97,
+          "line": 95,
           "kind": "property",
           "type": "number | string"
         },
@@ -177957,7 +178054,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "minRows?: number | string;",
-          "line": 98,
+          "line": 96,
           "kind": "property",
           "type": "number | string"
         },
@@ -177968,7 +178065,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "maxRows?: number | string;",
-          "line": 99,
+          "line": 97,
           "kind": "property",
           "type": "number | string"
         },
@@ -177979,7 +178076,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-label'?: string;",
-          "line": 100,
+          "line": 98,
           "kind": "property",
           "type": "string"
         },
@@ -177990,7 +178087,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-describedby'?: string;",
-          "line": 101,
+          "line": 99,
           "kind": "property",
           "type": "string"
         },
@@ -178001,7 +178098,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: { root?: RootSlot; input?: InputSlot };",
-          "line": 102,
+          "line": 100,
           "kind": "slot",
           "type": "{ root?: RootSlot; input?: InputSlot }"
         },
@@ -178012,7 +178109,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: RootSlot;",
-          "line": 102,
+          "line": 100,
           "kind": "slot",
           "type": "RootSlot"
         },
@@ -178023,7 +178120,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "input?: InputSlot",
-          "line": 102,
+          "line": 100,
           "kind": "slot",
           "type": "InputSlot"
         },
@@ -178034,7 +178131,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: {\n    root?: InputRootProps;\n    input?: InputBaseComponentProps;\n  };",
-          "line": 103,
+          "line": 101,
           "kind": "slot",
           "type": "{\n    root?: InputRootProps;\n    input?: InputBaseComponentProps;\n  }"
         },
@@ -178045,7 +178142,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: InputRootProps;",
-          "line": 104,
+          "line": 102,
           "kind": "slot",
           "type": "InputRootProps"
         },
@@ -178056,7 +178153,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "input?: InputBaseComponentProps;",
-          "line": 105,
+          "line": 103,
           "kind": "slot",
           "type": "InputBaseComponentProps"
         }
@@ -178086,7 +178183,7 @@
     {
       "name": "InputProps",
       "file": "src/inputs.tsx",
-      "line": 108,
+      "line": 106,
       "kind": "type",
       "members": [
         {
@@ -178096,7 +178193,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableUnderline?: boolean;",
-          "line": 109,
+          "line": 107,
           "kind": "property",
           "type": "boolean"
         }
@@ -178110,7 +178207,7 @@
     {
       "name": "FilledInputProps",
       "file": "src/inputs.tsx",
-      "line": 111,
+      "line": 109,
       "kind": "type",
       "members": [
         {
@@ -178120,7 +178217,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "hiddenLabel?: boolean;",
-          "line": 112,
+          "line": 110,
           "kind": "property",
           "type": "boolean"
         }
@@ -178134,7 +178231,7 @@
     {
       "name": "NotchedOutlineProps",
       "file": "src/inputs.tsx",
-      "line": 114,
+      "line": 112,
       "kind": "type",
       "members": [
         {
@@ -178144,7 +178241,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: React.ReactNode;",
-          "line": 114,
+          "line": 112,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -178155,7 +178252,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notched?: boolean",
-          "line": 114,
+          "line": 112,
           "kind": "property",
           "type": "boolean"
         }
@@ -178170,7 +178267,7 @@
     {
       "name": "OutlinedInputProps",
       "file": "src/inputs.tsx",
-      "line": 115,
+      "line": 113,
       "kind": "type",
       "members": [
         {
@@ -178180,7 +178277,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: React.ReactNode;",
-          "line": 116,
+          "line": 114,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -178191,7 +178288,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notched?: boolean;",
-          "line": 117,
+          "line": 115,
           "kind": "property",
           "type": "boolean"
         },
@@ -178202,7 +178299,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: InputBaseProps['slots'] & {\n    notchedOutline?: React.ComponentType<\n      NotchedOutlineProps & { ownerState?: InputBaseOwnerState }\n    >;\n  };",
-          "line": 118,
+          "line": 116,
           "kind": "slot",
           "type": "InputBaseProps['slots'] & {\n    notchedOutline?: React.ComponentType<\n      NotchedOutlineProps & { ownerState?: InputBaseOwnerState }\n    >;\n  }"
         },
@@ -178213,7 +178310,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notchedOutline?: React.ComponentType<\n      NotchedOutlineProps & { ownerState?: InputBaseOwnerState }\n    >;",
-          "line": 119,
+          "line": 117,
           "kind": "slot",
           "type": "React.ComponentType<\n      NotchedOutlineProps & { ownerState?: InputBaseOwnerState }\n    >"
         },
@@ -178224,7 +178321,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: InputBaseProps['slotProps'] & {\n    notchedOutline?: SlotProps<NotchedOutlineProps, InputBaseOwnerState>;\n  };",
-          "line": 123,
+          "line": 121,
           "kind": "slot",
           "type": "InputBaseProps['slotProps'] & {\n    notchedOutline?: SlotProps<NotchedOutlineProps, InputBaseOwnerState>;\n  }"
         },
@@ -178235,7 +178332,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notchedOutline?: SlotProps<NotchedOutlineProps, InputBaseOwnerState>;",
-          "line": 124,
+          "line": 122,
           "kind": "slot",
           "type": "SlotProps<NotchedOutlineProps, InputBaseOwnerState>"
         }
@@ -178255,7 +178352,7 @@
     {
       "name": "Variant",
       "file": "src/inputs.tsx",
-      "line": 127,
+      "line": 125,
       "kind": "type",
       "members": [],
       "references": [],
@@ -178265,7 +178362,7 @@
     {
       "name": "EngineProps",
       "file": "src/inputs.tsx",
-      "line": 128,
+      "line": 126,
       "kind": "type",
       "members": [
         {
@@ -178275,7 +178372,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: object;",
-          "line": 129,
+          "line": 127,
           "kind": "property",
           "type": "object"
         },
@@ -178286,7 +178383,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableUnderline?: boolean;",
-          "line": 130,
+          "line": 128,
           "kind": "property",
           "type": "boolean"
         },
@@ -178297,7 +178394,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "hiddenLabel?: boolean;",
-          "line": 131,
+          "line": 129,
           "kind": "property",
           "type": "boolean"
         },
@@ -178308,7 +178405,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: React.ReactNode;",
-          "line": 132,
+          "line": 130,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -178319,7 +178416,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notched?: boolean;",
-          "line": 133,
+          "line": 131,
           "kind": "property",
           "type": "boolean"
         },
@@ -178330,7 +178427,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: OutlinedInputProps['slots'];",
-          "line": 134,
+          "line": 132,
           "kind": "slot",
           "type": "OutlinedInputProps['slots']"
         },
@@ -178341,7 +178438,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: OutlinedInputProps['slotProps'];",
-          "line": 135,
+          "line": 133,
           "kind": "slot",
           "type": "OutlinedInputProps['slotProps']"
         }
@@ -178357,7 +178454,7 @@
     {
       "name": "InputAdornmentProps",
       "file": "src/inputs.tsx",
-      "line": 724,
+      "line": 722,
       "kind": "type",
       "members": [
         {
@@ -178367,7 +178464,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 725,
+          "line": 723,
           "kind": "property",
           "type": "SxProps"
         },
@@ -178378,7 +178475,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "position: 'start' | 'end';",
-          "line": 726,
+          "line": 724,
           "kind": "property",
           "type": "'start' | 'end'"
         },
@@ -178389,7 +178486,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disablePointerEvents?: boolean;",
-          "line": 727,
+          "line": 725,
           "kind": "property",
           "type": "boolean"
         },
@@ -178400,7 +178497,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableTypography?: boolean;",
-          "line": 728,
+          "line": 726,
           "kind": "property",
           "type": "boolean"
         },
@@ -178411,7 +178508,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: Exclude<Variant, 'base'>;",
-          "line": 729,
+          "line": 727,
           "kind": "property",
           "type": "Exclude<Variant, 'base'>"
         },
@@ -178422,7 +178519,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>;",
-          "line": 730,
+          "line": 728,
           "kind": "property",
           "type": "React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>"
         }
@@ -178442,7 +178539,7 @@
     {
       "name": "FormLabelPropsColorOverrides",
       "file": "src/labels.tsx",
-      "line": 33,
+      "line": 27,
       "kind": "type",
       "members": [],
       "references": [],
@@ -178452,7 +178549,7 @@
     {
       "name": "InputLabelPropsSizeOverrides",
       "file": "src/labels.tsx",
-      "line": 34,
+      "line": 28,
       "kind": "type",
       "members": [],
       "references": [],
@@ -178462,7 +178559,7 @@
     {
       "name": "FormHelperTextPropsVariantOverrides",
       "file": "src/labels.tsx",
-      "line": 35,
+      "line": 29,
       "kind": "type",
       "members": [],
       "references": [],
@@ -178472,7 +178569,7 @@
     {
       "name": "Augmented",
       "file": "src/labels.tsx",
-      "line": 36,
+      "line": 30,
       "kind": "type",
       "members": [],
       "references": [
@@ -178489,7 +178586,7 @@
     {
       "name": "FieldVariant",
       "file": "src/labels.tsx",
-      "line": 48,
+      "line": 42,
       "kind": "type",
       "members": [],
       "references": [],
@@ -178499,7 +178596,7 @@
     {
       "name": "FormLabelProps",
       "file": "src/labels.tsx",
-      "line": 49,
+      "line": 43,
       "kind": "type",
       "members": [
         {
@@ -178509,7 +178606,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 50,
+          "line": 44,
           "kind": "property",
           "type": "SxProps"
         },
@@ -178520,7 +178617,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: NativeTypographyComponent | 'label' | 'legend' | 'span' | 'p' | 'div';",
-          "line": 51,
+          "line": 45,
           "kind": "property",
           "type": "NativeTypographyComponent | 'label' | 'legend' | 'span' | 'p' | 'div'"
         },
@@ -178531,7 +178628,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color?: string;",
-          "line": 52,
+          "line": 46,
           "kind": "property",
           "type": "string"
         },
@@ -178542,7 +178639,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean;",
-          "line": 53,
+          "line": 47,
           "kind": "property",
           "type": "boolean"
         },
@@ -178553,7 +178650,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "error?: boolean;",
-          "line": 54,
+          "line": 48,
           "kind": "property",
           "type": "boolean"
         },
@@ -178564,7 +178661,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "filled?: boolean;",
-          "line": 55,
+          "line": 49,
           "kind": "property",
           "type": "boolean"
         },
@@ -178575,7 +178672,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focused?: boolean;",
-          "line": 56,
+          "line": 50,
           "kind": "property",
           "type": "boolean"
         },
@@ -178586,7 +178683,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "required?: boolean;",
-          "line": 57,
+          "line": 51,
           "kind": "property",
           "type": "boolean"
         },
@@ -178597,7 +178694,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id?: string;",
-          "line": 58,
+          "line": 52,
           "kind": "property",
           "type": "string"
         },
@@ -178608,7 +178705,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "htmlFor?: string;",
-          "line": 59,
+          "line": 53,
           "kind": "property",
           "type": "string"
         },
@@ -178619,7 +178716,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClick?: (event: GestureResponderEvent) => void;",
-          "line": 60,
+          "line": 54,
           "kind": "event",
           "type": "(event: GestureResponderEvent) => void"
         }
@@ -178636,7 +178733,7 @@
     {
       "name": "FormLabelBaseProps",
       "file": "src/labels.tsx",
-      "line": 62,
+      "line": 56,
       "kind": "type",
       "members": [],
       "references": [
@@ -178648,7 +178745,7 @@
     {
       "name": "FormLabelOwnProps",
       "file": "src/labels.tsx",
-      "line": 63,
+      "line": 57,
       "kind": "type",
       "members": [],
       "references": [
@@ -178660,7 +178757,7 @@
     {
       "name": "InputLabelProps",
       "file": "src/labels.tsx",
-      "line": 64,
+      "line": 58,
       "kind": "type",
       "members": [
         {
@@ -178670,7 +178767,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableAnimation?: boolean;",
-          "line": 65,
+          "line": 59,
           "kind": "property",
           "type": "boolean"
         },
@@ -178681,7 +178778,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "margin?: 'dense';",
-          "line": 66,
+          "line": 60,
           "kind": "property",
           "type": "'dense'"
         },
@@ -178692,7 +178789,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "shrink?: boolean;",
-          "line": 67,
+          "line": 61,
           "kind": "property",
           "type": "boolean"
         },
@@ -178703,7 +178800,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size?: Augmented<'small' | 'medium', InputLabelPropsSizeOverrides>;",
-          "line": 68,
+          "line": 62,
           "kind": "property",
           "type": "Augmented<'small' | 'medium', InputLabelPropsSizeOverrides>"
         },
@@ -178714,7 +178811,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: FieldVariant;",
-          "line": 69,
+          "line": 63,
           "kind": "property",
           "type": "FieldVariant"
         }
@@ -178731,7 +178828,7 @@
     {
       "name": "InputLabelOwnProps",
       "file": "src/labels.tsx",
-      "line": 71,
+      "line": 65,
       "kind": "type",
       "members": [],
       "references": [
@@ -178743,7 +178840,7 @@
     {
       "name": "FormHelperTextProps",
       "file": "src/labels.tsx",
-      "line": 72,
+      "line": 66,
       "kind": "type",
       "members": [
         {
@@ -178753,7 +178850,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "margin?: 'dense';",
-          "line": 73,
+          "line": 67,
           "kind": "property",
           "type": "'dense'"
         },
@@ -178764,7 +178861,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: Augmented<FieldVariant, FormHelperTextPropsVariantOverrides>;",
-          "line": 74,
+          "line": 68,
           "kind": "property",
           "type": "Augmented<FieldVariant, FormHelperTextPropsVariantOverrides>"
         }
@@ -178782,7 +178879,7 @@
     {
       "name": "FormHelperTextOwnProps",
       "file": "src/labels.tsx",
-      "line": 76,
+      "line": 70,
       "kind": "type",
       "members": [],
       "references": [
@@ -178794,7 +178891,7 @@
     {
       "name": "BoxProps",
       "file": "src/layout.tsx",
-      "line": 14,
+      "line": 12,
       "kind": "type",
       "members": [
         {
@@ -178804,7 +178901,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 15,
+          "line": 13,
           "kind": "property",
           "type": "SxProps"
         },
@@ -178815,7 +178912,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>;",
-          "line": 16,
+          "line": 14,
           "kind": "property",
           "type": "React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>"
         }
@@ -178833,7 +178930,7 @@
     {
       "name": "StackProps",
       "file": "src/layout.tsx",
-      "line": 27,
+      "line": 25,
       "kind": "type",
       "members": [
         {
@@ -178843,7 +178940,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';",
-          "line": 28,
+          "line": 26,
           "kind": "property",
           "type": "'row' | 'column' | 'row-reverse' | 'column-reverse'"
         },
@@ -178854,7 +178951,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "spacing?: ResponsiveStyleValue<SpacingArgument>;",
-          "line": 29,
+          "line": 27,
           "kind": "property",
           "type": "ResponsiveStyleValue<SpacingArgument>"
         },
@@ -178865,7 +178962,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "divider?: React.ReactNode;",
-          "line": 30,
+          "line": 28,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -178882,7 +178979,7 @@
     {
       "name": "PaperProps",
       "file": "src/layout.tsx",
-      "line": 60,
+      "line": 58,
       "kind": "type",
       "members": [
         {
@@ -178892,7 +178989,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation?: number;",
-          "line": 61,
+          "line": 59,
           "kind": "property",
           "type": "number"
         },
@@ -178903,7 +179000,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: 'elevation' | 'outlined';",
-          "line": 62,
+          "line": 60,
           "kind": "property",
           "type": "'elevation' | 'outlined'"
         },
@@ -178914,7 +179011,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "square?: boolean;",
-          "line": 63,
+          "line": 61,
           "kind": "property",
           "type": "boolean"
         }
@@ -178928,7 +179025,7 @@
     {
       "name": "DividerProps",
       "file": "src/layout.tsx",
-      "line": 126,
+      "line": 124,
       "kind": "type",
       "members": [
         {
@@ -178938,7 +179035,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "orientation?: 'horizontal' | 'vertical';",
-          "line": 127,
+          "line": 125,
           "kind": "property",
           "type": "'horizontal' | 'vertical'"
         },
@@ -178949,7 +179046,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "flexItem?: boolean;",
-          "line": 128,
+          "line": 126,
           "kind": "property",
           "type": "boolean"
         }
@@ -178961,9 +179058,64 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "ThemeProviderProps",
+      "file": "src/themeProvider.tsx",
+      "line": 17,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Omit",
+        "SystemThemeProviderProps",
+        "T",
+        "Theme"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ThemeWithProps",
+      "file": "src/themeProvider.tsx",
+      "line": 40,
+      "kind": "type",
+      "members": [
+        {
+          "name": "components",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "components?: Components;",
+          "line": 41,
+          "kind": "property",
+          "type": "Components"
+        }
+      ],
+      "references": [
+        "Components"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ThemedProps",
+      "file": "src/themeProvider.tsx",
+      "line": 43,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Name",
+        "PropertyKey",
+        "Props",
+        "Record",
+        "ThemeInput"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "TypographyPropsVariantOverrides",
       "file": "src/typography.tsx",
-      "line": 15,
+      "line": 14,
       "kind": "type",
       "members": [],
       "references": [],
@@ -178973,7 +179125,7 @@
     {
       "name": "TypographyPropsColorOverrides",
       "file": "src/typography.tsx",
-      "line": 16,
+      "line": 15,
       "kind": "type",
       "members": [],
       "references": [],
@@ -178983,7 +179135,7 @@
     {
       "name": "VariantFlags",
       "file": "src/typography.tsx",
-      "line": 17,
+      "line": 16,
       "kind": "type",
       "members": [],
       "references": [
@@ -178998,7 +179150,7 @@
     {
       "name": "TypographyVariantProp",
       "file": "src/typography.tsx",
-      "line": 22,
+      "line": 21,
       "kind": "type",
       "members": [],
       "references": [
@@ -179012,7 +179164,7 @@
     {
       "name": "NativeTypographyComponent",
       "file": "src/typography.tsx",
-      "line": 26,
+      "line": 25,
       "kind": "type",
       "members": [],
       "references": [
@@ -179027,7 +179179,7 @@
     {
       "name": "TypographyProps",
       "file": "src/typography.tsx",
-      "line": 29,
+      "line": 28,
       "kind": "type",
       "members": [
         {
@@ -179037,7 +179189,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 30,
+          "line": 29,
           "kind": "property",
           "type": "SxProps"
         },
@@ -179048,7 +179200,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: TypographyVariantProp;",
-          "line": 31,
+          "line": 30,
           "kind": "property",
           "type": "TypographyVariantProp"
         },
@@ -179059,7 +179211,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "align?: TextStyle['textAlign'] | 'inherit';",
-          "line": 32,
+          "line": 31,
           "kind": "property",
           "type": "TextStyle['textAlign'] | 'inherit'"
         },
@@ -179070,7 +179222,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color?: string;",
-          "line": 33,
+          "line": 32,
           "kind": "property",
           "type": "string"
         },
@@ -179081,7 +179233,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "gutterBottom?: boolean;",
-          "line": 34,
+          "line": 33,
           "kind": "property",
           "type": "boolean"
         },
@@ -179092,7 +179244,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "noWrap?: boolean;",
-          "line": 35,
+          "line": 34,
           "kind": "property",
           "type": "boolean"
         },
@@ -179103,7 +179255,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "paragraph?: boolean;",
-          "line": 37,
+          "line": 36,
           "kind": "property",
           "type": "boolean"
         },
@@ -179114,7 +179266,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: NativeTypographyComponent | string;",
-          "line": 38,
+          "line": 37,
           "kind": "property",
           "type": "NativeTypographyComponent | string"
         },
@@ -179125,7 +179277,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variantMapping?: Partial<Record<TypographyVariantProp, string>>;",
-          "line": 39,
+          "line": 38,
           "kind": "property",
           "type": "Partial<Record<TypographyVariantProp, string>>"
         }
@@ -179436,6 +179588,41 @@
         }
       ],
       "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "RtlProviderProps",
+      "file": "src/RtlProvider/index.tsx",
+      "line": 3,
+      "kind": "type",
+      "members": [
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 4,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "value",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "value?: boolean;",
+          "line": 5,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "React.ReactNode"
+      ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native-system"
     },

@@ -1,6 +1,6 @@
 import React from 'react';
 import Svg, { Path, type SvgProps } from 'react-native-svg';
-import { useTheme } from '@altroo/mui-native-system';
+import { useTheme } from '@altroo/mui-native/styles';
 export interface SvgIconProps extends Omit<SvgProps, 'color'> {
   color?: 'inherit' | 'primary' | 'secondary' | 'error' | 'action' | 'disabled';
   fontSize?: 'inherit' | 'small' | 'medium' | 'large';

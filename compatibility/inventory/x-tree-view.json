@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-x-tree-view",
-  "nativeSourceSha256": "ec49fe8014a170b1e8e1001bcca13cf3dbc498d64675605450b839dec190d3ca",
+  "nativeSourceSha256": "fef1e37d3a430164880ee4b4208d4286ef331564204ae10ef3b592a850640d40",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {

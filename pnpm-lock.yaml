@@ -276,6 +276,9 @@ importers:
 
   packages/icons:
     dependencies:
+      '@altroo/mui-native':
+        specifier: workspace:*
+        version: link:../material
       '@altroo/mui-native-system':
         specifier: workspace:*
         version: link:../system

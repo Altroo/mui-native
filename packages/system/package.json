@@ -39,6 +39,26 @@
       "types": "./dist/useThemeProps/index.d.ts",
       "react-native": "./src/useThemeProps/index.ts",
       "default": "./dist/useThemeProps/index.js"
+    },
+    "./ThemeProvider": {
+      "types": "./dist/ThemeProvider/index.d.ts",
+      "react-native": "./src/ThemeProvider/index.ts",
+      "default": "./dist/ThemeProvider/index.js"
+    },
+    "./useTheme": {
+      "types": "./dist/useTheme/index.d.ts",
+      "react-native": "./src/useTheme/index.ts",
+      "default": "./dist/useTheme/index.js"
+    },
+    "./useThemeWithoutDefault": {
+      "types": "./dist/useThemeWithoutDefault/index.d.ts",
+      "react-native": "./src/useThemeWithoutDefault/index.ts",
+      "default": "./dist/useThemeWithoutDefault/index.js"
+    },
+    "./RtlProvider": {
+      "types": "./dist/RtlProvider/index.d.ts",
+      "react-native": "./src/RtlProvider/index.tsx",
+      "default": "./dist/RtlProvider/index.js"
     }
   },
   "dependencies": {},

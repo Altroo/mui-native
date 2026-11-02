@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Shallow nested themes, callback replacement, System scopes, Material THEME_ID selection, shared original imports and RTL context. See [theme providers](theme-providers.md).
+
 - Dedicated FormLabel/InputLabel/FormHelperText contracts, floating/stacked fields, scoped focus/name/helper links and reduced-motion-aware native transforms. See [forms and labels](form-labels.md).
 - InputBase/Input/FilledInput/OutlinedInput, adornments, native row bounds and coordinated form state. See [native inputs](inputs.md) for the implemented subset and native differences.
 - TextField replacement of five native slots, distinct input-container and editable-host contracts, composed refs and React 19 cleanup. See [native input slots](textfield-slots.md).
@@ -30,7 +32,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 Do not assume unlisted props work. Public TypeScript interfaces describe the implemented subset. JavaScript callers should run migration diagnostics and review source usage before adoption.
 
 - Full Material UI export coverage, all icon variants, remaining component slot replacement, classes/className, arbitrary CSS, CSS variables, non-width media queries, arbitrary descendant selectors, browser refs/events, transitions, ripple behavior.
-- Full `styled` semantics, nested theme merging, typography inheritance, the full responsive/style utility export set, all upstream augmentation interfaces. The installed-consumer fixture verifies custom Theme, ThemeOptions, Palette, PaletteOptions and BreakpointOverrides augmentation through @mui/material/styles.
+- Full `styled` semantics, CSS-variable/color-scheme providers, complete typography inheritance, the full responsive/style utility export set, all upstream augmentation interfaces. The installed-consumer fixture verifies custom Theme, ThemeOptions, Palette, PaletteOptions and BreakpointOverrides augmentation through @mui/material/styles.
 - Nested modal/focus restoration, keyboard avoidance on all devices, VoiceOver/TalkBack workflows, RTL and large-font layouts.
 - Grid cell editing, column virtualization, apiRef, column menus, flexible/dynamic sizing, keyboard navigation, comprehensive filtering operators and callback detail arguments.
 - SimpleTreeView/TreeItem composition, complete tree apiRef, all Community hooks and loading/disabled semantics.

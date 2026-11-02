@@ -204,6 +204,31 @@
       "types": "./dist/InputAdornment/index.d.ts",
       "react-native": "./src/InputAdornment/index.ts",
       "default": "./dist/InputAdornment/index.js"
+    },
+    "./styles/ThemeProvider": {
+      "types": "./dist/styles/ThemeProvider/index.d.ts",
+      "react-native": "./src/styles/ThemeProvider/index.ts",
+      "default": "./dist/styles/ThemeProvider/index.js"
+    },
+    "./styles/useTheme": {
+      "types": "./dist/styles/useTheme/index.d.ts",
+      "react-native": "./src/styles/useTheme/index.ts",
+      "default": "./dist/styles/useTheme/index.js"
+    },
+    "./styles/useThemeProps": {
+      "types": "./dist/styles/useThemeProps/index.d.ts",
+      "react-native": "./src/styles/useThemeProps/index.ts",
+      "default": "./dist/styles/useThemeProps/index.js"
+    },
+    "./styles/identifier": {
+      "types": "./dist/styles/identifier/index.d.ts",
+      "react-native": "./src/styles/identifier/index.ts",
+      "default": "./dist/styles/identifier/index.js"
+    },
+    "./styles/styled": {
+      "types": "./dist/styles/styled/index.d.ts",
+      "react-native": "./src/styles/styled/index.ts",
+      "default": "./dist/styles/styled/index.js"
     }
   },
   "dependencies": {

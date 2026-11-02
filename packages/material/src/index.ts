@@ -20,3 +20,16 @@ export type {
   InputBasePropsColorOverrides,
   NotchedOutlineProps,
 } from './inputs';
+
+export {
+  ThemeProvider,
+  useTheme,
+  useThemeProps,
+  useSx,
+  useComponentStyle,
+  styled,
+  THEME_ID,
+} from './themeProvider';
+export type { ThemeProviderProps } from './themeProvider';
+
+export type { ThemeWithProps, ThemedProps } from './themeProvider';

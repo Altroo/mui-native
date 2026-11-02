@@ -10,7 +10,7 @@ import {
   CircularProgress,
   useControlled,
 } from '@altroo/mui-native';
-import { useTheme, useSx, type SxProps } from '@altroo/mui-native-system';
+import { useTheme, useSx, type SxProps } from '@altroo/mui-native/styles';
 import {
   processRows,
   gridValue,

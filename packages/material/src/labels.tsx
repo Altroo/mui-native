@@ -1,3 +1,4 @@
+import { useTheme, useSx, useComponentStyle } from './themeProvider';
 import React, {
   forwardRef,
   useContext,
@@ -18,14 +19,7 @@ import {
   type TextStyle,
   type GestureResponderEvent,
 } from 'react-native';
-import {
-  useDefaultProps,
-  useComponentStyle,
-  useSx,
-  useTheme,
-  getTextStyleInheritance,
-  type SxProps,
-} from '@altroo/mui-native-system';
+import { useDefaultProps, getTextStyleInheritance, type SxProps } from '@altroo/mui-native-system';
 import { FormContext, nativeLabelText, type NativeHelperRegistration } from './formState';
 import { nativeInsets } from './nativeInsets';
 import { observeLabelMotion, reducedLabelMotion } from './labelMotion';
@@ -87,7 +81,7 @@ function useLabelState(props: FormLabelProps) {
   };
 }
 function slotOverride(
-  theme: ReturnType<typeof useTheme>,
+  theme: import('@altroo/mui-native-system').Theme,
   name: string,
   slot: string,
   ownerState: object,

@@ -31,6 +31,22 @@ try {
       'Installed root/deep imports must share the same context-owning implementation.',
     );
   }
+  const materialStyles = requireConsumer('@altroo/mui-native/styles');
+  for (const name of ['ThemeProvider', 'useTheme', 'useThemeProps', 'styled']) {
+    assert.equal(materialStyles[name], material[name]);
+    assert.equal(requireConsumer('@altroo/mui-native/styles/' + name).default, material[name]);
+  }
+  assert.equal(materialStyles.THEME_ID, '$$material');
+  assert.equal(requireConsumer('@altroo/mui-native/styles/identifier').default, material.THEME_ID);
+  for (const name of ['ThemeProvider', 'useTheme', 'useThemeWithoutDefault', 'RtlProvider'])
+    assert.equal(requireConsumer('@altroo/mui-native-system/' + name).default, root[name]);
+  assert.equal(requireConsumer('@altroo/mui-native-system/RtlProvider').useRtl, root.useRtl);
+  assert.equal(
+    requireConsumer('@altroo/mui-native-system/useTheme').systemDefaultTheme,
+    root.systemDefaultTheme,
+  );
+  assert.notEqual(material.ThemeProvider, root.ThemeProvider);
+  assert.notEqual(material.useTheme, root.useTheme);
   for (const name of [
     'FormControl',
     'FormLabel',

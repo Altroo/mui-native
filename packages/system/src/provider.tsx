@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useMemo, forwardRef } from 'react';
 import { useWindowDimensions, StyleSheet, type StyleProp } from 'react-native';
 import { createTheme, type Theme } from './theme';
+import { diagnostic } from './diagnostics';
+import RtlProvider from './RtlProvider';
 import { DefaultPropsProvider, getThemeProps } from './defaultProps';
 import { nativeStyleTextMetrics, applyNativeTextMetrics } from './nativeText';
 import {
@@ -11,25 +13,49 @@ import {
   type StyleContext,
   type NativeStyle,
 } from './sx';
-const defaultTheme = createTheme();
-const Context = createContext<Theme | undefined>(undefined);
-export function ThemeProvider({
-  theme,
-  children,
-}: {
-  theme: Theme | ((outer: Theme) => Theme);
+export const systemDefaultTheme = createTheme();
+const EMPTY_THEME = {};
+const Context = createContext<object | undefined>(undefined);
+export interface ThemeProviderProps<T = Theme> {
+  theme: Partial<T> | ((outer: T) => T);
+  themeId?: string;
   children?: React.ReactNode;
-}) {
-  const outer = useTheme();
-  const value = useMemo(() => (typeof theme === 'function' ? theme(outer) : theme), [outer, theme]);
+}
+// Adapted from the pinned System provider: objects merge at the top level;
+// callbacks replace their selected theme. Keep one native context, not two engines.
+export function ThemeProvider<T = Theme>({ theme, themeId, children }: ThemeProviderProps<T>) {
+  const outer = useThemeWithoutDefault<Record<string, unknown>>(EMPTY_THEME);
+  const value = useMemo(() => {
+    const selected = themeId ? outer[themeId] || outer : outer;
+    if (typeof theme === 'function' && (!Object.keys(outer).length || (themeId && !outer[themeId])))
+      diagnostic('theme-provider', 'A theme callback needs an outer theme for its selected scope.');
+    const local = typeof theme === 'function' ? theme(selected as T) : theme;
+    return themeId
+      ? { ...outer, [themeId]: local }
+      : typeof theme === 'function'
+        ? (local as object)
+        : { ...outer, ...local };
+  }, [outer, theme, themeId]);
+  const effective = (
+    themeId ? (value as Record<string, unknown>)[themeId] : value
+  ) as Partial<Theme>;
   return (
     <Context.Provider value={value}>
-      <DefaultPropsProvider value={value.components}>{children}</DefaultPropsProvider>
+      <RtlProvider value={effective.direction === 'rtl'}>
+        <DefaultPropsProvider value={effective.components}>{children}</DefaultPropsProvider>
+      </RtlProvider>
     </Context.Provider>
   );
 }
-export function useTheme(fallback: Theme = defaultTheme): Theme {
-  return useContext(Context) ?? fallback;
+export function useThemeWithoutDefault<T = null>(fallback: T = null as T): T {
+  const value = useContext(Context);
+  return !value || Object.keys(value).length === 0 ? fallback : (value as T);
+}
+export function useTheme<T = Theme>(fallback: T = systemDefaultTheme as T): T {
+  return useThemeWithoutDefault(fallback);
+}
+function scopedTheme(theme: Theme, themeId?: string): Theme {
+  return (themeId && (theme as unknown as Record<string, Theme>)[themeId]) || theme;
 }
 export function useThemeProps<P extends object>({
   props,
@@ -47,8 +73,8 @@ export function useThemeProps<P extends object>({
   return getThemeProps({ theme: scoped as Theme, props, name });
 }
 
-export function useSx(sx?: SxProps, context: StyleContext = {}) {
-  const theme = useTheme();
+export function useSx(sx?: SxProps, context: StyleContext = {}, themeId?: string) {
+  const theme = scopedTheme(useTheme(), themeId);
   const { width } = useWindowDimensions();
   return resolveSx(sx, theme, { width, ...context });
 }
@@ -57,19 +83,20 @@ export function useComponentStyle(
   props: object,
   sx?: SxProps,
   context: StyleContext = {},
+  themeId?: string,
 ) {
-  const theme = useTheme();
+  const theme = scopedTheme(useTheme(), themeId);
   const { width } = useWindowDimensions();
   return componentStyle(theme, name, props as Record<string, unknown>, sx, { width, ...context });
 }
 export function styled<P extends object>(
   Component: React.ComponentType<P>,
-  options: { name?: string; shouldForwardProp?: (prop: string) => boolean } = {},
+  options: { name?: string; shouldForwardProp?: (prop: string) => boolean; themeId?: string } = {},
 ) {
   return (styles: SxObject | ((props: P & { theme: Theme; ownerState?: unknown }) => SxProps)) =>
     forwardRef<unknown, P & { sx?: SxProps; style?: StyleProp<NativeStyle>; ownerState?: unknown }>(
       (props, ref) => {
-        const theme = useTheme();
+        const theme = scopedTheme(useTheme(), options.themeId);
         const { width } = useWindowDimensions();
         const { sx, style, ownerState, ...rest } = props;
         const resolved =

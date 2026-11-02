@@ -336,6 +336,84 @@
         "Long-label width expands after shrink completion instead of animating CSS max-width on every frame. Native label focus and naming use the surrounding form registry.",
         "Native control refs/events replace DOM refs/events; helper field variants and reserved blank lines follow the pinned component contracts."
       ]
+    },
+    {
+      "localFile": "packages/system/src/provider.tsx",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "ThemeProvider/ThemeProvider.js": "cca6ab3f8adfb1c0664cdda3c89dfb1cf1f83b034390fe2670b276bed2a28569",
+          "ThemeProvider/ThemeProvider.d.ts": "6f6aabea10a128b4dc1d7e9cdd689d091f700f73d519ea55bcfa34d17e36690e",
+          "useTheme/useTheme.js": "d41fa6fcfc33ccd3bf85f8fd1af6b7f1b3af45cf5a6da5f8749d40767677d1e8",
+          "useTheme/useTheme.d.ts": "248309267e04429f5fbff4de4f1e12dd3e76f2df9688dd8051ee1057f89d18e8",
+          "useThemeWithoutDefault/useThemeWithoutDefault.js": "3d4208f5fd73e15d66adc0c6e0a98d166d30e9541f65d9dca7919a6a00fecd3f",
+          "useThemeWithoutDefault/useThemeWithoutDefault.d.ts": "da625a05492ce53ecca63a00ec09b257ea6bd40f44e75cd0a5ac20b989f02e4d",
+          "RtlProvider/index.js": "791d4454366a950cff318fe2b97006e51431441d44d6696aa0aa8333a456f878",
+          "RtlProvider/index.d.ts": "f5a100b8afd68a48691eb40d0cb7ee805612e40b84ca9c2b5acd07554b4210a5",
+          "useThemeProps/useThemeProps.js": "7ab3656727158f84371c3e8b9f72e4980a63ae113b92d8c0f95234355f8a6c17",
+          "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+          "createBox/createBox.js": "8cee82044816a0bdb217b3fdaf47354ebd42fb4c6987167c87ceb7e0e6c39e27"
+        }
+      },
+      "adaptations": [
+        "One shared native theme context replaces the browser styling/private-engine pair. Object nesting shallow-merges top-level keys; callbacks replace the selected theme and are evaluated once per memoized resolution, rather than separately for two browser engines.",
+        "Generic System themeId scopes preserve the surrounding theme envelope; empty-context fallbacks, component defaults and direction follow the selected scope. Native style helpers select an optional scope without installing a CSS engine."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/RtlProvider/index.tsx",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "ThemeProvider/ThemeProvider.js": "cca6ab3f8adfb1c0664cdda3c89dfb1cf1f83b034390fe2670b276bed2a28569",
+          "ThemeProvider/ThemeProvider.d.ts": "6f6aabea10a128b4dc1d7e9cdd689d091f700f73d519ea55bcfa34d17e36690e",
+          "useTheme/useTheme.js": "d41fa6fcfc33ccd3bf85f8fd1af6b7f1b3af45cf5a6da5f8749d40767677d1e8",
+          "useTheme/useTheme.d.ts": "248309267e04429f5fbff4de4f1e12dd3e76f2df9688dd8051ee1057f89d18e8",
+          "useThemeWithoutDefault/useThemeWithoutDefault.js": "3d4208f5fd73e15d66adc0c6e0a98d166d30e9541f65d9dca7919a6a00fecd3f",
+          "useThemeWithoutDefault/useThemeWithoutDefault.d.ts": "da625a05492ce53ecca63a00ec09b257ea6bd40f44e75cd0a5ac20b989f02e4d",
+          "RtlProvider/index.js": "791d4454366a950cff318fe2b97006e51431441d44d6696aa0aa8333a456f878",
+          "RtlProvider/index.d.ts": "f5a100b8afd68a48691eb40d0cb7ee805612e40b84ca9c2b5acd07554b4210a5",
+          "useThemeProps/useThemeProps.js": "7ab3656727158f84371c3e8b9f72e4980a63ae113b92d8c0f95234355f8a6c17",
+          "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+          "createBox/createBox.js": "8cee82044816a0bdb217b3fdaf47354ebd42fb4c6987167c87ceb7e0e6c39e27"
+        }
+      },
+      "adaptations": [
+        "A native React context preserves the provider and hook boolean defaults. It does not change global I18nManager settings or establish physical RTL layout."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/themeProvider.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "styles/ThemeProvider.js": "e1308a35b11aa6117dc361600b964a71d47bfb6c7b7ae040141fd77cecb7cb0a",
+          "styles/ThemeProviderNoVars.js": "96ff9cfd20a4d3cfaeb70c88d2db4c54f16b5ad158776bbdd5228c76a92acad3",
+          "styles/ThemeProvider.d.ts": "a8ae5b4ce15926d9673b1a122c70723059c10d81555308f3d2e774c14f6fcef1",
+          "styles/useTheme.js": "456c09c3aec1f29d479442b5deb648d8087c33cc8a1b88d9ffc03f9051482818",
+          "styles/useThemeProps.js": "153aededf39170da2b446a56fb5a050ca43b5f899d560dba271bb48fefea2a48",
+          "styles/useThemeProps.d.ts": "9c8bc1fc30b6495e83b6ca136037ddffcb911c1fbe0adfeedc41a734e99452b0",
+          "styles/identifier.js": "e75aca64cb87bbbb2c752b14873c81211d8b14e97621014ab05043a19ded0bf0",
+          "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+          "Box/Box.js": "306d78c5254c68f321b72999149d084a76903e4b45797999cc9f71eea80b79ce"
+        }
+      },
+      "adaptations": [
+        "Material ThemeProvider and hooks select the public $$material scope. Native Material, icon and X renderers consume scoped tokens and styles; System hooks retain the raw envelope.",
+        "The no-vars object marker is retained. CSS variable generation, browser storage and color-scheme providers remain unsupported; native transforms/styles do not introduce DOM layers."
+      ]
     }
   ]
 }

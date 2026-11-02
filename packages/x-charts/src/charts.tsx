@@ -2,7 +2,7 @@ import React from 'react';
 import { View, type GestureResponderEvent } from 'react-native';
 import Svg, { Rect, Line, Path, Circle, Text as SvgText } from 'react-native-svg';
 import { Typography, Stack } from '@altroo/mui-native';
-import { useTheme, type SxProps, useSx } from '@altroo/mui-native-system';
+import { useTheme, type SxProps, useSx } from '@altroo/mui-native/styles';
 export interface ChartSeries {
   id?: string | number;
   data: readonly (number | null)[];

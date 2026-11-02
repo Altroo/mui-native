@@ -1,12 +1,10 @@
+import { useTheme, useSx, useComponentStyle } from './themeProvider';
 import React, { forwardRef } from 'react';
 import { Typography, type TypographyProps } from './typography';
 export * from './typography';
 import { View, type ViewInstance, type ViewProps } from 'react-native';
 import {
-  useTheme,
   useDefaultProps,
-  useComponentStyle,
-  useSx,
   type SxProps,
   type SpacingArgument,
   type ResponsiveStyleValue,

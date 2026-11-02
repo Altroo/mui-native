@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-x-data-grid",
-  "nativeSourceSha256": "2134f2a8d9b9558dffbc8854225e524f579059ea75b087b7d8d99ed488aefec0",
+  "nativeSourceSha256": "63d7f0572145cfc90abf0db8e5bbcb3721ff98036486fc88b776f4a7aeca80a2",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {

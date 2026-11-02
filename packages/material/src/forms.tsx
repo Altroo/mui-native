@@ -1,3 +1,4 @@
+import { useTheme, useSx, useComponentStyle } from './themeProvider';
 import React, {
   createContext,
   useContext,
@@ -24,10 +25,7 @@ import {
   type GestureResponderEvent,
 } from 'react-native';
 import {
-  useTheme,
   useDefaultProps,
-  useComponentStyle,
-  useSx,
   diagnostic,
   resolveSlotProps,
   type SlotProps,

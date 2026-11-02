@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-x-charts",
-  "nativeSourceSha256": "1a5e0fde8cb2fcfeb755ffb1d35d2d87b7a32108894e9f5cbdb731f3787cc9cb",
+  "nativeSourceSha256": "3479d9dd7f0645dfc8ebfad5a056ab2bb88459cd12440b41824a45e1421f5422",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {

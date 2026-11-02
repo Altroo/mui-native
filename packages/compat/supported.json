@@ -37,12 +37,25 @@
       "Input",
       "FilledInput",
       "OutlinedInput",
-      "InputAdornment"
+      "InputAdornment",
+      "styles/ThemeProvider",
+      "styles/useTheme",
+      "styles/useThemeProps",
+      "styles/identifier",
+      "styles/styled"
     ]
   },
   "@mui/system": {
     "target": "@altroo/mui-native-system",
-    "subpaths": ["colorManipulator", "DefaultPropsProvider", "useThemeProps"]
+    "subpaths": [
+      "colorManipulator",
+      "DefaultPropsProvider",
+      "useThemeProps",
+      "ThemeProvider",
+      "useTheme",
+      "useThemeWithoutDefault",
+      "RtlProvider"
+    ]
   },
   "@mui/icons-material": {
     "target": "@altroo/mui-native-icons",

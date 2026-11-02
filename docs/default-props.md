@@ -42,7 +42,7 @@ Default resolution is connected to the existing Material layout, form/control, f
 
 `useThemeProps` remains a System theme lookup and supports `defaultTheme` plus an explicit `themeId`. `getThemeProps` applies a component's `defaultProps` directly. These helpers are available through original root/style imports and `@mui/system/useThemeProps`. System helpers do not consume an independent DefaultPropsProvider override or the Material style-merge flag. Default provider hooks also support MUI's raw configuration form where no defaultProps/styleOverrides/variants wrapper is present.
 
-Scoped default lookup does not implement general multi-design-system rendering. Nested partial theme objects, full scoped providers and remaining provider APIs still need their own compatibility work.
+Nested objects, callback replacement and scoped native providers are documented in [theme providers](theme-providers.md). Material useThemeProps now selects its Material scope and preserves the upstream ThemeWithProps/ThemedProps generic contract; System hooks retain explicit themeId/defaultTheme lookup. CSS-variable/color-scheme providers and remaining styling APIs remain unfinished.
 
 ## Explicit slot composition
 

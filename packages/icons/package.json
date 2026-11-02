@@ -47,7 +47,8 @@
     }
   },
   "dependencies": {
-    "@altroo/mui-native-system": "workspace:*"
+    "@altroo/mui-native-system": "workspace:*",
+    "@altroo/mui-native": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=19.3.0 <20",

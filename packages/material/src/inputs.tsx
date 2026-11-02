@@ -1,3 +1,4 @@
+import { useTheme, useSx, useComponentStyle } from './themeProvider';
 import React, { forwardRef, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   View,
@@ -15,9 +16,6 @@ import {
 } from 'react-native';
 import {
   useDefaultProps,
-  useTheme,
-  useSx,
-  useComponentStyle,
   resolveSlotProps,
   diagnostic,
   type SlotProps,

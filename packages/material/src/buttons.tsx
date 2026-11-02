@@ -1,3 +1,4 @@
+import { useTheme, useComponentStyle } from './themeProvider';
 import React, { forwardRef } from 'react';
 import {
   Pressable,
@@ -12,9 +13,7 @@ import {
   type TextStyle,
 } from 'react-native';
 import {
-  useTheme,
   useDefaultProps,
-  useComponentStyle,
   isNativeTextStyleProperty,
   type SxProps,
 } from '@altroo/mui-native-system';

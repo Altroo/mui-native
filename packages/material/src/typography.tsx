@@ -1,9 +1,8 @@
+import { useTheme, useComponentStyle } from './themeProvider';
 import React, { createContext, forwardRef, useContext } from 'react';
 import { Text, StyleSheet, type TextInstance, type TextProps, type TextStyle } from 'react-native';
 import {
-  useTheme,
   useDefaultProps,
-  useComponentStyle,
   getTextStyleInheritance,
   nativeStyleTextMetrics,
   applyNativeTextMetrics,

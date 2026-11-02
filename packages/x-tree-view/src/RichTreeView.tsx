@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { FlatList, Pressable, View, type GestureResponderEvent } from 'react-native';
 import { Typography, useControlled } from '@altroo/mui-native';
-import { useSx, type SxProps } from '@altroo/mui-native-system';
+import { useSx, type SxProps } from '@altroo/mui-native/styles';
 export interface TreeViewBaseItem {
   id: string;
   label: string;

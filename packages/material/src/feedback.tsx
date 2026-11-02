@@ -1,3 +1,4 @@
+import { useTheme } from './themeProvider';
 import React, { useEffect } from 'react';
 import {
   View,
@@ -11,7 +12,6 @@ import {
   type GestureResponderEvent,
 } from 'react-native';
 import {
-  useTheme,
   useDefaultProps,
   resolveSx,
   diagnostic,

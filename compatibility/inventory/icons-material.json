@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-icons",
-  "nativeSourceSha256": "3938aa1bf26b25908188c3ff69fc39746ad49b204b8fda06f95520d852cc1d23",
+  "nativeSourceSha256": "1539a2a7cbf9530c4009010bf8c2052c5ee2aaa027aa524906c0dd06f255da52",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {

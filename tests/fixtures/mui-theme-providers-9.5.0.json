@@ -1,0 +1,1016 @@
+{
+  "references": [
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "ThemeProvider/ThemeProvider.js": "cca6ab3f8adfb1c0664cdda3c89dfb1cf1f83b034390fe2670b276bed2a28569",
+        "ThemeProvider/ThemeProvider.d.ts": "6f6aabea10a128b4dc1d7e9cdd689d091f700f73d519ea55bcfa34d17e36690e",
+        "useTheme/useTheme.js": "d41fa6fcfc33ccd3bf85f8fd1af6b7f1b3af45cf5a6da5f8749d40767677d1e8",
+        "useTheme/useTheme.d.ts": "248309267e04429f5fbff4de4f1e12dd3e76f2df9688dd8051ee1057f89d18e8",
+        "useThemeWithoutDefault/useThemeWithoutDefault.js": "3d4208f5fd73e15d66adc0c6e0a98d166d30e9541f65d9dca7919a6a00fecd3f",
+        "useThemeWithoutDefault/useThemeWithoutDefault.d.ts": "da625a05492ce53ecca63a00ec09b257ea6bd40f44e75cd0a5ac20b989f02e4d",
+        "RtlProvider/index.js": "791d4454366a950cff318fe2b97006e51431441d44d6696aa0aa8333a456f878",
+        "RtlProvider/index.d.ts": "f5a100b8afd68a48691eb40d0cb7ee805612e40b84ca9c2b5acd07554b4210a5",
+        "useThemeProps/useThemeProps.js": "7ab3656727158f84371c3e8b9f72e4980a63ae113b92d8c0f95234355f8a6c17",
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+        "createBox/createBox.js": "8cee82044816a0bdb217b3fdaf47354ebd42fb4c6987167c87ceb7e0e6c39e27"
+      }
+    },
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "styles/ThemeProvider.js": "e1308a35b11aa6117dc361600b964a71d47bfb6c7b7ae040141fd77cecb7cb0a",
+        "styles/ThemeProviderNoVars.js": "96ff9cfd20a4d3cfaeb70c88d2db4c54f16b5ad158776bbdd5228c76a92acad3",
+        "styles/ThemeProvider.d.ts": "a8ae5b4ce15926d9673b1a122c70723059c10d81555308f3d2e774c14f6fcef1",
+        "styles/useTheme.js": "456c09c3aec1f29d479442b5deb648d8087c33cc8a1b88d9ffc03f9051482818",
+        "styles/useThemeProps.js": "153aededf39170da2b446a56fb5a050ca43b5f899d560dba271bb48fefea2a48",
+        "styles/useThemeProps.d.ts": "9c8bc1fc30b6495e83b6ca136037ddffcb911c1fbe0adfeedc41a734e99452b0",
+        "styles/identifier.js": "e75aca64cb87bbbb2c752b14873c81211d8b14e97621014ab05043a19ded0bf0",
+        "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+        "Box/Box.js": "306d78c5254c68f321b72999149d084a76903e4b45797999cc9f71eea80b79ce"
+      }
+    }
+  ],
+  "themeId": "$$material",
+  "fixtures": [
+    {
+      "name": "no provider",
+      "layers": [],
+      "output": {
+        "system": { "fallback": true },
+        "material": { "direction": "ltr", "components": {} },
+        "withoutDefault": null,
+        "defaults": {},
+        "systemDefaults": {},
+        "materialDefaults": {},
+        "rtl": false
+      }
+    },
+    {
+      "name": "empty object",
+      "layers": [{ "provider": "system", "theme": {} }],
+      "output": {
+        "system": { "fallback": true },
+        "material": { "direction": "ltr", "components": {} },
+        "withoutDefault": null,
+        "defaults": {},
+        "systemDefaults": {},
+        "materialDefaults": {},
+        "rtl": false
+      }
+    },
+    {
+      "name": "system root",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        }
+      ],
+      "output": {
+        "system": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          }
+        },
+        "material": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          }
+        },
+        "withoutDefault": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          }
+        },
+        "defaults": { "value": "outer" },
+        "systemDefaults": { "value": "outer" },
+        "materialDefaults": { "value": "outer" },
+        "rtl": true
+      }
+    },
+    {
+      "name": "system shallow object",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        }
+      ],
+      "output": {
+        "system": {
+          "stamp": "local",
+          "nested": { "second": 3 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "local" } } }
+        },
+        "material": {
+          "stamp": "local",
+          "nested": { "second": 3 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "local" } } }
+        },
+        "withoutDefault": {
+          "stamp": "local",
+          "nested": { "second": 3 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "local" } } }
+        },
+        "defaults": { "value": "local" },
+        "systemDefaults": { "value": "local" },
+        "materialDefaults": { "value": "local" },
+        "rtl": true
+      }
+    },
+    {
+      "name": "system empty child",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        { "provider": "system", "theme": {} }
+      ],
+      "output": {
+        "system": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          }
+        },
+        "material": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          }
+        },
+        "withoutDefault": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          }
+        },
+        "defaults": { "value": "outer" },
+        "systemDefaults": { "value": "outer" },
+        "materialDefaults": { "value": "outer" },
+        "rtl": true
+      }
+    },
+    {
+      "name": "system callback replaces",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        { "provider": "system", "theme": { "operation": "replace" } }
+      ],
+      "output": {
+        "system": { "stamp": "callback", "received": "outer", "receivedScope": null },
+        "material": { "stamp": "callback", "received": "outer", "receivedScope": null },
+        "withoutDefault": { "stamp": "callback", "received": "outer", "receivedScope": null },
+        "defaults": {},
+        "systemDefaults": {},
+        "materialDefaults": {},
+        "rtl": false
+      }
+    },
+    {
+      "name": "system callback extends",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        { "provider": "system", "theme": { "operation": "extend" } }
+      ],
+      "output": {
+        "system": {
+          "stamp": "callback",
+          "nested": { "first": 1, "second": 2, "third": 4 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "callback" } } }
+        },
+        "material": {
+          "stamp": "callback",
+          "nested": { "first": 1, "second": 2, "third": 4 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "callback" } } }
+        },
+        "withoutDefault": {
+          "stamp": "callback",
+          "nested": { "first": 1, "second": 2, "third": 4 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "callback" } } }
+        },
+        "defaults": { "value": "callback" },
+        "systemDefaults": { "value": "callback" },
+        "materialDefaults": { "value": "callback" },
+        "rtl": true
+      }
+    },
+    {
+      "name": "root callback receives empty object",
+      "layers": [{ "provider": "system", "theme": { "operation": "replace" } }],
+      "output": {
+        "system": { "stamp": "callback", "received": null, "receivedScope": null },
+        "material": { "stamp": "callback", "received": null, "receivedScope": null },
+        "withoutDefault": { "stamp": "callback", "received": null, "receivedScope": null },
+        "defaults": {},
+        "systemDefaults": {},
+        "materialDefaults": {},
+        "rtl": false
+      }
+    },
+    {
+      "name": "scoped object retains outer",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          },
+          "themeId": "design"
+        }
+      ],
+      "output": {
+        "system": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "design": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        },
+        "material": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "design": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        },
+        "withoutDefault": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "design": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        },
+        "defaults": { "value": "local" },
+        "systemDefaults": { "value": "outer" },
+        "materialDefaults": { "value": "outer" },
+        "rtl": false
+      }
+    },
+    {
+      "name": "scoped callback selects scope",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          },
+          "themeId": "design"
+        },
+        { "provider": "system", "theme": { "operation": "extend" }, "themeId": "design" }
+      ],
+      "output": {
+        "system": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "design": {
+            "stamp": "callback",
+            "nested": { "second": 3, "third": 4 },
+            "components": { "Probe": { "defaultProps": { "value": "callback" } } }
+          }
+        },
+        "material": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "design": {
+            "stamp": "callback",
+            "nested": { "second": 3, "third": 4 },
+            "components": { "Probe": { "defaultProps": { "value": "callback" } } }
+          }
+        },
+        "withoutDefault": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "design": {
+            "stamp": "callback",
+            "nested": { "second": 3, "third": 4 },
+            "components": { "Probe": { "defaultProps": { "value": "callback" } } }
+          }
+        },
+        "defaults": { "value": "callback" },
+        "systemDefaults": { "value": "outer" },
+        "materialDefaults": { "value": "outer" },
+        "rtl": false
+      }
+    },
+    {
+      "name": "scoped object replaces scope",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          },
+          "themeId": "design"
+        },
+        { "provider": "system", "theme": { "stamp": "replacement" }, "themeId": "design" }
+      ],
+      "output": {
+        "system": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "design": { "stamp": "replacement" }
+        },
+        "material": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "design": { "stamp": "replacement" }
+        },
+        "withoutDefault": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "design": { "stamp": "replacement" }
+        },
+        "defaults": {},
+        "systemDefaults": { "value": "outer" },
+        "materialDefaults": { "value": "outer" },
+        "rtl": false
+      }
+    },
+    {
+      "name": "material root",
+      "layers": [
+        {
+          "provider": "material",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        }
+      ],
+      "output": {
+        "system": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "vars": null
+        },
+        "material": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "vars": null
+        },
+        "withoutDefault": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "vars": null
+        },
+        "defaults": { "value": "outer" },
+        "systemDefaults": { "value": "outer" },
+        "materialDefaults": { "value": "outer" },
+        "rtl": true
+      }
+    },
+    {
+      "name": "material shallow object",
+      "layers": [
+        {
+          "provider": "material",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        {
+          "provider": "material",
+          "theme": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        }
+      ],
+      "output": {
+        "system": {
+          "stamp": "local",
+          "nested": { "second": 3 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "local" } } },
+          "vars": null
+        },
+        "material": {
+          "stamp": "local",
+          "nested": { "second": 3 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "local" } } },
+          "vars": null
+        },
+        "withoutDefault": {
+          "stamp": "local",
+          "nested": { "second": 3 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "local" } } },
+          "vars": null
+        },
+        "defaults": { "value": "local" },
+        "systemDefaults": { "value": "local" },
+        "materialDefaults": { "value": "local" },
+        "rtl": true
+      }
+    },
+    {
+      "name": "material callback replaces",
+      "layers": [
+        {
+          "provider": "material",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        { "provider": "material", "theme": { "operation": "replace" } }
+      ],
+      "output": {
+        "system": { "stamp": "callback", "received": "outer", "receivedScope": null },
+        "material": { "stamp": "callback", "received": "outer", "receivedScope": null },
+        "withoutDefault": { "stamp": "callback", "received": "outer", "receivedScope": null },
+        "defaults": {},
+        "systemDefaults": {},
+        "materialDefaults": {},
+        "rtl": false
+      }
+    },
+    {
+      "name": "material callback extends",
+      "layers": [
+        {
+          "provider": "material",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        { "provider": "material", "theme": { "operation": "extend" } }
+      ],
+      "output": {
+        "system": {
+          "stamp": "callback",
+          "nested": { "first": 1, "second": 2, "third": 4 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "callback" } } },
+          "vars": null
+        },
+        "material": {
+          "stamp": "callback",
+          "nested": { "first": 1, "second": 2, "third": 4 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "callback" } } },
+          "vars": null
+        },
+        "withoutDefault": {
+          "stamp": "callback",
+          "nested": { "first": 1, "second": 2, "third": 4 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "callback" } } },
+          "vars": null
+        },
+        "defaults": { "value": "callback" },
+        "systemDefaults": { "value": "callback" },
+        "materialDefaults": { "value": "callback" },
+        "rtl": true
+      }
+    },
+    {
+      "name": "material scoped object",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        {
+          "provider": "material",
+          "theme": {
+            "$$material": {
+              "stamp": "local",
+              "nested": { "second": 3 },
+              "components": { "Probe": { "defaultProps": { "value": "local" } } }
+            }
+          }
+        }
+      ],
+      "output": {
+        "system": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "$$material": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        },
+        "material": {
+          "stamp": "local",
+          "nested": { "second": 3 },
+          "components": { "Probe": { "defaultProps": { "value": "local" } } }
+        },
+        "withoutDefault": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "$$material": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        },
+        "defaults": { "value": "local" },
+        "systemDefaults": { "value": "outer" },
+        "materialDefaults": { "value": "local" },
+        "rtl": false
+      }
+    },
+    {
+      "name": "material scope replacement",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        {
+          "provider": "material",
+          "theme": {
+            "$$material": {
+              "stamp": "local",
+              "nested": { "second": 3 },
+              "components": { "Probe": { "defaultProps": { "value": "local" } } }
+            }
+          }
+        },
+        { "provider": "material", "theme": { "$$material": { "stamp": "replacement" } } }
+      ],
+      "output": {
+        "system": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "$$material": { "stamp": "replacement" }
+        },
+        "material": { "stamp": "replacement" },
+        "withoutDefault": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "$$material": { "stamp": "replacement" }
+        },
+        "defaults": {},
+        "systemDefaults": { "value": "outer" },
+        "materialDefaults": {},
+        "rtl": false
+      }
+    },
+    {
+      "name": "material function receives engine envelope",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        {
+          "provider": "material",
+          "theme": {
+            "$$material": {
+              "stamp": "local",
+              "nested": { "second": 3 },
+              "components": { "Probe": { "defaultProps": { "value": "local" } } }
+            }
+          }
+        },
+        { "provider": "material", "theme": { "operation": "extend" } }
+      ],
+      "output": {
+        "system": {
+          "stamp": "callback",
+          "nested": { "first": 1, "second": 2, "third": 4 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "callback" } } },
+          "$$material": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        },
+        "material": {
+          "stamp": "local",
+          "nested": { "second": 3 },
+          "components": { "Probe": { "defaultProps": { "value": "local" } } }
+        },
+        "withoutDefault": {
+          "stamp": "callback",
+          "nested": { "first": 1, "second": 2, "third": 4 },
+          "direction": "rtl",
+          "components": { "Probe": { "defaultProps": { "value": "callback" } } },
+          "$$material": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        },
+        "defaults": { "value": "callback" },
+        "systemDefaults": { "value": "callback" },
+        "materialDefaults": { "value": "local" },
+        "rtl": true
+      }
+    },
+    {
+      "name": "system explicit material callback",
+      "layers": [
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          }
+        },
+        {
+          "provider": "material",
+          "theme": {
+            "$$material": {
+              "stamp": "local",
+              "nested": { "second": 3 },
+              "components": { "Probe": { "defaultProps": { "value": "local" } } }
+            }
+          }
+        },
+        { "provider": "system", "theme": { "operation": "extend" }, "themeId": "$$material" }
+      ],
+      "output": {
+        "system": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "$$material": {
+            "stamp": "callback",
+            "nested": { "second": 3, "third": 4 },
+            "components": { "Probe": { "defaultProps": { "value": "callback" } } }
+          }
+        },
+        "material": {
+          "stamp": "callback",
+          "nested": { "second": 3, "third": 4 },
+          "components": { "Probe": { "defaultProps": { "value": "callback" } } }
+        },
+        "withoutDefault": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          },
+          "$$material": {
+            "stamp": "callback",
+            "nested": { "second": 3, "third": 4 },
+            "components": { "Probe": { "defaultProps": { "value": "callback" } } }
+          }
+        },
+        "defaults": { "value": "callback" },
+        "systemDefaults": { "value": "outer" },
+        "materialDefaults": { "value": "callback" },
+        "rtl": false
+      }
+    },
+    {
+      "name": "nested third-party scope preserves material",
+      "layers": [
+        {
+          "provider": "material",
+          "theme": {
+            "$$material": {
+              "stamp": "outer",
+              "nested": { "first": 1, "second": 2 },
+              "direction": "rtl",
+              "components": {
+                "Probe": { "defaultProps": { "value": "outer" } },
+                "Other": { "defaultProps": { "value": "other" } }
+              }
+            }
+          }
+        },
+        {
+          "provider": "system",
+          "theme": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          },
+          "themeId": "design"
+        }
+      ],
+      "output": {
+        "system": {
+          "$$material": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          },
+          "design": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        },
+        "material": {
+          "stamp": "outer",
+          "nested": { "first": 1, "second": 2 },
+          "direction": "rtl",
+          "components": {
+            "Probe": { "defaultProps": { "value": "outer" } },
+            "Other": { "defaultProps": { "value": "other" } }
+          }
+        },
+        "withoutDefault": {
+          "$$material": {
+            "stamp": "outer",
+            "nested": { "first": 1, "second": 2 },
+            "direction": "rtl",
+            "components": {
+              "Probe": { "defaultProps": { "value": "outer" } },
+              "Other": { "defaultProps": { "value": "other" } }
+            }
+          },
+          "design": {
+            "stamp": "local",
+            "nested": { "second": 3 },
+            "components": { "Probe": { "defaultProps": { "value": "local" } } }
+          }
+        },
+        "defaults": { "value": "local" },
+        "systemDefaults": {},
+        "materialDefaults": { "value": "outer" },
+        "rtl": false
+      }
+    }
+  ]
+}

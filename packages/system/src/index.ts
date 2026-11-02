@@ -23,3 +23,6 @@ export {
   mergeNativeStyles,
 } from './defaultProps';
 export type { DefaultPropsMap, SlotProps } from './defaultProps';
+
+export { default as RtlProvider, useRtl } from './RtlProvider';
+export type { RtlProviderProps } from './RtlProvider';
