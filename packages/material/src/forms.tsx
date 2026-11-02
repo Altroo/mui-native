@@ -6,20 +6,19 @@ import React, {
   forwardRef,
   useEffect,
   useLayoutEffect,
+  useCallback,
+  useMemo,
 } from 'react';
 import {
   View,
-  StyleSheet,
   type ViewInstance,
   type TextInstance,
   type StyleProp,
   type ViewStyle,
-  TextInput,
   Pressable,
   Switch as NativeSwitch,
   type TextInputProps,
   type TextInputInstance,
-  type TextInputChangeEvent,
   type GestureResponderEvent,
 } from 'react-native';
 import {
@@ -33,40 +32,14 @@ import {
 } from '@altroo/mui-native-system';
 import { Box, Stack, Typography, type BoxProps, type TypographyProps } from './layout';
 import { useForkRef } from './utils/refs';
-export function useControlled<T>(
-  controlled: T | undefined,
-  defaultValue: T,
-): [T, (value: T) => void] {
-  const isControlled = useRef(controlled !== undefined).current;
-  const [local, setLocal] = useState(defaultValue);
-  useEffect(() => {
-    if (isControlled !== (controlled !== undefined))
-      console.warn(
-        '[mui-native:controlled] Do not switch between controlled and uncontrolled state.',
-      );
-  }, [controlled, isControlled]);
-  return [
-    isControlled ? (controlled as T) : local,
-    (value) => {
-      if (!isControlled) setLocal(value);
-    },
-  ];
-}
-export type InputChangeEvent = {
-  target: { value: string; name?: string; id?: string };
-  currentTarget: { value: string; name?: string; id?: string };
-  nativeEvent: TextInputChangeEvent['nativeEvent'];
-};
+export { useControlled, useFormControl } from './formState';
+export type { InputChangeEvent } from './formState';
+import { FormContext, useControlled, type FormState, type InputChangeEvent } from './formState';
+import { NativeInputControl } from './inputs';
 export type CheckChangeEvent = {
   target: { checked: boolean; value?: string; name?: string };
   nativeEvent: GestureResponderEvent['nativeEvent'] | null;
 };
-interface FormState {
-  disabled?: boolean;
-  error?: boolean;
-  required?: boolean;
-}
-const FormContext = createContext<FormState>({});
 type LabelActivation = (event: GestureResponderEvent) => void;
 const LabelActivationContext = createContext<React.RefObject<LabelActivation | null> | null>(null);
 function useLabelActivation(activate: LabelActivation) {
@@ -79,18 +52,78 @@ function useLabelActivation(activate: LabelActivation) {
     };
   }, [target, activate]);
 }
-export interface FormControlProps extends BoxProps, FormState {
+export interface FormControlProps
+  extends BoxProps,
+    Omit<
+      FormState,
+      'onFocus' | 'onBlur' | 'onFilled' | 'onEmpty' | 'setAdornedStart' | 'filled' | 'adornedStart'
+    > {
   fullWidth?: boolean;
 }
 export const FormControl: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<FormControlProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, FormControlProps>(function FormControl(inProps, ref) {
-  const { disabled, error, required, fullWidth, children, ...props } = useDefaultProps({
+  const {
+    disabled,
+    error,
+    required,
+    fullWidth,
+    color,
+    size,
+    variant,
+    hiddenLabel,
+    focused: focusedProp,
+    children,
+    ...props
+  } = useDefaultProps({
     props: inProps,
     name: 'MuiFormControl',
   });
+  const [focused, setFocused] = useState(false);
+  const [filled, setFilled] = useState(false);
+  const [adornedStart, setAdornedStart] = useState(false);
+  const onFocus = useCallback(() => setFocused(true), []);
+  const onBlur = useCallback(() => setFocused(false), []);
+  const onFilled = useCallback(() => setFilled(true), []);
+  const onEmpty = useCallback(() => setFilled(false), []);
+  const context = useMemo(
+    () => ({
+      disabled,
+      error,
+      required,
+      color,
+      size,
+      variant,
+      hiddenLabel,
+      focused: !disabled && (focusedProp ?? focused),
+      filled,
+      adornedStart,
+      onFocus,
+      onBlur,
+      onFilled,
+      onEmpty,
+      setAdornedStart,
+    }),
+    [
+      disabled,
+      error,
+      required,
+      color,
+      size,
+      variant,
+      hiddenLabel,
+      focusedProp,
+      focused,
+      filled,
+      adornedStart,
+      onFocus,
+      onBlur,
+      onFilled,
+      onEmpty,
+    ],
+  );
   return (
-    <FormContext.Provider value={{ disabled, error, required }}>
+    <FormContext.Provider value={context}>
       <Box
         {...props}
         ref={ref}
@@ -105,12 +138,21 @@ export const FormLabel: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<TypographyProps> & React.RefAttributes<TextInstance>
 > = forwardRef<TextInstance, TypographyProps>(function FormLabel(inProps, ref) {
   const { children, ...props } = useDefaultProps({ props: inProps, name: 'MuiFormLabel' });
-  const state = useContext(FormContext);
+  const state = useContext(FormContext) ?? {};
   return (
     <Typography
       {...props}
       ref={ref}
-      color={state.error ? 'error.main' : (props.color ?? 'text.secondary')}
+      color={
+        state.error
+          ? 'error.main'
+          : (props.color ??
+            (state.disabled
+              ? 'text.disabled'
+              : state.focused
+                ? `${state.color ?? 'primary'}.main`
+                : 'text.secondary'))
+      }
     >
       {children}
       {state.required ? ' *' : ''}
@@ -127,7 +169,7 @@ export const FormHelperText: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<TypographyProps> & React.RefAttributes<TextInstance>
 > = forwardRef<TextInstance, TypographyProps>(function FormHelperText(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiFormHelperText' });
-  const state = useContext(FormContext);
+  const state = useContext(FormContext) ?? {};
   return (
     <Typography
       {...props}
@@ -148,7 +190,7 @@ type NativeSlot<P> = React.ComponentType<P & { ownerState?: TextFieldOwnerState 
 /** Native input-container contract, distinct from the editable htmlInput host. */
 export interface NativeTextFieldInputProps
   extends Omit<TextInputProps, 'onChange' | 'value' | 'defaultValue' | 'style'>,
-    FormState {
+    Pick<FormState, 'disabled' | 'error' | 'required'> {
   sx?: SxProps;
   style?: StyleProp<ViewStyle>;
   variant?: 'outlined' | 'filled' | 'standard';
@@ -206,118 +248,18 @@ export interface TextFieldProps
 export const NativeTextFieldInput: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<NativeTextFieldInputProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, NativeTextFieldInputProps>(function NativeTextFieldInput(
-  {
-    sx,
-    style,
-    variant = 'outlined',
-    size = 'medium',
-    fullWidth,
-    error: errorProp,
-    disabled: disabledProp,
-    required: _required,
-    value,
-    defaultValue = '',
-    name,
-    id,
-    type = 'text',
-    onChange,
-    onChangeText,
-    inputRef,
-    inputProps = {},
-    slots,
-    ownerState,
-    ...native
-  },
+  { variant = 'outlined', ownerState, slots, testID, ...props },
   ref,
 ) {
-  const form = useContext(FormContext);
-  const error = errorProp ?? form.error ?? false;
-  const disabled = disabledProp ?? form.disabled ?? false;
-  const [text, setText] = useControlled(value, defaultValue);
-  const theme = useTheme();
-  const wrapperStyle = useSx(sx);
-  const { ref: hostRef, ...hostProps } = inputProps;
-  const input = { ...native, ...hostProps };
-  const inputTypography = useSx(
-    { typography: 'body1' },
-    {
-      nativeStyle: StyleSheet.flatten(input.style) ?? undefined,
-    },
-  );
-  const mergedRef = useForkRef(inputRef, hostRef);
-  const [focused, setFocused] = useState(false);
-  const borderColor = error
-    ? theme.palette.error.main
-    : focused
-      ? theme.palette.primary.main
-      : theme.palette.divider;
-  // No lower-level alias may re-enable a disabled or explicitly read-only input.
-  const readOnly =
-    disabled ||
-    native.readOnly === true ||
-    native.editable === false ||
-    hostProps.readOnly === true ||
-    hostProps.editable === false;
-  const Host = slots?.input ?? TextInput;
   return (
-    <View ref={ref} style={[fullWidth ? { alignSelf: 'stretch' } : undefined, wrapperStyle, style]}>
-      <Host
-        {...input}
-        {...(Host !== TextInput ? { ownerState } : {})}
-        ref={mergedRef}
-        nativeID={id ?? input.nativeID}
-        accessibilityState={{ ...input.accessibilityState, disabled }}
-        readOnly={readOnly}
-        editable={!readOnly}
-        value={String(text ?? '')}
-        placeholderTextColor={input.placeholderTextColor ?? theme.palette.text.secondary}
-        selectionColor={input.selectionColor ?? theme.palette.primary.main}
-        keyboardAppearance={input.keyboardAppearance ?? theme.palette.mode}
-        secureTextEntry={type === 'password' || input.secureTextEntry}
-        keyboardType={
-          type === 'email'
-            ? 'email-address'
-            : type === 'number'
-              ? 'decimal-pad'
-              : input.keyboardType
-        }
-        onChange={(event) => {
-          const next = event.nativeEvent.text;
-          setText(next);
-          const target = { value: next, name, id };
-          onChange?.({ target, currentTarget: target, nativeEvent: event.nativeEvent });
-          onChangeText?.(next);
-          hostProps.onChange?.(event);
-          if (hostProps.onChangeText !== onChangeText) hostProps.onChangeText?.(next);
-        }}
-        onChangeText={undefined}
-        onFocus={(event) => {
-          setFocused(true);
-          native.onFocus?.(event);
-          if (hostProps.onFocus !== native.onFocus) hostProps.onFocus?.(event);
-        }}
-        onBlur={(event) => {
-          setFocused(false);
-          native.onBlur?.(event);
-          if (hostProps.onBlur !== native.onBlur) hostProps.onBlur?.(event);
-        }}
-        style={[
-          inputTypography,
-          {
-            color: disabled ? theme.palette.text.disabled : theme.palette.text.primary,
-            paddingHorizontal: variant === 'standard' ? 0 : 14,
-            paddingVertical: size === 'small' ? 10 : 16,
-            minHeight: 44,
-            borderColor,
-            borderRadius: variant === 'outlined' ? theme.shape.borderRadius : 0,
-            borderWidth: variant === 'outlined' ? 1 : 0,
-            borderBottomWidth: variant === 'outlined' ? 1 : focused ? 2 : 1,
-            backgroundColor: variant === 'filled' ? theme.palette.action.hover : 'transparent',
-          },
-          hostProps.style,
-        ]}
-      />
-    </View>
+    <NativeInputControl
+      {...props}
+      ref={ref}
+      variant={variant}
+      ownerStateOverride={ownerState}
+      slots={slots as import('./inputs').InputBaseProps['slots']}
+      inputProps={{ ...props.inputProps, testID: props.inputProps?.testID ?? testID }}
+    />
   );
 });
 
@@ -325,7 +267,7 @@ export const TextField: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<TextFieldProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, TextFieldProps>(function TextField(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiTextField' });
-  const form = useContext(FormContext);
+  const form = useContext(FormContext) ?? {};
   const {
     sx,
     style,
@@ -350,7 +292,8 @@ export const TextField: React.ForwardRefExoticComponent<
     'aria-label': ariaLabel,
     ...native
   } = props;
-  const [focused, setFocused] = useState(false);
+  const [focusedLocal, setFocused] = useState(false);
+  const focused = !disabled && focusedLocal;
   const ownerState = { ...props, variant, size, error, disabled, required, focused };
   const {
     ref: rootSlotRef,
@@ -363,6 +306,9 @@ export const TextField: React.ForwardRefExoticComponent<
     inputRef: inputSlotInputRef,
     ...inputProps
   } = resolveSlotProps(slotProps?.input, ownerState) ?? {};
+  useEffect(() => {
+    if (disabled || inputProps.disabled === true) setFocused(false);
+  }, [disabled, inputProps.disabled]);
   const initialValue = Object.prototype.hasOwnProperty.call(inputProps, 'defaultValue')
     ? (inputProps.defaultValue ?? '')
     : defaultValue;
@@ -707,7 +653,7 @@ export function FormControlLabel(inProps: {
   });
 
   const activate = useRef<LabelActivation | null>(null);
-  const form = useContext(FormContext);
+  const form = useContext(FormContext) ?? {};
   const inactive = disabled ?? control.props.disabled ?? form.disabled;
   const accessibleName =
     control.props['aria-label'] ?? control.props.inputProps?.['aria-label'] ?? labelText(label);

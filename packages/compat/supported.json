@@ -32,7 +32,12 @@
       "LinearProgress",
       "Snackbar",
       "DefaultPropsProvider",
-      "utils"
+      "utils",
+      "InputBase",
+      "Input",
+      "FilledInput",
+      "OutlinedInput",
+      "InputAdornment"
     ]
   },
   "@mui/system": {

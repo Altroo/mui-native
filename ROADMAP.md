@@ -56,7 +56,7 @@ Spacing, breakpoint helpers, native width rules, responsive Stack spacing and Di
 
 Typography theme values and native normalization now have pinned upstream fixtures, component regressions and installed-consumer augmentation checks. See [typography](docs/typography.md). Font availability, native visual/accessibility evidence, arbitrary CSS and remaining utilities are still open.
 
-Default-prop context, deferred slot callbacks and explicit slot composition have pinned reference cases and native consumer checks. See [defaults](docs/default-props.md). TextField now mounts five native slots with composed refs and cleanup. See [native input slots](docs/textfield-slots.md). Other slot contracts, InputBase/Select, nested/scoped theme providers and remaining contracts stay open.
+Default-prop context, deferred slot callbacks and explicit slot composition have pinned reference cases and native consumer checks. See [defaults](docs/default-props.md). TextField now mounts five native slots with composed refs and cleanup. See [native input slots](docs/textfield-slots.md). InputBase and the three input variants now share native state, adornments, row bounds and outline rendering with TextField; see [native inputs](docs/inputs.md). Complete input contracts, Select, floating labels, other slots, nested/scoped providers and remaining contracts stay open.
 
 ## 3. Verified alpha
 

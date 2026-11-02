@@ -31,12 +31,27 @@ try {
       'Installed root/deep imports must share the same context-owning implementation.',
     );
   }
-  for (const name of ['FormControl', 'FormLabel', 'Typography', 'Button'])
+  for (const name of [
+    'FormControl',
+    'FormLabel',
+    'Typography',
+    'Button',
+    'InputBase',
+    'Input',
+    'FilledInput',
+    'OutlinedInput',
+    'InputAdornment',
+  ])
     assert.equal(
       requireConsumer('@altroo/mui-native/' + name).default,
       material[name],
       `Installed ${name} must share its root implementation.`,
     );
+  assert.equal(
+    requireConsumer('@altroo/mui-native/FormControl').useFormControl,
+    material.useFormControl,
+  );
+  assert.equal('NativeInputControl' in requireConsumer('@altroo/mui-native/InputBase'), false);
   const textField = requireConsumer('@altroo/mui-native/TextField');
   const utils = requireConsumer('@altroo/mui-native/utils');
   assert.equal(textField.default, material.TextField);

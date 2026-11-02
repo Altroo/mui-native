@@ -239,6 +239,69 @@
         "Native generic ref types and React 19 callback cleanup returns.",
         "Attachment-local idempotent cleanup, variable-length ref lists, error rollback and complete release after cleanup errors."
       ]
+    },
+    {
+      "localFile": "packages/material/src/inputs.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/InputBase.d.ts": "6bff308e1bf8eb06e0e3c3549791d670dca8b78d8b1740d05481a18ca3031857",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "Input/Input.js": "ddddaf4bd83efb83589288a9a4177a5b25e370b9cb5528a1d9db420598b1a8cf",
+          "Input/Input.d.ts": "02b951baaeb852d84e1af4843c9bc3810aaa3ad30ae795f64ef3f3ee72b79c64",
+          "FilledInput/FilledInput.js": "cc4319b480da637d477ce59dfe040faf150041ae58bc8a1507f4da0115c08834",
+          "FilledInput/FilledInput.d.ts": "a44fee694f72f60d7cfc36cad1a04241fae91e254102963847e1aef9724565f6",
+          "OutlinedInput/OutlinedInput.js": "1395975ba2c625b70cb18b8c8928df3ed100daec434d730cffb8e322e5804598",
+          "OutlinedInput/OutlinedInput.d.ts": "3ee46204d683521bb7186283f4931cb1f028baf5a5d0776de2a9cca4df3e5583",
+          "OutlinedInput/NotchedOutline.js": "684b7660e32e8a913a7e31c7d16786042249b2bac257ab548cb5326683ed45bb",
+          "InputAdornment/InputAdornment.js": "0313fe90134486329be678798164bf7fdc4d0dda233726825c23e83e780f7cb0",
+          "InputAdornment/InputAdornment.d.ts": "68e90b09ebdc70f73bbf7a632837f153a215ec5fa44354061181d706a991a3b6",
+          "FormControl/FormControl.js": "eddfe9ff9afe7b79398b20da84646c7393df663933d3cc36ca68abe6a9b81c6e",
+          "FormControl/useFormControl.js": "6f63288fbc245047600e0c185edf65e2c541150b0cdefcab9963b7f2357f31d5"
+        }
+      },
+      "adaptations": [
+        "Shared native input engine for the base/standard/filled/outlined controls, native adornments and measured outline gaps.",
+        "Native refs/events/styles and content-size row bounds replace DOM inputs, fieldsets, pseudo-elements and textarea measurement.",
+        "TextField retains its documented native host-value guard and native callback order through a private bridge."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/formState.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "FormControl/FormControl.js": "eddfe9ff9afe7b79398b20da84646c7393df663933d3cc36ca68abe6a9b81c6e",
+          "FormControl/useFormControl.js": "6f63288fbc245047600e0c185edf65e2c541150b0cdefcab9963b7f2357f31d5"
+        }
+      },
+      "adaptations": ["Shared native form state and optional useFormControl lookup."]
+    },
+    {
+      "localFile": "packages/material/src/forms.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "FormControl/FormControl.js": "eddfe9ff9afe7b79398b20da84646c7393df663933d3cc36ca68abe6a9b81c6e",
+          "FormControl/useFormControl.js": "6f63288fbc245047600e0c185edf65e2c541150b0cdefcab9963b7f2357f31d5"
+        }
+      },
+      "adaptations": [
+        "Native form state callbacks coordinate focus, filled and adorned-start state with stable provider values."
+      ]
     }
   ]
 }

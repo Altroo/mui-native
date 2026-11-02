@@ -10,7 +10,7 @@ TextField supports `root`, `input`, `htmlInput`, `inputLabel` and `formHelperTex
 | inputLabel     | InputLabel             | TextInstance      | Label text      |
 | formHelperText | FormHelperText         | TextInstance      | Helper text     |
 
-`input` is the component around the editable host. `htmlInput` is the host itself, despite the upstream browser-oriented name. `NativeTextFieldInput` is an explicit native extension for composing a replacement input component; it does not implement the complete InputBase, Input, OutlinedInput or FilledInput APIs. It accepts `inputProps`, `inputRef` and `slots.input`, allowing TextField's editable-host replacement to reach the nested input.
+`input` is the component around the editable host. `htmlInput` is the host itself, despite the upstream browser-oriented name. `NativeTextFieldInput` is a native extension for composing a replacement input component. It shares the [input primitives](inputs.md) engine; the public input components retain their own scoped contracts. It accepts `inputProps`, `inputRef` and `slots.input`, allowing TextField's editable-host replacement to reach the nested input.
 
 ```tsx
 import React, { forwardRef } from 'react';
@@ -55,4 +55,4 @@ The pinned Material UI/Utils 9.5.0 reference covers two structural routing cases
 
 Component regressions cover all five custom components, live callbacks, inherited form flags, controlled/uncontrolled values, event ordering, duplicate handler prevention, style separation, native naming and ref replacement/cleanup. Fresh packed consumer checks compile original root/deep imports and reject browser tags/refs. Structural reference cases are not complete TextField equivalence.
 
-The select slot, complete InputBase/Input variants, floating labels/notches, adornments, browser-only props, complete focus/validation behavior and other component slots remain unfinished. Actual iOS/Android visual geometry, keyboard interaction, screen readers, RTL, font scaling, crash resolution and release performance require separate native validation. This increment does not advance verified upstream support or publish an alpha.
+Public input variants, adornments and a measured outline gap now have scoped implementations described in [native inputs](inputs.md). The select slot, complete input contracts, floating labels, browser-only props, complete focus/validation behavior and other component slots remain unfinished. Actual iOS/Android visual geometry, keyboard interaction, screen readers, RTL, font scaling, crash resolution and release performance require separate native validation. This increment does not advance verified upstream support or publish an alpha.

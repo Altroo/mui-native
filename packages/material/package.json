@@ -179,6 +179,31 @@
       "types": "./dist/utils/index.d.ts",
       "react-native": "./src/utils/index.ts",
       "default": "./dist/utils/index.js"
+    },
+    "./InputBase": {
+      "types": "./dist/InputBase/index.d.ts",
+      "react-native": "./src/InputBase/index.ts",
+      "default": "./dist/InputBase/index.js"
+    },
+    "./Input": {
+      "types": "./dist/Input/index.d.ts",
+      "react-native": "./src/Input/index.ts",
+      "default": "./dist/Input/index.js"
+    },
+    "./FilledInput": {
+      "types": "./dist/FilledInput/index.d.ts",
+      "react-native": "./src/FilledInput/index.ts",
+      "default": "./dist/FilledInput/index.js"
+    },
+    "./OutlinedInput": {
+      "types": "./dist/OutlinedInput/index.d.ts",
+      "react-native": "./src/OutlinedInput/index.ts",
+      "default": "./dist/OutlinedInput/index.js"
+    },
+    "./InputAdornment": {
+      "types": "./dist/InputAdornment/index.d.ts",
+      "react-native": "./src/InputAdornment/index.ts",
+      "default": "./dist/InputAdornment/index.js"
     }
   },
   "dependencies": {
