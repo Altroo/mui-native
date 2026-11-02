@@ -1,6 +1,12 @@
 import reference from './fixtures/mui-inputs-9.5.0.json';
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { View, TextInput, type ViewInstance, type TextInputInstance } from 'react-native';
+import {
+  View,
+  TextInput,
+  I18nManager,
+  type ViewInstance,
+  type TextInputInstance,
+} from 'react-native';
 import { render, screen, fireEvent, act } from '@testing-library/react-native';
 import {
   InputBase,
@@ -86,7 +92,11 @@ test('adornments share one outline and editable hosts remain borderless', () => 
   );
   expect(screen.getByText('$')).toBeTruthy();
   expect(screen.getByText('USD')).toBeTruthy();
-  expect(screen.getByTestId('root')).toHaveStyle({ flexDirection: 'row', paddingHorizontal: 14 });
+  expect(screen.getByTestId('root')).toHaveStyle({
+    flexDirection: 'row',
+    paddingLeft: 14,
+    paddingRight: 14,
+  });
   expect(screen.getByLabelText('Amount')).not.toHaveStyle({ borderWidth: 1 });
 });
 test('FormControl exposes fill/focus state, updates labels and keeps custom hosts isolated', () => {
@@ -443,3 +453,82 @@ test.each(['field', 'slot'] as const)(
     expect(screen.getByLabelText('Delayed').props.selectionColor).toBe('blue');
   },
 );
+
+test('native padding shorthands beat generated edges and multiline bounds include caller insets', () => {
+  const { rerender } = render(
+    <TextField
+      label="Padding"
+      slotProps={{ htmlInput: { style: { paddingVertical: 20, paddingHorizontal: 12 } } }}
+    />,
+  );
+  expect(screen.getByLabelText('Padding')).toHaveStyle({
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 12,
+    paddingRight: 12,
+  });
+  rerender(
+    <TextField
+      label="Padding"
+      multiline
+      rows={2}
+      slotProps={{ htmlInput: { style: { padding: 10, paddingTop: 15 } } }}
+    />,
+  );
+  expect(screen.getByLabelText('Padding')).toHaveStyle({
+    paddingTop: 15,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    minHeight: 73,
+    maxHeight: 73,
+    height: 73,
+  });
+});
+
+test('root padding shorthands override generated adornment edges', () => {
+  const { rerender } = render(
+    <OutlinedInput testID="root-pad" startAdornment="$" style={{ paddingHorizontal: 24 }} />,
+  );
+  expect(screen.getByTestId('root-pad')).toHaveStyle({ paddingLeft: 24, paddingRight: 24 });
+  rerender(
+    <OutlinedInput
+      testID="root-pad"
+      startAdornment="$"
+      style={{ padding: 20 }}
+      slotProps={{ root: { style: { paddingHorizontal: 30, paddingLeft: 35 } } }}
+    />,
+  );
+  expect(screen.getByTestId('root-pad')).toHaveStyle({
+    paddingLeft: 35,
+    paddingRight: 30,
+    paddingTop: 20,
+    paddingBottom: 20,
+  });
+});
+test.each([true, false])('RTL adornment insets respect native left/right swapping: %s', (swap) => {
+  const descriptors = Object.getOwnPropertyDescriptors(I18nManager);
+  Object.defineProperties(I18nManager, {
+    isRTL: { value: true, configurable: true },
+    doLeftAndRightSwapInRTL: { value: swap, configurable: true },
+  });
+  try {
+    const { unmount } = render(
+      <OutlinedInput testID="rtl-root" aria-label="RTL" startAdornment="$" />,
+    );
+    expect(screen.getByTestId('rtl-root')).toHaveStyle({
+      paddingLeft: swap ? 14 : 0,
+      paddingRight: swap ? 0 : 14,
+    });
+    expect(screen.getByLabelText('RTL')).toHaveStyle({
+      paddingLeft: swap ? 0 : 14,
+      paddingRight: swap ? 14 : 0,
+    });
+    unmount();
+  } finally {
+    for (const key of ['isRTL', 'doLeftAndRightSwapInRTL']) {
+      if (descriptors[key]) Object.defineProperty(I18nManager, key, descriptors[key]);
+      else Reflect.deleteProperty(I18nManager, key);
+    }
+  }
+});

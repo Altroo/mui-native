@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "903b6c4b9437477b3817cac30ba9844708bfcfde8c1132edcc6146363138973f",
+  "nativeSourceSha256": "ae5b0d4cb4d1c6828a75ca734f4c317f226c3f546f123b4e3eef09251dfd4657",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -35416,7 +35416,7 @@
           "module": "@altroo/mui-native:src/inputs.tsx",
           "name": "InputBaseOwnerState",
           "kind": "type",
-          "line": 52
+          "line": 53
         }
       ]
     },
@@ -35438,7 +35438,7 @@
           "module": "@altroo/mui-native:src/inputs.tsx",
           "name": "InputRootProps",
           "kind": "type",
-          "line": 48
+          "line": 49
         }
       ]
     },
@@ -35548,7 +35548,7 @@
           "module": "@altroo/mui-native:src/inputs.tsx",
           "name": "NotchedOutlineProps",
           "kind": "type",
-          "line": 110
+          "line": 111
         }
       ]
     },
@@ -66183,7 +66183,7 @@
         {
           "name": "FilledInputProps",
           "file": "src/inputs.tsx",
-          "line": 107,
+          "line": 108,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66273,7 +66273,7 @@
         {
           "name": "FilledInputProps",
           "file": "src/inputs.tsx",
-          "line": 107,
+          "line": 108,
           "package": "@altroo/mui-native"
         }
       ]
@@ -74712,7 +74712,7 @@
         {
           "name": "InputProps",
           "file": "src/inputs.tsx",
-          "line": 104,
+          "line": 105,
           "package": "@altroo/mui-native"
         }
       ]
@@ -74789,7 +74789,7 @@
         {
           "name": "InputProps",
           "file": "src/inputs.tsx",
-          "line": 104,
+          "line": 105,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75262,7 +75262,7 @@
         {
           "name": "InputAdornmentProps",
           "file": "src/inputs.tsx",
-          "line": 611,
+          "line": 644,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75341,7 +75341,7 @@
         {
           "name": "InputAdornmentProps",
           "file": "src/inputs.tsx",
-          "line": 611,
+          "line": 644,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75456,7 +75456,7 @@
         {
           "name": "InputAdornmentProps",
           "file": "src/inputs.tsx",
-          "line": 611,
+          "line": 644,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75535,7 +75535,7 @@
         {
           "name": "InputAdornmentProps",
           "file": "src/inputs.tsx",
-          "line": 611,
+          "line": 644,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75832,7 +75832,7 @@
         {
           "name": "InputBasePropsSizeOverrides",
           "file": "src/inputs.tsx",
-          "line": 29,
+          "line": 30,
           "package": "@altroo/mui-native"
         }
       ]
@@ -75849,7 +75849,7 @@
         {
           "name": "InputBasePropsColorOverrides",
           "file": "src/inputs.tsx",
-          "line": 30,
+          "line": 31,
           "package": "@altroo/mui-native"
         }
       ]
@@ -76485,7 +76485,7 @@
         {
           "name": "InputBaseProps",
           "file": "src/inputs.tsx",
-          "line": 66,
+          "line": 67,
           "package": "@altroo/mui-native"
         }
       ]
@@ -76520,7 +76520,7 @@
         {
           "name": "InputBaseComponentProps",
           "file": "src/inputs.tsx",
-          "line": 49,
+          "line": 50,
           "package": "@altroo/mui-native"
         }
       ]
@@ -76537,7 +76537,7 @@
         {
           "name": "InputBasePropsSizeOverrides",
           "file": "src/inputs.tsx",
-          "line": 29,
+          "line": 30,
           "package": "@altroo/mui-native"
         }
       ]
@@ -76554,7 +76554,7 @@
         {
           "name": "InputBasePropsColorOverrides",
           "file": "src/inputs.tsx",
-          "line": 30,
+          "line": 31,
           "package": "@altroo/mui-native"
         }
       ]
@@ -77190,7 +77190,7 @@
         {
           "name": "InputBaseProps",
           "file": "src/inputs.tsx",
-          "line": 66,
+          "line": 67,
           "package": "@altroo/mui-native"
         }
       ]
@@ -77225,7 +77225,7 @@
         {
           "name": "InputBaseComponentProps",
           "file": "src/inputs.tsx",
-          "line": 49,
+          "line": 50,
           "package": "@altroo/mui-native"
         }
       ]
@@ -89481,7 +89481,7 @@
         {
           "name": "NotchedOutlineProps",
           "file": "src/inputs.tsx",
-          "line": 110,
+          "line": 111,
           "package": "@altroo/mui-native"
         }
       ]
@@ -89582,7 +89582,7 @@
         {
           "name": "NotchedOutlineProps",
           "file": "src/inputs.tsx",
-          "line": 110,
+          "line": 111,
           "package": "@altroo/mui-native"
         }
       ]
@@ -89754,7 +89754,7 @@
         {
           "name": "OutlinedInputProps",
           "file": "src/inputs.tsx",
-          "line": 111,
+          "line": 112,
           "package": "@altroo/mui-native"
         }
       ]
@@ -89926,7 +89926,7 @@
         {
           "name": "OutlinedInputProps",
           "file": "src/inputs.tsx",
-          "line": 111,
+          "line": 112,
           "package": "@altroo/mui-native"
         }
       ]
@@ -177046,7 +177046,7 @@
     {
       "name": "InputBasePropsSizeOverrides",
       "file": "src/inputs.tsx",
-      "line": 29,
+      "line": 30,
       "kind": "type",
       "members": [],
       "references": [],
@@ -177056,7 +177056,7 @@
     {
       "name": "InputBasePropsColorOverrides",
       "file": "src/inputs.tsx",
-      "line": 30,
+      "line": 31,
       "kind": "type",
       "members": [],
       "references": [],
@@ -177066,7 +177066,7 @@
     {
       "name": "OverrideUnion",
       "file": "src/inputs.tsx",
-      "line": 31,
+      "line": 32,
       "kind": "type",
       "members": [],
       "references": [
@@ -177083,7 +177083,7 @@
     {
       "name": "InputSize",
       "file": "src/inputs.tsx",
-      "line": 43,
+      "line": 44,
       "kind": "type",
       "members": [],
       "references": [
@@ -177096,7 +177096,7 @@
     {
       "name": "InputColor",
       "file": "src/inputs.tsx",
-      "line": 44,
+      "line": 45,
       "kind": "type",
       "members": [],
       "references": [
@@ -177109,7 +177109,7 @@
     {
       "name": "InputRootProps",
       "file": "src/inputs.tsx",
-      "line": 48,
+      "line": 49,
       "kind": "type",
       "members": [
         {
@@ -177119,7 +177119,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps",
-          "line": 48,
+          "line": 49,
           "kind": "property",
           "type": "SxProps"
         }
@@ -177136,7 +177136,7 @@
     {
       "name": "InputBaseComponentProps",
       "file": "src/inputs.tsx",
-      "line": 49,
+      "line": 50,
       "kind": "type",
       "members": [
         {
@@ -177146,7 +177146,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 50,
+          "line": 51,
           "kind": "property",
           "type": "SxProps"
         }
@@ -177163,7 +177163,7 @@
     {
       "name": "InputBaseOwnerState",
       "file": "src/inputs.tsx",
-      "line": 52,
+      "line": 53,
       "kind": "type",
       "members": [
         {
@@ -177173,7 +177173,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color: string;",
-          "line": 54,
+          "line": 55,
           "kind": "property",
           "type": "string"
         },
@@ -177184,7 +177184,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size: string;",
-          "line": 55,
+          "line": 56,
           "kind": "property",
           "type": "string"
         },
@@ -177195,7 +177195,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focused: boolean;",
-          "line": 56,
+          "line": 57,
           "kind": "property",
           "type": "boolean"
         },
@@ -177206,7 +177206,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "filled: boolean;",
-          "line": 57,
+          "line": 58,
           "kind": "property",
           "type": "boolean"
         },
@@ -177217,7 +177217,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 58,
+          "line": 59,
           "kind": "property",
           "type": "boolean"
         },
@@ -177228,7 +177228,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "error: boolean;",
-          "line": 59,
+          "line": 60,
           "kind": "property",
           "type": "boolean"
         },
@@ -177239,7 +177239,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "required: boolean;",
-          "line": 60,
+          "line": 61,
           "kind": "property",
           "type": "boolean"
         }
@@ -177254,7 +177254,7 @@
     {
       "name": "RootSlot",
       "file": "src/inputs.tsx",
-      "line": 62,
+      "line": 63,
       "kind": "type",
       "members": [],
       "references": [
@@ -177268,7 +177268,7 @@
     {
       "name": "InputSlot",
       "file": "src/inputs.tsx",
-      "line": 63,
+      "line": 64,
       "kind": "type",
       "members": [],
       "references": [
@@ -177282,7 +177282,7 @@
     {
       "name": "InputBaseProps",
       "file": "src/inputs.tsx",
-      "line": 66,
+      "line": 67,
       "kind": "type",
       "members": [
         {
@@ -177292,7 +177292,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 71,
+          "line": 72,
           "kind": "property",
           "type": "SxProps"
         },
@@ -177303,7 +177303,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<ViewStyle>;",
-          "line": 72,
+          "line": 73,
           "kind": "property",
           "type": "StyleProp<ViewStyle>"
         },
@@ -177314,7 +177314,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: RootSlot;",
-          "line": 73,
+          "line": 74,
           "kind": "property",
           "type": "RootSlot"
         },
@@ -177325,7 +177325,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color?: InputColor;",
-          "line": 74,
+          "line": 75,
           "kind": "property",
           "type": "InputColor"
         },
@@ -177336,7 +177336,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size?: InputSize;",
-          "line": 75,
+          "line": 76,
           "kind": "property",
           "type": "InputSize"
         },
@@ -177347,7 +177347,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean;",
-          "line": 76,
+          "line": 77,
           "kind": "property",
           "type": "boolean"
         },
@@ -177358,7 +177358,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "error?: boolean;",
-          "line": 77,
+          "line": 78,
           "kind": "property",
           "type": "boolean"
         },
@@ -177369,7 +177369,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "required?: boolean;",
-          "line": 78,
+          "line": 79,
           "kind": "property",
           "type": "boolean"
         },
@@ -177380,7 +177380,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullWidth?: boolean;",
-          "line": 79,
+          "line": 80,
           "kind": "property",
           "type": "boolean"
         },
@@ -177391,7 +177391,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "margin?: 'dense' | 'none';",
-          "line": 80,
+          "line": 81,
           "kind": "property",
           "type": "'dense' | 'none'"
         },
@@ -177402,7 +177402,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: string | number;",
-          "line": 81,
+          "line": 82,
           "kind": "property",
           "type": "string | number"
         },
@@ -177413,7 +177413,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultValue?: string | number;",
-          "line": 82,
+          "line": 83,
           "kind": "property",
           "type": "string | number"
         },
@@ -177424,7 +177424,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 83,
+          "line": 84,
           "kind": "property",
           "type": "string"
         },
@@ -177435,7 +177435,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id?: string;",
-          "line": 84,
+          "line": 85,
           "kind": "property",
           "type": "string"
         },
@@ -177446,7 +177446,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "type?: 'text' | 'password' | 'email' | 'number';",
-          "line": 85,
+          "line": 86,
           "kind": "property",
           "type": "'text' | 'password' | 'email' | 'number'"
         },
@@ -177457,7 +177457,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onChange?: (event: InputChangeEvent) => void;",
-          "line": 86,
+          "line": 87,
           "kind": "event",
           "type": "(event: InputChangeEvent) => void"
         },
@@ -177468,7 +177468,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClick?: (event: GestureResponderEvent) => void;",
-          "line": 87,
+          "line": 88,
           "kind": "event",
           "type": "(event: GestureResponderEvent) => void"
         },
@@ -177479,7 +177479,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputRef?: React.Ref<TextInputInstance>;",
-          "line": 88,
+          "line": 89,
           "kind": "property",
           "type": "React.Ref<TextInputInstance>"
         },
@@ -177490,7 +177490,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputProps?: InputBaseComponentProps;",
-          "line": 89,
+          "line": 90,
           "kind": "property",
           "type": "InputBaseComponentProps"
         },
@@ -177501,7 +177501,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputComponent?: InputSlot;",
-          "line": 90,
+          "line": 91,
           "kind": "property",
           "type": "InputSlot"
         },
@@ -177512,7 +177512,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "startAdornment?: React.ReactNode;",
-          "line": 91,
+          "line": 92,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -177523,7 +177523,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "endAdornment?: React.ReactNode;",
-          "line": 92,
+          "line": 93,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -177534,7 +177534,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "renderSuffix?: (state: InputBaseOwnerState) => React.ReactNode;",
-          "line": 93,
+          "line": 94,
           "kind": "property",
           "type": "(state: InputBaseOwnerState) => React.ReactNode"
         },
@@ -177545,7 +177545,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rows?: number | string;",
-          "line": 94,
+          "line": 95,
           "kind": "property",
           "type": "number | string"
         },
@@ -177556,7 +177556,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "minRows?: number | string;",
-          "line": 95,
+          "line": 96,
           "kind": "property",
           "type": "number | string"
         },
@@ -177567,7 +177567,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "maxRows?: number | string;",
-          "line": 96,
+          "line": 97,
           "kind": "property",
           "type": "number | string"
         },
@@ -177578,7 +177578,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-label'?: string;",
-          "line": 97,
+          "line": 98,
           "kind": "property",
           "type": "string"
         },
@@ -177589,7 +177589,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: { root?: RootSlot; input?: InputSlot };",
-          "line": 98,
+          "line": 99,
           "kind": "slot",
           "type": "{ root?: RootSlot; input?: InputSlot }"
         },
@@ -177600,7 +177600,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: RootSlot;",
-          "line": 98,
+          "line": 99,
           "kind": "slot",
           "type": "RootSlot"
         },
@@ -177611,7 +177611,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "input?: InputSlot",
-          "line": 98,
+          "line": 99,
           "kind": "slot",
           "type": "InputSlot"
         },
@@ -177622,7 +177622,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: {\n    root?: InputRootProps;\n    input?: InputBaseComponentProps;\n  };",
-          "line": 99,
+          "line": 100,
           "kind": "slot",
           "type": "{\n    root?: InputRootProps;\n    input?: InputBaseComponentProps;\n  }"
         },
@@ -177633,7 +177633,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: InputRootProps;",
-          "line": 100,
+          "line": 101,
           "kind": "slot",
           "type": "InputRootProps"
         },
@@ -177644,7 +177644,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "input?: InputBaseComponentProps;",
-          "line": 101,
+          "line": 102,
           "kind": "slot",
           "type": "InputBaseComponentProps"
         }
@@ -177674,7 +177674,7 @@
     {
       "name": "InputProps",
       "file": "src/inputs.tsx",
-      "line": 104,
+      "line": 105,
       "kind": "type",
       "members": [
         {
@@ -177684,7 +177684,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableUnderline?: boolean;",
-          "line": 105,
+          "line": 106,
           "kind": "property",
           "type": "boolean"
         }
@@ -177698,7 +177698,7 @@
     {
       "name": "FilledInputProps",
       "file": "src/inputs.tsx",
-      "line": 107,
+      "line": 108,
       "kind": "type",
       "members": [
         {
@@ -177708,7 +177708,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "hiddenLabel?: boolean;",
-          "line": 108,
+          "line": 109,
           "kind": "property",
           "type": "boolean"
         }
@@ -177722,7 +177722,7 @@
     {
       "name": "NotchedOutlineProps",
       "file": "src/inputs.tsx",
-      "line": 110,
+      "line": 111,
       "kind": "type",
       "members": [
         {
@@ -177732,7 +177732,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: React.ReactNode;",
-          "line": 110,
+          "line": 111,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -177743,7 +177743,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notched?: boolean",
-          "line": 110,
+          "line": 111,
           "kind": "property",
           "type": "boolean"
         }
@@ -177758,7 +177758,7 @@
     {
       "name": "OutlinedInputProps",
       "file": "src/inputs.tsx",
-      "line": 111,
+      "line": 112,
       "kind": "type",
       "members": [
         {
@@ -177768,7 +177768,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: React.ReactNode;",
-          "line": 112,
+          "line": 113,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -177779,7 +177779,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notched?: boolean;",
-          "line": 113,
+          "line": 114,
           "kind": "property",
           "type": "boolean"
         },
@@ -177790,7 +177790,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: InputBaseProps['slots'] & {\n    notchedOutline?: React.ComponentType<\n      NotchedOutlineProps & { ownerState?: InputBaseOwnerState }\n    >;\n  };",
-          "line": 114,
+          "line": 115,
           "kind": "slot",
           "type": "InputBaseProps['slots'] & {\n    notchedOutline?: React.ComponentType<\n      NotchedOutlineProps & { ownerState?: InputBaseOwnerState }\n    >;\n  }"
         },
@@ -177801,7 +177801,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notchedOutline?: React.ComponentType<\n      NotchedOutlineProps & { ownerState?: InputBaseOwnerState }\n    >;",
-          "line": 115,
+          "line": 116,
           "kind": "slot",
           "type": "React.ComponentType<\n      NotchedOutlineProps & { ownerState?: InputBaseOwnerState }\n    >"
         },
@@ -177812,7 +177812,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: InputBaseProps['slotProps'] & {\n    notchedOutline?: SlotProps<NotchedOutlineProps, InputBaseOwnerState>;\n  };",
-          "line": 119,
+          "line": 120,
           "kind": "slot",
           "type": "InputBaseProps['slotProps'] & {\n    notchedOutline?: SlotProps<NotchedOutlineProps, InputBaseOwnerState>;\n  }"
         },
@@ -177823,7 +177823,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notchedOutline?: SlotProps<NotchedOutlineProps, InputBaseOwnerState>;",
-          "line": 120,
+          "line": 121,
           "kind": "slot",
           "type": "SlotProps<NotchedOutlineProps, InputBaseOwnerState>"
         }
@@ -177843,7 +177843,7 @@
     {
       "name": "Variant",
       "file": "src/inputs.tsx",
-      "line": 123,
+      "line": 124,
       "kind": "type",
       "members": [],
       "references": [],
@@ -177853,7 +177853,7 @@
     {
       "name": "EngineProps",
       "file": "src/inputs.tsx",
-      "line": 124,
+      "line": 125,
       "kind": "type",
       "members": [
         {
@@ -177863,7 +177863,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableUnderline?: boolean;",
-          "line": 125,
+          "line": 126,
           "kind": "property",
           "type": "boolean"
         },
@@ -177874,7 +177874,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "hiddenLabel?: boolean;",
-          "line": 126,
+          "line": 127,
           "kind": "property",
           "type": "boolean"
         },
@@ -177885,7 +177885,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: React.ReactNode;",
-          "line": 127,
+          "line": 128,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -177896,7 +177896,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notched?: boolean;",
-          "line": 128,
+          "line": 129,
           "kind": "property",
           "type": "boolean"
         },
@@ -177907,7 +177907,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: OutlinedInputProps['slots'];",
-          "line": 129,
+          "line": 130,
           "kind": "slot",
           "type": "OutlinedInputProps['slots']"
         },
@@ -177918,7 +177918,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: OutlinedInputProps['slotProps'];",
-          "line": 130,
+          "line": 131,
           "kind": "slot",
           "type": "OutlinedInputProps['slotProps']"
         }
@@ -177934,7 +177934,7 @@
     {
       "name": "InputAdornmentProps",
       "file": "src/inputs.tsx",
-      "line": 611,
+      "line": 644,
       "kind": "type",
       "members": [
         {
@@ -177944,7 +177944,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 612,
+          "line": 645,
           "kind": "property",
           "type": "SxProps"
         },
@@ -177955,7 +177955,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "position: 'start' | 'end';",
-          "line": 613,
+          "line": 646,
           "kind": "property",
           "type": "'start' | 'end'"
         },
@@ -177966,7 +177966,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disablePointerEvents?: boolean;",
-          "line": 614,
+          "line": 647,
           "kind": "property",
           "type": "boolean"
         },
@@ -177977,7 +177977,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableTypography?: boolean;",
-          "line": 615,
+          "line": 648,
           "kind": "property",
           "type": "boolean"
         },
@@ -177988,7 +177988,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: Exclude<Variant, 'base'>;",
-          "line": 616,
+          "line": 649,
           "kind": "property",
           "type": "Exclude<Variant, 'base'>"
         },
@@ -177999,7 +177999,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>;",
-          "line": 617,
+          "line": 650,
           "kind": "property",
           "type": "React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>"
         }

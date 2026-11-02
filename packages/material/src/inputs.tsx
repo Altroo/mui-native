@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   StyleSheet,
+  I18nManager,
   type ViewProps,
   type ViewInstance,
   type TextInputProps,
@@ -135,6 +136,17 @@ const names = {
   filled: 'MuiFilledInput',
   outlined: 'MuiOutlinedInput',
 };
+function paddingEdges(style: Readonly<Partial<ViewStyle>> | undefined) {
+  const edges: { -readonly [K in keyof ViewStyle]?: ViewStyle[K] } = {};
+  for (const edge of ['Top', 'Right', 'Bottom', 'Left'] as const) {
+    const value =
+      style?.[`padding${edge}`] ??
+      style?.[edge === 'Top' || edge === 'Bottom' ? 'paddingVertical' : 'paddingHorizontal'] ??
+      style?.padding;
+    if (value != null) edges[`padding${edge}`] = value;
+  }
+  return edges;
+}
 function rowCount(value: string | number | undefined, name: string) {
   if (value === undefined) return undefined;
   const number = Number(value);
@@ -393,11 +405,23 @@ function InputEngine({
           : 16;
   const paddingBottom =
     variant === 'filled' && !hiddenLabel ? 8 : variant === 'base' ? 0 : size === 'small' ? 10 : 16;
-  const minHeight = Math.max(44, minimum * lineHeight + paddingTop + paddingBottom);
+  const themedPadding = paddingEdges(typography);
+  const callerPadding = paddingEdges(StyleSheet.flatten(host.style) ?? undefined);
+  const framed = variant === 'outlined' || variant === 'filled';
+  // Native left/right values already swap in RTL when that platform option is enabled.
+  const mapPhysicalSides = I18nManager.isRTL && !I18nManager.doLeftAndRightSwapInRTL;
+  const leftAdornment = mapPhysicalSides ? endAdornment : startAdornment;
+  const rightAdornment = mapPhysicalSides ? startAdornment : endAdornment;
+  const topInset = Number(callerPadding.paddingTop ?? themedPadding.paddingTop ?? paddingTop);
+  const bottomInset = Number(
+    callerPadding.paddingBottom ?? themedPadding.paddingBottom ?? paddingBottom,
+  );
+  const verticalInset =
+    (Number.isFinite(topInset) ? topInset : paddingTop) +
+    (Number.isFinite(bottomInset) ? bottomInset : paddingBottom);
+  const minHeight = Math.max(44, minimum * lineHeight + verticalInset);
   const maxHeight =
-    maximum === undefined
-      ? undefined
-      : Math.max(minHeight, maximum * lineHeight + paddingTop + paddingBottom);
+    maximum === undefined ? undefined : Math.max(minHeight, maximum * lineHeight + verticalInset);
   const height =
     multiline && (fixedRows || contentHeight !== undefined)
       ? Math.min(maxHeight ?? Infinity, Math.max(minHeight, contentHeight ?? minHeight))
@@ -444,16 +468,22 @@ function InputEngine({
           alignItems: 'center',
           minWidth: 0,
           alignSelf: fullWidth ? 'stretch' : undefined,
-          paddingHorizontal: variant === 'outlined' || variant === 'filled' ? 14 : 0,
+          paddingLeft: framed && leftAdornment ? 14 : 0,
+          paddingRight: framed && rightAdornment ? 14 : 0,
           backgroundColor: variant === 'filled' ? theme.palette.action.hover : 'transparent',
           borderTopLeftRadius: variant === 'filled' ? theme.shape.borderRadius : undefined,
           borderTopRightRadius: variant === 'filled' ? theme.shape.borderRadius : undefined,
         },
         baseStyle,
+        paddingEdges(baseStyle),
         variant !== 'base' ? variantStyle : undefined,
+        variant !== 'base' ? paddingEdges(variantStyle) : undefined,
         style,
+        paddingEdges(StyleSheet.flatten(style) ?? undefined),
         rootSx,
+        paddingEdges(rootSx),
         rootProps.style,
+        paddingEdges(StyleSheet.flatten(rootProps.style) ?? undefined),
       ]}
     >
       {content(startAdornment)}
@@ -518,14 +548,17 @@ function InputEngine({
               color: disabled ? theme.palette.text.disabled : theme.palette.text.primary,
               paddingTop,
               paddingBottom,
-              paddingHorizontal: 0,
+              paddingLeft: framed && !leftAdornment ? 14 : 0,
+              paddingRight: framed && !rightAdornment ? 14 : 0,
               minHeight,
               maxHeight,
               height,
               textAlignVertical: multiline ? 'top' : 'center',
             },
             typography,
+            themedPadding,
             host.style,
+            callerPadding,
           ]}
         />
       </FormContext.Provider>
