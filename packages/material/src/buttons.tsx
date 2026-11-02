@@ -27,7 +27,9 @@ export interface ButtonProps extends Omit<PressableProps, 'children' | 'style' |
   fullWidth?: boolean;
   startIcon?: React.ReactNode;
   endIcon?: React.ReactNode;
-  loading?: boolean;
+  loading?: boolean | null;
+  loadingIndicator?: React.ReactNode;
+  loadingPosition?: 'start' | 'end' | 'center';
   disableElevation?: boolean;
   'aria-label'?: string;
 }
@@ -56,7 +58,9 @@ export const Button: React.ForwardRefExoticComponent<
     fullWidth,
     startIcon,
     endIcon,
-    loading = false,
+    loading = null,
+    loadingIndicator,
+    loadingPosition = 'center',
     disabled = false,
     disableElevation,
     style,
@@ -68,24 +72,88 @@ export const Button: React.ForwardRefExoticComponent<
     color === 'inherit'
       ? { main: theme.palette.text.primary, contrastText: theme.palette.background.paper }
       : theme.palette[color];
-  const inactive = disabled || loading;
+  const isLoading = loading === true;
+  const inactive = disabled || isLoading;
+  const hideContent = isLoading && loadingPosition === 'center';
+  const accessibleName =
+    label ??
+    native.accessibilityLabel ??
+    (typeof children === 'string' || typeof children === 'number' ? String(children) : undefined);
   const resolved = useComponentStyle(
     'MuiButton',
-    { ...props, variant, color, size, disabled: inactive },
+    { ...props, variant, color, size, disabled, loading, loadingPosition },
     sx,
-    { states: inactive ? ['disabled'] : [] },
+    { states: [...(inactive ? ['disabled'] : []), ...(isLoading ? ['loading'] : [])] },
   );
   const textStyle = Object.fromEntries(
     Object.entries(resolved).filter(([k]) => textKeys.has(k)),
   ) as TextStyle;
   const viewStyle = Object.fromEntries(Object.entries(resolved).filter(([k]) => !textKeys.has(k)));
+  const foregroundColor = inactive
+    ? theme.palette.action.disabled
+    : variant === 'contained'
+      ? activeColor.contrastText
+      : activeColor.main;
+  const indicator = loadingIndicator ?? (
+    <ActivityIndicator
+      size="small"
+      color={textStyle.color ?? foregroundColor}
+      accessible
+      accessibilityRole="progressbar"
+      accessibilityLabel={accessibleName ?? 'Loading'}
+    />
+  );
+  const renderNode = (node: React.ReactNode) =>
+    typeof node === 'string' || typeof node === 'number' ? (
+      <Text style={[theme.typography.button, { color: foregroundColor }, textStyle]}>{node}</Text>
+    ) : (
+      node
+    );
+  const renderIcon = (icon: React.ReactNode, position: 'start' | 'end') => {
+    const replace = isLoading && loadingPosition === position;
+    const hasIcon = icon != null && typeof icon !== 'boolean' && icon !== '';
+    if (!hasIcon && !replace) return null;
+    return (
+      <View
+        style={{
+          minWidth: 20,
+          minHeight: 20,
+          alignItems: 'center',
+          justifyContent: 'center',
+          opacity: hideContent ? 0 : 1,
+        }}
+      >
+        {hasIcon ? <View style={{ opacity: replace ? 0 : 1 }}>{renderNode(icon)}</View> : null}
+        {replace ? (
+          <View
+            pointerEvents="none"
+            style={
+              hasIcon
+                ? {
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    start: 0,
+                    end: 0,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }
+                : undefined
+            }
+          >
+            {renderNode(indicator)}
+          </View>
+        ) : null}
+      </View>
+    );
+  };
   return (
     <Pressable
       {...native}
       ref={ref}
       accessibilityRole="button"
-      accessibilityLabel={label ?? native.accessibilityLabel}
-      accessibilityState={{ ...native.accessibilityState, disabled: inactive, busy: loading }}
+      accessibilityLabel={accessibleName}
+      accessibilityState={{ ...native.accessibilityState, disabled: inactive, busy: isLoading }}
       disabled={inactive}
       onPress={onPress ?? onClick}
       style={(state) => [
@@ -115,27 +183,38 @@ export const Button: React.ForwardRefExoticComponent<
         typeof style === 'function' ? style(state) : style,
       ]}
     >
-      {startIcon}
-      {loading ? (
-        <ActivityIndicator color={activeColor.contrastText} accessibilityLabel="Loading" />
-      ) : null}
+      {renderIcon(startIcon, 'start')}
       <Text
         style={[
           theme.typography.button,
           {
-            color: inactive
-              ? theme.palette.action.disabled
-              : variant === 'contained'
-                ? activeColor.contrastText
-                : activeColor.main,
+            color: foregroundColor,
             textTransform: 'uppercase',
+            flexShrink: 1,
+            ...(hideContent ? { opacity: 0 } : {}),
           },
           textStyle,
         ]}
       >
         {children}
       </Text>
-      {endIcon}
+      {renderIcon(endIcon, 'end')}
+      {isLoading && loadingPosition === 'center' ? (
+        <View
+          pointerEvents="none"
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            start: 0,
+            end: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {renderNode(indicator)}
+        </View>
+      ) : null}
     </Pressable>
   );
 });

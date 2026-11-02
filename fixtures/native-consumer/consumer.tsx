@@ -19,8 +19,17 @@ const theme = createTheme({ status: { danger: '#f00' } });
 const danger: string = theme.status.danger;
 const content = (
   <ThemeProvider theme={theme}>
-    <Button onClick={(event) => event.nativeEvent.pageX}>Save</Button>
-    <DeepButton ref={React.createRef<ViewInstance>()}>Deep</DeepButton>
+    <Button loading={null} loadingPosition="start" onClick={(event) => event.nativeEvent.pageX}>
+      Save
+    </Button>
+    <DeepButton
+      ref={React.createRef<ViewInstance>()}
+      loading
+      loadingPosition="end"
+      loadingIndicator="Saving"
+    >
+      Deep
+    </DeepButton>
     <TextField
       inputRef={React.createRef<TextInputInstance>()}
       onChange={(event) => event.target.value.toUpperCase()}
@@ -33,6 +42,8 @@ const content = (
     </LocalizationProvider>
   </ThemeProvider>
 );
+// @ts-expect-error Loading positions use the supported MUI names.
+const badLoadingPosition = <Button loadingPosition="left" />;
 // @ts-expect-error Browser element refs are intentionally incompatible.
 const bad = <Button ref={React.createRef<{ innerHTML: string }>()} />;
 // @ts-expect-error Unsupported commercial imports must not resolve.
