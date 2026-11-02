@@ -274,10 +274,16 @@
       "types": "./dist/Popover/index.d.ts",
       "react-native": "./src/Popover/index.ts",
       "default": "./dist/Popover/index.js"
+    },
+    "./ButtonBase": {
+      "types": "./dist/ButtonBase/index.d.ts",
+      "react-native": "./src/ButtonBase/index.ts",
+      "default": "./dist/ButtonBase/index.js"
     }
   },
   "dependencies": {
-    "@altroo/mui-native-system": "workspace:*"
+    "@altroo/mui-native-system": "workspace:*",
+    "@altroo/mui-native-host": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=19.3.0 <20",

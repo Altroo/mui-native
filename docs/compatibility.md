@@ -6,6 +6,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Native ButtonBase activation, disabled/focus coordination, native keyboard event adapters and touch feedback, with a Fabric interaction host. A native development build is required; Expo Go does not contain the host. See [ButtonBase](button-base.md) and [native host](native-host.md) for scope and open gates.
 - Anchored native Popover with window/local coordinate conversion, origin/margin adjustment, default Grow, typed refs/actions and slots. See [Popover](popover.md) for native boundaries and device gates.
 
 - Literal text in native library containers, shared text inheritance, native Text/View boundaries and custom scopes. See [text containers](text-containers.md).

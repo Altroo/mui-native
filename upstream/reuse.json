@@ -957,6 +957,44 @@
       "adaptations": [
         "Pinned placement is coordinated through guarded asynchronous native measurements and actual node/cycle identity; stale results cannot position a reopened or replaced surface."
       ]
+    },
+    {
+      "localFile": "packages/material/src/buttonBase.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/ButtonBase.d.ts": "676950377394922d4412fc2acbcfe68611fc93dcc3829b38dea96162a6994742",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "utils/useFocusableWhenDisabled.js": "54fef8925c39d3e73e88e5b71ed50635c45f5013af4b67159d59074e1eef9bab"
+        }
+      },
+      "adaptations": [
+        "Native ButtonBase adapts pinned non-button activation ordering, disabled focus rules, action focus, theme state and native link ownership. Native ripple/opacity and a Fabric focus/key host replace browser DOM and programmable TouchRipple."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/nativeButtonEvents.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/ButtonBase.d.ts": "676950377394922d4412fc2acbcfe68611fc93dcc3829b38dea96162a6994742",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "utils/useFocusableWhenDisabled.js": "54fef8925c39d3e73e88e5b71ed50635c45f5013af4b67159d59074e1eef9bab"
+        }
+      },
+      "adaptations": [
+        "Native keyboard adapters retain the original non-button click/default-prevention ordering while exposing truthful native key payloads rather than a browser MouseEvent."
+      ]
     }
   ]
 }

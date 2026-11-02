@@ -10,7 +10,7 @@
     "build": "node scripts/build.mjs",
     "typecheck": "tsc --noEmit && tsc --noEmit -p apps/native-catalog/tsconfig.json",
     "test": "jest --runInBand && node --test scripts/inventory/*.test.mjs scripts/upstream/*.test.mjs packages/compat/*.test.cjs",
-    "check": "pnpm typecheck && pnpm test && pnpm coverage:verify && pnpm build",
+    "check": "pnpm typecheck && pnpm test && pnpm coverage:verify && pnpm build && pnpm native-host:codegen",
     "upstream:check": "node scripts/upstream/detect.mjs",
     "upstream:baseline": "node scripts/upstream/baseline.mjs",
     "catalog": "pnpm --filter native-catalog start",
@@ -21,7 +21,8 @@
     "upstream:simulate": "node scripts/upstream/simulate.mjs",
     "coverage:generate": "node scripts/inventory/generate.mjs",
     "coverage:check": "node scripts/inventory/generate.mjs --check",
-    "coverage:verify": "node scripts/inventory/freshness.mjs"
+    "coverage:verify": "node scripts/inventory/freshness.mjs",
+    "native-host:codegen": "node node_modules/react-native/scripts/generate-codegen-artifacts.js --path packages/native-host --outputPath .cache/native-host-codegen --targetPlatform all --source library"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",

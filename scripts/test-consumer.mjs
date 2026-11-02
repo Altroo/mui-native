@@ -1,4 +1,4 @@
-import { mkdir, readFile, readdir, writeFile, cp, rm } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile, cp, rm, access } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
@@ -45,6 +45,33 @@ for (const directory of await readdir('packages')) {
     if (installed !== expected) throw new Error(`${manifest.name}: installed ${notice} differs`);
   }
 }
+// A published native package must retain source/config needed by autolinking and codegen.
+const nativeHost = `${consumer}/node_modules/@altroo/mui-native-host`;
+for (const file of [
+  'react-native.config.js',
+  'AltrooMuiNativeHost.podspec',
+  'src/AltrooMUIInteractiveViewNativeComponent.ts',
+  'android/build.gradle',
+  'android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveViewDelegate.java',
+  'ios/AltrooMUIInteractiveViewComponentView.mm',
+])
+  await access(`${nativeHost}/${file}`);
+for (const directory of ['build', '.cxx', '.gradle']) {
+  try {
+    await access(`${nativeHost}/android/${directory}`);
+  } catch (error) {
+    if (error.code === 'ENOENT') continue;
+    throw error;
+  }
+  throw new Error(`Native host archive includes Android build output: ${directory}`);
+}
+const hostManifest = JSON.parse(await readFile(`${nativeHost}/package.json`, 'utf8'));
+if (
+  hostManifest.codegenConfig.ios.componentProvider.AltrooMUIInteractiveView !==
+  'AltrooMUIInteractiveViewComponentView'
+)
+  throw new Error('Missing native host Fabric registration');
+console.log('Installed native host retains autolinking, codegen and platform sources.');
 await cp('fixtures/native-consumer', consumer, { recursive: true });
 await writeFile(
   `${consumer}/tsconfig.native.json`,

@@ -235,6 +235,9 @@ importers:
       '@altroo/mui-native-compat':
         specifier: workspace:*
         version: link:../../packages/compat
+      '@altroo/mui-native-host':
+        specifier: workspace:*
+        version: link:../../packages/native-host
       '@altroo/mui-native-icons':
         specifier: workspace:*
         version: link:../../packages/icons
@@ -294,9 +297,21 @@ importers:
 
   packages/material:
     dependencies:
+      '@altroo/mui-native-host':
+        specifier: workspace:*
+        version: link:../native-host
       '@altroo/mui-native-system':
         specifier: workspace:*
         version: link:../system
+      react:
+        specifier: '>=19.3.0 <20'
+        version: 19.3.0
+      react-native:
+        specifier: '>=0.88.1 <0.89'
+        version: 0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
+
+  packages/native-host:
+    dependencies:
       react:
         specifier: '>=19.3.0 <20'
         version: 19.3.0

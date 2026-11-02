@@ -8,13 +8,16 @@ pnpm check
 pnpm pack:all
 ```
 
-Install the generated system and material archives together in the consumer. Add the compatibility archive if retaining original imports, and only the X/icon archives you need. X archives depend on the material and system packages, so pass all local archives together to the package manager. Install React 19.3.0 / React Native 0.88.1 peers. Charts/icons also require `react-native-svg` 15.16.0; use `npx expo install react-native-svg` in a matched Expo app. The grid archive carries FlashList, and the date archive carries Day.js.
+Install the generated system, material and native-host archives together in the consumer. Add the compatibility archive if retaining original imports, and only the X/icon archives you need. X archives depend on the material and system packages, so pass all local archives together to the package manager. Install React 19.3.0 / React Native 0.88.1 peers. Charts/icons also require `react-native-svg` 15.16.0; use `npx expo install react-native-svg` in a matched Expo app. The grid archive carries FlashList, and the date archive carries Day.js.
 
 ```sh
 npm install /absolute/path/artifacts/packages/altroo-mui-native-system-0.0.0-dev.0.tgz \
   /absolute/path/artifacts/packages/altroo-mui-native-0.0.0-dev.0.tgz \
+  /absolute/path/artifacts/packages/altroo-mui-native-host-0.0.1-dev.0.tgz \
   /absolute/path/artifacts/packages/altroo-mui-native-compat-0.0.0-dev.0.tgz
 ```
+
+Keep `@altroo/mui-native-host` as a direct native application dependency for autolinking. Rebuild the native application after installing it. Expo Go does not contain the Fabric interaction host required by ButtonBase. Use an Expo development build (`npx expo run:ios` or `npx expo run:android`) or the application's existing bare React Native native build. Existing controls have not all been migrated to the host. See [native host setup and custom roots](native-host.md).
 
 For explicit native imports, use `@altroo/mui-native` and the separate X packages. For shared application source that retains `@mui/...`, configure Metro:
 

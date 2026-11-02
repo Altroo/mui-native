@@ -1,0 +1,58 @@
+{
+  "name": "@altroo/mui-native-host",
+  "version": "0.0.1-dev.0",
+  "description": "Native interaction host for independent MUI compatibility",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Altroo/mui-native.git",
+    "directory": "packages/native-host"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "react-native": "./src/index.tsx",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src",
+    "android",
+    "!android/build",
+    "!android/.cxx",
+    "!android/.gradle",
+    "ios",
+    "AltrooMuiNativeHost.podspec",
+    "react-native.config.js",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "react-native": "./src/index.tsx",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": ">=19.3.0 <20",
+    "react-native": ">=0.88.1 <0.89"
+  },
+  "codegenConfig": {
+    "name": "AltrooMuiNativeHostSpec",
+    "type": "components",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.altroo.muinativehost"
+    },
+    "ios": {
+      "componentProvider": {
+        "AltrooMUIInteractiveView": "AltrooMUIInteractiveViewComponentView"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "private": true
+}

@@ -1,0 +1,12 @@
+apply plugin: "com.android.library"
+apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "com.facebook.react"
+android {
+  namespace "com.altroo.muinativehost"
+  compileSdkVersion rootProject.ext.has("compileSdkVersion") ? rootProject.ext.compileSdkVersion : 37
+  defaultConfig { minSdkVersion rootProject.ext.has("minSdkVersion") ? rootProject.ext.minSdkVersion : 24; targetSdkVersion 37 }
+  sourceSets { main.java.srcDirs += "build/generated/source/codegen/java" }
+}
+repositories { google(); mavenCentral() }
+dependencies { implementation "com.facebook.react:react-android" }
+react { libraryName = "AltrooMuiNativeHostSpec"; codegenJavaPackageName = "com.altroo.muinativehost" }

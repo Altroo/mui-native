@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "name": "react-native",
+  "version": "0.88.1",
+  "description": "Native host integrates public Fabric, View and Pressability contracts. API adapters and Java/Kotlin bridge handling follow installed MIT-licensed React Native source. This is not a runtime compatibility or device-validation claim.",
+  "licenseFile": "upstream/licenses/react-native-0.88.1.txt",
+  "licenseSha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+  "sourceFiles": {
+    "Libraries/Components/Pressable/Pressable.js": "e1dd5bf2717c2d1f993c51252256ff653f0080a8ddb00327c6e5dcd31b03475b",
+    "Libraries/Components/View/View.js": "bd8bd1250762fde59a24e08680071952d938c06ba72e461b9f763a765ab3c61b",
+    "ReactAndroid/src/main/java/com/facebook/react/uimanager/ViewManagerDelegate.kt": "99a7f39d0b79fbafa4db00563c4175a1c6d2ac09e2858acd2bf587f0122dc679",
+    "ReactAndroid/src/main/java/com/facebook/react/views/view/ReactViewManager.kt": "a321720d13d27e2998cfe7309e9903461f67bd7e5424dd4310366ee8e23c005c"
+  },
+  "localFiles": [
+    "packages/native-host/src/NativePressable.tsx",
+    "packages/native-host/src/interactiveView.tsx",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveViewManager.kt",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveViewDelegate.java"
+  ]
+}

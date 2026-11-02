@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "6e8952f5407ca945920a3dcb9dcfd707b19225375a2eba459123860d3ebd9dc0",
+  "nativeSourceSha256": "7bbe5f8bc70f143500e53c18947381e5066e287fc114a1710d770d39704e4770",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -2755,7 +2755,7 @@
           "file": "ButtonBase/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/ButtonBase/TouchRipple",
@@ -10655,7 +10655,7 @@
           "line": 130
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10674,7 +10674,7 @@
           "line": 134
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10750,7 +10750,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10769,7 +10769,7 @@
           "line": 131
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35234,6 +35234,50 @@
       ]
     },
     {
+      "name": "ButtonBaseActivationEvent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/nativeButtonEvents.ts",
+          "name": "ButtonBaseActivationEvent",
+          "kind": "type",
+          "line": 7
+        }
+      ]
+    },
+    {
+      "name": "ButtonBaseKeyEvent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/nativeButtonEvents.ts",
+          "name": "ButtonBaseKeyEvent",
+          "kind": "type",
+          "line": 4
+        }
+      ]
+    },
+    {
+      "name": "ButtonBaseRootProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/buttonBase.tsx",
+          "name": "ButtonBaseRootProps",
+          "kind": "type",
+          "line": 42
+        }
+      ]
+    },
+    {
+      "name": "ButtonBaseState",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/buttonBase.tsx",
+          "name": "ButtonBaseState",
+          "kind": "type",
+          "line": 38
+        }
+      ]
+    },
+    {
       "name": "CheckChangeEvent",
       "origins": [
         {
@@ -50675,7 +50719,7 @@
           "line": 13,
           "kind": "property",
           "type": "React.Ref<ButtonBaseActions> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -50701,7 +50745,7 @@
           "line": 23,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -50727,7 +50771,7 @@
           "line": 32,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -50740,7 +50784,7 @@
           "line": 40,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -50753,7 +50797,7 @@
           "line": 45,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -50766,7 +50810,7 @@
           "line": 50,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -50792,7 +50836,7 @@
           "line": 64,
           "kind": "property",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -50818,7 +50862,7 @@
           "line": 74,
           "kind": "event",
           "type": "React.FocusEventHandler<any> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -50831,7 +50875,7 @@
           "line": 78,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -50903,7 +50947,20 @@
         "TouchRippleProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonBaseOwnProps",
+          "file": "src/buttonBase.tsx",
+          "line": 47,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "ButtonBaseProps",
+          "file": "src/buttonBase.tsx",
+          "line": 71,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonBaseTypeMap",
@@ -51034,7 +51091,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonBaseProps",
+          "file": "src/buttonBase.tsx",
+          "line": 71,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonBaseActions",
@@ -51052,13 +51116,20 @@
           "line": 135,
           "kind": "property",
           "type": "focusVisible(): void;",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonBaseActions",
+          "file": "src/buttonBase.tsx",
+          "line": 35,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonBaseOwnProps",
@@ -51076,7 +51147,7 @@
           "line": 13,
           "kind": "property",
           "type": "React.Ref<ButtonBaseActions> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -51102,7 +51173,7 @@
           "line": 23,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -51128,7 +51199,7 @@
           "line": 32,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -51141,7 +51212,7 @@
           "line": 40,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -51154,7 +51225,7 @@
           "line": 45,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -51167,7 +51238,7 @@
           "line": 50,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -51193,7 +51264,7 @@
           "line": 64,
           "kind": "property",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -51219,7 +51290,7 @@
           "line": 74,
           "kind": "event",
           "type": "React.FocusEventHandler<any> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -51232,7 +51303,7 @@
           "line": 78,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -51304,7 +51375,20 @@
         "TouchRippleProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonBaseOwnProps",
+          "file": "src/buttonBase.tsx",
+          "line": 47,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "ButtonBaseProps",
+          "file": "src/buttonBase.tsx",
+          "line": 71,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonBaseTypeMap",
@@ -51435,7 +51519,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonBaseProps",
+          "file": "src/buttonBase.tsx",
+          "line": 71,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonBaseActions",
@@ -51453,13 +51544,20 @@
           "line": 135,
           "kind": "property",
           "type": "focusVisible(): void;",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonBaseActions",
+          "file": "src/buttonBase.tsx",
+          "line": 35,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "StartActionOptions",
@@ -176662,6 +176760,370 @@
   ],
   "nativeContracts": [
     {
+      "name": "ButtonBaseActions",
+      "file": "src/buttonBase.tsx",
+      "line": 35,
+      "kind": "type",
+      "members": [
+        {
+          "name": "focusVisible",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "focusVisible(): void;",
+          "line": 36,
+          "kind": "property",
+          "type": "focusVisible(): void;"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonBaseState",
+      "file": "src/buttonBase.tsx",
+      "line": 38,
+      "kind": "type",
+      "members": [
+        {
+          "name": "focusVisible",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "focusVisible: boolean;",
+          "line": 39,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disabled",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disabled: boolean;",
+          "line": 40,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "PressableStateCallbackType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonBaseRootProps",
+      "file": "src/buttonBase.tsx",
+      "line": 42,
+      "kind": "type",
+      "members": [
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>;",
+          "line": 43,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        },
+        {
+          "name": "href",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "href?: string;",
+          "line": 44,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "to",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "to?: unknown;",
+          "line": 45,
+          "kind": "property",
+          "type": "unknown"
+        }
+      ],
+      "references": [
+        "PressableProps",
+        "React.Ref",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonBaseOwnProps",
+      "file": "src/buttonBase.tsx",
+      "line": 47,
+      "kind": "type",
+      "members": [
+        {
+          "name": "disabled",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disabled?: boolean;",
+          "line": 48,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>;",
+          "line": 49,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        },
+        {
+          "name": "action",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "action?: React.Ref<ButtonBaseActions>;",
+          "line": 50,
+          "kind": "property",
+          "type": "React.Ref<ButtonBaseActions>"
+        },
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode | ((state: ButtonBaseState) => React.ReactNode);",
+          "line": 51,
+          "kind": "property",
+          "type": "React.ReactNode | ((state: ButtonBaseState) => React.ReactNode)"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps;",
+          "line": 52,
+          "kind": "property",
+          "type": "SxProps"
+        },
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: StyleProp<NativeStyle> | ((state: ButtonBaseState) => StyleProp<NativeStyle>);",
+          "line": 53,
+          "kind": "property",
+          "type": "StyleProp<NativeStyle> | ((state: ButtonBaseState) => StyleProp<NativeStyle>)"
+        },
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: React.ComponentType<ButtonBaseRootProps>;",
+          "line": 54,
+          "kind": "property",
+          "type": "React.ComponentType<ButtonBaseRootProps>"
+        },
+        {
+          "name": "LinkComponent",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "LinkComponent?: React.ComponentType<ButtonBaseRootProps>;",
+          "line": 55,
+          "kind": "property",
+          "type": "React.ComponentType<ButtonBaseRootProps>"
+        },
+        {
+          "name": "href",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "href?: string;",
+          "line": 56,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "to",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "to?: unknown;",
+          "line": 57,
+          "kind": "property",
+          "type": "unknown"
+        },
+        {
+          "name": "onClick",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onClick?: (event: ButtonBaseActivationEvent) => void;",
+          "line": 58,
+          "kind": "event",
+          "type": "(event: ButtonBaseActivationEvent) => void"
+        },
+        {
+          "name": "onPress",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onPress?: (event: ButtonBaseActivationEvent) => void;",
+          "line": 59,
+          "kind": "event",
+          "type": "(event: ButtonBaseActivationEvent) => void"
+        },
+        {
+          "name": "onKeyDown",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onKeyDown?: (event: ButtonBaseKeyEvent) => void;",
+          "line": 60,
+          "kind": "event",
+          "type": "(event: ButtonBaseKeyEvent) => void"
+        },
+        {
+          "name": "onKeyUp",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onKeyUp?: (event: ButtonBaseKeyEvent) => void;",
+          "line": 61,
+          "kind": "event",
+          "type": "(event: ButtonBaseKeyEvent) => void"
+        },
+        {
+          "name": "onFocusVisible",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onFocusVisible?: PressableProps['onFocus'];",
+          "line": 62,
+          "kind": "event",
+          "type": "PressableProps['onFocus']"
+        },
+        {
+          "name": "disableRipple",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableRipple?: boolean;",
+          "line": 63,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableTouchRipple",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableTouchRipple?: boolean;",
+          "line": 64,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "focusRipple",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "focusRipple?: boolean;",
+          "line": 65,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "focusableWhenDisabled",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "focusableWhenDisabled?: boolean;",
+          "line": 67,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "suppressFocusVisible",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "suppressFocusVisible?: boolean;",
+          "line": 69,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "ButtonBaseActions",
+        "ButtonBaseActivationEvent",
+        "ButtonBaseKeyEvent",
+        "ButtonBaseRootProps",
+        "ButtonBaseState",
+        "NativeStyle",
+        "PressableProps",
+        "React.ComponentType",
+        "React.ReactNode",
+        "React.Ref",
+        "StyleProp",
+        "SxProps",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonBaseProps",
+      "file": "src/buttonBase.tsx",
+      "line": 71,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ButtonBaseOwnProps",
+        "Omit",
+        "PressableProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "ButtonProps",
       "file": "src/buttons.tsx",
       "line": 24,
@@ -181388,6 +181850,83 @@
       "members": [],
       "references": [
         "ModalProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeKeyEvent",
+      "file": "src/nativeButtonEvents.ts",
+      "line": 2,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NonNullable",
+        "Parameters",
+        "PressableProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "KeyDetails",
+      "file": "src/nativeButtonEvents.ts",
+      "line": 3,
+      "kind": "type",
+      "members": [
+        {
+          "name": "isCanceled",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "isCanceled?: boolean",
+          "line": 3,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "NativeKeyEvent"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonBaseKeyEvent",
+      "file": "src/nativeButtonEvents.ts",
+      "line": 4,
+      "kind": "type",
+      "members": [
+        {
+          "name": "nativeEvent",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "nativeEvent: KeyDetails;",
+          "line": 5,
+          "kind": "property",
+          "type": "KeyDetails"
+        }
+      ],
+      "references": [
+        "KeyDetails",
+        "NativeKeyEvent",
+        "Omit"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonBaseActivationEvent",
+      "file": "src/nativeButtonEvents.ts",
+      "line": 7,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ButtonBaseKeyEvent",
+        "GestureResponderEvent"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"

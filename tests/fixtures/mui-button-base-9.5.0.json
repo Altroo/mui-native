@@ -1,0 +1,308 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+      "ButtonBase/ButtonBase.d.ts": "676950377394922d4412fc2acbcfe68611fc93dcc3829b38dea96162a6994742",
+      "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+      "utils/useFocusableWhenDisabled.js": "54fef8925c39d3e73e88e5b71ed50635c45f5013af4b67159d59074e1eef9bab"
+    }
+  },
+  "renderer": "react-test-renderer 19.3.0; controlled non-button host, focus matcher and events; no CSS/native input evidence",
+  "fixtures": [
+    {
+      "name": "Enter activates on key down",
+      "actions": [
+        { "kind": "down", "key": "Enter" },
+        { "kind": "up", "key": "Enter" }
+      ],
+      "snapshots": [
+        {
+          "trace": ["down:Enter", "click", "click-prevented:false"],
+          "eventPrevented": true,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        },
+        {
+          "trace": ["down:Enter", "click", "click-prevented:false", "up:Enter"],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "Space activates on key up",
+      "actions": [
+        { "kind": "down", "key": " " },
+        { "kind": "up", "key": " " }
+      ],
+      "snapshots": [
+        {
+          "trace": ["down: "],
+          "eventPrevented": true,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        },
+        {
+          "trace": ["down: ", "up: ", "click", "click-prevented:false"],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "nested keyboard target is not parent activation",
+      "actions": [
+        { "kind": "down", "key": "Enter", "nested": true },
+        { "kind": "up", "key": " ", "nested": true }
+      ],
+      "snapshots": [
+        {
+          "trace": ["down:Enter"],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        },
+        {
+          "trace": ["down:Enter", "up: "],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "canceled Space up does not activate",
+      "cancelUp": true,
+      "actions": [
+        { "kind": "down", "key": " " },
+        { "kind": "up", "key": " " }
+      ],
+      "snapshots": [
+        {
+          "trace": ["down: "],
+          "eventPrevented": true,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        },
+        {
+          "trace": ["down: ", "up: "],
+          "eventPrevented": true,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "canceled Enter down still dispatches click",
+      "cancelDown": true,
+      "actions": [{ "kind": "down", "key": "Enter" }],
+      "snapshots": [
+        {
+          "trace": ["down:Enter", "click", "click-prevented:false"],
+          "eventPrevented": true,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "activation cancellation is separate",
+      "cancelClick": true,
+      "actions": [{ "kind": "down", "key": "Enter" }],
+      "snapshots": [
+        {
+          "trace": ["down:Enter", "click", "click-prevented:true"],
+          "eventPrevented": true,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "ordinary keys only call external handlers",
+      "actions": [
+        { "kind": "down", "key": "a" },
+        { "kind": "up", "key": "a" }
+      ],
+      "snapshots": [
+        {
+          "trace": ["down:a"],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        },
+        {
+          "trace": ["down:a", "up:a"],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "Enter repeat remains activation",
+      "actions": [{ "kind": "down", "key": "Enter", "repeat": true }],
+      "snapshots": [
+        {
+          "trace": ["down:Enter", "click", "click-prevented:false"],
+          "eventPrevented": true,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "disabled drops key and click handlers",
+      "disabled": true,
+      "actions": [
+        { "kind": "down", "key": "Enter" },
+        { "kind": "up", "key": " " },
+        { "kind": "click" }
+      ],
+      "snapshots": [
+        {
+          "trace": [],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": -1
+        },
+        {
+          "trace": [],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": -1
+        },
+        {
+          "trace": ["click-prevented:true"],
+          "eventPrevented": true,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": -1
+        }
+      ]
+    },
+    {
+      "name": "focus callbacks and state",
+      "actions": [
+        { "kind": "focus", "visible": true },
+        { "kind": "blur" },
+        { "kind": "focus", "visible": false }
+      ],
+      "snapshots": [
+        {
+          "trace": ["focus-visible", "focus"],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": true,
+          "tabIndex": 0
+        },
+        {
+          "trace": ["focus-visible", "focus", "blur"],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        },
+        {
+          "trace": ["focus-visible", "focus", "blur", "focus"],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "explicit focus action and cleanup",
+      "actions": [{ "kind": "action" }, { "kind": "blur" }],
+      "snapshots": [
+        { "trace": [], "eventPrevented": false, "focuses": 1, "focusVisible": true, "tabIndex": 0 },
+        {
+          "trace": ["blur"],
+          "eventPrevented": false,
+          "focuses": 1,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    },
+    {
+      "name": "suppressed focus state and callback",
+      "suppressFocusVisible": true,
+      "actions": [{ "kind": "focus", "visible": true }, { "kind": "action" }],
+      "snapshots": [
+        {
+          "trace": ["focus"],
+          "eventPrevented": false,
+          "focuses": 0,
+          "focusVisible": false,
+          "tabIndex": 0
+        },
+        {
+          "trace": ["focus"],
+          "eventPrevented": false,
+          "focuses": 1,
+          "focusVisible": false,
+          "tabIndex": 0
+        }
+      ]
+    }
+  ],
+  "disabledFocus": [
+    {
+      "disabled": false,
+      "allow": false,
+      "tabIndex": 0,
+      "ariaDisabled": null,
+      "keys": [
+        { "key": "Tab", "prevented": false },
+        { "key": "Enter", "prevented": true },
+        { "key": "ArrowDown", "prevented": false }
+      ]
+    },
+    {
+      "disabled": true,
+      "allow": false,
+      "tabIndex": -1,
+      "ariaDisabled": true,
+      "keys": [
+        { "key": "Tab", "prevented": false },
+        { "key": "Enter", "prevented": false },
+        { "key": "ArrowDown", "prevented": false }
+      ]
+    },
+    {
+      "disabled": true,
+      "allow": true,
+      "tabIndex": 0,
+      "ariaDisabled": true,
+      "keys": [
+        { "key": "Tab", "prevented": false },
+        { "key": "Enter", "prevented": true },
+        { "key": "ArrowDown", "prevented": true }
+      ]
+    }
+  ]
+}

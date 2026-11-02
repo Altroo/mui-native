@@ -53,6 +53,7 @@ try {
     'Fade',
     'Grow',
     'Popover',
+    'ButtonBase',
     'Modal',
     'Backdrop',
     'Dialog',

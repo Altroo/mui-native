@@ -13,3 +13,8 @@ apps/*/android/
 !.env.example
 
 .playwright-mcp/
+
+# Native library compiler output.
+packages/native-host/android/build/
+packages/native-host/android/.cxx/
+packages/native-host/android/.gradle/
