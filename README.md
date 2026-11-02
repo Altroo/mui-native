@@ -90,6 +90,8 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Spacing, breakpoints and responsive styles](docs/layout-system.md)
 - [Native Button loading](docs/button.md)
 - [Native form controls and calendar behavior](docs/native-controls.md)
+- [Adaptive grid cards and table mode](docs/adaptive-grid.md)
+- [Performance measurement gates](docs/performance.md)
 - [Validation evidence](docs/validation.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security reporting](SECURITY.md)

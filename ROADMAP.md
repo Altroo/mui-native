@@ -34,11 +34,14 @@ Material UI baseline: 9.5.0. Stable X baseline: 9.15.0. Scheduler: 9.0.0-beta.13
 - [x] Material UI form prototype using original imports through Metro.
 - [x] Native form-label activation/content sizing, input alias guards and localized calendar weekday layout, with isolated regressions and consumer validation. Tracked in [issue #7](https://github.com/Altroo/mui-native/issues/7); device accessibility and full picker contracts remain open.
 - [x] Native grid, rich tree, chart and date prototypes.
+- [x] Optional adaptive native grid cards with a shared data model, explicit table mode and application-composed content. Scoped local checks cover model preservation; native visual, accessibility and performance gates remain open.
 - [ ] Verify packed-package imports, TypeScript augmentation, and web isolation together.
 - [ ] Exercise input composition, focus, keyboard and nested overlay behavior on both platforms.
 - [ ] Measure grid two-axis rendering, editing and row identity under load before scaling the architecture.
 - [ ] Validate date/time editing, locale and timezone behavior against upstream fixtures.
 - [ ] Measure chart hit targets, dense points, labels and accessibility.
+
+Performance is a gate for each family, starting with the alpha foundation. See [the performance contract](docs/performance.md) for workloads, native release-build evidence and the criteria for introducing Rust.
 
 ## 2. Compatibility foundation
 

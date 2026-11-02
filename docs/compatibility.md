@@ -10,6 +10,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 - Button loading positions, custom indicators, disabled presses and native busy state. See [native Button loading](button.md); screen-reader behavior remains unverified.
 - Controlled/uncontrolled form state, value/name change adapters, disabled buttons, native handler precedence, checkbox/radio selection.
 - Native modal backdrop and Android back-request close reasons; snackbar timeout cleanup.
+- Optional native grid cards, automatic switching at 600 dp of container width, explicit table mode and application-composed card content. See [native grid layouts](adaptive-grid.md).
 - Grid identity validation, single-column sorting/filtering, fixed-width columns, page size up to 100, include/exclude selection models. Row recycling uses FlashList. Server-mode inputs remain application-owned.
 - Rich tree expansion and selection, including validation of duplicate IDs in collapsed branches.
 - Bar/line chart numeric values, null gaps, basic categorical labels, item callbacks.

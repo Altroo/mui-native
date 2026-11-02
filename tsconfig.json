@@ -18,7 +18,9 @@
       "@altroo/mui-native-x-tree-view": ["./packages/x-tree-view/src/index.ts"],
       "@altroo/mui-native-x-data-grid": ["./packages/x-data-grid/src/index.ts"],
       "@altroo/mui-native-x-charts": ["./packages/x-charts/src/index.ts"],
-      "@altroo/mui-native-x-date-pickers": ["./packages/x-date-pickers/src/index.ts"]
+      "@altroo/mui-native-x-date-pickers": ["./packages/x-date-pickers/src/index.ts"],
+      "@mui/material": ["./packages/material/src/index.ts"],
+      "@mui/x-data-grid": ["./packages/x-data-grid/src/index.ts"]
     },
     "customConditions": ["react-native"]
   },
