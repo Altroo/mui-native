@@ -1,15 +1,19 @@
 # MUI Native delivery roadmap
 
-Updated: 2026-10-14. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
+Updated: 2026-11-02. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
 
 ## Decisions
 
 - One repository: `Altroo/mui-native`. Separate npm packages in the monorepo.
-- No npm publication before release gates pass.
+- Public source pre-alpha. No npm publication before release gates pass.
 - Independent project and branding. Upstream collaboration does not imply acceptance or endorsement.
 - Material UI plus MIT-licensed MUI X Community only. Exclude Pro/Premium source and paid-only feature parity.
 - Native iOS/Android renderers, original MUI on web. No WebView substitute.
 - Detect and prepare upstream updates twice daily. No automatic merging, support promotion, or publishing.
+
+## Feature completion workflow
+
+Each feature needs appropriate local checks and independent review of hidden bugs, edge cases, design, architecture, performance and library consumers. Fix actionable findings, rerun affected checks and review meaningful fixes again. Record device-only gaps explicitly. Deliver coherent changes with issue and validation links.
 
 ## 0. Repository, provenance, and automation
 

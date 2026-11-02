@@ -6,4 +6,4 @@ Use Node from .nvmrc, pnpm from package.json, then `pnpm install --frozen-lockfi
 
 Preserve MIT notices for reused source and register source commit/path/hash in the provenance manifest. Do not copy commercial code or implement paid-only parity. New dependencies need license review. Keep upstream reference updates separate from claims of native support.
 
-Do not publish packages or change repository visibility before release gates are reviewed. Discuss upstream contributions separately; this repository does not claim MUI affiliation.
+The source is a public pre-alpha. Package publication requires the reviewed release gates in ROADMAP.md. Discuss upstream contributions separately; this repository does not claim MUI affiliation.

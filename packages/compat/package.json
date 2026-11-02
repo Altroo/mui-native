@@ -7,7 +7,8 @@
     "index.cjs",
     "supported.json",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "NOTICE"
   ],
   "exports": {
     ".": "./index.cjs",

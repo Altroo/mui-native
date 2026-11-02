@@ -37,6 +37,14 @@ execFileSync('npm', ['install', '--no-audit', '--no-fund', ...tarballs], {
   cwd: consumer,
   stdio: 'inherit',
 });
+for (const directory of await readdir('packages')) {
+  const manifest = JSON.parse(await readFile(`packages/${directory}/package.json`, 'utf8'));
+  for (const notice of ['LICENSE', 'NOTICE']) {
+    const expected = await readFile(`packages/${directory}/${notice}`, 'utf8');
+    const installed = await readFile(`${consumer}/node_modules/${manifest.name}/${notice}`, 'utf8');
+    if (installed !== expected) throw new Error(`${manifest.name}: installed ${notice} differs`);
+  }
+}
 await cp('fixtures/native-consumer', consumer, { recursive: true });
 await writeFile(
   `${consumer}/tsconfig.native.json`,
@@ -55,5 +63,5 @@ if (
 )
   throw new Error('Browser MUI entered the native installed consumer');
 console.log(
-  'Installed tarballs: root/deep imports, theme augmentation, X types, and native isolation passed.',
+  'Installed tarballs: root/deep imports, theme augmentation, X types, native isolation, and distribution notices passed.',
 );

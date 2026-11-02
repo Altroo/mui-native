@@ -1,19 +1,30 @@
 # MUI Native
 
+[![Validate](https://github.com/Altroo/mui-native/actions/workflows/ci.yml/badge.svg)](https://github.com/Altroo/mui-native/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Independent React Native compatibility for Material UI and MUI X Community, maintained in **one monorepo** by Altroo.
 
-**Status: pre-alpha development. Nothing has been published to npm. This is a partial implementation, not a drop-in replacement for MUI.** The native package versions and upstream compatibility versions are separate.
+**Status: public pre-alpha. Nothing has been published to npm. This is a partial implementation, not a drop-in replacement for MUI.** The native package versions and upstream compatibility versions are separate.
 
 The runtime uses native views on iOS and Android. The optional Metro resolver retains familiar `@mui/...` application imports. Web applications continue using the original MUI packages. This project is not affiliated with, endorsed by, or an official product of MUI.
 
 [ROADMAP.md](ROADMAP.md) records project scope, progress, and next steps.
+
+## What you can explore
+
+- Native Material components with shared theme tokens, supported `sx` styles and familiar root/deep imports.
+- Community Grid, Tree View, Charts and Date Picker prototypes in separate packages.
+- Contract tests, installed-package validation and an upstream release monitor that keeps detected versions separate from verified support.
+
+This is active library development. APIs and behavior can change. Start with the catalog or a disposable consumer; review the [implemented subset and gaps](docs/compatibility.md) before migrating an application.
 
 ## Run the catalog
 
 Use Node 26.11.1 and pnpm 12.16.1. Xcode and an iOS simulator, or Android Studio and an emulator, are required for native development.
 
 ```sh
-git clone git@github.com:Altroo/mui-native.git
+git clone https://github.com/Altroo/mui-native.git
 cd mui-native
 npm install --global pnpm@12.16.1
 pnpm install --frozen-lockfile
