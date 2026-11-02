@@ -1,178 +1,15 @@
-import React, {
-  forwardRef,
-  useInsertionEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import {
-  Animated,
-  StyleSheet,
-  type ViewInstance,
-  type ViewStyle,
-  type GestureResponderEvent,
-} from 'react-native';
+import React, { forwardRef, useInsertionEffect, useRef } from 'react';
+import { StyleSheet, type ViewInstance, type ViewStyle } from 'react-native';
 import { useTheme } from './themeProvider';
 import { useForkRef } from './utils';
 import { useNativeReducedMotion } from './motionPreference';
-import {
-  nativeEasing,
-  nativeMilliseconds,
-  nativeOpacityTiming,
-  stripTiming,
-} from './nativeTransitionTiming';
+import { nativeMilliseconds, nativeOpacityTiming } from './nativeTransitionTiming';
 import NativeTransition from './NativeTransition';
-import type { TransitionProps, TransitionStatus } from './transitions/types';
+import { NativeTransitionSurface } from './NativeTransitionSurface';
+import type { NativeOpacityTiming } from './nativeTransitionTiming';
+import type { TransitionProps } from './transitions/types';
 export interface FadeProps extends Omit<TransitionProps, 'children'> {
   children: React.ReactElement<any>;
-}
-interface Timing {
-  duration: number;
-  delay: number;
-  easing: string;
-}
-const animatedTypes = new WeakMap<object, React.ComponentType<any>>();
-function animatedType(component: any): React.ComponentType<any> {
-  if ((typeof component !== 'function' && typeof component !== 'object') || component === null)
-    throw new Error('[mui-native:transition-child] Fade needs a native ref-forwarding component.');
-  let result = animatedTypes.get(component);
-  if (!result) {
-    result = Animated.createAnimatedComponent(component) as React.ComponentType<any>;
-    animatedTypes.set(component, result);
-  }
-  return result;
-}
-interface SurfaceProps {
-  status: Exclude<TransitionStatus, 'unmounted'>;
-  phase: number;
-  reduce: boolean;
-  inProp: boolean;
-  timing: Timing;
-  child: React.ReactElement<any>;
-  style: TransitionProps['style'];
-  native: Record<string, unknown>;
-  nodeRef: React.Ref<ViewInstance>;
-}
-function FadeSurface({
-  status,
-  phase,
-  reduce,
-  inProp,
-  timing,
-  child,
-  style,
-  native,
-  nodeRef,
-}: SurfaceProps) {
-  const [value] = useState(() => new Animated.Value(status === 'entered' ? 1 : 0));
-  const [running, setRunning] = useState(false);
-  const [pressed, setPressed] = useState(false);
-  const generation = useRef(0),
-    lastPhase = useRef(-1),
-    phaseReduced = useRef(reduce),
-    alive = useRef(false);
-  const driver = useRef<{ animation: Animated.CompositeAnimation; target: number } | undefined>(
-    undefined,
-  );
-  const stop = () => {
-    generation.current++;
-    driver.current?.animation.stop();
-    driver.current = undefined;
-    value.stopAnimation();
-  };
-  useLayoutEffect(() => {
-    alive.current = true;
-    return () => {
-      alive.current = false;
-      stop();
-    };
-  }, [value]);
-  useLayoutEffect(() => {
-    const target = status === 'entering' || status === 'entered' ? 1 : 0;
-    if (status === 'exited') {
-      stop();
-      value.setValue(0);
-      setRunning(false);
-      return;
-    }
-    if (status === 'entered') {
-      if (driver.current?.target !== 1 || reduce) {
-        stop();
-        value.setValue(1);
-        setRunning(false);
-      }
-      return;
-    }
-    if (lastPhase.current !== phase) {
-      lastPhase.current = phase;
-      phaseReduced.current = reduce;
-    } else if (reduce) phaseReduced.current = true;
-    stop();
-    if (phaseReduced.current) {
-      value.setValue(target);
-      setRunning(false);
-      return;
-    }
-    const token = generation.current;
-    setRunning(true);
-    const animation = Animated.timing(value, {
-      toValue: target,
-      duration: timing.duration,
-      delay: timing.delay,
-      easing: nativeEasing(timing.easing),
-      useNativeDriver: true,
-      isInteraction: false,
-    });
-    driver.current = { animation, target };
-    animation.start(({ finished }) => {
-      if (!finished || !alive.current || token !== generation.current) return;
-      driver.current = undefined;
-      value.setValue(target);
-      setRunning(false);
-    });
-  }, [status, phase, reduce, value]);
-  const Component = useMemo(() => animatedType(child.type), [child.type]);
-  const props = { ...child.props, ...native } as Record<string, any>;
-  const customStyle = typeof style === 'function' ? style({ pressed }) : style;
-  const childStyle =
-    typeof child.props.style === 'function' ? child.props.style({ pressed }) : child.props.style;
-  const hidden = status === 'exited' && !inProp;
-  const computed = [
-    {
-      opacity:
-        running || status === 'entering' || status === 'exiting'
-          ? value
-          : status === 'entered'
-            ? 1
-            : 0,
-    },
-    stripTiming(customStyle),
-    childStyle,
-    hidden && { opacity: 0 },
-  ];
-  if (typeof style === 'function' || typeof child.props.style === 'function') {
-    const pressIn = props.onPressIn,
-      pressOut = props.onPressOut;
-    props.onPressIn = (event: GestureResponderEvent) => {
-      setPressed(true);
-      pressIn?.(event);
-    };
-    props.onPressOut = (event: GestureResponderEvent) => {
-      setPressed(false);
-      pressOut?.(event);
-    };
-  }
-  return (
-    <Component
-      {...props}
-      ref={nodeRef}
-      style={computed}
-      pointerEvents={hidden ? 'none' : props.pointerEvents}
-      accessibilityElementsHidden={hidden || props.accessibilityElementsHidden}
-      importantForAccessibility={hidden ? 'no-hide-descendants' : props.importantForAccessibility}
-    />
-  );
 }
 export const Fade: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<FadeProps> & React.RefAttributes<ViewInstance>
@@ -206,7 +43,7 @@ export const Fade: React.ForwardRefExoticComponent<
   const reduced = useNativeReducedMotion(theme.motion?.reducedMotion, disablePrefersReducedMotion);
   const node = useRef<ViewInstance | null>(null);
   const handleRef = useForkRef(node, children.props.ref, ref);
-  const timing = useRef<Timing>({
+  const timing = useRef<NativeOpacityTiming>({
     duration: 0,
     delay: 0,
     easing: theme.transitions.easing.easeInOut,
@@ -273,12 +110,12 @@ export const Fade: React.ForwardRefExoticComponent<
       onExited={() => callExit(current.current.props.onExited)}
     >
       {(status, phase) => (
-        <FadeSurface
+        <NativeTransitionSurface
           status={status}
           phase={phase}
           reduce={reduced}
           inProp={inProp}
-          timing={timing.current}
+          timing={{ opacity: timing.current }}
           child={children}
           style={style}
           native={forwardedNative}

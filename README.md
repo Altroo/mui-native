@@ -96,6 +96,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Nested and scoped theme providers](docs/theme-providers.md)
 - [Native Modal, Backdrop and Dialog coordination](docs/modals.md)
 - [Native Fade, transition timing and reduced motion](docs/transitions.md)
+- [Native Grow and automatic height timing](docs/grow.md)
 - [Text rendering and inheritance in native containers](docs/text-containers.md)
 - [Spacing, breakpoints and responsive styles](docs/layout-system.md)
 - [Native Button loading](docs/button.md)

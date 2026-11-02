@@ -51,6 +51,7 @@ try {
   assert.notEqual(material.useTheme, root.useTheme);
   for (const name of [
     'Fade',
+    'Grow',
     'Modal',
     'Backdrop',
     'Dialog',
@@ -82,6 +83,7 @@ try {
       requireConsumer('@altroo/mui-native/styles/createTransitions')[name],
       root[name],
     );
+  assert.equal(material.Grow.muiSupportAuto, true);
   requireConsumer('@altroo/mui-native/transitions');
   requireConsumer('@altroo/mui-native/transitions/types');
   assert.equal('NativeInputControl' in requireConsumer('@altroo/mui-native/InputBase'), false);

@@ -1,0 +1,1635 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Grow/Grow.js": "5e69e85c92be7f7149642184b63075a365af9a7c3d0183c99c3de8f3c1e63f5e",
+      "Grow/Grow.d.ts": "1eb60b74b1746696676a16bc6d9bb506100cb501af218157c98ecf4561b616dd",
+      "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+      "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+      "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+      "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028"
+    }
+  },
+  "muiSupportAuto": true,
+  "fixtures": [
+    {
+      "name": "default auto enter and exit",
+      "initial": true,
+      "height": 36,
+      "props": {},
+      "actions": [{ "tick": 191 }, { "tick": 1 }, { "open": false }, { "tick": 192 }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001, "delay": 63.93600000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 64ms"
+            }
+          ],
+          "heightReads": 2,
+          "autoHeights": [36, 36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001, "delay": 63.93600000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 64ms"
+            }
+          ],
+          "heightReads": 2,
+          "autoHeights": [36, 36],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "auto height changes at the next phase",
+      "initial": true,
+      "height": 20,
+      "autoScale": true,
+      "props": {},
+      "actions": [
+        { "tick": 10 },
+        { "height": 50 },
+        { "tick": 31 },
+        { "open": false },
+        { "tick": 101 }
+      ],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 41 },
+              "output": "opacity 41ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 27.306 },
+              "output": "transform 27ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [20],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 41 },
+              "output": "opacity 41ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 27.306 },
+              "output": "transform 27ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [20],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 41 },
+              "output": "opacity 41ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 27.306 },
+              "output": "transform 27ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [20],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 41 },
+              "output": "opacity 41ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 27.306 },
+              "output": "transform 27ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [20],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 41 },
+              "output": "opacity 41ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 27.306 },
+              "output": "transform 27ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 101 },
+              "output": "opacity 101ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 67.266, "delay": 33.633 },
+              "output": "transform 67ms cubic-bezier(0.4, 0, 0.2, 1) 34ms"
+            }
+          ],
+          "heightReads": 2,
+          "autoHeights": [20, 50],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 41 },
+              "output": "opacity 41ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 27.306 },
+              "output": "transform 27ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 101 },
+              "output": "opacity 101ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 67.266, "delay": 33.633 },
+              "output": "transform 67ms cubic-bezier(0.4, 0, 0.2, 1) 34ms"
+            }
+          ],
+          "heightReads": 2,
+          "autoHeights": [20, 50],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "appear completion differs from animation timing",
+      "initial": true,
+      "props": { "timeout": { "appear": 10, "enter": 60, "exit": 90 } },
+      "actions": [{ "tick": 9 }, { "tick": 1 }, { "open": false }, { "tick": 90 }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 60 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 60 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 60 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 60 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 90 },
+              "output": "opacity 90ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 59.940000000000005, "delay": 29.970000000000002 },
+              "output": "transform 60ms cubic-bezier(0.4, 0, 0.2, 1) 30ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 60 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 90 },
+              "output": "opacity 90ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 59.940000000000005, "delay": 29.970000000000002 },
+              "output": "transform 60ms cubic-bezier(0.4, 0, 0.2, 1) 30ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "string timing preserves transform duration and zero string delay",
+      "initial": true,
+      "props": {
+        "timeout": 20,
+        "style": { "transitionDuration": "120ms", "transitionDelay": "0ms" }
+      },
+      "actions": [{ "tick": 20 }, { "open": false }, { "tick": 20 }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "opacity 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "transform 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "opacity 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "transform 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "opacity 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "transform 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "opacity 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "transform 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "opacity 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "transform 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "opacity 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": "120ms", "delay": "0ms" },
+              "output": "transform 120ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "numeric zero exit delay uses the transform fallback",
+      "initial": true,
+      "props": { "timeout": 60, "style": { "transitionDelay": 0 } },
+      "actions": [{ "tick": 60 }, { "open": false }, { "tick": 60 }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 60, "delay": 0 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96, "delay": 0 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 60, "delay": 0 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96, "delay": 0 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 60, "delay": 0 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96, "delay": 0 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 60, "delay": 0 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96, "delay": 19.98 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 20ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 60, "delay": 0 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96, "delay": 0 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 60, "delay": 0 },
+              "output": "opacity 60ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 39.96, "delay": 19.98 },
+              "output": "transform 40ms cubic-bezier(0.4, 0, 0.2, 1) 20ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "opacity easing stays default while transform uses phase easing",
+      "initial": true,
+      "props": { "timeout": 30, "easing": { "enter": "linear", "exit": "ease-out" } },
+      "actions": [{ "tick": 30 }, { "open": false }, { "tick": 30 }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 30 },
+              "output": "opacity 30ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 19.98, "easing": "linear" },
+              "output": "transform 20ms linear 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 30 },
+              "output": "opacity 30ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 19.98, "easing": "linear" },
+              "output": "transform 20ms linear 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 30 },
+              "output": "opacity 30ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 19.98, "easing": "linear" },
+              "output": "transform 20ms linear 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 30 },
+              "output": "opacity 30ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 19.98, "delay": 9.99, "easing": "ease-out" },
+              "output": "transform 20ms ease-out 10ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 30 },
+              "output": "opacity 30ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 19.98, "easing": "linear" },
+              "output": "transform 20ms linear 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 30 },
+              "output": "opacity 30ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 19.98, "delay": 9.99, "easing": "ease-out" },
+              "output": "transform 20ms ease-out 10ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "auto ignores style duration but retains style delay and easing",
+      "initial": true,
+      "props": {
+        "style": {
+          "transitionDuration": "500ms",
+          "transitionDelay": "4ms",
+          "transitionTimingFunction": "linear"
+        }
+      },
+      "actions": [{ "tick": 192 }, { "open": false }, { "tick": 192 }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192, "delay": "4ms" },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 4ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001, "delay": "4ms", "easing": "linear" },
+              "output": "transform 128ms linear 4ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192, "delay": "4ms" },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 4ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001, "delay": "4ms", "easing": "linear" },
+              "output": "transform 128ms linear 4ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192, "delay": "4ms" },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 4ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001, "delay": "4ms", "easing": "linear" },
+              "output": "transform 128ms linear 4ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 192, "delay": "4ms" },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 4ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001, "delay": "4ms", "easing": "linear" },
+              "output": "transform 128ms linear 4ms"
+            }
+          ],
+          "heightReads": 2,
+          "autoHeights": [36, 36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192, "delay": "4ms" },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 4ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001, "delay": "4ms", "easing": "linear" },
+              "output": "transform 128ms linear 4ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 192, "delay": "4ms" },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 4ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001, "delay": "4ms", "easing": "linear" },
+              "output": "transform 128ms linear 4ms"
+            }
+          ],
+          "heightReads": 2,
+          "autoHeights": [36, 36],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "interrupted listener cycles reject old completions",
+      "initial": true,
+      "listener": true,
+      "props": { "timeout": 50 },
+      "actions": [
+        { "done": 0 },
+        { "open": false },
+        { "open": true },
+        { "done": 1 },
+        { "done": 2 },
+        { "tick": 100 }
+      ],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004, "delay": 16.650000000000002 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 17ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "entered:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false"
+          ],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004, "delay": 16.650000000000002 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 17ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "entered:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false"
+          ],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004, "delay": 16.650000000000002 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 17ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "entered:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false",
+            "entered:false"
+          ],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004, "delay": 16.650000000000002 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 17ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "entered:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false",
+            "entered:false"
+          ],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004, "delay": 16.650000000000002 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 17ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 50 },
+              "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 33.300000000000004 },
+              "output": "transform 33ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "name": "mount/unmount with zero auto height",
+      "initial": false,
+      "height": 0,
+      "props": { "mountOnEnter": true, "unmountOnExit": true },
+      "actions": [{ "open": true }, { "tick": 0 }, { "open": false }, { "tick": 0 }],
+      "snapshots": [
+        {
+          "trace": [],
+          "factoryCalls": [],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": false,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:false", "entering:false"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 0 },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0 },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [0],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 0 },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0 },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [0],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 0 },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0 },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 0 },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0, "delay": 0 },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 2,
+          "autoHeights": [0, 0],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 0 },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0 },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 0 },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0, "delay": 0 },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 2,
+          "autoHeights": [0, 0],
+          "mounted": false,
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "name": "disabled later phases retain initial appear",
+      "initial": true,
+      "props": { "enter": false, "exit": false, "timeout": 5 },
+      "actions": [{ "tick": 5 }, { "open": false }, { "open": true }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 5 },
+              "output": "opacity 5ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 3.33 },
+              "output": "transform 3ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 5 },
+              "output": "opacity 5ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 3.33 },
+              "output": "transform 3ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 5 },
+              "output": "opacity 5ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 3.33 },
+              "output": "transform 3ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": true
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exited", "entered:false"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 5 },
+              "output": "opacity 5ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 3.33 },
+              "output": "transform 3ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "name": "reduced motion skips geometry and auto duration",
+      "initial": true,
+      "reduced": true,
+      "props": {},
+      "actions": [{ "tick": 0 }, { "open": false }, { "tick": 0 }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 0, "delay": "0ms" },
+              "output": "transform 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 0,
+          "autoHeights": [],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "component motion opt-out restores auto timing",
+      "initial": true,
+      "reduced": true,
+      "props": { "disablePrefersReducedMotion": true },
+      "actions": [{ "tick": 192 }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "name": "custom factory controls native timing but not auto deadline",
+      "initial": true,
+      "customFactory": true,
+      "props": {},
+      "actions": [{ "tick": 191 }, { "tick": 1 }, { "open": false }, { "tick": 192 }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 7ms linear 2ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 11ms linear 3ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 7ms linear 2ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 11ms linear 3ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 7ms linear 2ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 11ms linear 3ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 7ms linear 2ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 11ms linear 3ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 7ms linear 2ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001, "delay": 63.93600000000001 },
+              "output": "transform 11ms linear 3ms"
+            }
+          ],
+          "heightReads": 2,
+          "autoHeights": [36, 36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 7ms linear 2ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 11ms linear 3ms"
+            },
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 7ms linear 2ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001, "delay": 63.93600000000001 },
+              "output": "transform 11ms linear 3ms"
+            }
+          ],
+          "heightReads": 2,
+          "autoHeights": [36, 36],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "Grow ignores component defaults like pinned source",
+      "initial": true,
+      "themeDefaults": true,
+      "props": {},
+      "actions": [{ "tick": 192 }],
+      "snapshots": [
+        {
+          "trace": ["enter:true", "entering:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "factoryCalls": [
+            {
+              "property": "opacity",
+              "options": { "duration": 192 },
+              "output": "opacity 192ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            },
+            {
+              "property": "transform",
+              "options": { "duration": 127.87200000000001 },
+              "output": "transform 128ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+            }
+          ],
+          "heightReads": 1,
+          "autoHeights": [36],
+          "mounted": true,
+          "hidden": false
+        }
+      ]
+    }
+  ]
+}

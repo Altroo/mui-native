@@ -264,6 +264,11 @@
       "types": "./dist/transitions/types/index.d.ts",
       "react-native": "./src/transitions/types/index.ts",
       "default": "./dist/transitions/types/index.js"
+    },
+    "./Grow": {
+      "types": "./dist/Grow/index.d.ts",
+      "react-native": "./src/Grow/index.ts",
+      "default": "./dist/Grow/index.js"
     }
   },
   "dependencies": {

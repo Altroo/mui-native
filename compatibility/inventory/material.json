@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "99946853dfb5c54d2a2e426fc40aacbe14526a6272643f4117699aac867ab2ac",
+  "nativeSourceSha256": "b1f4414de1d96e545a967552615466f23510b501bb56001489344850e7220f5c",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -3925,7 +3925,7 @@
           "file": "Grow/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/Icon",
@@ -19357,7 +19357,7 @@
           "line": 62
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -19376,7 +19376,7 @@
           "line": 3
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -66479,7 +66479,7 @@
         {
           "name": "FadeProps",
           "file": "src/fade.tsx",
-          "line": 27,
+          "line": 11,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66606,7 +66606,7 @@
         {
           "name": "FadeProps",
           "file": "src/fade.tsx",
-          "line": 27,
+          "line": 11,
           "package": "@altroo/mui-native"
         }
       ]
@@ -71681,7 +71681,7 @@
           "line": 22,
           "kind": "property",
           "type": "React.ReactElement<unknown, any>",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -71733,7 +71733,7 @@
           "line": 37,
           "kind": "property",
           "type": "React.Ref<unknown> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -71746,7 +71746,7 @@
           "line": 45,
           "kind": "property",
           "type": "TransitionProps['timeout'] | 'auto' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -71757,7 +71757,14 @@
         "TransitionProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "GrowProps",
+          "file": "src/grow.tsx",
+          "line": 16,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "GrowProps",
@@ -71801,7 +71808,7 @@
           "line": 22,
           "kind": "property",
           "type": "React.ReactElement<unknown, any>",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -71853,7 +71860,7 @@
           "line": 37,
           "kind": "property",
           "type": "React.Ref<unknown> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -71866,7 +71873,7 @@
           "line": 45,
           "kind": "property",
           "type": "TransitionProps['timeout'] | 'auto' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -71877,7 +71884,14 @@
         "TransitionProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "GrowProps",
+          "file": "src/grow.tsx",
+          "line": 16,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconPropsSizeOverrides",
@@ -177028,7 +177042,7 @@
     {
       "name": "FadeProps",
       "file": "src/fade.tsx",
-      "line": 27,
+      "line": 11,
       "kind": "type",
       "members": [
         {
@@ -177038,7 +177052,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: React.ReactElement<any>;",
-          "line": 28,
+          "line": 12,
           "kind": "property",
           "type": "React.ReactElement<any>"
         }
@@ -177047,169 +177061,6 @@
         "Omit",
         "React.ReactElement",
         "TransitionProps"
-      ],
-      "inheritanceResolved": false,
-      "package": "@altroo/mui-native"
-    },
-    {
-      "name": "Timing",
-      "file": "src/fade.tsx",
-      "line": 30,
-      "kind": "type",
-      "members": [
-        {
-          "name": "duration",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "duration: number;",
-          "line": 31,
-          "kind": "property",
-          "type": "number"
-        },
-        {
-          "name": "delay",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "delay: number;",
-          "line": 32,
-          "kind": "property",
-          "type": "number"
-        },
-        {
-          "name": "easing",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "easing: string;",
-          "line": 33,
-          "kind": "property",
-          "type": "string"
-        }
-      ],
-      "references": [],
-      "inheritanceResolved": false,
-      "package": "@altroo/mui-native"
-    },
-    {
-      "name": "SurfaceProps",
-      "file": "src/fade.tsx",
-      "line": 46,
-      "kind": "type",
-      "members": [
-        {
-          "name": "status",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "status: Exclude<TransitionStatus, 'unmounted'>;",
-          "line": 47,
-          "kind": "property",
-          "type": "Exclude<TransitionStatus, 'unmounted'>"
-        },
-        {
-          "name": "phase",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "phase: number;",
-          "line": 48,
-          "kind": "property",
-          "type": "number"
-        },
-        {
-          "name": "reduce",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "reduce: boolean;",
-          "line": 49,
-          "kind": "property",
-          "type": "boolean"
-        },
-        {
-          "name": "inProp",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "inProp: boolean;",
-          "line": 50,
-          "kind": "property",
-          "type": "boolean"
-        },
-        {
-          "name": "timing",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "timing: Timing;",
-          "line": 51,
-          "kind": "property",
-          "type": "Timing"
-        },
-        {
-          "name": "child",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "child: React.ReactElement<any>;",
-          "line": 52,
-          "kind": "property",
-          "type": "React.ReactElement<any>"
-        },
-        {
-          "name": "style",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "style: TransitionProps['style'];",
-          "line": 53,
-          "kind": "property",
-          "type": "TransitionProps['style']"
-        },
-        {
-          "name": "native",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "native: Record<string, unknown>;",
-          "line": 54,
-          "kind": "property",
-          "type": "Record<string, unknown>"
-        },
-        {
-          "name": "nodeRef",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "nodeRef: React.Ref<ViewInstance>;",
-          "line": 55,
-          "kind": "property",
-          "type": "React.Ref<ViewInstance>"
-        }
-      ],
-      "references": [
-        "Exclude",
-        "React.ReactElement",
-        "React.Ref",
-        "Record",
-        "Timing",
-        "TransitionProps",
-        "TransitionStatus",
-        "ViewInstance"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -178868,6 +178719,56 @@
         "NativeFieldDescription",
         "NativeHelperRegistration",
         "ReadonlyArray"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "GrowProps",
+      "file": "src/grow.tsx",
+      "line": 16,
+      "kind": "type",
+      "members": [
+        {
+          "name": "children",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children: React.ReactElement<any>;",
+          "line": 17,
+          "kind": "property",
+          "type": "React.ReactElement<any>"
+        },
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>;",
+          "line": 18,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        },
+        {
+          "name": "timeout",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "timeout?: TransitionProps['timeout'] | 'auto';",
+          "line": 19,
+          "kind": "property",
+          "type": "TransitionProps['timeout'] | 'auto'"
+        }
+      ],
+      "references": [
+        "Omit",
+        "React.ReactElement",
+        "React.Ref",
+        "TransitionProps",
+        "ViewInstance"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -181444,13 +181345,24 @@
           "type": "TransitionProps['timeout']"
         },
         {
+          "name": "getAutoTimeout",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "getAutoTimeout?: () => number | null | undefined;",
+          "line": 11,
+          "kind": "property",
+          "type": "() => number | null | undefined"
+        },
+        {
           "name": "nodeRef",
           "optional": false,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nodeRef: React.RefObject<ViewInstance | null>;",
-          "line": 11,
+          "line": 12,
           "kind": "property",
           "type": "React.RefObject<ViewInstance | null>"
         },
@@ -181461,7 +181373,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "reduceMotion: boolean;",
-          "line": 12,
+          "line": 13,
           "kind": "property",
           "type": "boolean"
         },
@@ -181472,7 +181384,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "addEndListener?: (node: ViewInstance, done: () => void) => void;",
-          "line": 13,
+          "line": 14,
           "kind": "property",
           "type": "(node: ViewInstance, done: () => void) => void"
         },
@@ -181483,7 +181395,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEnter?: (appearing: boolean) => void;",
-          "line": 14,
+          "line": 15,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -181494,7 +181406,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEntering?: (appearing: boolean) => void;",
-          "line": 15,
+          "line": 16,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -181505,7 +181417,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEntered?: (appearing: boolean) => void;",
-          "line": 16,
+          "line": 17,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -181516,7 +181428,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExit?: () => void;",
-          "line": 17,
+          "line": 18,
           "kind": "event",
           "type": "() => void"
         },
@@ -181527,7 +181439,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExiting?: () => void;",
-          "line": 18,
+          "line": 19,
           "kind": "event",
           "type": "() => void"
         },
@@ -181538,7 +181450,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExited?: () => void;",
-          "line": 19,
+          "line": 20,
           "kind": "event",
           "type": "() => void"
         },
@@ -181549,7 +181461,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: (status: Exclude<TransitionStatus, 'unmounted'>, phase: number) => React.ReactNode;",
-          "line": 20,
+          "line": 21,
           "kind": "property",
           "type": "(status: Exclude<TransitionStatus, 'unmounted'>, phase: number) => React.ReactNode"
         }
@@ -181559,6 +181471,160 @@
         "React.ReactNode",
         "React.RefObject",
         "TransitionActions",
+        "TransitionProps",
+        "TransitionStatus",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeTransitionTiming",
+      "file": "src/NativeTransitionSurface.tsx",
+      "line": 5,
+      "kind": "type",
+      "members": [
+        {
+          "name": "opacity",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "opacity: NativeOpacityTiming;",
+          "line": 6,
+          "kind": "property",
+          "type": "NativeOpacityTiming"
+        },
+        {
+          "name": "transform",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "transform?: NativeOpacityTiming;",
+          "line": 7,
+          "kind": "property",
+          "type": "NativeOpacityTiming"
+        }
+      ],
+      "references": [
+        "NativeOpacityTiming"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SurfaceProps",
+      "file": "src/NativeTransitionSurface.tsx",
+      "line": 22,
+      "kind": "type",
+      "members": [
+        {
+          "name": "status",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "status: Exclude<TransitionStatus, 'unmounted'>;",
+          "line": 23,
+          "kind": "property",
+          "type": "Exclude<TransitionStatus, 'unmounted'>"
+        },
+        {
+          "name": "phase",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "phase: number;",
+          "line": 24,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "reduce",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "reduce: boolean;",
+          "line": 25,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "inProp",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "inProp: boolean;",
+          "line": 26,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "timing",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "timing: NativeTransitionTiming;",
+          "line": 27,
+          "kind": "property",
+          "type": "NativeTransitionTiming"
+        },
+        {
+          "name": "child",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "child: React.ReactElement<any>;",
+          "line": 28,
+          "kind": "property",
+          "type": "React.ReactElement<any>"
+        },
+        {
+          "name": "style",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style: TransitionProps['style'];",
+          "line": 29,
+          "kind": "property",
+          "type": "TransitionProps['style']"
+        },
+        {
+          "name": "native",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "native: Record<string, unknown>;",
+          "line": 30,
+          "kind": "property",
+          "type": "Record<string, unknown>"
+        },
+        {
+          "name": "nodeRef",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "nodeRef: React.Ref<ViewInstance>;",
+          "line": 31,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        }
+      ],
+      "references": [
+        "Exclude",
+        "NativeTransitionTiming",
+        "React.ReactElement",
+        "React.Ref",
+        "Record",
         "TransitionProps",
         "TransitionStatus",
         "ViewInstance"

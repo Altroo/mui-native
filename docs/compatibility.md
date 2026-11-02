@@ -8,7 +8,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 - Literal text in native library containers, shared text inheritance, native Text/View boundaries and custom scopes. See [text containers](text-containers.md).
 
-- Native Fade, theme transitions/motion helpers and Dialog/Backdrop transition slots with native-driver opacity, lifecycle and reduced-motion checks. See [transitions](transitions.md).
+- Native Fade/Grow, measured automatic height timing, theme transitions/motion helpers and Dialog/Backdrop transition slots with native-driver opacity, lifecycle and reduced-motion checks. See [transitions](transitions.md) and [Grow](grow.md).
 - Reusable Modal/Backdrop, top-layer dismissal, guarded native focus work, custom transition lifecycle wiring and Dialog slots/root routing. See [native modals](modals.md).
 
 - Shallow nested themes, callback replacement, System scopes, Material THEME_ID selection, shared original imports and RTL context. See [theme providers](theme-providers.md).

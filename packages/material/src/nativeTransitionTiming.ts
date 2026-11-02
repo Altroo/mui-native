@@ -84,24 +84,25 @@ export interface NativeOpacityTiming {
   delay: number;
   easing: string;
 }
-// Only the opacity/all clause is meaningful to a native Fade. Preserve the
-// theme factory's timing overrides without claiming a general CSS engine.
-export function nativeOpacityTiming(
+// Translate only the owned opacity/transform or all clause. Preserve theme
+// factory timing overrides without claiming a general CSS engine.
+export function nativePropertyTiming(
   declaration: string,
   fallback: NativeOpacityTiming,
+  property: 'opacity' | 'transform',
 ): NativeOpacityTiming {
   if (declaration.trim() === 'none') return { duration: 0, delay: 0, easing: 'linear' };
   const clauses = declaration.split(/,(?![^()]*\))/);
   const clause =
-    clauses.find((value) => /^\s*opacity(?:\s|$)/.test(value)) ??
+    clauses.find((value) => new RegExp('^\\s*' + property + '(?:\\s|$)').test(value)) ??
     clauses.find((value) => /^\s*all(?:\s|$)/.test(value));
   const match = clause
     ?.trim()
     .match(
-      /^(?:opacity|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
+      /^(?:opacity|transform|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
     );
   if (!match) {
-    diagnostic('transition-create', `Unsupported native opacity transition: ${declaration}`);
+    diagnostic('transition-create', `Unsupported native ${property} transition: ${declaration}`);
     return fallback;
   }
   return {
@@ -110,3 +111,6 @@ export function nativeOpacityTiming(
     delay: nativeMilliseconds(match[3]),
   };
 }
+
+export const nativeOpacityTiming = (declaration: string, fallback: NativeOpacityTiming) =>
+  nativePropertyTiming(declaration, fallback, 'opacity');

@@ -838,6 +838,69 @@
       "adaptations": [
         "Native window text scopes reset to native root defaults while inline overlays inherit their parent; backdrop content shares native text handling without changing root refs or dismissal wiring."
       ]
+    },
+    {
+      "localFile": "packages/material/src/grow.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Grow/Grow.js": "5e69e85c92be7f7149642184b63075a365af9a7c3d0183c99c3de8f3c1e63f5e",
+          "Grow/Grow.d.ts": "1eb60b74b1746696676a16bc6d9bb506100cb501af218157c98ecf4561b616dd",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028"
+        }
+      },
+      "adaptations": [
+        "Grow height-based duration, split opacity/transform factory arguments, completion semantics and public auto marker follow the pinned MIT implementation. Native public clientHeight and node-keyed layout fallback replace DOM measurements."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/NativeTransitionSurface.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Grow/Grow.js": "5e69e85c92be7f7149642184b63075a365af9a7c3d0183c99c3de8f3c1e63f5e",
+          "Grow/Grow.d.ts": "1eb60b74b1746696676a16bc6d9bb506100cb501af218157c98ecf4561b616dd",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028"
+        }
+      },
+      "adaptations": [
+        "A shared native-driver opacity/scale surface adapts selected Fade/Grow states without a native wrapper. Current cancellation settles the owned values; stale generations are ignored. Native child keys, refs, style ordering and reduced motion are preserved."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/NativeTransition.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Grow/Grow.js": "5e69e85c92be7f7149642184b63075a365af9a7c3d0183c99c3de8f3c1e63f5e",
+          "Grow/Grow.d.ts": "1eb60b74b1746696676a16bc6d9bb506100cb501af218157c98ecf4561b616dd",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028"
+        }
+      },
+      "adaptations": [
+        "Private auto-duration getter support follows the pinned transition completion contract while retaining native timer/listener cancellation and callback ordering."
+      ]
     }
   ]
 }

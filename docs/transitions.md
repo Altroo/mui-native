@@ -1,4 +1,4 @@
-# Native Fade and transition timing
+# Native Fade, Grow and transition timing
 
 Fade renders one ref-forwarding native child and animates its opacity with React Native Animated's native driver. It adds no native wrapper. Original root/deep imports work through the opt-in native resolver; web keeps original MUI.
 
@@ -51,6 +51,6 @@ Dialog's native window animation now defaults to 'none' because its content and 
 
 Run node scripts/reference/transitions.mjs --check after the [isolated reference setup](theming.md), with react-test-renderer@19.3.0 installed only in that ignored reference cache. The script verifies the pinned tarball, selected source bytes and license before executing four theme, three helper, four motion and ten original Fade lifecycle cases. Original lifecycle cases use a mock host ref and timer clock; they do not execute browser layout or CSS. Native tests compare those traces and add native-driver configuration, interruption cleanup, StrictMode, refs, reduced-motion subscriptions, slot replacement and Pressable behavior. A fresh installed consumer checks public root/deep paths and native ref/type contracts.
 
-Grow, Slide, Collapse, Zoom, full TransitionGroup interoperation and arbitrary CSS remain unfinished. The upstream helper declarations also list internal standalone create/getAutoHeightDuration functions that are absent from the pinned JavaScript module; the native package provides the actual factory methods and does not invent those named runtime exports. Frame pacing, physical keyboard/VoiceOver/TalkBack behavior, native presentation geometry and release-performance measurements remain device gates. Native-driver configuration alone is not a measured smoothness result.
+[Native Grow](grow.md) now supplies measured automatic opacity/scale transitions. Slide, Collapse, Zoom, full TransitionGroup interoperation and arbitrary CSS remain unfinished. The upstream helper declarations also list internal standalone create/getAutoHeightDuration functions that are absent from the pinned JavaScript module; the native package provides the actual factory methods and does not invent those named runtime exports. Frame pacing, physical keyboard/VoiceOver/TalkBack behavior, native presentation geometry and release-performance measurements remain device gates. Native-driver configuration alone is not a measured smoothness result.
 
 Participating library containers now normalize literal text and share inherited text styles; see [text containers](text-containers.md). Opaque custom component internals and full browser text flow remain open. No paid source or new runtime dependency is included, and no complete upstream package is marked verified.

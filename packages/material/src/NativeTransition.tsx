@@ -8,6 +8,7 @@ interface Props extends TransitionActions {
   mountOnEnter?: boolean;
   unmountOnExit?: boolean;
   timeout?: TransitionProps['timeout'];
+  getAutoTimeout?: () => number | null | undefined;
   nodeRef: React.RefObject<ViewInstance | null>;
   reduceMotion: boolean;
   addEndListener?: (node: ViewInstance, done: () => void) => void;
@@ -78,7 +79,9 @@ export default function NativeTransition(props: Props) {
     };
     pending.current = work;
     const p = current.current,
-      timeout = completionTimeout(p.timeout, state === 'entering', appearing.current);
+      timeout =
+        p.getAutoTimeout?.() ??
+        completionTimeout(p.timeout, state === 'entering', appearing.current);
     const node = p.nodeRef.current;
     if (!node) {
       diagnostic('transition-child', 'A native transition child must forward a native ref.');
