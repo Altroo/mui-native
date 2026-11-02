@@ -28,6 +28,7 @@ Material UI baseline: 9.5.0. Stable X baseline: 9.15.0. Scheduler: 9.0.0-beta.13
 
 - [x] Native theme, spacing and responsive styling engine with diagnostics.
 - [x] Material UI form prototype using original imports through Metro.
+- [x] Native form-label activation/content sizing, input alias guards and localized calendar weekday layout, with isolated regressions and consumer validation. Tracked in [issue #7](https://github.com/Altroo/mui-native/issues/7); device accessibility and full picker contracts remain open.
 - [x] Native grid, rich tree, chart and date prototypes.
 - [ ] Verify packed-package imports, TypeScript augmentation, and web isolation together.
 - [ ] Exercise input composition, focus, keyboard and nested overlay behavior on both platforms.

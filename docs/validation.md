@@ -44,3 +44,13 @@ Native interaction, Android and full compatibility gaps listed above remain unch
 The SDK-only snapshot was reconstructed separately from later component features and installed with the frozen lockfile from the local package cache. Its `pnpm check` passed 17 Jest and 25 Node tests, root/catalog TypeScript and seven runtime builds with 49 public entry points. All eight tarballs passed a fresh installed consumer, including native refs, root/deep imports, theme augmentation and browser/commercial isolation. Formatting passed.
 
 Independent review verified the matched Expo 58 runtime and strict native type migration. It found outdated setup versions and a bootstrap command relying on bundled Corepack; the setup instructions now use pinned pnpm installation through npm and the current runtime versions. Delivery is tracked in [issue #6](https://github.com/Altroo/mui-native/issues/6). This scoped migration does not close native crash, device interaction, accessibility, performance or full compatibility gates.
+
+## 2026-11-02 isolated native controls review
+
+The separate form/calendar increment passed 32 Jest and 25 Node tests, root/catalog types and seven runtime builds with 49 entry points. The eight packed archives passed a fresh installed consumer. Usage is documented in [native controls](native-controls.md), and delivery is tracked in [issue #7](https://github.com/Altroo/mui-native/issues/7).
+
+Independent review found conflicting native readOnly/editable aliases, hidden non-string label text, zero-width horizontal labels and supplied calendar values overriding the provider locale. Seven regression cases failed before correction and passed after correction. Textual labels now include numbers, arrays and fragments, with accessible fallback for unknown rich content. Native input aliases use one final editability policy. Calendar normalization preserves caller dates and follows provider locale changes. Label grow/shrink styles retain their automatic content basis. These checks do not establish native screen-reader or release-performance behavior.
+
+The preceding SDK-only commit `f218060` passed hosted [Validate #4](https://github.com/Altroo/mui-native/actions/runs/41457988607), and SDK issue #6 is closed.
+
+The follow-up independent review found no remaining actionable defects within this increment. A standalone probe compiled against the installed React Native Yoga engine changed a synthetic horizontal label from 0 dp to its 120 dp content width; column layout stayed unchanged. This is layout-engine evidence, not a simulator screenshot or a performance benchmark. Fresh installed-consumer checks and formatting passed after the fixes.

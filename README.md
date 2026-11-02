@@ -75,6 +75,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Architecture](docs/architecture.md)
 - [Installation and native import mapping](docs/installation.md)
 - [Compatibility boundaries](docs/compatibility.md)
+- [Native form controls and calendar behavior](docs/native-controls.md)
 - [Validation evidence](docs/validation.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security reporting](SECURITY.md)

@@ -4,6 +4,7 @@ import type { Dayjs } from 'dayjs';
 import {
   TextField,
   Button,
+  IconButton,
   Stack,
   Typography,
   Dialog,
@@ -99,6 +100,7 @@ export function DateField(props: DateFieldProps) {
       label={label}
       disabled={disabled}
       value={text}
+      placeholder={slotProps?.textField?.placeholder ?? format}
       error={error !== null}
       helperText={
         slotProps?.textField?.helperText ??
@@ -120,48 +122,81 @@ export interface DateCalendarProps extends Omit<DateFieldProps, 'format' | 'slot
 export function DateCalendar(props: DateCalendarProps) {
   const adapter = useAdapter();
   const [date, setDate] = useControlled(props.value, props.defaultValue ?? null);
-  const [month, setMonth] = useState(
-    (adapter.isValid(date) ? date : adapter.date(undefined, props.timezone)!).startOf('month'),
+  const normalizeMonth = useMemo(
+    () => (current: Dayjs | undefined) =>
+      adapter
+        .date(current, props.timezone)!
+        .locale(adapter.locale ?? 'en')
+        .startOf('month'),
+    [adapter, props.timezone],
+  );
+  const [month, setMonth] = useState(() =>
+    normalizeMonth(adapter.isValid(date) ? date : undefined),
   );
   useEffect(() => {
-    if (adapter.isValid(props.value ?? null)) setMonth(props.value!.startOf('month'));
-  }, [props.value, adapter]);
+    setMonth((previous) =>
+      normalizeMonth(adapter.isValid(props.value ?? null) ? props.value! : previous),
+    );
+  }, [props.value, adapter, normalizeMonth]);
   const start = month.startOf('week');
   const days = Array.from({ length: 42 }, (_, index) => start.add(index, 'day'));
   const today = adapter.date(undefined, props.timezone)!;
   return (
     <Stack spacing={1}>
       <Stack direction="row" style={{ alignItems: 'center', justifyContent: 'space-between' }}>
-        <Button aria-label="Previous month" onClick={() => setMonth(month.subtract(1, 'month'))}>
+        <IconButton
+          aria-label="Previous month"
+          style={{ alignSelf: 'center' }}
+          onClick={() => setMonth(month.subtract(1, 'month'))}
+        >
           ‹
-        </Button>
+        </IconButton>
         <Typography>{month.format('MMMM YYYY')}</Typography>
-        <Button aria-label="Next month" onClick={() => setMonth(month.add(1, 'month'))}>
+        <IconButton
+          aria-label="Next month"
+          style={{ alignSelf: 'center' }}
+          onClick={() => setMonth(month.add(1, 'month'))}
+        >
           ›
-        </Button>
+        </IconButton>
       </Stack>
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-        {days.map((day) => (
-          <View key={day.format('YYYY-MM-DD')} style={{ width: '14.285714%' }}>
-            <Button
-              disabled={
-                props.disabled ||
-                day.month() !== month.month() ||
-                validateDate(day, props, today) !== null
-              }
-              aria-label={day.format('dddd, MMMM D, YYYY')}
-              variant={adapter.isValid(date) && date.isSame(day, 'day') ? 'contained' : 'text'}
-              style={{ minWidth: 0, width: '100%', paddingHorizontal: 0 }}
-              onClick={() => {
-                setDate(day);
-                props.onChange?.(day, { validationError: null });
-              }}
-            >
-              {day.date()}
-            </Button>
-          </View>
+      <View style={{ flexDirection: 'row' }}>
+        {days.slice(0, 7).map((day) => (
+          <Typography
+            key={day.day()}
+            variant="caption"
+            color="text.secondary"
+            accessibilityLabel={day.format('dddd')}
+            style={{ flex: 1, textAlign: 'center' }}
+          >
+            {day.format('dd')}
+          </Typography>
         ))}
       </View>
+      {Array.from({ length: 6 }, (_, week) => (
+        <View key={week} style={{ flexDirection: 'row' }}>
+          {days.slice(week * 7, week * 7 + 7).map((day) => (
+            <View key={day.format('YYYY-MM-DD')} style={{ flex: 1, minWidth: 0 }}>
+              <Button
+                disabled={
+                  props.disabled ||
+                  day.month() !== month.month() ||
+                  validateDate(day, props, today) !== null
+                }
+                aria-label={day.format('dddd, MMMM D, YYYY')}
+                variant={adapter.isValid(date) && date.isSame(day, 'day') ? 'contained' : 'text'}
+                style={{ minWidth: 0, width: '100%', paddingHorizontal: 0 }}
+                onClick={() => {
+                  setDate(day);
+                  props.onChange?.(day, { validationError: null });
+                }}
+              >
+                {day.date()}
+              </Button>
+            </View>
+          ))}
+        </View>
+      ))}
     </Stack>
   );
 }

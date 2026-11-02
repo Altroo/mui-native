@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useRef, useState, forwardRef, useEffect } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useRef,
+  useState,
+  forwardRef,
+  useEffect,
+  useLayoutEffect,
+} from 'react';
 import {
   View,
   type ViewInstance,
@@ -51,6 +59,18 @@ interface FormState {
   required?: boolean;
 }
 const FormContext = createContext<FormState>({});
+type LabelActivation = (event: GestureResponderEvent) => void;
+const LabelActivationContext = createContext<React.RefObject<LabelActivation | null> | null>(null);
+function useLabelActivation(activate: LabelActivation) {
+  const target = useContext(LabelActivationContext);
+  useLayoutEffect(() => {
+    if (!target) return;
+    target.current = activate;
+    return () => {
+      target.current = null;
+    };
+  }, [target, activate]);
+}
 export interface FormControlProps extends BoxProps, FormState {
   fullWidth?: boolean;
 }
@@ -162,12 +182,17 @@ export const TextField: React.ForwardRefExoticComponent<
     : focused
       ? theme.palette.primary.main
       : theme.palette.divider;
+  const input = { ...native, ...slotProps?.htmlInput };
+  const readOnly = disabled || input.readOnly === true || input.editable === false;
   const change = (event: TextInputChangeEvent) => {
     const next = event.nativeEvent.text;
     setText(next);
     const target = { value: next, name, id };
     onChange?.({ target, currentTarget: target, nativeEvent: event.nativeEvent });
     onChangeText?.(next);
+    slotProps?.htmlInput?.onChange?.(event);
+    if (slotProps?.htmlInput?.onChangeText !== onChangeText)
+      slotProps?.htmlInput?.onChangeText?.(next);
   };
   return (
     <View ref={ref} style={[{ alignSelf: fullWidth ? 'stretch' : undefined, gap: 4 }, resolved]}>
@@ -178,32 +203,42 @@ export const TextField: React.ForwardRefExoticComponent<
           </InputLabel>
         ) : null}
         <TextInput
-          {...native}
-          {...slotProps?.htmlInput}
+          {...input}
           ref={inputRef}
           nativeID={id}
-          accessibilityLabel={ariaLabel ?? (typeof label === 'string' ? label : undefined)}
-          accessibilityState={{ disabled }}
-          accessibilityHint={typeof helperText === 'string' ? helperText : undefined}
-          editable={!disabled && native.editable !== false}
+          accessibilityLabel={
+            ariaLabel ?? input.accessibilityLabel ?? (typeof label === 'string' ? label : undefined)
+          }
+          accessibilityState={{ ...input.accessibilityState, disabled }}
+          accessibilityHint={
+            input.accessibilityHint ?? (typeof helperText === 'string' ? helperText : undefined)
+          }
+          readOnly={readOnly}
+          editable={!readOnly}
           value={String(text ?? '')}
-          secureTextEntry={type === 'password'}
+          placeholderTextColor={input.placeholderTextColor ?? theme.palette.text.secondary}
+          selectionColor={input.selectionColor ?? theme.palette.primary.main}
+          keyboardAppearance={input.keyboardAppearance ?? theme.palette.mode}
+          secureTextEntry={type === 'password' || input.secureTextEntry}
           keyboardType={
             type === 'email'
               ? 'email-address'
               : type === 'number'
                 ? 'decimal-pad'
-                : native.keyboardType
+                : input.keyboardType
           }
           onChange={change}
           onChangeText={undefined}
           onFocus={(e) => {
             setFocused(true);
             native.onFocus?.(e);
+            if (slotProps?.htmlInput?.onFocus !== native.onFocus)
+              slotProps?.htmlInput?.onFocus?.(e);
           }}
           onBlur={(e) => {
             setFocused(false);
             native.onBlur?.(e);
+            if (slotProps?.htmlInput?.onBlur !== native.onBlur) slotProps?.htmlInput?.onBlur?.(e);
           }}
           style={[
             {
@@ -258,6 +293,13 @@ export function Checkbox({
   const [selected, setSelected] = useControlled(checked, defaultChecked);
   const theme = useTheme();
   const style = useComponentStyle('MuiCheckbox', { checked: selected, disabled }, sx);
+  const activate = (event: GestureResponderEvent) => {
+    if (disabled) return;
+    const next = !selected;
+    setSelected(next);
+    onChange?.({ target: { checked: next, value, name }, nativeEvent: event.nativeEvent }, next);
+  };
+  useLabelActivation(activate);
   return (
     <Pressable
       testID={testID}
@@ -265,11 +307,7 @@ export function Checkbox({
       accessibilityRole="checkbox"
       accessibilityLabel={label ?? inputProps?.['aria-label']}
       accessibilityState={{ checked: indeterminate ? 'mixed' : selected, disabled }}
-      onPress={(e) => {
-        const next = !selected;
-        setSelected(next);
-        onChange?.({ target: { checked: next, value, name }, nativeEvent: e.nativeEvent }, next);
-      }}
+      onPress={activate}
       style={[{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }, style]}
     >
       <View
@@ -301,6 +339,12 @@ export function Switch({
 }: CheckboxProps) {
   const [selected, setSelected] = useControlled(checked, defaultChecked);
   const theme = useTheme();
+  const change = (next: boolean) => {
+    if (disabled) return;
+    setSelected(next);
+    onChange?.({ target: { checked: next, value, name }, nativeEvent: null }, next);
+  };
+  useLabelActivation(() => change(!selected));
   return (
     <NativeSwitch
       testID={testID}
@@ -308,11 +352,9 @@ export function Switch({
       accessibilityRole="switch"
       disabled={disabled}
       value={selected}
+      style={{ alignSelf: 'center' }}
       trackColor={{ true: theme.palette.primary.main }}
-      onValueChange={(next) => {
-        setSelected(next);
-        onChange?.({ target: { checked: next, value, name }, nativeEvent: null }, next);
-      }}
+      onValueChange={change}
     />
   );
 }
@@ -368,6 +410,17 @@ export function Radio({
   const [local, setLocal] = useControlled(checked, defaultChecked);
   const selected = group.value !== undefined ? group.value === value : local;
   const theme = useTheme();
+  const activate = (e: GestureResponderEvent) => {
+    if (disabled || selected) return;
+    setLocal(true);
+    const event = {
+      target: { checked: true, value, name: group.name },
+      nativeEvent: e.nativeEvent,
+    };
+    onChange?.(event, true);
+    group.onChange?.(event, value);
+  };
+  useLabelActivation(activate);
   return (
     <Pressable
       testID={testID}
@@ -376,16 +429,7 @@ export function Radio({
       accessibilityLabel={label}
       accessibilityState={{ checked: selected, disabled }}
       style={{ width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}
-      onPress={(e) => {
-        if (selected) return;
-        setLocal(true);
-        const event = {
-          target: { checked: true, value, name: group.name },
-          nativeEvent: e.nativeEvent,
-        };
-        onChange?.(event, true);
-        group.onChange?.(event, value);
-      }}
+      onPress={activate}
     >
       <View
         style={{
@@ -406,6 +450,17 @@ export function Radio({
     </Pressable>
   );
 }
+function labelText(label: React.ReactNode): string | undefined {
+  if (label == null || typeof label === 'boolean') return '';
+  if (typeof label === 'string' || typeof label === 'number') return String(label);
+  if (Array.isArray(label)) {
+    const parts = label.map(labelText);
+    return parts.every((part) => part !== undefined) ? parts.join('') : undefined;
+  }
+  if (React.isValidElement<{ children?: React.ReactNode }>(label) && label.type === React.Fragment)
+    return labelText(label.props.children);
+  return undefined;
+}
 export function FormControlLabel({
   control,
   label,
@@ -415,14 +470,39 @@ export function FormControlLabel({
   label: React.ReactNode;
   disabled?: boolean;
 }) {
+  const activate = useRef<LabelActivation | null>(null);
+  const form = useContext(FormContext);
+  const inactive = disabled ?? control.props.disabled ?? form.disabled;
+  const accessibleName =
+    control.props['aria-label'] ?? control.props.inputProps?.['aria-label'] ?? labelText(label);
   return (
-    <Stack direction="row" style={{ alignItems: 'center' }}>
-      {React.cloneElement(control, {
-        disabled: disabled ?? control.props.disabled,
-        'aria-label':
-          control.props['aria-label'] ?? (typeof label === 'string' ? label : undefined),
-      })}
-      <Typography>{label}</Typography>
-    </Stack>
+    <LabelActivationContext.Provider value={activate}>
+      <Stack direction="row" style={{ alignItems: 'center', gap: 8 }}>
+        {React.cloneElement(control, {
+          disabled: inactive,
+          'aria-label': accessibleName,
+        })}
+        <Pressable
+          accessible={false}
+          disabled={inactive}
+          onPress={(event) => activate.current?.(event)}
+          style={{
+            flexGrow: 1,
+            flexShrink: 1,
+            minWidth: 0,
+            minHeight: 44,
+            paddingVertical: 8,
+            justifyContent: 'center',
+          }}
+        >
+          <Typography
+            accessible={!accessibleName}
+            color={inactive ? 'text.disabled' : 'text.primary'}
+          >
+            {label}
+          </Typography>
+        </Pressable>
+      </Stack>
+    </LabelActivationContext.Provider>
   );
 }

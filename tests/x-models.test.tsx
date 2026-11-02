@@ -1,4 +1,5 @@
 import React from 'react';
+import 'dayjs/locale/fr';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import { processRows } from '../packages/x-data-grid/src/model';
 import { RichTreeView, flattenTree } from '../packages/x-tree-view/src';
@@ -6,6 +7,7 @@ import { chartDomain, BarChart } from '../packages/x-charts/src';
 import {
   AdapterDayjs,
   DateField,
+  DateCalendar,
   LocalizationProvider,
   validateDate,
 } from '../packages/x-date-pickers/src';
@@ -102,3 +104,70 @@ test('date bounds use calendar days and named zones reject nonexistent DST time'
   );
   expect(a.parse('2026-03-08 03:30', 'YYYY-MM-DD HH:mm', 'America/New_York')?.isValid()).toBe(true);
 });
+
+test('calendar exposes weekday context, selects days and navigates months', () => {
+  const adapter = new AdapterDayjs();
+  const change = jest.fn();
+  render(
+    <LocalizationProvider>
+      <DateCalendar defaultValue={adapter.date('2026-11-02')} onChange={change} />
+    </LocalizationProvider>,
+  );
+  for (const day of [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ]) {
+    expect(screen.getByLabelText(day)).toBeTruthy();
+  }
+  fireEvent.press(screen.getByLabelText('Saturday, November 7, 2026'), { nativeEvent: {} });
+  expect(change.mock.calls[0][0].format('YYYY-MM-DD')).toBe('2026-11-07');
+  fireEvent.press(screen.getByLabelText('Next month'), { nativeEvent: {} });
+  expect(screen.getByText('December 2026')).toBeTruthy();
+  fireEvent.press(screen.getByLabelText('Previous month'), { nativeEvent: {} });
+  expect(screen.getByText('November 2026')).toBeTruthy();
+});
+
+test.each([false, true])(
+  'calendar weekdays follow the provider locale for supplied dates (controlled: %s)',
+  (controlled) => {
+    const adapter = new AdapterDayjs();
+    const original = adapter.date('2026-11-02')!;
+    const next = adapter.date('2026-12-03')!;
+    const { rerender } = render(
+      <LocalizationProvider adapterLocale="fr">
+        <DateCalendar {...(controlled ? { value: original } : { defaultValue: original })} />
+      </LocalizationProvider>,
+    );
+    expect(screen.getByText('novembre 2026')).toBeTruthy();
+    const frenchWeekdays = screen.getAllByLabelText(
+      /^(lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche)$/,
+    );
+    expect(frenchWeekdays.map((day) => day.props.accessibilityLabel)).toEqual([
+      'lundi',
+      'mardi',
+      'mercredi',
+      'jeudi',
+      'vendredi',
+      'samedi',
+      'dimanche',
+    ]);
+    expect(original.locale()).toBe('en');
+    fireEvent.press(screen.getByLabelText('Next month'), { nativeEvent: {} });
+    rerender(
+      <LocalizationProvider>
+        <DateCalendar {...(controlled ? { value: next } : { defaultValue: original })} />
+      </LocalizationProvider>,
+    );
+    expect(screen.getByText('December 2026')).toBeTruthy();
+    expect(
+      screen.getAllByLabelText(/^(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday)$/)[0]
+        .props.accessibilityLabel,
+    ).toBe('Sunday');
+    expect(next.locale()).toBe('en');
+  },
+);
