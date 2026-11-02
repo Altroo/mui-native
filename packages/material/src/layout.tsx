@@ -2,25 +2,40 @@ import { useTheme, useSx, useComponentStyle } from './themeProvider';
 import React, { forwardRef } from 'react';
 import { Typography, type TypographyProps } from './typography';
 export * from './typography';
-import { View, type ViewInstance, type ViewProps } from 'react-native';
+import { View, type ViewInstance, type ViewProps, type StyleProp } from 'react-native';
 import {
   useDefaultProps,
+  NativeTextScope,
+  useNativeTextContext,
+  nativeTextStyleContext,
+  type NativeStyle,
   type SxProps,
   type SpacingArgument,
   type ResponsiveStyleValue,
 } from '@altroo/mui-native-system';
-export interface BoxProps extends ViewProps {
+export interface BoxProps extends Omit<ViewProps, 'style'> {
+  style?: StyleProp<NativeStyle>;
   sx?: SxProps;
   component?: React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>;
 }
 export const Box: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<BoxProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, BoxProps>(function Box(
-  { sx, style, component: Component = View, ...props },
+  { sx, style, children, component: Component = View, ...props },
   ref,
 ) {
-  const resolved = useSx(sx);
-  return <Component {...props} ref={ref} style={[resolved, style]} />;
+  const theme = useTheme();
+  const parent = useNativeTextContext();
+  const resolved = useSx(sx, nativeTextStyleContext(parent, style, theme));
+  return (
+    <NativeTextScope theme={theme} style={[resolved, style]} content={children}>
+      {(native, content) => (
+        <Component {...props} ref={ref} style={native}>
+          {content}
+        </Component>
+      )}
+    </NativeTextScope>
+  );
 });
 export interface StackProps extends BoxProps {
   direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
@@ -64,14 +79,27 @@ export const Paper: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<PaperProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, PaperProps>(function Paper(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiPaper' });
-  const { elevation = 1, variant = 'elevation', square = false, sx, style, ...rest } = props;
+  const {
+    elevation = 1,
+    variant = 'elevation',
+    square = false,
+    sx,
+    style,
+    component: Component = View,
+    children,
+    ...rest
+  } = props;
   const theme = useTheme();
   const shadow = useSx({ boxShadow: variant === 'elevation' ? elevation : 0 });
-  const resolved = useComponentStyle('MuiPaper', { ...props, elevation, variant, square }, sx);
+  const parent = useNativeTextContext();
+  const resolved = useComponentStyle('MuiPaper', { ...props, elevation, variant, square }, sx, {
+    ...nativeTextStyleContext(parent, style, theme),
+    baseStyle: { color: theme.palette.text.primary },
+  });
   return (
-    <View
-      {...rest}
-      ref={ref}
+    <NativeTextScope
+      theme={theme}
+      content={children}
       style={[
         {
           backgroundColor: theme.palette.background.paper,
@@ -82,7 +110,13 @@ export const Paper: React.ForwardRefExoticComponent<
         resolved,
         style,
       ]}
-    />
+    >
+      {(native, content) => (
+        <Component {...rest} ref={ref} style={native}>
+          {content}
+        </Component>
+      )}
+    </NativeTextScope>
   );
 });
 export const Card: React.ForwardRefExoticComponent<

@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useMemo, forwardRef } from 'react';
-import { useWindowDimensions, StyleSheet, type StyleProp } from 'react-native';
+import { useWindowDimensions, StyleSheet, View, Text, type StyleProp } from 'react-native';
 import { createTheme, type Theme } from './theme';
 import { diagnostic } from './diagnostics';
 import RtlProvider from './RtlProvider';
 import { DefaultPropsProvider, getThemeProps } from './defaultProps';
 import { nativeStyleTextMetrics, applyNativeTextMetrics } from './nativeText';
+import { NativeTextScope, useNativeTextContext, nativeTextStyleContext } from './textScope';
 import {
   componentStyle,
   resolveSx,
@@ -97,6 +98,7 @@ export function styled<P extends object>(
     forwardRef<unknown, P & { sx?: SxProps; style?: StyleProp<NativeStyle>; ownerState?: unknown }>(
       (props, ref) => {
         const theme = scopedTheme(useTheme(), options.themeId);
+        const parent = useNativeTextContext();
         const { width } = useWindowDimensions();
         const { sx, style, ownerState, ...rest } = props;
         const resolved =
@@ -109,15 +111,36 @@ export function styled<P extends object>(
         const native = StyleSheet.flatten(style) ?? undefined;
         const nativeMetrics = nativeStyleTextMetrics(style);
         const computed = componentStyle(theme, options.name ?? '', props, sx, {
+          ...nativeTextStyleContext(parent, style, theme),
           width,
           baseStyle: resolved,
           nativeStyle: native,
           nativeTextMetrics: nativeMetrics,
         });
+        const finalStyle = [computed, applyNativeTextMetrics(native, computed, nativeMetrics)];
+        if (Component === (View as unknown) || Component === (Text as unknown)) {
+          return (
+            <NativeTextScope
+              theme={theme}
+              kind={Component === (Text as unknown) ? 'text' : 'view'}
+              style={finalStyle}
+              content={(filtered as { children?: React.ReactNode }).children}
+            >
+              {(style, children) =>
+                React.createElement(Component, {
+                  ...filtered,
+                  ref,
+                  style,
+                  children,
+                } as unknown as P)
+              }
+            </NativeTextScope>
+          );
+        }
         return React.createElement(Component, {
           ...filtered,
           ref,
-          style: [computed, applyNativeTextMetrics(native, computed, nativeMetrics)],
+          style: finalStyle,
         } as unknown as P);
       },
     );

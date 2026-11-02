@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "12178afbddbeae3fa6aad2fba63a8f07ff3ff9224db30ff5d790a675fd3f7edf",
+  "nativeSourceSha256": "15612af697882f072e4ce7c1dcaadc95c7595191dfdf6a55beb2c173edfeaba4",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -6949,7 +6949,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "applyNativeTextMetrics",
           "kind": "value",
-          "line": 64
+          "line": 77
         }
       ]
     },
@@ -7169,7 +7169,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "getTextStyleInheritance",
           "kind": "value",
-          "line": 81
+          "line": 94
         }
       ]
     },
@@ -7180,7 +7180,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "inheritedTextStyle",
           "kind": "value",
-          "line": 35
+          "line": 48
         }
       ]
     },
@@ -7191,7 +7191,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "isNativeTextStyleProperty",
           "kind": "value",
-          "line": 32
+          "line": 45
         }
       ]
     },
@@ -7268,7 +7268,62 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "nativeStyleTextMetrics",
           "kind": "value",
-          "line": 45
+          "line": 58
+        }
+      ]
+    },
+    {
+      "name": "NativeTextScope",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/textScope.tsx",
+          "name": "NativeTextScope",
+          "kind": "value",
+          "line": 113
+        }
+      ]
+    },
+    {
+      "name": "NativeTextScopeProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/textScope.tsx",
+          "name": "NativeTextScopeProps",
+          "kind": "type",
+          "line": 100
+        }
+      ]
+    },
+    {
+      "name": "NativeTextScopeValue",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/textScope.tsx",
+          "name": "NativeTextScopeValue",
+          "kind": "type",
+          "line": 13
+        }
+      ]
+    },
+    {
+      "name": "nativeTextStyleContext",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/textScope.tsx",
+          "name": "nativeTextStyleContext",
+          "kind": "value",
+          "line": 21
+        }
+      ]
+    },
+    {
+      "name": "NativeTextStyleContext",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/textScope.tsx",
+          "name": "NativeTextStyleContext",
+          "kind": "value",
+          "line": 19
         }
       ]
     },
@@ -7357,6 +7412,17 @@
           "name": "ReducedMotionMode",
           "kind": "type",
           "line": 50
+        }
+      ]
+    },
+    {
+      "name": "renderNativeTextChildren",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/textScope.tsx",
+          "name": "renderNativeTextChildren",
+          "kind": "value",
+          "line": 137
         }
       ]
     },
@@ -7598,7 +7664,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentStyle",
           "kind": "value",
-          "line": 81
+          "line": 82
         }
       ]
     },
@@ -7614,13 +7680,24 @@
       ]
     },
     {
+      "name": "useNativeTextContext",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/textScope.tsx",
+          "name": "useNativeTextContext",
+          "kind": "value",
+          "line": 20
+        }
+      ]
+    },
+    {
       "name": "useSx",
       "origins": [
         {
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useSx",
           "kind": "value",
-          "line": 76
+          "line": 77
         }
       ]
     }
@@ -10867,7 +10944,7 @@
         {
           "name": "ThemeProviderProps",
           "file": "src/provider.tsx",
-          "line": 19,
+          "line": 20,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -10929,7 +11006,7 @@
         {
           "name": "ThemeProviderProps",
           "file": "src/provider.tsx",
-          "line": 19,
+          "line": 20,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -17705,7 +17782,7 @@
     {
       "name": "ThemeProviderProps",
       "file": "src/provider.tsx",
-      "line": 19,
+      "line": 20,
       "kind": "type",
       "members": [
         {
@@ -17715,7 +17792,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme: Partial<T> | ((outer: T) => T);",
-          "line": 20,
+          "line": 21,
           "kind": "property",
           "type": "Partial<T> | ((outer: T) => T)"
         },
@@ -17726,7 +17803,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "themeId?: string;",
-          "line": 21,
+          "line": 22,
           "kind": "property",
           "type": "string"
         },
@@ -17737,7 +17814,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 22,
+          "line": 23,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -18111,6 +18188,146 @@
         "Map",
         "Record",
         "StyleNode"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "NativeTextScopeValue",
+      "file": "src/textScope.tsx",
+      "line": 13,
+      "kind": "type",
+      "members": [
+        {
+          "name": "style",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style: TextStyle;",
+          "line": 14,
+          "kind": "property",
+          "type": "TextStyle"
+        },
+        {
+          "name": "literalStyle",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "literalStyle?: TextStyle;",
+          "line": 15,
+          "kind": "property",
+          "type": "TextStyle"
+        },
+        {
+          "name": "lineHeight",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "lineHeight?: number;",
+          "line": 16,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "nativeText",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "nativeText: boolean;",
+          "line": 17,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "TextStyle"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "NativeTextScopeProps",
+      "file": "src/textScope.tsx",
+      "line": 100,
+      "kind": "type",
+      "members": [
+        {
+          "name": "theme",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "theme: Theme;",
+          "line": 101,
+          "kind": "property",
+          "type": "Theme"
+        },
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: StyleProp<NativeStyle>;",
+          "line": 102,
+          "kind": "property",
+          "type": "StyleProp<NativeStyle>"
+        },
+        {
+          "name": "kind",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "kind?: 'view' | 'text';",
+          "line": 103,
+          "kind": "property",
+          "type": "'view' | 'text'"
+        },
+        {
+          "name": "reset",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "reset?: boolean;",
+          "line": 104,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "content",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "content?: React.ReactNode;",
+          "line": 105,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "children",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children: (\n    style: NativeStyle,\n    content: React.ReactNode,\n    scope: NativeTextScopeValue,\n  ) => React.ReactNode;",
+          "line": 106,
+          "kind": "property",
+          "type": "(\n    style: NativeStyle,\n    content: React.ReactNode,\n    scope: NativeTextScopeValue,\n  ) => React.ReactNode"
+        }
+      ],
+      "references": [
+        "NativeStyle",
+        "NativeTextScopeValue",
+        "React.ReactNode",
+        "StyleProp",
+        "Theme"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native-system"

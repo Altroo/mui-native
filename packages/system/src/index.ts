@@ -28,3 +28,12 @@ export { default as RtlProvider, useRtl } from './RtlProvider';
 export type { RtlProviderProps } from './RtlProvider';
 
 export * from './transitions';
+
+export {
+  NativeTextScope,
+  NativeTextStyleContext,
+  useNativeTextContext,
+  nativeTextStyleContext,
+  renderNativeTextChildren,
+} from './textScope';
+export type { NativeTextScopeValue, NativeTextScopeProps } from './textScope';

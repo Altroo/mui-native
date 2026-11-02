@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Literal text in native library containers, shared text inheritance, native Text/View boundaries and custom scopes. See [text containers](text-containers.md).
+
 - Native Fade, theme transitions/motion helpers and Dialog/Backdrop transition slots with native-driver opacity, lifecycle and reduced-motion checks. See [transitions](transitions.md).
 - Reusable Modal/Backdrop, top-layer dismissal, guarded native focus work, custom transition lifecycle wiring and Dialog slots/root routing. See [native modals](modals.md).
 
@@ -36,7 +38,7 @@ Do not assume unlisted props work. Public TypeScript interfaces describe the imp
 
 - Full Material UI export coverage, all icon variants, remaining component slot replacement, classes/className, arbitrary CSS, CSS variables, non-width media queries, arbitrary descendant selectors, browser refs/events, remaining transitions/TransitionGroup interoperation, ripple behavior.
 - Full `styled` semantics, CSS-variable/color-scheme providers, complete typography inheritance, the full responsive/style utility export set, all upstream augmentation interfaces. The installed-consumer fixture verifies custom Theme, ThemeOptions, Palette, PaletteOptions and BreakpointOverrides augmentation through @mui/material/styles.
-- Automatic raw-text wrapping in View-backed containers and complete cross-View text style inheritance; use native Text or Typography around literal text.
+- Full browser inline formatting, opaque custom-component text internals, arbitrary native views/portals outside shared text scopes and complete text inheritance. See [text container boundaries](text-containers.md).
 - Device-proven nested modal/focus restoration, keyboard avoidance on all devices, VoiceOver/TalkBack workflows, RTL and large-font layouts.
 - Grid cell editing, column virtualization, apiRef, column menus, flexible/dynamic sizing, keyboard navigation, comprehensive filtering operators and callback detail arguments.
 - SimpleTreeView/TreeItem composition, complete tree apiRef, all Community hooks and loading/disabled semantics.

@@ -14,6 +14,10 @@ import {
 } from 'react-native';
 import {
   useDefaultProps,
+  NativeTextScope,
+  useNativeTextContext,
+  nativeStyleTextMetrics,
+  applyNativeTextMetrics,
   isNativeTextStyleProperty,
   type SxProps,
 } from '@altroo/mui-native-system';
@@ -72,9 +76,13 @@ export const Button: React.ForwardRefExoticComponent<
     ...native
   } = props;
   const theme = useTheme();
+  const parentText = useNativeTextContext();
   const activeColor =
     color === 'inherit'
-      ? { main: theme.palette.text.primary, contrastText: theme.palette.background.paper }
+      ? {
+          main: parentText?.style.color ?? theme.palette.text.primary,
+          contrastText: theme.palette.background.paper,
+        }
       : theme.palette[color];
   const isLoading = loading === true;
   const inactive = disabled || isLoading;
@@ -202,18 +210,17 @@ export const Button: React.ForwardRefExoticComponent<
       ]}
     >
       {renderIcon(startIcon, 'start')}
-      <Text
+      <NativeTextScope
+        theme={theme}
+        kind="text"
+        content={children}
         style={[
-          {
-            color: foregroundColor,
-            flexShrink: 1,
-            ...(hideContent ? { opacity: 0 } : {}),
-          },
-          textStyle,
+          { color: foregroundColor, flexShrink: 1, ...(hideContent ? { opacity: 0 } : {}) },
+          applyNativeTextMetrics(textStyle, resolved, nativeStyleTextMetrics(resolved)),
         ]}
       >
-        {children}
-      </Text>
+        {(style, content) => <Text style={style}>{content}</Text>}
+      </NativeTextScope>
       {renderIcon(endIcon, 'end')}
       {isLoading && loadingPosition === 'center' ? (
         <View

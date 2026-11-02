@@ -1,8 +1,11 @@
 import { useTheme, useComponentStyle } from './themeProvider';
-import React, { createContext, forwardRef, useContext } from 'react';
+import React, { forwardRef } from 'react';
 import { Text, StyleSheet, type TextInstance, type TextProps, type TextStyle } from 'react-native';
 import {
   useDefaultProps,
+  NativeTextStyleContext,
+  useNativeTextContext,
+  renderNativeTextChildren,
   getTextStyleInheritance,
   nativeStyleTextMetrics,
   applyNativeTextMetrics,
@@ -37,9 +40,6 @@ export interface TypographyProps extends TextProps {
   component?: NativeTypographyComponent | string;
   variantMapping?: Partial<Record<TypographyVariantProp, string>>;
 }
-const TextContext = createContext<ReturnType<typeof getTextStyleInheritance> | undefined>(
-  undefined,
-);
 const defaultMapping: Record<string, string> = {
   h1: 'h1',
   h2: 'h2',
@@ -72,7 +72,7 @@ export const Typography: React.ForwardRefExoticComponent<
     ...native
   } = props;
   const theme = useTheme();
-  const parent = useContext(TextContext);
+  const parent = useNativeTextContext();
   const nativeStyle = StyleSheet.flatten(style) ?? undefined;
   const inheritedRatio = parent?.lineHeight;
   const nativeMetrics = nativeStyleTextMetrics(style);
@@ -123,12 +123,15 @@ export const Typography: React.ForwardRefExoticComponent<
     resolved as TextStyle,
     nativeMetrics,
   );
-  const finalStyle = StyleSheet.flatten([resolved as TextStyle, adjustedNativeStyle]);
-  const context = getTextStyleInheritance(
+  const finalStyle = StyleSheet.flatten([
+    parent && !parent.nativeText ? parent.style : undefined,
     resolved as TextStyle,
-    parent?.style,
     adjustedNativeStyle,
-  );
+  ]);
+  const context = {
+    ...getTextStyleInheritance(resolved as TextStyle, parent?.style, adjustedNativeStyle),
+    nativeText: true,
+  };
   const mapped = component ?? variantMapping[variant] ?? defaultMapping[variant] ?? 'span';
   if (typeof mapped === 'string' && !textTags.has(mapped))
     diagnostic(
@@ -143,7 +146,7 @@ export const Typography: React.ForwardRefExoticComponent<
         ? 'link'
         : undefined;
   return (
-    <TextContext.Provider value={context}>
+    <NativeTextStyleContext.Provider value={context}>
       <Component
         {...native}
         ref={ref}
@@ -151,7 +154,9 @@ export const Typography: React.ForwardRefExoticComponent<
         numberOfLines={noWrap ? 1 : native.numberOfLines}
         ellipsizeMode={native.ellipsizeMode ?? (noWrap ? 'tail' : undefined)}
         style={finalStyle}
-      />
-    </TextContext.Provider>
+      >
+        {renderNativeTextChildren(native.children, theme, context)}
+      </Component>
+    </NativeTextStyleContext.Provider>
   );
 });

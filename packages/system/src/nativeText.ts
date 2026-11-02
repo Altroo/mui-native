@@ -22,6 +22,12 @@ export const textMetricKeys = new Set([
 const inheritedKeys = new Set([
   ...textMetricKeys,
   'fontStyle',
+  'fontVariant',
+  'fontVariationSettings',
+  'textShadowColor',
+  'textShadowOffset',
+  'textShadowRadius',
+  'writingDirection',
   'textAlign',
   'textTransform',
   'color',
@@ -29,8 +35,15 @@ const inheritedKeys = new Set([
   'textDecorationLine',
   'textDecorationStyle',
 ]);
+const nativeTextOnlyKeys = new Set([
+  ...inheritedKeys,
+  'includeFontPadding',
+  'textAlignVertical',
+  'verticalAlign',
+  'userSelect',
+]);
 export function isNativeTextStyleProperty(key: string) {
-  return inheritedKeys.has(key);
+  return nativeTextOnlyKeys.has(key);
 }
 export function inheritedTextStyle(style: TextStyle): TextStyle {
   return Object.fromEntries(

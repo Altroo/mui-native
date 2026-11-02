@@ -74,6 +74,8 @@ import { Dialog, Typography } from '@mui/material';
 
 Top-level native props, testID, sx and style now target the modal root, matching MUI routing. Earlier native prototypes sent them to Paper; move those surface customizations into slotProps.paper. When ordinary root props or inherited Modal controls conflict, top-level values replace root-slot values, including an explicit undefined; they are not merged. Dialog's own open/onClose values are applied before the root slot, so root-slot values can override those two. Forwarded refs still compose. Paper retains the existing mobile margins, responsive width caps, fullWidth and fullScreen handling. These native dimensions do not claim identical browser geometry. Dialog's complete transition/scroll/ARIA/CSS contracts remain unfinished.
 
+Native window roots reset text inheritance; inline disablePortal roots retain the enclosing text scope. Participating Modal/Backdrop and Dialog containers normalize literal content through [native text scopes](text-containers.md).
+
 ## Evidence and limits
 
 Run node scripts/reference/modals.mjs --check after the isolated [reference setup](theming.md). It checks immutable artifact/source/license identity before comparing 16 original Modal mounting/default/transition-wiring/backdrop-order cases and eight Dialog routing cases. Native tests add stack nesting, cleanup, retained state, focus timing, native-handle forwarding, transition races and scoped styles. A fresh installed consumer compiles original root/deep imports, native refs/slots and unsupported browser-container/ref rejection. These checks use mocked native hosts/events and establish no device geometry, smoothness or calibrated release-performance result.

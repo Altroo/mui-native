@@ -16,6 +16,8 @@ try {
   const hooks = requireConsumer('@altroo/mui-native-system/useThemeProps');
   const material = requireConsumer('@altroo/mui-native');
   const materialDefaults = requireConsumer('@altroo/mui-native/DefaultPropsProvider');
+  for (const name of ['NativeTextScope', 'NativeTextStyleContext', 'useNativeTextContext'])
+    assert.equal(material[name], root[name]);
   for (const [actual, expected] of [
     [defaults.default, root.DefaultPropsProvider],
     [defaults.useDefaultProps, root.useDefaultProps],

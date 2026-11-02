@@ -744,6 +744,100 @@
       "adaptations": [
         "A shared native AccessibilityInfo resource replaces media-query preference observation. Unknown system state suppresses motion; native changes stop active owned motion promptly."
       ]
+    },
+    {
+      "localFile": "packages/system/src/textScope.tsx",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "createBox/createBox.js": "8cee82044816a0bdb217b3fdaf47354ebd42fb4c6987167c87ceb7e0e6c39e27",
+          "Stack/createStack.js": "33755ca3fa87be308490616e4fa6c5c1f98b9733639c5dda2bbd09e36018b266",
+          "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf"
+        }
+      },
+      "adaptations": [
+        "Native Text hosts replace DOM literal text and a shared React-only context carries inheritable text values through native containers. Native roots, refs, keys and single-element shape are preserved; browser inline flow remains unfinished."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/nativeText.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+          "Typography/Typography.js": "791ce01d7581defa70c9d08c2a9a0eb751719e0bde7fb36719f16b7139154d81",
+          "Box/Box.js": "306d78c5254c68f321b72999149d084a76903e4b45797999cc9f71eea80b79ce",
+          "Modal/Modal.js": "65c24666bc6e9692285494738cb1835fe8c7cdc2a38efb0a1262d212c25e4a39"
+        }
+      },
+      "adaptations": [
+        "Native text-only style routing distinguishes inherited font/decoration/shadow/direction fields from local layout and selection fields; CSS authored metric metadata and literal native lengths retain distinct semantics."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/layout.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+          "Typography/Typography.js": "791ce01d7581defa70c9d08c2a9a0eb751719e0bde7fb36719f16b7139154d81",
+          "Box/Box.js": "306d78c5254c68f321b72999149d084a76903e4b45797999cc9f71eea80b79ce",
+          "Modal/Modal.js": "65c24666bc6e9692285494738cb1835fe8c7cdc2a38efb0a1262d212c25e4a39"
+        }
+      },
+      "adaptations": [
+        "Paper follows the pinned text color reset and custom-root forwarding; container literal children use native text scopes without applying MuiTypography component defaults."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/typography.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+          "Typography/Typography.js": "791ce01d7581defa70c9d08c2a9a0eb751719e0bde7fb36719f16b7139154d81",
+          "Box/Box.js": "306d78c5254c68f321b72999149d084a76903e4b45797999cc9f71eea80b79ce",
+          "Modal/Modal.js": "65c24666bc6e9692285494738cb1835fe8c7cdc2a38efb0a1262d212c25e4a39"
+        }
+      },
+      "adaptations": [
+        "Typography consumes the shared native text context across View boundaries while leaving native Text inheritance active inside a tracked text parent."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/modal.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+          "Typography/Typography.js": "791ce01d7581defa70c9d08c2a9a0eb751719e0bde7fb36719f16b7139154d81",
+          "Box/Box.js": "306d78c5254c68f321b72999149d084a76903e4b45797999cc9f71eea80b79ce",
+          "Modal/Modal.js": "65c24666bc6e9692285494738cb1835fe8c7cdc2a38efb0a1262d212c25e4a39"
+        }
+      },
+      "adaptations": [
+        "Native window text scopes reset to native root defaults while inline overlays inherit their parent; backdrop content shares native text handling without changing root refs or dismissal wiring."
+      ]
     }
   ]
 }

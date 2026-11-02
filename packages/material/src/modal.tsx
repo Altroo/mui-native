@@ -26,12 +26,14 @@ import {
 } from 'react-native';
 import {
   useDefaultProps,
+  NativeTextScope,
+  renderNativeTextChildren,
   resolveSlotProps,
   diagnostic,
   type SlotProps,
   type SxProps,
 } from '@altroo/mui-native-system';
-import { useComponentStyle, useSx } from './themeProvider';
+import { useTheme, useComponentStyle, useSx } from './themeProvider';
 import { useForkRef } from './utils';
 import { Fade, type FadeProps } from './fade';
 import type { TransitionProps, TransitionStyle } from './transitions/types';
@@ -89,19 +91,29 @@ const BackdropSurface = forwardRef<ViewInstance, SurfaceProps>(function Backdrop
   ref,
 ) {
   const style = native.style;
+  const contentProp = native.children;
+  const theme = useTheme();
   return (
-    <Root
-      {...native}
-      {...(Root === Pressable ? {} : { ownerState })}
-      ref={ref}
-      accessible={native.accessible ?? false}
-      onPress={native.onPress ?? onClick}
-      style={
-        typeof style === 'function'
-          ? (state) => [nativeBaseStyle, style(state)]
-          : [nativeBaseStyle, style]
-      }
-    />
+    <NativeTextScope
+      theme={theme}
+      style={[nativeBaseStyle, typeof style === 'function' ? undefined : style]}
+      content={typeof contentProp === 'function' ? undefined : contentProp}
+    >
+      {(scopeStyle, content, scope) => (
+        <Root
+          {...native}
+          {...(Root === Pressable ? {} : { ownerState })}
+          ref={ref}
+          accessible={native.accessible ?? false}
+          onPress={native.onPress ?? onClick}
+          style={typeof style === 'function' ? (state) => [scopeStyle, style(state)] : scopeStyle}
+        >
+          {typeof contentProp === 'function'
+            ? (state) => renderNativeTextChildren(contentProp(state), theme, scope)
+            : content}
+        </Root>
+      )}
+    </NativeTextScope>
   );
 });
 export const Backdrop: React.ForwardRefExoticComponent<
@@ -239,6 +251,7 @@ export const Modal: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ModalProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ModalProps>(function Modal(inProps, forwardedRef) {
   const props = useDefaultProps({ props: inProps, name: 'MuiModal' });
+  const modalTheme = useTheme();
   const {
     open,
     children,
@@ -455,18 +468,10 @@ export const Modal: React.ForwardRefExoticComponent<
   const rendering = retained || (keepMounted && disablePortal) || (!disablePortal && windowShown);
   const tree = rendering ? (
     <ParentContext.Provider value={parentValue}>
-      <Root
-        {...rootRest}
-        {...(Root === View ? {} : { ownerState })}
-        ref={rootRef}
-        collapsable={false}
-        accessible={rootRest.accessible ?? false}
-        accessibilityViewIsModal={retained && !covered}
-        accessibilityElementsHidden={covered || !retained || rootRest.accessibilityElementsHidden}
-        importantForAccessibility={
-          covered || !retained ? 'no-hide-descendants' : rootRest.importantForAccessibility
-        }
-        pointerEvents={covered || !retained ? 'none' : rootRest.pointerEvents}
+      <NativeTextScope
+        theme={modalTheme}
+        reset={!disablePortal}
+        content={React.cloneElement(children, childProps)}
         style={[
           computed,
           style,
@@ -474,79 +479,99 @@ export const Modal: React.ForwardRefExoticComponent<
           rootStyle,
           !retained && (disablePortal || !windowShown) && { display: 'none' },
         ]}
-        onLayout={(event) => {
-          rootRest.onLayout?.(event);
-          if (disablePortal) focusInitial();
-        }}
-        onAccessibilityEscape={() => {
-          rootRest.onAccessibilityEscape?.();
-          manager.requestFrom(layer, null);
-        }}
-        onKeyDown={(event) => {
-          rootRest.onKeyDown?.(event);
-          if (
-            event.nativeEvent.key === 'Escape' &&
-            !event.nativeEvent.isComposing &&
-            manager.isTop(layer)
-          ) {
-            event.stopPropagation();
-            manager.requestFrom(layer, event);
-          }
-        }}
-        onFocusCapture={(event) => {
-          rootRest.onFocusCapture?.(event);
-          if (manager.isTop(layer)) {
-            activated.current = true;
-            const target = event.target;
-            if (
-              target &&
-              typeof target === 'object' &&
-              typeof target.focus === 'function' &&
-              layer.contains(target)
-            )
-              lastFocus.current = target;
-          }
-        }}
-        onBlurCapture={(event) => {
-          rootRest.onBlurCapture?.(event);
-          queueMicrotask(() => {
-            if (
-              !active.current ||
-              !activated.current ||
-              !manager.isTop(layer) ||
-              committed.current.disableEnforceFocus
-            )
-              return;
-            const current = TextInput.State.currentlyFocusedInput();
-            if (current && !layer.contains(current)) {
-              const target = [lastFocus.current, content.current, root.current].find(
-                (node) => node && typeof node.focus === 'function' && node.isConnected !== false,
-              );
-              target?.focus();
-            }
-          });
-        }}
       >
-        {!hideBackdrop && (
-          <BackdropSlot
-            {...backdropProps}
-            {...(BackdropSlot === Backdrop ? {} : { ownerState })}
-            open={open}
-            onPress={(event) => {
-              (backdropProps.onPress ?? backdropProps.onClick)?.(event);
-              if (!active.current || !manager.isTop(layer)) return;
-              if (
-                event.target !== undefined &&
-                event.currentTarget !== undefined &&
-                event.target !== event.currentTarget
-              )
-                return;
-              committed.current.onClose?.(event, 'backdropClick');
+        {(scopedStyle, scopedContent) => (
+          <Root
+            {...rootRest}
+            {...(Root === View ? {} : { ownerState })}
+            ref={rootRef}
+            collapsable={false}
+            accessible={rootRest.accessible ?? false}
+            accessibilityViewIsModal={retained && !covered}
+            accessibilityElementsHidden={
+              covered || !retained || rootRest.accessibilityElementsHidden
+            }
+            importantForAccessibility={
+              covered || !retained ? 'no-hide-descendants' : rootRest.importantForAccessibility
+            }
+            pointerEvents={covered || !retained ? 'none' : rootRest.pointerEvents}
+            style={scopedStyle}
+            onLayout={(event) => {
+              rootRest.onLayout?.(event);
+              if (disablePortal) focusInitial();
             }}
-          />
+            onAccessibilityEscape={() => {
+              rootRest.onAccessibilityEscape?.();
+              manager.requestFrom(layer, null);
+            }}
+            onKeyDown={(event) => {
+              rootRest.onKeyDown?.(event);
+              if (
+                event.nativeEvent.key === 'Escape' &&
+                !event.nativeEvent.isComposing &&
+                manager.isTop(layer)
+              ) {
+                event.stopPropagation();
+                manager.requestFrom(layer, event);
+              }
+            }}
+            onFocusCapture={(event) => {
+              rootRest.onFocusCapture?.(event);
+              if (manager.isTop(layer)) {
+                activated.current = true;
+                const target = event.target;
+                if (
+                  target &&
+                  typeof target === 'object' &&
+                  typeof target.focus === 'function' &&
+                  layer.contains(target)
+                )
+                  lastFocus.current = target;
+              }
+            }}
+            onBlurCapture={(event) => {
+              rootRest.onBlurCapture?.(event);
+              queueMicrotask(() => {
+                if (
+                  !active.current ||
+                  !activated.current ||
+                  !manager.isTop(layer) ||
+                  committed.current.disableEnforceFocus
+                )
+                  return;
+                const current = TextInput.State.currentlyFocusedInput();
+                if (current && !layer.contains(current)) {
+                  const target = [lastFocus.current, content.current, root.current].find(
+                    (node) =>
+                      node && typeof node.focus === 'function' && node.isConnected !== false,
+                  );
+                  target?.focus();
+                }
+              });
+            }}
+          >
+            {!hideBackdrop && (
+              <BackdropSlot
+                {...backdropProps}
+                {...(BackdropSlot === Backdrop ? {} : { ownerState })}
+                open={open}
+                onPress={(event) => {
+                  (backdropProps.onPress ?? backdropProps.onClick)?.(event);
+                  if (!active.current || !manager.isTop(layer)) return;
+                  if (
+                    event.target !== undefined &&
+                    event.currentTarget !== undefined &&
+                    event.target !== event.currentTarget
+                  )
+                    return;
+                  committed.current.onClose?.(event, 'backdropClick');
+                }}
+              />
+            )}
+            {scopedContent}
+          </Root>
         )}
-        {React.cloneElement(children, childProps)}
-      </Root>
+      </NativeTextScope>
     </ParentContext.Provider>
   ) : null;
   if (disablePortal) return tree;
