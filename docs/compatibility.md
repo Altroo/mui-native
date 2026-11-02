@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Anchored native Popover with window/local coordinate conversion, origin/margin adjustment, default Grow, typed refs/actions and slots. See [Popover](popover.md) for native boundaries and device gates.
+
 - Literal text in native library containers, shared text inheritance, native Text/View boundaries and custom scopes. See [text containers](text-containers.md).
 
 - Native Fade/Grow, measured automatic height timing, theme transitions/motion helpers and Dialog/Backdrop transition slots with native-driver opacity, lifecycle and reduced-motion checks. See [transitions](transitions.md) and [Grow](grow.md).

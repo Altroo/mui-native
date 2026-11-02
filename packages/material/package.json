@@ -269,6 +269,11 @@
       "types": "./dist/Grow/index.d.ts",
       "react-native": "./src/Grow/index.ts",
       "default": "./dist/Grow/index.js"
+    },
+    "./Popover": {
+      "types": "./dist/Popover/index.d.ts",
+      "react-native": "./src/Popover/index.ts",
+      "default": "./dist/Popover/index.js"
     }
   },
   "dependencies": {

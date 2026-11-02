@@ -52,6 +52,7 @@ try {
   for (const name of [
     'Fade',
     'Grow',
+    'Popover',
     'Modal',
     'Backdrop',
     'Dialog',
@@ -83,6 +84,8 @@ try {
       requireConsumer('@altroo/mui-native/styles/createTransitions')[name],
       root[name],
     );
+  for (const name of ['PopoverRoot', 'PopoverPaper', 'getOffsetTop', 'getOffsetLeft'])
+    assert.equal(requireConsumer('@altroo/mui-native/Popover')[name], material[name]);
   assert.equal(material.Grow.muiSupportAuto, true);
   requireConsumer('@altroo/mui-native/transitions');
   requireConsumer('@altroo/mui-native/transitions/types');

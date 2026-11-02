@@ -50,7 +50,8 @@
       "styles/createTransitions",
       "styles/createMotion",
       "transitions/types",
-      "Grow"
+      "Grow",
+      "Popover"
     ]
   },
   "@mui/system": {

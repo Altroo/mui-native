@@ -1,0 +1,328 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Popover/Popover.js": "4e197927566e2ec009098234f8a9a775332c3e374008031646ebd9778dab60e2",
+      "Popover/Popover.d.ts": "bec64167be299a61230a6e8fdcf749ee15591e8ad27f2f07f978b123bf01a420",
+      "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+    }
+  },
+  "renderer": "react-test-renderer 19.3.0 with controlled DOM geometry; no CSS/native frame evidence",
+  "fixtures": [
+    {
+      "name": "default anchor and paper origin",
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 200, "left": 100, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "200px", "left": "100px", "transformOrigin": "0px 0px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "centered attachment",
+      "anchorOrigin": { "vertical": "center", "horizontal": "center" },
+      "transformOrigin": { "vertical": "center", "horizontal": "center" },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 200, "left": 100, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "170px", "left": "60px", "transformOrigin": "60px 40px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "bottom right attachment",
+      "anchorOrigin": { "vertical": "bottom", "horizontal": "right" },
+      "transformOrigin": { "vertical": "bottom", "horizontal": "right" },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 200, "left": 100, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "140px", "left": "20px", "transformOrigin": "120px 80px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "fractional numeric origins round only coordinates",
+      "anchor": { "top": 200.25, "left": 100.125, "width": 40, "height": 20 },
+      "anchorOrigin": { "vertical": 3.125, "horizontal": 7.75 },
+      "transformOrigin": { "vertical": 2.25, "horizontal": 4.5 },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 200.25, "left": 100.125, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "201px", "left": "103px", "transformOrigin": "4.5px 2.25px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "top and left viewport correction",
+      "anchor": { "top": 2, "left": 3, "width": 40, "height": 20 },
+      "transformOrigin": { "vertical": "bottom", "horizontal": "right" },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 2, "left": 3, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "16px", "left": "16px", "transformOrigin": "-13px -14px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "bottom and right viewport correction",
+      "anchor": { "top": 790, "left": 395, "width": 40, "height": 20 },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 790, "left": 395, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "704px", "left": "264px", "transformOrigin": "131px 86px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "null margin retains pinned horizontal correction",
+      "marginThreshold": null,
+      "anchor": { "top": 790, "left": 395, "width": 40, "height": 20 },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 790, "left": 395, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "790px", "left": "280px", "transformOrigin": "115px 0px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "zero margin clips at viewport",
+      "marginThreshold": 0,
+      "anchor": { "top": 790, "left": 395, "width": 40, "height": 20 },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 790, "left": 395, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "720px", "left": "280px", "transformOrigin": "115px 70px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "position reference ignores anchor origin",
+      "anchorReference": "anchorPosition",
+      "anchorPosition": { "top": 130, "left": 170 },
+      "anchorOrigin": { "vertical": "bottom", "horizontal": "right" },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 200, "left": 100, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "130px", "left": "170px", "transformOrigin": "0px 0px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "none only writes transform origin",
+      "anchorReference": "none",
+      "transformOrigin": { "vertical": "bottom", "horizontal": "right" },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 200, "left": 100, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": null, "left": null, "transformOrigin": "120px 80px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "missing anchor uses body",
+      "missingAnchor": true,
+      "anchorOrigin": { "vertical": "center", "horizontal": "center" },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 0, "left": 0, "width": 400, "height": 800 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "400px", "left": "200px", "transformOrigin": "0px 0px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "negative numeric origins",
+      "anchorOrigin": { "vertical": -10, "horizontal": -7 },
+      "transformOrigin": { "vertical": -3, "horizontal": -2 },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 200, "left": 100, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 120, "height": 80 },
+      "result": { "top": "193px", "left": "95px", "transformOrigin": "-2px -3px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "oversize top branch takes precedence",
+      "size": { "width": 600, "height": 1000 },
+      "anchor": { "top": -200, "left": -100, "width": 40, "height": 20 },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": -200, "left": -100, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 600, "height": 1000 },
+      "result": { "top": "16px", "left": "16px", "transformOrigin": "-116px -216px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    },
+    {
+      "name": "zero sized paper",
+      "size": { "width": 0, "height": 0 },
+      "viewport": { "width": 400, "height": 800 },
+      "resolvedAnchor": { "top": 200, "left": 100, "width": 40, "height": 20 },
+      "resolvedSize": { "width": 0, "height": 0 },
+      "result": { "top": "200px", "left": "100px", "transformOrigin": "0px 0px" },
+      "routing": {
+        "open": true,
+        "disableAutoFocus": false,
+        "invisibleBackdrop": true,
+        "elevation": 8,
+        "appear": true,
+        "in": true,
+        "timeout": null,
+        "action": true
+      }
+    }
+  ],
+  "offsets": [
+    {
+      "length": 0,
+      "vertical": [
+        ["top", 0],
+        ["center", 0],
+        ["bottom", 0],
+        [-2.25, -2.25]
+      ],
+      "horizontal": [
+        ["left", 0],
+        ["center", 0],
+        ["right", 0],
+        [4.75, 4.75]
+      ]
+    },
+    {
+      "length": 1,
+      "vertical": [
+        ["top", 0],
+        ["center", 0.5],
+        ["bottom", 1],
+        [-2.25, -2.25]
+      ],
+      "horizontal": [
+        ["left", 0],
+        ["center", 0.5],
+        ["right", 1],
+        [4.75, 4.75]
+      ]
+    },
+    {
+      "length": 37.5,
+      "vertical": [
+        ["top", 0],
+        ["center", 18.75],
+        ["bottom", 37.5],
+        [-2.25, -2.25]
+      ],
+      "horizontal": [
+        ["left", 0],
+        ["center", 18.75],
+        ["right", 37.5],
+        [4.75, 4.75]
+      ]
+    }
+  ]
+}

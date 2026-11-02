@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "b1f4414de1d96e545a967552615466f23510b501bb56001489344850e7220f5c",
+  "nativeSourceSha256": "6e8952f5407ca945920a3dcb9dcfd707b19225375a2eba459123860d3ebd9dc0",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -5065,7 +5065,7 @@
           "file": "Popover/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/Popper",
@@ -18084,7 +18084,7 @@
           "line": 172
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -18103,7 +18103,7 @@
           "line": 171
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -24924,7 +24924,7 @@
           "line": 190
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -24943,7 +24943,7 @@
           "line": 168
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -24962,7 +24962,7 @@
           "line": 37
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25038,7 +25038,7 @@
           "line": 62
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25057,7 +25057,7 @@
           "line": 167
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25076,7 +25076,7 @@
           "line": 176
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25095,7 +25095,7 @@
           "line": 35
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25114,7 +25114,7 @@
           "line": 66
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25133,7 +25133,7 @@
           "line": 75
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25152,7 +25152,7 @@
           "line": 70
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25171,7 +25171,7 @@
           "line": 175
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25190,7 +25190,7 @@
           "line": 34
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25209,7 +25209,7 @@
           "line": 12
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25228,7 +25228,7 @@
           "line": 38
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -25247,7 +25247,7 @@
           "line": 36
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35564,6 +35564,17 @@
       ]
     },
     {
+      "name": "NativePopoverAnchor",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/popoverMeasurement.ts",
+          "name": "NativePopoverAnchor",
+          "kind": "type",
+          "line": 8
+        }
+      ]
+    },
+    {
       "name": "NativeStyle",
       "origins": [
         {
@@ -35703,6 +35714,39 @@
           "name": "PaletteTonalOffset",
           "kind": "type",
           "line": 93
+        }
+      ]
+    },
+    {
+      "name": "PopoverPaperProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/popover.tsx",
+          "name": "PopoverPaperProps",
+          "kind": "type",
+          "line": 44
+        }
+      ]
+    },
+    {
+      "name": "PopoverRootProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/popover.tsx",
+          "name": "PopoverRootProps",
+          "kind": "type",
+          "line": 40
+        }
+      ]
+    },
+    {
+      "name": "PopoverVirtualElement",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/popoverMeasurement.ts",
+          "name": "PopoverVirtualElement",
+          "kind": "type",
+          "line": 4
         }
       ]
     },
@@ -95901,7 +95945,7 @@
           "line": 17,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -95914,7 +95958,7 @@
           "line": 22,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -95927,7 +95971,7 @@
           "line": 27,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -95940,7 +95984,7 @@
           "line": 32,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -95948,7 +95992,14 @@
         "React.ElementType"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverSlots",
+          "file": "src/popover.tsx",
+          "line": 48,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverRootSlotPropsOverrides",
@@ -95958,7 +96009,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverRootSlotPropsOverrides",
+          "file": "src/popover.tsx",
+          "line": 33,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverPaperSlotPropsOverrides",
@@ -95968,7 +96026,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverPaperSlotPropsOverrides",
+          "file": "src/popover.tsx",
+          "line": 34,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverTransitionSlotPropsOverrides",
@@ -95978,7 +96043,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverTransitionSlotPropsOverrides",
+          "file": "src/popover.tsx",
+          "line": 35,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverBackdropSlotPropsOverrides",
@@ -95988,7 +96060,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverBackdropSlotPropsOverrides",
+          "file": "src/popover.tsx",
+          "line": 36,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverSlotsAndSlotProps",
@@ -96013,7 +96092,14 @@
         "TransitionProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverSlotsAndSlotProps",
+          "file": "src/popover.tsx",
+          "line": 97,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverOrigin",
@@ -96031,7 +96117,7 @@
           "line": 63,
           "kind": "property",
           "type": "'top' | 'center' | 'bottom' | number",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96044,13 +96130,20 @@
           "line": 64,
           "kind": "property",
           "type": "'left' | 'center' | 'right' | number",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverOrigin",
+          "file": "src/popoverGeometry.ts",
+          "line": 1,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverPosition",
@@ -96068,7 +96161,7 @@
           "line": 67,
           "kind": "property",
           "type": "number",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96081,13 +96174,20 @@
           "line": 68,
           "kind": "property",
           "type": "number",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverPosition",
+          "file": "src/popoverGeometry.ts",
+          "line": 5,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverReference",
@@ -96097,7 +96197,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverReference",
+          "file": "src/popoverGeometry.ts",
+          "line": 9,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverVirtualElement",
@@ -96115,7 +96222,7 @@
           "line": 72,
           "kind": "property",
           "type": "() => DOMRect",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96128,7 +96235,7 @@
           "line": 73,
           "kind": "property",
           "type": "Node['ELEMENT_NODE']",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -96137,7 +96244,14 @@
         "Node"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverVirtualElement",
+          "file": "src/popoverMeasurement.ts",
+          "line": 4,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverProps",
@@ -96155,7 +96269,7 @@
           "line": 80,
           "kind": "property",
           "type": "React.Ref<PopoverActions> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96168,7 +96282,7 @@
           "line": 86,
           "kind": "property",
           "type": "null | Element | PopoverVirtualElement | (() => Element | PopoverVirtualElement | null) | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96181,7 +96295,7 @@
           "line": 100,
           "kind": "property",
           "type": "PopoverOrigin | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96194,7 +96308,7 @@
           "line": 105,
           "kind": "property",
           "type": "PopoverPosition | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96207,7 +96321,7 @@
           "line": 111,
           "kind": "property",
           "type": "PopoverReference | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96220,7 +96334,7 @@
           "line": 115,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96259,7 +96373,7 @@
           "line": 132,
           "kind": "property",
           "type": "number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96272,7 +96386,7 @@
           "line": 138,
           "kind": "property",
           "type": "number | null | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96324,7 +96438,7 @@
           "line": 160,
           "kind": "property",
           "type": "PopoverOrigin | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96337,7 +96451,7 @@
           "line": 165,
           "kind": "property",
           "type": "TransitionProps['timeout'] | 'auto' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -96360,7 +96474,14 @@
         "TransitionProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverProps",
+          "file": "src/popover.tsx",
+          "line": 56,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverOwnerState",
@@ -96373,7 +96494,14 @@
         "PopoverProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverOwnerState",
+          "file": "src/popover.tsx",
+          "line": 89,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverActions",
@@ -96391,13 +96519,20 @@
           "line": 169,
           "kind": "property",
           "type": "updatePosition(): void;",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverActions",
+          "file": "src/popover.tsx",
+          "line": 37,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverRootProps",
@@ -96410,7 +96545,14 @@
         "PopoverProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverRootProps",
+          "file": "src/popover.tsx",
+          "line": 40,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverPaperProps",
@@ -96423,7 +96565,14 @@
         "PopoverProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverPaperProps",
+          "file": "src/popover.tsx",
+          "line": 44,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverSlots",
@@ -96441,7 +96590,7 @@
           "line": 17,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96454,7 +96603,7 @@
           "line": 22,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96467,7 +96616,7 @@
           "line": 27,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96480,7 +96629,7 @@
           "line": 32,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -96488,7 +96637,14 @@
         "React.ElementType"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverSlots",
+          "file": "src/popover.tsx",
+          "line": 48,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverRootSlotPropsOverrides",
@@ -96498,7 +96654,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverRootSlotPropsOverrides",
+          "file": "src/popover.tsx",
+          "line": 33,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverPaperSlotPropsOverrides",
@@ -96508,7 +96671,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverPaperSlotPropsOverrides",
+          "file": "src/popover.tsx",
+          "line": 34,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverTransitionSlotPropsOverrides",
@@ -96518,7 +96688,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverTransitionSlotPropsOverrides",
+          "file": "src/popover.tsx",
+          "line": 35,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverBackdropSlotPropsOverrides",
@@ -96528,7 +96705,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverBackdropSlotPropsOverrides",
+          "file": "src/popover.tsx",
+          "line": 36,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverSlotsAndSlotProps",
@@ -96553,7 +96737,14 @@
         "TransitionProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverSlotsAndSlotProps",
+          "file": "src/popover.tsx",
+          "line": 97,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverOrigin",
@@ -96571,7 +96762,7 @@
           "line": 63,
           "kind": "property",
           "type": "'top' | 'center' | 'bottom' | number",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96584,13 +96775,20 @@
           "line": 64,
           "kind": "property",
           "type": "'left' | 'center' | 'right' | number",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverOrigin",
+          "file": "src/popoverGeometry.ts",
+          "line": 1,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverPosition",
@@ -96608,7 +96806,7 @@
           "line": 67,
           "kind": "property",
           "type": "number",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96621,13 +96819,20 @@
           "line": 68,
           "kind": "property",
           "type": "number",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverPosition",
+          "file": "src/popoverGeometry.ts",
+          "line": 5,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverReference",
@@ -96637,7 +96842,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverReference",
+          "file": "src/popoverGeometry.ts",
+          "line": 9,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverVirtualElement",
@@ -96655,7 +96867,7 @@
           "line": 72,
           "kind": "property",
           "type": "() => DOMRect",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96668,7 +96880,7 @@
           "line": 73,
           "kind": "property",
           "type": "Node['ELEMENT_NODE']",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -96677,7 +96889,14 @@
         "Node"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverVirtualElement",
+          "file": "src/popoverMeasurement.ts",
+          "line": 4,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverProps",
@@ -96695,7 +96914,7 @@
           "line": 80,
           "kind": "property",
           "type": "React.Ref<PopoverActions> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96708,7 +96927,7 @@
           "line": 86,
           "kind": "property",
           "type": "null | Element | PopoverVirtualElement | (() => Element | PopoverVirtualElement | null) | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96721,7 +96940,7 @@
           "line": 100,
           "kind": "property",
           "type": "PopoverOrigin | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96734,7 +96953,7 @@
           "line": 105,
           "kind": "property",
           "type": "PopoverPosition | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96747,7 +96966,7 @@
           "line": 111,
           "kind": "property",
           "type": "PopoverReference | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96760,7 +96979,7 @@
           "line": 115,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96799,7 +97018,7 @@
           "line": 132,
           "kind": "property",
           "type": "number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96812,7 +97031,7 @@
           "line": 138,
           "kind": "property",
           "type": "number | null | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96864,7 +97083,7 @@
           "line": 160,
           "kind": "property",
           "type": "PopoverOrigin | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -96877,7 +97096,7 @@
           "line": 165,
           "kind": "property",
           "type": "TransitionProps['timeout'] | 'auto' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -96900,7 +97119,14 @@
         "TransitionProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverProps",
+          "file": "src/popover.tsx",
+          "line": 56,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverOwnerState",
@@ -96913,7 +97139,14 @@
         "PopoverProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverOwnerState",
+          "file": "src/popover.tsx",
+          "line": 89,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverActions",
@@ -96931,13 +97164,20 @@
           "line": 169,
           "kind": "property",
           "type": "updatePosition(): void;",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverActions",
+          "file": "src/popover.tsx",
+          "line": 37,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverRootProps",
@@ -96950,7 +97190,14 @@
         "PopoverProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverRootProps",
+          "file": "src/popover.tsx",
+          "line": 40,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverPaperProps",
@@ -96963,7 +97210,14 @@
         "PopoverProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopoverPaperProps",
+          "file": "src/popover.tsx",
+          "line": 44,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopoverClasses",
@@ -181297,7 +181551,7 @@
     {
       "name": "Props",
       "file": "src/NativeTransition.tsx",
-      "line": 6,
+      "line": 14,
       "kind": "type",
       "members": [
         {
@@ -181307,7 +181561,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "in?: boolean;",
-          "line": 7,
+          "line": 15,
           "kind": "property",
           "type": "boolean"
         },
@@ -181318,7 +181572,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mountOnEnter?: boolean;",
-          "line": 8,
+          "line": 16,
           "kind": "property",
           "type": "boolean"
         },
@@ -181329,7 +181583,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "unmountOnExit?: boolean;",
-          "line": 9,
+          "line": 17,
           "kind": "property",
           "type": "boolean"
         },
@@ -181340,7 +181594,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "timeout?: TransitionProps['timeout'];",
-          "line": 10,
+          "line": 18,
           "kind": "property",
           "type": "TransitionProps['timeout']"
         },
@@ -181351,7 +181605,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "getAutoTimeout?: () => number | null | undefined;",
-          "line": 11,
+          "line": 19,
           "kind": "property",
           "type": "() => number | null | undefined"
         },
@@ -181362,7 +181616,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nodeRef: React.RefObject<ViewInstance | null>;",
-          "line": 12,
+          "line": 20,
           "kind": "property",
           "type": "React.RefObject<ViewInstance | null>"
         },
@@ -181373,7 +181627,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "reduceMotion: boolean;",
-          "line": 13,
+          "line": 21,
           "kind": "property",
           "type": "boolean"
         },
@@ -181384,7 +181638,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "addEndListener?: (node: ViewInstance, done: () => void) => void;",
-          "line": 14,
+          "line": 22,
           "kind": "property",
           "type": "(node: ViewInstance, done: () => void) => void"
         },
@@ -181395,7 +181649,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEnter?: (appearing: boolean) => void;",
-          "line": 15,
+          "line": 23,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -181406,7 +181660,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEntering?: (appearing: boolean) => void;",
-          "line": 16,
+          "line": 24,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -181417,7 +181671,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEntered?: (appearing: boolean) => void;",
-          "line": 17,
+          "line": 25,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -181428,7 +181682,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExit?: () => void;",
-          "line": 18,
+          "line": 26,
           "kind": "event",
           "type": "() => void"
         },
@@ -181439,7 +181693,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExiting?: () => void;",
-          "line": 19,
+          "line": 27,
           "kind": "event",
           "type": "() => void"
         },
@@ -181450,7 +181704,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExited?: () => void;",
-          "line": 20,
+          "line": 28,
           "kind": "event",
           "type": "() => void"
         },
@@ -181461,7 +181715,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: (status: Exclude<TransitionStatus, 'unmounted'>, phase: number) => React.ReactNode;",
-          "line": 21,
+          "line": 29,
           "kind": "property",
           "type": "(status: Exclude<TransitionStatus, 'unmounted'>, phase: number) => React.ReactNode"
         }
@@ -181474,6 +181728,18 @@
         "TransitionProps",
         "TransitionStatus",
         "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeStatus",
+      "file": "src/NativeTransition.tsx",
+      "line": 31,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "TransitionStatus"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -181673,6 +181939,768 @@
         }
       ],
       "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverRootSlotPropsOverrides",
+      "file": "src/popover.tsx",
+      "line": 33,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverPaperSlotPropsOverrides",
+      "file": "src/popover.tsx",
+      "line": 34,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverTransitionSlotPropsOverrides",
+      "file": "src/popover.tsx",
+      "line": 35,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverBackdropSlotPropsOverrides",
+      "file": "src/popover.tsx",
+      "line": 36,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverActions",
+      "file": "src/popover.tsx",
+      "line": 37,
+      "kind": "type",
+      "members": [
+        {
+          "name": "updatePosition",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "updatePosition(): void;",
+          "line": 38,
+          "kind": "property",
+          "type": "updatePosition(): void;"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverRootProps",
+      "file": "src/popover.tsx",
+      "line": 40,
+      "kind": "type",
+      "members": [
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>;",
+          "line": 41,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        },
+        {
+          "name": "ownerState",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ownerState?: PopoverOwnerState;",
+          "line": 42,
+          "kind": "property",
+          "type": "PopoverOwnerState"
+        }
+      ],
+      "references": [
+        "ModalProps",
+        "PopoverOwnerState",
+        "React.Ref",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverPaperProps",
+      "file": "src/popover.tsx",
+      "line": 44,
+      "kind": "type",
+      "members": [
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>;",
+          "line": 45,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        },
+        {
+          "name": "ownerState",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ownerState?: PopoverOwnerState;",
+          "line": 46,
+          "kind": "property",
+          "type": "PopoverOwnerState"
+        }
+      ],
+      "references": [
+        "PaperProps",
+        "PopoverOwnerState",
+        "React.Ref",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverSlots",
+      "file": "src/popover.tsx",
+      "line": 48,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: React.ComponentType<PopoverRootProps>;",
+          "line": 49,
+          "kind": "slot",
+          "type": "React.ComponentType<PopoverRootProps>"
+        },
+        {
+          "name": "paper",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "paper?: React.ComponentType<PopoverPaperProps & React.RefAttributes<ViewInstance>>;",
+          "line": 50,
+          "kind": "slot",
+          "type": "React.ComponentType<PopoverPaperProps & React.RefAttributes<ViewInstance>>"
+        },
+        {
+          "name": "transition",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "transition?: React.ComponentType<TransitionProps & { children: React.ReactElement<any> }> & {\n    muiSupportAuto?: boolean;\n  };",
+          "line": 51,
+          "kind": "slot",
+          "type": "React.ComponentType<TransitionProps & { children: React.ReactElement<any> }> & {\n    muiSupportAuto?: boolean;\n  }"
+        },
+        {
+          "name": "transition.muiSupportAuto",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "muiSupportAuto?: boolean;",
+          "line": 52,
+          "kind": "slot",
+          "type": "boolean"
+        },
+        {
+          "name": "backdrop",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "backdrop?: React.ComponentType<BackdropProps & React.RefAttributes<ViewInstance>>;",
+          "line": 54,
+          "kind": "slot",
+          "type": "React.ComponentType<BackdropProps & React.RefAttributes<ViewInstance>>"
+        }
+      ],
+      "references": [
+        "BackdropProps",
+        "PopoverPaperProps",
+        "PopoverRootProps",
+        "React.ComponentType",
+        "React.ReactElement",
+        "React.RefAttributes",
+        "TransitionProps",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverProps",
+      "file": "src/popover.tsx",
+      "line": 56,
+      "kind": "type",
+      "members": [
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 57,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>;",
+          "line": 58,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        },
+        {
+          "name": "action",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "action?: React.Ref<PopoverActions>;",
+          "line": 59,
+          "kind": "property",
+          "type": "React.Ref<PopoverActions>"
+        },
+        {
+          "name": "anchorEl",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "anchorEl?: NativePopoverAnchor | null | (() => NativePopoverAnchor | null);",
+          "line": 60,
+          "kind": "property",
+          "type": "NativePopoverAnchor | null | (() => NativePopoverAnchor | null)"
+        },
+        {
+          "name": "anchorOrigin",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "anchorOrigin?: PopoverOrigin;",
+          "line": 61,
+          "kind": "property",
+          "type": "PopoverOrigin"
+        },
+        {
+          "name": "anchorPosition",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "anchorPosition?: PopoverPosition;",
+          "line": 62,
+          "kind": "property",
+          "type": "PopoverPosition"
+        },
+        {
+          "name": "anchorReference",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "anchorReference?: PopoverReference;",
+          "line": 63,
+          "kind": "property",
+          "type": "PopoverReference"
+        },
+        {
+          "name": "transformOrigin",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "transformOrigin?: PopoverOrigin;",
+          "line": 64,
+          "kind": "property",
+          "type": "PopoverOrigin"
+        },
+        {
+          "name": "elevation",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation?: number;",
+          "line": 65,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "marginThreshold",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "marginThreshold?: number | null;",
+          "line": 66,
+          "kind": "property",
+          "type": "number | null"
+        },
+        {
+          "name": "transitionDuration",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "transitionDuration?: GrowProps['timeout'];",
+          "line": 67,
+          "kind": "property",
+          "type": "GrowProps['timeout']"
+        },
+        {
+          "name": "slots",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slots?: PopoverSlots;",
+          "line": 68,
+          "kind": "slot",
+          "type": "PopoverSlots"
+        },
+        {
+          "name": "slotProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slotProps?: {\n    root?: SlotProps<Partial<PopoverRootProps> & PopoverRootSlotPropsOverrides, PopoverOwnerState>;\n    paper?: SlotProps<\n      PopoverPaperProps & PopoverPaperSlotPropsOverrides & React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >;\n    transition?: SlotProps<\n      Partial<TransitionProps> &\n        PopoverTransitionSlotPropsOverrides &\n        React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >;\n    backdrop?: SlotProps<\n      Partial<BackdropProps> &\n        PopoverBackdropSlotPropsOverrides &\n        React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >;\n  };",
+          "line": 69,
+          "kind": "slot",
+          "type": "{\n    root?: SlotProps<Partial<PopoverRootProps> & PopoverRootSlotPropsOverrides, PopoverOwnerState>;\n    paper?: SlotProps<\n      PopoverPaperProps & PopoverPaperSlotPropsOverrides & React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >;\n    transition?: SlotProps<\n      Partial<TransitionProps> &\n        PopoverTransitionSlotPropsOverrides &\n        React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >;\n    backdrop?: SlotProps<\n      Partial<BackdropProps> &\n        PopoverBackdropSlotPropsOverrides &\n        React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >;\n  }"
+        },
+        {
+          "name": "slotProps.root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: SlotProps<Partial<PopoverRootProps> & PopoverRootSlotPropsOverrides, PopoverOwnerState>;",
+          "line": 70,
+          "kind": "slot",
+          "type": "SlotProps<Partial<PopoverRootProps> & PopoverRootSlotPropsOverrides, PopoverOwnerState>"
+        },
+        {
+          "name": "slotProps.paper",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "paper?: SlotProps<\n      PopoverPaperProps & PopoverPaperSlotPropsOverrides & React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >;",
+          "line": 71,
+          "kind": "slot",
+          "type": "SlotProps<\n      PopoverPaperProps & PopoverPaperSlotPropsOverrides & React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >"
+        },
+        {
+          "name": "slotProps.transition",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "transition?: SlotProps<\n      Partial<TransitionProps> &\n        PopoverTransitionSlotPropsOverrides &\n        React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >;",
+          "line": 75,
+          "kind": "slot",
+          "type": "SlotProps<\n      Partial<TransitionProps> &\n        PopoverTransitionSlotPropsOverrides &\n        React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >"
+        },
+        {
+          "name": "slotProps.backdrop",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "backdrop?: SlotProps<\n      Partial<BackdropProps> &\n        PopoverBackdropSlotPropsOverrides &\n        React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >;",
+          "line": 81,
+          "kind": "slot",
+          "type": "SlotProps<\n      Partial<BackdropProps> &\n        PopoverBackdropSlotPropsOverrides &\n        React.RefAttributes<ViewInstance>,\n      PopoverOwnerState\n    >"
+        }
+      ],
+      "references": [
+        "BackdropProps",
+        "GrowProps",
+        "ModalProps",
+        "NativePopoverAnchor",
+        "Omit",
+        "Partial",
+        "PopoverActions",
+        "PopoverBackdropSlotPropsOverrides",
+        "PopoverOrigin",
+        "PopoverOwnerState",
+        "PopoverPaperProps",
+        "PopoverPaperSlotPropsOverrides",
+        "PopoverPosition",
+        "PopoverReference",
+        "PopoverRootProps",
+        "PopoverRootSlotPropsOverrides",
+        "PopoverSlots",
+        "PopoverTransitionSlotPropsOverrides",
+        "React.ReactNode",
+        "React.Ref",
+        "React.RefAttributes",
+        "SlotProps",
+        "TransitionProps",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverOwnerState",
+      "file": "src/popover.tsx",
+      "line": 89,
+      "kind": "type",
+      "members": [
+        {
+          "name": "anchorOrigin",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "anchorOrigin: PopoverOrigin;",
+          "line": 90,
+          "kind": "property",
+          "type": "PopoverOrigin"
+        },
+        {
+          "name": "anchorReference",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "anchorReference: PopoverReference;",
+          "line": 91,
+          "kind": "property",
+          "type": "PopoverReference"
+        },
+        {
+          "name": "transformOrigin",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "transformOrigin: PopoverOrigin;",
+          "line": 92,
+          "kind": "property",
+          "type": "PopoverOrigin"
+        },
+        {
+          "name": "elevation",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation: number;",
+          "line": 93,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "marginThreshold",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "marginThreshold: number | null;",
+          "line": 94,
+          "kind": "property",
+          "type": "number | null"
+        },
+        {
+          "name": "transitionDuration",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "transitionDuration: GrowProps['timeout'];",
+          "line": 95,
+          "kind": "property",
+          "type": "GrowProps['timeout']"
+        }
+      ],
+      "references": [
+        "GrowProps",
+        "Omit",
+        "PopoverOrigin",
+        "PopoverProps",
+        "PopoverReference"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverSlotsAndSlotProps",
+      "file": "src/popover.tsx",
+      "line": 97,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Pick",
+        "PopoverProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PositionedPaperProps",
+      "file": "src/popover.tsx",
+      "line": 220,
+      "kind": "type",
+      "members": [
+        {
+          "name": "surface",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "surface: React.ComponentType<PopoverPaperProps & React.RefAttributes<ViewInstance>>;",
+          "line": 221,
+          "kind": "property",
+          "type": "React.ComponentType<PopoverPaperProps & React.RefAttributes<ViewInstance>>"
+        },
+        {
+          "name": "nativePosition",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "nativePosition: StyleProp<NativeStyle>;",
+          "line": 222,
+          "kind": "property",
+          "type": "StyleProp<NativeStyle>"
+        },
+        {
+          "name": "nativeHidden",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "nativeHidden: boolean;",
+          "line": 223,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "NativeStyle",
+        "PopoverPaperProps",
+        "React.ComponentType",
+        "React.RefAttributes",
+        "StyleProp",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverOrigin",
+      "file": "src/popoverGeometry.ts",
+      "line": 1,
+      "kind": "type",
+      "members": [
+        {
+          "name": "vertical",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "vertical: 'top' | 'center' | 'bottom' | number;",
+          "line": 2,
+          "kind": "property",
+          "type": "'top' | 'center' | 'bottom' | number"
+        },
+        {
+          "name": "horizontal",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "horizontal: 'left' | 'center' | 'right' | number;",
+          "line": 3,
+          "kind": "property",
+          "type": "'left' | 'center' | 'right' | number"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverPosition",
+      "file": "src/popoverGeometry.ts",
+      "line": 5,
+      "kind": "type",
+      "members": [
+        {
+          "name": "top",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "top: number;",
+          "line": 6,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "left",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "left: number;",
+          "line": 7,
+          "kind": "property",
+          "type": "number"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverReference",
+      "file": "src/popoverGeometry.ts",
+      "line": 9,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopoverRect",
+      "file": "src/popoverGeometry.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [
+        {
+          "name": "top",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "top: number;",
+          "line": 11,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "left",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "left: number;",
+          "line": 12,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "width",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "width: number;",
+          "line": 13,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "height",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "height: number;",
+          "line": 14,
+          "kind": "property",
+          "type": "number"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopoverVirtualElement",
+      "file": "src/popoverMeasurement.ts",
+      "line": 4,
+      "kind": "type",
+      "members": [
+        {
+          "name": "nodeType",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "nodeType: 1;",
+          "line": 5,
+          "kind": "property",
+          "type": "1"
+        },
+        {
+          "name": "getBoundingClientRect",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "getBoundingClientRect(): NativePopoverRect;",
+          "line": 6,
+          "kind": "property",
+          "type": "getBoundingClientRect(): NativePopoverRect;"
+        }
+      ],
+      "references": [
+        "NativePopoverRect"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopoverAnchor",
+      "file": "src/popoverMeasurement.ts",
+      "line": 8,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "PopoverVirtualElement",
+        "ViewInstance"
+      ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
     },
@@ -182348,6 +183376,359 @@
         "TextProps",
         "TextStyle",
         "TypographyVariantProp"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Parameters",
+      "file": "src/usePopoverPosition.ts",
+      "line": 13,
+      "kind": "type",
+      "members": [
+        {
+          "name": "open",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "open: boolean;",
+          "line": 14,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "identity",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "identity: symbol;",
+          "line": 15,
+          "kind": "property",
+          "type": "symbol"
+        },
+        {
+          "name": "anchorEl",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "anchorEl?: NativePopoverAnchor | null | (() => NativePopoverAnchor | null);",
+          "line": 16,
+          "kind": "property",
+          "type": "NativePopoverAnchor | null | (() => NativePopoverAnchor | null)"
+        },
+        {
+          "name": "anchorOrigin",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "anchorOrigin: PopoverOrigin;",
+          "line": 17,
+          "kind": "property",
+          "type": "PopoverOrigin"
+        },
+        {
+          "name": "transformOrigin",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "transformOrigin: PopoverOrigin;",
+          "line": 18,
+          "kind": "property",
+          "type": "PopoverOrigin"
+        },
+        {
+          "name": "anchorPosition",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "anchorPosition?: PopoverPosition;",
+          "line": 19,
+          "kind": "property",
+          "type": "PopoverPosition"
+        },
+        {
+          "name": "anchorReference",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "anchorReference: PopoverReference;",
+          "line": 20,
+          "kind": "property",
+          "type": "PopoverReference"
+        },
+        {
+          "name": "marginThreshold",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "marginThreshold: number | null;",
+          "line": 21,
+          "kind": "property",
+          "type": "number | null"
+        },
+        {
+          "name": "viewport",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "viewport: { width: number; height: number };",
+          "line": 22,
+          "kind": "property",
+          "type": "{ width: number; height: number }"
+        },
+        {
+          "name": "viewport.width",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "width: number;",
+          "line": 22,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "viewport.height",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "height: number",
+          "line": 22,
+          "kind": "property",
+          "type": "number"
+        }
+      ],
+      "references": [
+        "NativePopoverAnchor",
+        "PopoverOrigin",
+        "PopoverPosition",
+        "PopoverReference"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Placement",
+      "file": "src/usePopoverPosition.ts",
+      "line": 24,
+      "kind": "type",
+      "members": [
+        {
+          "name": "top",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "top: number | null;",
+          "line": 25,
+          "kind": "property",
+          "type": "number | null"
+        },
+        {
+          "name": "left",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "left: number | null;",
+          "line": 26,
+          "kind": "property",
+          "type": "number | null"
+        },
+        {
+          "name": "origin",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "origin: { vertical: number; horizontal: number };",
+          "line": 27,
+          "kind": "property",
+          "type": "{ vertical: number; horizontal: number }"
+        },
+        {
+          "name": "origin.vertical",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "vertical: number;",
+          "line": 27,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "origin.horizontal",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "horizontal: number",
+          "line": 27,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "cycle",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "cycle: symbol;",
+          "line": 28,
+          "kind": "property",
+          "type": "symbol"
+        },
+        {
+          "name": "identity",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "identity: symbol;",
+          "line": 29,
+          "kind": "property",
+          "type": "symbol"
+        },
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: ViewInstance;",
+          "line": 30,
+          "kind": "property",
+          "type": "ViewInstance"
+        },
+        {
+          "name": "paper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "paper: ViewInstance;",
+          "line": 31,
+          "kind": "property",
+          "type": "ViewInstance"
+        }
+      ],
+      "references": [
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PositionController",
+      "file": "src/usePopoverPosition.ts",
+      "line": 33,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: RefCallback<ViewInstance>;",
+          "line": 34,
+          "kind": "property",
+          "type": "RefCallback<ViewInstance>"
+        },
+        {
+          "name": "paper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "paper: RefCallback<ViewInstance>;",
+          "line": 35,
+          "kind": "property",
+          "type": "RefCallback<ViewInstance>"
+        },
+        {
+          "name": "request",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "request: () => void;",
+          "line": 36,
+          "kind": "property",
+          "type": "() => void"
+        },
+        {
+          "name": "onPaperLayout",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onPaperLayout: (event: LayoutChangeEvent, identity: symbol) => void;",
+          "line": 37,
+          "kind": "event",
+          "type": "(event: LayoutChangeEvent, identity: symbol) => void"
+        },
+        {
+          "name": "exited",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "exited: (cycle: symbol) => void;",
+          "line": 38,
+          "kind": "property",
+          "type": "(cycle: symbol) => void"
+        },
+        {
+          "name": "cycle",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "cycle: symbol;",
+          "line": 39,
+          "kind": "property",
+          "type": "symbol"
+        },
+        {
+          "name": "positioned",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "positioned: boolean;",
+          "line": 40,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "placement",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "placement: Placement | undefined;",
+          "line": 41,
+          "kind": "property",
+          "type": "Placement | undefined"
+        }
+      ],
+      "references": [
+        "LayoutChangeEvent",
+        "Placement",
+        "RefCallback",
+        "ViewInstance"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"

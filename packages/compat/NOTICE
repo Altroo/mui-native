@@ -3,7 +3,7 @@ product and is not affiliated with or endorsed by MUI.
 
 Material UI and MUI X are names used to identify upstream compatibility targets.
 Native rendering code is independently authored. Palette, color, spacing,
-breakpoint, typography, default/slot-prop, slot routing, ref lifecycle, input/adornment state, label/helper state/layout, nested/scoped theme providers, modal/focus coordination, transition timing/lifecycle and height-based opacity/scale, reduced-motion configuration, container text inheritance and responsive-style algorithms adapt
+breakpoint, typography, default/slot-prop, slot routing, ref lifecycle, input/adornment state, label/helper state/layout, nested/scoped theme providers, modal/focus coordination, transition timing/lifecycle and height-based opacity/scale, reduced-motion configuration, container text inheritance, anchored popover positioning and responsive-style algorithms adapt
 MIT-licensed Material UI/System/Utils
 code as recorded in upstream/reuse.json. Upstream public declaration
 snapshots and license texts are retained under upstream/. Derived declaration

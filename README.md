@@ -40,7 +40,7 @@ Do not run `npm install @altroo/mui-native` yet. For testing a separate applicat
 
 | Package                             | Implemented development subset                                                                                      |
 | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `@altroo/mui-native`                | Layout, typography, buttons, inputs, checkbox/radio/switch, dialog, alert, progress, snackbar                       |
+| `@altroo/mui-native`                | Layout, typography, buttons, inputs, checkbox/radio/switch, dialog, popover, alert, progress, snackbar              |
 | `@altroo/mui-native-system`         | Theme provider, tokens, responsive `sx`, supported state selectors, component defaults/overrides/variants, `styled` |
 | `@altroo/mui-native-icons`          | Four original geometric icons; the full upstream icon inventory is tracked                                          |
 | `@altroo/mui-native-compat`         | Opt-in Metro import resolver and native TypeScript configuration generator                                          |
@@ -97,6 +97,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Native Modal, Backdrop and Dialog coordination](docs/modals.md)
 - [Native Fade, transition timing and reduced motion](docs/transitions.md)
 - [Native Grow and automatic height timing](docs/grow.md)
+- [Native anchored Popover](docs/popover.md)
 - [Text rendering and inheritance in native containers](docs/text-containers.md)
 - [Spacing, breakpoints and responsive styles](docs/layout-system.md)
 - [Native Button loading](docs/button.md)

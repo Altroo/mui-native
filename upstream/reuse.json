@@ -587,7 +587,8 @@
         }
       },
       "adaptations": [
-        "A native lifecycle state machine adapts pinned appear/enter/exit, mount/unmount, callbacks and completion races. Native refs replace DOM nodes; TransitionGroup interoperation remains unfinished."
+        "A native lifecycle state machine adapts pinned appear/enter/exit, mount/unmount, callbacks and completion races. Native refs replace DOM nodes; TransitionGroup interoperation remains unfinished.",
+        "Private native measurement readiness defers enter without consuming the initial appear state and permits cleanup when closed before geometry resolves."
       ]
     },
     {
@@ -899,7 +900,62 @@
         }
       },
       "adaptations": [
-        "Private auto-duration getter support follows the pinned transition completion contract while retaining native timer/listener cancellation and callback ordering."
+        "Private auto-duration getter support follows the pinned transition completion contract while retaining native timer/listener cancellation and callback ordering.",
+        "Private native measurement readiness defers enter without consuming the initial appear state and permits cleanup when closed before geometry resolves."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/popover.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Popover/Popover.js": "4e197927566e2ec009098234f8a9a775332c3e374008031646ebd9778dab60e2",
+          "Popover/Popover.d.ts": "bec64167be299a61230a6e8fdcf749ee15591e8ad27f2f07f978b123bf01a420",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+        }
+      },
+      "adaptations": [
+        "Native root/paper/transition/backdrop routing and public Popover contracts adapt the pinned MIT source. Native window/local coordinates, scrolling, content direction and measured readiness replace browser DOM infrastructure."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/popoverGeometry.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Popover/Popover.js": "4e197927566e2ec009098234f8a9a775332c3e374008031646ebd9778dab60e2",
+          "Popover/Popover.d.ts": "bec64167be299a61230a6e8fdcf749ee15591e8ad27f2f07f978b123bf01a420",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+        }
+      },
+      "adaptations": [
+        "Anchor offsets, transform origins, rounding and viewport corrections follow original Popover, including its marginThreshold=null horizontal-right branch."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/usePopoverPosition.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Popover/Popover.js": "4e197927566e2ec009098234f8a9a775332c3e374008031646ebd9778dab60e2",
+          "Popover/Popover.d.ts": "bec64167be299a61230a6e8fdcf749ee15591e8ad27f2f07f978b123bf01a420",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+        }
+      },
+      "adaptations": [
+        "Pinned placement is coordinated through guarded asynchronous native measurements and actual node/cycle identity; stale results cannot position a reopened or replaced surface."
       ]
     }
   ]

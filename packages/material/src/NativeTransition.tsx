@@ -1,7 +1,15 @@
-import React, { useCallback, useInsertionEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useInsertionEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import type { ViewInstance } from 'react-native';
 import { diagnostic } from '@altroo/mui-native-system';
 import { completionTimeout, nativeMilliseconds } from './nativeTransitionTiming';
+import { NativeTransitionReadiness } from './transitionReadiness';
 import type { TransitionActions, TransitionProps, TransitionStatus } from './transitions/types';
 interface Props extends TransitionActions {
   in?: boolean;
@@ -20,12 +28,17 @@ interface Props extends TransitionActions {
   onExited?: () => void;
   children: (status: Exclude<TransitionStatus, 'unmounted'>, phase: number) => React.ReactNode;
 }
+type NativeStatus = TransitionStatus | 'waiting';
 export default function NativeTransition(props: Props) {
+  const ready = useContext(NativeTransitionReadiness);
+  const committedReady = useRef(ready);
   const { in: inProp = false, appear = false, mountOnEnter = false, unmountOnExit = false } = props;
-  const [status, setStatus] = useState<TransitionStatus>(() =>
+  const [status, setStatus] = useState<NativeStatus>(() =>
     inProp
       ? appear
-        ? 'exited'
+        ? ready
+          ? 'exited'
+          : 'waiting'
         : 'entered'
       : mountOnEnter || unmountOnExit
         ? 'unmounted'
@@ -40,6 +53,7 @@ export default function NativeTransition(props: Props) {
   const current = useRef(props);
   useInsertionEffect(() => {
     current.current = props;
+    committedReady.current = ready;
   });
   const mounted = useRef(false),
     shouldAppear = useRef(inProp && appear),
@@ -123,7 +137,7 @@ export default function NativeTransition(props: Props) {
   );
   useLayoutEffect(() => {
     mounted.current = true;
-    if (shouldAppear.current) {
+    if (shouldAppear.current && committedReady.current && current.current.in) {
       shouldAppear.current = false;
       update(true, true);
     }
@@ -136,13 +150,27 @@ export default function NativeTransition(props: Props) {
     if (!mounted.current) return;
     const state = statusRef.current;
     if (inProp) {
-      if (state !== 'entering' && state !== 'entered') update(true);
+      if (state !== 'entering' && state !== 'entered') {
+        if (!ready) {
+          if (state !== 'waiting') {
+            statusRef.current = 'waiting';
+            setStatus('waiting');
+          }
+        } else {
+          const initial = shouldAppear.current;
+          shouldAppear.current = false;
+          update(true, initial);
+        }
+      }
+    } else if (state === 'waiting') {
+      shouldAppear.current = false;
+      update(false);
     } else if (state === 'entering' || state === 'entered') update(false);
     else if (state === 'exited' && unmountOnExit) {
       statusRef.current = 'unmounted';
       setStatus('unmounted');
     }
-  }, [inProp, status, unmountOnExit, update]);
+  }, [inProp, status, unmountOnExit, update, ready]);
   useLayoutEffect(() => {
     if (status === 'unmounted' || lastFired.current === 'unmounted') {
       lastFired.current = status;
@@ -171,5 +199,7 @@ export default function NativeTransition(props: Props) {
       schedule(status === 'entering' ? 'entered' : 'exited', status);
     }
   }, [props.reduceMotion, status, cancel, schedule]);
-  return status === 'unmounted' ? null : props.children(status, phase.current);
+  return status === 'unmounted'
+    ? null
+    : props.children(status === 'waiting' ? 'exited' : status, phase.current);
 }
