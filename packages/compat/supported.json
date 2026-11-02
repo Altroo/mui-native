@@ -35,7 +35,7 @@
   },
   "@mui/system": {
     "target": "@altroo/mui-native-system",
-    "subpaths": []
+    "subpaths": ["colorManipulator"]
   },
   "@mui/icons-material": {
     "target": "@altroo/mui-native-icons",

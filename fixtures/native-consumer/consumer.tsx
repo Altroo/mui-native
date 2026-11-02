@@ -6,7 +6,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import { RichTreeView } from '@mui/x-tree-view';
 import { BarChart } from '@mui/x-charts';
 import { DatePicker, LocalizationProvider, AdapterDayjs } from '@mui/x-date-pickers';
-import type {} from '@mui/material/styles';
+import { alpha, type PaletteColor, type PaletteColorOptions } from '@mui/material/styles';
+import { darken } from '@mui/system/colorManipulator';
 declare module '@mui/material/styles' {
   interface Theme {
     status: { danger: string };
@@ -14,8 +15,26 @@ declare module '@mui/material/styles' {
   interface ThemeOptions {
     status?: { danger: string };
   }
+  interface Palette {
+    brand: PaletteColor;
+  }
+  interface PaletteOptions {
+    brand?: PaletteColorOptions;
+  }
 }
-const theme = createTheme({ status: { danger: '#f00' } });
+const base = createTheme({
+  palette: {
+    primary: { main: '#123456' },
+    tonalOffset: { light: 0.1, dark: 0.4 },
+    contrastThreshold: 4.5,
+  },
+});
+const theme = createTheme(base, {
+  status: { danger: '#f00' },
+  palette: { brand: base.palette.augmentColor({ color: { main: '#36c' }, name: 'brand' }) },
+});
+const contrast: string = theme.palette.getContrastText(theme.palette.brand.main);
+const overlay: string = alpha(darken(theme.palette.primary.main, 0.2), 0.4);
 const danger: string = theme.status.danger;
 const content = (
   <ThemeProvider theme={theme}>

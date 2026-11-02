@@ -2,15 +2,40 @@ MUI Native is an independent project by Altroo. It is not an official MUI
 product and is not affiliated with or endorsed by MUI.
 
 Material UI and MUI X are names used to identify upstream compatibility targets.
-Native implementation code is independently authored. Upstream public declaration
+Native rendering code is independently authored. Palette and color algorithms adapt MIT-licensed Material UI/System
+code as recorded in upstream/reuse.json. Upstream public declaration
 snapshots and license texts are retained under upstream/. Their applicable MIT
 notices are preserved in upstream/licenses/. No Pro or Premium source, assets,
 license checks, or paid-only feature implementations are included.
 
 Upstream source references, package integrity values, and source commits are
-recorded in upstream/state.json. copiedFiles lists source reuse; an empty list
-means no upstream implementation source was copied into that package.
+recorded in upstream/state.json. Baseline copiedFiles lists reuse at the initial
+snapshot; later implementation adaptations are recorded in upstream/reuse.json.
 
 Material UI: Copyright (c) 2014 Call-Em-All
 MUI X Community: Copyright (c) 2020 Material-UI SAS
 See the exact per-package license files for full upstream notices.
+
+The following notice applies to adapted Material UI/System code:
+
+MIT License
+
+Copyright (c) 2014 Call-Em-All
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

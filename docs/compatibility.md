@@ -5,6 +5,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 ## Currently exercised
 
 - Object, function, and array `sx`; palette paths; spacing; fractional sizing; `px`/`rem`; responsive values; selected `&.Mui-state` selectors; root overrides and variants.
+- Palette shade/contrast derivation, light/dark defaults, augmentColor, color helpers and Palette/PaletteOptions augmentation. See [native theming](theming.md) for tested inputs and limitations.
 - Button loading positions, custom indicators, disabled presses and native busy state. See [native Button loading](button.md); screen-reader behavior remains unverified.
 - Controlled/uncontrolled form state, value/name change adapters, disabled buttons, native handler precedence, checkbox/radio selection.
 - Native modal backdrop and Android back-request close reasons; snackbar timeout cleanup.
@@ -18,7 +19,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 Do not assume unlisted props work. Public TypeScript interfaces describe the implemented subset. JavaScript callers should run migration diagnostics and review source usage before adoption.
 
 - Full Material UI export coverage, all icon variants, slot replacement, classes/className, arbitrary CSS, CSS variables, media queries, arbitrary descendant selectors, browser refs/events, transitions, ripple behavior.
-- Full `styled` semantics, nested theme merging, palette color derivation, typography inheritance, complete breakpoint utilities, all upstream augmentation interfaces. The installed-consumer fixture verifies custom Theme and ThemeOptions augmentation through @mui/material/styles.
+- Full `styled` semantics, nested theme merging, typography inheritance, complete breakpoint utilities, all upstream augmentation interfaces. The installed-consumer fixture verifies custom Theme, ThemeOptions, Palette and PaletteOptions augmentation through @mui/material/styles.
 - Nested modal/focus restoration, keyboard avoidance on all devices, VoiceOver/TalkBack workflows, RTL and large-font layouts.
 - Grid cell editing, column virtualization, apiRef, column menus, flexible/dynamic sizing, keyboard navigation, comprehensive filtering operators and callback detail arguments.
 - SimpleTreeView/TreeItem composition, complete tree apiRef, all Community hooks and loading/disabled semantics.

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "description": "Implementation reuse after the immutable initial baseline. This record does not advance verified package support.",
+  "entries": [
+    {
+      "localFile": "packages/system/src/theme.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "styles/createPalette.js": "973057639a7d4bb422fed3fccdd9bc171a3380329201b59e2c6a6e6312647ce6",
+          "colors/common.js": "689cd2599cdb2a36b81ea98894c7652729984abcf68f9acb5fba0944018eca2a",
+          "colors/grey.js": "cdb836479b770cb81743b2e78a10e9f9191e751fd28cb9dab6c92c3d165a5d97",
+          "colors/blue.js": "9aa014c803daf97b35007d2377813111000a2f4cae0e548dbe4da2317f084c9f",
+          "colors/purple.js": "6afa27630cabe221471d37a9228f641a7655adf94036e5012653213464771143",
+          "colors/red.js": "c025c2dc6db342403be1b10447d717f7bb2c3c07691289e0c3b904467136b3bb",
+          "colors/orange.js": "9c180c0ccb4555aee8f67e4b4583e9eaddf9d12a11af2bd9b134f4378f751956",
+          "colors/lightBlue.js": "5684a35f75587995b96eb04e547f75cc7b28a9ca90efc72b99167e29f5218558",
+          "colors/green.js": "a14b8b0187a92689ebf4a4a30c1d2de6e6219a34c8f4dd8c2b1f616a8ffa157c"
+        }
+      },
+      "adaptations": [
+        "Native palette types, defaults and augmentation; browser colorSpace is not implemented.",
+        "Zero object tonal offsets are supported rather than producing upstream NaN channels."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/colorManipulator.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "colorManipulator/colorManipulator.js": "fd47c8f2e104a4f3927c20202e568a3b4cf9f3379875362062549568fa6fffb9"
+        }
+      },
+      "adaptations": [
+        "Typed standalone helpers without Babel or MUI runtime dependencies.",
+        "String input signatures follow declarations; undocumented object overloads are not supported.",
+        "recomposeColor leaves input channels unmodified.",
+        "Diagnostic wording identifies MUI Native."
+      ]
+    }
+  ]
+}

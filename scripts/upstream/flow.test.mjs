@@ -100,13 +100,37 @@ async function fixture() {
     const report = await detect({
       state,
       now: '2026-11-02T12:00:00Z',
-      fetchArtifact: async (pkg) => ({
+      reuse: {
+        schemaVersion: 1,
+        entries: [
+          {
+            localFile: 'packages/system/src/theme.ts',
+            reference: {
+              name: '@mui/material',
+              sourceFiles: { 'styles/createPalette.js': hash('old palette') },
+            },
+          },
+        ],
+      },
+      fetchArtifact: async (pkg, { sourceFiles }) => ({
+        sourceFiles: Object.fromEntries(sourceFiles.map((file) => [file, hash('new palette')])),
         license: pkg.name === '@mui/x-chat' ? null : 'MIT fixture',
         apiFiles: [{ path: 'index.d.ts', sha256: hash('new api') }],
       }),
     });
     assert.deepEqual(state, before);
     assert.equal(report.changes.length, 2);
+    assert.deepEqual(
+      report.changes.find((change) => change.name === '@mui/material').adaptedSourceChanges,
+      [
+        {
+          path: 'styles/createPalette.js',
+          sha256: hash('new palette'),
+          status: 'changed',
+          localFiles: ['packages/system/src/theme.ts'],
+        },
+      ],
+    );
     assert.equal(report.advisories.length, 1);
     assert.equal(report.changes.find((change) => change.name === '@mui/x-chat').blocked, true);
     assert.equal(requests.filter((url) => url.includes('/compare/')).length, 2);
@@ -144,6 +168,14 @@ test('permission and dispatch failures preserve detection state and retries do n
       assert.deepEqual(remote.state(), state);
       await publish();
       assert.equal(remote.pulls.length, 1);
+      assert.ok(
+        remote.issues.some(
+          (issue) =>
+            issue.body.includes('styles/createPalette.js') &&
+            issue.body.includes('packages/system/src/theme.ts'),
+        ),
+        'Release review must identify changed adapted source and its native consumer',
+      );
       assert.equal(remote.issues.length, 4);
       assert.equal(remote.dispatches.length, 1);
       assert.equal(remote.state().packages['@mui/material'].candidate.version, '1.0.1');

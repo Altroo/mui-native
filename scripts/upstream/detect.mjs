@@ -6,8 +6,10 @@ import { request, pages } from './http.mjs';
 import { releaseResolver } from './source.mjs';
 import { inspectArtifact } from './artifact.mjs';
 import { detectPackage, mergeReport } from './model.mjs';
+import { reusedFiles, compareReusedFiles } from './reuse.mjs';
 export async function detect({
   state,
+  reuse = { schemaVersion: 1, entries: [] },
   fetchRegistry = async (name) => request(`https://registry.npmjs.org/${encodeURIComponent(name)}`),
   now = new Date().toISOString(),
   enrich = true,
@@ -51,7 +53,9 @@ export async function detect({
       const pkg = await request(
         `https://registry.npmjs.org/${encodeURIComponent(config.name)}/${change.version}`,
       );
-      const artifact = await fetchArtifact(pkg);
+      const adapted = reusedFiles(reuse, config.name);
+      const artifact = await fetchArtifact(pkg, { sourceFiles: adapted.map((file) => file.path) });
+      change.adaptedSourceChanges = compareReusedFiles(adapted, artifact.sourceFiles);
       const license = artifact.license;
       const snapshot = await readFile(base.apiSnapshot, 'utf8');
       if (createHash('sha256').update(snapshot).digest('hex') !== base.apiSnapshotSha256)
@@ -112,11 +116,16 @@ export async function detect({
 }
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const state = JSON.parse(await readFile('upstream/state.json', 'utf8'));
+  const reuse = JSON.parse(await readFile('upstream/reuse.json', 'utf8'));
   await mkdir('artifacts/upstream', { recursive: true });
   await rm('artifacts/upstream/report.json', { force: true });
   await rm('artifacts/upstream/error.json', { force: true });
   try {
-    const report = await detect({ state, enrich: !process.argv.includes('--registry-only') });
+    const report = await detect({
+      state,
+      reuse,
+      enrich: !process.argv.includes('--registry-only'),
+    });
     await writeFile('artifacts/upstream/report.json', JSON.stringify(report, null, 2) + '\n');
     console.log(
       `Detected ${report.changes.length} upstream releases; supported versions unchanged.`,

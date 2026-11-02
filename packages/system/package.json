@@ -24,7 +24,12 @@
       "react-native": "./src/index.ts",
       "default": "./dist/index.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./colorManipulator": {
+      "types": "./dist/colorManipulator/index.d.ts",
+      "react-native": "./src/colorManipulator/index.ts",
+      "default": "./dist/colorManipulator/index.js"
+    }
   },
   "dependencies": {},
   "peerDependencies": {

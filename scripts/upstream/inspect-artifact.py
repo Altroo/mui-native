@@ -5,6 +5,8 @@ import re
 import sys
 import tarfile
 
+source_files = json.loads(sys.argv[2]) if len(sys.argv) > 2 else []
+
 with tarfile.open(sys.argv[1], 'r:gz') as archive:
     files = {entry.name: entry for entry in archive.getmembers() if entry.isfile()}
     license_path = next((name for name in files if re.fullmatch(r'package/licen[cs]e(?:\.md|\.txt)?', name, re.I)), None)
@@ -16,5 +18,6 @@ with tarfile.open(sys.argv[1], 'r:gz') as archive:
         'license': read(license_path).decode() if license_path else None,
         'licensePath': license_path.removeprefix('package/') if license_path else None,
         'apiFiles': [{'path': name.removeprefix('package/'), 'sha256': hashlib.sha256(read(name)).hexdigest()} for name in sorted(files) if name.endswith('.d.ts') and '/node_modules/' not in name],
+        'sourceFiles': {name: hashlib.sha256(read('package/' + name)).hexdigest() for name in source_files if 'package/' + name in files},
         'index': read('package/index.d.ts').decode() if 'package/index.d.ts' in files else '',
     }))

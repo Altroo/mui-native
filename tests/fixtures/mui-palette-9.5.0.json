@@ -1,0 +1,1756 @@
+{
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "styles/createPalette.js": "973057639a7d4bb422fed3fccdd9bc171a3380329201b59e2c6a6e6312647ce6",
+        "colors/common.js": "689cd2599cdb2a36b81ea98894c7652729984abcf68f9acb5fba0944018eca2a",
+        "colors/grey.js": "cdb836479b770cb81743b2e78a10e9f9191e751fd28cb9dab6c92c3d165a5d97",
+        "colors/blue.js": "9aa014c803daf97b35007d2377813111000a2f4cae0e548dbe4da2317f084c9f",
+        "colors/purple.js": "6afa27630cabe221471d37a9228f641a7655adf94036e5012653213464771143",
+        "colors/red.js": "c025c2dc6db342403be1b10447d717f7bb2c3c07691289e0c3b904467136b3bb",
+        "colors/orange.js": "9c180c0ccb4555aee8f67e4b4583e9eaddf9d12a11af2bd9b134f4378f751956",
+        "colors/lightBlue.js": "5684a35f75587995b96eb04e547f75cc7b28a9ca90efc72b99167e29f5218558",
+        "colors/green.js": "a14b8b0187a92689ebf4a4a30c1d2de6e6219a34c8f4dd8c2b1f616a8ffa157c"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "colorManipulator/colorManipulator.js": "fd47c8f2e104a4f3927c20202e568a3b4cf9f3379875362062549568fa6fffb9"
+      }
+    }
+  ],
+  "palettes": [
+    {
+      "input": {},
+      "output": {
+        "common": { "black": "#000", "white": "#fff" },
+        "mode": "light",
+        "primary": {
+          "main": "#1976d2",
+          "light": "#42a5f5",
+          "dark": "#1565c0",
+          "contrastText": "#fff"
+        },
+        "secondary": {
+          "main": "#9c27b0",
+          "light": "#ba68c8",
+          "dark": "#7b1fa2",
+          "contrastText": "#fff"
+        },
+        "error": {
+          "main": "#d32f2f",
+          "light": "#ef5350",
+          "dark": "#c62828",
+          "contrastText": "#fff"
+        },
+        "warning": {
+          "main": "#ed6c02",
+          "light": "#ff9800",
+          "dark": "#e65100",
+          "contrastText": "#fff"
+        },
+        "info": {
+          "main": "#0288d1",
+          "light": "#03a9f4",
+          "dark": "#01579b",
+          "contrastText": "#fff"
+        },
+        "success": {
+          "main": "#2e7d32",
+          "light": "#4caf50",
+          "dark": "#1b5e20",
+          "contrastText": "#fff"
+        },
+        "grey": {
+          "50": "#fafafa",
+          "100": "#f5f5f5",
+          "200": "#eeeeee",
+          "300": "#e0e0e0",
+          "400": "#bdbdbd",
+          "500": "#9e9e9e",
+          "600": "#757575",
+          "700": "#616161",
+          "800": "#424242",
+          "900": "#212121",
+          "A100": "#f5f5f5",
+          "A200": "#eeeeee",
+          "A400": "#bdbdbd",
+          "A700": "#616161"
+        },
+        "contrastThreshold": 3,
+        "tonalOffset": 0.2,
+        "text": {
+          "primary": "rgba(0, 0, 0, 0.87)",
+          "secondary": "rgba(0, 0, 0, 0.6)",
+          "disabled": "rgba(0, 0, 0, 0.38)"
+        },
+        "divider": "rgba(0, 0, 0, 0.12)",
+        "background": { "paper": "#fff", "default": "#fff" },
+        "action": {
+          "active": "rgba(0, 0, 0, 0.54)",
+          "hover": "rgba(0, 0, 0, 0.04)",
+          "hoverOpacity": 0.04,
+          "selected": "rgba(0, 0, 0, 0.08)",
+          "selectedOpacity": 0.08,
+          "disabled": "rgba(0, 0, 0, 0.26)",
+          "disabledBackground": "rgba(0, 0, 0, 0.12)",
+          "disabledOpacity": 0.38,
+          "focus": "rgba(0, 0, 0, 0.12)",
+          "focusOpacity": 0.12,
+          "activatedOpacity": 0.12
+        }
+      },
+      "contrast": [
+        { "background": "#fff", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#000", "output": "#fff" },
+        { "background": "#90caf9", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#123456", "output": "#fff" },
+        { "background": "#777", "output": "#fff" },
+        { "background": "hsl(200, 50%, 50%)", "output": "#fff" }
+      ]
+    },
+    {
+      "input": { "mode": "dark" },
+      "output": {
+        "common": { "black": "#000", "white": "#fff" },
+        "mode": "dark",
+        "primary": {
+          "main": "#90caf9",
+          "light": "#e3f2fd",
+          "dark": "#42a5f5",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "secondary": {
+          "main": "#ce93d8",
+          "light": "#f3e5f5",
+          "dark": "#ab47bc",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "error": {
+          "main": "#f44336",
+          "light": "#e57373",
+          "dark": "#d32f2f",
+          "contrastText": "#fff"
+        },
+        "warning": {
+          "main": "#ffa726",
+          "light": "#ffb74d",
+          "dark": "#f57c00",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "info": {
+          "main": "#29b6f6",
+          "light": "#4fc3f7",
+          "dark": "#0288d1",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "success": {
+          "main": "#66bb6a",
+          "light": "#81c784",
+          "dark": "#388e3c",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "grey": {
+          "50": "#fafafa",
+          "100": "#f5f5f5",
+          "200": "#eeeeee",
+          "300": "#e0e0e0",
+          "400": "#bdbdbd",
+          "500": "#9e9e9e",
+          "600": "#757575",
+          "700": "#616161",
+          "800": "#424242",
+          "900": "#212121",
+          "A100": "#f5f5f5",
+          "A200": "#eeeeee",
+          "A400": "#bdbdbd",
+          "A700": "#616161"
+        },
+        "contrastThreshold": 3,
+        "tonalOffset": 0.2,
+        "text": {
+          "primary": "#fff",
+          "secondary": "rgba(255, 255, 255, 0.7)",
+          "disabled": "rgba(255, 255, 255, 0.5)",
+          "icon": "rgba(255, 255, 255, 0.5)"
+        },
+        "divider": "rgba(255, 255, 255, 0.12)",
+        "background": { "paper": "#121212", "default": "#121212" },
+        "action": {
+          "active": "#fff",
+          "hover": "rgba(255, 255, 255, 0.08)",
+          "hoverOpacity": 0.08,
+          "selected": "rgba(255, 255, 255, 0.16)",
+          "selectedOpacity": 0.16,
+          "disabled": "rgba(255, 255, 255, 0.3)",
+          "disabledBackground": "rgba(255, 255, 255, 0.12)",
+          "disabledOpacity": 0.38,
+          "focus": "rgba(255, 255, 255, 0.12)",
+          "focusOpacity": 0.12,
+          "activatedOpacity": 0.24
+        }
+      },
+      "contrast": [
+        { "background": "#fff", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#000", "output": "#fff" },
+        { "background": "#90caf9", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#123456", "output": "#fff" },
+        { "background": "#777", "output": "#fff" },
+        { "background": "hsl(200, 50%, 50%)", "output": "#fff" }
+      ]
+    },
+    {
+      "input": { "primary": { "main": "#123456" } },
+      "output": {
+        "common": { "black": "#000", "white": "#fff" },
+        "mode": "light",
+        "primary": {
+          "main": "#123456",
+          "light": "rgb(65, 92, 119)",
+          "dark": "rgb(12, 36, 60)",
+          "contrastText": "#fff"
+        },
+        "secondary": {
+          "main": "#9c27b0",
+          "light": "#ba68c8",
+          "dark": "#7b1fa2",
+          "contrastText": "#fff"
+        },
+        "error": {
+          "main": "#d32f2f",
+          "light": "#ef5350",
+          "dark": "#c62828",
+          "contrastText": "#fff"
+        },
+        "warning": {
+          "main": "#ed6c02",
+          "light": "#ff9800",
+          "dark": "#e65100",
+          "contrastText": "#fff"
+        },
+        "info": {
+          "main": "#0288d1",
+          "light": "#03a9f4",
+          "dark": "#01579b",
+          "contrastText": "#fff"
+        },
+        "success": {
+          "main": "#2e7d32",
+          "light": "#4caf50",
+          "dark": "#1b5e20",
+          "contrastText": "#fff"
+        },
+        "grey": {
+          "50": "#fafafa",
+          "100": "#f5f5f5",
+          "200": "#eeeeee",
+          "300": "#e0e0e0",
+          "400": "#bdbdbd",
+          "500": "#9e9e9e",
+          "600": "#757575",
+          "700": "#616161",
+          "800": "#424242",
+          "900": "#212121",
+          "A100": "#f5f5f5",
+          "A200": "#eeeeee",
+          "A400": "#bdbdbd",
+          "A700": "#616161"
+        },
+        "contrastThreshold": 3,
+        "tonalOffset": 0.2,
+        "text": {
+          "primary": "rgba(0, 0, 0, 0.87)",
+          "secondary": "rgba(0, 0, 0, 0.6)",
+          "disabled": "rgba(0, 0, 0, 0.38)"
+        },
+        "divider": "rgba(0, 0, 0, 0.12)",
+        "background": { "paper": "#fff", "default": "#fff" },
+        "action": {
+          "active": "rgba(0, 0, 0, 0.54)",
+          "hover": "rgba(0, 0, 0, 0.04)",
+          "hoverOpacity": 0.04,
+          "selected": "rgba(0, 0, 0, 0.08)",
+          "selectedOpacity": 0.08,
+          "disabled": "rgba(0, 0, 0, 0.26)",
+          "disabledBackground": "rgba(0, 0, 0, 0.12)",
+          "disabledOpacity": 0.38,
+          "focus": "rgba(0, 0, 0, 0.12)",
+          "focusOpacity": 0.12,
+          "activatedOpacity": 0.12
+        }
+      },
+      "contrast": [
+        { "background": "#fff", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#000", "output": "#fff" },
+        { "background": "#90caf9", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#123456", "output": "#fff" },
+        { "background": "#777", "output": "#fff" },
+        { "background": "hsl(200, 50%, 50%)", "output": "#fff" }
+      ]
+    },
+    {
+      "input": {
+        "mode": "dark",
+        "primary": { "main": "#123456" },
+        "secondary": { "main": "hsl(220, 70%, 40%)" }
+      },
+      "output": {
+        "common": { "black": "#000", "white": "#fff" },
+        "mode": "dark",
+        "primary": {
+          "main": "#123456",
+          "light": "rgb(65, 92, 119)",
+          "dark": "rgb(12, 36, 60)",
+          "contrastText": "#fff"
+        },
+        "secondary": {
+          "main": "hsl(220, 70%, 40%)",
+          "light": "hsl(220, 70%, 52%)",
+          "dark": "hsl(220, 70%, 28%)",
+          "contrastText": "#fff"
+        },
+        "error": {
+          "main": "#f44336",
+          "light": "#e57373",
+          "dark": "#d32f2f",
+          "contrastText": "#fff"
+        },
+        "warning": {
+          "main": "#ffa726",
+          "light": "#ffb74d",
+          "dark": "#f57c00",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "info": {
+          "main": "#29b6f6",
+          "light": "#4fc3f7",
+          "dark": "#0288d1",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "success": {
+          "main": "#66bb6a",
+          "light": "#81c784",
+          "dark": "#388e3c",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "grey": {
+          "50": "#fafafa",
+          "100": "#f5f5f5",
+          "200": "#eeeeee",
+          "300": "#e0e0e0",
+          "400": "#bdbdbd",
+          "500": "#9e9e9e",
+          "600": "#757575",
+          "700": "#616161",
+          "800": "#424242",
+          "900": "#212121",
+          "A100": "#f5f5f5",
+          "A200": "#eeeeee",
+          "A400": "#bdbdbd",
+          "A700": "#616161"
+        },
+        "contrastThreshold": 3,
+        "tonalOffset": 0.2,
+        "text": {
+          "primary": "#fff",
+          "secondary": "rgba(255, 255, 255, 0.7)",
+          "disabled": "rgba(255, 255, 255, 0.5)",
+          "icon": "rgba(255, 255, 255, 0.5)"
+        },
+        "divider": "rgba(255, 255, 255, 0.12)",
+        "background": { "paper": "#121212", "default": "#121212" },
+        "action": {
+          "active": "#fff",
+          "hover": "rgba(255, 255, 255, 0.08)",
+          "hoverOpacity": 0.08,
+          "selected": "rgba(255, 255, 255, 0.16)",
+          "selectedOpacity": 0.16,
+          "disabled": "rgba(255, 255, 255, 0.3)",
+          "disabledBackground": "rgba(255, 255, 255, 0.12)",
+          "disabledOpacity": 0.38,
+          "focus": "rgba(255, 255, 255, 0.12)",
+          "focusOpacity": 0.12,
+          "activatedOpacity": 0.24
+        }
+      },
+      "contrast": [
+        { "background": "#fff", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#000", "output": "#fff" },
+        { "background": "#90caf9", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#123456", "output": "#fff" },
+        { "background": "#777", "output": "#fff" },
+        { "background": "hsl(200, 50%, 50%)", "output": "#fff" }
+      ]
+    },
+    {
+      "input": { "primary": { "main": "#36c" }, "tonalOffset": 0.3 },
+      "output": {
+        "common": { "black": "#000", "white": "#fff" },
+        "mode": "light",
+        "primary": {
+          "main": "#36c",
+          "light": "rgb(112, 147, 219)",
+          "dark": "rgb(28, 56, 112)",
+          "contrastText": "#fff"
+        },
+        "secondary": {
+          "main": "#9c27b0",
+          "light": "#ba68c8",
+          "dark": "#7b1fa2",
+          "contrastText": "#fff"
+        },
+        "error": {
+          "main": "#d32f2f",
+          "light": "#ef5350",
+          "dark": "#c62828",
+          "contrastText": "#fff"
+        },
+        "warning": {
+          "main": "#ed6c02",
+          "light": "#ff9800",
+          "dark": "#e65100",
+          "contrastText": "#fff"
+        },
+        "info": {
+          "main": "#0288d1",
+          "light": "#03a9f4",
+          "dark": "#01579b",
+          "contrastText": "#fff"
+        },
+        "success": {
+          "main": "#2e7d32",
+          "light": "#4caf50",
+          "dark": "#1b5e20",
+          "contrastText": "#fff"
+        },
+        "grey": {
+          "50": "#fafafa",
+          "100": "#f5f5f5",
+          "200": "#eeeeee",
+          "300": "#e0e0e0",
+          "400": "#bdbdbd",
+          "500": "#9e9e9e",
+          "600": "#757575",
+          "700": "#616161",
+          "800": "#424242",
+          "900": "#212121",
+          "A100": "#f5f5f5",
+          "A200": "#eeeeee",
+          "A400": "#bdbdbd",
+          "A700": "#616161"
+        },
+        "contrastThreshold": 3,
+        "tonalOffset": 0.3,
+        "text": {
+          "primary": "rgba(0, 0, 0, 0.87)",
+          "secondary": "rgba(0, 0, 0, 0.6)",
+          "disabled": "rgba(0, 0, 0, 0.38)"
+        },
+        "divider": "rgba(0, 0, 0, 0.12)",
+        "background": { "paper": "#fff", "default": "#fff" },
+        "action": {
+          "active": "rgba(0, 0, 0, 0.54)",
+          "hover": "rgba(0, 0, 0, 0.04)",
+          "hoverOpacity": 0.04,
+          "selected": "rgba(0, 0, 0, 0.08)",
+          "selectedOpacity": 0.08,
+          "disabled": "rgba(0, 0, 0, 0.26)",
+          "disabledBackground": "rgba(0, 0, 0, 0.12)",
+          "disabledOpacity": 0.38,
+          "focus": "rgba(0, 0, 0, 0.12)",
+          "focusOpacity": 0.12,
+          "activatedOpacity": 0.12
+        }
+      },
+      "contrast": [
+        { "background": "#fff", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#000", "output": "#fff" },
+        { "background": "#90caf9", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#123456", "output": "#fff" },
+        { "background": "#777", "output": "#fff" },
+        { "background": "hsl(200, 50%, 50%)", "output": "#fff" }
+      ]
+    },
+    {
+      "input": {
+        "primary": { "main": "#36c" },
+        "tonalOffset": { "light": 0.1, "dark": 0.4 }
+      },
+      "output": {
+        "common": { "black": "#000", "white": "#fff" },
+        "mode": "light",
+        "primary": {
+          "main": "#36c",
+          "light": "rgb(71, 117, 209)",
+          "dark": "rgb(30, 61, 122)",
+          "contrastText": "#fff"
+        },
+        "secondary": {
+          "main": "#9c27b0",
+          "light": "#ba68c8",
+          "dark": "#7b1fa2",
+          "contrastText": "#fff"
+        },
+        "error": {
+          "main": "#d32f2f",
+          "light": "#ef5350",
+          "dark": "#c62828",
+          "contrastText": "#fff"
+        },
+        "warning": {
+          "main": "#ed6c02",
+          "light": "#ff9800",
+          "dark": "#e65100",
+          "contrastText": "#fff"
+        },
+        "info": {
+          "main": "#0288d1",
+          "light": "#03a9f4",
+          "dark": "#01579b",
+          "contrastText": "#fff"
+        },
+        "success": {
+          "main": "#2e7d32",
+          "light": "#4caf50",
+          "dark": "#1b5e20",
+          "contrastText": "#fff"
+        },
+        "grey": {
+          "50": "#fafafa",
+          "100": "#f5f5f5",
+          "200": "#eeeeee",
+          "300": "#e0e0e0",
+          "400": "#bdbdbd",
+          "500": "#9e9e9e",
+          "600": "#757575",
+          "700": "#616161",
+          "800": "#424242",
+          "900": "#212121",
+          "A100": "#f5f5f5",
+          "A200": "#eeeeee",
+          "A400": "#bdbdbd",
+          "A700": "#616161"
+        },
+        "contrastThreshold": 3,
+        "tonalOffset": { "light": 0.1, "dark": 0.4 },
+        "text": {
+          "primary": "rgba(0, 0, 0, 0.87)",
+          "secondary": "rgba(0, 0, 0, 0.6)",
+          "disabled": "rgba(0, 0, 0, 0.38)"
+        },
+        "divider": "rgba(0, 0, 0, 0.12)",
+        "background": { "paper": "#fff", "default": "#fff" },
+        "action": {
+          "active": "rgba(0, 0, 0, 0.54)",
+          "hover": "rgba(0, 0, 0, 0.04)",
+          "hoverOpacity": 0.04,
+          "selected": "rgba(0, 0, 0, 0.08)",
+          "selectedOpacity": 0.08,
+          "disabled": "rgba(0, 0, 0, 0.26)",
+          "disabledBackground": "rgba(0, 0, 0, 0.12)",
+          "disabledOpacity": 0.38,
+          "focus": "rgba(0, 0, 0, 0.12)",
+          "focusOpacity": 0.12,
+          "activatedOpacity": 0.12
+        }
+      },
+      "contrast": [
+        { "background": "#fff", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#000", "output": "#fff" },
+        { "background": "#90caf9", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#123456", "output": "#fff" },
+        { "background": "#777", "output": "#fff" },
+        { "background": "hsl(200, 50%, 50%)", "output": "#fff" }
+      ]
+    },
+    {
+      "input": { "primary": { "main": "#777" }, "contrastThreshold": 4.5 },
+      "output": {
+        "common": { "black": "#000", "white": "#fff" },
+        "mode": "light",
+        "primary": {
+          "main": "#777",
+          "light": "rgb(146, 146, 146)",
+          "dark": "rgb(83, 83, 83)",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "secondary": {
+          "main": "#9c27b0",
+          "light": "#ba68c8",
+          "dark": "#7b1fa2",
+          "contrastText": "#fff"
+        },
+        "error": {
+          "main": "#d32f2f",
+          "light": "#ef5350",
+          "dark": "#c62828",
+          "contrastText": "#fff"
+        },
+        "warning": {
+          "main": "#ed6c02",
+          "light": "#ff9800",
+          "dark": "#e65100",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "info": {
+          "main": "#0288d1",
+          "light": "#03a9f4",
+          "dark": "#01579b",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "success": {
+          "main": "#2e7d32",
+          "light": "#4caf50",
+          "dark": "#1b5e20",
+          "contrastText": "#fff"
+        },
+        "grey": {
+          "50": "#fafafa",
+          "100": "#f5f5f5",
+          "200": "#eeeeee",
+          "300": "#e0e0e0",
+          "400": "#bdbdbd",
+          "500": "#9e9e9e",
+          "600": "#757575",
+          "700": "#616161",
+          "800": "#424242",
+          "900": "#212121",
+          "A100": "#f5f5f5",
+          "A200": "#eeeeee",
+          "A400": "#bdbdbd",
+          "A700": "#616161"
+        },
+        "contrastThreshold": 4.5,
+        "tonalOffset": 0.2,
+        "text": {
+          "primary": "rgba(0, 0, 0, 0.87)",
+          "secondary": "rgba(0, 0, 0, 0.6)",
+          "disabled": "rgba(0, 0, 0, 0.38)"
+        },
+        "divider": "rgba(0, 0, 0, 0.12)",
+        "background": { "paper": "#fff", "default": "#fff" },
+        "action": {
+          "active": "rgba(0, 0, 0, 0.54)",
+          "hover": "rgba(0, 0, 0, 0.04)",
+          "hoverOpacity": 0.04,
+          "selected": "rgba(0, 0, 0, 0.08)",
+          "selectedOpacity": 0.08,
+          "disabled": "rgba(0, 0, 0, 0.26)",
+          "disabledBackground": "rgba(0, 0, 0, 0.12)",
+          "disabledOpacity": 0.38,
+          "focus": "rgba(0, 0, 0, 0.12)",
+          "focusOpacity": 0.12,
+          "activatedOpacity": 0.12
+        }
+      },
+      "contrast": [
+        { "background": "#fff", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#000", "output": "#fff" },
+        { "background": "#90caf9", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#123456", "output": "#fff" },
+        { "background": "#777", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "hsl(200, 50%, 50%)", "output": "rgba(0, 0, 0, 0.87)" }
+      ]
+    },
+    {
+      "input": {
+        "primary": { "300": "#89a", "500": "#456", "700": "#123" },
+        "secondary": { "A200": "#c9f", "A400": "#96c", "A700": "#639" }
+      },
+      "output": {
+        "common": { "black": "#000", "white": "#fff" },
+        "mode": "light",
+        "primary": {
+          "300": "#89a",
+          "500": "#456",
+          "700": "#123",
+          "main": "#456",
+          "light": "#89a",
+          "dark": "#123",
+          "contrastText": "#fff"
+        },
+        "secondary": {
+          "A200": "#c9f",
+          "A400": "#96c",
+          "A700": "#639",
+          "main": "#96c",
+          "light": "#c9f",
+          "dark": "#639",
+          "contrastText": "#fff"
+        },
+        "error": {
+          "main": "#d32f2f",
+          "light": "#ef5350",
+          "dark": "#c62828",
+          "contrastText": "#fff"
+        },
+        "warning": {
+          "main": "#ed6c02",
+          "light": "#ff9800",
+          "dark": "#e65100",
+          "contrastText": "#fff"
+        },
+        "info": {
+          "main": "#0288d1",
+          "light": "#03a9f4",
+          "dark": "#01579b",
+          "contrastText": "#fff"
+        },
+        "success": {
+          "main": "#2e7d32",
+          "light": "#4caf50",
+          "dark": "#1b5e20",
+          "contrastText": "#fff"
+        },
+        "grey": {
+          "50": "#fafafa",
+          "100": "#f5f5f5",
+          "200": "#eeeeee",
+          "300": "#e0e0e0",
+          "400": "#bdbdbd",
+          "500": "#9e9e9e",
+          "600": "#757575",
+          "700": "#616161",
+          "800": "#424242",
+          "900": "#212121",
+          "A100": "#f5f5f5",
+          "A200": "#eeeeee",
+          "A400": "#bdbdbd",
+          "A700": "#616161"
+        },
+        "contrastThreshold": 3,
+        "tonalOffset": 0.2,
+        "text": {
+          "primary": "rgba(0, 0, 0, 0.87)",
+          "secondary": "rgba(0, 0, 0, 0.6)",
+          "disabled": "rgba(0, 0, 0, 0.38)"
+        },
+        "divider": "rgba(0, 0, 0, 0.12)",
+        "background": { "paper": "#fff", "default": "#fff" },
+        "action": {
+          "active": "rgba(0, 0, 0, 0.54)",
+          "hover": "rgba(0, 0, 0, 0.04)",
+          "hoverOpacity": 0.04,
+          "selected": "rgba(0, 0, 0, 0.08)",
+          "selectedOpacity": 0.08,
+          "disabled": "rgba(0, 0, 0, 0.26)",
+          "disabledBackground": "rgba(0, 0, 0, 0.12)",
+          "disabledOpacity": 0.38,
+          "focus": "rgba(0, 0, 0, 0.12)",
+          "focusOpacity": 0.12,
+          "activatedOpacity": 0.12
+        }
+      },
+      "contrast": [
+        { "background": "#fff", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#000", "output": "#fff" },
+        { "background": "#90caf9", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#123456", "output": "#fff" },
+        { "background": "#777", "output": "#fff" },
+        { "background": "hsl(200, 50%, 50%)", "output": "#fff" }
+      ]
+    },
+    {
+      "input": {
+        "primary": {
+          "main": "#456",
+          "light": "#abc",
+          "dark": "#123",
+          "contrastText": "#fff"
+        },
+        "common": { "white": "#fefefe" },
+        "grey": { "500": "#888" },
+        "text": { "secondary": "#123" },
+        "action": { "hoverOpacity": 0.07 }
+      },
+      "output": {
+        "common": { "black": "#000", "white": "#fefefe" },
+        "mode": "light",
+        "primary": {
+          "main": "#456",
+          "light": "#abc",
+          "dark": "#123",
+          "contrastText": "#fff"
+        },
+        "secondary": {
+          "main": "#9c27b0",
+          "light": "#ba68c8",
+          "dark": "#7b1fa2",
+          "contrastText": "#fff"
+        },
+        "error": {
+          "main": "#d32f2f",
+          "light": "#ef5350",
+          "dark": "#c62828",
+          "contrastText": "#fff"
+        },
+        "warning": {
+          "main": "#ed6c02",
+          "light": "#ff9800",
+          "dark": "#e65100",
+          "contrastText": "#fff"
+        },
+        "info": {
+          "main": "#0288d1",
+          "light": "#03a9f4",
+          "dark": "#01579b",
+          "contrastText": "#fff"
+        },
+        "success": {
+          "main": "#2e7d32",
+          "light": "#4caf50",
+          "dark": "#1b5e20",
+          "contrastText": "#fff"
+        },
+        "grey": {
+          "50": "#fafafa",
+          "100": "#f5f5f5",
+          "200": "#eeeeee",
+          "300": "#e0e0e0",
+          "400": "#bdbdbd",
+          "500": "#888",
+          "600": "#757575",
+          "700": "#616161",
+          "800": "#424242",
+          "900": "#212121",
+          "A100": "#f5f5f5",
+          "A200": "#eeeeee",
+          "A400": "#bdbdbd",
+          "A700": "#616161"
+        },
+        "contrastThreshold": 3,
+        "tonalOffset": 0.2,
+        "text": {
+          "primary": "rgba(0, 0, 0, 0.87)",
+          "secondary": "#123",
+          "disabled": "rgba(0, 0, 0, 0.38)"
+        },
+        "divider": "rgba(0, 0, 0, 0.12)",
+        "background": { "paper": "#fff", "default": "#fff" },
+        "action": {
+          "active": "rgba(0, 0, 0, 0.54)",
+          "hover": "rgba(0, 0, 0, 0.04)",
+          "hoverOpacity": 0.07,
+          "selected": "rgba(0, 0, 0, 0.08)",
+          "selectedOpacity": 0.08,
+          "disabled": "rgba(0, 0, 0, 0.26)",
+          "disabledBackground": "rgba(0, 0, 0, 0.12)",
+          "disabledOpacity": 0.38,
+          "focus": "rgba(0, 0, 0, 0.12)",
+          "focusOpacity": 0.12,
+          "activatedOpacity": 0.12
+        }
+      },
+      "contrast": [
+        { "background": "#fff", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#000", "output": "#fff" },
+        { "background": "#90caf9", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#123456", "output": "#fff" },
+        { "background": "#777", "output": "#fff" },
+        { "background": "hsl(200, 50%, 50%)", "output": "#fff" }
+      ]
+    },
+    {
+      "input": {
+        "primary": { "main": "rgba(12, 34, 56, 0.8)" },
+        "secondary": { "main": "hsla(240, 50%, 45%, 0.8)" },
+        "error": { "main": "#900" },
+        "warning": { "main": "#aa4" },
+        "info": { "main": "rgb(12, 90, 128)" },
+        "success": { "main": "#172" }
+      },
+      "output": {
+        "common": { "black": "#000", "white": "#fff" },
+        "mode": "light",
+        "primary": {
+          "main": "rgba(12, 34, 56, 0.8)",
+          "light": "rgba(60, 78, 95, 0.8)",
+          "dark": "rgba(8, 23, 39, 0.8)",
+          "contrastText": "#fff"
+        },
+        "secondary": {
+          "main": "hsla(240, 50%, 45%, 0.8)",
+          "light": "hsla(240, 50%, 56%, 0.8)",
+          "dark": "hsla(240, 50%, 31.499999999999996%, 0.8)",
+          "contrastText": "#fff"
+        },
+        "error": {
+          "main": "#900",
+          "light": "rgb(173, 51, 51)",
+          "dark": "rgb(107, 0, 0)",
+          "contrastText": "#fff"
+        },
+        "warning": {
+          "main": "#aa4",
+          "light": "rgb(187, 187, 105)",
+          "dark": "rgb(118, 118, 47)",
+          "contrastText": "rgba(0, 0, 0, 0.87)"
+        },
+        "info": {
+          "main": "rgb(12, 90, 128)",
+          "light": "rgb(60, 123, 153)",
+          "dark": "rgb(8, 62, 89)",
+          "contrastText": "#fff"
+        },
+        "success": {
+          "main": "#172",
+          "light": "rgb(64, 146, 78)",
+          "dark": "rgb(11, 83, 23)",
+          "contrastText": "#fff"
+        },
+        "grey": {
+          "50": "#fafafa",
+          "100": "#f5f5f5",
+          "200": "#eeeeee",
+          "300": "#e0e0e0",
+          "400": "#bdbdbd",
+          "500": "#9e9e9e",
+          "600": "#757575",
+          "700": "#616161",
+          "800": "#424242",
+          "900": "#212121",
+          "A100": "#f5f5f5",
+          "A200": "#eeeeee",
+          "A400": "#bdbdbd",
+          "A700": "#616161"
+        },
+        "contrastThreshold": 3,
+        "tonalOffset": 0.2,
+        "text": {
+          "primary": "rgba(0, 0, 0, 0.87)",
+          "secondary": "rgba(0, 0, 0, 0.6)",
+          "disabled": "rgba(0, 0, 0, 0.38)"
+        },
+        "divider": "rgba(0, 0, 0, 0.12)",
+        "background": { "paper": "#fff", "default": "#fff" },
+        "action": {
+          "active": "rgba(0, 0, 0, 0.54)",
+          "hover": "rgba(0, 0, 0, 0.04)",
+          "hoverOpacity": 0.04,
+          "selected": "rgba(0, 0, 0, 0.08)",
+          "selectedOpacity": 0.08,
+          "disabled": "rgba(0, 0, 0, 0.26)",
+          "disabledBackground": "rgba(0, 0, 0, 0.12)",
+          "disabledOpacity": 0.38,
+          "focus": "rgba(0, 0, 0, 0.12)",
+          "focusOpacity": 0.12,
+          "activatedOpacity": 0.12
+        }
+      },
+      "contrast": [
+        { "background": "#fff", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#000", "output": "#fff" },
+        { "background": "#90caf9", "output": "rgba(0, 0, 0, 0.87)" },
+        { "background": "#123456", "output": "#fff" },
+        { "background": "#777", "output": "#fff" },
+        { "background": "hsl(200, 50%, 50%)", "output": "#fff" }
+      ]
+    }
+  ],
+  "augmentation": [
+    {
+      "input": { "color": { "main": "#36c" }, "name": "brand" },
+      "output": {
+        "main": "#36c",
+        "light": "rgb(71, 117, 209)",
+        "dark": "rgb(30, 61, 122)",
+        "contrastText": "#fff"
+      }
+    },
+    {
+      "input": {
+        "color": { "200": "#abc", "400": "#456", "800": "#123" },
+        "mainShade": 400,
+        "lightShade": 200,
+        "darkShade": 800
+      },
+      "output": {
+        "200": "#abc",
+        "400": "#456",
+        "800": "#123",
+        "main": "#456",
+        "light": "#abc",
+        "dark": "#123",
+        "contrastText": "#fff"
+      }
+    },
+    {
+      "input": {
+        "color": { "main": "#456", "contrastText": "#fff", "custom": "#fff" }
+      },
+      "output": {
+        "main": "#456",
+        "contrastText": "#fff",
+        "custom": "#fff",
+        "light": "rgb(86, 102, 117)",
+        "dark": "rgb(40, 51, 61)"
+      }
+    }
+  ],
+  "colors": [
+    {
+      "operation": "decomposeColor",
+      "args": ["#000"],
+      "output": { "type": "rgb", "values": [0, 0, 0] }
+    },
+    { "operation": "colorChannel", "args": ["#000"], "output": "0 0 0" },
+    { "operation": "getLuminance", "args": ["#000"], "output": 0 },
+    { "operation": "emphasize", "args": ["#000"], "output": "rgb(38, 38, 38)" },
+    { "operation": "alpha", "args": ["#000", 0], "output": "rgba(0, 0, 0, 0)" },
+    {
+      "operation": "alpha",
+      "args": ["#000", 0.2],
+      "output": "rgba(0, 0, 0, 0.2)"
+    },
+    { "operation": "alpha", "args": ["#000", 1], "output": "rgba(0, 0, 0, 1)" },
+    { "operation": "lighten", "args": ["#000", 0], "output": "rgb(0, 0, 0)" },
+    {
+      "operation": "lighten",
+      "args": ["#000", 0.2],
+      "output": "rgb(51, 51, 51)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#000", 1],
+      "output": "rgb(255, 255, 255)"
+    },
+    { "operation": "darken", "args": ["#000", 0], "output": "rgb(0, 0, 0)" },
+    { "operation": "darken", "args": ["#000", 0.2], "output": "rgb(0, 0, 0)" },
+    { "operation": "darken", "args": ["#000", 1], "output": "rgb(0, 0, 0)" },
+    { "operation": "getContrastRatio", "args": ["#000", "#fff"], "output": 21 },
+    {
+      "operation": "decomposeColor",
+      "args": ["#fff"],
+      "output": { "type": "rgb", "values": [255, 255, 255] }
+    },
+    { "operation": "colorChannel", "args": ["#fff"], "output": "255 255 255" },
+    { "operation": "getLuminance", "args": ["#fff"], "output": 1 },
+    {
+      "operation": "emphasize",
+      "args": ["#fff"],
+      "output": "rgb(216, 216, 216)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#fff", 0],
+      "output": "rgba(255, 255, 255, 0)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#fff", 0.2],
+      "output": "rgba(255, 255, 255, 0.2)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#fff", 1],
+      "output": "rgba(255, 255, 255, 1)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#fff", 0],
+      "output": "rgb(255, 255, 255)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#fff", 0.2],
+      "output": "rgb(255, 255, 255)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#fff", 1],
+      "output": "rgb(255, 255, 255)"
+    },
+    {
+      "operation": "darken",
+      "args": ["#fff", 0],
+      "output": "rgb(255, 255, 255)"
+    },
+    {
+      "operation": "darken",
+      "args": ["#fff", 0.2],
+      "output": "rgb(204, 204, 204)"
+    },
+    { "operation": "darken", "args": ["#fff", 1], "output": "rgb(0, 0, 0)" },
+    { "operation": "getContrastRatio", "args": ["#fff", "#fff"], "output": 1 },
+    {
+      "operation": "decomposeColor",
+      "args": ["#123456"],
+      "output": { "type": "rgb", "values": [18, 52, 86] }
+    },
+    { "operation": "colorChannel", "args": ["#123456"], "output": "18 52 86" },
+    { "operation": "getLuminance", "args": ["#123456"], "output": 0.033 },
+    {
+      "operation": "emphasize",
+      "args": ["#123456"],
+      "output": "rgb(53, 82, 111)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#123456", 0],
+      "output": "rgba(18, 52, 86, 0)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#123456", 0.2],
+      "output": "rgba(18, 52, 86, 0.2)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#123456", 1],
+      "output": "rgba(18, 52, 86, 1)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#123456", 0],
+      "output": "rgb(18, 52, 86)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#123456", 0.2],
+      "output": "rgb(65, 92, 119)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#123456", 1],
+      "output": "rgb(255, 255, 255)"
+    },
+    {
+      "operation": "darken",
+      "args": ["#123456", 0],
+      "output": "rgb(18, 52, 86)"
+    },
+    {
+      "operation": "darken",
+      "args": ["#123456", 0.2],
+      "output": "rgb(14, 41, 68)"
+    },
+    { "operation": "darken", "args": ["#123456", 1], "output": "rgb(0, 0, 0)" },
+    {
+      "operation": "getContrastRatio",
+      "args": ["#123456", "#fff"],
+      "output": 12.650602409638553
+    },
+    {
+      "operation": "decomposeColor",
+      "args": ["#f09a"],
+      "output": { "type": "rgba", "values": [255, 0, 153, 0.667] }
+    },
+    { "operation": "colorChannel", "args": ["#f09a"], "output": "255 0 153" },
+    { "operation": "getLuminance", "args": ["#f09a"], "output": 0.236 },
+    {
+      "operation": "emphasize",
+      "args": ["#f09a"],
+      "output": "rgba(255, 38, 168, 0.667)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#f09a", 0],
+      "output": "rgba(255, 0, 153, 0)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#f09a", 0.2],
+      "output": "rgba(255, 0, 153, 0.2)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#f09a", 1],
+      "output": "rgba(255, 0, 153, 1)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#f09a", 0],
+      "output": "rgba(255, 0, 153, 0.667)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#f09a", 0.2],
+      "output": "rgba(255, 51, 173, 0.667)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#f09a", 1],
+      "output": "rgba(255, 255, 255, 0.667)"
+    },
+    {
+      "operation": "darken",
+      "args": ["#f09a", 0],
+      "output": "rgba(255, 0, 153, 0.667)"
+    },
+    {
+      "operation": "darken",
+      "args": ["#f09a", 0.2],
+      "output": "rgba(204, 0, 122, 0.667)"
+    },
+    {
+      "operation": "darken",
+      "args": ["#f09a", 1],
+      "output": "rgba(0, 0, 0, 0.667)"
+    },
+    {
+      "operation": "getContrastRatio",
+      "args": ["#f09a", "#fff"],
+      "output": 3.6713286713286717
+    },
+    {
+      "operation": "decomposeColor",
+      "args": ["#12345678"],
+      "output": { "type": "rgba", "values": [18, 52, 86, 0.471] }
+    },
+    {
+      "operation": "colorChannel",
+      "args": ["#12345678"],
+      "output": "18 52 86"
+    },
+    { "operation": "getLuminance", "args": ["#12345678"], "output": 0.033 },
+    {
+      "operation": "emphasize",
+      "args": ["#12345678"],
+      "output": "rgba(53, 82, 111, 0.471)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#12345678", 0],
+      "output": "rgba(18, 52, 86, 0)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#12345678", 0.2],
+      "output": "rgba(18, 52, 86, 0.2)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["#12345678", 1],
+      "output": "rgba(18, 52, 86, 1)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#12345678", 0],
+      "output": "rgba(18, 52, 86, 0.471)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#12345678", 0.2],
+      "output": "rgba(65, 92, 119, 0.471)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["#12345678", 1],
+      "output": "rgba(255, 255, 255, 0.471)"
+    },
+    {
+      "operation": "darken",
+      "args": ["#12345678", 0],
+      "output": "rgba(18, 52, 86, 0.471)"
+    },
+    {
+      "operation": "darken",
+      "args": ["#12345678", 0.2],
+      "output": "rgba(14, 41, 68, 0.471)"
+    },
+    {
+      "operation": "darken",
+      "args": ["#12345678", 1],
+      "output": "rgba(0, 0, 0, 0.471)"
+    },
+    {
+      "operation": "getContrastRatio",
+      "args": ["#12345678", "#fff"],
+      "output": 12.650602409638553
+    },
+    {
+      "operation": "decomposeColor",
+      "args": ["rgb(12, 34, 56)"],
+      "output": { "type": "rgb", "values": [12, 34, 56] }
+    },
+    {
+      "operation": "colorChannel",
+      "args": ["rgb(12, 34, 56)"],
+      "output": "12 34 56"
+    },
+    {
+      "operation": "getLuminance",
+      "args": ["rgb(12, 34, 56)"],
+      "output": 0.015
+    },
+    {
+      "operation": "emphasize",
+      "args": ["rgb(12, 34, 56)"],
+      "output": "rgb(48, 67, 85)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["rgb(12, 34, 56)", 0],
+      "output": "rgba(12, 34, 56, 0)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["rgb(12, 34, 56)", 0.2],
+      "output": "rgba(12, 34, 56, 0.2)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["rgb(12, 34, 56)", 1],
+      "output": "rgba(12, 34, 56, 1)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["rgb(12, 34, 56)", 0],
+      "output": "rgb(12, 34, 56)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["rgb(12, 34, 56)", 0.2],
+      "output": "rgb(60, 78, 95)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["rgb(12, 34, 56)", 1],
+      "output": "rgb(255, 255, 255)"
+    },
+    {
+      "operation": "darken",
+      "args": ["rgb(12, 34, 56)", 0],
+      "output": "rgb(12, 34, 56)"
+    },
+    {
+      "operation": "darken",
+      "args": ["rgb(12, 34, 56)", 0.2],
+      "output": "rgb(9, 27, 44)"
+    },
+    {
+      "operation": "darken",
+      "args": ["rgb(12, 34, 56)", 1],
+      "output": "rgb(0, 0, 0)"
+    },
+    {
+      "operation": "getContrastRatio",
+      "args": ["rgb(12, 34, 56)", "#fff"],
+      "output": 16.153846153846153
+    },
+    {
+      "operation": "decomposeColor",
+      "args": ["rgba(12, 34, 56, 0.8)"],
+      "output": { "type": "rgba", "values": [12, 34, 56, 0.8] }
+    },
+    {
+      "operation": "colorChannel",
+      "args": ["rgba(12, 34, 56, 0.8)"],
+      "output": "12 34 56"
+    },
+    {
+      "operation": "getLuminance",
+      "args": ["rgba(12, 34, 56, 0.8)"],
+      "output": 0.015
+    },
+    {
+      "operation": "emphasize",
+      "args": ["rgba(12, 34, 56, 0.8)"],
+      "output": "rgba(48, 67, 85, 0.8)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["rgba(12, 34, 56, 0.8)", 0],
+      "output": "rgba(12, 34, 56, 0)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["rgba(12, 34, 56, 0.8)", 0.2],
+      "output": "rgba(12, 34, 56, 0.2)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["rgba(12, 34, 56, 0.8)", 1],
+      "output": "rgba(12, 34, 56, 1)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["rgba(12, 34, 56, 0.8)", 0],
+      "output": "rgba(12, 34, 56, 0.8)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["rgba(12, 34, 56, 0.8)", 0.2],
+      "output": "rgba(60, 78, 95, 0.8)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["rgba(12, 34, 56, 0.8)", 1],
+      "output": "rgba(255, 255, 255, 0.8)"
+    },
+    {
+      "operation": "darken",
+      "args": ["rgba(12, 34, 56, 0.8)", 0],
+      "output": "rgba(12, 34, 56, 0.8)"
+    },
+    {
+      "operation": "darken",
+      "args": ["rgba(12, 34, 56, 0.8)", 0.2],
+      "output": "rgba(9, 27, 44, 0.8)"
+    },
+    {
+      "operation": "darken",
+      "args": ["rgba(12, 34, 56, 0.8)", 1],
+      "output": "rgba(0, 0, 0, 0.8)"
+    },
+    {
+      "operation": "getContrastRatio",
+      "args": ["rgba(12, 34, 56, 0.8)", "#fff"],
+      "output": 16.153846153846153
+    },
+    {
+      "operation": "decomposeColor",
+      "args": ["hsl(220, 70%, 40%)"],
+      "output": { "type": "hsl", "values": [220, 70, 40] }
+    },
+    {
+      "operation": "colorChannel",
+      "args": ["hsl(220, 70%, 40%)"],
+      "output": "220 70% 40%"
+    },
+    {
+      "operation": "getLuminance",
+      "args": ["hsl(220, 70%, 40%)"],
+      "output": 0.088
+    },
+    {
+      "operation": "emphasize",
+      "args": ["hsl(220, 70%, 40%)"],
+      "output": "hsl(220, 70%, 49%)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["hsl(220, 70%, 40%)", 0],
+      "output": "hsla(220, 70%, 40%, 0)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["hsl(220, 70%, 40%)", 0.2],
+      "output": "hsla(220, 70%, 40%, 0.2)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["hsl(220, 70%, 40%)", 1],
+      "output": "hsla(220, 70%, 40%, 1)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["hsl(220, 70%, 40%)", 0],
+      "output": "hsl(220, 70%, 40%)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["hsl(220, 70%, 40%)", 0.2],
+      "output": "hsl(220, 70%, 52%)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["hsl(220, 70%, 40%)", 1],
+      "output": "hsl(220, 70%, 100%)"
+    },
+    {
+      "operation": "darken",
+      "args": ["hsl(220, 70%, 40%)", 0],
+      "output": "hsl(220, 70%, 40%)"
+    },
+    {
+      "operation": "darken",
+      "args": ["hsl(220, 70%, 40%)", 0.2],
+      "output": "hsl(220, 70%, 32%)"
+    },
+    {
+      "operation": "darken",
+      "args": ["hsl(220, 70%, 40%)", 1],
+      "output": "hsl(220, 70%, 0%)"
+    },
+    {
+      "operation": "getContrastRatio",
+      "args": ["hsl(220, 70%, 40%)", "#fff"],
+      "output": 7.608695652173913
+    },
+    {
+      "operation": "decomposeColor",
+      "args": ["hsla(200, 50%, 60%, 0.4)"],
+      "output": { "type": "hsla", "values": [200, 50, 60, 0.4] }
+    },
+    {
+      "operation": "colorChannel",
+      "args": ["hsla(200, 50%, 60%, 0.4)"],
+      "output": "200 50% 60%"
+    },
+    {
+      "operation": "getLuminance",
+      "args": ["hsla(200, 50%, 60%, 0.4)"],
+      "output": 0.359
+    },
+    {
+      "operation": "emphasize",
+      "args": ["hsla(200, 50%, 60%, 0.4)"],
+      "output": "hsla(200, 50%, 66%, 0.4)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["hsla(200, 50%, 60%, 0.4)", 0],
+      "output": "hsla(200, 50%, 60%, 0)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["hsla(200, 50%, 60%, 0.4)", 0.2],
+      "output": "hsla(200, 50%, 60%, 0.2)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["hsla(200, 50%, 60%, 0.4)", 1],
+      "output": "hsla(200, 50%, 60%, 1)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["hsla(200, 50%, 60%, 0.4)", 0],
+      "output": "hsla(200, 50%, 60%, 0.4)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["hsla(200, 50%, 60%, 0.4)", 0.2],
+      "output": "hsla(200, 50%, 68%, 0.4)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["hsla(200, 50%, 60%, 0.4)", 1],
+      "output": "hsla(200, 50%, 100%, 0.4)"
+    },
+    {
+      "operation": "darken",
+      "args": ["hsla(200, 50%, 60%, 0.4)", 0],
+      "output": "hsla(200, 50%, 60%, 0.4)"
+    },
+    {
+      "operation": "darken",
+      "args": ["hsla(200, 50%, 60%, 0.4)", 0.2],
+      "output": "hsla(200, 50%, 48%, 0.4)"
+    },
+    {
+      "operation": "darken",
+      "args": ["hsla(200, 50%, 60%, 0.4)", 1],
+      "output": "hsla(200, 50%, 0%, 0.4)"
+    },
+    {
+      "operation": "getContrastRatio",
+      "args": ["hsla(200, 50%, 60%, 0.4)", "#fff"],
+      "output": 2.5672371638141813
+    },
+    {
+      "operation": "decomposeColor",
+      "args": ["color(srgb 0.2 0.4 0.6)"],
+      "output": {
+        "type": "color",
+        "values": [0.2, 0.4, 0.6],
+        "colorSpace": "srgb"
+      }
+    },
+    {
+      "operation": "colorChannel",
+      "args": ["color(srgb 0.2 0.4 0.6)"],
+      "output": "0.2 0.4 0.6"
+    },
+    {
+      "operation": "getLuminance",
+      "args": ["color(srgb 0.2 0.4 0.6)"],
+      "output": 0.125
+    },
+    {
+      "operation": "emphasize",
+      "args": ["color(srgb 0.2 0.4 0.6)"],
+      "output": "color(srgb 0.32 0.49 0.6599999999999999)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["color(srgb 0.2 0.4 0.6)", 0],
+      "output": "color(srgb 0.2 0.4 0.6 /0)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["color(srgb 0.2 0.4 0.6)", 0.2],
+      "output": "color(srgb 0.2 0.4 0.6 /0.2)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["color(srgb 0.2 0.4 0.6)", 1],
+      "output": "color(srgb 0.2 0.4 0.6 /1)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["color(srgb 0.2 0.4 0.6)", 0],
+      "output": "color(srgb 0.2 0.4 0.6)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["color(srgb 0.2 0.4 0.6)", 0.2],
+      "output": "color(srgb 0.36000000000000004 0.52 0.6799999999999999)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["color(srgb 0.2 0.4 0.6)", 1],
+      "output": "color(srgb 1 1 1)"
+    },
+    {
+      "operation": "darken",
+      "args": ["color(srgb 0.2 0.4 0.6)", 0],
+      "output": "color(srgb 0.2 0.4 0.6)"
+    },
+    {
+      "operation": "darken",
+      "args": ["color(srgb 0.2 0.4 0.6)", 0.2],
+      "output": "color(srgb 0.16000000000000003 0.32000000000000006 0.48)"
+    },
+    {
+      "operation": "darken",
+      "args": ["color(srgb 0.2 0.4 0.6)", 1],
+      "output": "color(srgb 0 0 0)"
+    },
+    {
+      "operation": "getContrastRatio",
+      "args": ["color(srgb 0.2 0.4 0.6)", "#fff"],
+      "output": 6.000000000000001
+    },
+    {
+      "operation": "decomposeColor",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)"],
+      "output": {
+        "type": "color",
+        "values": [0.2, 0.4, 0.6, 0.8],
+        "colorSpace": "display-p3"
+      }
+    },
+    {
+      "operation": "colorChannel",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)"],
+      "output": "0.2 0.4 0.6"
+    },
+    {
+      "operation": "getLuminance",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)"],
+      "output": 0.125
+    },
+    {
+      "operation": "emphasize",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)"],
+      "output": "color(display-p3 0.32 0.49 0.6599999999999999 0.8)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)", 0],
+      "output": "color(display-p3 0.2 0.4 0.6 /0)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)", 0.2],
+      "output": "color(display-p3 0.2 0.4 0.6 /0.2)"
+    },
+    {
+      "operation": "alpha",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)", 1],
+      "output": "color(display-p3 0.2 0.4 0.6 /1)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)", 0],
+      "output": "color(display-p3 0.2 0.4 0.6 0.8)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)", 0.2],
+      "output": "color(display-p3 0.36000000000000004 0.52 0.6799999999999999 0.8)"
+    },
+    {
+      "operation": "lighten",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)", 1],
+      "output": "color(display-p3 1 1 1 0.8)"
+    },
+    {
+      "operation": "darken",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)", 0],
+      "output": "color(display-p3 0.2 0.4 0.6 0.8)"
+    },
+    {
+      "operation": "darken",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)", 0.2],
+      "output": "color(display-p3 0.16000000000000003 0.32000000000000006 0.48 0.8)"
+    },
+    {
+      "operation": "darken",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)", 1],
+      "output": "color(display-p3 0 0 0 0.8)"
+    },
+    {
+      "operation": "getContrastRatio",
+      "args": ["color(display-p3 0.2 0.4 0.6 /0.8)", "#fff"],
+      "output": 6.000000000000001
+    },
+    { "operation": "hexToRgb", "args": ["#f09"], "output": "rgb(255, 0, 153)" },
+    {
+      "operation": "hexToRgb",
+      "args": ["#f09a"],
+      "output": "rgba(255, 0, 153, 0.667)"
+    },
+    {
+      "operation": "hexToRgb",
+      "args": ["#123456"],
+      "output": "rgb(18, 52, 86)"
+    },
+    {
+      "operation": "hexToRgb",
+      "args": ["#12345678"],
+      "output": "rgba(18, 52, 86, 0.471)"
+    },
+    {
+      "operation": "rgbToHex",
+      "args": ["rgb(12, 34, 56)"],
+      "output": "#0c2238"
+    },
+    {
+      "operation": "rgbToHex",
+      "args": ["rgba(12, 34, 56, 0.4)"],
+      "output": "#0c223866"
+    },
+    {
+      "operation": "hslToRgb",
+      "args": ["hsl(220, 70%, 40%)"],
+      "output": "rgb(31, 78, 173)"
+    },
+    {
+      "operation": "hslToRgb",
+      "args": ["hsla(200, 50%, 60%, 0.4)"],
+      "output": "rgba(102, 170, 204, 0.4)"
+    },
+    {
+      "operation": "blend",
+      "args": ["#123456", "#abcdef", 0.4, 1],
+      "output": "rgb(79, 113, 147)"
+    },
+    {
+      "operation": "blend",
+      "args": ["#123456", "#abcdef", 0.4, 2.2],
+      "output": "rgb(59, 100, 137)"
+    },
+    {
+      "operation": "recomposeColor",
+      "args": [{ "type": "rgba", "values": [12.8, 34.2, 56, 0.8] }],
+      "output": "rgba(12, 34, 56, 0.8)"
+    },
+    {
+      "operation": "recomposeColor",
+      "args": [{ "type": "hsl", "values": [220, 70, 40] }],
+      "output": "hsl(220, 70%, 40%)"
+    }
+  ]
+}

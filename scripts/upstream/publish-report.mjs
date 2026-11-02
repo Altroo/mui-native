@@ -84,7 +84,10 @@ export async function publishReport({
       changes
         .map(
           (c) =>
-            `- ${c.name}@${c.version}: ${c.classification}. [Release](${c.releaseUrl}) | [Source comparison](${c.compareUrl})`,
+            `- ${c.name}@${c.version}: ${c.classification}. [Release](${c.releaseUrl}) | [Source comparison](${c.compareUrl})` +
+            (c.adaptedSourceChanges?.length
+              ? `\n  Adapted source changed: ${c.adaptedSourceChanges.map((file) => `\`${file.path}\` (${file.status}; review ${file.localFiles.map((local) => `\`${local}\``).join(', ')})`).join('; ')}.`
+              : ''),
         )
         .join('\n') +
         (prepareDrafts

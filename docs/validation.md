@@ -80,3 +80,11 @@ The public source contains the reviewed SDK 58 baseline, native control/calendar
 The public baseline passed 44 Jest and 25 Node tests, root/catalog TypeScript, seven builds with 49 entry points, the fresh eight-tarball consumer and formatting.
 
 The installed-consumer harness now verifies that all eight archives retain their exact LICENSE and NOTICE files. The compatibility package includes NOTICE in its distribution allowlist. Public availability does not establish npm release readiness, full compatibility, native accessibility or performance parity.
+
+## 2026-11-02 isolated palette and color delivery
+
+The palette/color/provenance increment passed 228 Jest and 28 Node tests, root/catalog TypeScript, seven builds with 50 entry points, the fresh eight-package consumer and formatting. Installed consumers exercised Palette/PaletteOptions augmentation and root/deep color helpers, rejected browser/commercial imports and retained exact LICENSE/NOTICE contents. Delivery is tracked in [issue #11](https://github.com/Altroo/mui-native/issues/11).
+
+The reference check verified 10 palette, 3 augmentation and 166 color-helper cases against the integrity-checked Material UI/System 9.5.0 artifacts. Independent review compared 225 additional palette inputs, verified all ten adapted-source hashes and installed runtime exports, and found no actionable defects. The source-reuse record stays separate from immutable baselines; changed/removed implementation files appear in upstream review reports without advancing verified support. Existing styling/provider source and upstream support state remain unchanged by this increment.
+
+These checks cover finite JavaScript/type contracts. They do not certify native rendering of CSS color() strings, composited contrast, full styling parity, screen-reader behavior or release performance. See [theming limitations](theming.md).

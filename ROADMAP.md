@@ -44,6 +44,8 @@ Material UI baseline: 9.5.0. Stable X baseline: 9.15.0. Scheduler: 9.0.0-beta.13
 
 Expand `createTheme`, palette derivation, typography, spacing, breakpoints, default props, style overrides, variants, slots and owner state. Finish `styled`, scoped state/slot selectors and precedence. Add native ref handles, controlled-state diagnostics, meaningful unsupported-prop diagnostics, event ordering and migration tooling. Prove module augmentation and public import paths in installed consumers. Add RTL, font scaling, reduced motion, focus coordination and overlay hosting.
 
+Palette derivation and color helpers have pinned upstream reference fixtures and installed-consumer augmentation checks. See [native theming](docs/theming.md); broader styling contracts remain open.
+
 Button loading positions, custom indicators and disabled/busy state have scoped component and installed-consumer checks. See [native Button loading](docs/button.md). Full Button and native accessibility verification remain open.
 
 ## 3. Verified alpha
