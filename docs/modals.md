@@ -49,16 +49,16 @@ Focus capture records native handles when available. On blur, enforce-focus chec
 
 keepMounted preserves child state with disablePortal inline mode. Hidden inline roots stop hit testing and accessibility exposure. React Native's window Modal removes its subtree after dismissal, so window keepMounted cannot preserve it; requesting that combination emits the modal-keep-mounted diagnostic. Inline overlays fill their containing native layout and do not implement DOM container portals or automatic parent ScrollView locking.
 
-A custom transition child with an in prop receives chained onEnter/onExited callbacks. closeAfterTransition retains stack ownership until the current exit completes. Transition metadata is published at commit before child layout callbacks; stale exits from an earlier close cannot finish a later close cycle. Modal callbacks run before the child's matching callback. This wiring does not supply Fade/Grow/Slide components or implement the complete CSS transition API. Native window animationType can be supplied through nativeModalProps; Dialog defaults to the native fade animation.
+A custom transition child with an in prop receives chained onEnter/onExited callbacks. closeAfterTransition retains stack ownership until the current exit completes. Transition metadata is published at commit before child layout callbacks; stale exits from an earlier close cannot finish a later close cycle. Modal callbacks run before the child's matching callback. Native [Fade](transitions.md) now supplies opacity transitions; Grow/Slide and the complete CSS transition API remain open. Native window animationType can be supplied through nativeModalProps; Dialog defaults to none because content/backdrop use Fade.
 
-Backdrop supports open, invisible, native presses/refs, component replacement, native styles and sx. Closed backdrops stop hit testing. MuiModal/MuiBackdrop defaults and implemented named overrides use their component contexts. Backdrop's full root/transition slot and animation API remains unfinished.
+Backdrop supports open, invisible, native presses/refs, component replacement, native styles and sx. Exited backdrops stop hit testing while retaining layout. MuiModal/MuiBackdrop defaults and implemented named overrides use their component contexts. Backdrop implements root/transition slots and transitionDuration through native Fade; full CSS animation parity remains unfinished.
 
 ## Dialog slots and migration
 
-Dialog uses Modal and implements root, container, paper and backdrop slots with object/callback slotProps. Refs reach native views. Its default keyboard container forwards the underlying native view and uses pointerEvents=box-none so outside-paper taps can reach the backdrop; an explicit container slot override wins. Root/container/paper overrides remain scoped to their corresponding views.
+Dialog uses Modal and implements root, container, paper, backdrop and transition slots with object/callback slotProps. Refs reach native views. Its default keyboard container forwards the underlying native view and uses pointerEvents=box-none so outside-paper taps can reach the backdrop; an explicit container slot override wins. Root/container/paper overrides remain scoped to their corresponding views.
 
 ```tsx
-import { Dialog } from '@mui/material';
+import { Dialog, Typography } from '@mui/material';
 
 <Dialog
   open={open}
@@ -68,7 +68,7 @@ import { Dialog } from '@mui/material';
     paper: { testID: 'dialog-paper', sx: { borderRadius: 3 } },
   }}
 >
-  Content
+  <Typography>Content</Typography>
 </Dialog>;
 ```
 

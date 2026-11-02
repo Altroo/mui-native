@@ -1,0 +1,630 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Fade/Fade.js": "70b8162d090c47dc90d748a6bdc75c106440651b79ee3edb919f66477eba3798",
+      "Fade/Fade.d.ts": "478d420c2d0afc8006a7690270f5e609adad50ed05affa20437e83d7bc062fce",
+      "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+      "internal/Transition.d.ts": "795f469a31910731b945a2e52ea0171e8cf96c4e0632860b615a83a18400dee5",
+      "transitions/types.d.ts": "f50575b0f86abe96639d451557adcc7d8768ec7e3de930b47e063e3fcf81ad22",
+      "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+      "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+      "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028",
+      "styles/createTransitions.d.ts": "5f54447feaafcbe24ab100c0b5e1583d9b7e6f684105c45eed84fc1cc90ed955",
+      "styles/createMotion.js": "9c16055324af253924283b18215cb1336cdd2bc8b5d020a3084702b5fae23c6b",
+      "styles/createMotion.d.ts": "ee33d486a5c1122915d4311f74ced3d28a6ad9bc8280ece2f5a92ff9b62a46fe",
+      "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+      "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+      "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+      "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+      "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7"
+    }
+  },
+  "calls": [
+    [],
+    ["opacity"],
+    [["opacity", "transform"], { "duration": 151.6, "delay": 2.4 }],
+    ["height", { "duration": "0.2s", "easing": "linear", "delay": "10ms" }],
+    [[], { "duration": 0 }]
+  ],
+  "heights": [0, 1, 36, 100, 1000, 1000000000],
+  "themes": [
+    {
+      "name": "defaults",
+      "options": {},
+      "output": {
+        "duration": {
+          "shortest": 150,
+          "shorter": 200,
+          "short": 250,
+          "standard": 300,
+          "complex": 375,
+          "enteringScreen": 225,
+          "leavingScreen": 195
+        },
+        "easing": {
+          "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+          "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+          "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+        },
+        "motion": { "reducedMotion": "never" },
+        "legacyMotion": false,
+        "calls": [
+          "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "opacity 152ms cubic-bezier(0.4, 0, 0.2, 1) 2ms,transform 152ms cubic-bezier(0.4, 0, 0.2, 1) 2ms",
+          "height 0.2s linear 10ms",
+          ""
+        ],
+        "heights": [0, 101, 192, 239, 440, 3000]
+      }
+    },
+    {
+      "name": "partial timing and system motion",
+      "options": {
+        "transitions": {
+          "duration": { "standard": 123, "enteringScreen": 40 },
+          "easing": { "easeInOut": "linear" }
+        },
+        "motion": { "reducedMotion": "system" }
+      },
+      "output": {
+        "duration": {
+          "standard": 123,
+          "enteringScreen": 40,
+          "shortest": 150,
+          "shorter": 200,
+          "short": 250,
+          "complex": 375,
+          "leavingScreen": 195
+        },
+        "easing": {
+          "easeInOut": "linear",
+          "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+          "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+          "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+        },
+        "motion": { "reducedMotion": "system" },
+        "legacyMotion": false,
+        "calls": [
+          "all 123ms linear 0ms",
+          "opacity 123ms linear 0ms",
+          "opacity 152ms linear 2ms,transform 152ms linear 2ms",
+          "height 0.2s linear 10ms",
+          ""
+        ],
+        "heights": [0, 101, 192, 239, 440, 3000]
+      }
+    },
+    {
+      "name": "legacy transition motion removed",
+      "options": {
+        "transitions": { "reducedMotion": "always" },
+        "motion": { "reducedMotion": "always" }
+      },
+      "output": {
+        "duration": {
+          "shortest": 150,
+          "shorter": 200,
+          "short": 250,
+          "standard": 300,
+          "complex": 375,
+          "enteringScreen": 225,
+          "leavingScreen": 195
+        },
+        "easing": {
+          "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+          "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+          "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+        },
+        "motion": { "reducedMotion": "always" },
+        "legacyMotion": false,
+        "calls": [
+          "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "opacity 152ms cubic-bezier(0.4, 0, 0.2, 1) 2ms,transform 152ms cubic-bezier(0.4, 0, 0.2, 1) 2ms",
+          "height 0.2s linear 10ms",
+          ""
+        ],
+        "heights": [0, 101, 192, 239, 440, 3000]
+      }
+    },
+    {
+      "name": "additional arguments preserve initial factory closure",
+      "options": { "transitions": { "duration": { "standard": 80 } } },
+      "extra": {
+        "transitions": { "duration": { "standard": 90 }, "reducedMotion": "system" },
+        "motion": { "reducedMotion": "always" }
+      },
+      "output": {
+        "duration": {
+          "standard": 90,
+          "shortest": 150,
+          "shorter": 200,
+          "short": 250,
+          "complex": 375,
+          "enteringScreen": 225,
+          "leavingScreen": 195
+        },
+        "easing": {
+          "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+          "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+          "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+        },
+        "motion": { "reducedMotion": "always" },
+        "legacyMotion": false,
+        "calls": [
+          "all 80ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "opacity 80ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "opacity 152ms cubic-bezier(0.4, 0, 0.2, 1) 2ms,transform 152ms cubic-bezier(0.4, 0, 0.2, 1) 2ms",
+          "height 0.2s linear 10ms",
+          ""
+        ],
+        "heights": [0, 101, 192, 239, 440, 3000]
+      }
+    }
+  ],
+  "helpers": [
+    {
+      "input": {},
+      "output": {
+        "duration": {
+          "shortest": 150,
+          "shorter": 200,
+          "short": 250,
+          "standard": 300,
+          "complex": 375,
+          "enteringScreen": 225,
+          "leavingScreen": 195
+        },
+        "easing": {
+          "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+          "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+          "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+        },
+        "motion": {},
+        "legacyMotion": false,
+        "calls": [
+          "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "opacity 152ms cubic-bezier(0.4, 0, 0.2, 1) 2ms,transform 152ms cubic-bezier(0.4, 0, 0.2, 1) 2ms",
+          "height 0.2s linear 10ms",
+          ""
+        ],
+        "heights": [0, 101, 192, 239, 440, 3000]
+      }
+    },
+    {
+      "input": { "duration": { "standard": 42 }, "easing": { "easeInOut": "linear" } },
+      "output": {
+        "duration": {
+          "shortest": 150,
+          "shorter": 200,
+          "short": 250,
+          "standard": 42,
+          "complex": 375,
+          "enteringScreen": 225,
+          "leavingScreen": 195
+        },
+        "easing": {
+          "easeInOut": "linear",
+          "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+          "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+          "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+        },
+        "motion": {},
+        "legacyMotion": false,
+        "calls": [
+          "all 42ms linear 0ms",
+          "opacity 42ms linear 0ms",
+          "opacity 152ms linear 2ms,transform 152ms linear 2ms",
+          "height 0.2s linear 10ms",
+          ""
+        ],
+        "heights": [0, 101, 192, 239, 440, 3000]
+      }
+    },
+    {
+      "input": { "reducedMotion": "always" },
+      "output": {
+        "duration": {
+          "shortest": 150,
+          "shorter": 200,
+          "short": 250,
+          "standard": 300,
+          "complex": 375,
+          "enteringScreen": 225,
+          "leavingScreen": 195
+        },
+        "easing": {
+          "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+          "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+          "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+          "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+        },
+        "motion": {},
+        "legacyMotion": false,
+        "calls": [
+          "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "opacity 152ms cubic-bezier(0.4, 0, 0.2, 1) 2ms,transform 152ms cubic-bezier(0.4, 0, 0.2, 1) 2ms",
+          "height 0.2s linear 10ms",
+          ""
+        ],
+        "heights": [0, 101, 192, 239, 440, 3000]
+      }
+    }
+  ],
+  "motions": [
+    { "input": {}, "output": { "reducedMotion": "never" } },
+    { "input": { "reducedMotion": "system" }, "output": { "reducedMotion": "system" } },
+    { "input": { "reducedMotion": "always" }, "output": { "reducedMotion": "always" } },
+    {
+      "input": { "reducedMotion": "never", "custom": 3 },
+      "output": { "reducedMotion": "never", "custom": 3 }
+    }
+  ],
+  "lifecycles": [
+    {
+      "name": "appear deadlines",
+      "initial": true,
+      "props": { "timeout": { "appear": 10, "enter": 20, "exit": 30 } },
+      "actions": [{ "tick": 9 }, { "tick": 1 }, { "open": false }, { "tick": 29 }, { "tick": 1 }],
+      "snapshots": [
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "skip initial appear and later phases",
+      "initial": true,
+      "props": { "appear": false, "enter": false, "exit": false },
+      "actions": [{ "open": false }, { "open": true }],
+      "snapshots": [
+        { "trace": [], "mounted": true, "hidden": false },
+        { "trace": ["exited"], "mounted": true, "hidden": true },
+        { "trace": ["exited", "entered:false"], "mounted": true, "hidden": false }
+      ]
+    },
+    {
+      "name": "mount and unmount on exit",
+      "initial": false,
+      "props": { "mountOnEnter": true, "unmountOnExit": true, "timeout": 5 },
+      "actions": [{ "open": true }, { "tick": 5 }, { "open": false }, { "tick": 5 }],
+      "snapshots": [
+        { "trace": [], "mounted": false, "hidden": false },
+        { "trace": ["enter:false", "entering:false"], "mounted": true, "hidden": false },
+        {
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "mounted": false,
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "name": "interrupted phases",
+      "initial": true,
+      "props": { "timeout": 20 },
+      "actions": [
+        { "tick": 7 },
+        { "open": false },
+        { "tick": 4 },
+        { "open": true },
+        { "tick": 20 },
+        { "tick": 40 }
+      ],
+      "snapshots": [
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        {
+          "trace": ["enter:true", "entering:true", "exit", "exiting"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "exit", "exiting"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false"
+          ],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false",
+            "entered:false"
+          ],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false",
+            "entered:false"
+          ],
+          "mounted": true,
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "name": "listener races timeout",
+      "initial": true,
+      "listener": true,
+      "props": { "timeout": 20 },
+      "actions": [
+        { "done": 0 },
+        { "tick": 20 },
+        { "open": false },
+        { "open": true },
+        { "done": 1 },
+        { "done": 2 },
+        { "tick": 40 }
+      ],
+      "snapshots": [
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "entered:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false"
+          ],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "entered:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false"
+          ],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "entered:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false",
+            "entered:false"
+          ],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "entered:true",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false",
+            "entered:false"
+          ],
+          "mounted": true,
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "name": "style timing does not replace fallback",
+      "initial": true,
+      "props": {
+        "timeout": 20,
+        "style": {
+          "transitionDuration": "0.1s",
+          "transitionDelay": "5ms",
+          "transitionTimingFunction": "linear"
+        }
+      },
+      "actions": [{ "tick": 19 }, { "tick": 1 }, { "open": false }, { "tick": 20 }],
+      "snapshots": [
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "only enter completion authored",
+      "initial": false,
+      "props": { "timeout": { "enter": 10 } },
+      "actions": [{ "open": true }, { "tick": 10 }, { "open": false }, { "tick": 0 }],
+      "snapshots": [
+        { "trace": [], "mounted": true, "hidden": true },
+        { "trace": ["enter:false", "entering:false"], "mounted": true, "hidden": false },
+        {
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "enter false still appears initially",
+      "initial": true,
+      "props": { "enter": false, "timeout": 5 },
+      "actions": [{ "tick": 5 }, { "open": false }, { "tick": 5 }, { "open": true }],
+      "snapshots": [
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "mounted": true,
+          "hidden": true
+        },
+        {
+          "trace": [
+            "enter:true",
+            "entering:true",
+            "entered:true",
+            "exit",
+            "exiting",
+            "exited",
+            "entered:false"
+          ],
+          "mounted": true,
+          "hidden": false
+        }
+      ]
+    },
+    {
+      "name": "reduced motion completes asynchronously",
+      "initial": true,
+      "reduced": true,
+      "props": { "timeout": 100 },
+      "actions": [{ "tick": 0 }, { "open": false }, { "tick": 0 }],
+      "snapshots": [
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "mounted": true,
+          "hidden": false
+        },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "mounted": true,
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "name": "component reduced motion override",
+      "initial": true,
+      "reduced": true,
+      "props": { "timeout": 7, "disablePrefersReducedMotion": true },
+      "actions": [{ "tick": 6 }, { "tick": 1 }],
+      "snapshots": [
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        { "trace": ["enter:true", "entering:true"], "mounted": true, "hidden": false },
+        {
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "mounted": true,
+          "hidden": false
+        }
+      ]
+    }
+  ]
+}

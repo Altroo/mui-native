@@ -496,6 +496,254 @@
         "Dialog composes the reusable native Modal with keyboard avoidance, native paper sizing and four implemented native slots. Root props and conflicting root-slot precedence follow pinned Dialog routing; paper props are explicit slots.",
         "The keyboard container forwards its public native view ref and lets background touches reach the backdrop. Native styles/events replace CSS classes, DOM roles and browser transitions; complete Dialog contracts remain open."
       ]
+    },
+    {
+      "localFile": "packages/system/src/transitions.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Fade/Fade.js": "70b8162d090c47dc90d748a6bdc75c106440651b79ee3edb919f66477eba3798",
+          "Fade/Fade.d.ts": "478d420c2d0afc8006a7690270f5e609adad50ed05affa20437e83d7bc062fce",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "internal/Transition.d.ts": "795f469a31910731b945a2e52ea0171e8cf96c4e0632860b615a83a18400dee5",
+          "transitions/types.d.ts": "f50575b0f86abe96639d451557adcc7d8768ec7e3de930b47e063e3fcf81ad22",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028",
+          "styles/createTransitions.d.ts": "5f54447feaafcbe24ab100c0b5e1583d9b7e6f684105c45eed84fc1cc90ed955",
+          "styles/createMotion.js": "9c16055324af253924283b18215cb1336cdd2bc8b5d020a3084702b5fae23c6b",
+          "styles/createMotion.d.ts": "ee33d486a5c1122915d4311f74ced3d28a6ad9bc8280ece2f5a92ff9b62a46fe",
+          "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7"
+        }
+      },
+      "adaptations": [
+        "Typed theme duration/easing, CSS timing generation, automatic-height calculation and reduced-motion configuration follow the pinned MIT algorithms. No browser animation engine is introduced."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/theme.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Fade/Fade.js": "70b8162d090c47dc90d748a6bdc75c106440651b79ee3edb919f66477eba3798",
+          "Fade/Fade.d.ts": "478d420c2d0afc8006a7690270f5e609adad50ed05affa20437e83d7bc062fce",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "internal/Transition.d.ts": "795f469a31910731b945a2e52ea0171e8cf96c4e0632860b615a83a18400dee5",
+          "transitions/types.d.ts": "f50575b0f86abe96639d451557adcc7d8768ec7e3de930b47e063e3fcf81ad22",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028",
+          "styles/createTransitions.d.ts": "5f54447feaafcbe24ab100c0b5e1583d9b7e6f684105c45eed84fc1cc90ed955",
+          "styles/createMotion.js": "9c16055324af253924283b18215cb1336cdd2bc8b5d020a3084702b5fae23c6b",
+          "styles/createMotion.d.ts": "ee33d486a5c1122915d4311f74ced3d28a6ad9bc8280ece2f5a92ff9b62a46fe",
+          "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7"
+        }
+      },
+      "adaptations": [
+        "Theme transition/motion initialization, additional-argument merging and removal of legacy transitions.reducedMotion follow the pinned configuration behavior."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/NativeTransition.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Fade/Fade.js": "70b8162d090c47dc90d748a6bdc75c106440651b79ee3edb919f66477eba3798",
+          "Fade/Fade.d.ts": "478d420c2d0afc8006a7690270f5e609adad50ed05affa20437e83d7bc062fce",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "internal/Transition.d.ts": "795f469a31910731b945a2e52ea0171e8cf96c4e0632860b615a83a18400dee5",
+          "transitions/types.d.ts": "f50575b0f86abe96639d451557adcc7d8768ec7e3de930b47e063e3fcf81ad22",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028",
+          "styles/createTransitions.d.ts": "5f54447feaafcbe24ab100c0b5e1583d9b7e6f684105c45eed84fc1cc90ed955",
+          "styles/createMotion.js": "9c16055324af253924283b18215cb1336cdd2bc8b5d020a3084702b5fae23c6b",
+          "styles/createMotion.d.ts": "ee33d486a5c1122915d4311f74ced3d28a6ad9bc8280ece2f5a92ff9b62a46fe",
+          "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7"
+        }
+      },
+      "adaptations": [
+        "A native lifecycle state machine adapts pinned appear/enter/exit, mount/unmount, callbacks and completion races. Native refs replace DOM nodes; TransitionGroup interoperation remains unfinished."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/fade.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Fade/Fade.js": "70b8162d090c47dc90d748a6bdc75c106440651b79ee3edb919f66477eba3798",
+          "Fade/Fade.d.ts": "478d420c2d0afc8006a7690270f5e609adad50ed05affa20437e83d7bc062fce",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "internal/Transition.d.ts": "795f469a31910731b945a2e52ea0171e8cf96c4e0632860b615a83a18400dee5",
+          "transitions/types.d.ts": "f50575b0f86abe96639d451557adcc7d8768ec7e3de930b47e063e3fcf81ad22",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028",
+          "styles/createTransitions.d.ts": "5f54447feaafcbe24ab100c0b5e1583d9b7e6f684105c45eed84fc1cc90ed955",
+          "styles/createMotion.js": "9c16055324af253924283b18215cb1336cdd2bc8b5d020a3084702b5fae23c6b",
+          "styles/createMotion.d.ts": "ee33d486a5c1122915d4311f74ced3d28a6ad9bc8280ece2f5a92ff9b62a46fe",
+          "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7"
+        }
+      },
+      "adaptations": [
+        "Native-driver opacity replaces CSS opacity transitions without adding a native wrapper. Native timing/style translation is bounded and diagnostic; timers remain the authored lifecycle fallback."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/transitions/types/index.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Fade/Fade.js": "70b8162d090c47dc90d748a6bdc75c106440651b79ee3edb919f66477eba3798",
+          "Fade/Fade.d.ts": "478d420c2d0afc8006a7690270f5e609adad50ed05affa20437e83d7bc062fce",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "internal/Transition.d.ts": "795f469a31910731b945a2e52ea0171e8cf96c4e0632860b615a83a18400dee5",
+          "transitions/types.d.ts": "f50575b0f86abe96639d451557adcc7d8768ec7e3de930b47e063e3fcf81ad22",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028",
+          "styles/createTransitions.d.ts": "5f54447feaafcbe24ab100c0b5e1583d9b7e6f684105c45eed84fc1cc90ed955",
+          "styles/createMotion.js": "9c16055324af253924283b18215cb1336cdd2bc8b5d020a3084702b5fae23c6b",
+          "styles/createMotion.d.ts": "ee33d486a5c1122915d4311f74ced3d28a6ad9bc8280ece2f5a92ff9b62a46fe",
+          "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7"
+        }
+      },
+      "adaptations": [
+        "Public transition actions, timing and lifecycle names adapt pinned declarations to native View refs, styles and events. Browser DOM targets are excluded."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/modal.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Fade/Fade.js": "70b8162d090c47dc90d748a6bdc75c106440651b79ee3edb919f66477eba3798",
+          "Fade/Fade.d.ts": "478d420c2d0afc8006a7690270f5e609adad50ed05affa20437e83d7bc062fce",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "internal/Transition.d.ts": "795f469a31910731b945a2e52ea0171e8cf96c4e0632860b615a83a18400dee5",
+          "transitions/types.d.ts": "f50575b0f86abe96639d451557adcc7d8768ec7e3de930b47e063e3fcf81ad22",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028",
+          "styles/createTransitions.d.ts": "5f54447feaafcbe24ab100c0b5e1583d9b7e6f684105c45eed84fc1cc90ed955",
+          "styles/createMotion.js": "9c16055324af253924283b18215cb1336cdd2bc8b5d020a3084702b5fae23c6b",
+          "styles/createMotion.d.ts": "ee33d486a5c1122915d4311f74ced3d28a6ad9bc8280ece2f5a92ff9b62a46fe",
+          "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7"
+        }
+      },
+      "adaptations": [
+        "Backdrop root/transition slots and transitionDuration now compose a native Fade; native controlled open drives actual opacity exits."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/dialog.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Fade/Fade.js": "70b8162d090c47dc90d748a6bdc75c106440651b79ee3edb919f66477eba3798",
+          "Fade/Fade.d.ts": "478d420c2d0afc8006a7690270f5e609adad50ed05affa20437e83d7bc062fce",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "internal/Transition.d.ts": "795f469a31910731b945a2e52ea0171e8cf96c4e0632860b615a83a18400dee5",
+          "transitions/types.d.ts": "f50575b0f86abe96639d451557adcc7d8768ec7e3de930b47e063e3fcf81ad22",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028",
+          "styles/createTransitions.d.ts": "5f54447feaafcbe24ab100c0b5e1583d9b7e6f684105c45eed84fc1cc90ed955",
+          "styles/createMotion.js": "9c16055324af253924283b18215cb1336cdd2bc8b5d020a3084702b5fae23c6b",
+          "styles/createMotion.d.ts": "ee33d486a5c1122915d4311f74ced3d28a6ad9bc8280ece2f5a92ff9b62a46fe",
+          "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7"
+        }
+      },
+      "adaptations": [
+        "Dialog composes the default Fade and transition slot with the native keyboard container; native-window animation defaults to none to avoid duplicate motion."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/motionPreference.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Fade/Fade.js": "70b8162d090c47dc90d748a6bdc75c106440651b79ee3edb919f66477eba3798",
+          "Fade/Fade.d.ts": "478d420c2d0afc8006a7690270f5e609adad50ed05affa20437e83d7bc062fce",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "internal/Transition.d.ts": "795f469a31910731b945a2e52ea0171e8cf96c4e0632860b615a83a18400dee5",
+          "transitions/types.d.ts": "f50575b0f86abe96639d451557adcc7d8768ec7e3de930b47e063e3fcf81ad22",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028",
+          "styles/createTransitions.d.ts": "5f54447feaafcbe24ab100c0b5e1583d9b7e6f684105c45eed84fc1cc90ed955",
+          "styles/createMotion.js": "9c16055324af253924283b18215cb1336cdd2bc8b5d020a3084702b5fae23c6b",
+          "styles/createMotion.d.ts": "ee33d486a5c1122915d4311f74ced3d28a6ad9bc8280ece2f5a92ff9b62a46fe",
+          "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+          "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
+          "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
+          "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7"
+        }
+      },
+      "adaptations": [
+        "A shared native AccessibilityInfo resource replaces media-query preference observation. Unknown system state suppresses motion; native changes stop active owned motion promptly."
+      ]
     }
   ]
 }

@@ -239,6 +239,31 @@
       "types": "./dist/Backdrop/index.d.ts",
       "react-native": "./src/Backdrop/index.ts",
       "default": "./dist/Backdrop/index.js"
+    },
+    "./Fade": {
+      "types": "./dist/Fade/index.d.ts",
+      "react-native": "./src/Fade/index.ts",
+      "default": "./dist/Fade/index.js"
+    },
+    "./transitions": {
+      "types": "./dist/transitions/index.d.ts",
+      "react-native": "./src/transitions/index.ts",
+      "default": "./dist/transitions/index.js"
+    },
+    "./styles/createTransitions": {
+      "types": "./dist/styles/createTransitions/index.d.ts",
+      "react-native": "./src/styles/createTransitions/index.ts",
+      "default": "./dist/styles/createTransitions/index.js"
+    },
+    "./styles/createMotion": {
+      "types": "./dist/styles/createMotion/index.d.ts",
+      "react-native": "./src/styles/createMotion/index.ts",
+      "default": "./dist/styles/createMotion/index.js"
+    },
+    "./transitions/types": {
+      "types": "./dist/transitions/types/index.d.ts",
+      "react-native": "./src/transitions/types/index.ts",
+      "default": "./dist/transitions/types/index.js"
     }
   },
   "dependencies": {

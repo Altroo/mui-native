@@ -1,3 +1,11 @@
+import {
+  createTransitions,
+  createMotion,
+  type Transitions,
+  type TransitionsOptions,
+  type Motion,
+  type MotionOptions,
+} from './transitions';
 import { createTypography, type TypographyVariants, type TypographyOptions } from './typography';
 export type {
   TypographyVariant,
@@ -150,6 +158,8 @@ export interface Theme {
   typography: TypographyVariants;
   breakpoints: Breakpoints;
   components: Components;
+  transitions: Transitions;
+  motion: Motion;
 }
 export interface ThemeOptions {
   palette?: PaletteOptions;
@@ -159,6 +169,8 @@ export interface ThemeOptions {
   typography?: TypographyOptions;
   breakpoints?: BreakpointsOptions;
   components?: Theme['components'];
+  transitions?: TransitionsOptions;
+  motion?: MotionOptions;
 }
 export function merge<T>(base: T, value: unknown): T {
   if (!value || typeof value !== 'object' || Array.isArray(value))
@@ -302,13 +314,19 @@ export function createTheme(options: ThemeOptions = {}, ...overrides: ThemeOptio
     typography: createTypography(palette, options.typography),
     breakpoints: createBreakpoints(options.breakpoints),
     components: {},
+    transitions: createTransitions(options.transitions),
+    motion: createMotion(options.motion),
   };
   const {
     spacing: _spacing,
     palette: _palette,
     breakpoints: _breakpoints,
     typography: _typography,
+    transitions: _transitions,
+    motion: _motion,
     ...rest
   } = options;
-  return overrides.reduce<Theme>((theme, next) => merge(theme, next), merge(base, rest));
+  const result = overrides.reduce<Theme>((theme, next) => merge(theme, next), merge(base, rest));
+  delete (result.transitions as unknown as Record<string, unknown>).reducedMotion;
+  return result;
 }

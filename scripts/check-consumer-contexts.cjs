@@ -48,6 +48,7 @@ try {
   assert.notEqual(material.ThemeProvider, root.ThemeProvider);
   assert.notEqual(material.useTheme, root.useTheme);
   for (const name of [
+    'Fade',
     'Modal',
     'Backdrop',
     'Dialog',
@@ -72,6 +73,15 @@ try {
     requireConsumer('@altroo/mui-native/FormControl').useFormControl,
     material.useFormControl,
   );
+  for (const name of ['createTransitions', 'createMotion'])
+    assert.equal(requireConsumer('@altroo/mui-native/styles/' + name).default, root[name]);
+  for (const name of ['duration', 'easing'])
+    assert.deepEqual(
+      requireConsumer('@altroo/mui-native/styles/createTransitions')[name],
+      root[name],
+    );
+  requireConsumer('@altroo/mui-native/transitions');
+  requireConsumer('@altroo/mui-native/transitions/types');
   assert.equal('NativeInputControl' in requireConsumer('@altroo/mui-native/InputBase'), false);
   const textField = requireConsumer('@altroo/mui-native/TextField');
   const utils = requireConsumer('@altroo/mui-native/utils');

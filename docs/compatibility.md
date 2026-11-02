@@ -6,6 +6,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Native Fade, theme transitions/motion helpers and Dialog/Backdrop transition slots with native-driver opacity, lifecycle and reduced-motion checks. See [transitions](transitions.md).
 - Reusable Modal/Backdrop, top-layer dismissal, guarded native focus work, custom transition lifecycle wiring and Dialog slots/root routing. See [native modals](modals.md).
 
 - Shallow nested themes, callback replacement, System scopes, Material THEME_ID selection, shared original imports and RTL context. See [theme providers](theme-providers.md).
@@ -33,9 +34,10 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 Do not assume unlisted props work. Public TypeScript interfaces describe the implemented subset. JavaScript callers should run migration diagnostics and review source usage before adoption.
 
-- Full Material UI export coverage, all icon variants, remaining component slot replacement, classes/className, arbitrary CSS, CSS variables, non-width media queries, arbitrary descendant selectors, browser refs/events, transitions, ripple behavior.
+- Full Material UI export coverage, all icon variants, remaining component slot replacement, classes/className, arbitrary CSS, CSS variables, non-width media queries, arbitrary descendant selectors, browser refs/events, remaining transitions/TransitionGroup interoperation, ripple behavior.
 - Full `styled` semantics, CSS-variable/color-scheme providers, complete typography inheritance, the full responsive/style utility export set, all upstream augmentation interfaces. The installed-consumer fixture verifies custom Theme, ThemeOptions, Palette, PaletteOptions and BreakpointOverrides augmentation through @mui/material/styles.
-- Nested modal/focus restoration, keyboard avoidance on all devices, VoiceOver/TalkBack workflows, RTL and large-font layouts.
+- Automatic raw-text wrapping in View-backed containers and complete cross-View text style inheritance; use native Text or Typography around literal text.
+- Device-proven nested modal/focus restoration, keyboard avoidance on all devices, VoiceOver/TalkBack workflows, RTL and large-font layouts.
 - Grid cell editing, column virtualization, apiRef, column menus, flexible/dynamic sizing, keyboard navigation, comprehensive filtering operators and callback detail arguments.
 - SimpleTreeView/TreeItem composition, complete tree apiRef, all Community hooks and loading/disabled semantics.
 - Pie/scatter and other chart types, axes/composition APIs, multiple axes, tooltips, keyboard interactions, animations and full accessibility parity.

@@ -4,6 +4,7 @@ import { createTheme } from '@mui/material';
 // Library defaults remain Material defaults; applications choose their own theme.
 export function createCatalogTheme(dark: boolean) {
   return createTheme({
+    motion: { reducedMotion: 'system' },
     palette: {
       mode: dark ? 'dark' : 'light',
       primary: { main: dark ? '#8dc4ff' : '#0274d7', contrastText: dark ? '#121722' : '#ffffff' },

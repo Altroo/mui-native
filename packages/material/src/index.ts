@@ -47,3 +47,19 @@ export type {
   BackdropComponentsPropsOverrides,
   NativeFocusTarget,
 } from './modal';
+
+export { Fade } from './fade';
+export type { FadeProps } from './fade';
+export type {
+  TransitionProps,
+  TransitionStatus,
+  TransitionActions,
+  TransitionHandlerProps,
+  EasingProps,
+} from './transitions';
+export type {
+  BackdropSlots,
+  BackdropOwnerState,
+  BackdropRootProps,
+  BackdropTransitionSlotPropsOverrides,
+} from './modal';

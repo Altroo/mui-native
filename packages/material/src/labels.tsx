@@ -11,7 +11,6 @@ import React, {
 import {
   Text,
   Animated,
-  Easing,
   I18nManager,
   StyleSheet,
   type TextInstance,
@@ -22,7 +21,8 @@ import {
 import { useDefaultProps, getTextStyleInheritance, type SxProps } from '@altroo/mui-native-system';
 import { FormContext, nativeLabelText, type NativeHelperRegistration } from './formState';
 import { nativeInsets } from './nativeInsets';
-import { observeLabelMotion, reducedLabelMotion } from './labelMotion';
+import { useNativeReducedMotion } from './motionPreference';
+import { nativeEasing } from './nativeTransitionTiming';
 import type { NativeTypographyComponent } from './typography';
 export interface FormLabelPropsColorOverrides {}
 export interface InputLabelPropsSizeOverrides {}
@@ -237,34 +237,23 @@ export const InputLabel: React.ForwardRefExoticComponent<
     target.current = shrink ? 1 : 0;
   }, [shrink]);
   const previousTarget = useRef(shrink ? 1 : 0);
-  useEffect(() => {
-    if (disableAnimation || !transformsLabel) return;
-    return observeLabelMotion((value) => {
-      if (value) {
-        progress.stopAnimation();
-        progress.setValue(target.current);
-        setExpandedWidth(Boolean(target.current));
-      }
-    });
-  }, [progress, disableAnimation, transformsLabel]);
+  const reducedMotion = useNativeReducedMotion(
+    theme.motion?.reducedMotion,
+    disableAnimation || !transformsLabel,
+  );
   useEffect(() => {
     let active = true;
     progress.stopAnimation();
     const next = shrink ? 1 : 0;
-    if (
-      previousTarget.current === next ||
-      disableAnimation ||
-      reducedLabelMotion() ||
-      !transformsLabel
-    ) {
+    if (previousTarget.current === next || disableAnimation || reducedMotion || !transformsLabel) {
       progress.setValue(next);
       setExpandedWidth(Boolean(shrink));
     } else {
       setExpandedWidth(false);
       Animated.timing(progress, {
         toValue: next,
-        duration: 200,
-        easing: Easing.bezier(0, 0, 0.2, 1),
+        duration: theme.transitions.duration.shorter,
+        easing: nativeEasing(theme.transitions.easing.easeOut),
         useNativeDriver: true,
       }).start(({ finished }) => {
         if (finished && active) setExpandedWidth(Boolean(shrink));
@@ -275,7 +264,15 @@ export const InputLabel: React.ForwardRefExoticComponent<
       active = false;
       progress.stopAnimation();
     };
-  }, [disableAnimation, transformsLabel, shrink, progress]);
+  }, [
+    disableAnimation,
+    transformsLabel,
+    shrink,
+    progress,
+    reducedMotion,
+    theme.transitions.duration.shorter,
+    theme.transitions.easing.easeOut,
+  ]);
   const text = nativeLabelText(children);
   const nativeID = id ?? props.nativeID;
   useLayoutEffect(

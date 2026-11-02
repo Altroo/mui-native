@@ -33,6 +33,8 @@ import {
 } from '@altroo/mui-native-system';
 import { useComponentStyle, useSx } from './themeProvider';
 import { useForkRef } from './utils';
+import { Fade, type FadeProps } from './fade';
+import type { TransitionProps, TransitionStyle } from './transitions/types';
 import {
   nativeModalManager as manager,
   type NativeModalEntry,
@@ -42,28 +44,92 @@ export type { NativeFocusTarget } from './nativeModalManager';
 type NativeKeyEvent = Parameters<NonNullable<ViewProps['onKeyDown']>>[0];
 export type ModalCloseEvent = GestureResponderEvent | NativeKeyEvent | null;
 export interface BackdropComponentsPropsOverrides {}
-export interface BackdropProps extends Omit<PressableProps, 'style' | 'onClick'> {
+export interface BackdropTransitionSlotPropsOverrides {}
+export interface BackdropRootProps
+  extends Omit<PressableProps, 'onClick'>,
+    BackdropComponentsPropsOverrides {
+  ref?: React.Ref<ViewInstance>;
+  sx?: SxProps;
+  onClick?: (event: GestureResponderEvent) => void;
+  ownerState?: BackdropOwnerState;
+}
+export interface BackdropSlots {
+  root?: React.ComponentType<BackdropRootProps>;
+  transition?: React.ComponentType<FadeProps>;
+}
+export interface BackdropProps
+  extends Omit<PressableProps, 'children' | 'style' | 'onClick'>,
+    Omit<TransitionProps, keyof PressableProps | 'children' | 'style'> {
   open: boolean;
   invisible?: boolean;
+  children?: React.ReactNode;
   sx?: SxProps;
-  style?: PressableProps['style'];
+  style?: TransitionStyle;
   onClick?: (event: GestureResponderEvent) => void;
-  component?: React.ComponentType<PressableProps & React.RefAttributes<ViewInstance>>;
+  component?: React.ComponentType<BackdropRootProps>;
+  transitionDuration?: TransitionProps['timeout'];
+  slots?: BackdropSlots;
+  slotProps?: {
+    root?: SlotProps<BackdropRootProps, BackdropOwnerState>;
+    transition?: SlotProps<
+      Partial<FadeProps> & BackdropTransitionSlotPropsOverrides,
+      BackdropOwnerState
+    >;
+  };
 }
+export interface BackdropOwnerState extends BackdropProps {
+  invisible: boolean;
+}
+interface SurfaceProps extends BackdropRootProps {
+  surface: React.ComponentType<BackdropRootProps>;
+  nativeBaseStyle: ViewProps['style'];
+}
+const BackdropSurface = forwardRef<ViewInstance, SurfaceProps>(function BackdropSurface(
+  { surface: Root, nativeBaseStyle, ownerState, sx, onClick, ...native },
+  ref,
+) {
+  const style = native.style;
+  return (
+    <Root
+      {...native}
+      {...(Root === Pressable ? {} : { ownerState })}
+      ref={ref}
+      accessible={native.accessible ?? false}
+      onPress={native.onPress ?? onClick}
+      style={
+        typeof style === 'function'
+          ? (state) => [nativeBaseStyle, style(state)]
+          : [nativeBaseStyle, style]
+      }
+    />
+  );
+});
 export const Backdrop: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<BackdropProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, BackdropProps>(function Backdrop(inProps, ref) {
+  const props = useDefaultProps({ props: inProps, name: 'MuiBackdrop' });
   const {
     open,
     invisible = false,
+    children,
     sx,
     style,
     onClick,
     onPress,
-    component: Root = Pressable,
-    ...native
-  } = useDefaultProps({ props: inProps, name: 'MuiBackdrop' });
-  const computed = useComponentStyle('MuiBackdrop', { ...inProps, open, invisible }, sx, {
+    component,
+    slots = {},
+    slotProps = {},
+    transitionDuration,
+    ...other
+  } = props;
+  const ownerState = { ...props, invisible };
+  const root = resolveSlotProps(slotProps.root, ownerState) ?? {};
+  const transition = resolveSlotProps(slotProps.transition, ownerState) ?? {};
+  const Root = slots.root ?? component ?? Pressable,
+    Transition = slots.transition ?? Fade;
+  const rootRef = useForkRef(ref, root.ref);
+  const effectiveSx = Object.hasOwn(props, 'sx') ? sx : root.sx;
+  const computed = useComponentStyle('MuiBackdrop', ownerState, effectiveSx, {
     overrideKeys: invisible ? ['invisible'] : [],
     baseStyle: {
       position: 'absolute',
@@ -74,19 +140,31 @@ export const Backdrop: React.ForwardRefExoticComponent<
       backgroundColor: invisible ? 'transparent' : 'rgba(0,0,0,0.5)',
     },
   });
+  const press = Object.hasOwn(props, 'onPress')
+    ? { onPress }
+    : Object.hasOwn(props, 'onClick')
+      ? { onPress: onClick }
+      : {};
   return (
-    <Root
-      {...native}
-      ref={ref}
-      onPress={onPress ?? onClick}
-      accessible={native.accessible ?? false}
-      pointerEvents={open ? native.pointerEvents : 'none'}
-      style={(state) => [
-        computed,
-        typeof style === 'function' ? style(state) : style,
-        !open && { display: 'none' },
-      ]}
-    />
+    <Transition
+      in={open}
+      timeout={transitionDuration}
+      {...other}
+      {...press}
+      style={style}
+      {...transition}
+      {...(Transition === Fade ? {} : { ownerState })}
+    >
+      <BackdropSurface
+        {...root}
+        surface={Root}
+        ownerState={ownerState}
+        nativeBaseStyle={computed}
+        ref={rootRef}
+      >
+        {children}
+      </BackdropSurface>
+    </Transition>
   );
 });
 export interface NativeModalControlProps {
@@ -453,7 +531,7 @@ export const Modal: React.ForwardRefExoticComponent<
           <BackdropSlot
             {...backdropProps}
             {...(BackdropSlot === Backdrop ? {} : { ownerState })}
-            open={retained}
+            open={open}
             onPress={(event) => {
               (backdropProps.onPress ?? backdropProps.onClick)?.(event);
               if (!active.current || !manager.isTop(layer)) return;

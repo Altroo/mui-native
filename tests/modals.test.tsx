@@ -32,18 +32,28 @@ const node = (target: ReturnType<typeof focusTarget>, id: string) =>
     useImperativeHandle(ref, () => target as unknown as ViewInstance, []);
     return <View {...props} testID={id} />;
   });
-test('standalone backdrop supports invisible, disabled hit testing, styles and native refs', () => {
+test('standalone backdrop supports invisible, disabled hit testing, styles and native refs', async () => {
   const ref = React.createRef<ViewInstance>();
   const { rerender } = render(
-    <Backdrop ref={ref} open invisible testID="backdrop" style={{ padding: 3 }} />,
+    <Backdrop
+      ref={ref}
+      open
+      invisible
+      transitionDuration={0}
+      testID="backdrop"
+      style={{ padding: 3 }}
+    />,
   );
   expect(screen.getByTestId('backdrop')).toHaveStyle({
     backgroundColor: 'transparent',
     padding: 3,
   });
-  rerender(<Backdrop open={false} testID="backdrop" />);
+  rerender(<Backdrop open={false} transitionDuration={0} testID="backdrop" />);
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  });
   expect(screen.getByTestId('backdrop', { includeHiddenElements: true })).toHaveStyle({
-    display: 'none',
+    opacity: 0,
   });
   expect(screen.getByTestId('backdrop', { includeHiddenElements: true }).props.pointerEvents).toBe(
     'none',

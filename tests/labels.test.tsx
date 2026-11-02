@@ -437,12 +437,14 @@ test('enabling reduced motion during shrink releases the final long-label width'
     .spyOn(Animated, 'timing')
     .mockReturnValue({ start: jest.fn(), stop: jest.fn(), reset: jest.fn() });
   const field = (shrink: boolean) => (
-    <FormControl testID="form">
-      <InputLabel shrink={shrink} testID="label">
-        A long label with interrupted motion
-      </InputLabel>
-      <OutlinedInput />
-    </FormControl>
+    <ThemeProvider theme={createTheme({ motion: { reducedMotion: 'system' } })}>
+      <FormControl testID="form">
+        <InputLabel shrink={shrink} testID="label">
+          A long label with interrupted motion
+        </InputLabel>
+        <OutlinedInput />
+      </FormControl>
+    </ThemeProvider>
   );
   const { rerender, unmount } = render(field(false));
   try {

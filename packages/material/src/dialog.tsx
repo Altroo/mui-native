@@ -22,10 +22,13 @@ import { useTheme, useComponentStyle } from './themeProvider';
 import { Paper, type PaperProps, type BoxProps } from './layout';
 import { Modal, type ModalProps, type NativeModalControlProps, type BackdropProps } from './modal';
 import { useForkRef } from './utils';
+import { Fade, type FadeProps } from './fade';
+import type { TransitionProps } from './transitions/types';
 export interface DialogPaperSlotPropsOverrides {}
 export interface DialogContainerSlotPropsOverrides {}
 export interface DialogBackdropSlotPropsOverrides {}
 export interface DialogRootSlotPropsOverrides {}
+export interface DialogTransitionSlotPropsOverrides {}
 export interface DialogOwnerState extends NativeModalControlProps {
   fullWidth: boolean;
   fullScreen: boolean;
@@ -40,13 +43,19 @@ export interface DialogSlots {
   paper?: React.ComponentType<PaperSlotProps>;
   container?: React.ComponentType<ContainerProps>;
   backdrop?: React.ComponentType<BackdropProps & React.RefAttributes<ViewInstance>>;
+  transition?: React.ComponentType<FadeProps>;
 }
 export interface DialogProps extends BoxProps, NativeModalControlProps {
   fullWidth?: boolean;
   fullScreen?: boolean;
   maxWidth?: Breakpoint | false;
+  transitionDuration?: TransitionProps['timeout'];
   slots?: DialogSlots;
   slotProps?: {
+    transition?: SlotProps<
+      Partial<FadeProps> & DialogTransitionSlotPropsOverrides,
+      DialogOwnerState
+    >;
     root?: SlotProps<
       Partial<ModalProps> & DialogRootSlotPropsOverrides & { ref?: React.Ref<ViewInstance> },
       DialogOwnerState
@@ -61,13 +70,30 @@ export interface DialogProps extends BoxProps, NativeModalControlProps {
 }
 // KeyboardAvoidingView's class instance is not a native focus handle. Its
 // public viewRef exposes the native root in the pinned React Native version.
-const NativeDialogContainer = forwardRef<ViewInstance, ContainerProps>(
-  function NativeDialogContainer({ sx, ...props }, ref) {
-    const keyboard = useRef<React.ComponentRef<typeof KeyboardAvoidingView> | null>(null);
-    useImperativeHandle(ref, () => keyboard.current?.viewRef.current as ViewInstance, [
-      props.behavior,
-    ]);
-    return <KeyboardAvoidingView {...props} ref={keyboard} />;
+interface NativeContainerProps extends ContainerProps {
+  surface: React.ComponentType<ContainerProps>;
+  nativeBaseStyle: StyleProp<ViewStyle>;
+  ownerState: DialogOwnerState;
+}
+const NativeDialogContainer = forwardRef<ViewInstance, NativeContainerProps>(
+  function NativeDialogContainer(
+    { surface: Component, nativeBaseStyle, ownerState, sx, ...props },
+    ref,
+  ) {
+    const target = useRef<any>(null);
+    useImperativeHandle(
+      ref,
+      () => (Component === KeyboardAvoidingView ? target.current?.viewRef.current : target.current),
+      [Component, props.behavior],
+    );
+    return (
+      <Component
+        {...props}
+        {...(Component === KeyboardAvoidingView ? {} : { ownerState })}
+        ref={target}
+        style={[nativeBaseStyle, props.style]}
+      />
+    );
   },
 );
 function sxList(...values: Array<SxProps | undefined>): SxProps {
@@ -98,19 +124,23 @@ export const Dialog: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<DialogProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, DialogProps>(function Dialog(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiDialog' });
+  const theme = useTheme();
   const {
     open,
     onClose,
     fullWidth = false,
     fullScreen = false,
     maxWidth = 'sm' as Breakpoint,
+    transitionDuration = {
+      enter: theme.transitions.duration.enteringScreen,
+      exit: theme.transitions.duration.leavingScreen,
+    },
     children,
     sx,
     slots = {},
     slotProps = {},
     ...rootNative
   } = props;
-  const theme = useTheme();
   const { width } = useWindowDimensions();
   const availableWidth = Math.max(0, width - 48);
   const unit = theme.breakpoints.unit ?? 'px';
@@ -139,6 +169,7 @@ export const Dialog: React.ForwardRefExoticComponent<
   const containerProps = resolveSlotProps(slotProps.container, ownerState) ?? {};
   const paperProps = resolveSlotProps(slotProps.paper, ownerState) ?? {};
   const backdropProps = resolveSlotProps(slotProps.backdrop, ownerState) ?? {};
+  const transitionProps = resolveSlotProps(slotProps.transition, ownerState) ?? {};
   const rootRef = useForkRef(ref, rootProps.ref);
   const effectiveRootSx = Object.hasOwn(props, 'sx') ? sx : rootProps.sx;
   const effectiveRootStyle = Object.hasOwn(rootNative, 'style')
@@ -164,7 +195,8 @@ export const Dialog: React.ForwardRefExoticComponent<
     paperProps.sx,
   );
   const Root = slots.root ?? Modal,
-    Container = slots.container ?? NativeDialogContainer,
+    Container = slots.container ?? KeyboardAvoidingView,
+    Transition = slots.transition ?? Fade,
     PaperSlot = slots.paper ?? Paper;
   const { sx: containerSx, style: containerNativeStyle, ...containerRest } = containerProps;
   const { style: paperSlotStyle, ...paperRest } = paperProps;
@@ -176,6 +208,7 @@ export const Dialog: React.ForwardRefExoticComponent<
       slots={slots.backdrop ? { backdrop: slots.backdrop } : undefined}
       slotProps={{
         backdrop: {
+          transitionDuration,
           accessibilityLabel: 'Dismiss dialog',
           accessibilityRole: 'button',
           accessible: true,
@@ -187,41 +220,51 @@ export const Dialog: React.ForwardRefExoticComponent<
       sx={effectiveRootSx}
       nativeModalProps={{
         transparent: !fullScreen,
-        animationType: 'fade',
+        animationType: 'none',
         ...effectiveWindowProps,
       }}
       {...(Root === Modal ? {} : { ownerState })}
       ref={rootRef}
       style={[rootStyle, effectiveRootStyle]}
     >
-      <Container
-        pointerEvents="box-none"
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        {...containerRest}
-        {...(Container === NativeDialogContainer ? {} : { ownerState })}
-        style={[containerStyle, containerNativeStyle]}
+      <Transition
+        appear
+        in={open}
+        timeout={transitionDuration}
+        {...transitionProps}
+        {...(Transition === Fade ? {} : { ownerState })}
       >
-        <PaperSlot
-          {...paperRest}
-          {...(PaperSlot === Paper ? {} : { ownerState })}
-          sx={paperProps.sx}
-          style={[
-            {
-              margin: fullScreen ? 0 : 24,
-              width: fullScreen ? '100%' : fullWidth ? availableWidth : undefined,
-              minWidth: fullScreen ? undefined : Math.min(280, availableWidth, maximumWidth),
-              maxWidth: fullScreen ? undefined : Math.min(availableWidth, maximumWidth),
-              ...(fullScreen ? { borderRadius: 0 } : {}),
-              alignSelf: fullScreen ? 'stretch' : undefined,
-              flex: fullScreen ? 1 : undefined,
-            },
-            paperStyle,
-            paperSlotStyle,
-          ]}
+        <NativeDialogContainer
+          pointerEvents="box-none"
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+          {...containerRest}
+          surface={Container}
+          ownerState={ownerState}
+          nativeBaseStyle={containerStyle}
+          style={containerNativeStyle}
         >
-          {children}
-        </PaperSlot>
-      </Container>
+          <PaperSlot
+            {...paperRest}
+            {...(PaperSlot === Paper ? {} : { ownerState })}
+            sx={paperProps.sx}
+            style={[
+              {
+                margin: fullScreen ? 0 : 24,
+                width: fullScreen ? '100%' : fullWidth ? availableWidth : undefined,
+                minWidth: fullScreen ? undefined : Math.min(280, availableWidth, maximumWidth),
+                maxWidth: fullScreen ? undefined : Math.min(availableWidth, maximumWidth),
+                ...(fullScreen ? { borderRadius: 0 } : {}),
+                alignSelf: fullScreen ? 'stretch' : undefined,
+                flex: fullScreen ? 1 : undefined,
+              },
+              paperStyle,
+              paperSlotStyle,
+            ]}
+          >
+            {children}
+          </PaperSlot>
+        </NativeDialogContainer>
+      </Transition>
     </Root>
   );
 });

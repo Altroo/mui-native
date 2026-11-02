@@ -7,3 +7,5 @@ export type {
   DialogBackdropSlotPropsOverrides,
   DialogRootSlotPropsOverrides,
 } from '../dialog';
+
+export type { DialogTransitionSlotPropsOverrides } from '../dialog';

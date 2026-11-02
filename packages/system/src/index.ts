@@ -26,3 +26,5 @@ export type { DefaultPropsMap, SlotProps } from './defaultProps';
 
 export { default as RtlProvider, useRtl } from './RtlProvider';
 export type { RtlProviderProps } from './RtlProvider';
+
+export * from './transitions';
