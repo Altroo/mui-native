@@ -1,0 +1,1362 @@
+{
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "styles/createPalette.js": "973057639a7d4bb422fed3fccdd9bc171a3380329201b59e2c6a6e6312647ce6",
+        "styles/createTypography.js": "c5b645a4cf220e5b515923a5475c0989b0f36736a6882b024441df29c5a96d03",
+        "styles/createTypography.d.ts": "a9e0a480c019837e2634ee2ac49d078e9548032f2f69e9f7c4465ce4e871155f",
+        "Typography/Typography.js": "791ce01d7581defa70c9d08c2a9a0eb751719e0bde7fb36719f16b7139154d81",
+        "Typography/Typography.d.ts": "7e03586cd0e6a494fb36142aeb03cd23a3ba89ba85179cc935616e23beeb10d4"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf",
+        "typography/typography.js": "909cec360c596b4e0cf36fafca205f477c0ab0e62aff2751b061c33e17ddd45b",
+        "style/style.js": "ae36c11e3fe1e5f23cc3485e64281bab51665780d1ec2e788742586eef9ba8d9",
+        "styleFunctionSx/defaultSxConfig.js": "d8efd9936072efe65f1faaec85230f59e22eac85c29579df0e32492321e8e706"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "input": {},
+      "output": {
+        "htmlFontSize": 16,
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontSize": 14,
+        "fontWeightLight": 300,
+        "fontWeightRegular": 400,
+        "fontWeightMedium": 500,
+        "fontWeightBold": 700,
+        "h1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "6rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "-0.01562em"
+        },
+        "h2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "3.75rem",
+          "lineHeight": 1.2,
+          "letterSpacing": "-0.00833em"
+        },
+        "h3": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "3rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "0em"
+        },
+        "h4": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "2.125rem",
+          "lineHeight": 1.235,
+          "letterSpacing": "0.00735em"
+        },
+        "h5": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.5rem",
+          "lineHeight": 1.334,
+          "letterSpacing": "0em"
+        },
+        "h6": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "1.25rem",
+          "lineHeight": 1.6,
+          "letterSpacing": "0.0075em"
+        },
+        "subtitle1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.00938em"
+        },
+        "subtitle2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.57,
+          "letterSpacing": "0.00714em"
+        },
+        "body1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1rem",
+          "lineHeight": 1.5,
+          "letterSpacing": "0.00938em"
+        },
+        "body2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.43,
+          "letterSpacing": "0.01071em"
+        },
+        "button": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.02857em",
+          "textTransform": "uppercase"
+        },
+        "caption": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.75rem",
+          "lineHeight": 1.66,
+          "letterSpacing": "0.03333em"
+        },
+        "overline": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.75rem",
+          "lineHeight": 2.66,
+          "letterSpacing": "0.08333em",
+          "textTransform": "uppercase"
+        },
+        "inherit": {
+          "fontFamily": "inherit",
+          "fontWeight": "inherit",
+          "fontSize": "inherit",
+          "lineHeight": "inherit",
+          "letterSpacing": "inherit"
+        }
+      },
+      "conversions": [
+        { "value": 0, "output": "0rem" },
+        { "value": 1, "output": "0.0625rem" },
+        { "value": 12, "output": "0.75rem" },
+        { "value": 14, "output": "0.875rem" },
+        { "value": 16, "output": "1rem" },
+        { "value": 24, "output": "1.5rem" },
+        { "value": -8, "output": "-0.5rem" },
+        { "value": 1.5, "output": "0.09375rem" }
+      ]
+    },
+    {
+      "input": { "fontSize": 18 },
+      "output": {
+        "htmlFontSize": 16,
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontSize": 18,
+        "fontWeightLight": 300,
+        "fontWeightRegular": 400,
+        "fontWeightMedium": 500,
+        "fontWeightBold": 700,
+        "h1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "7.714285714285715rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "-0.01562em"
+        },
+        "h2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "4.821428571428572rem",
+          "lineHeight": 1.2,
+          "letterSpacing": "-0.00833em"
+        },
+        "h3": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "3.8571428571428577rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "0em"
+        },
+        "h4": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "2.732142857142857rem",
+          "lineHeight": 1.235,
+          "letterSpacing": "0.00735em"
+        },
+        "h5": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.9285714285714288rem",
+          "lineHeight": 1.334,
+          "letterSpacing": "0em"
+        },
+        "h6": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "1.6071428571428572rem",
+          "lineHeight": 1.6,
+          "letterSpacing": "0.0075em"
+        },
+        "subtitle1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.2857142857142858rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.00938em"
+        },
+        "subtitle2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "1.125rem",
+          "lineHeight": 1.57,
+          "letterSpacing": "0.00714em"
+        },
+        "body1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.2857142857142858rem",
+          "lineHeight": 1.5,
+          "letterSpacing": "0.00938em"
+        },
+        "body2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.125rem",
+          "lineHeight": 1.43,
+          "letterSpacing": "0.01071em"
+        },
+        "button": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "1.125rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.02857em",
+          "textTransform": "uppercase"
+        },
+        "caption": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.9642857142857144rem",
+          "lineHeight": 1.66,
+          "letterSpacing": "0.03333em"
+        },
+        "overline": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.9642857142857144rem",
+          "lineHeight": 2.66,
+          "letterSpacing": "0.08333em",
+          "textTransform": "uppercase"
+        },
+        "inherit": {
+          "fontFamily": "inherit",
+          "fontWeight": "inherit",
+          "fontSize": "inherit",
+          "lineHeight": "inherit",
+          "letterSpacing": "inherit"
+        }
+      },
+      "conversions": [
+        { "value": 0, "output": "0rem" },
+        { "value": 1, "output": "0.08035714285714286rem" },
+        { "value": 12, "output": "0.9642857142857144rem" },
+        { "value": 14, "output": "1.125rem" },
+        { "value": 16, "output": "1.2857142857142858rem" },
+        { "value": 24, "output": "1.9285714285714288rem" },
+        { "value": -8, "output": "-0.6428571428571429rem" },
+        { "value": 1.5, "output": "0.1205357142857143rem" }
+      ]
+    },
+    {
+      "input": { "htmlFontSize": 20 },
+      "output": {
+        "htmlFontSize": 20,
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontSize": 14,
+        "fontWeightLight": 300,
+        "fontWeightRegular": 400,
+        "fontWeightMedium": 500,
+        "fontWeightBold": 700,
+        "h1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "4.8rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "-0.01562em"
+        },
+        "h2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "3rem",
+          "lineHeight": 1.2,
+          "letterSpacing": "-0.00833em"
+        },
+        "h3": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "2.4rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "0em"
+        },
+        "h4": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.7rem",
+          "lineHeight": 1.235,
+          "letterSpacing": "0.00735em"
+        },
+        "h5": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.2rem",
+          "lineHeight": 1.334,
+          "letterSpacing": "0em"
+        },
+        "h6": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "1rem",
+          "lineHeight": 1.6,
+          "letterSpacing": "0.0075em"
+        },
+        "subtitle1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.8rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.00938em"
+        },
+        "subtitle2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.7rem",
+          "lineHeight": 1.57,
+          "letterSpacing": "0.00714em"
+        },
+        "body1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.8rem",
+          "lineHeight": 1.5,
+          "letterSpacing": "0.00938em"
+        },
+        "body2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.7rem",
+          "lineHeight": 1.43,
+          "letterSpacing": "0.01071em"
+        },
+        "button": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.7rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.02857em",
+          "textTransform": "uppercase"
+        },
+        "caption": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.6rem",
+          "lineHeight": 1.66,
+          "letterSpacing": "0.03333em"
+        },
+        "overline": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.6rem",
+          "lineHeight": 2.66,
+          "letterSpacing": "0.08333em",
+          "textTransform": "uppercase"
+        },
+        "inherit": {
+          "fontFamily": "inherit",
+          "fontWeight": "inherit",
+          "fontSize": "inherit",
+          "lineHeight": "inherit",
+          "letterSpacing": "inherit"
+        }
+      },
+      "conversions": [
+        { "value": 0, "output": "0rem" },
+        { "value": 1, "output": "0.05rem" },
+        { "value": 12, "output": "0.6rem" },
+        { "value": 14, "output": "0.7rem" },
+        { "value": 16, "output": "0.8rem" },
+        { "value": 24, "output": "1.2rem" },
+        { "value": -8, "output": "-0.4rem" },
+        { "value": 1.5, "output": "0.075rem" }
+      ]
+    },
+    {
+      "input": { "fontSize": 18, "htmlFontSize": 20 },
+      "output": {
+        "htmlFontSize": 20,
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontSize": 18,
+        "fontWeightLight": 300,
+        "fontWeightRegular": 400,
+        "fontWeightMedium": 500,
+        "fontWeightBold": 700,
+        "h1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "6.171428571428572rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "-0.01562em"
+        },
+        "h2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "3.8571428571428577rem",
+          "lineHeight": 1.2,
+          "letterSpacing": "-0.00833em"
+        },
+        "h3": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "3.085714285714286rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "0em"
+        },
+        "h4": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "2.185714285714286rem",
+          "lineHeight": 1.235,
+          "letterSpacing": "0.00735em"
+        },
+        "h5": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.542857142857143rem",
+          "lineHeight": 1.334,
+          "letterSpacing": "0em"
+        },
+        "h6": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "1.2857142857142858rem",
+          "lineHeight": 1.6,
+          "letterSpacing": "0.0075em"
+        },
+        "subtitle1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.0285714285714287rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.00938em"
+        },
+        "subtitle2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.9rem",
+          "lineHeight": 1.57,
+          "letterSpacing": "0.00714em"
+        },
+        "body1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.0285714285714287rem",
+          "lineHeight": 1.5,
+          "letterSpacing": "0.00938em"
+        },
+        "body2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.9rem",
+          "lineHeight": 1.43,
+          "letterSpacing": "0.01071em"
+        },
+        "button": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.9rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.02857em",
+          "textTransform": "uppercase"
+        },
+        "caption": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.7714285714285715rem",
+          "lineHeight": 1.66,
+          "letterSpacing": "0.03333em"
+        },
+        "overline": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.7714285714285715rem",
+          "lineHeight": 2.66,
+          "letterSpacing": "0.08333em",
+          "textTransform": "uppercase"
+        },
+        "inherit": {
+          "fontFamily": "inherit",
+          "fontWeight": "inherit",
+          "fontSize": "inherit",
+          "lineHeight": "inherit",
+          "letterSpacing": "inherit"
+        }
+      },
+      "conversions": [
+        { "value": 0, "output": "0rem" },
+        { "value": 1, "output": "0.0642857142857143rem" },
+        { "value": 12, "output": "0.7714285714285715rem" },
+        { "value": 14, "output": "0.9rem" },
+        { "value": 16, "output": "1.0285714285714287rem" },
+        { "value": 24, "output": "1.542857142857143rem" },
+        { "value": -8, "output": "-0.5142857142857143rem" },
+        { "value": 1.5, "output": "0.09642857142857143rem" }
+      ]
+    },
+    {
+      "input": { "fontFamily": "Inter, sans-serif" },
+      "output": {
+        "htmlFontSize": 16,
+        "fontFamily": "Inter, sans-serif",
+        "fontSize": 14,
+        "fontWeightLight": 300,
+        "fontWeightRegular": 400,
+        "fontWeightMedium": 500,
+        "fontWeightBold": 700,
+        "h1": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 300,
+          "fontSize": "6rem",
+          "lineHeight": 1.167
+        },
+        "h2": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 300,
+          "fontSize": "3.75rem",
+          "lineHeight": 1.2
+        },
+        "h3": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 400,
+          "fontSize": "3rem",
+          "lineHeight": 1.167
+        },
+        "h4": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 400,
+          "fontSize": "2.125rem",
+          "lineHeight": 1.235
+        },
+        "h5": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.5rem",
+          "lineHeight": 1.334
+        },
+        "h6": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 500,
+          "fontSize": "1.25rem",
+          "lineHeight": 1.6
+        },
+        "subtitle1": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1rem",
+          "lineHeight": 1.75
+        },
+        "subtitle2": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.57
+        },
+        "body1": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1rem",
+          "lineHeight": 1.5
+        },
+        "body2": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.43
+        },
+        "button": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.75,
+          "textTransform": "uppercase"
+        },
+        "caption": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.75rem",
+          "lineHeight": 1.66
+        },
+        "overline": {
+          "fontFamily": "Inter, sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.75rem",
+          "lineHeight": 2.66,
+          "textTransform": "uppercase"
+        },
+        "inherit": {
+          "fontFamily": "inherit",
+          "fontWeight": "inherit",
+          "fontSize": "inherit",
+          "lineHeight": "inherit",
+          "letterSpacing": "inherit"
+        }
+      },
+      "conversions": [
+        { "value": 0, "output": "0rem" },
+        { "value": 1, "output": "0.0625rem" },
+        { "value": 12, "output": "0.75rem" },
+        { "value": 14, "output": "0.875rem" },
+        { "value": 16, "output": "1rem" },
+        { "value": 24, "output": "1.5rem" },
+        { "value": -8, "output": "-0.5rem" },
+        { "value": 1.5, "output": "0.09375rem" }
+      ]
+    },
+    {
+      "input": {
+        "fontWeightLight": 200,
+        "fontWeightRegular": 350,
+        "fontWeightMedium": 600,
+        "fontWeightBold": 900
+      },
+      "output": {
+        "htmlFontSize": 16,
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontSize": 14,
+        "fontWeightLight": 200,
+        "fontWeightRegular": 350,
+        "fontWeightMedium": 600,
+        "fontWeightBold": 900,
+        "h1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 200,
+          "fontSize": "6rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "-0.01562em"
+        },
+        "h2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 200,
+          "fontSize": "3.75rem",
+          "lineHeight": 1.2,
+          "letterSpacing": "-0.00833em"
+        },
+        "h3": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 350,
+          "fontSize": "3rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "0em"
+        },
+        "h4": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 350,
+          "fontSize": "2.125rem",
+          "lineHeight": 1.235,
+          "letterSpacing": "0.00735em"
+        },
+        "h5": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 350,
+          "fontSize": "1.5rem",
+          "lineHeight": 1.334,
+          "letterSpacing": "0em"
+        },
+        "h6": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 600,
+          "fontSize": "1.25rem",
+          "lineHeight": 1.6,
+          "letterSpacing": "0.0075em"
+        },
+        "subtitle1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 350,
+          "fontSize": "1rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.00938em"
+        },
+        "subtitle2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 600,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.57,
+          "letterSpacing": "0.00714em"
+        },
+        "body1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 350,
+          "fontSize": "1rem",
+          "lineHeight": 1.5,
+          "letterSpacing": "0.00938em"
+        },
+        "body2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 350,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.43,
+          "letterSpacing": "0.01071em"
+        },
+        "button": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 600,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.02857em",
+          "textTransform": "uppercase"
+        },
+        "caption": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 350,
+          "fontSize": "0.75rem",
+          "lineHeight": 1.66,
+          "letterSpacing": "0.03333em"
+        },
+        "overline": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 350,
+          "fontSize": "0.75rem",
+          "lineHeight": 2.66,
+          "letterSpacing": "0.08333em",
+          "textTransform": "uppercase"
+        },
+        "inherit": {
+          "fontFamily": "inherit",
+          "fontWeight": "inherit",
+          "fontSize": "inherit",
+          "lineHeight": "inherit",
+          "letterSpacing": "inherit"
+        }
+      },
+      "conversions": [
+        { "value": 0, "output": "0rem" },
+        { "value": 1, "output": "0.0625rem" },
+        { "value": 12, "output": "0.75rem" },
+        { "value": 14, "output": "0.875rem" },
+        { "value": 16, "output": "1rem" },
+        { "value": 24, "output": "1.5rem" },
+        { "value": -8, "output": "-0.5rem" },
+        { "value": 1.5, "output": "0.09375rem" }
+      ]
+    },
+    {
+      "input": {
+        "allVariants": {
+          "color": "#123456",
+          "letterSpacing": "0.03em",
+          "lineHeight": 1.4,
+          "fontSize": 18
+        }
+      },
+      "output": {
+        "htmlFontSize": 16,
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontSize": 14,
+        "fontWeightLight": 300,
+        "fontWeightRegular": 400,
+        "fontWeightMedium": 500,
+        "fontWeightBold": 700,
+        "h1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "h2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "h3": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "h4": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "h5": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "h6": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "subtitle1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "subtitle2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "body1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "body2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "button": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "textTransform": "uppercase",
+          "color": "#123456"
+        },
+        "caption": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "color": "#123456"
+        },
+        "overline": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": 18,
+          "lineHeight": 1.4,
+          "letterSpacing": "0.03em",
+          "textTransform": "uppercase",
+          "color": "#123456"
+        },
+        "inherit": {
+          "fontFamily": "inherit",
+          "fontWeight": "inherit",
+          "fontSize": "inherit",
+          "lineHeight": "inherit",
+          "letterSpacing": "inherit"
+        }
+      },
+      "conversions": [
+        { "value": 0, "output": "0rem" },
+        { "value": 1, "output": "0.0625rem" },
+        { "value": 12, "output": "0.75rem" },
+        { "value": 14, "output": "0.875rem" },
+        { "value": 16, "output": "1rem" },
+        { "value": 24, "output": "1.5rem" },
+        { "value": -8, "output": "-0.5rem" },
+        { "value": 1.5, "output": "0.09375rem" }
+      ]
+    },
+    {
+      "input": {
+        "body1": { "fontSize": "2rem", "lineHeight": "150%", "letterSpacing": "1px" },
+        "h1": { "fontWeight": "bold" }
+      },
+      "output": {
+        "htmlFontSize": 16,
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontSize": 14,
+        "fontWeightLight": 300,
+        "fontWeightRegular": 400,
+        "fontWeightMedium": 500,
+        "fontWeightBold": 700,
+        "h1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": "bold",
+          "fontSize": "6rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "-0.01562em"
+        },
+        "h2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "3.75rem",
+          "lineHeight": 1.2,
+          "letterSpacing": "-0.00833em"
+        },
+        "h3": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "3rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "0em"
+        },
+        "h4": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "2.125rem",
+          "lineHeight": 1.235,
+          "letterSpacing": "0.00735em"
+        },
+        "h5": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.5rem",
+          "lineHeight": 1.334,
+          "letterSpacing": "0em"
+        },
+        "h6": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "1.25rem",
+          "lineHeight": 1.6,
+          "letterSpacing": "0.0075em"
+        },
+        "subtitle1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.00938em"
+        },
+        "subtitle2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.57,
+          "letterSpacing": "0.00714em"
+        },
+        "body1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "2rem",
+          "lineHeight": "150%",
+          "letterSpacing": "1px"
+        },
+        "body2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.43,
+          "letterSpacing": "0.01071em"
+        },
+        "button": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.02857em",
+          "textTransform": "uppercase"
+        },
+        "caption": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.75rem",
+          "lineHeight": 1.66,
+          "letterSpacing": "0.03333em"
+        },
+        "overline": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.75rem",
+          "lineHeight": 2.66,
+          "letterSpacing": "0.08333em",
+          "textTransform": "uppercase"
+        },
+        "inherit": {
+          "fontFamily": "inherit",
+          "fontWeight": "inherit",
+          "fontSize": "inherit",
+          "lineHeight": "inherit",
+          "letterSpacing": "inherit"
+        }
+      },
+      "conversions": [
+        { "value": 0, "output": "0rem" },
+        { "value": 1, "output": "0.0625rem" },
+        { "value": 12, "output": "0.75rem" },
+        { "value": 14, "output": "0.875rem" },
+        { "value": 16, "output": "1rem" },
+        { "value": 24, "output": "1.5rem" },
+        { "value": -8, "output": "-0.5rem" },
+        { "value": 1.5, "output": "0.09375rem" }
+      ]
+    },
+    {
+      "input": { "poster": { "fontSize": "5rem", "lineHeight": 1.1 }, "h3": null },
+      "output": {
+        "htmlFontSize": 16,
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontSize": 14,
+        "fontWeightLight": 300,
+        "fontWeightRegular": 400,
+        "fontWeightMedium": 500,
+        "fontWeightBold": 700,
+        "h1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "6rem",
+          "lineHeight": 1.167,
+          "letterSpacing": "-0.01562em"
+        },
+        "h2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 300,
+          "fontSize": "3.75rem",
+          "lineHeight": 1.2,
+          "letterSpacing": "-0.00833em"
+        },
+        "h3": null,
+        "h4": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "2.125rem",
+          "lineHeight": 1.235,
+          "letterSpacing": "0.00735em"
+        },
+        "h5": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1.5rem",
+          "lineHeight": 1.334,
+          "letterSpacing": "0em"
+        },
+        "h6": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "1.25rem",
+          "lineHeight": 1.6,
+          "letterSpacing": "0.0075em"
+        },
+        "subtitle1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.00938em"
+        },
+        "subtitle2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.57,
+          "letterSpacing": "0.00714em"
+        },
+        "body1": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "1rem",
+          "lineHeight": 1.5,
+          "letterSpacing": "0.00938em"
+        },
+        "body2": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.43,
+          "letterSpacing": "0.01071em"
+        },
+        "button": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 500,
+          "fontSize": "0.875rem",
+          "lineHeight": 1.75,
+          "letterSpacing": "0.02857em",
+          "textTransform": "uppercase"
+        },
+        "caption": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.75rem",
+          "lineHeight": 1.66,
+          "letterSpacing": "0.03333em"
+        },
+        "overline": {
+          "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+          "fontWeight": 400,
+          "fontSize": "0.75rem",
+          "lineHeight": 2.66,
+          "letterSpacing": "0.08333em",
+          "textTransform": "uppercase"
+        },
+        "inherit": {
+          "fontFamily": "inherit",
+          "fontWeight": "inherit",
+          "fontSize": "inherit",
+          "lineHeight": "inherit",
+          "letterSpacing": "inherit"
+        },
+        "poster": { "fontSize": "5rem", "lineHeight": 1.1 }
+      },
+      "conversions": [
+        { "value": 0, "output": "0rem" },
+        { "value": 1, "output": "0.0625rem" },
+        { "value": 12, "output": "0.75rem" },
+        { "value": 14, "output": "0.875rem" },
+        { "value": 16, "output": "1rem" },
+        { "value": 24, "output": "1.5rem" },
+        { "value": -8, "output": "-0.5rem" },
+        { "value": 1.5, "output": "0.09375rem" }
+      ]
+    }
+  ],
+  "callback": {
+    "htmlFontSize": 16,
+    "fontFamily": "Inter",
+    "fontSize": 14,
+    "fontWeightLight": 300,
+    "fontWeightRegular": 400,
+    "fontWeightMedium": 500,
+    "fontWeightBold": 700,
+    "h1": { "fontFamily": "Inter", "fontWeight": 650, "fontSize": "6rem", "lineHeight": 1.167 },
+    "h2": { "fontFamily": "Inter", "fontWeight": 650, "fontSize": "3.75rem", "lineHeight": 1.2 },
+    "h3": { "fontFamily": "Inter", "fontWeight": 650, "fontSize": "3rem", "lineHeight": 1.167 },
+    "h4": { "fontFamily": "Inter", "fontWeight": 650, "fontSize": "2.125rem", "lineHeight": 1.235 },
+    "h5": { "fontFamily": "Inter", "fontWeight": 650, "fontSize": "1.5rem", "lineHeight": 1.334 },
+    "h6": { "fontFamily": "Inter", "fontWeight": 650, "fontSize": "1.25rem", "lineHeight": 1.6 },
+    "subtitle1": {
+      "fontFamily": "Inter",
+      "fontWeight": 650,
+      "fontSize": "1rem",
+      "lineHeight": 1.75
+    },
+    "subtitle2": {
+      "fontFamily": "Inter",
+      "fontWeight": 650,
+      "fontSize": "0.875rem",
+      "lineHeight": 1.57
+    },
+    "body1": {
+      "fontFamily": "Inter",
+      "fontWeight": 650,
+      "fontSize": "1rem",
+      "lineHeight": 1.5,
+      "color": "#345678"
+    },
+    "body2": {
+      "fontFamily": "Inter",
+      "fontWeight": 650,
+      "fontSize": "0.875rem",
+      "lineHeight": 1.43
+    },
+    "button": {
+      "fontFamily": "Inter",
+      "fontWeight": 650,
+      "fontSize": "0.875rem",
+      "lineHeight": 1.75,
+      "textTransform": "uppercase"
+    },
+    "caption": {
+      "fontFamily": "Inter",
+      "fontWeight": 650,
+      "fontSize": "0.75rem",
+      "lineHeight": 1.66
+    },
+    "overline": {
+      "fontFamily": "Inter",
+      "fontWeight": 650,
+      "fontSize": "0.75rem",
+      "lineHeight": 2.66,
+      "textTransform": "uppercase"
+    },
+    "inherit": {
+      "fontFamily": "inherit",
+      "fontWeight": "inherit",
+      "fontSize": "inherit",
+      "lineHeight": "inherit",
+      "letterSpacing": "inherit"
+    }
+  },
+  "custom": {
+    "htmlFontSize": 16,
+    "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+    "fontSize": 14,
+    "fontWeightLight": 300,
+    "fontWeightRegular": 400,
+    "fontWeightMedium": 500,
+    "fontWeightBold": 700,
+    "h1": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 300,
+      "fontSize": "9.6px",
+      "lineHeight": 1.167,
+      "letterSpacing": "-0.01562em"
+    },
+    "h2": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 300,
+      "fontSize": "6px",
+      "lineHeight": 1.2,
+      "letterSpacing": "-0.00833em"
+    },
+    "h3": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 400,
+      "fontSize": "4.8px",
+      "lineHeight": 1.167,
+      "letterSpacing": "0em"
+    },
+    "h4": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 400,
+      "fontSize": "3.4px",
+      "lineHeight": 1.235,
+      "letterSpacing": "0.00735em"
+    },
+    "h5": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 400,
+      "fontSize": "2.4px",
+      "lineHeight": 1.334,
+      "letterSpacing": "0em"
+    },
+    "h6": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 500,
+      "fontSize": "2px",
+      "lineHeight": 1.6,
+      "letterSpacing": "0.0075em"
+    },
+    "subtitle1": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 400,
+      "fontSize": "1.6px",
+      "lineHeight": 1.75,
+      "letterSpacing": "0.00938em"
+    },
+    "subtitle2": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 500,
+      "fontSize": "1.4px",
+      "lineHeight": 1.57,
+      "letterSpacing": "0.00714em"
+    },
+    "body1": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 400,
+      "fontSize": "1.6px",
+      "lineHeight": 1.5,
+      "letterSpacing": "0.00938em"
+    },
+    "body2": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 400,
+      "fontSize": "1.4px",
+      "lineHeight": 1.43,
+      "letterSpacing": "0.01071em"
+    },
+    "button": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 500,
+      "fontSize": "1.4px",
+      "lineHeight": 1.75,
+      "letterSpacing": "0.02857em",
+      "textTransform": "uppercase"
+    },
+    "caption": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 400,
+      "fontSize": "1.2px",
+      "lineHeight": 1.66,
+      "letterSpacing": "0.03333em"
+    },
+    "overline": {
+      "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+      "fontWeight": 400,
+      "fontSize": "1.2px",
+      "lineHeight": 2.66,
+      "letterSpacing": "0.08333em",
+      "textTransform": "uppercase"
+    },
+    "inherit": {
+      "fontFamily": "inherit",
+      "fontWeight": "inherit",
+      "fontSize": "inherit",
+      "lineHeight": "inherit",
+      "letterSpacing": "inherit"
+    }
+  },
+  "sx": [
+    {
+      "input": { "typography": "body1" },
+      "output": {
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontWeight": 400,
+        "fontSize": "1rem",
+        "lineHeight": 1.5,
+        "letterSpacing": "0.00938em"
+      }
+    },
+    {
+      "input": { "typography": "h1", "fontSize": 32 },
+      "output": {
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontWeight": 300,
+        "fontSize": 32,
+        "lineHeight": 1.167,
+        "letterSpacing": "-0.01562em"
+      }
+    },
+    {
+      "input": { "fontWeight": "medium", "fontFamily": "default", "fontSize": "body2.fontSize" },
+      "output": {
+        "fontWeight": 500,
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontSize": "0.875rem"
+      }
+    },
+    {
+      "input": { "fontWeight": "fontWeightBold", "fontSize": "fontSize" },
+      "output": { "fontWeight": 700, "fontSize": 14 }
+    },
+    {
+      "input": { "typography": "button", "lineHeight": 5, "letterSpacing": "0.5em" },
+      "output": {
+        "fontFamily": "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+        "fontWeight": 500,
+        "fontSize": "0.875rem",
+        "lineHeight": 5,
+        "letterSpacing": "0.5em",
+        "textTransform": "uppercase"
+      }
+    }
+  ]
+}

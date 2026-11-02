@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- MUI-shaped typography themes, callbacks/conversion, native text normalization, custom variants, heading mapping and tracked text inheritance. See [typography](typography.md) for native differences and explicit limits.
+
 - Object, function, and array `sx`; palette paths; spacing; fractional sizing; `px`/`rem`; responsive values; selected `&.Mui-state` selectors; root overrides and variants.
 - Spacing arrays/functions/strings and multi-value helpers, breakpoint methods and custom keys, native width media rules, responsive Stack spacing and Dialog widths. See [layout system](layout-system.md) for supported units, ordering and limitations.
 - Palette shade/contrast derivation, light/dark defaults, augmentColor, color helpers and Palette/PaletteOptions augmentation. See [native theming](theming.md) for tested inputs and limitations.

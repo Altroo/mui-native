@@ -86,3 +86,21 @@ test('short and collapsed viewports have a recoverable screen-level scroll fallb
   expect(screen.UNSAFE_getByType(DataGrid).props.height).toBe(160);
   scrollTo.mockRestore();
 });
+
+test('catalog theme keeps intentional native text heights after CSS typography migration', () => {
+  const { createCatalogTheme } = require('../apps/native-catalog/catalogTheme');
+  const { resolveSx } = require('../packages/system/src');
+  for (const dark of [false, true]) {
+    const theme = createCatalogTheme(dark);
+    for (const [variant, size, height] of [
+      ['h5', 26, 34],
+      ['h6', 20, 28],
+      ['subtitle1', 16, 24],
+      ['subtitle2', 14, 22],
+    ])
+      expect(resolveSx(theme.typography[variant], theme)).toMatchObject({
+        fontSize: size,
+        lineHeight: height,
+      });
+  }
+});

@@ -1,7 +1,15 @@
 import React, { createContext, useContext, useMemo, forwardRef } from 'react';
-import { useWindowDimensions, type StyleProp, type ViewStyle } from 'react-native';
+import { useWindowDimensions, StyleSheet, type StyleProp } from 'react-native';
 import { createTheme, type Theme } from './theme';
-import { componentStyle, resolveSx, type SxProps, type SxObject, type StyleContext } from './sx';
+import { nativeStyleTextMetrics, applyNativeTextMetrics } from './nativeText';
+import {
+  componentStyle,
+  resolveSx,
+  type SxProps,
+  type SxObject,
+  type StyleContext,
+  type NativeStyle,
+} from './sx';
 const defaultTheme = createTheme();
 const Context = createContext(defaultTheme);
 export function ThemeProvider({
@@ -44,7 +52,7 @@ export function styled<P extends object>(
   options: { name?: string; shouldForwardProp?: (prop: string) => boolean } = {},
 ) {
   return (styles: SxObject | ((props: P & { theme: Theme; ownerState?: unknown }) => SxProps)) =>
-    forwardRef<unknown, P & { sx?: SxProps; style?: StyleProp<ViewStyle>; ownerState?: unknown }>(
+    forwardRef<unknown, P & { sx?: SxProps; style?: StyleProp<NativeStyle>; ownerState?: unknown }>(
       (props, ref) => {
         const theme = useTheme();
         const { width } = useWindowDimensions();
@@ -56,14 +64,18 @@ export function styled<P extends object>(
         const filtered = Object.fromEntries(
           Object.entries(rest).filter(([key]) => options.shouldForwardProp?.(key) ?? true),
         );
+        const native = StyleSheet.flatten(style) ?? undefined;
+        const nativeMetrics = nativeStyleTextMetrics(style);
+        const computed = componentStyle(theme, options.name ?? '', props, sx, {
+          width,
+          baseStyle: resolved,
+          nativeStyle: native,
+          nativeTextMetrics: nativeMetrics,
+        });
         return React.createElement(Component, {
           ...filtered,
           ref,
-          style: [
-            resolveSx(resolved, theme, { width, mode: 'css' }),
-            componentStyle(theme, options.name ?? '', props, sx, { width }),
-            style,
-          ],
+          style: [computed, applyNativeTextMetrics(native, computed, nativeMetrics)],
         } as unknown as P);
       },
     );

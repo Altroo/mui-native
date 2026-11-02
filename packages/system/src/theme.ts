@@ -1,4 +1,15 @@
-import type { TextStyle } from 'react-native';
+import { createTypography, type TypographyVariants, type TypographyOptions } from './typography';
+export type {
+  TypographyVariant,
+  TypographyVariants,
+  TypographyVariantsOptions,
+  TypographyStyle,
+  TypographyStyleOptions,
+  TypographyUtils,
+  FontStyle,
+  FontStyleOptions,
+  TypographyOptions,
+} from './typography';
 import type { SxProps, SxObject } from './sx';
 import { darken, lighten, getContrastRatio } from './colorManipulator';
 import { createSpacing, type Spacing, type SpacingOptions } from './spacing';
@@ -116,20 +127,6 @@ export interface PaletteOptions {
   action?: Partial<TypeAction>;
   getContrastText?: (background: string) => string;
 }
-export type TypographyVariant =
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
-  | 'subtitle1'
-  | 'subtitle2'
-  | 'body1'
-  | 'body2'
-  | 'button'
-  | 'caption'
-  | 'overline';
 export interface ComponentConfig {
   defaultProps?: Record<string, unknown>;
   styleOverrides?: Record<
@@ -146,23 +143,16 @@ export interface Theme {
   spacing: Spacing;
   shape: { borderRadius: number };
   direction: 'ltr' | 'rtl';
-  typography: Record<TypographyVariant, TextStyle> & { fontFamily: string; htmlFontSize: number };
+  typography: TypographyVariants;
   breakpoints: Breakpoints;
   components: Record<string, ComponentConfig>;
 }
-type DeepPartial<T> = {
-  [K in keyof T]?: T[K] extends (...args: never[]) => unknown
-    ? T[K]
-    : T[K] extends object
-      ? DeepPartial<T[K]>
-      : T[K];
-};
 export interface ThemeOptions {
   palette?: PaletteOptions;
   spacing?: SpacingOptions;
   shape?: Partial<Theme['shape']>;
   direction?: Theme['direction'];
-  typography?: DeepPartial<Theme['typography']>;
+  typography?: TypographyOptions;
   breakpoints?: BreakpointsOptions;
   components?: Theme['components'];
 }
@@ -299,35 +289,22 @@ function createPalette(options: PaletteOptions = {}): Palette {
   return merge(base, other);
 }
 export function createTheme(options: ThemeOptions = {}, ...overrides: ThemeOptions[]): Theme {
-  const typography = Object.fromEntries(
-    Object.entries({
-      h1: [96, 112, 300],
-      h2: [60, 72, 300],
-      h3: [48, 56, 400],
-      h4: [34, 42, 400],
-      h5: [24, 32, 400],
-      h6: [20, 32, 500],
-      subtitle1: [16, 28, 400],
-      subtitle2: [14, 22, 500],
-      body1: [16, 24, 400],
-      body2: [14, 20, 400],
-      button: [14, 24, 500],
-      caption: [12, 20, 400],
-      overline: [12, 32, 400],
-    }).map(([k, [fontSize, lineHeight, weight]]) => [
-      k,
-      { fontSize, lineHeight, fontWeight: String(weight) },
-    ]),
-  );
+  const palette = createPalette(options.palette);
   const base: Theme = {
-    palette: createPalette(options.palette),
+    palette,
     spacing: createSpacing(options.spacing),
     shape: { borderRadius: 4 },
     direction: 'ltr',
-    typography: { ...typography, fontFamily: 'System', htmlFontSize: 16 } as Theme['typography'],
+    typography: createTypography(palette, options.typography),
     breakpoints: createBreakpoints(options.breakpoints),
     components: {},
   };
-  const { spacing: _spacing, palette: _palette, breakpoints: _breakpoints, ...rest } = options;
+  const {
+    spacing: _spacing,
+    palette: _palette,
+    breakpoints: _breakpoints,
+    typography: _typography,
+    ...rest
+  } = options;
   return overrides.reduce<Theme>((theme, next) => merge(theme, next), merge(base, rest));
 }

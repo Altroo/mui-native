@@ -10,7 +10,13 @@ import {
   useWindowDimensions,
   type GestureResponderEvent,
 } from 'react-native';
-import { useTheme, diagnostic, type SxProps, type Breakpoint } from '@altroo/mui-native-system';
+import {
+  useTheme,
+  resolveSx,
+  diagnostic,
+  type SxProps,
+  type Breakpoint,
+} from '@altroo/mui-native-system';
 import { Box, Paper, Typography, Stack, type BoxProps } from './layout';
 import { Button } from './buttons';
 export interface DialogProps extends BoxProps {
@@ -45,7 +51,7 @@ export function Dialog({
       : unit === 'rem'
         ? theme.typography.htmlFontSize
         : unit === 'em'
-          ? (theme.typography.body1.fontSize ?? 16)
+          ? (resolveSx(theme.typography.body1, theme, { mode: 'css' }).fontSize ?? 16)
           : undefined;
   const configuredWidth = maxWidth ? theme.breakpoints.values[maxWidth] : undefined;
   if (maxWidth && configuredWidth !== undefined && multiplier === undefined)

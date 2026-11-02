@@ -14,10 +14,10 @@ export function createCatalogTheme(dark: boolean) {
     },
     shape: { borderRadius: 16 },
     typography: {
-      h5: { fontSize: 26, lineHeight: 34, fontWeight: '600', letterSpacing: -0.5 },
-      h6: { fontSize: 20, lineHeight: 28, fontWeight: '600' },
-      subtitle1: { fontSize: 16, lineHeight: 24, fontWeight: '600' },
-      subtitle2: { fontSize: 14, lineHeight: 22, fontWeight: '600' },
+      h5: { fontSize: 26, lineHeight: '34px', fontWeight: '600', letterSpacing: -0.5 },
+      h6: { fontSize: 20, lineHeight: '28px', fontWeight: '600' },
+      subtitle1: { fontSize: 16, lineHeight: '24px', fontWeight: '600' },
+      subtitle2: { fontSize: 14, lineHeight: '22px', fontWeight: '600' },
     },
     components: {
       MuiButton: {

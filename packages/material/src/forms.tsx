@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import {
   View,
+  StyleSheet,
   type ViewInstance,
   TextInput,
   Pressable,
@@ -22,6 +23,7 @@ import {
   useTheme,
   useThemeProps,
   useComponentStyle,
+  useSx,
   type SxProps,
 } from '@altroo/mui-native-system';
 import { Box, Stack, Typography, type BoxProps, type TypographyProps } from './layout';
@@ -177,12 +179,16 @@ export const TextField: React.ForwardRefExoticComponent<
       ],
     },
   );
+  const input = { ...native, ...slotProps?.htmlInput };
+  const inputTypography = useSx(
+    { typography: 'body1' },
+    { nativeStyle: StyleSheet.flatten(input.style) ?? undefined },
+  );
   const borderColor = error
     ? theme.palette.error.main
     : focused
       ? theme.palette.primary.main
       : theme.palette.divider;
-  const input = { ...native, ...slotProps?.htmlInput };
   const readOnly = disabled || input.readOnly === true || input.editable === false;
   const change = (event: TextInputChangeEvent) => {
     const next = event.nativeEvent.text;
@@ -241,9 +247,9 @@ export const TextField: React.ForwardRefExoticComponent<
             if (slotProps?.htmlInput?.onBlur !== native.onBlur) slotProps?.htmlInput?.onBlur?.(e);
           }}
           style={[
+            inputTypography,
             {
               color: disabled ? theme.palette.text.disabled : theme.palette.text.primary,
-              fontSize: 16,
               paddingHorizontal: variant === 'standard' ? 0 : 14,
               paddingVertical: size === 'small' ? 10 : 16,
               minHeight: 44,

@@ -1,21 +1,13 @@
 import React, { forwardRef } from 'react';
-import {
-  View,
-  type ViewInstance,
-  Text,
-  type TextInstance,
-  type ViewProps,
-  type TextProps,
-  type StyleProp,
-  type TextStyle,
-} from 'react-native';
+import { Typography, type TypographyProps } from './typography';
+export * from './typography';
+import { View, type ViewInstance, type ViewProps } from 'react-native';
 import {
   useTheme,
   useThemeProps,
   useComponentStyle,
   useSx,
   type SxProps,
-  type TypographyVariant,
   type SpacingArgument,
   type ResponsiveStyleValue,
 } from '@altroo/mui-native-system';
@@ -57,57 +49,6 @@ export const Stack: React.ForwardRefExoticComponent<
         </React.Fragment>
       ))}
     </Box>
-  );
-});
-export interface TypographyProps extends TextProps {
-  sx?: SxProps;
-  variant?: TypographyVariant;
-  align?: TextStyle['textAlign'];
-  color?: string;
-  gutterBottom?: boolean;
-  noWrap?: boolean;
-  paragraph?: boolean;
-}
-export const Typography: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<TypographyProps> & React.RefAttributes<TextInstance>
-> = forwardRef<TextInstance, TypographyProps>(function Typography(inProps, ref) {
-  const props = useThemeProps({ props: inProps, name: 'MuiTypography' });
-  const {
-    sx,
-    variant = 'body1',
-    align,
-    color,
-    gutterBottom,
-    noWrap,
-    paragraph,
-    style,
-    ...rest
-  } = props;
-  const theme = useTheme();
-  const resolved = useComponentStyle('MuiTypography', { ...props, variant }, sx);
-  const colorStyle = useSx(color ? { color } : undefined);
-  return (
-    <Text
-      {...rest}
-      ref={ref}
-      numberOfLines={noWrap ? 1 : rest.numberOfLines}
-      style={[
-        {
-          fontFamily: theme.typography.fontFamily,
-          color: theme.palette.text.primary,
-          ...theme.typography[variant],
-          textAlign: align,
-          marginBottom: paragraph
-            ? 16
-            : gutterBottom
-              ? Number(theme.typography[variant].fontSize) * 0.35
-              : 0,
-        },
-        colorStyle,
-        resolved as TextStyle,
-        style,
-      ]}
-    />
   );
 });
 export interface PaperProps extends BoxProps {

@@ -28,7 +28,7 @@ Color helpers are available from `@mui/material/styles`, `@mui/system`, and `@mu
 - Contrast calculation follows MUI's rounded luminance behavior and does not composite translucent colors over a background. It is not an accessibility audit of an actual screen.
 - Two deliberate native differences are recorded in `upstream/reuse.json`: zero-valued object tonal offsets remain valid; `recomposeColor` does not mutate input channels. Undocumented object-input overloads are not exposed.
 - Additional arguments to `createTheme` merge after palette derivation, matching upstream merge behavior. Put a new `main` color in the first options argument if its shades should be recalculated. Custom `getContrastText` overrides the returned method after standard augmentation, as upstream does.
-- Complete Button color/variant augmentation, all typography/breakpoint utilities, nested providers and slot styling remain open work.
+- Typography theme values, native conversion and custom variants are documented in [typography](typography.md). Complete Button color/variant augmentation, remaining typography/breakpoint utilities, nested providers and slot styling remain open work.
 
 ## Reproduce the reference checks
 

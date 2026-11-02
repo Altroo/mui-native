@@ -87,12 +87,51 @@
         "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
         "sourceFiles": {
           "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf",
-          "breakpoints/breakpoints.js": "7aca2df4ac9182dd138ed3c1b3ca738ad8a370769b1d5a81b2aa04f143c507c2"
+          "breakpoints/breakpoints.js": "7aca2df4ac9182dd138ed3c1b3ca738ad8a370769b1d5a81b2aa04f143c507c2",
+          "typography/typography.js": "909cec360c596b4e0cf36fafca205f477c0ab0e62aff2751b061c33e17ddd45b",
+          "style/style.js": "ae36c11e3fe1e5f23cc3485e64281bab51665780d1ec2e788742586eef9ba8d9",
+          "styleFunctionSx/defaultSxConfig.js": "d8efd9936072efe65f1faaec85230f59e22eac85c29579df0e32492321e8e706"
         }
       },
       "adaptations": [
         "Native width-query evaluation and style normalization follow the upstream breakpoint rule ordering.",
-        "No DOM, CSS engine, arbitrary media query or container-query implementation is included."
+        "No DOM, CSS engine, arbitrary media query or container-query implementation is included.",
+        "Typography tokens expand as CSS rules; native font units are normalized after the complete style cascade."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/typography.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "styles/createTypography.js": "c5b645a4cf220e5b515923a5475c0989b0f36736a6882b024441df29c5a96d03",
+          "styles/createTypography.d.ts": "a9e0a480c019837e2634ee2ac49d078e9548032f2f69e9f7c4465ce4e871155f"
+        }
+      },
+      "adaptations": [
+        "Public typography values and augmentation interfaces follow the pinned MUI contract. Native unit and font-family conversion happens separately at the rendering boundary."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/typography.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Typography/Typography.js": "791ce01d7581defa70c9d08c2a9a0eb751719e0bde7fb36719f16b7139154d81",
+          "Typography/Typography.d.ts": "7e03586cd0e6a494fb36142aeb03cd23a3ba89ba85179cc935616e23beeb10d4"
+        }
+      },
+      "adaptations": [
+        "Typography defaults, variant mapping, color names and override ordering use native Text and accessibility semantics instead of DOM/CSS rendering.",
+        "Native style and text inheritance are platform extensions; browser elements, CSS classes and DOM refs are not rendered."
       ]
     }
   ]

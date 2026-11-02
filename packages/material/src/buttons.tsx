@@ -1,8 +1,10 @@
 import React, { forwardRef } from 'react';
 import {
   Pressable,
+  StyleSheet,
   View,
   type ViewInstance,
+  type ViewStyle,
   Text,
   ActivityIndicator,
   type GestureResponderEvent,
@@ -13,6 +15,7 @@ import {
   useTheme,
   useThemeProps,
   useComponentStyle,
+  isNativeTextStyleProperty,
   type SxProps,
 } from '@altroo/mui-native-system';
 export interface ButtonProps extends Omit<PressableProps, 'children' | 'style' | 'onPress'> {
@@ -33,16 +36,18 @@ export interface ButtonProps extends Omit<PressableProps, 'children' | 'style' |
   disableElevation?: boolean;
   'aria-label'?: string;
 }
-const textKeys = new Set([
-  'color',
-  'fontSize',
-  'fontWeight',
-  'fontFamily',
-  'lineHeight',
-  'letterSpacing',
-  'textTransform',
-  'textAlign',
-]);
+function expandNativePadding(style: Readonly<Partial<ViewStyle>> | null | undefined) {
+  if (!style) return style;
+  const output = { ...style };
+  for (const edge of ['Top', 'Right', 'Bottom', 'Left'] as const) {
+    const value =
+      style[`padding${edge}`] ??
+      style[edge === 'Top' || edge === 'Bottom' ? 'paddingVertical' : 'paddingHorizontal'] ??
+      style.padding;
+    if (value != null) output[`padding${edge}`] = value;
+  }
+  return output;
+}
 export const Button: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ButtonProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ButtonProps>(function Button(inProps, ref) {
@@ -79,21 +84,52 @@ export const Button: React.ForwardRefExoticComponent<
     label ??
     native.accessibilityLabel ??
     (typeof children === 'string' || typeof children === 'number' ? String(children) : undefined);
-  const resolved = useComponentStyle(
-    'MuiButton',
-    { ...props, variant, color, size, disabled, loading, loadingPosition },
-    sx,
-    { states: [...(inactive ? ['disabled'] : []), ...(isLoading ? ['loading'] : [])] },
-  );
-  const textStyle = Object.fromEntries(
-    Object.entries(resolved).filter(([k]) => textKeys.has(k)),
-  ) as TextStyle;
-  const viewStyle = Object.fromEntries(Object.entries(resolved).filter(([k]) => !textKeys.has(k)));
   const foregroundColor = inactive
     ? theme.palette.action.disabled
     : variant === 'contained'
       ? activeColor.contrastText
       : activeColor.main;
+  const resolved = useComponentStyle(
+    'MuiButton',
+    { ...props, variant, color, size, disabled, loading, loadingPosition },
+    sx,
+    {
+      states: [...(inactive ? ['disabled'] : []), ...(isLoading ? ['loading'] : [])],
+      baseStyle: [
+        theme.typography.button,
+        {
+          minHeight: 44,
+          minWidth: 64,
+          paddingLeft: size === 'small' ? 10 : size === 'large' ? 22 : 16,
+          paddingRight: size === 'small' ? 10 : size === 'large' ? 22 : 16,
+          paddingTop: size === 'small' ? 4 : size === 'large' ? 8 : 6,
+          paddingBottom: size === 'small' ? 4 : size === 'large' ? 8 : 6,
+          flexDirection: 'row',
+          gap: 8,
+          justifyContent: 'center',
+          alignItems: 'center',
+          alignSelf: fullWidth ? 'stretch' : 'flex-start',
+          borderRadius: theme.shape.borderRadius,
+          backgroundColor:
+            variant === 'contained'
+              ? inactive
+                ? theme.palette.action.disabledBackground
+                : activeColor.main
+              : 'transparent',
+          borderWidth: variant === 'outlined' ? 1 : 0,
+          borderColor: inactive ? theme.palette.action.disabledBackground : activeColor.main,
+          elevation: variant === 'contained' && !disableElevation && !inactive ? 2 : 0,
+          color: foregroundColor,
+        },
+      ],
+    },
+  );
+  const textStyle = Object.fromEntries(
+    Object.entries(resolved).filter(([k]) => isNativeTextStyleProperty(k)),
+  ) as TextStyle;
+  const viewStyle = Object.fromEntries(
+    Object.entries(resolved).filter(([k]) => !isNativeTextStyleProperty(k)),
+  );
   const indicator = loadingIndicator ?? (
     <ActivityIndicator
       size="small"
@@ -105,7 +141,7 @@ export const Button: React.ForwardRefExoticComponent<
   );
   const renderNode = (node: React.ReactNode) =>
     typeof node === 'string' || typeof node === 'number' ? (
-      <Text style={[theme.typography.button, { color: foregroundColor }, textStyle]}>{node}</Text>
+      <Text style={[{ color: foregroundColor }, textStyle]}>{node}</Text>
     ) : (
       node
     );
@@ -157,39 +193,20 @@ export const Button: React.ForwardRefExoticComponent<
       disabled={inactive}
       onPress={onPress ?? onClick}
       style={(state) => [
-        {
-          minHeight: 44,
-          minWidth: 64,
-          paddingHorizontal: size === 'small' ? 10 : size === 'large' ? 22 : 16,
-          paddingVertical: size === 'small' ? 4 : size === 'large' ? 8 : 6,
-          flexDirection: 'row',
-          gap: 8,
-          justifyContent: 'center',
-          alignItems: 'center',
-          alignSelf: fullWidth ? 'stretch' : 'flex-start',
-          borderRadius: theme.shape.borderRadius,
-          backgroundColor:
-            variant === 'contained'
-              ? inactive
-                ? theme.palette.action.disabledBackground
-                : activeColor.main
-              : 'transparent',
-          borderWidth: variant === 'outlined' ? 1 : 0,
-          borderColor: inactive ? theme.palette.action.disabledBackground : activeColor.main,
-          opacity: state.pressed ? 0.8 : 1,
-          elevation: variant === 'contained' && !disableElevation && !inactive ? 2 : 0,
-        },
         viewStyle,
-        typeof style === 'function' ? style(state) : style,
+        {
+          opacity:
+            (typeof viewStyle.opacity === 'number' ? viewStyle.opacity : 1) *
+            (state.pressed ? 0.8 : 1),
+        },
+        expandNativePadding(StyleSheet.flatten(typeof style === 'function' ? style(state) : style)),
       ]}
     >
       {renderIcon(startIcon, 'start')}
       <Text
         style={[
-          theme.typography.button,
           {
             color: foregroundColor,
-            textTransform: 'uppercase',
             flexShrink: 1,
             ...(hideContent ? { opacity: 0 } : {}),
           },

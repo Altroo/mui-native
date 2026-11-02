@@ -3,7 +3,7 @@ product and is not affiliated with or endorsed by MUI.
 
 Material UI and MUI X are names used to identify upstream compatibility targets.
 Native rendering code is independently authored. Palette, color, spacing,
-breakpoint and responsive-style algorithms adapt MIT-licensed Material UI/System
+breakpoint, typography and responsive-style algorithms adapt MIT-licensed Material UI/System
 code as recorded in upstream/reuse.json. Upstream public declaration
 snapshots and license texts are retained under upstream/. Derived declaration
 inventories are retained under compatibility/inventory/. Their applicable MIT

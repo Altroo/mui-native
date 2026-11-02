@@ -2,13 +2,16 @@ import type { TextStyle, ViewStyle } from 'react-native';
 import type { Theme, Breakpoint } from './theme';
 export type ResponsiveStyleValue<T> = T | readonly (T | null)[] | { [key: string]: T | null };
 import { diagnostic } from './diagnostics';
+import { normalizeTextStyle, textMetricKeys, type NativeTextContext } from './nativeText';
 export type SxObject = { [key: string]: unknown };
 export type SxProps<T extends Theme = Theme> =
   | SxObject
   | ((theme: T) => SxObject)
   | readonly (false | null | undefined | SxObject | ((theme: T) => SxObject))[];
 export type NativeStyle = ViewStyle & TextStyle;
-export type StyleContext = {
+export type StyleContext = NativeTextContext & {
+  baseStyle?: SxProps;
+  overrideKeys?: readonly string[];
   width?: number;
   states?: readonly string[];
   slot?: string;
@@ -128,7 +131,8 @@ function resolveRules(
   theme: Theme,
   context: StyleContext,
 ): StyleRule[] {
-  const assign = (target: Record<string, unknown>, key: string, value: unknown) => {
+  const assign = (node: StyleNode, key: string, value: unknown, mode = context.mode) => {
+    const target = node.base;
     if (value == null) {
       // A responsive hole replaces declarations in this media branch only.
       // Retain its key position, then omit it when applying native rules.
@@ -137,7 +141,8 @@ function resolveRules(
     }
     if (key === 'typography') {
       const style = theme.typography[value as keyof Theme['typography']];
-      if (typeof style === 'object') mergeStyles(target, style);
+      if (style && typeof style === 'object')
+        for (const expanded of build(style, 'css')) mergeNode(node, expanded);
       else diagnostic('typography', `Unknown typography ${String(value)}`);
       return;
     }
@@ -169,9 +174,22 @@ function resolveRules(
         continue;
       }
       let next: unknown = value;
+      if (
+        mode !== 'css' &&
+        typeof next === 'string' &&
+        ['fontFamily', 'fontSize', 'fontWeight', 'fontStyle'].includes(nativeKey)
+      ) {
+        const parts = next.split('.');
+        const last = parts.pop()!;
+        const alternate = [
+          ...parts,
+          nativeKey + (last === 'default' ? '' : last[0]?.toUpperCase() + last.slice(1)),
+        ].join('.');
+        next = path(theme.typography, next) || path(theme.typography, alternate) || next;
+      }
       if (typeof next === 'string' && /color$/i.test(nativeKey))
         next = path(theme.palette, next) ?? next;
-      if (context.mode !== 'css' && typeof next === 'number') {
+      if (mode !== 'css' && typeof next === 'number') {
         if (spacing.test(nativeKey)) next = theme.spacing(next);
         else if (nativeKey === 'borderRadius') next *= theme.shape.borderRadius;
         else if (sizing.test(nativeKey) && next > 0 && next <= 1) next = `${next * 100}%`;
@@ -187,25 +205,21 @@ function resolveRules(
           continue;
         }
       }
+      if (textMetricKeys.has(nativeKey)) {
+        setStyle(target, nativeKey, next);
+        continue;
+      }
+      const em =
+        typeof next === 'string' ? next.match(new RegExp(`^(${numberPattern})em$`, 'i')) : null;
+      if (em) {
+        setStyle(target, nativeKey, { emLength: Number(em[1]) });
+        continue;
+      }
       next = length(next, theme);
       if (next === undefined) continue;
       if (spacing.test(nativeKey) && !isSpacingLength(next, nativeKey)) {
         diagnostic('spacing-value', `Unsupported native ${nativeKey}: ${String(next)}`);
         continue;
-      }
-      if (
-        nativeKey === 'lineHeight' &&
-        typeof next === 'number' &&
-        next > 0 &&
-        next < 4 &&
-        (typeof value === 'number' ||
-          (typeof value === 'string' &&
-            Boolean(value.match(literalLength)) &&
-            value.match(literalLength)?.[2] === undefined))
-      ) {
-        // Preserve the existing native typography representation until variants are
-        // normalized separately: their numeric line heights are absolute lengths.
-        next = { relativeLineHeight: next };
       }
       setStyle(target, nativeKey, next);
     }
@@ -214,16 +228,25 @@ function resolveRules(
     (node.conditions ??= new Map(
       theme.breakpoints.internal_mediaKeys.map((query) => [query, undefined]),
     ));
-  const build = (raw: unknown): StyleNode[] => {
+  const mergeNode = (target: StyleNode, source: StyleNode) => {
+    mergeStyles(target.base, source.base);
+    for (const [query, branches] of source.conditions ?? []) {
+      if (branches === undefined) continue;
+      const previous = conditions(target).get(query);
+      if (!branches.length || !previous?.length) conditions(target).set(query, branches);
+      else for (const branch of branches) mergeNode(previous[previous.length - 1], branch);
+    }
+  };
+  const build = (raw: unknown, mode = context.mode): StyleNode[] => {
     if (!raw) return [];
-    if (typeof raw === 'function') return build(raw(theme));
-    if (Array.isArray(raw)) return raw.flatMap(build);
+    if (typeof raw === 'function') return build(raw(theme), mode);
+    if (Array.isArray(raw)) return raw.flatMap((item) => build(item, mode));
     const node: StyleNode = { base: {} };
     for (const [key, entry] of Object.entries(raw as SxObject)) {
       const original = typeof entry === 'function' ? entry(theme) : entry;
       if (original == null) continue;
       if (key.startsWith('@media') || key.startsWith('&')) {
-        conditions(node).set(key, build(original));
+        conditions(node).set(key, build(original, mode));
         continue;
       }
       const responsive =
@@ -233,7 +256,7 @@ function resolveRules(
           (typeof original === 'object' &&
             Object.keys(original).some((name) => Object.hasOwn(theme.breakpoints.values, name))));
       if (!responsive) {
-        assign(node.base, key, original);
+        assign(node, key, original, mode);
         continue;
       }
       const pairs = Array.isArray(original)
@@ -247,7 +270,7 @@ function resolveRules(
         const query = theme.breakpoints.up(name as Breakpoint);
         const branches = conditions(node).get(query) ?? [];
         if (!branches.length) branches.push({ base: {} });
-        assign(branches[branches.length - 1].base, key, value);
+        assign(branches[branches.length - 1], key, value, mode);
         conditions(node).set(query, branches);
       }
     }
@@ -284,7 +307,7 @@ function resolveRules(
   collect(build(input), 0);
   return rules;
 }
-function finishRules(rules: StyleRule[], theme: Theme): NativeStyle {
+function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {}): NativeStyle {
   const result: Record<string, unknown> = {};
   // Stable sorting preserves upstream rule order within equal specificity.
   for (const rule of rules.sort((a, b) => a.specificity - b.specificity)) {
@@ -311,19 +334,14 @@ function finishRules(rules: StyleRule[], theme: Theme): NativeStyle {
       result[key] = value;
     }
   }
-  const lineHeight = result.lineHeight;
-  if (lineHeight && typeof lineHeight === 'object' && 'relativeLineHeight' in lineHeight) {
-    const size = Number(result.fontSize ?? theme.typography.body1.fontSize);
-    result.lineHeight = Number(lineHeight.relativeLineHeight) * size;
-  }
-  return result as NativeStyle;
+  return normalizeTextStyle(result, theme, context) as NativeStyle;
 }
 export function resolveSx(
   input: SxProps | undefined,
   theme: Theme,
   context: StyleContext = {},
 ): NativeStyle {
-  return finishRules(resolveRules(input, theme, context), theme);
+  return finishRules(resolveRules(input, theme, context), theme, context);
 }
 export function componentStyle(
   theme: Theme,
@@ -333,8 +351,12 @@ export function componentStyle(
   context: StyleContext = {},
 ): NativeStyle {
   const config = theme.components[name];
-  const override = config?.styleOverrides?.root;
-  const base = typeof override === 'function' ? override({ theme, ownerState: props }) : override;
+  const bases = ['root', ...(context.overrideKeys ?? [])].flatMap((key) => {
+    const override = config?.styleOverrides?.[key];
+    const style =
+      typeof override === 'function' ? override({ theme, ownerState: props }) : override;
+    return resolveRules(style, theme, { ...context, mode: 'css' });
+  });
   const variants = (config?.variants ?? []).filter((v) =>
     typeof v.props === 'function'
       ? v.props(props)
@@ -342,10 +364,12 @@ export function componentStyle(
   );
   return finishRules(
     [
-      ...resolveRules(base, theme, { ...context, mode: 'css' }),
+      ...resolveRules(context.baseStyle, theme, { ...context, mode: 'css' }),
+      ...bases,
       ...variants.flatMap((v) => resolveRules(v.style, theme, { ...context, mode: 'css' })),
       ...resolveRules(sx, theme, context),
     ],
     theme,
+    context,
   );
 }

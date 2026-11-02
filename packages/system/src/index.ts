@@ -5,3 +5,11 @@ export * from './provider';
 export * from './colorManipulator';
 export { createSpacing } from './spacing';
 export { createBreakpoints, breakpointKeys } from './breakpoints';
+
+export {
+  inheritedTextStyle,
+  getTextStyleInheritance,
+  nativeStyleTextMetrics,
+  applyNativeTextMetrics,
+  isNativeTextStyleProperty,
+} from './nativeText';

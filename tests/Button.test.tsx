@@ -194,13 +194,13 @@ test('loading preserves theme typography opacity across positions and transition
     </ThemeProvider>
   );
   const { rerender } = render(content(false, 'center'));
-  expect(screen.getByText('Save')).toHaveStyle({ opacity: 0.4 });
+  expect(screen.getByRole('button')).toHaveStyle({ opacity: 0.4 });
   rerender(content(true, 'center'));
   expect(screen.getByText('Save')).toHaveStyle({ opacity: 0 });
   for (const position of ['start', 'end'] as const) {
     rerender(content(true, position));
-    expect(screen.getByText('Save')).toHaveStyle({ opacity: 0.4 });
+    expect(screen.getByRole('button')).toHaveStyle({ opacity: 0.4 });
   }
   rerender(content(false, 'center'));
-  expect(screen.getByText('Save')).toHaveStyle({ opacity: 0.4 });
+  expect(screen.getByRole('button')).toHaveStyle({ opacity: 0.4 });
 });

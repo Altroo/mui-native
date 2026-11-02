@@ -329,14 +329,15 @@ test('Dialog respects sx radius, clamps minimum width to small custom caps and c
   expect(screen.getByTestId('dialog')).toHaveStyle({ maxWidth: Math.min(available, 800) });
 });
 
-test('exported native typography variants preserve their absolute heights through sx and CSS mode', () => {
+test('CSS typography variants normalize consistently through sx and CSS mode', () => {
   const theme = createTheme();
   for (const variant of ['body1', 'h1', 'button'] as const) {
     const style = { ...theme.typography[variant] };
-    const dimensions = { fontSize: style.fontSize, lineHeight: style.lineHeight };
-    expect(resolveSx(style, theme)).toMatchObject(dimensions);
-    expect(resolveSx(style, theme, { mode: 'css' })).toMatchObject(dimensions);
-    expect(resolveSx({ typography: variant }, theme)).toEqual(style);
+    const expected = resolveSx(style, theme, { mode: 'css' });
+    expect(typeof expected.fontSize).toBe('number');
+    expect(typeof expected.lineHeight).toBe('number');
+    expect(resolveSx(style, theme)).toEqual(expected);
+    expect(resolveSx({ typography: variant }, theme)).toEqual(expected);
   }
 });
 
@@ -402,7 +403,7 @@ test('responsive holes remove synthetic shadow and border declarations but typog
     resolveSx({ [condition]: { typography: 'h1' }, typography: ['body1', null, 'button'] }, theme, {
       width: 700,
     }),
-  ).toEqual(theme.typography.h1);
+  ).toEqual(resolveSx(theme.typography.h1, theme, { mode: 'css' }));
   expect(resolveSx({ border: 2, borderBottomWidth: 4 }, theme)).toEqual({
     borderWidth: 2,
     borderStyle: 'solid',
