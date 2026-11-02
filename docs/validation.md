@@ -29,4 +29,12 @@ For reproducible commands and project scope, see [ROADMAP.md](../ROADMAP.md).
 - The real report passed an in-memory publisher simulation: five issues, zero PRs, zero CI dispatches and zero network writes. Synthetic scenarios covered eligible candidates, disabled draft creation, missing permissions, retries, rejected state writes, preservation of human files and unchanged verified/released support.
 - The bundled create/approve-PR setting stays disabled. The active workflow requests only contents/issues write permission and creates update issues for manual candidate PRs.
 
-These results establish the local preflight. Remote execution still needs one verification run after deployment. Native interaction, Android and full compatibility gaps listed above remain unchanged.
+Remote verification after local preflight:
+
+- [Upstream Updates #39](https://github.com/Altroo/mui-native/actions/runs/41432931185) succeeded in 1m 30s. Detection took 53s and issue preparation took 21s.
+- [Validate #3](https://github.com/Altroo/mui-native/actions/runs/41432854538) succeeded in 1m 3s on implementation commit `2428f67`.
+- Four release-review issues and the [Upstream Updates dashboard](https://github.com/Altroo/mui-native/issues/5) were created. No PRs or candidate CI runs were created.
+- Bot commit `d08b231` advanced detection state. All immutable baselines, candidate fields and verified/released support fields were compared against the previous state and preserved; no version gained a support claim.
+- The bundled create/approve-PR setting and default read-only workflow permissions were rechecked and remain unchanged.
+
+Native interaction, Android and full compatibility gaps listed above remain unchanged. Automatic PR creation is intentionally disabled; its synthetic tests do not establish a live candidate lifecycle.
