@@ -40,6 +40,6 @@ function createNativeTsconfig({
       ];
     }
   }
-  return { extends: base, compilerOptions: { paths } };
+  return { extends: base, compilerOptions: { customConditions: ['react-native'], paths } };
 }
 module.exports.createNativeTsconfig = createNativeTsconfig;

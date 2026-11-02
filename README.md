@@ -10,19 +10,18 @@ The runtime uses native views on iOS and Android. The optional Metro resolver re
 
 ## Run the catalog
 
-Use Node 22.23.2 and pnpm 12.11.2. Xcode and an iOS simulator, or Android Studio and an emulator, are required for native development.
+Use Node 26.11.1 and pnpm 12.16.1. Xcode and an iOS simulator, or Android Studio and an emulator, are required for native development.
 
 ```sh
 git clone git@github.com:Altroo/mui-native.git
 cd mui-native
-corepack enable
-corepack prepare pnpm@12.11.2 --activate
+npm install --global pnpm@12.16.1
 pnpm install --frozen-lockfile
 pnpm check
 pnpm catalog
 ```
 
-The catalog uses Expo SDK 57. Press `i` or `a` from Expo's terminal interface to launch the corresponding simulator. `pnpm --filter native-catalog ios` and `pnpm --filter native-catalog android` create development builds when native build prerequisites are installed.
+The catalog uses Expo SDK 58. Press `i` or `a` from Expo's terminal interface to launch the corresponding simulator. `pnpm --filter native-catalog ios` and `pnpm --filter native-catalog android` create development builds when native build prerequisites are installed.
 
 Do not run `npm install @altroo/mui-native` yet. For testing a separate application before publication, use the local tarball instructions in [installation](docs/installation.md).
 

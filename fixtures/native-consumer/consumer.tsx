@@ -1,4 +1,5 @@
 import React from 'react';
+import type { ViewInstance, TextInputInstance } from 'react-native';
 import { createTheme, ThemeProvider, Button, TextField } from '@mui/material';
 import DeepButton from '@mui/material/Button';
 import { DataGrid } from '@mui/x-data-grid';
@@ -19,8 +20,11 @@ const danger: string = theme.status.danger;
 const content = (
   <ThemeProvider theme={theme}>
     <Button onClick={(event) => event.nativeEvent.pageX}>Save</Button>
-    <DeepButton>Deep</DeepButton>
-    <TextField onChange={(event) => event.target.value.toUpperCase()} />
+    <DeepButton ref={React.createRef<ViewInstance>()}>Deep</DeepButton>
+    <TextField
+      inputRef={React.createRef<TextInputInstance>()}
+      onChange={(event) => event.target.value.toUpperCase()}
+    />
     <DataGrid rows={[{ id: 1, name: 'One' }]} columns={[{ field: 'name' }]} />
     <RichTreeView items={[{ id: 'one', label: 'One' }]} />
     <BarChart series={[{ data: [1, 2, 3] }]} />

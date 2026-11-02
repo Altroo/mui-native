@@ -1,6 +1,6 @@
 # Installation during pre-alpha development
 
-No npm release exists. Start with the repository catalog, or build and pack local tarballs for a disposable Expo SDK 57 / React Native 0.86.3 application.
+No npm release exists. Start with the repository catalog, or build and pack local tarballs for a disposable Expo SDK 58 / React Native 0.88.1 application.
 
 ```sh
 pnpm install --frozen-lockfile
@@ -8,7 +8,7 @@ pnpm check
 pnpm pack:all
 ```
 
-Install the generated system and material archives together in the consumer. Add the compatibility archive if retaining original imports, and only the X/icon archives you need. X archives depend on the material and system packages, so pass all local archives together to the package manager. Install React 19.2.3 / React Native 0.86.3 peers. Charts/icons also require `react-native-svg` 15.15.4; use `npx expo install react-native-svg` in a matched Expo app. The grid archive carries FlashList, and the date archive carries Day.js.
+Install the generated system and material archives together in the consumer. Add the compatibility archive if retaining original imports, and only the X/icon archives you need. X archives depend on the material and system packages, so pass all local archives together to the package manager. Install React 19.3.0 / React Native 0.88.1 peers. Charts/icons also require `react-native-svg` 15.16.0; use `npx expo install react-native-svg` in a matched Expo app. The grid archive carries FlashList, and the date archive carries Day.js.
 
 ```sh
 npm install /absolute/path/artifacts/packages/altroo-mui-native-system-0.0.0-dev.0.tgz \
@@ -37,3 +37,5 @@ npx tsc --project tsconfig.native.json --noEmit
 Keep the existing web tsconfig separate and install the original `@mui/*` packages in the web application. TypeScript aliases do not configure Metro by themselves. Do not alias every `@mui/*` import globally. Only implemented public subpaths are mapped; commercial and internal imports are rejected on native.
 
 Use the catalog as a setup reference. An npm installation guide with alpha versions will replace tarball paths after verified alpha and namespace ownership checks. React Native peer ranges will only broaden after matrix validation.
+
+SDK 58 uses React Native's strict public TypeScript API. Native refs use `ViewInstance` and `TextInputInstance`; DOM refs are incompatible. The generated native tsconfig selects the `react-native` condition. Keep `skipLibCheck: true`, as recommended by the [React Native migration guide](https://reactnative.dev/docs/strict-typescript-api), because upstream generated declarations contain internal errors. The consumer fixture still checks component usage, native refs, theme augmentation and rejection of unsupported imports.

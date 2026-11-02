@@ -1,7 +1,9 @@
 import React, { forwardRef } from 'react';
 import {
   View,
+  type ViewInstance,
   Text,
+  type TextInstance,
   type ViewProps,
   type TextProps,
   type StyleProp,
@@ -17,9 +19,11 @@ import {
 } from '@altroo/mui-native-system';
 export interface BoxProps extends ViewProps {
   sx?: SxProps;
-  component?: React.ComponentType<ViewProps & React.RefAttributes<View>>;
+  component?: React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>;
 }
-export const Box = forwardRef<View, BoxProps>(function Box(
+export const Box: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<BoxProps> & React.RefAttributes<ViewInstance>
+> = forwardRef<ViewInstance, BoxProps>(function Box(
   { sx, style, component: Component = View, ...props },
   ref,
 ) {
@@ -31,7 +35,9 @@ export interface StackProps extends BoxProps {
   spacing?: number;
   divider?: React.ReactNode;
 }
-export const Stack = forwardRef<View, StackProps>(function Stack(
+export const Stack: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<StackProps> & React.RefAttributes<ViewInstance>
+> = forwardRef<ViewInstance, StackProps>(function Stack(
   { direction = 'column', spacing = 0, divider, children, sx, ...props },
   ref,
 ) {
@@ -63,7 +69,9 @@ export interface TypographyProps extends TextProps {
   noWrap?: boolean;
   paragraph?: boolean;
 }
-export const Typography = forwardRef<Text, TypographyProps>(function Typography(inProps, ref) {
+export const Typography: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<TypographyProps> & React.RefAttributes<TextInstance>
+> = forwardRef<TextInstance, TypographyProps>(function Typography(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiTypography' });
   const {
     sx,
@@ -108,7 +116,9 @@ export interface PaperProps extends BoxProps {
   variant?: 'elevation' | 'outlined';
   square?: boolean;
 }
-export const Paper = forwardRef<View, PaperProps>(function Paper(inProps, ref) {
+export const Paper: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<PaperProps> & React.RefAttributes<ViewInstance>
+> = forwardRef<ViewInstance, PaperProps>(function Paper(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiPaper' });
   const { elevation = 1, variant = 'elevation', square = false, sx, style, ...rest } = props;
   const theme = useTheme();
@@ -131,7 +141,9 @@ export const Paper = forwardRef<View, PaperProps>(function Paper(inProps, ref) {
     />
   );
 });
-export const Card = forwardRef<View, PaperProps>(function Card(props, ref) {
+export const Card: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<PaperProps> & React.RefAttributes<ViewInstance>
+> = forwardRef<ViewInstance, PaperProps>(function Card(props, ref) {
   const resolved = useComponentStyle('MuiCard', props, props.sx);
   return (
     <Paper
@@ -142,10 +154,14 @@ export const Card = forwardRef<View, PaperProps>(function Card(props, ref) {
     />
   );
 });
-export const CardContent = forwardRef<View, BoxProps>(function CardContent(props, ref) {
+export const CardContent: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<BoxProps> & React.RefAttributes<ViewInstance>
+> = forwardRef<ViewInstance, BoxProps>(function CardContent(props, ref) {
   return <Box {...props} ref={ref} style={[{ padding: 16, paddingBottom: 24 }, props.style]} />;
 });
-export const CardActions = forwardRef<View, BoxProps>(function CardActions(props, ref) {
+export const CardActions: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<BoxProps> & React.RefAttributes<ViewInstance>
+> = forwardRef<ViewInstance, BoxProps>(function CardActions(props, ref) {
   return (
     <Stack
       {...props}

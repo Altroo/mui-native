@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import {
   Pressable,
   View,
+  type ViewInstance,
   Text,
   ActivityIndicator,
   type GestureResponderEvent,
@@ -40,7 +41,9 @@ const textKeys = new Set([
   'textTransform',
   'textAlign',
 ]);
-export const Button = forwardRef<View, ButtonProps>(function Button(inProps, ref) {
+export const Button: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<ButtonProps> & React.RefAttributes<ViewInstance>
+> = forwardRef<ViewInstance, ButtonProps>(function Button(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiButton' });
   const {
     children,
@@ -136,7 +139,9 @@ export const Button = forwardRef<View, ButtonProps>(function Button(inProps, ref
     </Pressable>
   );
 });
-export const IconButton = forwardRef<View, ButtonProps>(function IconButton(props, ref) {
+export const IconButton: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<ButtonProps> & React.RefAttributes<ViewInstance>
+> = forwardRef<ViewInstance, ButtonProps>(function IconButton(props, ref) {
   return (
     <Button
       {...props}

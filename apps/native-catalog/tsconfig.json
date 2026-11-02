@@ -1,4 +1,25 @@
 {
-  "compilerOptions": {},
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "customConditions": ["react-native"],
+    "paths": {
+      "@altroo/mui-native-system": ["../../packages/system/src/index.ts"],
+      "@altroo/mui-native": ["../../packages/material/src/index.ts"],
+      "@altroo/mui-native/*": ["../../packages/material/src/*/index.ts"],
+      "@altroo/mui-native-icons": ["../../packages/icons/src/index.ts"],
+      "@altroo/mui-native-x-tree-view": ["../../packages/x-tree-view/src/index.ts"],
+      "@altroo/mui-native-x-data-grid": ["../../packages/x-data-grid/src/index.ts"],
+      "@altroo/mui-native-x-charts": ["../../packages/x-charts/src/index.ts"],
+      "@altroo/mui-native-x-date-pickers": ["../../packages/x-date-pickers/src/index.ts"],
+      "@mui/material": ["../../packages/material/src/index.ts"],
+      "@mui/system": ["../../packages/system/src/index.ts"],
+      "@mui/icons-material": ["../../packages/icons/src/index.ts"],
+      "@mui/x-tree-view": ["../../packages/x-tree-view/src/index.ts"],
+      "@mui/x-data-grid": ["../../packages/x-data-grid/src/index.ts"],
+      "@mui/x-charts": ["../../packages/x-charts/src/index.ts"],
+      "@mui/x-date-pickers": ["../../packages/x-date-pickers/src/index.ts"]
+    }
+  },
+  "include": ["*.ts", "*.tsx", "index.js"]
 }

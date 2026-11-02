@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useRef, useState, forwardRef, useEffect } from 'react';
 import {
   View,
+  type ViewInstance,
   TextInput,
   Pressable,
   Switch as NativeSwitch,
   type TextInputProps,
-  type NativeSyntheticEvent,
-  type TextInputChangeEventData,
+  type TextInputInstance,
+  type TextInputChangeEvent,
   type GestureResponderEvent,
 } from 'react-native';
 import {
@@ -38,7 +39,7 @@ export function useControlled<T>(
 export type InputChangeEvent = {
   target: { value: string; name?: string; id?: string };
   currentTarget: { value: string; name?: string; id?: string };
-  nativeEvent: TextInputChangeEventData;
+  nativeEvent: TextInputChangeEvent['nativeEvent'];
 };
 export type CheckChangeEvent = {
   target: { checked: boolean; value?: string; name?: string };
@@ -106,7 +107,7 @@ export interface TextFieldProps
   id?: string;
   type?: 'text' | 'password' | 'email' | 'number';
   onChange?: (event: InputChangeEvent) => void;
-  inputRef?: React.Ref<TextInput>;
+  inputRef?: React.Ref<TextInputInstance>;
   'aria-label'?: string;
   slotProps?: {
     htmlInput?: TextInputProps;
@@ -114,7 +115,9 @@ export interface TextFieldProps
     formHelperText?: TypographyProps;
   };
 }
-export const TextField = forwardRef<View, TextFieldProps>(function TextField(inProps, ref) {
+export const TextField: React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<TextFieldProps> & React.RefAttributes<ViewInstance>
+> = forwardRef<ViewInstance, TextFieldProps>(function TextField(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiTextField' });
   const form = useContext(FormContext);
   const {
@@ -159,7 +162,7 @@ export const TextField = forwardRef<View, TextFieldProps>(function TextField(inP
     : focused
       ? theme.palette.primary.main
       : theme.palette.divider;
-  const change = (event: NativeSyntheticEvent<TextInputChangeEventData>) => {
+  const change = (event: TextInputChangeEvent) => {
     const next = event.nativeEvent.text;
     setText(next);
     const target = { value: next, name, id };

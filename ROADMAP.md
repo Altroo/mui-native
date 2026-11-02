@@ -15,6 +15,7 @@ Updated: 2026-10-14. Priority: maximum compatibility with existing MUI app code,
 
 - [x] Create the repository and monorepo package boundaries.
 - [x] Pin Node, pnpm, Expo, React, and React Native.
+- [x] Upgrade the development and consumer baseline to SDK 58 / RN 0.88.1, including strict native refs/events and a separately validated SDK snapshot. Tracked in [issue #6](https://github.com/Altroo/mui-native/issues/6).
 - [x] Verify npm package versions, package integrity, immutable source commits, and public API declaration hashes.
 - [x] Preserve available MIT notices and flag missing license text.
 - [x] Implement release detection, deduplication, candidate preparation, explicit candidate CI dispatch, and support-state separation.

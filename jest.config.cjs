@@ -8,6 +8,6 @@ module.exports = {
     '^@altroo/mui-native-icons$': '<rootDir>/packages/icons/src',
   },
   transformIgnorePatterns: [
-    'node_modules/(?!\\.pnpm/|react-native/|@react-native/|react-native-svg/)',
+    'node_modules/(?!\\.pnpm/|react-native/|@react-native/|react-native-svg/|@shopify/flash-list/)',
   ],
 };

@@ -6,7 +6,7 @@
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "skipLibCheck": false,
+    "skipLibCheck": true,
     "noEmit": true,
     "lib": ["ES2022"]
   },

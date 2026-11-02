@@ -1,10 +1,14 @@
-import { mkdir, readFile, readdir, writeFile, cp } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile, cp, rm } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 const require = createRequire(import.meta.url);
 const consumer = resolve('.cache/consumer');
+const workspace = JSON.parse(await readFile('package.json', 'utf8'));
+const versions = workspace.devDependencies;
 execFileSync('pnpm', ['pack:all'], { stdio: 'inherit' });
+// Every run is a fresh install, including after workspace dependency upgrades.
+await rm(consumer, { recursive: true, force: true });
 await mkdir(consumer, { recursive: true });
 await writeFile(
   `${consumer}/package.json`,
@@ -12,8 +16,15 @@ await writeFile(
     {
       name: 'mui-native-installed-consumer',
       private: true,
-      dependencies: { react: '19.2.3', 'react-native': '0.86.3', 'react-native-svg': '15.15.4' },
-      devDependencies: { typescript: '7.0.2', '@types/react': '19.2.18' },
+      dependencies: {
+        react: versions.react,
+        'react-native': versions['react-native'],
+        'react-native-svg': versions['react-native-svg'],
+      },
+      devDependencies: {
+        typescript: versions.typescript,
+        '@types/react': versions['@types/react'],
+      },
     },
     null,
     2,

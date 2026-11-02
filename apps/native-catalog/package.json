@@ -10,18 +10,19 @@
     "export": "expo export --platform all"
   },
   "dependencies": {
-    "expo": "57.0.29",
-    "react": "19.2.3",
-    "react-native": "0.86.3",
-    "react-native-svg": "15.15.4",
     "@altroo/mui-native": "workspace:*",
-    "@altroo/mui-native-system": "workspace:*",
-    "@altroo/mui-native-icons": "workspace:*",
     "@altroo/mui-native-compat": "workspace:*",
-    "@altroo/mui-native-x-tree-view": "workspace:*",
-    "@altroo/mui-native-x-data-grid": "workspace:*",
+    "@altroo/mui-native-icons": "workspace:*",
+    "@altroo/mui-native-system": "workspace:*",
     "@altroo/mui-native-x-charts": "workspace:*",
+    "@altroo/mui-native-x-data-grid": "workspace:*",
     "@altroo/mui-native-x-date-pickers": "workspace:*",
-    "dayjs": "1.11.13"
+    "@altroo/mui-native-x-tree-view": "workspace:*",
+    "dayjs": "1.11.13",
+    "expo": "58.0.22",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-svg": "15.16.0",
+    "react-native-safe-area-context": "5.10.1"
   }
 }

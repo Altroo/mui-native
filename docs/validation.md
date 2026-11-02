@@ -38,3 +38,9 @@ Remote verification after local preflight:
 - The bundled create/approve-PR setting and default read-only workflow permissions were rechecked and remain unchanged.
 
 Native interaction, Android and full compatibility gaps listed above remain unchanged. Automatic PR creation is intentionally disabled; its synthetic tests do not establish a live candidate lifecycle.
+
+## 2026-11-02 isolated SDK upgrade delivery
+
+The SDK-only snapshot was reconstructed separately from later component features and installed with the frozen lockfile from the local package cache. Its `pnpm check` passed 17 Jest and 25 Node tests, root/catalog TypeScript and seven runtime builds with 49 public entry points. All eight tarballs passed a fresh installed consumer, including native refs, root/deep imports, theme augmentation and browser/commercial isolation. Formatting passed.
+
+Independent review verified the matched Expo 58 runtime and strict native type migration. It found outdated setup versions and a bootstrap command relying on bundled Corepack; the setup instructions now use pinned pnpm installation through npm and the current runtime versions. Delivery is tracked in [issue #6](https://github.com/Altroo/mui-native/issues/6). This scoped migration does not close native crash, device interaction, accessibility, performance or full compatibility gates.

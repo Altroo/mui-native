@@ -19,7 +19,8 @@
       "@altroo/mui-native-x-data-grid": ["./packages/x-data-grid/src/index.ts"],
       "@altroo/mui-native-x-charts": ["./packages/x-charts/src/index.ts"],
       "@altroo/mui-native-x-date-pickers": ["./packages/x-date-pickers/src/index.ts"]
-    }
+    },
+    "customConditions": ["react-native"]
   },
   "include": ["packages/**/*.ts", "packages/**/*.tsx", "tests/**/*.ts", "tests/**/*.tsx"],
   "exclude": ["**/dist", "node_modules"]
