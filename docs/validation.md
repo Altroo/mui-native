@@ -19,7 +19,7 @@ Not established:
 
 The local full upstream scan encountered an unauthenticated GitHub advisory HTTP 403 and did not advance committed state. Verify it with repository Actions credentials. The mutable state remains separate from immutable package/source/license references.
 
-For reproducible commands and project scope, see [ROADMAP.md](../ROADMAP.md).
+For setup commands, see [installation](installation.md). Project scope and remaining gates are tracked in the [roadmap](../ROADMAP.md).
 
 ## 2026-11-02 upstream preflight
 
