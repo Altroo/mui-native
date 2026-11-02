@@ -1,8 +1,9 @@
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { readFile, mkdir, writeFile, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { packages } from './config.mjs';
-import { request, pages, commitForTag } from './http.mjs';
+import { request, pages } from './http.mjs';
+import { releaseResolver } from './source.mjs';
 import { inspectArtifact } from './artifact.mjs';
 import { detectPackage, mergeReport } from './model.mjs';
 export async function detect({
@@ -10,6 +11,7 @@ export async function detect({
   fetchRegistry = async (name) => request(`https://registry.npmjs.org/${encodeURIComponent(name)}`),
   now = new Date().toISOString(),
   enrich = true,
+  fetchArtifact = inspectArtifact,
 }) {
   const results = [];
   const changes = [];
@@ -24,6 +26,8 @@ export async function detect({
   }
   const releases = {};
   const advisories = [];
+  const resolveRelease = releaseResolver();
+  const comparisons = new Map();
   if (enrich) {
     for (const repository of new Set(packages.map((p) => p.repository)))
       releases[repository] = await pages(`https://api.github.com/repos/${repository}/releases`);
@@ -36,24 +40,18 @@ export async function detect({
     for (const change of changes) {
       const config = packages.find((p) => p.name === change.name);
       const base = state.packages[change.name].baseline;
-      const release = releases[config.repository].find(
-        (r) =>
-          !r.draft &&
-          (config.channel === 'preview'
-            ? r.body?.includes(`${config.name}@${change.version}`)
-            : r.tag_name === `v${change.version}`),
+      const { release, sourceCommit } = await resolveRelease(
+        config,
+        change,
+        releases[config.repository],
       );
-      if (!release)
-        throw new Error(
-          `Published version has no matching GitHub release: ${change.name}@${change.version}`,
-        );
-      change.sourceCommit = await commitForTag(config.repository, release.tag_name);
+      change.sourceCommit = sourceCommit;
       change.releaseUrl = release.html_url;
       change.releaseNotes = release.body ?? '';
       const pkg = await request(
         `https://registry.npmjs.org/${encodeURIComponent(config.name)}/${change.version}`,
       );
-      const artifact = await inspectArtifact(pkg);
+      const artifact = await fetchArtifact(pkg);
       const license = artifact.license;
       const snapshot = await readFile(base.apiSnapshot, 'utf8');
       if (createHash('sha256').update(snapshot).digest('hex') !== base.apiSnapshotSha256)
@@ -71,9 +69,9 @@ export async function detect({
         change.classification = 'license-review';
       }
       change.compareUrl = `https://github.com/${config.repository}/compare/${base.sourceCommit}...${change.sourceCommit}`;
-      const diff = await request(
-        `https://api.github.com/repos/${config.repository}/compare/${base.sourceCommit}...${change.sourceCommit}`,
-      );
+      const comparison = `https://api.github.com/repos/${config.repository}/compare/${base.sourceCommit}...${change.sourceCommit}`;
+      if (!comparisons.has(comparison)) comparisons.set(comparison, request(comparison));
+      const diff = await comparisons.get(comparison);
       change.files = (diff.files ?? [])
         .filter(
           (file) =>
@@ -115,6 +113,8 @@ export async function detect({
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const state = JSON.parse(await readFile('upstream/state.json', 'utf8'));
   await mkdir('artifacts/upstream', { recursive: true });
+  await rm('artifacts/upstream/report.json', { force: true });
+  await rm('artifacts/upstream/error.json', { force: true });
   try {
     const report = await detect({ state, enrich: !process.argv.includes('--registry-only') });
     await writeFile('artifacts/upstream/report.json', JSON.stringify(report, null, 2) + '\n');

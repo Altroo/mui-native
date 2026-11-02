@@ -38,8 +38,6 @@ jobs:
     permissions:
       contents: write
       issues: write
-      pull-requests: write
-      actions: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -53,4 +51,5 @@ jobs:
           path: artifacts/upstream
       - run: node scripts/upstream/publish-report.mjs
         env:
+          PREPARE_DRAFT_PRS: 'false'
           GITHUB_TOKEN: ${{ github.token }}

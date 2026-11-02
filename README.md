@@ -66,7 +66,7 @@ export function Example() {
 
 ## Staying current
 
-GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It creates deduplicated release issues, prepares draft candidates, and updates a pinned Upstream Updates dashboard. It never merges or publishes automatically. Candidate validation is dispatched explicitly.
+GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It creates deduplicated release issues and updates an Upstream Updates dashboard. Candidate PRs are created manually; automatic PR creation, approval, merging and publishing are disabled. Run the local checks and `pnpm upstream:simulate` before hosted runs; see [upstream operations](docs/upstream.md).
 
 [Update operations](docs/upstream.md) explains licensing gates, outage recovery, permissions, and the distinction between detected, candidate, verified, and released support.
 

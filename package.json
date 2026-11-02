@@ -17,7 +17,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "pack:all": "node scripts/pack.mjs",
-    "test:consumer": "node scripts/test-consumer.mjs"
+    "test:consumer": "node scripts/test-consumer.mjs",
+    "upstream:simulate": "node scripts/upstream/simulate.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
