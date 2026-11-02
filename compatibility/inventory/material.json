@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "d2736e3ece1e5d0bde07083db03415254ad846ede8526f487052731ed8a5b39f",
+  "nativeSourceSha256": "980aebec0e2a7404137d68a3c525b0446705124538ad864ad2a2dce705909885",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -26558,7 +26558,7 @@
           "line": 15
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -34766,7 +34766,7 @@
           "line": 17
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35229,7 +35229,7 @@
           "module": "@altroo/mui-native:src/forms.tsx",
           "name": "CheckChangeEvent",
           "kind": "type",
-          "line": 56
+          "line": 60
         }
       ]
     },
@@ -35416,7 +35416,7 @@
           "module": "@altroo/mui-native:src/forms.tsx",
           "name": "InputChangeEvent",
           "kind": "type",
-          "line": 51
+          "line": 55
         }
       ]
     },
@@ -35483,6 +35483,28 @@
           "name": "nativeStyleTextMetrics",
           "kind": "value",
           "line": 45
+        }
+      ]
+    },
+    {
+      "name": "NativeTextFieldInput",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/forms.tsx",
+          "name": "NativeTextFieldInput",
+          "kind": "value",
+          "line": 206
+        }
+      ]
+    },
+    {
+      "name": "NativeTextFieldInputProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/forms.tsx",
+          "name": "NativeTextFieldInputProps",
+          "kind": "type",
+          "line": 149
         }
       ]
     },
@@ -35670,6 +35692,50 @@
           "name": "SxObject",
           "kind": "type",
           "line": 6
+        }
+      ]
+    },
+    {
+      "name": "TextFieldHtmlInputSlotProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/forms.tsx",
+          "name": "TextFieldHtmlInputSlotProps",
+          "kind": "type",
+          "line": 145
+        }
+      ]
+    },
+    {
+      "name": "TextFieldInputSlotProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/forms.tsx",
+          "name": "TextFieldInputSlotProps",
+          "kind": "type",
+          "line": 168
+        }
+      ]
+    },
+    {
+      "name": "TextFieldLabelSlotProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/forms.tsx",
+          "name": "TextFieldLabelSlotProps",
+          "kind": "type",
+          "line": 144
+        }
+      ]
+    },
+    {
+      "name": "TextFieldRootSlotProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/forms.tsx",
+          "name": "TextFieldRootSlotProps",
+          "kind": "type",
+          "line": 143
         }
       ]
     },
@@ -56845,7 +56911,7 @@
         {
           "name": "CheckboxProps",
           "file": "src/forms.tsx",
-          "line": 280,
+          "line": 493,
           "package": "@altroo/mui-native"
         }
       ]
@@ -57181,7 +57247,7 @@
         {
           "name": "CheckboxProps",
           "file": "src/forms.tsx",
-          "line": 280,
+          "line": 493,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66735,7 +66801,7 @@
         {
           "name": "FormControlProps",
           "file": "src/forms.tsx",
-          "line": 78,
+          "line": 82,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66814,7 +66880,7 @@
         {
           "name": "FormControlProps",
           "file": "src/forms.tsx",
-          "line": 78,
+          "line": 82,
           "package": "@altroo/mui-native"
         }
       ]
@@ -67031,7 +67097,7 @@
         {
           "name": "FormControlProps",
           "file": "src/forms.tsx",
-          "line": 78,
+          "line": 82,
           "package": "@altroo/mui-native"
         }
       ]
@@ -67110,7 +67176,7 @@
         {
           "name": "FormControlProps",
           "file": "src/forms.tsx",
-          "line": 78,
+          "line": 82,
           "package": "@altroo/mui-native"
         }
       ]
@@ -98131,7 +98197,7 @@
         {
           "name": "RadioGroupProps",
           "file": "src/forms.tsx",
-          "line": 384,
+          "line": 597,
           "package": "@altroo/mui-native"
         }
       ]
@@ -98206,7 +98272,7 @@
         {
           "name": "RadioGroupProps",
           "file": "src/forms.tsx",
-          "line": 384,
+          "line": 597,
           "package": "@altroo/mui-native"
         }
       ]
@@ -128116,7 +128182,7 @@
         {
           "name": "TextFieldProps",
           "file": "src/forms.tsx",
-          "line": 125,
+          "line": 169,
           "package": "@altroo/mui-native"
         }
       ]
@@ -128135,7 +128201,7 @@
         {
           "name": "TextFieldOwnerState",
           "file": "src/forms.tsx",
-          "line": 122,
+          "line": 140,
           "package": "@altroo/mui-native"
         }
       ]
@@ -128867,7 +128933,7 @@
         {
           "name": "TextFieldProps",
           "file": "src/forms.tsx",
-          "line": 125,
+          "line": 169,
           "package": "@altroo/mui-native"
         }
       ]
@@ -128886,7 +128952,7 @@
         {
           "name": "TextFieldOwnerState",
           "file": "src/forms.tsx",
-          "line": 122,
+          "line": 140,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175532,7 +175598,7 @@
     {
       "name": "InputChangeEvent",
       "file": "src/forms.tsx",
-      "line": 51,
+      "line": 55,
       "kind": "type",
       "members": [
         {
@@ -175542,7 +175608,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "target: { value: string; name?: string; id?: string };",
-          "line": 52,
+          "line": 56,
           "kind": "property",
           "type": "{ value: string; name?: string; id?: string }"
         },
@@ -175553,7 +175619,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value: string;",
-          "line": 52,
+          "line": 56,
           "kind": "property",
           "type": "string"
         },
@@ -175564,7 +175630,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 52,
+          "line": 56,
           "kind": "property",
           "type": "string"
         },
@@ -175575,7 +175641,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id?: string",
-          "line": 52,
+          "line": 56,
           "kind": "property",
           "type": "string"
         },
@@ -175586,7 +175652,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "currentTarget: { value: string; name?: string; id?: string };",
-          "line": 53,
+          "line": 57,
           "kind": "property",
           "type": "{ value: string; name?: string; id?: string }"
         },
@@ -175597,7 +175663,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value: string;",
-          "line": 53,
+          "line": 57,
           "kind": "property",
           "type": "string"
         },
@@ -175608,7 +175674,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 53,
+          "line": 57,
           "kind": "property",
           "type": "string"
         },
@@ -175619,7 +175685,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id?: string",
-          "line": 53,
+          "line": 57,
           "kind": "property",
           "type": "string"
         },
@@ -175630,7 +175696,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeEvent: TextInputChangeEvent['nativeEvent'];",
-          "line": 54,
+          "line": 58,
           "kind": "property",
           "type": "TextInputChangeEvent['nativeEvent']"
         }
@@ -175644,7 +175710,7 @@
     {
       "name": "CheckChangeEvent",
       "file": "src/forms.tsx",
-      "line": 56,
+      "line": 60,
       "kind": "type",
       "members": [
         {
@@ -175654,7 +175720,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "target: { checked: boolean; value?: string; name?: string };",
-          "line": 57,
+          "line": 61,
           "kind": "property",
           "type": "{ checked: boolean; value?: string; name?: string }"
         },
@@ -175665,7 +175731,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "checked: boolean;",
-          "line": 57,
+          "line": 61,
           "kind": "property",
           "type": "boolean"
         },
@@ -175676,7 +175742,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: string;",
-          "line": 57,
+          "line": 61,
           "kind": "property",
           "type": "string"
         },
@@ -175687,7 +175753,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string",
-          "line": 57,
+          "line": 61,
           "kind": "property",
           "type": "string"
         },
@@ -175698,7 +175764,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeEvent: GestureResponderEvent['nativeEvent'] | null;",
-          "line": 58,
+          "line": 62,
           "kind": "property",
           "type": "GestureResponderEvent['nativeEvent'] | null"
         }
@@ -175712,7 +175778,7 @@
     {
       "name": "FormState",
       "file": "src/forms.tsx",
-      "line": 60,
+      "line": 64,
       "kind": "type",
       "members": [
         {
@@ -175722,7 +175788,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean;",
-          "line": 61,
+          "line": 65,
           "kind": "property",
           "type": "boolean"
         },
@@ -175733,7 +175799,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "error?: boolean;",
-          "line": 62,
+          "line": 66,
           "kind": "property",
           "type": "boolean"
         },
@@ -175744,7 +175810,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "required?: boolean;",
-          "line": 63,
+          "line": 67,
           "kind": "property",
           "type": "boolean"
         }
@@ -175756,7 +175822,7 @@
     {
       "name": "LabelActivation",
       "file": "src/forms.tsx",
-      "line": 66,
+      "line": 70,
       "kind": "type",
       "members": [],
       "references": [
@@ -175768,7 +175834,7 @@
     {
       "name": "FormControlProps",
       "file": "src/forms.tsx",
-      "line": 78,
+      "line": 82,
       "kind": "type",
       "members": [
         {
@@ -175778,7 +175844,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullWidth?: boolean;",
-          "line": 79,
+          "line": 83,
           "kind": "property",
           "type": "boolean"
         }
@@ -175793,7 +175859,7 @@
     {
       "name": "TextFieldOwnerState",
       "file": "src/forms.tsx",
-      "line": 122,
+      "line": 140,
       "kind": "type",
       "members": [
         {
@@ -175803,7 +175869,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focused: boolean;",
-          "line": 123,
+          "line": 141,
           "kind": "property",
           "type": "boolean"
         }
@@ -175816,9 +175882,65 @@
       "package": "@altroo/mui-native"
     },
     {
-      "name": "TextFieldProps",
+      "name": "TextFieldRootSlotProps",
       "file": "src/forms.tsx",
-      "line": 125,
+      "line": 143,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "FormControlProps",
+        "React.RefAttributes",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "TextFieldLabelSlotProps",
+      "file": "src/forms.tsx",
+      "line": 144,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.RefAttributes",
+        "TextInstance",
+        "TypographyProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "TextFieldHtmlInputSlotProps",
+      "file": "src/forms.tsx",
+      "line": 145,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.RefAttributes",
+        "TextInputInstance",
+        "TextInputProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeSlot",
+      "file": "src/forms.tsx",
+      "line": 146,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "P",
+        "React.ComponentType",
+        "TextFieldOwnerState"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeTextFieldInputProps",
+      "file": "src/forms.tsx",
+      "line": 149,
       "kind": "type",
       "members": [
         {
@@ -175828,75 +175950,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 127,
+          "line": 152,
           "kind": "property",
           "type": "SxProps"
         },
         {
-          "name": "label",
+          "name": "style",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "label?: React.ReactNode;",
-          "line": 128,
+          "declaration": "style?: StyleProp<ViewStyle>;",
+          "line": 153,
           "kind": "property",
-          "type": "React.ReactNode"
-        },
-        {
-          "name": "helperText",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "helperText?: React.ReactNode;",
-          "line": 129,
-          "kind": "property",
-          "type": "React.ReactNode"
-        },
-        {
-          "name": "error",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "error?: boolean;",
-          "line": 130,
-          "kind": "property",
-          "type": "boolean"
-        },
-        {
-          "name": "disabled",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "disabled?: boolean;",
-          "line": 131,
-          "kind": "property",
-          "type": "boolean"
-        },
-        {
-          "name": "required",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "required?: boolean;",
-          "line": 132,
-          "kind": "property",
-          "type": "boolean"
-        },
-        {
-          "name": "fullWidth",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "fullWidth?: boolean;",
-          "line": 133,
-          "kind": "property",
-          "type": "boolean"
+          "type": "StyleProp<ViewStyle>"
         },
         {
           "name": "variant",
@@ -175905,7 +175972,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: 'outlined' | 'filled' | 'standard';",
-          "line": 134,
+          "line": 154,
           "kind": "property",
           "type": "'outlined' | 'filled' | 'standard'"
         },
@@ -175916,9 +175983,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size?: 'small' | 'medium';",
-          "line": 135,
+          "line": 155,
           "kind": "property",
           "type": "'small' | 'medium'"
+        },
+        {
+          "name": "fullWidth",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "fullWidth?: boolean;",
+          "line": 156,
+          "kind": "property",
+          "type": "boolean"
         },
         {
           "name": "value",
@@ -175927,7 +176005,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: string | number;",
-          "line": 136,
+          "line": 157,
           "kind": "property",
           "type": "string | number"
         },
@@ -175938,7 +176016,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultValue?: string | number;",
-          "line": 137,
+          "line": 158,
           "kind": "property",
           "type": "string | number"
         },
@@ -175949,7 +176027,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 138,
+          "line": 159,
           "kind": "property",
           "type": "string"
         },
@@ -175960,7 +176038,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id?: string;",
-          "line": 139,
+          "line": 160,
           "kind": "property",
           "type": "string"
         },
@@ -175971,7 +176049,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "type?: 'text' | 'password' | 'email' | 'number';",
-          "line": 140,
+          "line": 161,
           "kind": "property",
           "type": "'text' | 'password' | 'email' | 'number'"
         },
@@ -175982,7 +176060,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onChange?: (event: InputChangeEvent) => void;",
-          "line": 141,
+          "line": 162,
           "kind": "event",
           "type": "(event: InputChangeEvent) => void"
         },
@@ -175993,106 +176071,144 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputRef?: React.Ref<TextInputInstance>;",
-          "line": 142,
+          "line": 163,
           "kind": "property",
           "type": "React.Ref<TextInputInstance>"
         },
         {
-          "name": "aria-label",
+          "name": "inputProps",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "'aria-label'?: string;",
-          "line": 143,
+          "declaration": "inputProps?: TextFieldHtmlInputSlotProps;",
+          "line": 164,
           "kind": "property",
-          "type": "string"
+          "type": "TextFieldHtmlInputSlotProps"
         },
         {
-          "name": "slotProps",
+          "name": "slots",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "slotProps?: {\n    htmlInput?: SlotProps<TextInputProps, TextFieldOwnerState>;\n    inputLabel?: SlotProps<TypographyProps, TextFieldOwnerState>;\n    formHelperText?: SlotProps<TypographyProps, TextFieldOwnerState>;\n  };",
-          "line": 144,
+          "declaration": "slots?: { input?: NativeSlot<TextFieldHtmlInputSlotProps> };",
+          "line": 165,
           "kind": "slot",
-          "type": "{\n    htmlInput?: SlotProps<TextInputProps, TextFieldOwnerState>;\n    inputLabel?: SlotProps<TypographyProps, TextFieldOwnerState>;\n    formHelperText?: SlotProps<TypographyProps, TextFieldOwnerState>;\n  }"
+          "type": "{ input?: NativeSlot<TextFieldHtmlInputSlotProps> }"
         },
         {
-          "name": "slotProps.htmlInput",
+          "name": "slots.input",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "htmlInput?: SlotProps<TextInputProps, TextFieldOwnerState>;",
-          "line": 145,
+          "declaration": "input?: NativeSlot<TextFieldHtmlInputSlotProps>",
+          "line": 165,
           "kind": "slot",
-          "type": "SlotProps<TextInputProps, TextFieldOwnerState>"
+          "type": "NativeSlot<TextFieldHtmlInputSlotProps>"
         },
         {
-          "name": "slotProps.inputLabel",
+          "name": "ownerState",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "inputLabel?: SlotProps<TypographyProps, TextFieldOwnerState>;",
-          "line": 146,
-          "kind": "slot",
-          "type": "SlotProps<TypographyProps, TextFieldOwnerState>"
-        },
-        {
-          "name": "slotProps.formHelperText",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "formHelperText?: SlotProps<TypographyProps, TextFieldOwnerState>;",
-          "line": 147,
-          "kind": "slot",
-          "type": "SlotProps<TypographyProps, TextFieldOwnerState>"
+          "declaration": "ownerState?: TextFieldOwnerState;",
+          "line": 166,
+          "kind": "property",
+          "type": "TextFieldOwnerState"
         }
       ],
       "references": [
+        "FormState",
         "InputChangeEvent",
+        "NativeSlot",
         "Omit",
-        "React.ReactNode",
         "React.Ref",
-        "SlotProps",
+        "StyleProp",
         "SxProps",
+        "TextFieldHtmlInputSlotProps",
         "TextFieldOwnerState",
         "TextInputInstance",
         "TextInputProps",
-        "TypographyProps"
+        "ViewStyle"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
     },
     {
-      "name": "CheckboxProps",
+      "name": "TextFieldInputSlotProps",
       "file": "src/forms.tsx",
-      "line": 280,
+      "line": 168,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativeTextFieldInputProps",
+        "React.RefAttributes",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "TextFieldProps",
+      "file": "src/forms.tsx",
+      "line": 169,
       "kind": "type",
       "members": [
         {
-          "name": "checked",
+          "name": "sx",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "checked?: boolean;",
-          "line": 281,
+          "declaration": "sx?: SxProps;",
+          "line": 171,
           "kind": "property",
-          "type": "boolean"
+          "type": "SxProps"
         },
         {
-          "name": "defaultChecked",
+          "name": "style",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "defaultChecked?: boolean;",
-          "line": 282,
+          "declaration": "style?: StyleProp<ViewStyle>;",
+          "line": 172,
+          "kind": "property",
+          "type": "StyleProp<ViewStyle>"
+        },
+        {
+          "name": "label",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "label?: React.ReactNode;",
+          "line": 173,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "helperText",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "helperText?: React.ReactNode;",
+          "line": 174,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "error",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "error?: boolean;",
+          "line": 175,
           "kind": "property",
           "type": "boolean"
         },
@@ -176103,7 +176219,332 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean;",
-          "line": 283,
+          "line": 176,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "required",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "required?: boolean;",
+          "line": 177,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "fullWidth",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "fullWidth?: boolean;",
+          "line": 178,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "variant",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant?: 'outlined' | 'filled' | 'standard';",
+          "line": 179,
+          "kind": "property",
+          "type": "'outlined' | 'filled' | 'standard'"
+        },
+        {
+          "name": "size",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "size?: 'small' | 'medium';",
+          "line": 180,
+          "kind": "property",
+          "type": "'small' | 'medium'"
+        },
+        {
+          "name": "value",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "value?: string | number;",
+          "line": 181,
+          "kind": "property",
+          "type": "string | number"
+        },
+        {
+          "name": "defaultValue",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultValue?: string | number;",
+          "line": 182,
+          "kind": "property",
+          "type": "string | number"
+        },
+        {
+          "name": "name",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "name?: string;",
+          "line": 183,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "id?: string;",
+          "line": 184,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "type?: 'text' | 'password' | 'email' | 'number';",
+          "line": 185,
+          "kind": "property",
+          "type": "'text' | 'password' | 'email' | 'number'"
+        },
+        {
+          "name": "onChange",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onChange?: (event: InputChangeEvent) => void;",
+          "line": 186,
+          "kind": "event",
+          "type": "(event: InputChangeEvent) => void"
+        },
+        {
+          "name": "inputRef",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "inputRef?: React.Ref<TextInputInstance>;",
+          "line": 187,
+          "kind": "property",
+          "type": "React.Ref<TextInputInstance>"
+        },
+        {
+          "name": "aria-label",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "'aria-label'?: string;",
+          "line": 188,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "slots",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slots?: {\n    root?: NativeSlot<TextFieldRootSlotProps>;\n    input?: NativeSlot<TextFieldInputSlotProps>;\n    htmlInput?: NativeSlot<TextFieldHtmlInputSlotProps>;\n    inputLabel?: NativeSlot<TextFieldLabelSlotProps>;\n    formHelperText?: NativeSlot<TextFieldLabelSlotProps>;\n  };",
+          "line": 189,
+          "kind": "slot",
+          "type": "{\n    root?: NativeSlot<TextFieldRootSlotProps>;\n    input?: NativeSlot<TextFieldInputSlotProps>;\n    htmlInput?: NativeSlot<TextFieldHtmlInputSlotProps>;\n    inputLabel?: NativeSlot<TextFieldLabelSlotProps>;\n    formHelperText?: NativeSlot<TextFieldLabelSlotProps>;\n  }"
+        },
+        {
+          "name": "slots.root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: NativeSlot<TextFieldRootSlotProps>;",
+          "line": 190,
+          "kind": "slot",
+          "type": "NativeSlot<TextFieldRootSlotProps>"
+        },
+        {
+          "name": "slots.input",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "input?: NativeSlot<TextFieldInputSlotProps>;",
+          "line": 191,
+          "kind": "slot",
+          "type": "NativeSlot<TextFieldInputSlotProps>"
+        },
+        {
+          "name": "slots.htmlInput",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "htmlInput?: NativeSlot<TextFieldHtmlInputSlotProps>;",
+          "line": 192,
+          "kind": "slot",
+          "type": "NativeSlot<TextFieldHtmlInputSlotProps>"
+        },
+        {
+          "name": "slots.inputLabel",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "inputLabel?: NativeSlot<TextFieldLabelSlotProps>;",
+          "line": 193,
+          "kind": "slot",
+          "type": "NativeSlot<TextFieldLabelSlotProps>"
+        },
+        {
+          "name": "slots.formHelperText",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "formHelperText?: NativeSlot<TextFieldLabelSlotProps>;",
+          "line": 194,
+          "kind": "slot",
+          "type": "NativeSlot<TextFieldLabelSlotProps>"
+        },
+        {
+          "name": "slotProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slotProps?: {\n    root?: SlotProps<TextFieldRootSlotProps, TextFieldOwnerState>;\n    input?: SlotProps<TextFieldInputSlotProps, TextFieldOwnerState>;\n    htmlInput?: SlotProps<TextFieldHtmlInputSlotProps, TextFieldOwnerState>;\n    inputLabel?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;\n    formHelperText?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;\n  };",
+          "line": 196,
+          "kind": "slot",
+          "type": "{\n    root?: SlotProps<TextFieldRootSlotProps, TextFieldOwnerState>;\n    input?: SlotProps<TextFieldInputSlotProps, TextFieldOwnerState>;\n    htmlInput?: SlotProps<TextFieldHtmlInputSlotProps, TextFieldOwnerState>;\n    inputLabel?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;\n    formHelperText?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;\n  }"
+        },
+        {
+          "name": "slotProps.root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: SlotProps<TextFieldRootSlotProps, TextFieldOwnerState>;",
+          "line": 197,
+          "kind": "slot",
+          "type": "SlotProps<TextFieldRootSlotProps, TextFieldOwnerState>"
+        },
+        {
+          "name": "slotProps.input",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "input?: SlotProps<TextFieldInputSlotProps, TextFieldOwnerState>;",
+          "line": 198,
+          "kind": "slot",
+          "type": "SlotProps<TextFieldInputSlotProps, TextFieldOwnerState>"
+        },
+        {
+          "name": "slotProps.htmlInput",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "htmlInput?: SlotProps<TextFieldHtmlInputSlotProps, TextFieldOwnerState>;",
+          "line": 199,
+          "kind": "slot",
+          "type": "SlotProps<TextFieldHtmlInputSlotProps, TextFieldOwnerState>"
+        },
+        {
+          "name": "slotProps.inputLabel",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "inputLabel?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;",
+          "line": 200,
+          "kind": "slot",
+          "type": "SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>"
+        },
+        {
+          "name": "slotProps.formHelperText",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "formHelperText?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;",
+          "line": 201,
+          "kind": "slot",
+          "type": "SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>"
+        }
+      ],
+      "references": [
+        "InputChangeEvent",
+        "NativeSlot",
+        "Omit",
+        "React.ReactNode",
+        "React.Ref",
+        "SlotProps",
+        "StyleProp",
+        "SxProps",
+        "TextFieldHtmlInputSlotProps",
+        "TextFieldInputSlotProps",
+        "TextFieldLabelSlotProps",
+        "TextFieldOwnerState",
+        "TextFieldRootSlotProps",
+        "TextInputInstance",
+        "TextInputProps",
+        "ViewStyle"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CheckboxProps",
+      "file": "src/forms.tsx",
+      "line": 493,
+      "kind": "type",
+      "members": [
+        {
+          "name": "checked",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "checked?: boolean;",
+          "line": 494,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "defaultChecked",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultChecked?: boolean;",
+          "line": 495,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disabled",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disabled?: boolean;",
+          "line": 496,
           "kind": "property",
           "type": "boolean"
         },
@@ -176114,7 +176555,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "indeterminate?: boolean;",
-          "line": 284,
+          "line": 497,
           "kind": "property",
           "type": "boolean"
         },
@@ -176125,7 +176566,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: string;",
-          "line": 285,
+          "line": 498,
           "kind": "property",
           "type": "string"
         },
@@ -176136,7 +176577,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 286,
+          "line": 499,
           "kind": "property",
           "type": "string"
         },
@@ -176147,7 +176588,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onChange?: (event: CheckChangeEvent, checked: boolean) => void;",
-          "line": 287,
+          "line": 500,
           "kind": "event",
           "type": "(event: CheckChangeEvent, checked: boolean) => void"
         },
@@ -176158,7 +176599,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size?: 'small' | 'medium';",
-          "line": 288,
+          "line": 501,
           "kind": "property",
           "type": "'small' | 'medium'"
         },
@@ -176169,7 +176610,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 289,
+          "line": 502,
           "kind": "property",
           "type": "SxProps"
         },
@@ -176180,7 +176621,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputProps?: { 'aria-label'?: string };",
-          "line": 290,
+          "line": 503,
           "kind": "property",
           "type": "{ 'aria-label'?: string }"
         },
@@ -176191,7 +176632,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-label'?: string",
-          "line": 290,
+          "line": 503,
           "kind": "property",
           "type": "string"
         },
@@ -176202,7 +176643,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-label'?: string;",
-          "line": 291,
+          "line": 504,
           "kind": "property",
           "type": "string"
         },
@@ -176213,7 +176654,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "testID?: string;",
-          "line": 292,
+          "line": 505,
           "kind": "property",
           "type": "string"
         }
@@ -176228,7 +176669,7 @@
     {
       "name": "RadioGroupProps",
       "file": "src/forms.tsx",
-      "line": 384,
+      "line": 597,
       "kind": "type",
       "members": [
         {
@@ -176238,7 +176679,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: string;",
-          "line": 385,
+          "line": 598,
           "kind": "property",
           "type": "string"
         },
@@ -176249,7 +176690,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultValue?: string;",
-          "line": 386,
+          "line": 599,
           "kind": "property",
           "type": "string"
         },
@@ -176260,7 +176701,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 387,
+          "line": 600,
           "kind": "property",
           "type": "string"
         },
@@ -176271,7 +176712,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "row?: boolean;",
-          "line": 388,
+          "line": 601,
           "kind": "property",
           "type": "boolean"
         },
@@ -176282,7 +176723,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onChange?: (e: CheckChangeEvent, value: string) => void;",
-          "line": 389,
+          "line": 602,
           "kind": "event",
           "type": "(e: CheckChangeEvent, value: string) => void"
         }

@@ -36,7 +36,7 @@
       "packages/material/src/FormControlLabel/index.ts": "72758b4ed047b4ee1016d2755367b231ca54e7f97457ebcae29366d964224726",
       "packages/material/src/FormHelperText/index.ts": "5815ed5b6f543a3064ec5c080901759359228554f127ccb3dcdee8ae3447b76e",
       "packages/material/src/FormLabel/index.ts": "d8c2df23bf3189fc2a06beebdf1cea7bb944c09dad85e48355d67982f3423475",
-      "packages/material/src/forms.tsx": "ffc32889766a17f6c48dd3547d210f4f2eda9e1a82bdbec32c1579fec884f3e9",
+      "packages/material/src/forms.tsx": "c50a4df351383d22ea985cf98f06b1008819f9e3568a8a3be52fe9a292d5d8f7",
       "packages/material/src/IconButton/index.ts": "6dd20ea493f4ac893b83b01d5be0ac4aa4d806a074f08cea9e359e10ee31bb5f",
       "packages/material/src/index.ts": "86afae1b09ac764d223146c4717e2db528969a1312b6404019cf19be025abf14",
       "packages/material/src/InputLabel/index.ts": "8a2e790da65944139756176f14208b69936b143b0e24685c7677004626b040c1",
@@ -52,8 +52,9 @@
       "packages/material/src/TextField/index.ts": "09d175ad9a5284adba213076e847ca9df592241b342d7be930528fcbeef4fadd",
       "packages/material/src/typography.tsx": "d59558ef5907c3b6f0dacc418034e83b8f50e266852d08f53837689dd0ea967f",
       "packages/material/src/Typography/index.ts": "a4abb6b777a7fa90349f8bf180a0b9829a7ac4738c5ced7b40cb353192223c79",
-      "packages/material/src/utils/index.ts": "e16e3aa2ed36c41575fc88acca9d031c3dfe9a1bb9deedf918e5dbc217c65d92",
+      "packages/material/src/utils/index.ts": "9a7dd641da278c2d8fe5cf9abaf310874ff083ddedc6a3d8643cd6025dd2255b",
       "packages/material/src/utils/mergeSlotProps.ts": "268ef0c162be5c867d4e841076c60c3f1ee49882cca33b92eb84a5e9e7a32c90",
+      "packages/material/src/utils/refs.ts": "907124cd99a8df3f5ad2f6887a07f43f8896db226d477a81be6a0462f28c6a3e",
       "packages/system/package.json": "c53529e6232e11698d1eea51bc176aa1169b30d6be2f17d349340808c5973d7a",
       "packages/system/src/breakpoints.ts": "68c485014abc6d0bf96e65109ebf3d50f2bafc091563bd222228e63c8f17e2d4",
       "packages/system/src/colorManipulator.ts": "0f243e7a46b477b32259ac2fa0bc125f4000db3cceda7f676b4849f30e6878da",
@@ -139,7 +140,7 @@
   },
   "documentation": {
     "path": "docs/coverage.md",
-    "sha256": "69e932e335fb92ec0eb520ccb52e1dc3c245ef76ae289a21e2f4ebf91546d39f"
+    "sha256": "ebf891a4d8b97ffeb38ef5a6eef83bb5b5a7110757a1fa83e0fbfe5cc1d51293"
   },
   "referenceDependencies": [
     {
@@ -161,11 +162,11 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "d2736e3ece1e5d0bde07083db03415254ad846ede8526f487052731ed8a5b39f",
+      "nativeSourceSha256": "980aebec0e2a7404137d68a3c525b0446705124538ad864ad2a2dce705909885",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
-      "locallyDeclaredRootNames": 88,
+      "locallyDeclaredRootNames": 90,
       "directMembers": 4046,
       "eventDeclarations": 112,
       "slotDeclarations": 219,
@@ -173,7 +174,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "cce7cb96b81dbf58c9a3c2a5c1bf91b65c9166fb9d049fee84302008bd32ab80"
+      "sha256": "58827ef9e698a143517e0378760904582c9b6ddf3de54b05d285966a4c24981d"
     },
     {
       "package": "@mui/system",

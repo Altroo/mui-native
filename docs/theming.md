@@ -44,7 +44,7 @@ mv .cache/upstream/mui-system-9.5.0.tgz .cache/upstream/system-9.5.0.tgz
 mv .cache/upstream/mui-utils-9.5.0.tgz .cache/upstream/utils-9.5.0.tgz
 cd .cache/palette-reference
 npm init -y
-npm install --ignore-scripts --no-audit --no-fund ../upstream/material-9.5.0.tgz ../upstream/system-9.5.0.tgz ../upstream/utils-9.5.0.tgz react@19.3.0 react-dom@19.3.0
+npm install --ignore-scripts --no-audit --no-fund ../upstream/material-9.5.0.tgz ../upstream/system-9.5.0.tgz ../upstream/utils-9.5.0.tgz react@19.3.0 react-dom@19.3.0 @emotion/react@11.14.0 @emotion/styled@11.14.1
 cd ../..
 node scripts/reference/palette.mjs --check
 ```

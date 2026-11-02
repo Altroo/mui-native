@@ -26,7 +26,7 @@ const theme = createTheme({
 </ThemeProvider>;
 ```
 
-The supplied input slot keeps the theme's placeholder and capitalization. TextField supports object or owner-state callbacks for `htmlInput`, `inputLabel` and `formHelperText`. Callbacks run at rendering with resolved props, form flags and focus state. Both sides remain deferred when theme and caller provide callbacks. Native input aliases, managed value/change behavior and the existing event order still apply.
+The supplied input slot keeps the theme's placeholder and capitalization. TextField supports object or owner-state callbacks for `root`, `input`, `htmlInput`, `inputLabel` and `formHelperText`. Callbacks run at rendering with resolved props, form flags and focus state. Both sides remain deferred when theme and caller provide callbacks. Native input aliases, managed value/change behavior and the existing event order still apply.
 
 ## Merge rules
 
@@ -34,7 +34,7 @@ The supplied input slot keeps the theme's placeholder and capitalization. TextFi
 
 By default, a supplied `style` or `className` replaces its default. Set `components.mergeClassNameAndStyle: true` to merge them. Native styles preserve ordered arrays and Pressable callbacks, with caller styles last. This deliberately uses React Native style semantics instead of spreading array indices into a CSS object. Class-name concatenation is useful for custom roots; it does not introduce a native CSS class engine.
 
-Default resolution is connected to the existing Material layout, form/control, feedback, Button/IconButton and Typography components. Box retains its existing System behavior and does not gain MuiBox default-prop support. Each component still implements only its documented prop subset; a default cannot enable an unimplemented API or slot replacement.
+Default resolution is connected to the existing Material layout, form/control, feedback, Button/IconButton and Typography components. Box retains its existing System behavior and does not gain MuiBox default-prop support. Each component still implements only its documented prop subset; a default cannot enable an unimplemented API. TextField component replacement is documented in [native input slots](textfield-slots.md); other component slot mounting remains unfinished.
 
 ## Providers and hooks
 

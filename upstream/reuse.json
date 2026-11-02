@@ -200,6 +200,45 @@
         }
       },
       "adaptations": ["Native event-key detection uses the same uppercase onX convention."]
+    },
+    {
+      "localFile": "packages/material/src/forms.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+        }
+      },
+      "adaptations": [
+        "Native TextField slots preserve the input-container/editable-host distinction with native refs, styles, owner state and event adaptation.",
+        "The native adapter is a composable extension, not an InputBase/OutlinedInput/FilledInput parity claim. Disabled/read-only guards remain authoritative."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/utils/refs.ts",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "useForkRef/useForkRef.js": "7e0d11874df7d122e1ba63304cbf548dc7aceef27944f243ecd170921083b91a",
+          "useForkRef/useForkRef.d.ts": "1ff0faca356af9440189026e7ead9f4461af4109fff62c9508b8c0ed9a49ce68",
+          "setRef/setRef.js": "9f3a2d43792c7393e814e8f4d71431eb16e109366fd7cae3698026f87e9241e7",
+          "setRef/setRef.d.ts": "676ecc05abaf7e2a33686da7f5a998a8812fde2b4b42cb756b8ee63ef22dad55"
+        }
+      },
+      "adaptations": [
+        "Native generic ref types and React 19 callback cleanup returns.",
+        "Attachment-local idempotent cleanup, variable-length ref lists, error rollback and complete release after cleanup errors."
+      ]
     }
   ]
 }

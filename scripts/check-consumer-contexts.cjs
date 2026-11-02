@@ -37,6 +37,14 @@ try {
       material[name],
       `Installed ${name} must share its root implementation.`,
     );
+  const textField = requireConsumer('@altroo/mui-native/TextField');
+  const utils = requireConsumer('@altroo/mui-native/utils');
+  assert.equal(textField.default, material.TextField);
+  assert.equal(textField.NativeTextFieldInput, material.NativeTextFieldInput);
+  for (const name of ['useForkRef', 'setRef']) {
+    assert.equal(typeof utils[name], 'function');
+    assert.equal(utils[name], material[name]);
+  }
   console.log(
     'Installed root/deep providers, hooks and Material components share their implementations.',
   );
