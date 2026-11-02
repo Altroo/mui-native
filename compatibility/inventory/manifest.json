@@ -37,17 +37,20 @@
       "packages/material/src/FormControlLabel/index.ts": "72758b4ed047b4ee1016d2755367b231ca54e7f97457ebcae29366d964224726",
       "packages/material/src/FormHelperText/index.ts": "5815ed5b6f543a3064ec5c080901759359228554f127ccb3dcdee8ae3447b76e",
       "packages/material/src/FormLabel/index.ts": "d8c2df23bf3189fc2a06beebdf1cea7bb944c09dad85e48355d67982f3423475",
-      "packages/material/src/forms.tsx": "5e08dbeb12467310823c28c473bc072f1ba15b2b796271477b70f7fae10028b6",
-      "packages/material/src/formState.ts": "3282aa274d2d540a5a806c12bf65e3c3b434aa955ad7b7db9e418b7e9e5867df",
+      "packages/material/src/forms.tsx": "bcca75eb353f413509576846c2837a69ce74467294d83a0a117dc8790557d08c",
+      "packages/material/src/formState.ts": "306d198468d185b4835f13f25ad220a08f0fd2b74dc48152200e034dc5e0a5cf",
       "packages/material/src/IconButton/index.ts": "6dd20ea493f4ac893b83b01d5be0ac4aa4d806a074f08cea9e359e10ee31bb5f",
       "packages/material/src/index.ts": "a0fad37d36ea504a57998e734eaf9959f4874874dc9ee8f7b3fc54336cbd055c",
       "packages/material/src/Input/index.ts": "9c6687959c875f6a480ba0bc5620a5d74c5259ce607526ca64a0a4db2442b50c",
       "packages/material/src/InputAdornment/index.ts": "8ee899763437210b3027f092a116ffd21c58f26e142d931f23199ad9837a5bbb",
       "packages/material/src/InputBase/index.ts": "b0034ca1d11f85b615c3518f0c23a2d99c8442a2f194c4ca42cc73e310cb6fbc",
       "packages/material/src/InputLabel/index.ts": "8a2e790da65944139756176f14208b69936b143b0e24685c7677004626b040c1",
-      "packages/material/src/inputs.tsx": "3112f8d94371d7b8aae97bea8911cc76528d89e54bc81a611cd2d46e01f4e346",
+      "packages/material/src/inputs.tsx": "ac27bf1e75033ce7a0a855990fdc3af9c03b3b69307a8c1c421a8066f95b74c3",
+      "packages/material/src/labelMotion.ts": "010edb3b3c8aba684dbab1e233b3ed432706222c734464a33bcbd3a0eee8216f",
+      "packages/material/src/labels.tsx": "b079a62ff0871e333db3b26a6780925805a93240b9643b36df70c3f02262c55d",
       "packages/material/src/layout.tsx": "18fab4848a5da381c2d996d5a43422113ca7cc311542f658b348bb2eecdc4ca5",
       "packages/material/src/LinearProgress/index.ts": "4f87ce0228b08ef37823e8097d356fe03d7d7ad99ba7dafffe95148b114cee34",
+      "packages/material/src/nativeInsets.ts": "3e5509c5d81098e4edb4265109903232c730458d6eb7c97dca128b15f1acccbd",
       "packages/material/src/OutlinedInput/index.ts": "def45dc15be298ea7eb34c3573df021ad1b653d5d8e1933d958beb3edae46375",
       "packages/material/src/Paper/index.ts": "95edb968b52ae295269647bee727f393f757d825c26f0c536d48d6b034992962",
       "packages/material/src/Radio/index.ts": "8bc679050d8aa88b52dd810cfaf91c3a59a3e1997ee7c2a7020a1d3cda31ebc6",
@@ -147,7 +150,7 @@
   },
   "documentation": {
     "path": "docs/coverage.md",
-    "sha256": "ca0cc1b6866a26d5fcecca1ad549d702de14735c23c1af4c0c230f879ef507c2"
+    "sha256": "28d01fcc512656c04a8324832552bb9bbfae9a60e934a88764ef5b5f35c94f88"
   },
   "referenceDependencies": [
     {
@@ -169,11 +172,11 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "ae5b0d4cb4d1c6828a75ca734f4c317f226c3f546f123b4e3eef09251dfd4657",
+      "nativeSourceSha256": "94b5b2e60e0d9524071be7ccd273b7ae4405115aee79f7141715c529a363d8c0",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
-      "locallyDeclaredRootNames": 104,
+      "locallyDeclaredRootNames": 114,
       "directMembers": 4046,
       "eventDeclarations": 112,
       "slotDeclarations": 219,
@@ -181,7 +184,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "a67cfb76811da666000b89c38833ea6dfc73692da6a815470d81b92f7cbc0a3e"
+      "sha256": "7dd954ae675ef329e6ae8399c1d2a845680dcbe4e29f225723adf3632ff30348"
     },
     {
       "package": "@mui/system",

@@ -6,6 +6,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Dedicated FormLabel/InputLabel/FormHelperText contracts, floating/stacked fields, scoped focus/name/helper links and reduced-motion-aware native transforms. See [forms and labels](form-labels.md).
 - InputBase/Input/FilledInput/OutlinedInput, adornments, native row bounds and coordinated form state. See [native inputs](inputs.md) for the implemented subset and native differences.
 - TextField replacement of five native slots, distinct input-container and editable-host contracts, composed refs and React 19 cleanup. See [native input slots](textfield-slots.md).
 - Theme/default-prop contexts, named slot default merging, TextField owner-state callbacks and explicit slot prop composition. See [defaults](default-props.md) for replacement rules and native differences.

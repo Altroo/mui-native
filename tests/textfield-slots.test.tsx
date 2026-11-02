@@ -77,7 +77,7 @@ test('all five slots mount distinctly, receive live state and retain form contex
   );
   expect(screen.getByTestId('label-slot')).toHaveTextContent('Name *');
   expect(screen.getByTestId('helper-slot')).toHaveStyle({ color: '#d32f2f' });
-  expect(screen.getByTestId('root')).toHaveStyle({ gap: 4 });
+  expect(screen.getByTestId('root')).toHaveStyle({ gap: 0 });
   expect(screen.getByTestId('host').props.ownerState).toBeUndefined();
   fireEvent(screen.getByTestId('host'), 'focus', { nativeEvent: {} });
   for (const slot of [root, input, host])
@@ -144,6 +144,7 @@ test('input and host customization cannot replace controlled value or weaken dis
   rerender(
     <TextField
       label="Locked"
+      value="Controlled"
       readOnly
       slotProps={{ input: { readOnly: false }, htmlInput: { readOnly: false, editable: true } }}
     />,
@@ -187,23 +188,23 @@ test('root, input-container, editable-host and text refs compose and clean up on
   const textInstance = { measure: jest.fn() } as unknown as TextInstance;
   const Root = forwardRef<ViewInstance, Owned<TextFieldRootSlotProps>>(
     ({ ownerState: _o, ...props }, ref) => {
-      useImperativeHandle(ref, () => rootInstance);
+      useImperativeHandle(ref, () => rootInstance, [rootInstance]);
       return <FormControl {...props} />;
     },
   );
   const Input = forwardRef<ViewInstance, Owned<TextFieldInputSlotProps>>((props, ref) => {
-    useImperativeHandle(ref, () => containerInstance);
+    useImperativeHandle(ref, () => containerInstance, [containerInstance]);
     return <NativeTextFieldInput {...props} />;
   });
   const Host = forwardRef<TextInputInstance, Owned<TextFieldHtmlInputSlotProps>>(
     ({ ownerState: _o, ...props }, ref) => {
-      useImperativeHandle(ref, () => hostInstance);
+      useImperativeHandle(ref, () => hostInstance, [hostInstance]);
       return <TextInput {...props} />;
     },
   );
   const Label = forwardRef<TextInstance, Owned<TextFieldLabelSlotProps>>(
     ({ ownerState: _o, ...props }, ref) => {
-      useImperativeHandle(ref, () => textInstance);
+      useImperativeHandle(ref, () => textInstance, [textInstance]);
       return <InputLabel {...props} />;
     },
   );

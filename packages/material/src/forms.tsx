@@ -8,9 +8,11 @@ import React, {
   useLayoutEffect,
   useCallback,
   useMemo,
+  useId,
 } from 'react';
 import {
   View,
+  StyleSheet,
   type ViewInstance,
   type TextInstance,
   type StyleProp,
@@ -26,6 +28,7 @@ import {
   useDefaultProps,
   useComponentStyle,
   useSx,
+  diagnostic,
   resolveSlotProps,
   type SlotProps,
   type SxProps,
@@ -34,8 +37,28 @@ import { Box, Stack, Typography, type BoxProps, type TypographyProps } from './l
 import { useForkRef } from './utils/refs';
 export { useControlled, useFormControl } from './formState';
 export type { InputChangeEvent } from './formState';
-import { FormContext, useControlled, type FormState, type InputChangeEvent } from './formState';
-import { NativeInputControl } from './inputs';
+import {
+  FormContext,
+  useControlled,
+  nativeLabelText,
+  type FormState,
+  type InputChangeEvent,
+} from './formState';
+import {
+  NativeInputControl,
+  type InputBaseProps,
+  type InputBaseComponentProps,
+  type OutlinedInputProps,
+} from './inputs';
+import { nativeInsets } from './nativeInsets';
+import {
+  FormLabel,
+  InputLabel,
+  FormHelperText,
+  type InputLabelProps,
+  type FormHelperTextProps,
+} from './labels';
+export * from './labels';
 export type CheckChangeEvent = {
   target: { checked: boolean; value?: string; name?: string };
   nativeEvent: GestureResponderEvent['nativeEvent'] | null;
@@ -53,25 +76,57 @@ function useLabelActivation(activate: LabelActivation) {
   }, [target, activate]);
 }
 export interface FormControlProps
-  extends BoxProps,
-    Omit<
+  extends Omit<BoxProps, 'component'>,
+    Pick<
       FormState,
-      'onFocus' | 'onBlur' | 'onFilled' | 'onEmpty' | 'setAdornedStart' | 'filled' | 'adornedStart'
+      | 'disabled'
+      | 'error'
+      | 'required'
+      | 'color'
+      | 'size'
+      | 'variant'
+      | 'hiddenLabel'
+      | 'focused'
+      | 'labelDisplay'
     > {
   fullWidth?: boolean;
+  margin?: 'none' | 'dense' | 'normal';
+  component?: BoxProps['component'] | 'div' | 'fieldset';
+}
+function initialInputState(children: React.ReactNode, kind: 'filled' | 'adornedStart') {
+  let result = false;
+  React.Children.forEach(children, (child) => {
+    if (!React.isValidElement<Record<string, any>>(child)) return;
+    const name = (child.type as { muiName?: string }).muiName;
+    if (name !== 'Input') return;
+    if (kind === 'adornedStart') result ||= Boolean(child.props.startAdornment);
+    else {
+      const props = child.props;
+      const value =
+        props.value ??
+        props.defaultValue ??
+        props.inputProps?.value ??
+        props.inputProps?.defaultValue;
+      result ||= value != null && String(value).length > 0;
+    }
+  });
+  return result;
 }
 export const FormControl: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<FormControlProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, FormControlProps>(function FormControl(inProps, ref) {
   const {
-    disabled,
-    error,
-    required,
-    fullWidth,
-    color,
-    size,
-    variant,
-    hiddenLabel,
+    disabled = false,
+    error = false,
+    required = false,
+    fullWidth = false,
+    component,
+    color = 'primary',
+    size = 'medium',
+    variant = 'outlined',
+    hiddenLabel = false,
+    labelDisplay = 'floating',
+    margin = 'none',
     focused: focusedProp,
     children,
     ...props
@@ -80,8 +135,71 @@ export const FormControl: React.ForwardRefExoticComponent<
     name: 'MuiFormControl',
   });
   const [focused, setFocused] = useState(false);
-  const [filled, setFilled] = useState(false);
-  const [adornedStart, setAdornedStart] = useState(false);
+  if (disabled && focused) setFocused(false);
+  const [filled, setFilled] = useState(() => initialInputState(children, 'filled'));
+  const [adornedStart, setAdornedStart] = useState(() =>
+    initialInputState(children, 'adornedStart'),
+  );
+  const [width, setWidth] = useState<number>();
+  const [label, setLabel] = useState<FormState['label']>();
+  const [helpers, setHelpers] = useState<NonNullable<FormState['helper']>[]>([]);
+  const helper = helpers.at(-1);
+  const helperEntries = useRef(new Map<symbol, NonNullable<FormState['helper']>>());
+  const inputs = useRef(new Map<symbol, { id?: string; focus: () => void }>());
+  const activeLabel = useRef<symbol | undefined>(undefined);
+  const registerInput = useCallback((id: string | undefined, focus: () => void) => {
+    if (inputs.current.size)
+      diagnostic('form-control', 'Only one input should be registered in a FormControl.');
+    const token = Symbol();
+    inputs.current.set(token, { id, focus });
+    return () => {
+      inputs.current.delete(token);
+    };
+  }, []);
+  const focusInput = useCallback(
+    (id?: string) => {
+      if (disabled) return;
+      const input = [...inputs.current.values()].find(
+        (input) => id === undefined || input.id === id,
+      );
+      input?.focus();
+    },
+    [disabled],
+  );
+  const registerLabel = useCallback((description: NonNullable<FormState['label']>) => {
+    const token = Symbol();
+    activeLabel.current = token;
+    setLabel(description);
+    return () => {
+      if (activeLabel.current === token) {
+        activeLabel.current = undefined;
+        setLabel(undefined);
+      }
+    };
+  }, []);
+  const registerHelper = useCallback((description: NonNullable<FormState['helper']>) => {
+    const token = Symbol();
+    helperEntries.current.set(token, description);
+    setHelpers([...helperEntries.current.values()]);
+    return {
+      update(next: NonNullable<FormState['helper']>) {
+        const previous = helperEntries.current.get(token);
+        if (
+          !previous ||
+          (previous.id === next.id &&
+            previous.text === next.text &&
+            previous.htmlFor === next.htmlFor &&
+            previous.shrink === next.shrink)
+        )
+          return;
+        helperEntries.current.set(token, next);
+        setHelpers([...helperEntries.current.values()]);
+      },
+      remove() {
+        if (helperEntries.current.delete(token)) setHelpers([...helperEntries.current.values()]);
+      },
+    };
+  }, []);
   const onFocus = useCallback(() => setFocused(true), []);
   const onBlur = useCallback(() => setFocused(false), []);
   const onFilled = useCallback(() => setFilled(true), []);
@@ -95,6 +213,17 @@ export const FormControl: React.ForwardRefExoticComponent<
       size,
       variant,
       hiddenLabel,
+      fullWidth,
+      margin,
+      labelDisplay,
+      width,
+      label,
+      helper,
+      helpers,
+      registerInput,
+      focusInput,
+      registerLabel,
+      registerHelper,
       focused: !disabled && (focusedProp ?? focused),
       filled,
       adornedStart,
@@ -112,6 +241,17 @@ export const FormControl: React.ForwardRefExoticComponent<
       size,
       variant,
       hiddenLabel,
+      fullWidth,
+      margin,
+      labelDisplay,
+      width,
+      label,
+      helper,
+      helpers,
+      registerInput,
+      focusInput,
+      registerLabel,
+      registerHelper,
       focusedProp,
       focused,
       filled,
@@ -122,90 +262,70 @@ export const FormControl: React.ForwardRefExoticComponent<
       onEmpty,
     ],
   );
+  const resolved = useComponentStyle(
+    'MuiFormControl',
+    { ...inProps, disabled, error, required, fullWidth, color, size, variant, hiddenLabel, margin },
+    props.sx,
+    {
+      overrideKeys: [
+        `margin${margin[0].toUpperCase()}${margin.slice(1)}`,
+        ...(fullWidth ? ['fullWidth'] : []),
+      ],
+      baseStyle: {
+        position: 'relative',
+        flexDirection: 'column',
+        minWidth: 0,
+        width: fullWidth ? '100%' : undefined,
+        marginTop: margin === 'normal' ? 16 : margin === 'dense' ? 8 : 0,
+        marginBottom: margin === 'normal' ? 8 : margin === 'dense' ? 4 : 0,
+      },
+    },
+  );
   return (
     <FormContext.Provider value={context}>
       <Box
         {...props}
+        component={typeof component === 'string' ? View : component}
         ref={ref}
-        style={[fullWidth ? { alignSelf: 'stretch' } : undefined, props.style]}
+        sx={undefined}
+        onLayout={(event) => {
+          setWidth(event.nativeEvent.layout.width);
+          props.onLayout?.(event);
+        }}
+        style={[
+          fullWidth ? { alignSelf: 'stretch' } : undefined,
+          resolved,
+          props.style,
+          nativeInsets(StyleSheet.flatten(props.style), 'margin'),
+          nativeInsets(StyleSheet.flatten(props.style), 'padding'),
+        ]}
       >
         {children}
       </Box>
     </FormContext.Provider>
   );
 });
-export const FormLabel: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<TypographyProps> & React.RefAttributes<TextInstance>
-> = forwardRef<TextInstance, TypographyProps>(function FormLabel(inProps, ref) {
-  const { children, ...props } = useDefaultProps({ props: inProps, name: 'MuiFormLabel' });
-  const state = useContext(FormContext) ?? {};
-  return (
-    <Typography
-      {...props}
-      ref={ref}
-      color={
-        state.error
-          ? 'error.main'
-          : (props.color ??
-            (state.disabled
-              ? 'text.disabled'
-              : state.focused
-                ? `${state.color ?? 'primary'}.main`
-                : 'text.secondary'))
-      }
-    >
-      {children}
-      {state.required ? ' *' : ''}
-    </Typography>
-  );
-});
-export const InputLabel: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<TypographyProps> & React.RefAttributes<TextInstance>
-> = forwardRef<TextInstance, TypographyProps>(function InputLabel(inProps, ref) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiInputLabel' });
-  return <FormLabel {...props} ref={ref} />;
-});
-export const FormHelperText: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<TypographyProps> & React.RefAttributes<TextInstance>
-> = forwardRef<TextInstance, TypographyProps>(function FormHelperText(inProps, ref) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiFormHelperText' });
-  const state = useContext(FormContext) ?? {};
-  return (
-    <Typography
-      {...props}
-      ref={ref}
-      variant={props.variant ?? 'caption'}
-      color={state.error ? 'error.main' : (props.color ?? 'text.secondary')}
-    />
-  );
-});
 export interface TextFieldOwnerState extends Omit<TextFieldProps, 'slots' | 'slotProps'> {
   focused: boolean;
 }
 export type TextFieldRootSlotProps = FormControlProps & React.RefAttributes<ViewInstance>;
-export type TextFieldLabelSlotProps = TypographyProps & React.RefAttributes<TextInstance>;
-export type TextFieldHtmlInputSlotProps = TextInputProps & React.RefAttributes<TextInputInstance>;
-type NativeSlot<P> = React.ComponentType<P & { ownerState?: TextFieldOwnerState }>;
+export type TextFieldLabelSlotProps = InputLabelProps & React.RefAttributes<TextInstance>;
+export type TextFieldHelperTextSlotProps = FormHelperTextProps & React.RefAttributes<TextInstance>;
+export type TextFieldHtmlInputSlotProps = InputBaseComponentProps;
+type NativeSlot<P> = React.ComponentType<P>;
 
 /** Native input-container contract, distinct from the editable htmlInput host. */
 export interface NativeTextFieldInputProps
-  extends Omit<TextInputProps, 'onChange' | 'value' | 'defaultValue' | 'style'>,
-    Pick<FormState, 'disabled' | 'error' | 'required'> {
-  sx?: SxProps;
-  style?: StyleProp<ViewStyle>;
+  extends Omit<InputBaseProps, 'slots' | 'slotProps' | 'inputProps'> {
   variant?: 'outlined' | 'filled' | 'standard';
-  size?: 'small' | 'medium';
-  fullWidth?: boolean;
-  value?: string | number;
-  defaultValue?: string | number;
-  name?: string;
-  id?: string;
-  type?: 'text' | 'password' | 'email' | 'number';
-  onChange?: (event: InputChangeEvent) => void;
-  inputRef?: React.Ref<TextInputInstance>;
   inputProps?: TextFieldHtmlInputSlotProps;
-  slots?: { input?: NativeSlot<TextFieldHtmlInputSlotProps> };
+  slots?: OutlinedInputProps['slots'];
+  slotProps?: OutlinedInputProps['slotProps'];
   ownerState?: TextFieldOwnerState;
+  label?: React.ReactNode;
+  notched?: boolean;
+  disableUnderline?: boolean;
+  hiddenLabel?: boolean;
 }
 export type TextFieldInputSlotProps = NativeTextFieldInputProps & React.RefAttributes<ViewInstance>;
 export interface TextFieldProps
@@ -218,6 +338,7 @@ export interface TextFieldProps
   disabled?: boolean;
   required?: boolean;
   fullWidth?: boolean;
+  labelDisplay?: 'floating' | 'stacked';
   variant?: 'outlined' | 'filled' | 'standard';
   size?: 'small' | 'medium';
   value?: string | number;
@@ -233,14 +354,14 @@ export interface TextFieldProps
     input?: NativeSlot<TextFieldInputSlotProps>;
     htmlInput?: NativeSlot<TextFieldHtmlInputSlotProps>;
     inputLabel?: NativeSlot<TextFieldLabelSlotProps>;
-    formHelperText?: NativeSlot<TextFieldLabelSlotProps>;
+    formHelperText?: NativeSlot<TextFieldHelperTextSlotProps>;
   };
   slotProps?: {
     root?: SlotProps<TextFieldRootSlotProps, TextFieldOwnerState>;
     input?: SlotProps<TextFieldInputSlotProps, TextFieldOwnerState>;
     htmlInput?: SlotProps<TextFieldHtmlInputSlotProps, TextFieldOwnerState>;
     inputLabel?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;
-    formHelperText?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;
+    formHelperText?: SlotProps<TextFieldHelperTextSlotProps, TextFieldOwnerState>;
   };
 }
 
@@ -263,6 +384,8 @@ export const NativeTextFieldInput: React.ForwardRefExoticComponent<
   );
 });
 
+Object.assign(NativeTextFieldInput, { muiName: 'Input' });
+
 export const TextField: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<TextFieldProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, TextFieldProps>(function TextField(inProps, ref) {
@@ -277,12 +400,13 @@ export const TextField: React.ForwardRefExoticComponent<
     disabled = form.disabled ?? false,
     required = form.required ?? false,
     fullWidth,
+    labelDisplay = 'floating',
     variant = 'outlined',
     size = 'medium',
     value,
     defaultValue = '',
     name,
-    id,
+    id: idProp,
     type = 'text',
     onChange,
     onChangeText,
@@ -292,6 +416,9 @@ export const TextField: React.ForwardRefExoticComponent<
     'aria-label': ariaLabel,
     ...native
   } = props;
+  const generatedId = useId();
+  const hostInstance = useRef<TextInputInstance>(null);
+  const [rootWidth, setRootWidth] = useState<number>();
   const [focusedLocal, setFocused] = useState(false);
   const focused = !disabled && focusedLocal;
   const ownerState = { ...props, variant, size, error, disabled, required, focused };
@@ -316,8 +443,20 @@ export const TextField: React.ForwardRefExoticComponent<
   const htmlInputProps = resolveSlotProps(slotProps?.htmlInput, ownerState) ?? {};
   const inputLabelProps = resolveSlotProps(slotProps?.inputLabel, ownerState);
   const helperProps = resolveSlotProps(slotProps?.formHelperText, ownerState);
+  const id =
+    idProp ??
+    htmlInputProps.nativeID ??
+    inputProps.inputProps?.nativeID ??
+    native.nativeID ??
+    generatedId;
+  const labelId = idProp
+    ? `${id}-label`
+    : (inputLabelProps?.id ?? inputLabelProps?.nativeID ?? `${id}-label`);
+  const helperId = idProp
+    ? `${id}-helper-text`
+    : (helperProps?.id ?? helperProps?.nativeID ?? `${id}-helper-text`);
   const rootRef = useForkRef(ref, rootSlotRef);
-  const mergedInputRef = useForkRef(inputRef, inputSlotInputRef);
+  const mergedInputRef = useForkRef(hostInstance, inputRef, inputSlotInputRef);
   const mergedHostRef = useForkRef(inputProps.inputProps?.ref, htmlInputProps.ref);
   const resolved = useComponentStyle('MuiTextField', ownerState, sx, {
     states: [
@@ -336,14 +475,56 @@ export const TextField: React.ForwardRefExoticComponent<
     (inputProps.onChange ?? onChange)?.(event);
   };
   return (
-    <FormContext.Provider value={{ disabled, error, required }}>
+    <FormContext.Provider
+      value={{
+        disabled,
+        error,
+        required,
+        size,
+        variant,
+        labelDisplay,
+        width: rootWidth,
+        filled: String(inputProps.value ?? text ?? '').length > 0,
+        focused,
+        adornedStart: Boolean(inputProps.startAdornment),
+        label:
+          label != null && label !== ''
+            ? {
+                id: labelId,
+                htmlFor: id,
+                text: nativeLabelText(label),
+                shrink:
+                  inputLabelProps?.shrink ??
+                  Boolean(
+                    focused ||
+                      String(inputProps.value ?? text ?? '').length ||
+                      inputProps.startAdornment,
+                  ),
+              }
+            : undefined,
+        helper:
+          helperText != null
+            ? { id: helperId, text: nativeLabelText(helperText)?.trim() || undefined }
+            : undefined,
+        focusInput: (target) => {
+          if (!disabled && !inputProps.disabled && (!target || target === (inputProps.id ?? id)))
+            hostInstance.current?.focus();
+        },
+      }}
+    >
       <Root
         {...rootProps}
         {...(Root !== FormControl && Root !== View ? { ownerState } : {})}
-        {...(Root !== View ? { disabled, error, required, fullWidth } : {})}
+        {...(Root !== View
+          ? { disabled, error, required, fullWidth, variant, size, labelDisplay }
+          : {})}
         ref={rootRef}
+        onLayout={(event) => {
+          if (Root !== FormControl) setRootWidth(event.nativeEvent.layout.width);
+          rootProps.onLayout?.(event);
+        }}
         style={[
-          { alignSelf: fullWidth ? 'stretch' : undefined, gap: 4 },
+          { alignSelf: fullWidth ? 'stretch' : undefined, gap: labelDisplay === 'stacked' ? 4 : 0 },
           resolved,
           style,
           rootSlotStyle,
@@ -352,9 +533,10 @@ export const TextField: React.ForwardRefExoticComponent<
       >
         {label != null && label !== '' ? (
           <Label
+            htmlFor={id}
             {...inputLabelProps}
             {...(Label !== InputLabel ? { ownerState } : {})}
-            nativeID={id ? `${id}-label` : inputLabelProps?.nativeID}
+            nativeID={labelId}
           >
             {label}
           </Label>
@@ -365,6 +547,14 @@ export const TextField: React.ForwardRefExoticComponent<
           name={name}
           id={id}
           type={type}
+          label={variant === 'outlined' ? label : undefined}
+          notched={
+            labelDisplay === 'stacked'
+              ? false
+              : variant === 'outlined'
+                ? inputLabelProps?.shrink
+                : undefined
+          }
           variant={variant}
           size={size}
           fullWidth={fullWidth}
@@ -374,7 +564,8 @@ export const TextField: React.ForwardRefExoticComponent<
             (typeof label === 'string' ? label : undefined)
           }
           accessibilityHint={
-            native.accessibilityHint ?? (typeof helperText === 'string' ? helperText : undefined)
+            native.accessibilityHint ??
+            (typeof helperText === 'string' && helperText.trim() ? helperText : undefined)
           }
           onChangeText={onChangeText}
           {...inputProps}
@@ -384,6 +575,8 @@ export const TextField: React.ForwardRefExoticComponent<
             ...inputProps.inputProps,
             ...htmlInputProps,
             ref: mergedHostRef,
+            'aria-label':
+              ariaLabel ?? htmlInputProps['aria-label'] ?? inputProps.inputProps?.['aria-label'],
             onFocus:
               (htmlInputProps.onFocus ?? inputProps.inputProps?.onFocus) ===
               (inputProps.onFocus ?? native.onFocus)
@@ -427,7 +620,7 @@ export const TextField: React.ForwardRefExoticComponent<
           <Helper
             {...helperProps}
             {...(Helper !== FormHelperText ? { ownerState } : {})}
-            nativeID={id ? `${id}-helper-text` : helperProps?.nativeID}
+            nativeID={helperId}
           >
             {helperText}
           </Helper>

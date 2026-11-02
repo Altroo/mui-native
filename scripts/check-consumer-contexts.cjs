@@ -34,6 +34,8 @@ try {
   for (const name of [
     'FormControl',
     'FormLabel',
+    'InputLabel',
+    'FormHelperText',
     'Typography',
     'Button',
     'InputBase',

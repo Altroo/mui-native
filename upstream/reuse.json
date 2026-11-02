@@ -268,7 +268,8 @@
       "adaptations": [
         "Shared native input engine for the base/standard/filled/outlined controls, native adornments and measured outline gaps.",
         "Native refs/events/styles and content-size row bounds replace DOM inputs, fieldsets, pseudo-elements and textarea measurement.",
-        "TextField retains its documented native host-value guard and native callback order through a private bridge."
+        "TextField retains its documented native host-value guard and native callback order through a private bridge.",
+        "Native label/helper associations, focus registration and focused placeholder visibility are coordinated through the form context."
       ]
     },
     {
@@ -301,6 +302,39 @@
       },
       "adaptations": [
         "Native form state callbacks coordinate focus, filled and adorned-start state with stable provider values."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/labels.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "FormLabel/FormLabel.js": "cd2e6c3f8bd9b68bb4fcd37154090d614a7a7a801c378414808f2c9956a923d1",
+          "FormLabel/FormLabel.d.ts": "9cd0fc5364ed46b35a958c51c45e4bc47dfaf32750d536b16faab83e885f6c1a",
+          "InputLabel/InputLabel.js": "d9a2197f43dbf9ed1621d4f1600b717a8b5eaf68a8457191c79be79688b6c1eb",
+          "InputLabel/InputLabel.d.ts": "b9e75acf8c49e675de4d1f0ddc5f9ccead5e31ce10814bc6c3e159f5aedac1f1",
+          "FormHelperText/FormHelperText.js": "e498a29b4e4883460d18c5c8d066fbaca1280b7fbad33f7884f619d5a008da36",
+          "FormHelperText/FormHelperText.d.ts": "ca6970eff86a31fd8d9c132f80dbd1aa54d2dcd76a5b2a9108ae8c394bd7e7a1",
+          "FormControl/FormControl.js": "eddfe9ff9afe7b79398b20da84646c7393df663933d3cc36ca68abe6a9b81c6e",
+          "FormControl/FormControl.d.ts": "5e695fcebbb6a7ff65a5413649befc0510bb34c2e8ac4aa86a55daf77256e17a",
+          "FormControl/useFormControl.js": "6f63288fbc245047600e0c185edf65e2c541150b0cdefcab9963b7f2357f31d5",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "Input/Input.js": "ddddaf4bd83efb83589288a9a4177a5b25e370b9cb5528a1d9db420598b1a8cf",
+          "FilledInput/FilledInput.js": "cc4319b480da637d477ce59dfe040faf150041ae58bc8a1507f4da0115c08834",
+          "OutlinedInput/OutlinedInput.js": "1395975ba2c625b70cb18b8c8928df3ed100daec434d730cffb8e322e5804598",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028"
+        }
+      },
+      "adaptations": [
+        "Native label/helper state, typography and variant-specific floating offsets replace browser label elements and CSS transitions.",
+        "Native transforms request the native animation driver; shared reduced-motion monitoring handles late results and releases subscriptions.",
+        "Long-label width expands after shrink completion instead of animating CSS max-width on every frame. Native label focus and naming use the surrounding form registry.",
+        "Native control refs/events replace DOM refs/events; helper field variants and reserved blank lines follow the pinned component contracts."
       ]
     }
   ]

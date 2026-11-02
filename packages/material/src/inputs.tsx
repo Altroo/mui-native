@@ -1,4 +1,4 @@
-import React, { forwardRef, useContext, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -26,6 +26,7 @@ import {
 import { Typography } from './typography';
 import { FormContext, useControlled, type InputChangeEvent } from './formState';
 import { useForkRef } from './utils/refs';
+import { nativeInsets } from './nativeInsets';
 
 export interface InputBasePropsSizeOverrides {}
 export interface InputBasePropsColorOverrides {}
@@ -49,6 +50,7 @@ export type InputColor = OverrideUnion<
 export type InputRootProps = ViewProps & { sx?: SxProps } & React.RefAttributes<ViewInstance>;
 export type InputBaseComponentProps = TextInputProps & {
   sx?: SxProps;
+  'aria-describedby'?: string;
 } & React.RefAttributes<TextInputInstance>;
 export interface InputBaseOwnerState
   extends Omit<InputBaseProps, 'slots' | 'slotProps' | 'color' | 'size'> {
@@ -96,6 +98,7 @@ export interface InputBaseProps
   minRows?: number | string;
   maxRows?: number | string;
   'aria-label'?: string;
+  'aria-describedby'?: string;
   slots?: { root?: RootSlot; input?: InputSlot };
   slotProps?: {
     root?: InputRootProps;
@@ -123,6 +126,7 @@ export interface OutlinedInputProps extends Omit<InputBaseProps, 'slots' | 'slot
 }
 type Variant = 'base' | 'standard' | 'filled' | 'outlined';
 type EngineProps = InputBaseProps & {
+  ownerState?: object;
   disableUnderline?: boolean;
   hiddenLabel?: boolean;
   label?: React.ReactNode;
@@ -136,17 +140,8 @@ const names = {
   filled: 'MuiFilledInput',
   outlined: 'MuiOutlinedInput',
 };
-function paddingEdges(style: Readonly<Partial<ViewStyle>> | undefined) {
-  const edges: { -readonly [K in keyof ViewStyle]?: ViewStyle[K] } = {};
-  for (const edge of ['Top', 'Right', 'Bottom', 'Left'] as const) {
-    const value =
-      style?.[`padding${edge}`] ??
-      style?.[edge === 'Top' || edge === 'Bottom' ? 'paddingVertical' : 'paddingHorizontal'] ??
-      style?.padding;
-    if (value != null) edges[`padding${edge}`] = value;
-  }
-  return edges;
-}
+const paddingEdges = (style: Readonly<Partial<ViewStyle>> | undefined) =>
+  nativeInsets(style, 'padding');
 function rowCount(value: string | number | undefined, name: string) {
   if (value === undefined) return undefined;
   const number = Number(value);
@@ -171,6 +166,7 @@ const NotchedOutline = forwardRef<ViewInstance, NotchedOutlineProps>(function No
   const [labelWidth, setLabelWidth] = useState(0);
   const resolved = useSx(sx);
   const border = StyleSheet.flatten([resolved, style]) ?? {};
+  const metrics = useSx({ typography: 'body1' });
   const gap =
     notched && label != null && label !== '' && labelWidth > 0
       ? Math.min(labelWidth + 8, Math.max(0, width - 28))
@@ -241,7 +237,13 @@ const NotchedOutline = forwardRef<ViewInstance, NotchedOutlineProps>(function No
           variant="body1"
           noWrap
           onLayout={(e) => setLabelWidth(e.nativeEvent.layout.width)}
-          style={{ position: 'absolute', start: 14, maxWidth: '85%', opacity: 0, fontSize: 12 }}
+          style={{
+            position: 'absolute',
+            start: 14,
+            maxWidth: '85%',
+            opacity: 0,
+            fontSize: Number(metrics.fontSize ?? 16) * 0.75,
+          }}
         >
           {label}
         </Typography>
@@ -299,11 +301,13 @@ function InputEngine({
     onBlur,
     onClick,
     testID,
+    ownerState: _externalOwnerState,
     disableUnderline,
     hiddenLabel = form?.hiddenLabel ?? false,
     label,
     notched,
     'aria-label': ariaLabel,
+    'aria-describedby': ariaDescribedby,
     ...native
   } = props;
   const [focusedLocal, setFocused] = useState(false);
@@ -370,11 +374,18 @@ function InputEngine({
   const nativeFocused = useRef(false);
   const rootRef = useForkRef(forwardedRef, rootProps.ref);
   const hostRef = useForkRef(innerRef, inputRef, inputProps.ref, slotInput.ref);
-  useEffect(() => {
+  useLayoutEffect(
+    () =>
+      form?.registerInput?.(id ?? host.nativeID, () => {
+        if (!disabled) innerRef.current?.focus();
+      }),
+    [form?.registerInput, id, host.nativeID, disabled],
+  );
+  useLayoutEffect(() => {
     if (filled) form?.onFilled?.();
     else form?.onEmpty?.();
   }, [filled, form?.onFilled, form?.onEmpty]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     form?.setAdornedStart?.(Boolean(startAdornment));
   }, [Boolean(startAdornment), form?.setAdornedStart]);
   useEffect(() => {
@@ -400,11 +411,23 @@ function InputEngine({
         ? size === 'small'
           ? 21
           : 25
-        : size === 'small'
-          ? 10
-          : 16;
+        : variant === 'standard'
+          ? size === 'small'
+            ? 1
+            : 4
+          : size === 'small'
+            ? 10
+            : 16;
   const paddingBottom =
-    variant === 'filled' && !hiddenLabel ? 8 : variant === 'base' ? 0 : size === 'small' ? 10 : 16;
+    variant === 'filled' && !hiddenLabel
+      ? 8
+      : variant === 'base'
+        ? 0
+        : variant === 'standard'
+          ? 5
+          : size === 'small'
+            ? 10
+            : 16;
   const themedPadding = paddingEdges(typography);
   const callerPadding = paddingEdges(StyleSheet.flatten(host.style) ?? undefined);
   const framed = variant === 'outlined' || variant === 'filled';
@@ -449,8 +472,37 @@ function InputEngine({
   const outlineStyle = useSx(
     [inputOverride(names[variant], 'notchedOutline'), outlineProps.sx].flat() as SxProps,
   );
+  const labelShrink =
+    form?.label?.shrink ?? Boolean(form?.filled || form?.focused || form?.adornedStart);
+  const labelRelations = input['aria-labelledby'] ?? input.accessibilityLabelledBy;
+  const relationIds =
+    typeof labelRelations === 'string' ? labelRelations.split(/\s+/) : labelRelations;
+  const linkedLabel =
+    form?.label &&
+    (!form.label.htmlFor || form.label.htmlFor === (id ?? input.nativeID)) &&
+    (!relationIds || (form.label.id && relationIds.includes(form.label.id)))
+      ? form.label
+      : undefined;
+  const explicitLabel = host['aria-label'] ?? ariaLabel ?? input.accessibilityLabel;
+  const describedby = host['aria-describedby'] ?? ariaDescribedby;
+  const helpers = form?.helpers ?? (form?.helper ? [form.helper] : []);
+  const helperIds =
+    describedby === undefined ? undefined : [...new Set(describedby.split(/\s+/).filter(Boolean))];
+  const helpText =
+    (helperIds
+      ? helperIds.map((id) => helpers.find((helper) => helper.id === id)?.text)
+      : helpers.map((helper) => helper.text)
+    )
+      .filter(Boolean)
+      .join(' ') || undefined;
   const { sx: _rootSx, ref: _rootRef, ...rootNative } = rootProps;
-  const { sx: _inputSx, ref: _hostRef, ...hostNative } = input;
+  const {
+    sx: _inputSx,
+    ref: _hostRef,
+    'aria-label': _hostAriaLabel,
+    'aria-describedby': _hostAriaDescription,
+    ...hostNative
+  } = input;
   return (
     <Root
       {...rootNative}
@@ -467,6 +519,8 @@ function InputEngine({
           flexDirection: 'row',
           alignItems: 'center',
           minWidth: 0,
+          marginTop:
+            variant === 'standard' && form && form.labelDisplay !== 'stacked' ? 16 : undefined,
           alignSelf: fullWidth ? 'stretch' : undefined,
           paddingLeft: framed && leftAdornment ? 14 : 0,
           paddingRight: framed && rightAdornment ? 14 : 0,
@@ -493,14 +547,24 @@ function InputEngine({
           {...(Host !== TextInput ? { ownerState } : {})}
           ref={hostRef}
           nativeID={id ?? input.nativeID}
-          accessibilityLabel={ariaLabel ?? input.accessibilityLabel}
+          accessibilityLabel={explicitLabel ?? linkedLabel?.text}
+          accessibilityLabelledBy={
+            input.accessibilityLabelledBy ??
+            (explicitLabel !== undefined || input['aria-labelledby'] ? undefined : linkedLabel?.id)
+          }
+          accessibilityHint={input.accessibilityHint ?? helpText}
+          placeholder={input.placeholder}
           accessibilityState={{ ...input.accessibilityState, disabled }}
           readOnly={readOnly}
           editable={!readOnly}
           multiline={multiline}
           value={String(text ?? '')}
           numberOfLines={fixedRows ?? input.numberOfLines}
-          placeholderTextColor={input.placeholderTextColor ?? theme.palette.text.secondary}
+          placeholderTextColor={
+            form?.label && !labelShrink && !focusedLocal && form.labelDisplay !== 'stacked'
+              ? 'transparent'
+              : (input.placeholderTextColor ?? theme.palette.text.secondary)
+          }
           selectionColor={input.selectionColor ?? activeColor}
           keyboardAppearance={input.keyboardAppearance ?? theme.palette.mode}
           secureTextEntry={type === 'password' || input.secureTextEntry}
@@ -579,7 +643,12 @@ function InputEngine({
               label
             )
           }
-          notched={notched ?? Boolean(startAdornment || focused || filled)}
+          notched={
+            notched ??
+            (form?.labelDisplay === 'stacked'
+              ? false
+              : Boolean(startAdornment || focused || filled))
+          }
           style={[
             { borderWidth: focused ? 2 : 1, borderColor, borderRadius: theme.shape.borderRadius },
             outlineStyle,
@@ -610,17 +679,28 @@ export const InputBase: React.ForwardRefExoticComponent<
 > = forwardRef((props, ref) => <InputEngine inProps={props} variant="base" forwardedRef={ref} />);
 export const Input: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<InputProps> & React.RefAttributes<ViewInstance>
-> = forwardRef((props, ref) => (
-  <InputEngine inProps={props} variant="standard" forwardedRef={ref} />
-));
+> & { muiName: string } = Object.assign(
+  forwardRef<ViewInstance, InputProps>((props, ref) => (
+    <InputEngine inProps={props} variant="standard" forwardedRef={ref} />
+  )),
+  { muiName: 'Input' },
+);
 export const FilledInput: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<FilledInputProps> & React.RefAttributes<ViewInstance>
-> = forwardRef((props, ref) => <InputEngine inProps={props} variant="filled" forwardedRef={ref} />);
+> & { muiName: string } = Object.assign(
+  forwardRef<ViewInstance, FilledInputProps>((props, ref) => (
+    <InputEngine inProps={props} variant="filled" forwardedRef={ref} />
+  )),
+  { muiName: 'Input' },
+);
 export const OutlinedInput: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<OutlinedInputProps> & React.RefAttributes<ViewInstance>
-> = forwardRef((props, ref) => (
-  <InputEngine inProps={props} variant="outlined" forwardedRef={ref} />
-));
+> & { muiName: string } = Object.assign(
+  forwardRef<ViewInstance, OutlinedInputProps>((props, ref) => (
+    <InputEngine inProps={props} variant="outlined" forwardedRef={ref} />
+  )),
+  { muiName: 'Input' },
+);
 // Internal bridge preserves the already documented TextField native extension.
 export const NativeInputControl: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<

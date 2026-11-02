@@ -66,7 +66,7 @@ test('input exposes MUI value/name while preserving controlled value and native 
   expect(onChange.mock.calls[0][0].target).toEqual({
     value: 'after',
     name: 'email',
-    id: undefined,
+    id: input.props.nativeID,
   });
   expect(onChangeText).toHaveBeenCalledWith('after');
   expect(input.props.value).toBe('before');
