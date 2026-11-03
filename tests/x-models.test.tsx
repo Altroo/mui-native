@@ -1,4 +1,3 @@
-import React from 'react';
 import 'dayjs/locale/fr';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import { processRows } from '../packages/x-data-grid/src/model';

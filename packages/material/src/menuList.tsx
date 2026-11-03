@@ -11,7 +11,7 @@ import type { NativeDescendantKey } from '@altroo/mui-native-host';
 import type { ViewInstance, ViewProps } from 'react-native';
 import { useDefaultProps } from '@altroo/mui-native-system';
 import { List, type ListProps } from './lists';
-import { NativeMenuListRoot, type MenuListRootProps } from './menuListRoot';
+import { NativeMenuListRoot } from './menuListRoot';
 import {
   NativeMenuRegistry,
   menuNavigationKeys,

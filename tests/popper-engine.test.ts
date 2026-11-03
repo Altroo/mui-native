@@ -6,7 +6,6 @@ import type {
   NativePopperOptions,
   NativePopperPlatform,
   NativePopperMeasurements,
-  NativePopperRect,
 } from '../packages/material/src/popper/types';
 function fixture(
   options: Partial<NativePopperOptions> = {},

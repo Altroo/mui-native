@@ -17,7 +17,6 @@ import {
   Backdrop,
   Dialog,
   TextField,
-  type FadeProps,
 } from '../packages/material/src';
 const animations: Array<{
   value: Animated.Value;

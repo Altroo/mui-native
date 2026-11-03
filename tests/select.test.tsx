@@ -5,20 +5,14 @@ import { TextInput, Text, View, I18nManager } from 'react-native';
 import { act, cleanup, fireEvent } from '@testing-library/react-native';
 import {
   configureDiagnostics,
-  Select,
   Menu,
   MenuItem,
   ButtonBase,
   Modal,
   Input,
-  OutlinedInput,
-  FormControl,
-  InputLabel,
-  useFormControl,
   ThemeProvider,
   createTheme,
   SelectProps,
-  TextField,
   selectClasses,
   getSelectUtilityClasses,
 } from '../packages/material/src';
@@ -241,7 +235,7 @@ test('menu width follows anchor layout and autoWidth releases its minimum', asyn
   expect(menu(model).slotProps.paper.style[0]).toEqual({ minWidth: undefined });
 });
 test('select paper slot callbacks receive Select owner state and authored width wins', async () => {
-  const paper = jest.fn((owner: any) => ({ style: { minWidth: 317 } })),
+  const paper = jest.fn((_owner: any) => ({ style: { minWidth: 317 } })),
     model = new NativeSelectModel();
   model.props = {
     variant: 'filled',

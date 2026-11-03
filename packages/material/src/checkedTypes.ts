@@ -11,7 +11,6 @@ import type {
   ButtonBaseProps,
   ButtonBaseRootProps,
   ButtonBaseActivationEvent,
-  ButtonBaseActions,
   ButtonBaseState,
 } from './buttonBase';
 import type { CheckboxClasses, RadioClasses } from './controlClasses';

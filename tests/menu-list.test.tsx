@@ -1,6 +1,6 @@
 import React from 'react';
 import { cleanup, render, screen, fireEvent, act } from '@testing-library/react-native';
-import { ScrollView, StyleSheet, View, type ViewInstance } from 'react-native';
+import { ScrollView, StyleSheet, type ViewInstance } from 'react-native';
 import {
   MenuList,
   MenuItem,

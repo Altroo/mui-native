@@ -1,6 +1,6 @@
 import React from 'react';
 import { act, fireEvent } from '@testing-library/react-native';
-import { Chip, ThemeProvider, createTheme } from '../../packages/material/src';
+import { Chip } from '../../packages/material/src';
 import { NativeMenuModel } from './nativeMenuModel';
 export class NativeChipModel extends NativeMenuModel {
   props: Record<string, any> = {};

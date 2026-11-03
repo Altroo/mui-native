@@ -4,7 +4,6 @@ import { act, render, cleanup, fireEvent } from '@testing-library/react-native';
 import {
   Switch,
   ButtonBase,
-  FormControlLabel,
   ThemeProvider,
   createTheme,
   NativeCheckedInputSurface,

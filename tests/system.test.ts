@@ -11,7 +11,7 @@ test('theme tokens, spacing, sizing and responsive arrays translate to native un
       [
         { p: 2, width: 0.5, color: 'primary.main' },
         false,
-        (t) => ({ mt: [1, null, 3], fontSize: '1.5rem', borderRadius: 2 }),
+        (_theme) => ({ mt: [1, null, 3], fontSize: '1.5rem', borderRadius: 2 }),
       ],
       theme,
       { width: 950 },

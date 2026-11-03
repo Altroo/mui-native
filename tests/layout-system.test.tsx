@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dimensions } from 'react-native';
 import { act, render, screen } from '@testing-library/react-native';
 import {
@@ -10,7 +9,6 @@ import {
   configureDiagnostics,
   styled,
   type BreakpointsOptions,
-  type Spacing,
   type SpacingOptions,
 } from '../packages/system/src';
 import { Box, Stack, ThemeProvider } from '../packages/material/src';

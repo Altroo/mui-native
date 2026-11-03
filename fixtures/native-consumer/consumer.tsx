@@ -47,11 +47,11 @@ const theme = createTheme(base, {
   status: { danger: '#f00' },
   palette: { brand: base.palette.augmentColor({ color: { main: '#36c' }, name: 'brand' }) },
 });
-const contrast: string = theme.palette.getContrastText(theme.palette.brand.main);
-const overlay: string = alpha(darken(theme.palette.primary.main, 0.2), 0.4);
-const danger: string = theme.status.danger;
+export const contrast: string = theme.palette.getContrastText(theme.palette.brand.main);
+export const overlay: string = alpha(darken(theme.palette.primary.main, 0.2), 0.4);
+export const danger: string = theme.status.danger;
 const layout: NativeGridLayout = 'auto';
-const content = (
+export const content = (
   <ThemeProvider theme={theme}>
     <Button
       loading={null}
@@ -93,23 +93,25 @@ const content = (
   </ThemeProvider>
 );
 // @ts-expect-error Loading positions use the supported MUI names.
-const badLoadingPosition = <Button loadingPosition="left" />;
+export const badLoadingPosition = <Button loadingPosition="left" />;
 // @ts-expect-error Browser element refs are intentionally incompatible.
-const bad = <Button ref={React.createRef<{ innerHTML: string }>()} />;
+export const bad = <Button ref={React.createRef<{ innerHTML: string }>()} />;
 // @ts-expect-error Unsupported commercial imports must not resolve.
-import { DataGridPremium } from '@mui/x-data-grid-premium';
+export { DataGridPremium } from '@mui/x-data-grid-premium';
 
 const breakpoint: Breakpoint = 'tablet';
-const query: string = theme.breakpoints.between('mobile', breakpoint);
-const customBreakpoints = createBreakpoints({ values: { mobile: 0, tablet: 640, desktop: 1200 } });
-const spacing: string = createSpacing([0, 4, '1rem'])(1, 'auto', 2);
+export const query: string = theme.breakpoints.between('mobile', breakpoint);
+export const customBreakpoints = createBreakpoints({
+  values: { mobile: 0, tablet: 640, desktop: 1200 },
+});
+export const spacing: string = createSpacing([0, 4, '1rem'])(1, 'auto', 2);
 // @ts-expect-error Disabled default breakpoint names must not remain in the public type.
 theme.breakpoints.up('sm');
 // @ts-expect-error Spacing exposes at most four arguments.
 theme.spacing(1, 2, 3, 4, 5);
 
 // @ts-expect-error Only the documented native presentations are supported.
-const badGridLayout = <DataGrid rows={[]} columns={[]} nativeLayout="tiles" />;
+export const badGridLayout = <DataGrid rows={[]} columns={[]} nativeLayout="tiles" />;
 
 type CardRow = { id: number; name: string };
 const renderTypedCard = ({ row, renderCell, selectionControl }: NativeGridCardParams<CardRow>) => {
@@ -118,6 +120,8 @@ const renderTypedCard = ({ row, renderCell, selectionControl }: NativeGridCardPa
   const invalidNumber: number = row.name;
   // @ts-expect-error An undeclared field must not become any through the generic constraint.
   const missing = row.missing;
+  void invalidNumber;
+  void missing;
   return (
     <>
       {name}
@@ -126,7 +130,7 @@ const renderTypedCard = ({ row, renderCell, selectionControl }: NativeGridCardPa
     </>
   );
 };
-const deepGrid = (
+export const deepGrid = (
   <DeepDataGrid<CardRow>
     rows={[{ id: 1, name: 'One' }]}
     columns={[{ field: 'name' }]}

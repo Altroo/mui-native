@@ -6,7 +6,7 @@ import InputLabel, { type InputLabelProps } from '@mui/material/InputLabel';
 import FormHelperText, { type FormHelperTextProps } from '@mui/material/FormHelperText';
 import { OutlinedInput, TextField } from '@mui/material';
 const label = React.createRef<TextInstance>();
-const form = (
+export const form = (
   <FormControl component="fieldset" margin="dense" variant="outlined">
     <FormLabel component="legend">Customer</FormLabel>
     <InputLabel htmlFor="name" shrink disableAnimation ref={label}>
@@ -18,7 +18,7 @@ const form = (
     </FormHelperText>
   </FormControl>
 );
-const field = (
+export const field = (
   <TextField
     label="Name"
     labelDisplay="floating"
@@ -29,24 +29,29 @@ const field = (
     }}
   />
 );
-const stacked = <TextField label="Name" labelDisplay="stacked" />;
-function State() {
+export const stacked = <TextField label="Name" labelDisplay="stacked" />;
+export function State() {
   const state = useFormControl();
   return <FormLabel focused={state?.focused} />;
 }
-const a: FormLabelProps = {
+export const a: FormLabelProps = {
   error: false,
   disabled: false,
   filled: true,
   required: false,
   color: 'secondary',
 };
-const b: InputLabelProps = { shrink: true, variant: 'filled', margin: 'dense', size: 'small' };
-const c: FormHelperTextProps = { variant: 'standard', error: false, focused: true };
+export const b: InputLabelProps = {
+  shrink: true,
+  variant: 'filled',
+  margin: 'dense',
+  size: 'small',
+};
+export const c: FormHelperTextProps = { variant: 'standard', error: false, focused: true };
 // @ts-expect-error Helper variant denotes the control, not typography.
-const typography = <FormHelperText variant="caption" />;
+export const typography = <FormHelperText variant="caption" />;
 // @ts-expect-error Browser label refs are not native text refs.
-const wrongRef = <InputLabel ref={React.createRef<HTMLLabelElement>()} />;
+export const wrongRef = <InputLabel ref={React.createRef<HTMLLabelElement>()} />;
 
 declare module '@mui/material/InputLabel' {
   interface InputLabelPropsSizeOverrides {
@@ -63,5 +68,5 @@ declare module '@mui/material/FormLabel' {
     brand: true;
   }
 }
-const customLabel = <InputLabel size="compact" color="brand" />;
-const customHelper = <FormHelperText variant="denseMessage">Hint</FormHelperText>;
+export const customLabel = <InputLabel size="compact" color="brand" />;
+export const customHelper = <FormHelperText variant="denseMessage">Hint</FormHelperText>;

@@ -2,7 +2,6 @@ import React, {
   forwardRef,
   useContext,
   useId,
-  useRef,
   useMemo,
   useLayoutEffect,
   useImperativeHandle,
@@ -18,7 +17,7 @@ import { useTheme, useComponentStyle } from './themeProvider';
 import { FormContext, useControlled } from './formState';
 import { useMenuEvent } from './useMenuEvent';
 import { NativeRadioRegistry } from './nativeRadioRegistry';
-import { RadioContext, type RadioGroupState } from './radioContext';
+import { RadioContext } from './radioContext';
 import type { NativeCheckedChangeEvent } from './checkedTypes';
 import type { FormGroupClasses, RadioGroupClasses } from './controlClasses';
 export { useRadioGroup } from './radioContext';

@@ -4,7 +4,6 @@ import { act, cleanup, render, fireEvent } from '@testing-library/react-native';
 import {
   Checkbox,
   ButtonBase,
-  Radio,
   RadioGroup,
   FormControlLabel,
   Switch,

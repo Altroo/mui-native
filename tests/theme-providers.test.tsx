@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { render, screen } from '@testing-library/react-native';
 import * as system from '../packages/system/src';

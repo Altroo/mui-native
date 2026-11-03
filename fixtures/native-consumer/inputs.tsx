@@ -19,7 +19,7 @@ function State() {
   const state = useFormControl();
   return <View testID={state?.focused ? 'focused' : 'idle'} />;
 }
-const basic = (
+export const basic = (
   <InputBase
     ref={rootRef}
     inputRef={inputRef}
@@ -30,7 +30,7 @@ const basic = (
     inputProps={{ autoCapitalize: 'sentences' }}
   />
 );
-const composed = (
+export const composed = (
   <FormControl variant="outlined" color="secondary" size="small">
     <OutlinedInput
       label="Amount"
@@ -43,18 +43,18 @@ const composed = (
     <State />
   </FormControl>
 );
-const variants = (
+export const variants = (
   <>
     <Input disableUnderline />
     <FilledInput hiddenLabel disableUnderline />
   </>
 );
 // @ts-expect-error Native editable refs cannot point to a View.
-const wrong = <InputBase inputRef={rootRef} />;
+export const wrong = <InputBase inputRef={rootRef} />;
 // @ts-expect-error Native inputs do not accept browser tag names.
-const html = <InputBase inputComponent="input" />;
+export const html = <InputBase inputComponent="input" />;
 // @ts-expect-error Outline input does not have an underline toggle.
-const underline = <OutlinedInput disableUnderline />;
+export const underline = <OutlinedInput disableUnderline />;
 
 declare module '@mui/material/InputBase' {
   interface InputBasePropsSizeOverrides {
@@ -64,4 +64,4 @@ declare module '@mui/material/InputBase' {
     brand: true;
   }
 }
-const augmented = <Input size="compact" color="brand" />;
+export const augmented = <Input size="compact" color="brand" />;

@@ -4,7 +4,6 @@ import {
   Platform,
   useWindowDimensions,
   type ViewInstance,
-  type ViewProps,
   type StyleProp,
   type ViewStyle,
   type KeyboardAvoidingViewProps,

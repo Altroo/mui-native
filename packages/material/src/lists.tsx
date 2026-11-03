@@ -7,7 +7,6 @@ import {
   type ViewInstance,
   type ScrollViewProps,
   type StyleProp,
-  type ViewStyle,
 } from 'react-native';
 import {
   useDefaultProps,

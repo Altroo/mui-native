@@ -1,4 +1,3 @@
-import React from 'react';
 import { type GestureResponderEvent, type TextInputProps } from 'react-native';
 import {
   createTheme,
@@ -19,7 +18,7 @@ const theme = createTheme({
     MuiTextField: { defaultProps: { slotProps: { htmlInput: { placeholder: 'Default' } } } },
   },
 });
-const slot = deepMergeSlotProps<TextInputProps>({ placeholder: 'App' }, { editable: false });
+export const slot = deepMergeSlotProps<TextInputProps>({ placeholder: 'App' }, { editable: false });
 const ownerSlot = mergeSlotProps(
   (state: { disabled: boolean; id?: string }) => ({
     editable: !state.disabled,
@@ -28,8 +27,8 @@ const ownerSlot = mergeSlotProps(
   { placeholder: 'Default' },
 );
 const result = ownerSlot({ disabled: true });
-const editable: boolean = result.editable;
-const props = getThemeProps({
+export const editable: boolean = result.editable;
+export const props = getThemeProps({
   props: { size: undefined as 'small' | 'large' | undefined },
   theme,
   name: 'MuiButton',
@@ -44,9 +43,15 @@ function Probe() {
     props: { disabled: undefined as boolean | undefined },
     name: 'Custom',
   });
-  return <Button size={a.size === 'small' ? 'small' : 'large'} accessibilityLabel={b.label} />;
+  return (
+    <Button
+      disabled={c.disabled}
+      size={a.size === 'small' ? 'small' : 'large'}
+      accessibilityLabel={b.label}
+    />
+  );
 }
-const content = (
+export const content = (
   <SystemDefaults value={theme.components}>
     <DefaultPropsProvider value={{ MuiButton: { defaultProps: { size: 'small' } } }}>
       <Probe />
@@ -64,14 +69,14 @@ const content = (
     </DefaultPropsProvider>
   </SystemDefaults>
 );
-const eventSlot = mergeSlotProps(
+export const eventSlot = mergeSlotProps(
   { onPress: (event: GestureResponderEvent) => event.nativeEvent.pageX },
   { onPress: (event: GestureResponderEvent) => event.nativeEvent.pageY },
 );
 // @ts-expect-error TextField callback state is typed, not an arbitrary bag.
-const bad = <TextField slotProps={{ htmlInput: (state) => ({ value: state.missing }) }} />;
+export const bad = <TextField slotProps={{ htmlInput: (state) => ({ value: state.missing }) }} />;
 // @ts-expect-error Native input-slot values must use native string types.
-const browserSlot = <TextField slotProps={{ htmlInput: (state) => ({ value: 42 }) }} />;
+export const browserSlot = <TextField slotProps={{ htmlInput: (_state) => ({ value: 42 }) }} />;
 
 const absentExternal = deepMergeSlotProps<TextInputProps>(undefined, { editable: false });
-const stillNative: boolean | undefined = absentExternal.editable;
+export const stillNative: boolean | undefined = absentExternal.editable;

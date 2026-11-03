@@ -4,20 +4,12 @@ import {
   View,
   Animated,
   StyleSheet,
-  Pressable,
   type ViewInstance,
   type ViewProps,
   AccessibilityInfo,
 } from 'react-native';
 import { render, screen, act, cleanup, fireEvent } from '@testing-library/react-native';
-import {
-  Grow,
-  Fade,
-  Modal,
-  ThemeProvider,
-  createTheme,
-  type GrowProps,
-} from '../packages/material/src';
+import { Grow, Fade, ThemeProvider, createTheme } from '../packages/material/src';
 const animations: Array<{
   value: Animated.Value;
   config: any;

@@ -1,12 +1,7 @@
 import React from 'react';
 import { act } from '@testing-library/react-native';
 import { View } from 'react-native';
-import {
-  Portal,
-  Button,
-  type NativePortalHandle,
-  type PortalProps,
-} from '../../packages/material/src';
+import { Portal, Button, type NativePortalHandle } from '../../packages/material/src';
 import { NativePortalHost, type NativePortalLayout } from '../../packages/native-host/src';
 import { NativeMenuModel } from './nativeMenuModel';
 export class NativePortalModel extends NativeMenuModel {

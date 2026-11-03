@@ -1,12 +1,4 @@
-import React, {
-  forwardRef,
-  useContext,
-  useId,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { forwardRef, useContext, useId, useLayoutEffect, useRef, useState } from 'react';
 import { StyleSheet, useWindowDimensions, type ViewInstance, type StyleProp } from 'react-native';
 import {
   useDefaultProps,

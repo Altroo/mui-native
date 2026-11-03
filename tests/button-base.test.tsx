@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Pressable,
-  Linking,
-  Platform,
-  StyleSheet,
-  type ViewInstance,
-} from 'react-native';
+import { Pressable, Linking, Platform, StyleSheet, type ViewInstance } from 'react-native';
 import { render, screen, fireEvent, act, cleanup } from '@testing-library/react-native';
 import {
   ButtonBase,

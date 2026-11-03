@@ -19,7 +19,10 @@
       "@mui/x-data-grid": ["../../packages/x-data-grid/src/index.ts"],
       "@mui/x-charts": ["../../packages/x-charts/src/index.ts"],
       "@mui/x-date-pickers": ["../../packages/x-date-pickers/src/index.ts"]
-    }
+    },
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
   },
-  "include": ["*.ts", "*.tsx", "index.js"]
+  "include": ["**/*.ts", "**/*.tsx", "index.js"],
+  "exclude": ["node_modules", "android", "ios", ".expo"]
 }

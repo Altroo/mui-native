@@ -1,7 +1,6 @@
 import {
   NativeModalManager,
   type NativeModalEntry,
-  type NativeFocusTarget,
 } from '../packages/material/src/nativeModalManager';
 function entry(parent?: symbol): NativeModalEntry {
   return {

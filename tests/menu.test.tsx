@@ -11,7 +11,6 @@ import { render, screen, cleanup, act, fireEvent } from '@testing-library/react-
 import {
   Menu,
   MenuPaper,
-  MenuList,
   MenuItem,
   PopoverRoot,
   ThemeProvider,
@@ -19,7 +18,6 @@ import {
   configureDiagnostics,
   menuClasses,
   getMenuUtilityClass,
-  type MenuProps,
   type MenuRootProps,
   type MenuPaperProps,
   type MenuListSlotProps,

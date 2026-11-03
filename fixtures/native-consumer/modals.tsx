@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Pressable, type ViewInstance, type PressableProps } from 'react-native';
+import { View, Text, Pressable, type ViewInstance } from 'react-native';
 import Modal, {
   type ModalProps,
   type ModalRootProps,

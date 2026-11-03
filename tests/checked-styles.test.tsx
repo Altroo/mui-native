@@ -1,4 +1,3 @@
-import React from 'react';
 import * as RN from 'react-native';
 import { act, cleanup } from '@testing-library/react-native';
 import {

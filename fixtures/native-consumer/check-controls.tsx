@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, type ViewInstance, type TextInstance } from 'react-native';
+import { View, Text, type ViewInstance } from 'react-native';
 import {
   Checkbox,
   Radio,
@@ -16,7 +16,7 @@ import {
   type RadioProps,
   type FormControlLabelProps,
 } from '@mui/material';
-import DeepCheckbox, { type CheckboxPropsColorOverrides } from '@mui/material/Checkbox';
+import DeepCheckbox from '@mui/material/Checkbox';
 import DeepRadio from '@mui/material/Radio';
 import DeepGroup, { useRadioGroup as groupHook } from '@mui/material/RadioGroup';
 import deepHook from '@mui/material/RadioGroup/useRadioGroup';

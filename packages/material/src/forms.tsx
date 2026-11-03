@@ -4,15 +4,13 @@ import type {
   NativeSelectInputProps,
 } from './nativeSelect';
 import type { NativeSelectModeProps } from './select';
-import { useTheme, useSx, useComponentStyle } from './themeProvider';
+import { useSx, useComponentStyle } from './themeProvider';
 import React, {
-  createContext,
   useContext,
   useRef,
   useState,
   forwardRef,
   useEffect,
-  useLayoutEffect,
   useCallback,
   useMemo,
   useId,
@@ -24,7 +22,6 @@ import {
   type TextInstance,
   type StyleProp,
   type ViewStyle,
-  Pressable,
   type TextInputProps,
   type TextInputInstance,
 } from 'react-native';
@@ -35,7 +32,7 @@ import {
   type SlotProps,
   type SxProps,
 } from '@altroo/mui-native-system';
-import { Box, Stack, Typography, type BoxProps, type TypographyProps } from './layout';
+import { Box, type BoxProps } from './layout';
 import { useForkRef } from './utils/refs';
 import { Select, type SelectProps, type SelectChangeEvent, type SelectInputHandle } from './select';
 import { inputControlFilled } from './nativeInputControl';
@@ -56,7 +53,6 @@ import {
 } from './inputs';
 import { nativeInsets } from './nativeInsets';
 import {
-  FormLabel,
   InputLabel,
   FormHelperText,
   type InputLabelProps,

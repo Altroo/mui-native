@@ -1,5 +1,5 @@
 import '@shopify/flash-list/jestSetup';
-import React from 'react';
+
 import { ScrollView } from 'react-native';
 import { DataGrid } from '../packages/x-data-grid/src';
 import {

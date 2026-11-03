@@ -1,10 +1,7 @@
-import React from 'react';
 import { View, TextInput, Text } from 'react-native';
 import { act, cleanup } from '@testing-library/react-native';
 import { NativeSelectionControlModel } from './helpers/nativeSelectionControlModel';
 import {
-  NativeSelect,
-  NativeSelectInputHandle,
   FormControl,
   InputLabel,
   useFormControl,

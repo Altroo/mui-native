@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import * as RN from 'react-native';
-import { act, cleanup, fireEvent, render } from '@testing-library/react-native';
+import { act, cleanup, render } from '@testing-library/react-native';
 import {
   Portal,
-  Button,
   ThemeProvider,
   createTheme,
   useTheme,
   configureDiagnostics,
-  type NativePortalHandle,
 } from '../packages/material/src';
 import { NativePortalHost, getNativeFocusedView } from '../packages/native-host/src';
 import { clearNativeFocus } from '../packages/native-host/src/nativeFocus';

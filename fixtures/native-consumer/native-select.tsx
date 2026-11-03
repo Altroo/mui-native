@@ -95,7 +95,7 @@ control.current?.focus();
 control.current?.blur();
 control.current?.selectedOptions.item(0)?.label;
 // @ts-expect-error Native values are strings, including the empty value.
-const wrong: number = control.current!.value;
+export const wrong: number = control.current!.value;
 // @ts-expect-error Native handles expose a real view node rather than a browser select.
 export const browser = <NativeSelect inputRef={React.createRef<HTMLSelectElement>()} />;
 const wrongMode: NativeSelectModeProps<string[]> = {

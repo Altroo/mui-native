@@ -1,4 +1,4 @@
-import { Easing as NativeEasing, StyleSheet, type ViewStyle } from 'react-native';
+import { Easing as NativeEasing, type ViewStyle } from 'react-native';
 import {
   diagnostic,
   nativeStyleTextMetrics,

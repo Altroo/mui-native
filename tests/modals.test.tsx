@@ -10,16 +10,7 @@ import {
   type ViewInstance,
 } from 'react-native';
 import { render, screen, fireEvent, act, cleanup } from '@testing-library/react-native';
-import {
-  Modal,
-  Backdrop,
-  Dialog,
-  ThemeProvider,
-  createTheme,
-  Button,
-  type ModalProps,
-  type ModalRootProps,
-} from '../packages/material/src';
+import { Modal, Backdrop, Dialog, ThemeProvider, createTheme } from '../packages/material/src';
 import { Commands } from '../packages/native-host/src/AltrooMUIInteractiveViewNativeComponent';
 import { nativeModalManager as manager } from '../packages/material/src/nativeModalManager';
 afterEach(() => {

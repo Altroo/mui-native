@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import type { ViewInstance, NativeSyntheticEvent, StyleProp, ViewStyle } from 'react-native';
+import type { ViewInstance, NativeSyntheticEvent } from 'react-native';
 import type { NativeProps } from './AltrooMUIPortalHostNativeComponent';
 import { portalCalibration } from './portalCoordinates';
 export interface NativePortalLayout {

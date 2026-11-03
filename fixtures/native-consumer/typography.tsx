@@ -29,8 +29,8 @@ const theme = createTheme({
   }),
 });
 const variants: TypographyVariants = theme.typography;
-const posterSize: TypographyStyle['fontSize'] = variants.poster.fontSize;
-const rem: string = theme.typography.pxToRem(24);
+export const posterSize: TypographyStyle['fontSize'] = variants.poster.fontSize;
+export const rem: string = theme.typography.pxToRem(24);
 const props: TypographyProps = {
   variant: 'poster',
   align: 'inherit',
@@ -39,7 +39,7 @@ const props: TypographyProps = {
 const CustomText = React.forwardRef<TextInstance, React.ComponentProps<typeof Text>>(
   (props, ref) => <Text {...props} ref={ref} />,
 );
-const content = (
+export const content = (
   <>
     <RootTypography {...props} color="textSecondary">
       Root
@@ -58,10 +58,10 @@ const content = (
   </>
 );
 // @ts-expect-error Disabled default variants must be rejected through both original imports.
-const disabled = <RootTypography variant="h3" />;
+export const disabled = <RootTypography variant="h3" />;
 // @ts-expect-error Unregistered custom variants must not silently become strings.
-const unregistered = <Typography variant="unregistered" />;
+export const unregistered = <Typography variant="unregistered" />;
 // @ts-expect-error Native style keeps native length types; CSS units belong in sx or theme variants.
-const cssNativeStyle = <Typography style={{ fontSize: '2rem' }} />;
+export const cssNativeStyle = <Typography style={{ fontSize: '2rem' }} />;
 // @ts-expect-error Browser node refs are incompatible with native Text refs.
-const browserRef = <Typography ref={React.createRef<{ innerHTML: string }>()} />;
+export const browserRef = <Typography ref={React.createRef<{ innerHTML: string }>()} />;

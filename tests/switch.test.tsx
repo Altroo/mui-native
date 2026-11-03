@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet } from 'react-native';
 import { cleanup } from '@testing-library/react-native';
 import { configureDiagnostics, decomposeColor } from '../packages/material/src';

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { View, StyleSheet, type ViewInstance } from 'react-native';
 import { render, act, cleanup } from '@testing-library/react-native';
 import { Modal, Dialog, ThemeProvider, createTheme } from '../packages/material/src';

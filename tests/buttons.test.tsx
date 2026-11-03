@@ -1,9 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, Linking, StyleSheet } from 'react-native';
-import { act, cleanup, fireEvent } from '@testing-library/react-native';
+import { act, cleanup } from '@testing-library/react-native';
 import {
-  Button,
-  IconButton,
   ButtonBase,
   ThemeProvider,
   createTheme,
@@ -12,7 +10,6 @@ import {
   iconButtonClasses,
   getButtonUtilityClass,
   getIconButtonUtilityClass,
-  Modal,
   type ButtonBaseActions,
   type ButtonBaseRootProps,
 } from '../packages/material/src';

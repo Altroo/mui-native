@@ -4,7 +4,6 @@ import {
   View,
   Text,
   ActivityIndicator,
-  I18nManager,
   useWindowDimensions,
   type ViewInstance,
   type StyleProp,
@@ -23,10 +22,9 @@ import {
   diagnostic,
   type NativeStyle,
   type Theme,
-  type SxProps,
 } from '@altroo/mui-native-system';
 import { useTheme } from './themeProvider';
-import { ButtonBase, type ButtonBaseProps, type ButtonBaseState } from './buttonBase';
+import { ButtonBase, type ButtonBaseState } from './buttonBase';
 import { Typography } from './typography';
 import { listSlotStyle } from './listStyles';
 import type {
@@ -420,7 +418,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
       </View>
     );
   };
-  const loader = (state: ButtonBaseState) =>
+  const loader = (_state: ButtonBaseState) =>
     typeof loading === 'boolean' ? (
       <View
         pointerEvents="none"

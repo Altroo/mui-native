@@ -26,6 +26,7 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm check
+      - name: Lint, unused-code, contracts and build checks
+        run: pnpm check
       - run: pnpm test:consumer
       - run: pnpm format:check

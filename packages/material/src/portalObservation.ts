@@ -23,7 +23,10 @@ export class PortalObservationRegistry {
     | null = null;
   private accepting = true;
   private clearing = false;
-  constructor(private readonly changed: (lease: PortalObservationLease | null) => void) {}
+  private readonly changed: (lease: PortalObservationLease | null) => void;
+  constructor(changed: (lease: PortalObservationLease | null) => void) {
+    this.changed = changed;
+  }
   observe(node: ViewInstance | null, tag: number, listener: PortalObservationListener): () => void {
     if (
       !Number.isInteger(tag) ||

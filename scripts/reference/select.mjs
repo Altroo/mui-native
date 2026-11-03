@@ -220,8 +220,6 @@ function run(input) {
   let renderer,
     root,
     paper,
-    list,
-    focus = null,
     clock = 0,
     timerId = 0;
   const handle = React.createRef();
@@ -245,9 +243,7 @@ function run(input) {
     nodeType: 1,
     parentNode: anchor,
     ownerDocument: document,
-    focus: () => {
-      focus = 'display';
-    },
+    focus: () => {},
     contains: (other) => other === display,
   };
   const optionNodes = new Map();
@@ -287,7 +283,6 @@ function run(input) {
     return React.createElement('div', { ref }, props.children);
   });
   const List = React.forwardRef((props, ref) => {
-    list = props;
     React.useImperativeHandle(props.actions, () => ({
       adjustStyleForScrollbar: () => null,
       focusInitialTarget: () => null,

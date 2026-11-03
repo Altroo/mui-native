@@ -5,7 +5,6 @@ import {
   Chip,
   type ChipProps,
   type NativeChipLabelProps,
-  type ChipOwnerState,
   type ButtonBaseRootProps,
 } from '@mui/material';
 import DeepChip, { type ChipPropsColorOverrides } from '@mui/material/Chip';

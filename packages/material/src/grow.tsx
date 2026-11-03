@@ -1,4 +1,4 @@
-import React, { forwardRef, useCallback, useInsertionEffect, useRef } from 'react';
+import React, { forwardRef, useInsertionEffect, useRef } from 'react';
 import {
   StyleSheet,
   type ViewInstance,

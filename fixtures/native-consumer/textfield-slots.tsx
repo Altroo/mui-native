@@ -10,7 +10,7 @@ const Input = forwardRef<ViewInstance, TextFieldInputSlotProps>((props, ref) => 
 ));
 const root = React.createRef<ViewInstance>();
 const input = React.createRef<TextInputInstance>();
-const example = (
+export const example = (
   <TextField
     ref={root}
     inputRef={input}
@@ -25,7 +25,7 @@ const example = (
     }}
   />
 );
-function RefProbe() {
+export function RefProbe() {
   const combined = useForkRef(input, (instance: TextInputInstance | null) => {
     instance?.focus();
     return () => {
@@ -35,7 +35,7 @@ function RefProbe() {
   return <TextInput ref={combined} />;
 }
 // @ts-expect-error Editable input refs must target a TextInput, not a View.
-const invalid = <TextField slotProps={{ htmlInput: { ref: root } }} />;
+export const invalid = <TextField slotProps={{ htmlInput: { ref: root } }} />;
 // @ts-expect-error DOM tag names are not native slot components.
-const html = <TextField slots={{ htmlInput: 'input' }} />;
+export const html = <TextField slots={{ htmlInput: 'input' }} />;
 setRef(input, null);

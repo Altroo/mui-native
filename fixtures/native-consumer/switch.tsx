@@ -11,7 +11,7 @@ import {
   type ButtonBaseActions,
   type NativeSwitchChangeEvent,
 } from '@mui/material';
-import DeepSwitch, { type SwitchPropsSizeOverrides } from '@mui/material/Switch';
+import DeepSwitch from '@mui/material/Switch';
 import switchClasses, { getSwitchUtilityClass } from '@mui/material/Switch/switchClasses';
 declare module '@mui/material/Switch' {
   interface SwitchPropsColorOverrides {

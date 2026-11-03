@@ -1,4 +1,3 @@
-import React from 'react';
 import { ActivityIndicator, Text, StyleSheet } from 'react-native';
 import type { ReactTestInstance } from 'react-test-renderer';
 import { fireEvent, render, screen } from '@testing-library/react-native';

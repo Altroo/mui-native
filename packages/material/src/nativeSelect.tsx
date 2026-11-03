@@ -1,6 +1,5 @@
 import React, {
   forwardRef,
-  useCallback,
   useContext,
   useImperativeHandle,
   useInsertionEffect,
@@ -10,7 +9,6 @@ import React, {
   useState,
 } from 'react';
 import {
-  View,
   Text,
   TextInput,
   I18nManager,

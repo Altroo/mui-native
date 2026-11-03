@@ -17,7 +17,6 @@ import {
   TextInput,
   BackHandler,
   Platform,
-  StyleSheet,
   type ViewProps,
   type ViewInstance,
   type PressableProps,

@@ -1,4 +1,3 @@
-import React from 'react';
 import { type ViewInstance } from 'react-native';
 import { act, fireEvent } from '@testing-library/react-native';
 import { Select, TextField, MenuItem, type SelectProps } from '../../packages/material/src';

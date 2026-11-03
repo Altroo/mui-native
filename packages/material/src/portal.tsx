@@ -11,7 +11,6 @@ import React, {
   useSyncExternalStore,
 } from 'react';
 import {
-  View,
   findNodeHandle,
   type ViewInstance,
   type TextInstance,

@@ -26,10 +26,8 @@ import React, {
   useState,
 } from 'react';
 import {
-  View,
   Text,
   I18nManager,
-  StyleSheet,
   useWindowDimensions,
   type ViewInstance,
   type TextInputProps,
@@ -45,13 +43,7 @@ import {
   type SlotProps,
   type SxProps,
 } from '@altroo/mui-native-system';
-import {
-  Input,
-  FilledInput,
-  OutlinedInput,
-  type InputBaseProps,
-  type InputRootProps,
-} from './inputs';
+import { Input, FilledInput, OutlinedInput, type InputBaseProps } from './inputs';
 import { Menu, type MenuProps, type MenuPaperProps, type MenuListSlotProps } from './menu';
 import { FormContext, useControlled, nativeLabelText } from './formState';
 import { NativeInputValueContext, inputControlFilled } from './nativeInputControl';
