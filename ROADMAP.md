@@ -5,7 +5,7 @@ Updated: 2026-11-03. Priority: maximum compatibility with existing MUI app code,
 ## Decisions
 
 - One repository: `Altroo/mui-native`. Separate npm packages in the monorepo.
-- Public source pre-alpha. No npm publication before release gates pass.
+- Public source and early npm previews under the `prealpha` tag. Verified alpha/stable publication still requires the release gates below.
 - Independent project and branding. Upstream collaboration does not imply acceptance or endorsement.
 - Material UI plus MIT-licensed MUI X Community only. Exclude Pro/Premium source and paid-only feature parity.
 - Native iOS/Android renderers, original MUI on web. No WebView substitute.
@@ -66,6 +66,10 @@ Native Select and TextField select now have pinned original-runtime fixtures, ra
 
 Native Popper now composes the positioning engine with measured native frames, window/inline Portal routing, native/virtual anchors, root slots/ref/instance lifecycle, keepMounted and transitions. See [Popper](docs/popper.md) and [issue #39](https://github.com/Altroo/mui-native/issues/39). Physical native and release-performance gates remain open. Autocomplete still needs editable keyboard ownership and complete component integration.
 
+## Early public pre-alpha channel
+
+Early preview packages may be published under the `prealpha` dist-tag for consumer feedback before family certification. They must contain real implementations, clear compatibility/native-build limits, MIT/upstream notices and aligned dependency versions. Require local checks, clean archive-consumer installation, package-content inspection, a publish dry run and independent review. Keep verified/released upstream-support state unchanged. This channel does not complete the verified-alpha checklist.
+
 ## 3. Verified alpha
 
 Core scope: Box, Stack, Typography, Divider, Paper, Card, Button, IconButton, initial icons, TextField/FormControl parts, Checkbox, Radio, Switch, Dialog, Alert, progress and Snackbar.
@@ -112,6 +116,19 @@ Scheduler and Chat remain isolated preview tracks. Resolve Chat licensing proven
 Review update issues weekly, prioritize relevant security changes, and implement candidates against immutable source/API/license comparisons. Keep one active candidate per family/channel/major, preserve human edits, and process missed publications after outages. Upgrade Expo/React Native/tooling in separate changes. Check scheduler health monthly, including GitHub's inactivity disabling behavior for public repositories. Never equate a dependency bump with a completed native port.
 
 NativeSelect, native Select and native TextField now parse option/group configuration, preserve DOM-shaped string/selectedOptions semantics and native refs, and hold overlay ownership through actual native dismissal. See [native selection](docs/native-select.md) and [issue #32](https://github.com/Altroo/mui-native/issues/32). Full browser forms, inline list layout and physical picker/accessibility/performance gates remain open.
+
+## Native mobile extension track
+
+Add selected mobile-specific patterns alongside the full Material UI/X compatibility work, after the first pre-alpha preview. Use the same theme, `sx`, controlled-state, ref, slots/slotProps, defaults/overrides/variants and documentation conventions. Keep genuinely new APIs in an explicitly native extension namespace; do not invent original `@mui/material` imports. The proposed optional `@altroo/mui-native-mobile` package is not created or published until it contains real components. See [the design and examples](docs/mobile-extensions.md).
+
+- [ ] Prioritize safe-area/keyboard-aware Screen composition, a useful themed ScrollView, and FlatList/SectionList integration while preserving native virtualization.
+- [ ] Compose RefreshControl and refresh/load-more states into lists; keep fetching, sorting and filtering models application-owned unless a separate library contract requires them.
+- [ ] Add a native BottomSheet with snap points, gestures, keyboard/focus ownership and MUI-style customization; then evaluate action sheets and swipeable list actions.
+- [ ] Document BackHandler and StatusBar integration through focused recipes/ownership helpers; preserve application navigation and system behavior.
+- [ ] Keep PermissionsAndroid application-owned and platform-specific. Use Snackbar for the cross-platform UI track, document ToastAndroid/ActionSheetIOS where useful, and complete native MUI Drawer before adding a duplicate DrawerLayoutAndroid wrapper.
+- [ ] Ship typed root/deep imports, full examples, accessibility alternatives, cleanup regressions, both-platform interactions and release performance evidence for each implemented extension.
+
+This track extends native capabilities; it does not replace or reduce the agreed Material UI/X scope or certify any unimplemented API.
 
 ## After alpha: simplify installation
 

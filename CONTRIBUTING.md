@@ -12,7 +12,7 @@ Review WebStorm inspections on changed source files before delivery. The project
 
 Preserve MIT notices for reused source and register source commit/path/hash in the provenance manifest. Do not copy commercial code or implement paid-only parity. New dependencies need license review. Keep upstream reference updates separate from claims of native support.
 
-The source is a public pre-alpha. Package publication requires the reviewed release gates in ROADMAP.md. Discuss upstream contributions separately; this repository does not claim MUI affiliation.
+The source is a public pre-alpha. Early pre-alpha previews follow the distribution checks in ROADMAP.md and docs/releases.md. Verified alpha/stable publication requires the complete reviewed release gates in ROADMAP.md. Discuss upstream contributions separately; this repository does not claim MUI affiliation.
 
 Before pushing, review comments alongside WebStorm inspection results and run the blocking lint/unused-code checks plus the affected tests and builds. Explain nonobvious coordinate spaces, ownership, cancellation and native/API constraints; use JSDoc for public contracts where it helps callers. Keep comments clear, organized and consistent with the final implementation. Resolve actionable warnings, unused imports/private code and stale explanations before delivery.
 

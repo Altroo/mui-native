@@ -5,7 +5,7 @@
 
 Independent React Native compatibility for Material UI and MUI X Community, maintained in **one monorepo** by Altroo.
 
-**Status: public pre-alpha. Nothing has been published to npm. This is a partial implementation, not a drop-in replacement for MUI.** The native package versions and upstream compatibility versions are separate.
+**Status: public pre-alpha. Preview packages use the `prealpha` dist-tag. This is a partial implementation, not a drop-in replacement for MUI.** The native package versions and upstream compatibility versions are separate.
 
 The runtime uses native views on iOS and Android. The optional Metro resolver retains familiar `@mui/...` application imports. Web applications continue using the original MUI packages. This project is not affiliated with, endorsed by, or an official product of MUI.
 
@@ -37,7 +37,7 @@ The expandable tables list **135 Material component/helper modules** and **84 mo
 | ✅    | **Upstream release detection**       |                                  [100%](docs/upstream.md) | Twice-daily detection and deduplicated review issues work. Each detected update still needs a separate compatibility review.                                                 |
 | 🔧    | **Full native validation matrix**    |                                 [25%](docs/validation.md) | Scoped emulator scenarios exist. Broad keyboard/IME, screen-reader, RTL, font-scaling and physical-device matrices remain.                                                   |
 | 🗺️    | **Calibrated release performance**   |                                 [0%](docs/performance.md) | Accepted input/scrolling/memory baselines and physical-device calibration remain outstanding.                                                                                |
-| 🗺️    | **Verified alpha publication**       |                         [0%](ROADMAP.md#3-verified-alpha) | The alpha release checklist is open; no packages are published to npm.                                                                                                       |
+| 🗺️    | **Verified alpha publication**       |                         [0%](ROADMAP.md#3-verified-alpha) | The verified-alpha checklist is open. Publishing a pre-alpha preview does not complete these gates.                                                                          |
 
 ### Component and module progress
 
@@ -348,6 +348,22 @@ Expand a family to see individual entries. Percentages link to the implementatio
 
 </details>
 
+### Native mobile extensions (planned)
+
+These are proposed MUI-style additions, separate from upstream MUI compatibility. They are **not included in the first pre-alpha**. React Native already supplies many underlying primitives; the work here is their theme, composition and interaction integration.
+
+| State | Part                            |                        Progress | What it means                                                                                                                                  |
+| ----- | ------------------------------- | ------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🗺️    | **Screen layout**               | [0%](docs/mobile-extensions.md) | Compose safe-area insets and `KeyboardAvoidingView` into a themed screen without duplicating native layout engines.                            |
+| 🗺️    | **Themed ScrollView**           | [0%](docs/mobile-extensions.md) | Preserve native scrolling/ref/events while adding useful theme, `sx` and slot composition.                                                     |
+| 🗺️    | **FlatList**                    | [0%](docs/mobile-extensions.md) | Keep React Native virtualization; add MUI-style item/empty/footer/refresh composition where it adds value.                                     |
+| 🗺️    | **SectionList**                 | [0%](docs/mobile-extensions.md) | Preserve native sections, sticky headers and virtualization with consistent theming and slots.                                                 |
+| 🗺️    | **Refresh/loading composition** | [0%](docs/mobile-extensions.md) | Integrate `RefreshControl`, refreshing and load-more feedback into scrolling/list examples. Application data fetching stays application-owned. |
+| 🗺️    | **BottomSheet**                 | [0%](docs/mobile-extensions.md) | Native snap points, gestures, keyboard handling and focus ownership with MUI-style props and theme integration.                                |
+| 🗺️    | **Swipeable list actions**      | [0%](docs/mobile-extensions.md) | Theme-aware leading/trailing actions, native gestures and explicit accessibility alternatives.                                                 |
+
+`BackHandler`, `PermissionsAndroid`, `ToastAndroid`, `ActionSheetIOS` and `StatusBar` are APIs or system integrations, not all new UI components. Prefer focused recipes/helpers and existing MUI behavior where appropriate. `DrawerLayoutAndroid` is evaluated within the native Drawer track. The [extension plan](docs/mobile-extensions.md) records these decisions, platform limits and proposed examples; APIs will not be wrapped solely to duplicate React Native exports.
+
 The [roadmap](ROADMAP.md) defines the full target and release gates. This table does not promote any package to verified or released support.
 
 ## What you can explore
@@ -373,7 +389,15 @@ pnpm catalog
 
 The catalog uses Expo SDK 58. Rendering interactive rows or Modal/Dialog/Popover/Menu/Select requires a native development build because Expo Go does not include the library's interaction host. See [installation](docs/installation.md) and [native host](docs/native-host.md). Press `i` or `a` from Expo's terminal interface to launch the corresponding simulator. `pnpm --filter native-catalog ios` and `pnpm --filter native-catalog android` create development builds when native build prerequisites are installed.
 
-Do not run `npm install @altroo/mui-native` yet. For testing a separate application before publication, use the local tarball instructions in [installation](docs/installation.md).
+## Install the pre-alpha preview
+
+Use the explicit `prealpha` tag in a disposable or development application:
+
+```sh
+npm install @altroo/mui-native@prealpha @altroo/mui-native-host@prealpha
+```
+
+The native host must be a direct app dependency and requires a native rebuild. Add `@altroo/mui-native-compat@prealpha` to retain supported original MUI imports. Optional icons/X packages use the same tag. Follow [installation](docs/installation.md) for peers, Metro/TypeScript setup and optional native dependencies. This preview is intended for testing the documented subset; alpha/stable verification remains open.
 
 ## Packages
 
@@ -422,8 +446,11 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 
 ## Development and release
 
+This project uses AI-assisted tools to accelerate development, review, and documentation, with testing and compatibility checks required before release.
+
 - [Roadmap and milestone gates](ROADMAP.md)
 - [Architecture](docs/architecture.md)
+- [Planned native mobile extensions](docs/mobile-extensions.md)
 - [Installation and native import mapping](docs/installation.md)
 - [Compatibility boundaries](docs/compatibility.md)
 - [Generated declaration inventory and remaining gaps](docs/coverage.md)
