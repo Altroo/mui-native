@@ -1,6 +1,8 @@
 module.exports = {
   preset: '@react-native/jest-preset',
   testMatch: ['<rootDir>/tests/**/*.test.ts?(x)'],
+  // Unpacked consumer archives must not become duplicate Haste packages.
+  modulePathIgnorePatterns: ['<rootDir>/.cache/'],
   moduleNameMapper: {
     '^@altroo/mui-native-x-(.*)$': '<rootDir>/packages/x-$1/src',
     '^@altroo/mui-native-system$': '<rootDir>/packages/system/src',

@@ -17,6 +17,10 @@ Initial targets, pending calibration on documented physical devices:
 
 Workloads: ordinary forms and dialogs; a 10,000-row/50-column grid with two-axis scrolling; a 1,000-row editing scenario once editing exists; a 10,000-node tree; and charts with 1,000/10,000 points. Virtualize visible content, avoid unnecessary renders, reuse stable styles/data, and keep expensive computation off the input path. Benchmark the algorithms separately to locate hotspots, but do not label desktop microbenchmarks as mobile performance results.
 
+## Reproducible positioning measurements
+
+The [Popper release benchmark](performance-popper.md) compares a shared native scrolling/popup workload with a plain React Native baseline in a separate application. Its Android collector validates the production Hermes build, input feedback stage, native geometry, frame deadlines and report completeness. Read the metric definitions and remaining measurement gaps before interpreting results. This harness does not certify the performance targets above.
+
 ## When Rust makes sense
 
 Rust supports [iOS and Android compilation targets](https://doc.rust-lang.org/rustc/platform-support.html). Candidate work includes large-data filtering, aggregation and chart geometry if profiling shows these dominate latency. Keep the MUI-facing component API in TypeScript and hide any native implementation behind a narrow module interface.

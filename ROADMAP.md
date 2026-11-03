@@ -66,6 +66,8 @@ Native Select and TextField select now have pinned original-runtime fixtures, ra
 
 Native Popper now composes the positioning engine with measured native frames, window/inline Portal routing, native/virtual anchors, root slots/ref/instance lifecycle, keepMounted and transitions. See [Popper](docs/popper.md) and [issue #39](https://github.com/Altroo/mui-native/issues/39). Physical native and release-performance gates remain open. Autocomplete still needs editable keyboard ownership and complete component integration.
 
+The separate [Android Popper release benchmark](docs/performance-popper.md) now checks production build identity, actual input/scroll behavior, frame deadlines, collector loss and report completeness. One emulator pilot completed; a repeat failed its native swipe assertion. Reproducible comparisons, iOS collection and physical calibration remain open. This tooling does not complete family performance certification.
+
 ## Early public pre-alpha channel
 
 Early preview packages may be published under the `prealpha` dist-tag for consumer feedback before family certification. They must contain real implementations, clear compatibility/native-build limits, MIT/upstream notices and aligned dependency versions. Require local checks, clean archive-consumer installation, package-content inspection, a publish dry run and independent review. Keep verified/released upstream-support state unchanged. This channel does not complete the verified-alpha checklist.
