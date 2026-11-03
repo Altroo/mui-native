@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "description": "Supporting renderer provenance for native selection reconciliation. This reference does not expand monitored MUI targets or imply device validation.",
+  "entries": [
+    {
+      "localFile": "packages/material/src/nativeSelectionModel.tsx",
+      "reference": {
+        "name": "react-dom",
+        "version": "19.3.0",
+        "integrity": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==",
+        "sourceFiles": {
+          "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+          "cjs/react-dom-client.development.js": "c10b5e5ad37ca22c88b58bf4ada9a3b655ab79934c0b5cc6bad26f42c774584f"
+        },
+        "licenseSha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+        "licenseFile": "upstream/licenses/react-dom-19.3.0.txt"
+      },
+      "adaptations": [
+        "Select option/value matching, default/update and multiple reset policy adapt the integrity/source-verified React DOM implementation and 32 actual Chromium reference cases. Native key identity replaces DOM option nodes; this is not a browser form implementation."
+      ]
+    }
+  ]
+}

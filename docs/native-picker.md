@@ -2,7 +2,7 @@
 
 The host package exports a low-level NativePicker anchor for framework-native selection. Its iOS implementation presents UIKit table rows in an adaptive sheet or an anchored iPad popover; Android uses a framework AlertDialog and native checkable rows. These choices follow the public [UIKit row-selection API](https://developer.apple.com/documentation/uikit/handling-row-selection-in-a-table-view) and [Android dialog API](https://developer.android.com/reference/android/app/AlertDialog.Builder). It adds no runtime dependency.
 
-This is the platform foundation for the unfinished NativeSelect/Select native branch. Material NativeSelect and TextField native integration are not available yet. The existing default [Select](select.md) continues using Menu. No whole-package support or physical-device validation is implied.
+Material [NativeSelect, native Select and native TextField](native-select.md) compose this platform foundation with native Input state, string values, refs and overlay ownership. The existing default [Select](select.md) continues using Menu. No whole-package support or physical-device validation is implied.
 
 ## Composing a control
 
@@ -39,7 +39,7 @@ Options have unique nonempty string ids, string labels and optional enabled/sele
 
 ## Events and lifecycle
 
-onSelection receives the persisted original native event with sessionId, revision, optionId and selected. onDismiss receives a persisted native event with sessionId and selected/cancel/done/background/unavailable reason. These are native host events, with no fabricated DOM input or gesture data. The later Material wrapper will own browser-shaped string and selectedOptions adaptation.
+onSelection receives the persisted original native event with sessionId, revision, optionId and selected. onDismiss receives a persisted native event with sessionId and selected/cancel/done/background/unavailable reason. These are native host events, with no fabricated DOM input or gesture data. The Material wrapper owns browser-shaped string and selectedOptions adaptation.
 
 Each opening or requestKey change gets a new presentation session. Equivalent option arrays keep the revision stable; meaningful option/model changes get a new revision. Only the current committed session, revision and enabled option can publish selection. Closed, consumed, removed and unmounted callbacks are ignored. A native user dismissal consumes the session even if the caller leaves open=true; toggle open or change requestKey to request another presentation. Programmatic closure/replacement and stale callbacks do not publish user dismissal.
 
@@ -57,3 +57,9 @@ JavaScript tests exercise actual host composition and native-shaped events for s
 ```
 
 Codegen, platform compilation and installed-consumer evidence are recorded in [validation](validation.md) and [issue #31](https://github.com/Altroo/mui-native/issues/31). These checks establish source/build/event contracts within their stated scope. Material native option parsing, string values, refs/events and NativeSelect import paths remain the next integration work.
+
+## Presentation acknowledgements
+
+onPresentationChange(event, { requestKey }) receives persisted native presentation events with sessionId, state (`presented` or `dismissed`), reason and terminal. A terminal dismissed acknowledgement follows actual programmatic/user closure, including an idle request that never acquired a window. Configuration replacement can dismiss a surface nonterminally within the same session. Old contexts remain identified by their original requestKey; consumers must release only their matching request. The native Material layer keeps parent overlays suspended until its terminal acknowledgement. onDismiss remains a user-dismissal request, not proof that native closure has completed. The direct host does not register a modal manager layer for custom callers.
+
+The acknowledgement schema requires native-host 0.0.2-dev.0 and a native rebuild. Its changed codegen/backend compiles on Android and UIKit; physical lifecycle and presentation remain unverified.

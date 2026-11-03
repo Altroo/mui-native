@@ -36,5 +36,6 @@ class AltrooMUINativePickerManager : SimpleViewManager<AltrooMUINativePicker>(),
   override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Any> = mutableMapOf(
     "topPickerSelection" to mapOf("registrationName" to "onPickerSelection"),
     "topPickerDismiss" to mapOf("registrationName" to "onPickerDismiss"),
+    "topPickerPresentation" to mapOf("registrationName" to "onPickerPresentation"),
   )
 }

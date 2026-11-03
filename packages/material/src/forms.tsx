@@ -1,3 +1,9 @@
+import type {
+  NativeSelectChangeEvent,
+  NativeSelectInputHandle,
+  NativeSelectInputProps,
+} from './nativeSelect';
+import type { NativeSelectModeProps } from './select';
 import { useTheme, useSx, useComponentStyle } from './themeProvider';
 import React, {
   createContext,
@@ -407,17 +413,77 @@ export interface TextFieldProps<
   variant?: Variant;
   value?: unknown;
   defaultValue?: unknown;
-  onChange?: (event: InputChangeEvent | SelectChangeEvent<Value>, child?: React.ReactNode) => void;
-  inputRef?: React.Ref<TextInputInstance | SelectInputHandle<Value>>;
+  onChange?: (
+    event: InputChangeEvent | SelectChangeEvent<Value> | NativeSelectChangeEvent,
+    child?: React.ReactNode,
+  ) => void;
+  inputRef?: React.Ref<TextInputInstance | SelectInputHandle<Value> | NativeSelectInputHandle>;
 }
 export interface TextFieldSelectProps<Value = unknown>
-  extends Omit<TextFieldProps, 'value' | 'defaultValue' | 'onChange' | 'inputRef' | 'select'> {
+  extends Omit<
+    TextFieldProps,
+    | 'value'
+    | 'defaultValue'
+    | 'onChange'
+    | 'inputRef'
+    | 'select'
+    | 'SelectProps'
+    | 'slotProps'
+    | 'onKeyDown'
+    | 'onKeyUp'
+  > {
   select: true;
   value?: Value;
   defaultValue?: Value;
   onChange?: (event: SelectChangeEvent<Value>, child: React.ReactNode) => void;
   inputRef?: React.Ref<SelectInputHandle<Value>>;
+  onKeyDown?: SelectProps<Value>['onKeyDown'];
+  onKeyUp?: SelectProps<Value>['onKeyUp'];
+  SelectProps?: Partial<Exclude<SelectProps<Value>, { native: true }>>;
+  slotProps?: Omit<NonNullable<NativeTextFieldProps['slotProps']>, 'select'> & {
+    select?: SlotProps<
+      Partial<Exclude<SelectProps<Value>, { native: true }>> & React.RefAttributes<ViewInstance>,
+      TextFieldOwnerState
+    >;
+  };
 }
+type ConfiguredNativeSelect = Partial<NativeSelectModeProps<any>> & {
+  native: true;
+} & React.RefAttributes<ViewInstance>;
+type NativeFieldSlots = Omit<NonNullable<NativeTextFieldProps['slotProps']>, 'select'> & {
+  select?: SlotProps<ConfiguredNativeSelect, TextFieldOwnerState>;
+};
+export type TextFieldNativeSelectProps<Variant extends TextFieldVariants = TextFieldVariants> =
+  Omit<
+    NativeTextFieldProps,
+    | 'select'
+    | 'value'
+    | 'defaultValue'
+    | 'onChange'
+    | 'inputRef'
+    | 'SelectProps'
+    | 'slotProps'
+    | 'variant'
+    | 'onKeyDown'
+    | 'onKeyUp'
+  > & {
+    select: true;
+    variant?: Variant;
+    value?: unknown;
+    defaultValue?: unknown;
+    onChange?: (event: NativeSelectChangeEvent) => void;
+    onKeyDown?: NativeSelectInputProps['onKeyDown'];
+    onKeyUp?: NativeSelectInputProps['onKeyUp'];
+    inputRef?: React.Ref<NativeSelectInputHandle>;
+  } & (
+      | { SelectProps: ConfiguredNativeSelect; slotProps?: NativeFieldSlots }
+      | {
+          SelectProps?: Partial<SelectProps<any>>;
+          slotProps: NativeFieldSlots & {
+            select: SlotProps<ConfiguredNativeSelect, TextFieldOwnerState>;
+          };
+        }
+    );
 type TextFieldImplementationProps = Omit<NativeTextFieldProps, 'select'> & { select?: boolean };
 const TextFieldImpl = forwardRef<ViewInstance, TextFieldImplementationProps>(
   function TextField(inProps, ref) {
@@ -499,7 +565,7 @@ const TextFieldImpl = forwardRef<ViewInstance, TextFieldImplementationProps>(
     const htmlInputProps = resolveSlotProps(slotProps?.htmlInput, ownerState) ?? {};
     const inputLabelProps = resolveSlotProps(slotProps?.inputLabel, ownerState);
     const helperProps = resolveSlotProps(slotProps?.formHelperText, ownerState);
-    const SelectSlot = slots?.select ?? Select;
+    const SelectSlot: React.ElementType = slots?.select ?? Select;
     const fieldFilled = select
       ? inputControlFilled(
           selectProps?.value !== undefined ? selectProps.value : (inputProps.value ?? text),
@@ -687,9 +753,14 @@ const TextFieldImpl = forwardRef<ViewInstance, TextFieldImplementationProps>(
               input={inputElement}
               {...(labelDisplay === 'stacked' ? { notched: false } : {})}
               {...selectProps}
-              onChange={(event: SelectChangeEvent<any>, child: React.ReactNode) => {
+              onChange={(
+                event: SelectChangeEvent<any> | NativeSelectChangeEvent,
+                child?: React.ReactNode,
+              ) => {
                 setText(event.target.value);
-                ((selectProps?.onChange ?? inputProps.onChange ?? onChange) as any)?.(event, child);
+                const callback = (selectProps?.onChange ?? inputProps.onChange ?? onChange) as any;
+                if ('selectedOptions' in event.target) callback?.(event);
+                else callback?.(event, child);
               }}
             >
               {children}
@@ -713,6 +784,9 @@ const TextFieldImpl = forwardRef<ViewInstance, TextFieldImplementationProps>(
 );
 export const TextField = TextFieldImpl as unknown as {
   (props: NativeTextFieldProps & React.RefAttributes<ViewInstance>): React.ReactElement;
+  <Variant extends TextFieldVariants = TextFieldVariants>(
+    props: TextFieldNativeSelectProps<Variant> & React.RefAttributes<ViewInstance>,
+  ): React.ReactElement;
   <Value = unknown>(
     props: TextFieldSelectProps<Value> & React.RefAttributes<ViewInstance>,
   ): React.ReactElement;

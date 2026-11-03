@@ -142,8 +142,11 @@ export function focus() {
 }
 // @ts-expect-error Native view refs do not expose an HTML select element.
 export const browser = <Select ref={React.createRef<HTMLSelectElement>()} />;
-// @ts-expect-error Platform picker mode remains explicitly unsupported.
-export const picker = <Select native />;
+export const picker = (
+  <Select native>
+    <option value="a">Alpha</option>
+  </Select>
+);
 // @ts-expect-error Native select handles expose the generic value, not DOM selection APIs.
 input.current?.selectedIndex;
 // @ts-expect-error Generic value is checked through the handler contract.

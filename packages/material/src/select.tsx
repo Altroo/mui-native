@@ -1,3 +1,18 @@
+import { selectionEvent } from './selectionEvent';
+import {
+  NativeSelectInput,
+  type NativeSelectInputProps,
+  type NativeSelectInputHandle,
+  type NativeSelectChangeEvent,
+  type NativeSelectFocusEvent,
+  type NativeSelectIconProps,
+  type NativeSelectPickerProps,
+} from './nativeSelect';
+import {
+  NativeSelectionIconSurface,
+  NativeSelectionIndicator as DefaultIcon,
+  useNativeSelectionSlotStyle,
+} from './selectionStyles';
 import React, {
   forwardRef,
   useCallback,
@@ -26,8 +41,6 @@ import {
   resolveSlotProps,
   NativeTextScope,
   diagnostic,
-  resolveSx,
-  isNativeTextStyleProperty,
   type NativeStyle,
   type SlotProps,
   type SxProps,
@@ -183,7 +196,21 @@ export interface OutlinedSelectProps {
   variant?: 'outlined';
   notched?: boolean;
 }
-export type SelectProps<Value = unknown> = BaseSelectProps<Value> &
+export interface NativeSelectModeProps<Value = unknown>
+  extends Omit<
+    BaseSelectProps<Value>,
+    'native' | 'inputRef' | 'inputProps' | 'onChange' | 'onFocus' | 'onBlur' | 'IconComponent'
+  > {
+  native: true;
+  inputRef?: React.Ref<NativeSelectInputHandle>;
+  inputProps?: Partial<NativeSelectInputProps> & React.RefAttributes<NativeSelectInputHandle>;
+  onChange?: (event: NativeSelectChangeEvent, child?: undefined) => void;
+  onFocus?: (event: NativeSelectFocusEvent) => void;
+  onBlur?: (event: NativeSelectFocusEvent) => void;
+  IconComponent?: React.ComponentType<NativeSelectIconProps>;
+  nativePickerProps?: NativeSelectPickerProps;
+}
+export type SelectProps<Value = unknown> = (BaseSelectProps<Value> | NativeSelectModeProps<Value>) &
   (FilledSelectProps | StandardSelectProps | OutlinedSelectProps);
 export interface SelectOwnerState extends Omit<SelectInputProps, 'MenuProps'> {
   value: unknown;
@@ -248,94 +275,14 @@ function equalValue(a: unknown, b: unknown) {
 }
 /** Keep native event provenance and bound methods; never overwrite the source target. */
 function valueEvent(event: any, value: unknown, name: string | undefined, blur = false) {
-  event.persist?.();
-  const copy = Object.create(event),
-    target = { value, name };
-  Object.defineProperty(copy, 'nativeEvent', {
-    value: event.nativeEvent,
-    enumerable: true,
-    writable: true,
-  });
-  Object.defineProperty(copy, 'target', { value: target, enumerable: true, writable: true });
-  if (!blur)
-    Object.defineProperty(copy, 'currentTarget', {
-      value: target,
-      enumerable: true,
-      writable: true,
-    });
-  for (const key of [
-    'preventDefault',
-    'stopPropagation',
-    'persist',
-    'isDefaultPrevented',
-    'isPropagationStopped',
-  ])
-    if (typeof event[key] === 'function')
-      Object.defineProperty(copy, key, { value: event[key].bind(event) });
-  return copy;
+  return selectionEvent(event, { value, name }, !blur);
 }
-function useSelectSlotStyle(slot: 'select' | 'icon', owner: SelectOwnerState, sx?: SxProps) {
-  const theme = useTheme(),
-    { width } = useWindowDimensions();
-  const config = theme.components.MuiSelect;
-  const overrides = config && typeof config === 'object' ? config.styleOverrides : undefined;
-  const keys =
-    slot === 'select'
-      ? [
-          'select',
-          owner.variant,
-          ...(owner.error ? ['error'] : []),
-          ...(owner.multiple ? ['multiple'] : []),
-        ]
-      : ['icon', ...(owner.open ? ['iconOpen'] : [])];
-  const rules = keys.map((key) => {
-    const raw = overrides?.[key];
-    return typeof raw === 'function'
-      ? raw({ theme, ownerState: owner as unknown as Record<string, unknown> })
-      : raw;
-  });
-  const extra = useSx(sx);
-  return [
-    resolveSx(rules as SxProps, theme, {
-      width,
-      mode: 'css',
-      slot: `MuiSelect-${slot}`,
-      states: [...(owner.disabled ? ['disabled'] : []), ...(owner.error ? ['error'] : [])],
-    }),
-    extra,
-  ];
-}
-const DefaultIcon = ({ style }: SelectIconProps) => {
-  const flat = StyleSheet.flatten(style) ?? {},
-    color = flat.color;
-  const size =
-    typeof flat.fontSize === 'number' && Number.isFinite(flat.fontSize) ? flat.fontSize : 24;
-  const view = Object.fromEntries(
-    Object.entries(flat).filter(([key]) => !isNativeTextStyleProperty(key)),
-  );
-  return (
-    <View
-      accessible={false}
-      style={[{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }, view]}
-    >
-      <View
-        style={{
-          width: 0,
-          height: 0,
-          borderLeftWidth: (size * 5) / 24,
-          borderRightWidth: (size * 5) / 24,
-          borderTopWidth: (size * 5) / 24,
-          borderLeftColor: 'transparent',
-          borderRightColor: 'transparent',
-          borderTopColor: color as any,
-        }}
-      />
-    </View>
-  );
-};
 type InternalInputProps = SelectInputProps & {
   nativeSelectAnchor?: React.RefObject<ViewInstance | null>;
   nativeSelectWidth?: number;
+  nativeSelectionEndAdornment?: boolean;
+  nativeSelectionBaseStyle?: StyleProp<NativeStyle>;
+  nativeSelectionAuthoredStyle?: StyleProp<NativeStyle>;
   ownerState?: object;
 };
 export const SelectInput = forwardRef<SelectInputHandle, InternalInputProps>(
@@ -372,6 +319,9 @@ export const SelectInput = forwardRef<SelectInputHandle, InternalInputProps>(
       sx,
       nativeSelectAnchor,
       nativeSelectWidth,
+      nativeSelectionEndAdornment = false,
+      nativeSelectionBaseStyle,
+      nativeSelectionAuthoredStyle,
       ownerState: _owner,
       ...native
     } = inputProps;
@@ -402,9 +352,9 @@ export const SelectInput = forwardRef<SelectInputHandle, InternalInputProps>(
       required,
       name,
     };
-    const selectedStyle = useSelectSlotStyle('select', owner, sx);
+    const selectedStyle = useNativeSelectionSlotStyle('MuiSelect', 'select', owner, sx);
     const displaySx = useSx(SelectDisplayProps.sx);
-    const iconStyle = useSelectSlotStyle('icon', owner);
+    const iconStyle = useNativeSelectionSlotStyle('MuiSelect', 'icon', owner);
     // Match InputEngine's physical edge policy; native left/right values may
     // already swap in RTL. Defaults must not outrank authored physical padding.
     const physicalEnd =
@@ -633,124 +583,131 @@ export const SelectInput = forwardRef<SelectInputHandle, InternalInputProps>(
       onKeyUp: displayUp,
       ...displayProps
     } = SelectDisplayProps;
+    const pressOpen = useMenuEvent((event: any) => {
+      if (!disabled && !readOnly && display.current && display.current.isConnected !== false) {
+        display.current.focus();
+        update(true, event, 'pointer');
+      }
+    });
+    const renderIcon = () => (
+      <NativeSelectionIconSurface
+        trailing={nativeSelectionEndAdornment}
+        end={physicalEnd}
+        variant={variant}
+        disabled={disabled || readOnly}
+        onPress={pressOpen}
+      >
+        <IconComponent
+          ownerState={owner}
+          style={[
+            {
+              color: disabled ? theme.palette.text.disabled : theme.palette.action.active,
+              fontSize: 24,
+              transform: [{ rotate: open ? '180deg' : '0deg' }],
+            },
+            iconStyle,
+          ]}
+        />
+      </NativeSelectionIconSurface>
+    );
     return (
       <>
         <NativeTextScope
           theme={theme}
-          style={[selectionDefaults, style, selectedStyle, displaySx, displayStyle]}
+          style={[
+            selectionDefaults,
+            nativeSelectionBaseStyle,
+            selectedStyle,
+            nativeSelectionAuthoredStyle ?? style,
+            displaySx,
+            displayStyle,
+          ]}
           content={content}
         >
           {(viewStyle, textContent, scope) => (
-            <NativePressable
-              {...{
-                managedKeys: ['ArrowUp', 'ArrowDown', 'Enter', ' '],
-                role: 'combobox',
-                'aria-controls': open ? listId : undefined,
-                'aria-expanded': open,
-                'aria-haspopup': 'listbox',
-                'aria-readonly': readOnly,
-                'aria-required': required,
-                'aria-invalid': error,
-              }}
-              ref={displayRef}
-              nativeID={
-                displayId ?? native.nativeID ?? (name ? `mui-component-select-${name}` : undefined)
-              }
-              testID={native.testID}
-              accessibilityRole="combobox"
-              accessibilityLabel={native.accessibilityLabel}
-              accessibilityLabelledBy={labelId ?? native.accessibilityLabelledBy}
-              accessibilityHint={native.accessibilityHint}
-              accessibilityValue={{
-                ...native.accessibilityValue,
-                text: nativeLabelText(content) ?? undefined,
-              }}
-              accessibilityState={{ ...native.accessibilityState, disabled, expanded: open }}
-              disabled={disabled}
-              focusable={!disabled}
-              tabIndex={disabled ? -1 : (native.tabIndex ?? 0)}
-              onPress={(event) => {
-                if (
-                  !disabled &&
-                  !readOnly &&
-                  display.current &&
-                  display.current.isConnected !== false
-                ) {
-                  display.current?.focus();
-                  update(true, event, 'pointer');
-                }
-              }}
-              onKeyDown={(nativeEvent) => {
-                const event = buttonKeyEvent(nativeEvent);
-                if (!display.current || display.current.isConnected === false) return;
-                if (displayDown) {
-                  displayDown(event);
-                  return;
-                }
-                if (
-                  disabled ||
-                  readOnly ||
-                  event.target !== event.currentTarget ||
-                  event.isComposing ||
-                  event.isCanceled
-                )
-                  return;
-                if (
-                  !typeahead(event) &&
-                  [' ', 'ArrowUp', 'ArrowDown', 'Enter'].includes(event.key)
-                ) {
-                  event.preventDefault();
-                  update(true, event, 'keyboard');
-                }
-                onKeyDown?.(event);
-              }}
-              onKeyUp={(event) => {
-                const key = buttonKeyEvent(event);
-                (displayUp ?? onKeyUp)?.(key);
-              }}
-              onFocus={onFocus as any}
-              onBlur={(event) => {
-                resetSearch();
-                if (!open) onBlur?.(valueEvent(event, value, name, true));
-              }}
-              {...displayProps}
-              style={[{ justifyContent: 'center', minHeight: 44 }, viewStyle]}
-            >
-              {typeof content === 'string' || typeof content === 'number' ? (
-                <Text
-                  numberOfLines={1}
-                  ellipsizeMode="tail"
-                  style={scope.literalStyle ?? scope.style}
-                >
-                  {content}
-                </Text>
-              ) : (
-                textContent
-              )}
-              <View
-                pointerEvents="none"
-                accessible={false}
-                style={{
-                  position: 'absolute',
-                  [physicalEnd]: variant === 'standard' ? 0 : 7,
-                  top: 0,
-                  bottom: 0,
-                  justifyContent: 'center',
+            <>
+              <NativePressable
+                {...{
+                  managedKeys: ['ArrowUp', 'ArrowDown', 'Enter', ' '],
+                  role: 'combobox',
+                  'aria-controls': open ? listId : undefined,
+                  'aria-expanded': open,
+                  'aria-haspopup': 'listbox',
+                  'aria-readonly': readOnly,
+                  'aria-required': required,
+                  'aria-invalid': error,
                 }}
+                ref={displayRef}
+                nativeID={
+                  displayId ??
+                  native.nativeID ??
+                  (name ? `mui-component-select-${name}` : undefined)
+                }
+                testID={native.testID}
+                accessibilityRole="combobox"
+                accessibilityLabel={native.accessibilityLabel}
+                accessibilityLabelledBy={labelId ?? native.accessibilityLabelledBy}
+                accessibilityHint={native.accessibilityHint}
+                accessibilityValue={{
+                  ...native.accessibilityValue,
+                  text: nativeLabelText(content) ?? undefined,
+                }}
+                accessibilityState={{ ...native.accessibilityState, disabled, expanded: open }}
+                disabled={disabled}
+                focusable={!disabled}
+                tabIndex={disabled ? -1 : (native.tabIndex ?? 0)}
+                onPress={pressOpen}
+                onKeyDown={(nativeEvent) => {
+                  const event = buttonKeyEvent(nativeEvent);
+                  if (!display.current || display.current.isConnected === false) return;
+                  if (displayDown) {
+                    displayDown(event);
+                    return;
+                  }
+                  if (
+                    disabled ||
+                    readOnly ||
+                    event.target !== event.currentTarget ||
+                    event.isComposing ||
+                    event.isCanceled
+                  )
+                    return;
+                  if (
+                    !typeahead(event) &&
+                    [' ', 'ArrowUp', 'ArrowDown', 'Enter'].includes(event.key)
+                  ) {
+                    event.preventDefault();
+                    update(true, event, 'keyboard');
+                  }
+                  onKeyDown?.(event);
+                }}
+                onKeyUp={(event) => {
+                  const key = buttonKeyEvent(event);
+                  (displayUp ?? onKeyUp)?.(key);
+                }}
+                onFocus={onFocus as any}
+                onBlur={(event) => {
+                  resetSearch();
+                  if (!open) onBlur?.(valueEvent(event, value, name, true));
+                }}
+                {...displayProps}
+                style={[{ justifyContent: 'center', minHeight: 44 }, viewStyle]}
               >
-                <IconComponent
-                  ownerState={owner}
-                  style={[
-                    {
-                      color: disabled ? theme.palette.text.disabled : theme.palette.action.active,
-                      fontSize: 24,
-                      transform: [{ rotate: open ? '180deg' : '0deg' }],
-                    },
-                    iconStyle,
-                  ]}
-                />
-              </View>
-            </NativePressable>
+                {typeof content === 'string' || typeof content === 'number' ? (
+                  <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    style={scope.literalStyle ?? scope.style}
+                  >
+                    {content}
+                  </Text>
+                ) : (
+                  textContent
+                )}
+                {!nativeSelectionEndAdornment ? renderIcon() : null}
+              </NativePressable>
+              {nativeSelectionEndAdornment ? renderIcon() : null}
+            </>
           )}
         </NativeTextScope>
         <NativeMenuFocusSource.Provider value={source}>
@@ -817,118 +774,146 @@ export const SelectInput = forwardRef<SelectInputHandle, InternalInputProps>(
   },
 );
 
-const SelectImpl = forwardRef<ViewInstance, SelectProps<any>>(function Select(inProps, forwarded) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiSelect' }),
-    form = useContext(FormContext);
-  const {
-    autoWidth = false,
-    children,
-    defaultOpen = false,
-    displayEmpty = false,
-    IconComponent = DefaultIcon,
-    id,
-    input,
-    inputProps,
-    label,
-    labelId,
-    MenuProps,
-    multiple = false,
-    native = false,
-    onClose,
-    onOpen,
-    open,
-    renderValue,
-    SelectDisplayProps,
-    variant: variantProp,
-    style,
-    slotProps,
-    ...other
-  } = props;
-  if (native)
-    throw new Error(
-      'MUI Native: NativeSelect/platform-picker mode is not implemented. Use the default Select with MenuItem.',
-    );
-  const variant = variantProp ?? form?.variant ?? 'outlined';
-  const anchor = useRef<ViewInstance | null>(null),
-    [width, setWidth] = useState<number>();
-  const [focused, setFocused] = useState(false);
-  const disabled = props.disabled ?? form?.disabled ?? false;
-  useEffect(() => {
-    if (disabled) setFocused(false);
-  }, [disabled]);
-  const element =
-    input ??
-    (variant === 'outlined' ? (
-      <OutlinedInput label={label} />
-    ) : variant === 'filled' ? (
-      <FilledInput />
-    ) : (
-      <Input />
-    ));
-  const root = useForkRef(anchor, forwarded, element.props.ref);
-  const owner = { ...props, variant, focused };
-  const rootStyle = useComponentStyle('MuiSelect', owner, undefined, {
-    states: [
-      ...((props.disabled ?? form?.disabled) ? ['disabled'] : []),
-      ...((props.error ?? form?.error) ? ['error'] : []),
-      ...(focused && !disabled ? ['focused'] : []),
-    ],
-  });
-  const effectiveSlots = slotProps ?? element.props.slotProps;
-  const rootProps = effectiveSlots?.root ?? {};
-  return (
-    <NativeInputValueContext.Provider value="select">
-      {React.cloneElement(element, {
-        inputComponent: SelectInput,
-        inputProps: {
-          children,
-          error: props.error ?? form?.error,
-          IconComponent,
-          variant,
-          multiple,
-          autoWidth,
-          defaultOpen,
-          displayEmpty,
-          labelId,
-          MenuProps,
-          onClose,
-          onOpen,
-          open,
-          renderValue,
-          SelectDisplayProps: { id, ...SelectDisplayProps },
-          ...inputProps,
-          ...element.props.inputProps,
-          nativeSelectAnchor: anchor,
-          nativeSelectWidth: width,
-        },
-        ...(displayEmpty && variant === 'outlined' ? { notched: true } : {}),
-        ...other,
-        onFocus: (event: any) => {
-          setFocused(true);
-          ({ ...element.props, ...other }).onFocus?.(event);
-        },
-        onBlur: (event: any) => {
-          setFocused(false);
-          ({ ...element.props, ...other }).onBlur?.(event);
-        },
-        id: id ?? element.props.id,
-        ref: root,
-        style: [rootStyle, style ?? element.props.style],
-        slotProps: {
-          ...effectiveSlots,
-          root: {
-            ...rootProps,
-            onLayout: (event: any) => {
-              const next = event.nativeEvent.layout.width;
-              if (Number.isFinite(next) && next >= 0) setWidth(next);
-              rootProps.onLayout?.(event);
+type SelectImplementationProps = Omit<
+  BaseSelectProps<any>,
+  'native' | 'inputRef' | 'inputProps' | 'onChange' | 'onFocus' | 'onBlur' | 'IconComponent'
+> & {
+  variant?: SelectVariants;
+  native?: boolean;
+  inputRef?: React.Ref<any>;
+  inputProps?: any;
+  onChange?: any;
+  onFocus?: any;
+  onBlur?: any;
+  IconComponent?: React.ComponentType<any>;
+  nativePickerProps?: NativeSelectPickerProps;
+};
+const SelectImpl = forwardRef<ViewInstance, SelectImplementationProps>(
+  function Select(inProps, forwarded) {
+    const props = useDefaultProps({ props: inProps, name: 'MuiSelect' }),
+      form = useContext(FormContext);
+    const {
+      autoWidth = false,
+      children,
+      defaultOpen = false,
+      displayEmpty = false,
+      IconComponent = DefaultIcon,
+      id,
+      input,
+      inputProps,
+      label,
+      labelId,
+      MenuProps,
+      multiple = false,
+      native = false,
+      nativePickerProps,
+      onClose,
+      onOpen,
+      open,
+      renderValue,
+      SelectDisplayProps,
+      variant: variantProp,
+      style,
+      slotProps,
+      ...other
+    } = props;
+    const variant = variantProp ?? form?.variant ?? 'outlined';
+    const anchor = useRef<ViewInstance | null>(null),
+      [width, setWidth] = useState<number>();
+    const [focused, setFocused] = useState(false);
+    const disabled = props.disabled ?? form?.disabled ?? false;
+    useEffect(() => {
+      if (disabled) setFocused(false);
+    }, [disabled]);
+    const element =
+      input ??
+      (variant === 'outlined' ? (
+        <OutlinedInput label={label} />
+      ) : variant === 'filled' ? (
+        <FilledInput />
+      ) : (
+        <Input />
+      ));
+    const root = useForkRef(anchor, forwarded, element.props.ref);
+    const owner = { ...props, variant, focused };
+    const rootStyle = useComponentStyle('MuiSelect', owner, undefined, {
+      states: [
+        ...((props.disabled ?? form?.disabled) ? ['disabled'] : []),
+        ...((props.error ?? form?.error) ? ['error'] : []),
+        ...(focused && !disabled ? ['focused'] : []),
+      ],
+    });
+    const effectiveSlots = slotProps ?? element.props.slotProps;
+    const rootProps = effectiveSlots?.root ?? {};
+    return (
+      <NativeInputValueContext.Provider value={native ? 'nativeSelect' : 'select'}>
+        {React.cloneElement(element, {
+          inputComponent: native ? NativeSelectInput : SelectInput,
+          inputProps: {
+            children,
+            error: props.error ?? form?.error,
+            IconComponent,
+            variant,
+            multiple,
+            ...(native
+              ? { id, nativePickerProps }
+              : {
+                  autoWidth,
+                  defaultOpen,
+                  displayEmpty,
+                  labelId,
+                  MenuProps,
+                  onClose,
+                  onOpen,
+                  open,
+                  renderValue,
+                  SelectDisplayProps: { id, ...SelectDisplayProps },
+                }),
+            ...inputProps,
+            ...element.props.inputProps,
+            ...(!native ? { nativeSelectAnchor: anchor, nativeSelectWidth: width } : {}),
+          },
+          ...((displayEmpty || (multiple && native)) && variant === 'outlined'
+            ? { notched: true }
+            : {}),
+          ...other,
+          onFocus: (event: any) => {
+            setFocused(true);
+            ({ ...element.props, ...other }).onFocus?.(event);
+          },
+          onBlur: (event: any) => {
+            setFocused(false);
+            ({ ...element.props, ...other }).onBlur?.(event);
+          },
+          id: id ?? element.props.id,
+          ref: root,
+          style: [rootStyle, style ?? element.props.style],
+          slotProps: {
+            ...effectiveSlots,
+            root: {
+              ...rootProps,
+              onLayout: (event: any) => {
+                const next = event.nativeEvent.layout.width;
+                if (Number.isFinite(next) && next >= 0) setWidth(next);
+                rootProps.onLayout?.(event);
+              },
             },
           },
-        },
-      })}
-    </NativeInputValueContext.Provider>
-  );
-});
-export const Select = Object.assign(SelectImpl, { muiName: 'Select' }) as (<Value = unknown>(
-  props: SelectProps<Value> & React.RefAttributes<ViewInstance>,
-) => React.ReactElement) & { muiName: string };
+        })}
+      </NativeInputValueContext.Provider>
+    );
+  },
+);
+export const Select = Object.assign(SelectImpl, { muiName: 'Select' }) as {
+  <Value = unknown>(
+    props: BaseSelectProps<Value> &
+      (FilledSelectProps | StandardSelectProps | OutlinedSelectProps) &
+      React.RefAttributes<ViewInstance>,
+  ): React.ReactElement | null;
+  <Value = unknown>(
+    props: NativeSelectModeProps<Value> &
+      (FilledSelectProps | StandardSelectProps | OutlinedSelectProps) &
+      React.RefAttributes<ViewInstance>,
+  ): React.ReactElement | null;
+  muiName: string;
+};

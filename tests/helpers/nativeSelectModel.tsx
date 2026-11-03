@@ -9,7 +9,7 @@ export interface SelectOption extends ModelItem {
 }
 export class NativeSelectModel extends NativeMenuOverlayModel {
   options: SelectOption[];
-  props: Partial<SelectProps<any>> = {};
+  props: Partial<Exclude<SelectProps<any>, { native: true }>> = {};
   field = false;
   fieldProps: Record<string, any> = {};
   anchorWidth = 200;

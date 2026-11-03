@@ -1,5 +1,5 @@
+import { NativeModalParentContext as ParentContext } from './nativeModalContext';
 import React, {
-  createContext,
   forwardRef,
   useContext,
   useEffect,
@@ -240,9 +240,6 @@ export interface ModalProps
   };
 }
 export type ModalOwnProps = ModalProps;
-const ParentContext = createContext<
-  { id: symbol; host: symbol; nativeWindow: boolean; presented: boolean } | undefined
->(undefined);
 const noSubscribe = () => () => {};
 function contains(root: ViewInstance | null, target: NativeFocusTarget) {
   return (
@@ -321,8 +318,9 @@ export const Modal: React.ForwardRefExoticComponent<
       host: disablePortal ? (parent?.host ?? id) : id,
       nativeWindow: nativeWindowHost,
       presented: presentationReady,
+      open,
     }),
-    [id, disablePortal, parent?.host, nativeWindowHost, presentationReady],
+    [id, disablePortal, parent?.host, nativeWindowHost, presentationReady, open],
   );
   const committed = useRef(props);
   const transitionCycle = useMemo(() => Symbol('transition-cycle'), [open]);

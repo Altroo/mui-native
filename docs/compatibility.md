@@ -6,9 +6,9 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
-- A low-level [platform-native picker host](native-picker.md) with UIKit/Android implementations, modeled events, a JVM lifecycle policy check and compile/link evidence. Material NativeSelect/Select native/TextField native integration and physical device gates remain unfinished.
+- A low-level [platform-native picker host](native-picker.md) with UIKit/Android implementations, modeled events, a JVM lifecycle policy check and compile/link evidence. Material integration is documented in [native selection](native-select.md); physical device gates remain unfinished.
 
-- Native Select and TextField select with raw single/multiple values, Menu composition, keyboard/typeahead, value/name events, native refs and Select owner-state slots. See [Select](select.md); NativeSelect/platform-picker mode and physical device gates remain open.
+- Native Select and TextField select with raw single/multiple values, Menu composition, keyboard/typeahead, value/name events, native refs and Select owner-state slots. See [Select](select.md); NativeSelect/platform-picker integration is described in [native selection](native-select.md); physical device gates remain open.
 
 - Anchored native Menu with five slots, source-shaped close/focus policy, native presentation gates, observed trigger restoration and nested keyboard ownership. Declared descendant Tab/Escape retains actual control targets and callbacks; UIKit command metadata is limited. See [native Menu](menu.md) and [native host](native-host.md); broader foreign-input keyboard contracts and physical overlay gates remain open.
 
@@ -48,7 +48,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 Do not assume unlisted props work. Public TypeScript interfaces describe the implemented subset. JavaScript callers should run migration diagnostics and review source usage before adoption.
 
-- NativeSelect and Select native/platform-picker mode, browser form/autofill/reset behavior, and complete Select inherited contracts.
+- Browser form/autofill/reset behavior, native inline-list layout, complete Select inherited contracts and physical picker validation.
 - Full Material UI export coverage, all icon variants, remaining component slot replacement, classes/className, arbitrary CSS, CSS variables, non-width media queries, arbitrary descendant selectors, browser refs/events, remaining transitions/TransitionGroup interoperation, ripple behavior.
 - Full `styled` semantics, CSS-variable/color-scheme providers, complete typography inheritance, the full responsive/style utility export set, all upstream augmentation interfaces. The installed-consumer fixture verifies custom Theme, ThemeOptions, Palette, PaletteOptions and BreakpointOverrides augmentation through @mui/material/styles.
 - Full browser inline formatting, opaque custom-component text internals, arbitrary native views/portals outside shared text scopes and complete text inheritance. See [text container boundaries](text-containers.md).

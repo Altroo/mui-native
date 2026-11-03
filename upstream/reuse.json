@@ -1428,7 +1428,7 @@
         }
       },
       "adaptations": [
-        "Raw single/multiple value matching, controlled open/value policy, closed typeahead, callback order and mutable value/name targets, native Input/Menu composition, Select slot owners and caret/display defaults adapt Select/SelectInput. Native geometry, events, focus refs and primitive truncation replace DOM behavior; NativeSelect/platform-picker mode is not implemented."
+        "Raw single/multiple value matching, controlled open/value policy, closed typeahead, callback order and mutable value/name targets, native Input/Menu composition, Select slot owners and caret/display defaults adapt Select/SelectInput. Native geometry, events, focus refs and primitive truncation replace DOM behavior; NativeSelect/platform-picker integration is recorded separately below."
       ]
     },
     {
@@ -1574,6 +1574,195 @@
       },
       "adaptations": [
         "Select logical listbox role uses a native list accessibility role while retaining native option selection metadata and existing registered navigation."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/nativeSelect.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "NativeSelect/NativeSelect.js": "ce0c90053728ad36272f44f48166ffd7ceb357c035ac357100b27cda1a3d900b",
+          "NativeSelect/NativeSelect.d.ts": "5bde73a7726033c08aa3a1578dac8f1734dddd9a630f9b985d67365049abfdb1",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "NativeSelect/NativeSelectInput.d.ts": "c4dc3d6e7fc6a9f92964a638d033397f68eba61f3c250405a93449081b626034",
+          "NativeSelect/nativeSelectClasses.js": "ad35c4af6290010f639f819876495ba3991600c93d7d5c8d8134ac177cc51d9f",
+          "NativeSelect/nativeSelectClasses.d.ts": "a534aae35e31df8c5dfae7d984612adca9d5641b59b49ead295066dee45b4dfe",
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "NativeSelect and native Select/TextField use native framework picker rows, DOM-shaped string/option reconciliation, native value/ref/event adapters and actual presentation acknowledgement. Option elements are parsed configuration only; browser forms and physical device parity are not implemented."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/nativeSelectionModel.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "NativeSelect/NativeSelect.js": "ce0c90053728ad36272f44f48166ffd7ceb357c035ac357100b27cda1a3d900b",
+          "NativeSelect/NativeSelect.d.ts": "5bde73a7726033c08aa3a1578dac8f1734dddd9a630f9b985d67365049abfdb1",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "NativeSelect/NativeSelectInput.d.ts": "c4dc3d6e7fc6a9f92964a638d033397f68eba61f3c250405a93449081b626034",
+          "NativeSelect/nativeSelectClasses.js": "ad35c4af6290010f639f819876495ba3991600c93d7d5c8d8134ac177cc51d9f",
+          "NativeSelect/nativeSelectClasses.d.ts": "a534aae35e31df8c5dfae7d984612adca9d5641b59b49ead295066dee45b4dfe",
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "NativeSelect and native Select/TextField use native framework picker rows, DOM-shaped string/option reconciliation, native value/ref/event adapters and actual presentation acknowledgement. Option elements are parsed configuration only; browser forms and physical device parity are not implemented."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/selectionEvent.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "NativeSelect/NativeSelect.js": "ce0c90053728ad36272f44f48166ffd7ceb357c035ac357100b27cda1a3d900b",
+          "NativeSelect/NativeSelect.d.ts": "5bde73a7726033c08aa3a1578dac8f1734dddd9a630f9b985d67365049abfdb1",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "NativeSelect/NativeSelectInput.d.ts": "c4dc3d6e7fc6a9f92964a638d033397f68eba61f3c250405a93449081b626034",
+          "NativeSelect/nativeSelectClasses.js": "ad35c4af6290010f639f819876495ba3991600c93d7d5c8d8134ac177cc51d9f",
+          "NativeSelect/nativeSelectClasses.d.ts": "a534aae35e31df8c5dfae7d984612adca9d5641b59b49ead295066dee45b4dfe",
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "NativeSelect and native Select/TextField use native framework picker rows, DOM-shaped string/option reconciliation, native value/ref/event adapters and actual presentation acknowledgement. Option elements are parsed configuration only; browser forms and physical device parity are not implemented."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/selectionStyles.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "NativeSelect/NativeSelect.js": "ce0c90053728ad36272f44f48166ffd7ceb357c035ac357100b27cda1a3d900b",
+          "NativeSelect/NativeSelect.d.ts": "5bde73a7726033c08aa3a1578dac8f1734dddd9a630f9b985d67365049abfdb1",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "NativeSelect/NativeSelectInput.d.ts": "c4dc3d6e7fc6a9f92964a638d033397f68eba61f3c250405a93449081b626034",
+          "NativeSelect/nativeSelectClasses.js": "ad35c4af6290010f639f819876495ba3991600c93d7d5c8d8134ac177cc51d9f",
+          "NativeSelect/nativeSelectClasses.d.ts": "a534aae35e31df8c5dfae7d984612adca9d5641b59b49ead295066dee45b4dfe",
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "NativeSelect and native Select/TextField use native framework picker rows, DOM-shaped string/option reconciliation, native value/ref/event adapters and actual presentation acknowledgement. Option elements are parsed configuration only; browser forms and physical device parity are not implemented."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/select.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "NativeSelect/NativeSelect.js": "ce0c90053728ad36272f44f48166ffd7ceb357c035ac357100b27cda1a3d900b",
+          "NativeSelect/NativeSelect.d.ts": "5bde73a7726033c08aa3a1578dac8f1734dddd9a630f9b985d67365049abfdb1",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "NativeSelect/NativeSelectInput.d.ts": "c4dc3d6e7fc6a9f92964a638d033397f68eba61f3c250405a93449081b626034",
+          "NativeSelect/nativeSelectClasses.js": "ad35c4af6290010f639f819876495ba3991600c93d7d5c8d8134ac177cc51d9f",
+          "NativeSelect/nativeSelectClasses.d.ts": "a534aae35e31df8c5dfae7d984612adca9d5641b59b49ead295066dee45b4dfe",
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "NativeSelect and native Select/TextField use native framework picker rows, DOM-shaped string/option reconciliation, native value/ref/event adapters and actual presentation acknowledgement. Option elements are parsed configuration only; browser forms and physical device parity are not implemented."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/inputs.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "NativeSelect/NativeSelect.js": "ce0c90053728ad36272f44f48166ffd7ceb357c035ac357100b27cda1a3d900b",
+          "NativeSelect/NativeSelect.d.ts": "5bde73a7726033c08aa3a1578dac8f1734dddd9a630f9b985d67365049abfdb1",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "NativeSelect/NativeSelectInput.d.ts": "c4dc3d6e7fc6a9f92964a638d033397f68eba61f3c250405a93449081b626034",
+          "NativeSelect/nativeSelectClasses.js": "ad35c4af6290010f639f819876495ba3991600c93d7d5c8d8134ac177cc51d9f",
+          "NativeSelect/nativeSelectClasses.d.ts": "a534aae35e31df8c5dfae7d984612adca9d5641b59b49ead295066dee45b4dfe",
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "NativeSelect and native Select/TextField use native framework picker rows, DOM-shaped string/option reconciliation, native value/ref/event adapters and actual presentation acknowledgement. Option elements are parsed configuration only; browser forms and physical device parity are not implemented."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/forms.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "NativeSelect/NativeSelect.js": "ce0c90053728ad36272f44f48166ffd7ceb357c035ac357100b27cda1a3d900b",
+          "NativeSelect/NativeSelect.d.ts": "5bde73a7726033c08aa3a1578dac8f1734dddd9a630f9b985d67365049abfdb1",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "NativeSelect/NativeSelectInput.d.ts": "c4dc3d6e7fc6a9f92964a638d033397f68eba61f3c250405a93449081b626034",
+          "NativeSelect/nativeSelectClasses.js": "ad35c4af6290010f639f819876495ba3991600c93d7d5c8d8134ac177cc51d9f",
+          "NativeSelect/nativeSelectClasses.d.ts": "a534aae35e31df8c5dfae7d984612adca9d5641b59b49ead295066dee45b4dfe",
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "NativeSelect and native Select/TextField use native framework picker rows, DOM-shaped string/option reconciliation, native value/ref/event adapters and actual presentation acknowledgement. Option elements are parsed configuration only; browser forms and physical device parity are not implemented."
       ]
     }
   ]

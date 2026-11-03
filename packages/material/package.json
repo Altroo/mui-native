@@ -354,6 +354,21 @@
       "types": "./dist/Select/SelectInput/index.d.ts",
       "react-native": "./src/Select/SelectInput/index.ts",
       "default": "./dist/Select/SelectInput/index.js"
+    },
+    "./NativeSelect": {
+      "types": "./dist/NativeSelect/index.d.ts",
+      "react-native": "./src/NativeSelect/index.ts",
+      "default": "./dist/NativeSelect/index.js"
+    },
+    "./NativeSelect/NativeSelectInput": {
+      "types": "./dist/NativeSelect/NativeSelectInput/index.d.ts",
+      "react-native": "./src/NativeSelect/NativeSelectInput/index.ts",
+      "default": "./dist/NativeSelect/NativeSelectInput/index.js"
+    },
+    "./NativeSelect/nativeSelectClasses": {
+      "types": "./dist/NativeSelect/nativeSelectClasses/index.d.ts",
+      "react-native": "./src/NativeSelect/nativeSelectClasses/index.ts",
+      "default": "./dist/NativeSelect/nativeSelectClasses/index.js"
     }
   },
   "dependencies": {

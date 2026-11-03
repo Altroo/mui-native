@@ -2,6 +2,8 @@ import React from 'react';
 import { type ViewInstance } from 'react-native';
 import {
   NativePicker,
+  type NativePickerPresentation,
+  type NativePickerPresentationContext,
   type NativePickerProps,
   type NativePickerOption,
   type NativePickerSelection,
@@ -16,6 +18,12 @@ const props: NativePickerProps = {
   options,
   multiple: true,
   colorScheme: 'dark',
+  onPresentationChange(event, context) {
+    const phase: NativePickerPresentation = event.nativeEvent;
+    const request: NativePickerPresentationContext = context;
+    void phase.terminal;
+    void request.requestKey;
+  },
   onSelection(event) {
     const value: NativePickerSelection = event.nativeEvent;
     event.persist();

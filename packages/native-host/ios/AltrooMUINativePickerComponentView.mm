@@ -105,7 +105,7 @@ using namespace facebook::react;
 @end
 @implementation AltrooMUINativePickerComponentView {
   BOOL _active, _multiple, _scheduled, _presenting, _closing;
-  NSString *_sessionId, *_revision, *_closedSession, *_presentedSession;
+  NSString *_sessionId, *_revision, *_closedSession, *_presentedSession, *_acknowledgedSession;
   NSString *_title, *_doneText, *_cancelText, *_scheme;
   NSArray<NSDictionary *> *_options;
   AltrooPickerTable *_table;
@@ -149,6 +149,12 @@ using namespace facebook::react;
   __weak auto weakSelf = self;
   dispatch_async(dispatch_get_main_queue(), ^{ auto strongSelf = weakSelf; if (!strongSelf) return; strongSelf->_scheduled = NO; [strongSelf syncPicker]; });
 }
+- (void)emitPresentation:(NSString *)session state:(NSString *)state reason:(NSString *)reason terminal:(BOOL)terminal {
+  if (terminal && [_sessionId isEqualToString:session]) _acknowledgedSession = session;
+  if (!_eventEmitter) return;
+  auto emitter = std::static_pointer_cast<AltrooMUINativePickerEventEmitter const>(_eventEmitter);
+  emitter->onPickerPresentation({RCTStringFromNSString(session), RCTStringFromNSString(state), RCTStringFromNSString(reason), (bool)terminal});
+}
 - (void)emitDismiss:(NSString *)session reason:(NSString *)reason {
   if (!_eventEmitter) return;
   auto emitter = std::static_pointer_cast<AltrooMUINativePickerEventEmitter const>(_eventEmitter);
@@ -159,6 +165,7 @@ using namespace facebook::react;
   _navigation = nil; _table = nil; _presentedSession = nil; _closing = NO; _presenting = NO;
   _pendingReason = nil;
   if (notify) { _closedSession = session; [self emitDismiss:session reason:reason]; }
+  [self emitPresentation:session state:@"dismissed" reason:reason terminal:YES];
   [self scheduleSync];
 }
 - (void)requestDismiss:(NSString *)reason notify:(BOOL)notify {
@@ -187,7 +194,12 @@ using namespace facebook::react;
   _navigation.overrideUserInterfaceStyle = [_scheme isEqualToString:@"dark"] ? UIUserInterfaceStyleDark : [_scheme isEqualToString:@"light"] ? UIUserInterfaceStyleLight : UIUserInterfaceStyleUnspecified;
 }
 - (void)syncPicker {
-  if (!_active) { _closedSession = @""; [self requestDismiss:@"programmatic" notify:NO]; return; }
+  if (!_active) {
+    _closedSession = @""; [self requestDismiss:@"programmatic" notify:NO];
+    if (!_navigation && _sessionId.length && ![_acknowledgedSession isEqualToString:_sessionId])
+      [self emitPresentation:_sessionId state:@"dismissed" reason:@"programmatic" terminal:YES];
+    return;
+  }
   if (!_sessionId.length || !self.window || _closing) return;
   if ([_closedSession isEqualToString:_sessionId]) return;
   if (_navigation && ![_presentedSession isEqualToString:_sessionId]) { [self requestDismiss:@"replaced" notify:NO]; return; }
@@ -195,7 +207,7 @@ using namespace facebook::react;
   for (NSDictionary *option in _options) { if ([option[@"id"] length]) [ids addObject:option[@"id"]]; if ([option[@"selected"] boolValue]) selected++; }
   if (!_options.count || ids.count != _options.count || (!_multiple && selected > 1)) {
     if (_navigation) [self requestDismiss:@"unavailable" notify:YES];
-    else { _closedSession = _sessionId; [self emitDismiss:_sessionId reason:@"unavailable"]; }
+    else { _closedSession = _sessionId; [self emitDismiss:_sessionId reason:@"unavailable"]; [self emitPresentation:_sessionId state:@"dismissed" reason:@"unavailable" terminal:YES]; }
     return;
   }
   if (_navigation) { [self configureTable]; return; }
@@ -204,7 +216,7 @@ using namespace facebook::react;
   UIViewController *presenter = (UIViewController *)responder;
   while (presenter.presentedViewController && !presenter.presentedViewController.isBeingDismissed) presenter = presenter.presentedViewController;
   if (!presenter || !presenter.view.window || presenter.isBeingDismissed || UIApplication.sharedApplication.applicationState != UIApplicationStateActive) {
-    _closedSession = _sessionId; [self emitDismiss:_sessionId reason:@"unavailable"]; return;
+    _closedSession = _sessionId; [self emitDismiss:_sessionId reason:@"unavailable"]; [self emitPresentation:_sessionId state:@"dismissed" reason:@"unavailable" terminal:YES]; return;
   }
   if (presenter.transitionCoordinator) {
     __weak auto weakSelf = self;
@@ -239,8 +251,10 @@ using namespace facebook::react;
   }
   _navigation.presentationController.delegate = self;
   _presenting = YES;
+  AltrooPickerNavigation *ownedNavigation = _navigation;
   [presenter presentViewController:_navigation animated:YES completion:^{
-    auto host = weakSelf; if (!host) return; host->_presenting = NO;
+    auto host = weakSelf; if (!host || host->_navigation != ownedNavigation) return; host->_presenting = NO;
+    [host emitPresentation:session state:@"presented" reason:@"" terminal:NO];
     if (host->_pendingReason) { NSString *reason = host->_pendingReason; BOOL notify = host->_pendingNotify; host->_pendingReason = nil; [host requestDismiss:reason notify:notify]; }
     else [host scheduleSync];
   }];

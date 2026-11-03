@@ -14,6 +14,12 @@ type SelectionData = Readonly<{
   selected: boolean;
 }>;
 type DismissData = Readonly<{ sessionId: string; reason: string }>;
+type PresentationData = Readonly<{
+  sessionId: string;
+  state: string;
+  reason: string;
+  terminal: boolean;
+}>;
 export interface NativeProps extends ViewProps {
   active?: CodegenTypes.WithDefault<boolean, false>;
   sessionId?: string;
@@ -26,5 +32,6 @@ export interface NativeProps extends ViewProps {
   colorScheme?: CodegenTypes.WithDefault<'system' | 'light' | 'dark', 'system'>;
   onPickerSelection?: CodegenTypes.DirectEventHandler<SelectionData>;
   onPickerDismiss?: CodegenTypes.DirectEventHandler<DismissData>;
+  onPickerPresentation?: CodegenTypes.DirectEventHandler<PresentationData>;
 }
 export default codegenNativeComponent<NativeProps>('AltrooMUINativePicker');

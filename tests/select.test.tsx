@@ -436,7 +436,7 @@ for (const fixture of reference.fixtures)
           ? { slotProps: { paper: () => ({ style: { minWidth: input.paperWidth } }) } }
           : {}),
       },
-    } as SelectProps<any>;
+    } as Exclude<SelectProps<any>, { native: true }>;
     await model.mount();
     const snapshot = () => ({
       value: handle.current?.value === undefined ? 'value:undefined' : encode(handle.current.value),
@@ -765,3 +765,36 @@ test.each(['inputProps', 'slotProps'])(
     expect(model.tree!.getByTestId('trigger')).toHaveStyle({ paddingRight: 64 });
   },
 );
+
+test('inline input styles win over named selection overrides', async () => {
+  const model = new NativeSelectModel();
+  model.props = { inputProps: { style: { paddingRight: 64 } } };
+  const element = model.element.bind(model);
+  model.element = () => (
+    <ThemeProvider
+      theme={createTheme({
+        components: { MuiSelect: { styleOverrides: { select: { paddingRight: 42 } } } },
+      })}
+    >
+      {element()}
+    </ThemeProvider>
+  );
+  await model.mount();
+  expect(model.tree!.getByTestId('trigger')).toHaveStyle({ paddingRight: 64 });
+});
+
+test('end-adornment caret still opens the default Select menu', async () => {
+  const { NativePressable } = require('../packages/native-host/src');
+  const onOpen = jest.fn(),
+    model = new NativeSelectModel();
+  model.props = { endAdornment: <Text>kg</Text>, onOpen };
+  await model.mount();
+  const caret = model
+    .tree!.UNSAFE_getAllByType(NativePressable)
+    .find((node: any) => node.props.accessible === false && node.props.onPress);
+  expect(caret).toBeDefined();
+  await act(async () => {
+    fireEvent.press(caret!, model.event(model.nodes.get('trigger')));
+  });
+  expect(onOpen).toHaveBeenCalledTimes(1);
+});

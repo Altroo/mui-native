@@ -243,3 +243,84 @@ test('untyped children fail before a native carrier can mount them', () => {
     silent.mockRestore();
   }
 });
+
+function phase(host: any, state: string, terminal: boolean, reason = '') {
+  return {
+    nativeEvent: { sessionId: host.sessionId, state, terminal, reason },
+    persist: jest.fn(),
+  } as any;
+}
+test('programmatic close retains its session until the actual native dismissal acknowledgement', () => {
+  const changed = jest.fn(),
+    close = jest.fn(),
+    model = setup({ requestKey: 'first', onPresentationChange: changed, onDismiss: close });
+  const old = model.host(),
+    done = phase(old, 'dismissed', true, 'programmatic');
+  model.update({ open: false });
+  expect(model.host().sessionId).toBe(old.sessionId);
+  act(() => {
+    old.onPickerPresentation(done);
+    old.onPickerPresentation(done);
+  });
+  expect(changed).toHaveBeenCalledTimes(1);
+  expect(changed).toHaveBeenCalledWith(done, { requestKey: 'first' });
+  expect(close).not.toHaveBeenCalled();
+});
+test('replaced presentation acknowledgements retain their original request context', () => {
+  const changed = jest.fn(),
+    selection = jest.fn(),
+    model = setup({ requestKey: 'first', onPresentationChange: changed, onSelection: selection });
+  const old = model.host();
+  model.update({ requestKey: 'second' });
+  act(() => old.onPickerPresentation(phase(old, 'dismissed', true, 'replaced')));
+  expect(changed.mock.calls[0][1]).toEqual({ requestKey: 'first' });
+  act(() => model.host().onPickerSelection(event(model.host())));
+  expect(selection).toHaveBeenCalledTimes(1);
+});
+test('nonterminal configuration dismissal does not consume a still-active presentation session', () => {
+  const changed = jest.fn(),
+    selection = jest.fn(),
+    model = setup({ onPresentationChange: changed, onSelection: selection });
+  const host = model.host();
+  act(() => {
+    host.onPickerPresentation(phase(host, 'presented', false));
+    host.onPickerPresentation(phase(host, 'dismissed', false, 'configuration'));
+    host.onPickerPresentation(phase(host, 'presented', false));
+    host.onPickerSelection(event(host));
+  });
+  expect(changed).toHaveBeenCalledTimes(3);
+  expect(selection).toHaveBeenCalledTimes(1);
+});
+test('terminal acknowledgement rejects late presented and selection events', () => {
+  const changed = jest.fn(),
+    selection = jest.fn(),
+    model = setup({ onPresentationChange: changed, onSelection: selection });
+  const host = model.host();
+  act(() => {
+    host.onPickerPresentation(phase(host, 'dismissed', true, 'unavailable'));
+    host.onPickerPresentation(phase(host, 'presented', false));
+    host.onPickerSelection(event(host));
+  });
+  expect(changed).toHaveBeenCalledTimes(1);
+  expect(selection).not.toHaveBeenCalled();
+});
+test.each([
+  ['unknown', false],
+  ['presented', true],
+  ['dismissed', 'true'],
+])('invalid presentation payloads are ignored: %s/%s', (state, terminal) => {
+  const changed = jest.fn(),
+    model = setup({ onPresentationChange: changed });
+  act(() =>
+    model.host().onPickerPresentation(phase(model.host(), state as string, terminal as boolean)),
+  );
+  expect(changed).not.toHaveBeenCalled();
+});
+test('unmounted lifecycle callbacks cannot publish', () => {
+  const changed = jest.fn(),
+    model = setup({ onPresentationChange: changed });
+  const old = model.host();
+  model.tree.unmount();
+  act(() => old.onPickerPresentation(phase(old, 'dismissed', true, 'programmatic')));
+  expect(changed).not.toHaveBeenCalled();
+});

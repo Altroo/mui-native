@@ -2,7 +2,7 @@
 
 `@altroo/mui-native-host` is an independent native dependency of the material package. It provides `InteractiveView` and `NativePressable` for native keyboard/focus composition, plus the separate [NativePicker anchor](native-picker.md) for platform selection surfaces. Its Fabric spec, Android manager/view and iOS component view ship in the local archive and are autolinked into the application. The interaction primitive adds no containing native View or global React Native feature-flag override. Picker presentation uses its own transparent native anchor.
 
-The current peer matrix is React 19.3.0 / React Native 0.88.1, with the catalog on Expo SDK 58. The host archive is `0.0.1-dev.0`; other library archives remain `0.0.0-dev.0`. The host version also satisfies CocoaPods' default minimum-version constraint, unlike a `0.0.0` prerelease. Nothing is published to npm.
+The current peer matrix is React 19.3.0 / React Native 0.88.1, with the catalog on Expo SDK 58. The host archive is `0.0.2-dev.0`; other library archives remain `0.0.0-dev.0`. The host version also satisfies CocoaPods' default minimum-version constraint, unlike a `0.0.0` prerelease. Nothing is published to npm.
 
 ## Consumer setup
 
@@ -58,3 +58,5 @@ The private focused-host key payload includes common navigation/activation names
 `pnpm check` includes `pnpm native-host:codegen`, which generates both platform bindings under ignored `.cache/native-host-codegen`. No native SDK is needed for that schema check. `pnpm test:consumer` verifies installed native configuration/source files and excludes native compiler output from archives.
 
 For compile-only catalog checks, generate ignored native projects with `pnpm exec expo prebuild --no-install --platform all` from `apps/native-catalog`, then use the generated Gradle project and CocoaPods workspace. The recorded Android check assembles a debug arm64 APK; the recorded iOS checks compile the library and generic simulator app. These commands do not constitute installation or interaction evidence. See [validation](validation.md) for the actual results and remaining gates.
+
+See [native selection](native-select.md) for NativeSelect and Select/TextField platform-picker composition, string events and native handle routing. Native-host 0.0.2-dev.0 requires rebuilding the application.

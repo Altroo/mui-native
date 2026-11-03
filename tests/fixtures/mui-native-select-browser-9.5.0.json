@@ -1,0 +1,2637 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "NativeSelect/NativeSelect.js": "ce0c90053728ad36272f44f48166ffd7ceb357c035ac357100b27cda1a3d900b",
+      "NativeSelect/NativeSelect.d.ts": "5bde73a7726033c08aa3a1578dac8f1734dddd9a630f9b985d67365049abfdb1",
+      "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+      "NativeSelect/NativeSelectInput.d.ts": "c4dc3d6e7fc6a9f92964a638d033397f68eba61f3c250405a93449081b626034",
+      "NativeSelect/nativeSelectClasses.js": "ad35c4af6290010f639f819876495ba3991600c93d7d5c8d8134ac177cc51d9f",
+      "NativeSelect/nativeSelectClasses.d.ts": "a534aae35e31df8c5dfae7d984612adca9d5641b59b49ead295066dee45b4dfe",
+      "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+      "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+      "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+      "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+      "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+      "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+    }
+  },
+  "renderer": {
+    "name": "react-dom",
+    "version": "19.3.0",
+    "integrity": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==",
+    "sourceFiles": {
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "cjs/react-dom-client.development.js": "c10b5e5ad37ca22c88b58bf4ada9a3b655ab79934c0b5cc6bad26f42c774584f"
+    }
+  },
+  "scope": "Actual original MUI and React DOM in Chromium; DOM option/value/change contracts only, not physical native picker evidence.",
+  "fixtures": [
+    {
+      "input": {
+        "name": "default native first option",
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "uncontrolled value and native event",
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "change": ["b"]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "value": "b",
+          "name": "",
+          "selected": ["b"],
+          "current": true,
+          "child": "undefined"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "controlled string declines a native change",
+        "props": {
+          "value": "a"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "change": ["b"]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "value": "b",
+          "name": "",
+          "selected": ["b"],
+          "current": true,
+          "child": "undefined"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "numeric value stringifies",
+        "props": {
+          "value": 2
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": 1,
+            "text": "One"
+          },
+          {
+            "id": "b",
+            "value": 2,
+            "text": "Two"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "2",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "1",
+              "label": "One",
+              "text": "One",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "2",
+              "label": "Two",
+              "text": "Two",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "missing controlled value falls back to first own-enabled option",
+        "props": {
+          "value": "missing"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "A",
+            "disabled": true
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "B"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "A",
+              "text": "A",
+              "selected": false,
+              "disabled": true,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "B",
+              "text": "B",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "uncontrolled skips a disabled group initially",
+        "options": [
+          {
+            "id": "g",
+            "label": "Group",
+            "disabled": true,
+            "options": [
+              {
+                "id": "a",
+                "value": "a",
+                "text": "A"
+              }
+            ]
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "B"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "A",
+              "text": "A",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": true
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "B",
+              "text": "B",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "authored missing value fallback inspects own disabled rather than group",
+        "props": {
+          "value": "missing"
+        },
+        "options": [
+          {
+            "id": "g",
+            "label": "Group",
+            "disabled": true,
+            "options": [
+              {
+                "id": "a",
+                "value": "a",
+                "text": "A"
+              }
+            ]
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "B"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "A",
+              "text": "A",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": true
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "B",
+              "text": "B",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "matching disabled option can be selected programmatically",
+        "props": {
+          "value": "a"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "A",
+            "disabled": true
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "B"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "A",
+              "text": "A",
+              "selected": true,
+              "disabled": true,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "B",
+              "text": "B",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "multiple has no implicit initial selection",
+        "props": {
+          "inputProps": {
+            "multiple": true
+          }
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "change": ["b", "c"]
+          },
+          {
+            "change": []
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "",
+          "selectedIndex": -1,
+          "multiple": true,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": true,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "",
+          "selectedIndex": -1,
+          "multiple": true,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "value": "b",
+          "name": "",
+          "selected": ["b", "c"],
+          "current": true,
+          "child": "undefined"
+        },
+        {
+          "value": "",
+          "name": "",
+          "selected": [],
+          "current": true,
+          "child": "undefined"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "multiple exposes first string and option order",
+        "props": {
+          "defaultValue": ["c", "a"],
+          "inputProps": {
+            "multiple": true
+          }
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "change": ["b", "c"]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": true,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": true,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "value": "b",
+          "name": "",
+          "selected": ["b", "c"],
+          "current": true,
+          "child": "undefined"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "controlled multiple restores authored selection",
+        "props": {
+          "value": ["a", "c"],
+          "inputProps": {
+            "multiple": true
+          }
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "change": ["b"]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": true,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": true,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "value": "b",
+          "name": "",
+          "selected": ["b"],
+          "current": true,
+          "child": "undefined"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "empty option is a real value",
+        "props": {
+          "defaultValue": ""
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "",
+            "text": "None"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          }
+        ],
+        "actions": [
+          {
+            "change": ["b"]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "",
+              "label": "None",
+              "text": "None",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "",
+              "label": "None",
+              "text": "None",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "value": "b",
+          "name": "",
+          "selected": ["b"],
+          "current": true,
+          "child": "undefined"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "option text supplies absent value and collapses HTML spaces",
+        "options": [
+          {
+            "id": "a",
+            "text": "  Alpha\n  Beta  "
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "Alpha Beta",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "Alpha Beta",
+              "label": "Alpha Beta",
+              "text": "Alpha Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "option label attribute differs from text value",
+        "options": [
+          {
+            "id": "a",
+            "label": "Visible",
+            "text": "Value text"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "Value text",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "Value text",
+              "label": "Visible",
+              "text": "Value text",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "duplicate values single selects first match",
+        "props": {
+          "value": "same"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "same",
+            "text": "First"
+          },
+          {
+            "id": "b",
+            "value": "same",
+            "text": "Second"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "same",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "same",
+              "label": "First",
+              "text": "First",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "same",
+              "label": "Second",
+              "text": "Second",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "duplicate values multiple selects every match",
+        "props": {
+          "value": ["same"],
+          "inputProps": {
+            "multiple": true
+          }
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "same",
+            "text": "First"
+          },
+          {
+            "id": "b",
+            "value": "same",
+            "text": "Second"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "same",
+          "selectedIndex": 0,
+          "multiple": true,
+          "options": [
+            {
+              "id": "a",
+              "value": "same",
+              "label": "First",
+              "text": "First",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "same",
+              "label": "Second",
+              "text": "Second",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "uncontrolled selection survives value mutation on the same option node",
+        "props": {
+          "defaultValue": "b"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "options": [
+              {
+                "id": "a",
+                "value": "a",
+                "text": "Alpha"
+              },
+              {
+                "id": "b",
+                "value": "changed",
+                "text": "Beta"
+              },
+              {
+                "id": "c",
+                "value": "c",
+                "text": "Gamma"
+              }
+            ]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "changed",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "changed",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "uncontrolled selected removal chooses first eligible remaining option",
+        "props": {
+          "defaultValue": "b"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "options": [
+              {
+                "id": "a",
+                "value": "a",
+                "text": "Alpha"
+              },
+              {
+                "id": "c",
+                "value": "c",
+                "text": "Gamma"
+              }
+            ]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "uncontrolled selected key follows reorder",
+        "props": {
+          "defaultValue": "b"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "options": [
+              {
+                "id": "c",
+                "value": "c",
+                "text": "Gamma"
+              },
+              {
+                "id": "b",
+                "value": "b",
+                "text": "Beta"
+              },
+              {
+                "id": "a",
+                "value": "a",
+                "text": "Alpha"
+              }
+            ]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "changing defaultValue alone does not reset selection",
+        "props": {
+          "defaultValue": "b"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "props": {
+              "defaultValue": "c"
+            }
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "changing multiple resets to authored default",
+        "props": {
+          "defaultValue": ["b"]
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "props": {
+              "inputProps": {
+                "multiple": true
+              }
+            }
+          },
+          {
+            "props": {
+              "inputProps": {
+                "multiple": false
+              }
+            }
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": true,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "null value behaves as uncontrolled",
+        "props": {
+          "value": null
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "change": ["b"]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "value": "b",
+          "name": "",
+          "selected": ["b"],
+          "current": true,
+          "child": "undefined"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "controlled becomes uncontrolled preserving its last DOM state",
+        "props": {
+          "value": "b"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "props": {
+              "$remove": ["value"]
+            }
+          },
+          {
+            "change": ["c"]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "c",
+          "selectedIndex": 2,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "value": "c",
+          "name": "",
+          "selected": ["c"],
+          "current": true,
+          "child": "undefined"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "all disabled without an authored value has no selection",
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "A",
+            "disabled": true
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "",
+          "selectedIndex": -1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "A",
+              "text": "A",
+              "selected": false,
+              "disabled": true,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "no options has empty string and minus-one index",
+        "options": []
+      },
+      "states": [
+        {
+          "value": "",
+          "selectedIndex": -1,
+          "multiple": false,
+          "options": []
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "child selected attribute initializes uncontrolled state",
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta",
+            "selected": true
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "SelectNative composition",
+        "component": "SelectNative",
+        "props": {
+          "defaultValue": "b",
+          "name": "choice"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "change": ["c"]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "c",
+          "selectedIndex": 2,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "value": "c",
+          "name": "choice",
+          "selected": ["c"],
+          "current": true,
+          "child": "undefined"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "TextFieldNative composition",
+        "component": "TextFieldNative",
+        "props": {
+          "defaultValue": "b",
+          "name": "choice"
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "change": ["c"]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "c",
+          "selectedIndex": 2,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "value": "c",
+          "name": "choice",
+          "selected": ["c"],
+          "current": true,
+          "child": "undefined"
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "empty option label falls back to text",
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "label": "",
+            "text": "Alpha"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "single list size has no implicit selection",
+        "props": {
+          "inputProps": {
+            "size": 4
+          }
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "",
+          "selectedIndex": -1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "single list size retains an authored selection",
+        "props": {
+          "defaultValue": "b",
+          "inputProps": {
+            "size": 4
+          }
+        },
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "b",
+          "selectedIndex": 1,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "changing selected attributes updates the same uncontrolled option",
+        "options": [
+          {
+            "id": "a",
+            "value": "a",
+            "text": "Alpha"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "text": "Beta"
+          },
+          {
+            "id": "c",
+            "value": "c",
+            "text": "Gamma"
+          }
+        ],
+        "actions": [
+          {
+            "options": [
+              {
+                "id": "a",
+                "value": "a",
+                "text": "Alpha",
+                "selected": false
+              },
+              {
+                "id": "b",
+                "value": "b",
+                "text": "Beta",
+                "selected": false
+              },
+              {
+                "id": "c",
+                "value": "c",
+                "text": "Gamma",
+                "selected": true
+              }
+            ]
+          }
+        ]
+      },
+      "states": [
+        {
+          "value": "a",
+          "selectedIndex": 0,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        },
+        {
+          "value": "c",
+          "selectedIndex": 2,
+          "multiple": false,
+          "options": [
+            {
+              "id": "a",
+              "value": "a",
+              "label": "Alpha",
+              "text": "Alpha",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "b",
+              "value": "b",
+              "label": "Beta",
+              "text": "Beta",
+              "selected": false,
+              "disabled": false,
+              "groupDisabled": false
+            },
+            {
+              "id": "c",
+              "value": "c",
+              "label": "Gamma",
+              "text": "Gamma",
+              "selected": true,
+              "disabled": false,
+              "groupDisabled": false
+            }
+          ]
+        }
+      ],
+      "trace": []
+    }
+  ]
+}

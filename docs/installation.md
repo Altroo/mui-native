@@ -13,7 +13,7 @@ Install the generated system, material and native-host archives together in the 
 ```sh
 npm install /absolute/path/artifacts/packages/altroo-mui-native-system-0.0.0-dev.0.tgz \
   /absolute/path/artifacts/packages/altroo-mui-native-0.0.0-dev.0.tgz \
-  /absolute/path/artifacts/packages/altroo-mui-native-host-0.0.1-dev.0.tgz \
+  /absolute/path/artifacts/packages/altroo-mui-native-host-0.0.2-dev.0.tgz \
   /absolute/path/artifacts/packages/altroo-mui-native-compat-0.0.0-dev.0.tgz
 ```
 
@@ -43,4 +43,4 @@ Use the catalog as a setup reference. An npm installation guide with alpha versi
 
 SDK 58 uses React Native's strict public TypeScript API. Native refs use `ViewInstance` and `TextInputInstance`; DOM refs are incompatible. The generated native tsconfig selects the `react-native` condition. Keep `skipLibCheck: true`, as recommended by the [React Native migration guide](https://reactnative.dev/docs/strict-typescript-api), because upstream generated declarations contain internal errors. The consumer fixture still checks component usage, native refs, theme augmentation and rejection of unsupported imports.
 
-Native [Select and TextField select](select.md) use the same material/system/host archives and native rebuild requirement as Menu. They add no picker or web-runtime dependency. NativeSelect/platform-picker mode remains unsupported; use MenuItem children with the default Select branch.
+Native [Select and TextField select](select.md) use the same material/system/host archives and native rebuild requirement as Menu. They add no picker or web-runtime dependency. For platform-native selection, use option/optgroup configuration with [NativeSelect or Select native](native-select.md). The changed presentation acknowledgement protocol requires native-host 0.0.2-dev.0 and a native rebuild. Use MenuItem children with the default Select branch.

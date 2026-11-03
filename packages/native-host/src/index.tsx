@@ -13,4 +13,6 @@ export type {
   NativePickerSelection,
   NativePickerDismiss,
   NativePickerDismissReason,
+  NativePickerPresentation,
+  NativePickerPresentationContext,
 } from './nativePicker';

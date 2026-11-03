@@ -25,7 +25,7 @@ internal data class PickerOption(val id: String, val label: String, val groupId:
 private data class PickerRow(val label: String, val option: PickerOption?)
 private data class PickerConfiguration(val multiple: Boolean, val title: String, val doneText: String, val cancelText: String, val scheme: String)
 private data class PickerRowTag(val id: String, val revision: String)
-private class PickerClose(val session: String, var reason: String = "cancel", var notify: Boolean = true)
+private class PickerClose(val session: String, var reason: String = "cancel", var notify: Boolean = true, var terminal: Boolean = true, var reported: Boolean = false)
 
 class AltrooMUINativePicker(private val reactContext: ThemedReactContext) : ReactViewGroup(reactContext), LifecycleEventListener {
   var active = false
@@ -44,6 +44,8 @@ class AltrooMUINativePicker(private val reactContext: ThemedReactContext) : Reac
   private var configuration: PickerConfiguration? = null
   private val presentation = PickerPresentationState()
   private var renderedRevision = ""
+  private var acknowledgedSession = ""
+  private val closing = mutableSetOf<PickerClose>()
   private var observing = false
   init {
     pointerEvents = PointerEvents.NONE
@@ -68,6 +70,18 @@ class AltrooMUINativePicker(private val reactContext: ThemedReactContext) : Reac
     UIManagerHelper.getEventDispatcher(reactContext)?.dispatchEvent(
       HostEvent(UIManagerHelper.getSurfaceId(reactContext), id, name, data, true))
   }
+  private fun presentationEvent(session: String, state: String, reason: String, terminal: Boolean) {
+    if (terminal && session == sessionId) acknowledgedSession = session
+    val data = Arguments.createMap().apply {
+      putString("sessionId", session); putString("state", state); putString("reason", reason); putBoolean("terminal", terminal)
+    }
+    UIManagerHelper.getEventDispatcher(reactContext)?.dispatchEvent(
+      HostEvent(UIManagerHelper.getSurfaceId(reactContext), id, "topPickerPresentation", data, true))
+  }
+  private fun acknowledgeIdle() {
+    if (!active && dialog == null && closing.isEmpty() && sessionId.isNotEmpty() && acknowledgedSession != sessionId)
+      presentationEvent(sessionId, "dismissed", "programmatic", true)
+  }
   private fun rebuildRows() {
     var previous = ""
     rows = buildList {
@@ -80,7 +94,8 @@ class AltrooMUINativePicker(private val reactContext: ThemedReactContext) : Reac
   private fun closePicker(reason: String, notify: Boolean) {
     val current = dialog ?: return
     close?.apply {
-      this.reason = reason; this.notify = notify
+      this.reason = reason; this.notify = notify; this.terminal = reason != "configuration"
+      closing.add(this)
       if (notify) presentation.consume(session, sessionId)
     }
     dialog = null; adapter = null; close = null
@@ -91,6 +106,7 @@ class AltrooMUINativePicker(private val reactContext: ThemedReactContext) : Reac
     if (gate != PickerGate.CONSUMED) {
       presentation.consume(sessionId, sessionId)
       emit("topPickerDismiss", sessionId, reason)
+      presentationEvent(sessionId, "dismissed", reason, true)
     }
   }
   fun syncPicker() {
@@ -99,7 +115,7 @@ class AltrooMUINativePicker(private val reactContext: ThemedReactContext) : Reac
     val gate = presentation.gate(active, sessionId, isAttachedToWindow,
       isShown && windowVisibility == View.VISIBLE,
       reactContext.reactApplicationContext.lifecycleState == LifecycleState.RESUMED, valid, options.size)
-    if (gate == PickerGate.INACTIVE) { closePicker("programmatic", false); return }
+    if (gate == PickerGate.INACTIVE) { closePicker("programmatic", false); acknowledgeIdle(); return }
     if (gate == PickerGate.DETACHED) return
     if (dialog != null && close?.session != sessionId) closePicker("replaced", false)
     if (gate == PickerGate.CONSUMED) return
@@ -154,16 +170,21 @@ class AltrooMUINativePicker(private val reactContext: ThemedReactContext) : Reac
       if (ownsPresentation()) { state.reason = "cancel"; presentation.consume(state.session, sessionId) }
     }
     current.setOnDismissListener {
+      if (state.reported) return@setOnDismissListener
+      state.reported = true; closing.remove(state)
       if (dialog === current) { dialog = null; adapter = null; close = null }
       if (state.notify) {
         presentation.consume(state.session, sessionId)
         emit("topPickerDismiss", state.session, state.reason)
       }
+      presentationEvent(state.session, "dismissed", state.reason, state.terminal)
+      acknowledgeIdle()
     }
     dialog = current; close = state; adapter = listAdapter; configuration = nextConfiguration
     try { current.show() } catch (_: android.view.WindowManager.BadTokenException) {
       dialog = null; adapter = null; close = null; state.notify = false; unavailable(); return
     }
+    presentationEvent(state.session, "presented", "", false)
     current.listView.setOnItemClickListener { _, view, _, _ ->
       val tag = view.tag as? PickerRowTag ?: return@setOnItemClickListener
       if (!active || dialog !== current || state.session != sessionId || tag.revision != revision) return@setOnItemClickListener

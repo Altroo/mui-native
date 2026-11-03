@@ -47,6 +47,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+Native select string/option reconciliation also adapts the MIT-licensed
+React DOM 19.3.0 select behavior recorded in upstream/native-selection.json.
+
 The native interaction host integrates React Native Fabric and public
 Pressability/View APIs. Related API adapters follow MIT-licensed React Native
 0.88.1 source as recorded in upstream/native-host.json.

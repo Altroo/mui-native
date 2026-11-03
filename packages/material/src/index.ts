@@ -85,6 +85,7 @@ export { Select, selectClasses, getSelectUtilityClasses } from './select';
 export type {
   SelectProps,
   BaseSelectProps,
+  NativeSelectModeProps,
   FilledSelectProps,
   StandardSelectProps,
   OutlinedSelectProps,
@@ -100,3 +101,21 @@ export type {
   SelectClasses,
   SelectClassKey,
 } from './select';
+
+export { NativeSelect, nativeSelectClasses, getNativeSelectUtilityClasses } from './nativeSelect';
+export type {
+  NativeSelectProps,
+  NativeSelectInputProps,
+  NativeSelectInputHandle,
+  NativeSelectTarget,
+  NativeSelectOption,
+  NativeSelectOptionCollection,
+  NativeSelectChangeEvent,
+  NativeSelectFocusEvent,
+  NativeSelectBlurEvent,
+  NativeSelectClasses,
+  NativeSelectClassKey,
+  NativeSelectIconProps,
+  NativeSelectOwnerState,
+  NativeSelectPickerProps,
+} from './nativeSelect';

@@ -28,6 +28,15 @@ export interface NativePickerDismiss {
   sessionId: string;
   reason: NativePickerDismissReason;
 }
+export interface NativePickerPresentation {
+  sessionId: string;
+  state: 'presented' | 'dismissed';
+  reason: string;
+  terminal: boolean;
+}
+export interface NativePickerPresentationContext {
+  readonly requestKey?: string;
+}
 export interface NativePickerProps extends Omit<ViewProps, 'children'> {
   children?: never;
   open: boolean;
@@ -41,6 +50,10 @@ export interface NativePickerProps extends Omit<ViewProps, 'children'> {
   colorScheme?: 'system' | 'light' | 'dark';
   onSelection?: (event: NativeSyntheticEvent<NativePickerSelection>) => void;
   onDismiss?: (event: NativeSyntheticEvent<NativePickerDismiss>) => void;
+  onPresentationChange?: (
+    event: NativeSyntheticEvent<NativePickerPresentation>,
+    context: NativePickerPresentationContext,
+  ) => void;
 }
 function normalizeOptions(
   options: readonly NativePickerOption[],
@@ -93,6 +106,7 @@ export const NativePicker: React.ForwardRefExoticComponent<
     children: unsupportedChildren,
     onSelection,
     onDismiss,
+    onPresentationChange,
     ...viewProps
   },
   ref,
@@ -106,8 +120,17 @@ export const NativePicker: React.ForwardRefExoticComponent<
   // The native revision is a small unique token, not the serialized option list.
   const signature = JSON.stringify([multiple, normalized]);
   const model = useMemo(() => ({ options: normalized, revision: token() }), [signature]);
-  const [sessionId, setSessionId] = useState('');
+  const [session, setSession] = useState<{ id: string; requestKey?: string }>({ id: '' });
+  const sessionId = session.id;
+  const retired = useRef('');
+  const known = useRef(new Map<string, { requestKey?: string; terminal: boolean }>());
   const dismissed = useRef('');
+  const active =
+    open &&
+    Boolean(sessionId) &&
+    sessionId !== retired.current &&
+    sessionId !== dismissed.current &&
+    session.requestKey === requestKey;
   const live = useRef<{
     active: boolean;
     sessionId: string;
@@ -116,19 +139,26 @@ export const NativePicker: React.ForwardRefExoticComponent<
     options: readonly PickerOption[];
     onSelection: NativePickerProps['onSelection'];
     onDismiss: NativePickerProps['onDismiss'];
+    onPresentationChange: NativePickerProps['onPresentationChange'];
   } | null>(null);
   useLayoutEffect(() => {
-    setSessionId(open ? token() : '');
+    if (open) setSession({ id: token(), requestKey });
+    else retired.current = sessionId;
   }, [open, requestKey]);
   useLayoutEffect(() => {
+    if (sessionId && !known.current.has(sessionId))
+      known.current.set(sessionId, { requestKey: session.requestKey, terminal: false });
+    for (const [id, value] of known.current)
+      if (id !== sessionId && value.terminal) known.current.delete(id);
     live.current = {
-      active: open && Boolean(sessionId) && dismissed.current !== sessionId,
+      active,
       sessionId,
       revision: model.revision,
       multiple,
       options: model.options,
       onSelection,
       onDismiss,
+      onPresentationChange,
     };
     return () => {
       live.current = null;
@@ -164,12 +194,35 @@ export const NativePicker: React.ForwardRefExoticComponent<
     event.persist();
     current.onDismiss?.(event);
   }, []);
+  const presentation = useCallback((event: NativeSyntheticEvent<NativePickerPresentation>) => {
+    const current = live.current,
+      data = event.nativeEvent;
+    const owner = known.current.get(data.sessionId);
+    if (
+      !current ||
+      !owner ||
+      owner.terminal ||
+      !['presented', 'dismissed'].includes(data.state) ||
+      typeof data.terminal !== 'boolean' ||
+      (data.state === 'presented' && data.terminal)
+    )
+      return;
+    if (data.terminal) {
+      owner.terminal = true;
+      if (current.sessionId === data.sessionId) {
+        current.active = false;
+        dismissed.current = data.sessionId;
+      }
+    }
+    event.persist();
+    current.onPresentationChange?.(event, { requestKey: owner.requestKey });
+  }, []);
   const Host = (implementation ??= require('./AltrooMUINativePickerNativeComponent')).default;
   return (
     <Host
       {...viewProps}
       ref={ref}
-      active={open && Boolean(sessionId)}
+      active={active}
       sessionId={sessionId}
       revision={model.revision}
       options={model.options}
@@ -180,6 +233,7 @@ export const NativePicker: React.ForwardRefExoticComponent<
       colorScheme={colorScheme}
       onPickerSelection={selection}
       onPickerDismiss={dismiss}
+      onPickerPresentation={presentation}
       collapsable={false}
       accessible={false}
       accessibilityElementsHidden

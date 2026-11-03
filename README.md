@@ -118,3 +118,5 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Upstream collaboration proposal, not submitted](docs/upstream-proposal.md)
 
 Original implementation: [MIT](LICENSE). Upstream references and notices: [NOTICE](NOTICE), `upstream/licenses/`, and `upstream/state.json`.
+
+NativeSelect and the native Select/TextField branch use platform picker rows with string/selectedOptions events and native refs. See the [native selection guide](docs/native-select.md). Physical device gates remain open.

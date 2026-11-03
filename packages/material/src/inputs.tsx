@@ -1,5 +1,13 @@
 import { useTheme, useSx, useComponentStyle } from './themeProvider';
-import React, { forwardRef, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, {
+  forwardRef,
+  useContext,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   View,
   Text,
@@ -20,6 +28,7 @@ import {
   diagnostic,
   type SlotProps,
   type SxProps,
+  type NativeStyle,
 } from '@altroo/mui-native-system';
 import { Typography } from './typography';
 import { FormContext, useControlled, type InputChangeEvent } from './formState';
@@ -326,7 +335,20 @@ function InputEngine({
       : (host.defaultValue ?? '')
     : defaultValue;
   const [text, setText] = useControlled(controlledValue, initialInputValue);
-  const filled = control ? inputControlFilled(text) : String(text ?? '').length > 0;
+  const initiallyControlled = useRef(controlledValue != null).current;
+  const [nativeValue, setNativeValue] = useState<string>();
+  const notifyNativeValue = useCallback(
+    (next: string) => {
+      if (!initiallyControlled) setNativeValue(next);
+    },
+    [initiallyControlled],
+  );
+  const filled =
+    control === 'nativeSelect' && !initiallyControlled && nativeValue !== undefined
+      ? inputControlFilled(nativeValue)
+      : control
+        ? inputControlFilled(text)
+        : String(text ?? '').length > 0;
   const ownerState = {
     ...props,
     ...ownerStateOverride,
@@ -437,6 +459,12 @@ function InputEngine({
     (host as InputBaseComponentProps & { variant?: string }).variant ?? variant;
   // Native left/right values already swap in RTL when that platform option is enabled.
   const mapPhysicalSides = I18nManager.isRTL && !I18nManager.doLeftAndRightSwapInRTL;
+  const selectionCaret = selectionVariant === 'standard' ? 24 : 32;
+  const selectionEndAdornment = Boolean(
+    control &&
+      endAdornment &&
+      !(control === 'nativeSelect' && (host as Record<string, unknown>).multiple),
+  );
   const leftAdornment = mapPhysicalSides ? endAdornment : startAdornment;
   const rightAdornment = mapPhysicalSides ? startAdornment : endAdornment;
   const topInset = Number(callerPadding.paddingTop ?? themedPadding.paddingTop ?? paddingTop);
@@ -507,6 +535,33 @@ function InputEngine({
     'aria-describedby': _hostAriaDescription,
     ...hostNative
   } = input;
+  const selectionBaseStyle: StyleProp<NativeStyle> = [
+    {
+      flex: 1,
+      minWidth: 0,
+      color: disabled ? theme.palette.text.disabled : theme.palette.text.primary,
+      paddingTop,
+      paddingBottom,
+      paddingLeft: framed && !leftAdornment ? 14 : 0,
+      paddingRight: framed && !rightAdornment ? 14 : 0,
+      ...(control
+        ? {
+            [mapPhysicalSides ? 'paddingLeft' : 'paddingRight']: selectionEndAdornment
+              ? 0
+              : selectionCaret,
+            ...(selectionVariant === 'standard' ? { minWidth: 16 } : {}),
+          }
+        : {}),
+      minHeight,
+      maxHeight,
+      height,
+      textAlignVertical: multiline ? 'top' : 'center',
+    },
+    typography,
+    themedPadding,
+  ];
+  const authoredInputStyle = [host.style, callerPadding];
+  const inputStyle = [selectionBaseStyle, ...authoredInputStyle];
   return (
     <NativeInputValueContext.Provider value={undefined}>
       <Root
@@ -529,6 +584,9 @@ function InputEngine({
             alignSelf: fullWidth ? 'stretch' : undefined,
             paddingLeft: framed && leftAdornment ? 14 : 0,
             paddingRight: framed && rightAdornment ? 14 : 0,
+            ...(selectionEndAdornment
+              ? { [mapPhysicalSides ? 'paddingLeft' : 'paddingRight']: selectionCaret }
+              : {}),
             backgroundColor: variant === 'filled' ? theme.palette.action.hover : 'transparent',
             borderTopLeftRadius: variant === 'filled' ? theme.shape.borderRadius : undefined,
             borderTopRightRadius: variant === 'filled' ? theme.shape.borderRadius : undefined,
@@ -556,6 +614,12 @@ function InputEngine({
                   error: (host as Record<string, unknown>).error ?? error,
                   required: (host as Record<string, unknown>).required ?? required,
                   defaultValue: initialInputValue as any,
+                  nativeSelectionEndAdornment: selectionEndAdornment,
+                  nativeSelectionBaseStyle: selectionBaseStyle,
+                  nativeSelectionAuthoredStyle: authoredInputStyle,
+                  ...(control === 'nativeSelect'
+                    ? { nativeSelectionNotify: notifyNativeValue }
+                    : {}),
                 }
               : {})}
             {...(Host !== TextInput ? { ownerState } : {})}
@@ -595,9 +659,10 @@ function InputEngine({
               if (control) {
                 const change = event as unknown as InputChangeEvent;
                 setText(change.target.value);
-                if (!nativeHostEventsLast) (host.onChange as any)?.(event, child);
-                (onChange as any)?.(change, child);
-                if (nativeHostEventsLast) (host.onChange as any)?.(event, child);
+                const args = control === 'nativeSelect' ? [event] : [event, child];
+                if (!nativeHostEventsLast) (host.onChange as any)?.(...args);
+                (onChange as any)?.(...args);
+                if (nativeHostEventsLast) (host.onChange as any)?.(...args);
                 return;
               }
               const next = event.nativeEvent.text;
@@ -629,32 +694,7 @@ function InputEngine({
               if (multiline) setContentHeight(event.nativeEvent.contentSize.height);
               input.onContentSizeChange?.(event);
             }}
-            style={[
-              {
-                flex: 1,
-                minWidth: 0,
-                color: disabled ? theme.palette.text.disabled : theme.palette.text.primary,
-                paddingTop,
-                paddingBottom,
-                paddingLeft: framed && !leftAdornment ? 14 : 0,
-                paddingRight: framed && !rightAdornment ? 14 : 0,
-                ...(control
-                  ? {
-                      [mapPhysicalSides ? 'paddingLeft' : 'paddingRight']:
-                        selectionVariant === 'standard' ? 24 : 32,
-                      ...(selectionVariant === 'standard' ? { minWidth: 16 } : {}),
-                    }
-                  : {}),
-                minHeight,
-                maxHeight,
-                height,
-                textAlignVertical: multiline ? 'top' : 'center',
-              },
-              typography,
-              themedPadding,
-              host.style,
-              callerPadding,
-            ]}
+            style={inputStyle}
           />
         </FormContext.Provider>
         {content(endAdornment)}

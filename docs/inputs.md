@@ -56,4 +56,6 @@ Component tests exercise controlled/uncontrolled state, host precedence, restric
 
 This is a declared subset. Full CSS classes/selectors/animations, browser validation/autofill/pointer behavior, all adornment styling, global browser ID associations and complete upstream export/prop equivalence remain unfinished. Multiple-input registration now emits a native diagnostic. Current iOS/Android rendering, keyboards, screen readers, RTL, font scaling, historical crash fixes and release performance require separate native evidence. No alpha or complete version-support claim is made.
 
-[Native Select and TextField select](select.md) reuse these Input and form-state contracts with a native combobox host, raw values and a SelectInputHandle ref. The default selection branch mounts no editable or hidden TextInput. TextField adds slots.select/slotProps.select alongside legacy SelectProps; NativeSelect/platform-picker mode remains unfinished.
+[Native Select and TextField select](select.md) reuse these Input and form-state contracts with a native combobox host, raw values and a SelectInputHandle ref. The default selection branch mounts no editable or hidden TextInput. TextField adds slots.select/slotProps.select alongside legacy SelectProps; NativeSelect/platform-picker mode has a separate [native selection guide](native-select.md).
+
+See [native selection](native-select.md) for NativeSelect and Select/TextField platform-picker composition, string events and native handle routing. Native-host 0.0.2-dev.0 requires rebuilding the application.

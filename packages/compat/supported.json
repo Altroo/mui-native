@@ -67,7 +67,10 @@
       "Menu/menuClasses",
       "Select",
       "Select/selectClasses",
-      "Select/SelectInput"
+      "Select/SelectInput",
+      "NativeSelect",
+      "NativeSelect/NativeSelectInput",
+      "NativeSelect/nativeSelectClasses"
     ]
   },
   "@mui/system": {

@@ -2,6 +2,7 @@ export { Select as default, Select, selectClasses, getSelectUtilityClasses } fro
 export type {
   SelectProps,
   BaseSelectProps,
+  NativeSelectModeProps,
   FilledSelectProps,
   StandardSelectProps,
   OutlinedSelectProps,
