@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "55c5090572ffa36548d933b6604001a73b9fe03d8ac46fb66b7c09490338557e",
+  "nativeSourceSha256": "62ceec7867d4b121e4bde75072ea364373104569c617e50d32a475f1f34ba6ae",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -99339,7 +99339,14 @@
         "Options"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopperPlacementType",
+          "file": "src/popper/types.ts",
+          "line": 3,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopperRootSlotPropsOverrides",
@@ -99906,7 +99913,14 @@
         "Options"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PopperPlacementType",
+          "file": "src/popper/types.ts",
+          "line": 3,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PopperRootSlotPropsOverrides",
@@ -193031,6 +193045,1017 @@
       "members": [],
       "references": [
         "PopoverVirtualElement",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopperPlacementType",
+      "file": "src/popper/types.ts",
+      "line": 3,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperSide",
+      "file": "src/popper/types.ts",
+      "line": 19,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperPhase",
+      "file": "src/popper/types.ts",
+      "line": 20,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperRect",
+      "file": "src/popper/types.ts",
+      "line": 30,
+      "kind": "type",
+      "members": [
+        {
+          "name": "x",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "x: number;",
+          "line": 31,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "y",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "y: number;",
+          "line": 32,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "width",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "width: number;",
+          "line": 33,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "height",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "height: number;",
+          "line": 34,
+          "kind": "property",
+          "type": "number"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PopperVirtualElement",
+      "file": "src/popper/types.ts",
+      "line": 36,
+      "kind": "type",
+      "members": [
+        {
+          "name": "getBoundingClientRect",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "getBoundingClientRect(): Pick<NativePopperRect, 'width' | 'height'> &\n    ({ x: number; y: number } | { left: number; top: number });",
+          "line": 37,
+          "kind": "property",
+          "type": "getBoundingClientRect(): Pick<NativePopperRect, 'width' | 'height'> &\n    ({ x: number; y: number } | { left: number; top: number });"
+        },
+        {
+          "name": "contextElement",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "contextElement?: ViewInstance;",
+          "line": 39,
+          "kind": "property",
+          "type": "ViewInstance"
+        }
+      ],
+      "references": [
+        "NativePopperRect",
+        "Pick",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperAnchor",
+      "file": "src/popper/types.ts",
+      "line": 41,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "PopperVirtualElement",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperBoundary",
+      "file": "src/popper/types.ts",
+      "line": 42,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "PopperVirtualElement",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperPadding",
+      "file": "src/popper/types.ts",
+      "line": 47,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativePopperSide",
+        "Partial",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperOverflowOptions",
+      "file": "src/popper/types.ts",
+      "line": 48,
+      "kind": "type",
+      "members": [
+        {
+          "name": "placement",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "placement?: PopperPlacementType;",
+          "line": 49,
+          "kind": "property",
+          "type": "PopperPlacementType"
+        },
+        {
+          "name": "strategy",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "strategy?: 'absolute' | 'fixed';",
+          "line": 50,
+          "kind": "property",
+          "type": "'absolute' | 'fixed'"
+        },
+        {
+          "name": "boundary",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "boundary?: NativePopperBoundary;",
+          "line": 51,
+          "kind": "property",
+          "type": "NativePopperBoundary"
+        },
+        {
+          "name": "rootBoundary",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "rootBoundary?: 'viewport' | 'document';",
+          "line": 52,
+          "kind": "property",
+          "type": "'viewport' | 'document'"
+        },
+        {
+          "name": "elementContext",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elementContext?: 'reference' | 'popper';",
+          "line": 53,
+          "kind": "property",
+          "type": "'reference' | 'popper'"
+        },
+        {
+          "name": "altBoundary",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "altBoundary?: boolean;",
+          "line": 54,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "padding",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "padding?: NativePopperPadding;",
+          "line": 55,
+          "kind": "property",
+          "type": "NativePopperPadding"
+        }
+      ],
+      "references": [
+        "NativePopperBoundary",
+        "NativePopperPadding",
+        "PopperPlacementType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperMeasurements",
+      "file": "src/popper/types.ts",
+      "line": 57,
+      "kind": "type",
+      "members": [
+        {
+          "name": "reference",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "reference: NativePopperRect;",
+          "line": 58,
+          "kind": "property",
+          "type": "NativePopperRect"
+        },
+        {
+          "name": "popper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "popper: NativePopperRect;",
+          "line": 59,
+          "kind": "property",
+          "type": "NativePopperRect"
+        },
+        {
+          "name": "viewport",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "viewport: NativePopperRect;",
+          "line": 60,
+          "kind": "property",
+          "type": "NativePopperRect"
+        },
+        {
+          "name": "document",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "document: NativePopperRect;",
+          "line": 61,
+          "kind": "property",
+          "type": "NativePopperRect"
+        },
+        {
+          "name": "clipping",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "clipping: { reference: NativePopperRect | null; popper: NativePopperRect | null };",
+          "line": 62,
+          "kind": "property",
+          "type": "{ reference: NativePopperRect | null; popper: NativePopperRect | null }"
+        },
+        {
+          "name": "clipping.reference",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "reference: NativePopperRect | null;",
+          "line": 62,
+          "kind": "property",
+          "type": "NativePopperRect | null"
+        },
+        {
+          "name": "clipping.popper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "popper: NativePopperRect | null",
+          "line": 62,
+          "kind": "property",
+          "type": "NativePopperRect | null"
+        },
+        {
+          "name": "offsetParent",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "offsetParent: { width: number; height: number; clientTop?: number; clientLeft?: number };",
+          "line": 63,
+          "kind": "property",
+          "type": "{ width: number; height: number; clientTop?: number; clientLeft?: number }"
+        },
+        {
+          "name": "offsetParent.width",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "width: number;",
+          "line": 63,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "offsetParent.height",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "height: number;",
+          "line": 63,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "offsetParent.clientTop",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "clientTop?: number;",
+          "line": 63,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "offsetParent.clientLeft",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "clientLeft?: number",
+          "line": 63,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "pixelRatio",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "pixelRatio: number;",
+          "line": 64,
+          "kind": "property",
+          "type": "number"
+        }
+      ],
+      "references": [
+        "NativePopperRect"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperModifierArguments",
+      "file": "src/popper/types.ts",
+      "line": 66,
+      "kind": "type",
+      "members": [
+        {
+          "name": "state",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "state: NativePopperState;",
+          "line": 67,
+          "kind": "property",
+          "type": "NativePopperState"
+        },
+        {
+          "name": "instance",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "instance: NativePopperInstance;",
+          "line": 68,
+          "kind": "property",
+          "type": "NativePopperInstance"
+        },
+        {
+          "name": "name",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "name: string;",
+          "line": 69,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "options",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "options: Options;",
+          "line": 70,
+          "kind": "property",
+          "type": "Options"
+        }
+      ],
+      "references": [
+        "NativePopperInstance",
+        "NativePopperState",
+        "Options",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperModifier",
+      "file": "src/popper/types.ts",
+      "line": 72,
+      "kind": "type",
+      "members": [
+        {
+          "name": "name",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "name: Name;",
+          "line": 73,
+          "kind": "property",
+          "type": "Name"
+        },
+        {
+          "name": "enabled",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "enabled?: boolean;",
+          "line": 74,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "phase",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "phase?: NativePopperPhase;",
+          "line": 75,
+          "kind": "property",
+          "type": "NativePopperPhase"
+        },
+        {
+          "name": "fn",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "fn?: (args: NativePopperModifierArguments<Options>) => void | NativePopperState;",
+          "line": 76,
+          "kind": "property",
+          "type": "(args: NativePopperModifierArguments<Options>) => void | NativePopperState"
+        },
+        {
+          "name": "effect",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "effect?: (args: NativePopperModifierArguments<Options>) => void | (() => void);",
+          "line": 77,
+          "kind": "property",
+          "type": "(args: NativePopperModifierArguments<Options>) => void | (() => void)"
+        },
+        {
+          "name": "requires",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "requires?: string[];",
+          "line": 78,
+          "kind": "property",
+          "type": "string[]"
+        },
+        {
+          "name": "requiresIfExists",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "requiresIfExists?: string[];",
+          "line": 79,
+          "kind": "property",
+          "type": "string[]"
+        },
+        {
+          "name": "options",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "options?: Options;",
+          "line": 80,
+          "kind": "property",
+          "type": "Options"
+        },
+        {
+          "name": "data",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "data?: Record<string, any>;",
+          "line": 81,
+          "kind": "property",
+          "type": "Record<string, any>"
+        }
+      ],
+      "references": [
+        "Name",
+        "NativePopperModifierArguments",
+        "NativePopperPhase",
+        "NativePopperState",
+        "Options",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperOptions",
+      "file": "src/popper/types.ts",
+      "line": 83,
+      "kind": "type",
+      "members": [
+        {
+          "name": "placement",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "placement: PopperPlacementType;",
+          "line": 84,
+          "kind": "property",
+          "type": "PopperPlacementType"
+        },
+        {
+          "name": "strategy",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "strategy: 'absolute' | 'fixed';",
+          "line": 85,
+          "kind": "property",
+          "type": "'absolute' | 'fixed'"
+        },
+        {
+          "name": "modifiers",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "modifiers: NativePopperModifier[];",
+          "line": 86,
+          "kind": "property",
+          "type": "NativePopperModifier[]"
+        },
+        {
+          "name": "onFirstUpdate",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onFirstUpdate?: (state: NativePopperState) => void;",
+          "line": 87,
+          "kind": "event",
+          "type": "(state: NativePopperState) => void"
+        }
+      ],
+      "references": [
+        "NativePopperModifier",
+        "NativePopperState",
+        "PopperPlacementType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperState",
+      "file": "src/popper/types.ts",
+      "line": 89,
+      "kind": "type",
+      "members": [
+        {
+          "name": "placement",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "placement: PopperPlacementType;",
+          "line": 90,
+          "kind": "property",
+          "type": "PopperPlacementType"
+        },
+        {
+          "name": "orderedModifiers",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "orderedModifiers: NativePopperModifier[];",
+          "line": 91,
+          "kind": "property",
+          "type": "NativePopperModifier[]"
+        },
+        {
+          "name": "options",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "options: NativePopperOptions;",
+          "line": 92,
+          "kind": "property",
+          "type": "NativePopperOptions"
+        },
+        {
+          "name": "modifiersData",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "modifiersData: Record<string, any>;",
+          "line": 93,
+          "kind": "property",
+          "type": "Record<string, any>"
+        },
+        {
+          "name": "elements",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elements: { reference: NativePopperAnchor; popper: ViewInstance; arrow?: ViewInstance };",
+          "line": 94,
+          "kind": "property",
+          "type": "{ reference: NativePopperAnchor; popper: ViewInstance; arrow?: ViewInstance }"
+        },
+        {
+          "name": "elements.reference",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "reference: NativePopperAnchor;",
+          "line": 94,
+          "kind": "property",
+          "type": "NativePopperAnchor"
+        },
+        {
+          "name": "elements.popper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "popper: ViewInstance;",
+          "line": 94,
+          "kind": "property",
+          "type": "ViewInstance"
+        },
+        {
+          "name": "elements.arrow",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "arrow?: ViewInstance",
+          "line": 94,
+          "kind": "property",
+          "type": "ViewInstance"
+        },
+        {
+          "name": "rects",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "rects: { reference: NativePopperRect; popper: NativePopperRect };",
+          "line": 95,
+          "kind": "property",
+          "type": "{ reference: NativePopperRect; popper: NativePopperRect }"
+        },
+        {
+          "name": "rects.reference",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "reference: NativePopperRect;",
+          "line": 95,
+          "kind": "property",
+          "type": "NativePopperRect"
+        },
+        {
+          "name": "rects.popper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "popper: NativePopperRect",
+          "line": 95,
+          "kind": "property",
+          "type": "NativePopperRect"
+        },
+        {
+          "name": "reset",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "reset: boolean;",
+          "line": 96,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "styles",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "styles: Record<string, NativeStyle>;",
+          "line": 97,
+          "kind": "property",
+          "type": "Record<string, NativeStyle>"
+        },
+        {
+          "name": "attributes",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "attributes: Record<string, Record<string, string | boolean>>;",
+          "line": 98,
+          "kind": "property",
+          "type": "Record<string, Record<string, string | boolean>>"
+        },
+        {
+          "name": "native",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "native: NativePopperMeasurements;",
+          "line": 100,
+          "kind": "property",
+          "type": "NativePopperMeasurements"
+        }
+      ],
+      "references": [
+        "NativePopperAnchor",
+        "NativePopperMeasurements",
+        "NativePopperModifier",
+        "NativePopperOptions",
+        "NativePopperRect",
+        "NativeStyle",
+        "PopperPlacementType",
+        "Record",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperInstance",
+      "file": "src/popper/types.ts",
+      "line": 102,
+      "kind": "type",
+      "members": [
+        {
+          "name": "state",
+          "optional": false,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly state: NativePopperState;",
+          "line": 103,
+          "kind": "property",
+          "type": "NativePopperState"
+        },
+        {
+          "name": "setOptions",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "setOptions(\n    options:\n      | Partial<NativePopperOptions>\n      | ((previous: NativePopperOptions) => Partial<NativePopperOptions>),\n  ): Promise<NativePopperState>;",
+          "line": 104,
+          "kind": "property",
+          "type": "setOptions(\n    options:\n      | Partial<NativePopperOptions>\n      | ((previous: NativePopperOptions) => Partial<NativePopperOptions>),\n  ): Promise<NativePopperState>;"
+        },
+        {
+          "name": "forceUpdate",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "forceUpdate(): void;",
+          "line": 109,
+          "kind": "property",
+          "type": "forceUpdate(): void;"
+        },
+        {
+          "name": "update",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "update(): Promise<NativePopperState>;",
+          "line": 110,
+          "kind": "property",
+          "type": "update(): Promise<NativePopperState>;"
+        },
+        {
+          "name": "destroy",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "destroy(): void;",
+          "line": 111,
+          "kind": "property",
+          "type": "destroy(): void;"
+        }
+      ],
+      "references": [
+        "NativePopperOptions",
+        "NativePopperState",
+        "Partial",
+        "Promise"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePopperPlatform",
+      "file": "src/popper/types.ts",
+      "line": 113,
+      "kind": "type",
+      "members": [
+        {
+          "name": "report",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "report(error: unknown): void;",
+          "line": 114,
+          "kind": "property",
+          "type": "report(error: unknown): void;"
+        },
+        {
+          "name": "measure",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "measure(\n    state: NativePopperState,\n  ): NativePopperMeasurements | null | Promise<NativePopperMeasurements | null>;",
+          "line": 115,
+          "kind": "property",
+          "type": "measure(\n    state: NativePopperState,\n  ): NativePopperMeasurements | null | Promise<NativePopperMeasurements | null>;"
+        },
+        {
+          "name": "boundary",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "boundary?(\n    boundary: Exclude<NativePopperBoundary, 'clippingParents'>,\n    state: NativePopperState,\n  ): NativePopperRect | null;",
+          "line": 118,
+          "kind": "property",
+          "type": "boundary?(\n    boundary: Exclude<NativePopperBoundary, 'clippingParents'>,\n    state: NativePopperState,\n  ): NativePopperRect | null;"
+        },
+        {
+          "name": "layout",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "layout(element: ViewInstance): NativePopperRect | null;",
+          "line": 122,
+          "kind": "property",
+          "type": "layout(element: ViewInstance): NativePopperRect | null;"
+        },
+        {
+          "name": "parent",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "parent(element: ViewInstance, state: NativePopperState): NativePopperMeasurements['offsetParent'];",
+          "line": 123,
+          "kind": "property",
+          "type": "parent(element: ViewInstance, state: NativePopperState): NativePopperMeasurements['offsetParent'];"
+        },
+        {
+          "name": "contains",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "contains(parent: ViewInstance, child: ViewInstance): boolean;",
+          "line": 124,
+          "kind": "property",
+          "type": "contains(parent: ViewInstance, child: ViewInstance): boolean;"
+        },
+        {
+          "name": "subscribe",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "subscribe?(\n    instance: NativePopperInstance,\n    options: { scroll: boolean; resize: boolean },\n  ): () => void;",
+          "line": 125,
+          "kind": "property",
+          "type": "subscribe?(\n    instance: NativePopperInstance,\n    options: { scroll: boolean; resize: boolean },\n  ): () => void;"
+        },
+        {
+          "name": "apply",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "apply?(state: NativePopperState): void;",
+          "line": 129,
+          "kind": "property",
+          "type": "apply?(state: NativePopperState): void;"
+        }
+      ],
+      "references": [
+        "Exclude",
+        "NativePopperBoundary",
+        "NativePopperInstance",
+        "NativePopperMeasurements",
+        "NativePopperRect",
+        "NativePopperState",
+        "Promise",
         "ViewInstance"
       ],
       "inheritanceResolved": false,

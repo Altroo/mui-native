@@ -76,7 +76,7 @@ Release gates:
 - [ ] npm namespace ownership and distribution notices reviewed.
 - [ ] `0.1.0-alpha.1` publication only after the above.
 
-Native [Chip](docs/chip.md) adds the reusable display/action/deletion dependency for Autocomplete; see [issue #37](https://github.com/Altroo/mui-native/issues/37). Autocomplete still needs popup/input composition and full native validation. Its [Portal foundation](docs/portal.md) now has source-backed container/ref contracts and native rendering code; [issue #38](https://github.com/Altroo/mui-native/issues/38) tracks this reusable dependency. Complete Popper placement, editable keyboard navigation, Autocomplete and physical validation remain unfinished.
+Native [Chip](docs/chip.md) adds the reusable display/action/deletion dependency for Autocomplete; see [issue #37](https://github.com/Altroo/mui-native/issues/37). Autocomplete still needs popup/input composition and full native validation. Its [Portal foundation](docs/portal.md) now has source-backed container/ref contracts and native rendering code; [issue #38](https://github.com/Altroo/mui-native/issues/38) tracks this reusable dependency. The [native positioning engine](docs/native-positioning.md) now has source-backed placement/modifier/lifecycle comparisons; [issue #39](https://github.com/Altroo/mui-native/issues/39) tracks the complete Popper integration. Actual native anchor/clipping observation, the public Popper component/imports, editable keyboard navigation, Autocomplete and physical validation remain unfinished.
 
 ## 4. Complete Material UI
 

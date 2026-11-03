@@ -6,7 +6,7 @@
     "files": {
       ".nvmrc": "45507e6d96329a845faa642c0f485313bcb2ca1e08b043589cde4ddd15969cd6",
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
-      "package.json": "5fa01907cfee75f57c497a0ebbc91a4e618294db1cfb741c3e6ea4d9549453b5",
+      "package.json": "97465ab56aae7e9eb2fe7f61d210b67f07f78e2d15cd9a579a0b51bdd41cf7fd",
       "packages/compat/package.json": "96f0b851536ec8333bce8db32a0d2e8b12b529e290b4ea333769a1894314ff54",
       "packages/compat/supported.json": "9fb60844788183f0adc20071c5cd68ef6bcd81ab680a8b5802219858e28923b2",
       "packages/icons/package.json": "acb6165d3435cf8b944741a8167e77a162dde02b76b31b3c4136fc26a93cb737",
@@ -129,6 +129,11 @@
       "packages/material/src/Popover/index.ts": "11a166f368795378f9e7267de7a160267170dfdd7568cd85c9384dc03da8b850",
       "packages/material/src/popoverGeometry.ts": "ebe5f9208a99d2c359cac1725722fcd76239297c91e40ef46186aba979329d70",
       "packages/material/src/popoverMeasurement.ts": "b51339a07e5df46f53005a36ba0f88bb59d16e6e05f05f1e38b9c4eae04df0c9",
+      "packages/material/src/popper/engine.ts": "4a6737ed2503b4e04919e7526ab8ae5bfc8d8f8b1116685539df544a2dc68233",
+      "packages/material/src/popper/geometry.ts": "23d5388c827273d2d1a81f1f466a643a8cdc5f8b6039705dad1b4c4ec8cae601",
+      "packages/material/src/popper/modifiers.ts": "7f65a49a68efe2acb78931ce8d1a16e586bf3ccfd820bddc6f3b526736a6d636",
+      "packages/material/src/popper/overflow.ts": "ae15ce91569db05114c79e1ad4ba29dba9c058ebb553eb967106b4657c6f96dc",
+      "packages/material/src/popper/types.ts": "ce774987b4d7f357bf670392411ec83c004d688f39254a3860590aac072abe2e",
       "packages/material/src/portal.tsx": "61ecb2b80baf043d511ac00fac68820078edb88d072fc5e407258d20eaf18c2e",
       "packages/material/src/Portal/index.ts": "fce8b0cefa404488c36a224604d5e03eb03f6116a682945774f2bf7cbeae2772",
       "packages/material/src/portalContext.ts": "c8a1e5c5c1e39dcc92fbfa17d5ffda508850ab5ffaa38bc1109b28a5f6aa7ae8",
@@ -303,7 +308,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "55c5090572ffa36548d933b6604001a73b9fe03d8ac46fb66b7c09490338557e",
+      "nativeSourceSha256": "62ceec7867d4b121e4bde75072ea364373104569c617e50d32a475f1f34ba6ae",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -315,7 +320,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "9d2e1c890131b6dc5cd3900a6b7b367ca08716d0b48e399a80f777eb099de57b"
+      "sha256": "3b761f41eef1ddbaa98d93047e11189ee4f7a46df2395c1654dee13ceb4be8e6"
     },
     {
       "package": "@mui/system",
