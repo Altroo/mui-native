@@ -12,7 +12,7 @@ import {
   DialogContent,
   DialogActions,
   useControlled,
-  type TextFieldProps,
+  type NativeTextFieldProps,
 } from '@altroo/mui-native';
 import { AdapterDayjs, type PickerValue } from './AdapterDayjs';
 const AdapterContext = createContext<AdapterDayjs | null>(null);
@@ -56,7 +56,7 @@ export interface DateFieldProps {
   disablePast?: boolean;
   disableFuture?: boolean;
   timezone?: string;
-  slotProps?: { textField?: Omit<TextFieldProps, 'value' | 'onChange'> };
+  slotProps?: { textField?: Omit<NativeTextFieldProps, 'value' | 'onChange'> };
 }
 export function validateDate(
   value: PickerValue,

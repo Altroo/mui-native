@@ -1,6 +1,6 @@
 # Native ButtonBase
 
-`ButtonBase` is an unstyled native activation and focus primitive for application controls and composite library components. Root and `@mui/material/ButtonBase` imports resolve to the same implementation when the [native import mapping](installation.md) is configured. It supplies [MenuItem/MenuList](menu-list.md) and [anchored Menu](menu.md); Select integration follows. Existing Button, IconButton and other catalog controls have not yet been migrated to this primitive.
+`ButtonBase` is an unstyled native activation and focus primitive for application controls and composite library components. Root and `@mui/material/ButtonBase` imports resolve to the same implementation when the [native import mapping](installation.md) is configured. It supplies [MenuItem/MenuList](menu-list.md) and [anchored Menu](menu.md); [Select](select.md) uses MenuItem for option activation and a dedicated native trigger. Existing Button, IconButton and other catalog controls have not yet been migrated to this primitive.
 
 ```tsx
 import React from 'react';

@@ -1401,6 +1401,180 @@
       "adaptations": [
         "Native overlay readiness defers initial focus until presentation/placement/top ownership; nested native MenuLists isolate keyboard navigation and typeahead while preserving ancestor callbacks."
       ]
+    },
+    {
+      "localFile": "packages/material/src/select.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "Select/SelectInput.js": "2cdbd4bf9d51ce991b08c882cf8f3322bfa57b51143541e8dd0e6ebfdcfe1d52",
+          "Select/SelectInput.d.ts": "9091514ad2d4351232895121c094c3c3d769ea5c953a44b7a3b4689fd9237c9d",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "Select/selectClasses.js": "2528b554801f59c9441c2bfe35c5bff1b15775d0aef04be01075a03963fcfe72",
+          "Select/selectClasses.d.ts": "fe6bbd6a216c7347eb6af70f20c9c7e3f676683a9500f8fb7647d7447bb5f5d3",
+          "Select/utils/closedTypeahead.js": "307e249eed83636c9d81c2c3c1f5c94d29fd335ccc7fed59a4d83bb40932bb5d",
+          "Select/utils/areEqualValues.js": "c732005341597134758f8cf5b883bd07e8ae1806cec386807c732df6f9ff2cd8",
+          "Select/utils/getOpenInteractionType.js": "83f02ef748bf97e9ab2ef794dcf30f9733b1fcfc02ed7d9cfd7a3b59f13a8038",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "Raw single/multiple value matching, controlled open/value policy, closed typeahead, callback order and mutable value/name targets, native Input/Menu composition, Select slot owners and caret/display defaults adapt Select/SelectInput. Native geometry, events, focus refs and primitive truncation replace DOM behavior; NativeSelect/platform-picker mode is not implemented."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/nativeInputControl.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "Select/SelectInput.js": "2cdbd4bf9d51ce991b08c882cf8f3322bfa57b51143541e8dd0e6ebfdcfe1d52",
+          "Select/SelectInput.d.ts": "9091514ad2d4351232895121c094c3c3d769ea5c953a44b7a3b4689fd9237c9d",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "Select/selectClasses.js": "2528b554801f59c9441c2bfe35c5bff1b15775d0aef04be01075a03963fcfe72",
+          "Select/selectClasses.d.ts": "fe6bbd6a216c7347eb6af70f20c9c7e3f676683a9500f8fb7647d7447bb5f5d3",
+          "Select/utils/closedTypeahead.js": "307e249eed83636c9d81c2c3c1f5c94d29fd335ccc7fed59a4d83bb40932bb5d",
+          "Select/utils/areEqualValues.js": "c732005341597134758f8cf5b883bd07e8ae1806cec386807c732df6f9ff2cd8",
+          "Select/utils/getOpenInteractionType.js": "83f02ef748bf97e9ab2ef794dcf30f9733b1fcfc02ed7d9cfd7a3b59f13a8038",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "Private selection context and filled-state predicate retain opaque Select values through actual Input composition without a duplicate editable host."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/inputs.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "Select/SelectInput.js": "2cdbd4bf9d51ce991b08c882cf8f3322bfa57b51143541e8dd0e6ebfdcfe1d52",
+          "Select/SelectInput.d.ts": "9091514ad2d4351232895121c094c3c3d769ea5c953a44b7a3b4689fd9237c9d",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "Select/selectClasses.js": "2528b554801f59c9441c2bfe35c5bff1b15775d0aef04be01075a03963fcfe72",
+          "Select/selectClasses.d.ts": "fe6bbd6a216c7347eb6af70f20c9c7e3f676683a9500f8fb7647d7447bb5f5d3",
+          "Select/utils/closedTypeahead.js": "307e249eed83636c9d81c2c3c1f5c94d29fd335ccc7fed59a4d83bb40932bb5d",
+          "Select/utils/areEqualValues.js": "c732005341597134758f8cf5b883bd07e8ae1806cec386807c732df6f9ff2cd8",
+          "Select/utils/getOpenInteractionType.js": "83f02ef748bf97e9ab2ef794dcf30f9733b1fcfc02ed7d9cfd7a3b59f13a8038",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "The Select branch retains raw controlled/default values, filled state, child event arguments and native Select handles while preserving scalar input behavior."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/forms.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "Select/SelectInput.js": "2cdbd4bf9d51ce991b08c882cf8f3322bfa57b51143541e8dd0e6ebfdcfe1d52",
+          "Select/SelectInput.d.ts": "9091514ad2d4351232895121c094c3c3d769ea5c953a44b7a3b4689fd9237c9d",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "Select/selectClasses.js": "2528b554801f59c9441c2bfe35c5bff1b15775d0aef04be01075a03963fcfe72",
+          "Select/selectClasses.d.ts": "fe6bbd6a216c7347eb6af70f20c9c7e3f676683a9500f8fb7647d7447bb5f5d3",
+          "Select/utils/closedTypeahead.js": "307e249eed83636c9d81c2c3c1f5c94d29fd335ccc7fed59a4d83bb40932bb5d",
+          "Select/utils/areEqualValues.js": "c732005341597134758f8cf5b883bd07e8ae1806cec386807c732df6f9ff2cd8",
+          "Select/utils/getOpenInteractionType.js": "83f02ef748bf97e9ab2ef794dcf30f9733b1fcfc02ed7d9cfd7a3b59f13a8038",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "TextField selection composition routes a single Input through Select, preserves legacy/select slot precedence, raw defaults, label/helper state and public variant/value types."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/menuItem.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "Select/SelectInput.js": "2cdbd4bf9d51ce991b08c882cf8f3322bfa57b51143541e8dd0e6ebfdcfe1d52",
+          "Select/SelectInput.d.ts": "9091514ad2d4351232895121c094c3c3d769ea5c953a44b7a3b4689fd9237c9d",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "Select/selectClasses.js": "2528b554801f59c9441c2bfe35c5bff1b15775d0aef04be01075a03963fcfe72",
+          "Select/selectClasses.d.ts": "fe6bbd6a216c7347eb6af70f20c9c7e3f676683a9500f8fb7647d7447bb5f5d3",
+          "Select/utils/closedTypeahead.js": "307e249eed83636c9d81c2c3c1f5c94d29fd335ccc7fed59a4d83bb40932bb5d",
+          "Select/utils/areEqualValues.js": "c732005341597134758f8cf5b883bd07e8ae1806cec386807c732df6f9ff2cd8",
+          "Select/utils/getOpenInteractionType.js": "83f02ef748bf97e9ab2ef794dcf30f9733b1fcfc02ed7d9cfd7a3b59f13a8038",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "Select option values remain private to composition; selected/activation callbacks preserve native overlay readiness and stale-node guards."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/menuList.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+          "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+          "Select/SelectInput.js": "2cdbd4bf9d51ce991b08c882cf8f3322bfa57b51143541e8dd0e6ebfdcfe1d52",
+          "Select/SelectInput.d.ts": "9091514ad2d4351232895121c094c3c3d769ea5c953a44b7a3b4689fd9237c9d",
+          "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+          "Select/selectClasses.js": "2528b554801f59c9441c2bfe35c5bff1b15775d0aef04be01075a03963fcfe72",
+          "Select/selectClasses.d.ts": "fe6bbd6a216c7347eb6af70f20c9c7e3f676683a9500f8fb7647d7447bb5f5d3",
+          "Select/utils/closedTypeahead.js": "307e249eed83636c9d81c2c3c1f5c94d29fd335ccc7fed59a4d83bb40932bb5d",
+          "Select/utils/areEqualValues.js": "c732005341597134758f8cf5b883bd07e8ae1806cec386807c732df6f9ff2cd8",
+          "Select/utils/getOpenInteractionType.js": "83f02ef748bf97e9ab2ef794dcf30f9733b1fcfc02ed7d9cfd7a3b59f13a8038",
+          "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+          "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+          "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+          "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+        }
+      },
+      "adaptations": [
+        "Select logical listbox role uses a native list accessibility role while retaining native option selection metadata and existing registered navigation."
+      ]
     }
   ]
 }

@@ -1,14 +1,15 @@
 # Native TextField slots and refs
 
-TextField supports `root`, `input`, `htmlInput`, `inputLabel` and `formHelperText` component slots. Each has object or owner-state callback props. Native owner state includes resolved field flags, variant, size and current focus. Theme defaults merge named slot entries before rendering.
+TextField supports `root`, `input`, `htmlInput`, `inputLabel`, `formHelperText` and `select` component slots. Each has object or owner-state callback props. Native owner state includes resolved field flags, variant, size and current focus. Theme defaults merge named slot entries before rendering.
 
-| Slot           | Default component      | Ref instance      | Style target    |
-| -------------- | ---------------------- | ----------------- | --------------- |
-| root           | FormControl            | ViewInstance      | Field container |
-| input          | NativeTextFieldInput   | ViewInstance      | Input container |
-| htmlInput      | React Native TextInput | TextInputInstance | Editable host   |
-| inputLabel     | InputLabel             | TextInstance      | Label text      |
-| formHelperText | FormHelperText         | TextInstance      | Helper text     |
+| Slot           | Default component           | Ref instance            | Style target          |
+| -------------- | --------------------------- | ----------------------- | --------------------- |
+| root           | FormControl                 | ViewInstance            | Field container       |
+| input          | NativeTextFieldInput        | ViewInstance            | Input container       |
+| htmlInput      | React Native TextInput      | TextInputInstance       | Editable host         |
+| inputLabel     | InputLabel                  | TextInstance            | Label text            |
+| formHelperText | FormHelperText              | TextInstance            | Helper text           |
+| select         | Select (select fields only) | Input root ViewInstance | Selection composition |
 
 `input` is the component around the editable host. `htmlInput` is the host itself, despite the upstream browser-oriented name. `NativeTextFieldInput` is a native extension for composing a replacement input component. It shares the [input primitives](inputs.md) engine; the public input components retain their own scoped contracts. It accepts `inputProps`, `inputRef` and `slots.input`, allowing TextField's editable-host replacement to reach the nested input.
 
@@ -56,3 +57,5 @@ The pinned Material UI/Utils 9.5.0 reference covers two structural routing cases
 Component regressions cover all five custom components, live callbacks, inherited form flags, controlled/uncontrolled values, event ordering, duplicate handler prevention, style separation, native naming and ref replacement/cleanup. Fresh packed consumer checks compile original root/deep imports and reject browser tags/refs. Structural reference cases are not complete TextField equivalence.
 
 Public input variants, adornments and a measured outline gap now have scoped implementations described in [native inputs](inputs.md). Floating/stacked label coordination and scoped focus/name/helper links are described in [forms and labels](form-labels.md). The select slot, complete input/label contracts, browser-global behavior, complete focus/validation behavior and other component slots remain unfinished. Actual iOS/Android visual geometry, keyboard interaction, screen readers, RTL, font scaling, crash resolution and release performance require separate native validation. This increment does not advance verified upstream support or publish an alpha.
+
+[Native Select and TextField select](select.md) reuse these Input and form-state contracts with a native combobox host, raw values and a SelectInputHandle ref. The default selection branch mounts no editable or hidden TextInput. TextField adds slots.select/slotProps.select alongside legacy SelectProps; NativeSelect/platform-picker mode remains unfinished.

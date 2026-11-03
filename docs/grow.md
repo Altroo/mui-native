@@ -1,6 +1,6 @@
 # Native Grow
 
-Grow is a reusable native opacity/scale transition through @mui/material/Grow or the root @mui/material import. It supplies the default transition for [native Popover](popover.md); Menu and Select remain separate implementation work. It adds no native wrapper.
+Grow is a reusable native opacity/scale transition through @mui/material/Grow or the root @mui/material import. It supplies the default transition for [native Popover](popover.md); [Menu](menu.md) and [Select](select.md) compose that overlay. It adds no native wrapper.
 
 ```tsx
 import Grow from '@mui/material/Grow';
@@ -44,4 +44,4 @@ Fade and Grow share a private native surface and lifecycle engine. Interrupted/u
 
 Run node scripts/reference/grow.mjs --check after the [isolated reference setup](theming.md), with the matching react-test-renderer@19.3.0 installed only in that ignored cache. Fourteen original Material UI 9.5.0 cases compare geometry reads, height calculations, exact factory arguments/output and callback/mounting traces. Tarball integrity, selected source bytes and MIT license identity are checked before execution. Twenty-nine native cases include those reference comparisons and native-driver configuration, initial scale, origin forwarding, cancellation, refs/keys, reduced motion and cleanup. A fresh installed consumer checks root/deep imports, public props refs, the auto marker and Modal composition.
 
-These tests use mocked native nodes, geometry, timers and animation drivers. They establish no physical window/layout result, frame pacing, screen-reader workflow or release-performance certification. Full TransitionGroup/CSS behavior, remaining transitions, physical Popover geometry and Menu/Select remain open. No paid source, runtime dependency or npm publication is included, and no complete upstream package support is promoted.
+These tests use mocked native nodes, geometry, timers and animation drivers. They establish no physical window/layout result, frame pacing, screen-reader workflow or release-performance certification. Full TransitionGroup/CSS behavior, remaining transitions, physical Popover/Menu/Select geometry and platform-picker mode remain open. No paid source, runtime dependency or npm publication is included, and no complete upstream package support is promoted.

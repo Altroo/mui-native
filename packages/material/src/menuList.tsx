@@ -45,6 +45,8 @@ export interface MenuListActions {
   ): ViewInstance | null;
 }
 export interface MenuListOwnProps {
+  /** RN has no listbox role; the native list surface uses list with option children. */
+  role?: ListProps['role'] | 'listbox';
   autoFocus?: boolean;
   autoFocusItem?: boolean;
   disabledItemsFocusable?: boolean;
@@ -59,7 +61,7 @@ export interface MenuListOwnProps {
   onKeyDownCapture?: (event: ButtonBaseKeyEvent) => void;
 }
 export interface MenuListProps
-  extends Omit<ListProps, 'onKeyDown' | 'onKeyDownCapture'>,
+  extends Omit<ListProps, 'onKeyDown' | 'onKeyDownCapture' | 'role'>,
     MenuListOwnProps {}
 // React Native key events bubble through nested composites. Only the innermost
 // MenuList owns navigation/typeahead; ancestor consumer callbacks still run.
@@ -394,7 +396,7 @@ export const MenuList: React.ForwardRefExoticComponent<
           {...other}
           ref={ref}
           component={listDefaults.component ?? NativeMenuListRoot}
-          role={other.role ?? 'menu'}
+          role={(other.role === 'listbox' ? 'list' : other.role) ?? 'menu'}
           focusable={listDefaults.focusable ?? true}
           tabIndex={tabIndex}
           scrollable={scrollable}
@@ -405,7 +407,7 @@ export const MenuList: React.ForwardRefExoticComponent<
             nativeScrollProps: effectiveScrollProps,
             nativeRootProps: {
               ...other,
-              role: other.role ?? 'menu',
+              role: (other.role === 'listbox' ? 'list' : other.role) ?? 'menu',
               tabIndex,
               focusable: listDefaults.focusable ?? true,
             },

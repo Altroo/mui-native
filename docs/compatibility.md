@@ -6,9 +6,11 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
-- Anchored native Menu with five slots, source-shaped close/focus policy, native presentation gates, observed trigger restoration and nested keyboard ownership. Declared descendant Tab/Escape retains actual control targets and callbacks; UIKit command metadata is limited. See [native Menu](menu.md) and [native host](native-host.md); Select, broader foreign-input keyboard contracts and physical overlay gates remain open.
+- Native Select and TextField select with raw single/multiple values, Menu composition, keyboard/typeahead, value/name events, native refs and Select owner-state slots. See [Select](select.md); NativeSelect/platform-picker mode and physical device gates remain open.
 
-- Registered native MenuItem/MenuList composition, connected-node order, focus handoff, keyboard/typeahead, checkable roles and owned scrolling. See [native menu lists](menu-list.md) for the tested subset, native differences and open Menu/Select/device gates.
+- Anchored native Menu with five slots, source-shaped close/focus policy, native presentation gates, observed trigger restoration and nested keyboard ownership. Declared descendant Tab/Escape retains actual control targets and callbacks; UIKit command metadata is limited. See [native Menu](menu.md) and [native host](native-host.md); broader foreign-input keyboard contracts and physical overlay gates remain open.
+
+- Registered native MenuItem/MenuList composition, connected-node order, focus handoff, keyboard/typeahead, checkable roles and owned scrolling. See [native menu lists](menu-list.md) for the tested subset, native differences and open device and platform-picker gates.
 
 - Eight native List composition primitives with density, slots, natural action sizing and optional owned scrolling/sticky subheaders. See [native lists](lists.md) for the tested subset and native boundaries.
 - Native ButtonBase activation, disabled/focus coordination, native keyboard event adapters and touch feedback, with a Fabric interaction host. A native development build is required; Expo Go does not contain the host. See [ButtonBase](button-base.md) and [native host](native-host.md) for scope and open gates.
@@ -23,7 +25,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 - Dedicated FormLabel/InputLabel/FormHelperText contracts, floating/stacked fields, scoped focus/name/helper links and reduced-motion-aware native transforms. See [forms and labels](form-labels.md).
 - InputBase/Input/FilledInput/OutlinedInput, adornments, native row bounds and coordinated form state. See [native inputs](inputs.md) for the implemented subset and native differences.
-- TextField replacement of five native slots, distinct input-container and editable-host contracts, composed refs and React 19 cleanup. See [native input slots](textfield-slots.md).
+- TextField replacement of six native slots, including Select, distinct input-container and editable-host contracts, composed refs and React 19 cleanup. See [native input slots](textfield-slots.md).
 - Theme/default-prop contexts, named slot default merging, TextField owner-state callbacks and explicit slot prop composition. See [defaults](default-props.md) for replacement rules and native differences.
 
 - MUI-shaped typography themes, callbacks/conversion, native text normalization, custom variants, heading mapping and tracked text inheritance. See [typography](typography.md) for native differences and explicit limits.
@@ -44,6 +46,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 Do not assume unlisted props work. Public TypeScript interfaces describe the implemented subset. JavaScript callers should run migration diagnostics and review source usage before adoption.
 
+- NativeSelect and Select native/platform-picker mode, browser form/autofill/reset behavior, and complete Select inherited contracts.
 - Full Material UI export coverage, all icon variants, remaining component slot replacement, classes/className, arbitrary CSS, CSS variables, non-width media queries, arbitrary descendant selectors, browser refs/events, remaining transitions/TransitionGroup interoperation, ripple behavior.
 - Full `styled` semantics, CSS-variable/color-scheme providers, complete typography inheritance, the full responsive/style utility export set, all upstream augmentation interfaces. The installed-consumer fixture verifies custom Theme, ThemeOptions, Palette, PaletteOptions and BreakpointOverrides augmentation through @mui/material/styles.
 - Full browser inline formatting, opaque custom-component text internals, arbitrary native views/portals outside shared text scopes and complete text inheritance. See [text container boundaries](text-containers.md).

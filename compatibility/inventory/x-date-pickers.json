@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-x-date-pickers",
-  "nativeSourceSha256": "f87a2b4ce078b260f88ff01f9154d889fdcf752a5a0a949baf7e174b992d87e9",
+  "nativeSourceSha256": "d69359edd77d773e0478f3323f774d42eb4f2a8dd0d812fb8f315d4bb96e7e8a",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -65718,10 +65718,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "slotProps?: { textField?: Omit<TextFieldProps, 'value' | 'onChange'> };",
+          "declaration": "slotProps?: { textField?: Omit<NativeTextFieldProps, 'value' | 'onChange'> };",
           "line": 59,
           "kind": "slot",
-          "type": "{ textField?: Omit<TextFieldProps, 'value' | 'onChange'> }"
+          "type": "{ textField?: Omit<NativeTextFieldProps, 'value' | 'onChange'> }"
         },
         {
           "name": "slotProps.textField",
@@ -65729,18 +65729,18 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "textField?: Omit<TextFieldProps, 'value' | 'onChange'>",
+          "declaration": "textField?: Omit<NativeTextFieldProps, 'value' | 'onChange'>",
           "line": 59,
           "kind": "slot",
-          "type": "Omit<TextFieldProps, 'value' | 'onChange'>"
+          "type": "Omit<NativeTextFieldProps, 'value' | 'onChange'>"
         }
       ],
       "references": [
         "DateValidationError",
         "Dayjs",
+        "NativeTextFieldProps",
         "Omit",
-        "PickerValue",
-        "TextFieldProps"
+        "PickerValue"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native-x-date-pickers"

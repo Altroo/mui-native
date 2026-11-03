@@ -21,6 +21,8 @@ import {
   type ButtonBaseProps,
   type ButtonBaseState,
   type ButtonBaseActions,
+  type ButtonBaseActivationEvent,
+  type ButtonBaseKeyEvent,
 } from './buttonBase';
 import { useTheme } from './themeProvider';
 import { ListContext } from './listContext';
@@ -32,6 +34,7 @@ import { nativeButtonModality } from './nativeButtonModality';
 import { useForkRef } from './utils';
 import type { MenuFocusSource } from './nativeMenuRegistry';
 export interface MenuItemOwnProps {
+  value?: unknown;
   autoFocus?: boolean;
   dense?: boolean;
   disableGutters?: boolean;
@@ -57,6 +60,7 @@ export const MenuItem: React.ForwardRefExoticComponent<
     role = 'menuitem',
     tabIndex: explicitTabIndex,
     textValue,
+    value: _optionValue,
     children,
     sx,
     style: suppliedStyle,
@@ -179,11 +183,41 @@ export const MenuItem: React.ForwardRefExoticComponent<
     cached = { ...state, style: result };
     return result;
   };
+  const activate = useMenuEvent((event: ButtonBaseActivationEvent) => {
+    if (!focusReady || !node.current || node.current.isConnected === false) {
+      event.preventDefault();
+      return;
+    }
+    (base.onPress ?? base.onClick)?.(event);
+  });
+  const keyDown = useMenuEvent((event: ButtonBaseKeyEvent) => {
+    if (
+      (event.key === ' ' || event.key === 'Enter') &&
+      (!focusReady || !node.current || node.current.isConnected === false)
+    ) {
+      event.preventDefault();
+      return;
+    }
+    base.onKeyDown?.(event);
+  });
+  const keyUp = useMenuEvent((event: ButtonBaseKeyEvent) => {
+    if (
+      (event.key === ' ' || event.key === 'Enter') &&
+      (!focusReady || !node.current || node.current.isConnected === false)
+    ) {
+      event.preventDefault();
+      return;
+    }
+    base.onKeyUp?.(event);
+  });
   return (
     <ButtonBase
       {...nativeListProps(other)}
       ref={ref}
       action={actionRef}
+      onPress={activate}
+      onKeyDown={keyDown}
+      onKeyUp={keyUp}
       disabled={disabled}
       role={nativeRole}
       accessibilityRole={base.accessibilityRole ?? nativeRole}

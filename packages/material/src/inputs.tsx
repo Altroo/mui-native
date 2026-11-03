@@ -25,6 +25,7 @@ import { Typography } from './typography';
 import { FormContext, useControlled, type InputChangeEvent } from './formState';
 import { useForkRef } from './utils/refs';
 import { nativeInsets } from './nativeInsets';
+import { NativeInputValueContext, inputControlFilled } from './nativeInputControl';
 
 export interface InputBasePropsSizeOverrides {}
 export interface InputBasePropsColorOverrides {}
@@ -266,6 +267,7 @@ function InputEngine({
   const baseDefaults = useDefaultProps({ props: variantDefaults, name: 'MuiInputBase' });
   const props = variant === 'base' ? variantDefaults : baseDefaults;
   const form = useContext(FormContext);
+  const control = useContext(NativeInputValueContext);
   const {
     sx,
     style,
@@ -278,7 +280,7 @@ function InputEngine({
     fullWidth,
     margin,
     value,
-    defaultValue = '',
+    defaultValue = control ? undefined : '',
     name,
     id,
     type = 'text',
@@ -315,14 +317,16 @@ function InputEngine({
   const resolvedHost = { ...inputProps, ...slotInput };
   const { value: _hostValue, defaultValue: _hostDefault, ...managedHost } = resolvedHost;
   // Apply the TextField policy after both variant and base theme defaults.
-  const host: InputBaseComponentProps = nativeHostEventsLast ? managedHost : resolvedHost;
-  const [text, setText] = useControlled(
-    host.value ?? value,
-    Object.prototype.hasOwnProperty.call(host, 'defaultValue')
-      ? (host.defaultValue ?? '')
-      : defaultValue,
-  );
-  const filled = String(text ?? '').length > 0;
+  const host: InputBaseComponentProps =
+    nativeHostEventsLast && !control ? managedHost : resolvedHost;
+  const controlledValue = host.value ?? value;
+  const initialInputValue = Object.prototype.hasOwnProperty.call(host, 'defaultValue')
+    ? control
+      ? host.defaultValue
+      : (host.defaultValue ?? '')
+    : defaultValue;
+  const [text, setText] = useControlled(controlledValue, initialInputValue);
+  const filled = control ? inputControlFilled(text) : String(text ?? '').length > 0;
   const ownerState = {
     ...props,
     ...ownerStateOverride,
@@ -429,6 +433,8 @@ function InputEngine({
   const themedPadding = paddingEdges(typography);
   const callerPadding = paddingEdges(StyleSheet.flatten(host.style) ?? undefined);
   const framed = variant === 'outlined' || variant === 'filled';
+  const selectionVariant =
+    (host as InputBaseComponentProps & { variant?: string }).variant ?? variant;
   // Native left/right values already swap in RTL when that platform option is enabled.
   const mapPhysicalSides = I18nManager.isRTL && !I18nManager.doLeftAndRightSwapInRTL;
   const leftAdornment = mapPhysicalSides ? endAdornment : startAdornment;
@@ -502,174 +508,202 @@ function InputEngine({
     ...hostNative
   } = input;
   return (
-    <Root
-      {...rootNative}
-      {...(Root !== View ? { ownerState } : {})}
-      ref={rootRef}
-      testID={testID ?? rootProps.testID}
-      onTouchEnd={(event) => {
-        if (!disabled && event.target === event.currentTarget) innerRef.current?.focus();
-        rootProps.onTouchEnd?.(event);
-        onClick?.(event);
-      }}
-      style={[
-        {
-          flexDirection: 'row',
-          alignItems: 'center',
-          minWidth: 0,
-          marginTop:
-            variant === 'standard' && form && form.labelDisplay !== 'stacked' ? 16 : undefined,
-          alignSelf: fullWidth ? 'stretch' : undefined,
-          paddingLeft: framed && leftAdornment ? 14 : 0,
-          paddingRight: framed && rightAdornment ? 14 : 0,
-          backgroundColor: variant === 'filled' ? theme.palette.action.hover : 'transparent',
-          borderTopLeftRadius: variant === 'filled' ? theme.shape.borderRadius : undefined,
-          borderTopRightRadius: variant === 'filled' ? theme.shape.borderRadius : undefined,
-        },
-        baseStyle,
-        paddingEdges(baseStyle),
-        variant !== 'base' ? variantStyle : undefined,
-        variant !== 'base' ? paddingEdges(variantStyle) : undefined,
-        style,
-        paddingEdges(StyleSheet.flatten(style) ?? undefined),
-        rootSx,
-        paddingEdges(rootSx),
-        rootProps.style,
-        paddingEdges(StyleSheet.flatten(rootProps.style) ?? undefined),
-      ]}
-    >
-      {content(startAdornment)}
-      <FormContext.Provider value={undefined}>
-        <Host
-          {...hostNative}
-          {...(Host !== TextInput ? { ownerState } : {})}
-          ref={hostRef}
-          nativeID={id ?? input.nativeID}
-          accessibilityLabel={explicitLabel ?? linkedLabel?.text}
-          accessibilityLabelledBy={
-            input.accessibilityLabelledBy ??
-            (explicitLabel !== undefined || input['aria-labelledby'] ? undefined : linkedLabel?.id)
-          }
-          accessibilityHint={input.accessibilityHint ?? helpText}
-          placeholder={input.placeholder}
-          accessibilityState={{ ...input.accessibilityState, disabled }}
-          readOnly={readOnly}
-          editable={!readOnly}
-          multiline={multiline}
-          value={String(text ?? '')}
-          numberOfLines={fixedRows ?? input.numberOfLines}
-          placeholderTextColor={
-            form?.label && !labelShrink && !focusedLocal && form.labelDisplay !== 'stacked'
-              ? 'transparent'
-              : (input.placeholderTextColor ?? theme.palette.text.secondary)
-          }
-          selectionColor={input.selectionColor ?? activeColor}
-          keyboardAppearance={input.keyboardAppearance ?? theme.palette.mode}
-          secureTextEntry={type === 'password' || input.secureTextEntry}
-          keyboardType={
-            type === 'email'
-              ? 'email-address'
-              : type === 'number'
-                ? 'decimal-pad'
-                : input.keyboardType
-          }
-          onChange={(event) => {
-            const next = event.nativeEvent.text;
-            setText(next);
-            const target = { value: next, name, id };
-            if (!nativeHostEventsLast) host.onChange?.(event);
-            onChange?.({ target, currentTarget: target, nativeEvent: event.nativeEvent });
-            onChangeText?.(next);
-            if (nativeHostEventsLast) host.onChange?.(event);
-            if (host.onChangeText !== onChangeText) host.onChangeText?.(next);
-          }}
-          onChangeText={undefined}
-          onFocus={(event) => {
-            if (disabled) return;
-            nativeFocused.current = true;
-            setFocused(true);
-            onFocus?.(event);
-            if (host.onFocus !== onFocus) host.onFocus?.(event);
-            form?.onFocus?.();
-          }}
-          onBlur={(event) => {
-            nativeFocused.current = false;
-            setFocused(false);
-            onBlur?.(event);
-            if (host.onBlur !== onBlur) host.onBlur?.(event);
-            form?.onBlur?.();
-          }}
-          onContentSizeChange={(event) => {
-            if (multiline) setContentHeight(event.nativeEvent.contentSize.height);
-            input.onContentSizeChange?.(event);
-          }}
-          style={[
-            {
-              flex: 1,
-              minWidth: 0,
-              color: disabled ? theme.palette.text.disabled : theme.palette.text.primary,
-              paddingTop,
-              paddingBottom,
-              paddingLeft: framed && !leftAdornment ? 14 : 0,
-              paddingRight: framed && !rightAdornment ? 14 : 0,
-              minHeight,
-              maxHeight,
-              height,
-              textAlignVertical: multiline ? 'top' : 'center',
-            },
-            typography,
-            themedPadding,
-            host.style,
-            callerPadding,
-          ]}
-        />
-      </FormContext.Provider>
-      {content(endAdornment)}
-      {variant === 'outlined' ? (
-        <Outline
-          {...outlineProps}
-          {...(Outline !== NotchedOutline && Outline !== View ? { ownerState } : {})}
-          label={
-            Object.prototype.hasOwnProperty.call(outlineProps, 'label') ? (
-              outlineProps.label
-            ) : label != null && label !== '' && required ? (
-              <>
-                {label}
-                {'\u2009'}*
-              </>
-            ) : (
-              label
-            )
-          }
-          notched={
-            notched ??
-            (form?.labelDisplay === 'stacked'
-              ? false
-              : Boolean(startAdornment || focused || filled))
-          }
-          style={[
-            { borderWidth: focused ? 2 : 1, borderColor, borderRadius: theme.shape.borderRadius },
-            outlineStyle,
-            outlineProps.style,
-          ]}
-        />
-      ) : null}
-      {(variant === 'standard' || variant === 'filled') && !disableUnderline ? (
-        <View
-          pointerEvents="none"
-          accessible={false}
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            start: 0,
-            end: 0,
-            height: focused ? 2 : 1,
-            backgroundColor: borderColor,
-          }}
-        />
-      ) : null}
-      {renderSuffix?.(ownerState)}
-    </Root>
+    <NativeInputValueContext.Provider value={undefined}>
+      <Root
+        {...rootNative}
+        {...(Root !== View ? { ownerState } : {})}
+        ref={rootRef}
+        testID={testID ?? rootProps.testID}
+        onTouchEnd={(event) => {
+          if (!disabled && event.target === event.currentTarget) innerRef.current?.focus();
+          rootProps.onTouchEnd?.(event);
+          onClick?.(event);
+        }}
+        style={[
+          {
+            flexDirection: 'row',
+            alignItems: 'center',
+            minWidth: 0,
+            marginTop:
+              variant === 'standard' && form && form.labelDisplay !== 'stacked' ? 16 : undefined,
+            alignSelf: fullWidth ? 'stretch' : undefined,
+            paddingLeft: framed && leftAdornment ? 14 : 0,
+            paddingRight: framed && rightAdornment ? 14 : 0,
+            backgroundColor: variant === 'filled' ? theme.palette.action.hover : 'transparent',
+            borderTopLeftRadius: variant === 'filled' ? theme.shape.borderRadius : undefined,
+            borderTopRightRadius: variant === 'filled' ? theme.shape.borderRadius : undefined,
+          },
+          baseStyle,
+          paddingEdges(baseStyle),
+          variant !== 'base' ? variantStyle : undefined,
+          variant !== 'base' ? paddingEdges(variantStyle) : undefined,
+          style,
+          paddingEdges(StyleSheet.flatten(style) ?? undefined),
+          rootSx,
+          paddingEdges(rootSx),
+          rootProps.style,
+          paddingEdges(StyleSheet.flatten(rootProps.style) ?? undefined),
+        ]}
+      >
+        {content(startAdornment)}
+        <FormContext.Provider value={undefined}>
+          <Host
+            {...hostNative}
+            {...(control
+              ? {
+                  name: (host as Record<string, unknown>).name ?? name,
+                  disabled: disabled || (host as Record<string, unknown>).disabled === true,
+                  error: (host as Record<string, unknown>).error ?? error,
+                  required: (host as Record<string, unknown>).required ?? required,
+                  defaultValue: initialInputValue as any,
+                }
+              : {})}
+            {...(Host !== TextInput ? { ownerState } : {})}
+            ref={hostRef}
+            nativeID={id ?? input.nativeID}
+            accessibilityLabel={explicitLabel ?? linkedLabel?.text}
+            accessibilityLabelledBy={
+              input.accessibilityLabelledBy ??
+              (explicitLabel !== undefined || input['aria-labelledby']
+                ? undefined
+                : linkedLabel?.id)
+            }
+            accessibilityHint={input.accessibilityHint ?? helpText}
+            placeholder={input.placeholder}
+            accessibilityState={{ ...input.accessibilityState, disabled }}
+            readOnly={readOnly}
+            editable={!readOnly}
+            multiline={multiline}
+            value={control ? (controlledValue as any) : String(text ?? '')}
+            numberOfLines={fixedRows ?? input.numberOfLines}
+            placeholderTextColor={
+              form?.label && !labelShrink && !focusedLocal && form.labelDisplay !== 'stacked'
+                ? 'transparent'
+                : (input.placeholderTextColor ?? theme.palette.text.secondary)
+            }
+            selectionColor={input.selectionColor ?? activeColor}
+            keyboardAppearance={input.keyboardAppearance ?? theme.palette.mode}
+            secureTextEntry={type === 'password' || input.secureTextEntry}
+            keyboardType={
+              type === 'email'
+                ? 'email-address'
+                : type === 'number'
+                  ? 'decimal-pad'
+                  : input.keyboardType
+            }
+            onChange={(event, child?: React.ReactNode) => {
+              if (control) {
+                const change = event as unknown as InputChangeEvent;
+                setText(change.target.value);
+                if (!nativeHostEventsLast) (host.onChange as any)?.(event, child);
+                (onChange as any)?.(change, child);
+                if (nativeHostEventsLast) (host.onChange as any)?.(event, child);
+                return;
+              }
+              const next = event.nativeEvent.text;
+              setText(next);
+              const target = { value: next, name, id };
+              if (!nativeHostEventsLast) host.onChange?.(event);
+              onChange?.({ target, currentTarget: target, nativeEvent: event.nativeEvent });
+              onChangeText?.(next);
+              if (nativeHostEventsLast) host.onChange?.(event);
+              if (host.onChangeText !== onChangeText) host.onChangeText?.(next);
+            }}
+            onChangeText={undefined}
+            onFocus={(event) => {
+              if (disabled) return;
+              nativeFocused.current = true;
+              setFocused(true);
+              onFocus?.(event);
+              if (host.onFocus !== onFocus) host.onFocus?.(event);
+              form?.onFocus?.();
+            }}
+            onBlur={(event) => {
+              nativeFocused.current = false;
+              setFocused(false);
+              onBlur?.(event);
+              if (host.onBlur !== onBlur) host.onBlur?.(event);
+              form?.onBlur?.();
+            }}
+            onContentSizeChange={(event) => {
+              if (multiline) setContentHeight(event.nativeEvent.contentSize.height);
+              input.onContentSizeChange?.(event);
+            }}
+            style={[
+              {
+                flex: 1,
+                minWidth: 0,
+                color: disabled ? theme.palette.text.disabled : theme.palette.text.primary,
+                paddingTop,
+                paddingBottom,
+                paddingLeft: framed && !leftAdornment ? 14 : 0,
+                paddingRight: framed && !rightAdornment ? 14 : 0,
+                ...(control
+                  ? {
+                      [mapPhysicalSides ? 'paddingLeft' : 'paddingRight']:
+                        selectionVariant === 'standard' ? 24 : 32,
+                      ...(selectionVariant === 'standard' ? { minWidth: 16 } : {}),
+                    }
+                  : {}),
+                minHeight,
+                maxHeight,
+                height,
+                textAlignVertical: multiline ? 'top' : 'center',
+              },
+              typography,
+              themedPadding,
+              host.style,
+              callerPadding,
+            ]}
+          />
+        </FormContext.Provider>
+        {content(endAdornment)}
+        {variant === 'outlined' ? (
+          <Outline
+            {...outlineProps}
+            {...(Outline !== NotchedOutline && Outline !== View ? { ownerState } : {})}
+            label={
+              Object.prototype.hasOwnProperty.call(outlineProps, 'label') ? (
+                outlineProps.label
+              ) : label != null && label !== '' && required ? (
+                <>
+                  {label}
+                  {'\u2009'}*
+                </>
+              ) : (
+                label
+              )
+            }
+            notched={
+              notched ??
+              (form?.labelDisplay === 'stacked'
+                ? false
+                : Boolean(startAdornment || focused || filled))
+            }
+            style={[
+              { borderWidth: focused ? 2 : 1, borderColor, borderRadius: theme.shape.borderRadius },
+              outlineStyle,
+              outlineProps.style,
+            ]}
+          />
+        ) : null}
+        {(variant === 'standard' || variant === 'filled') && !disableUnderline ? (
+          <View
+            pointerEvents="none"
+            accessible={false}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              start: 0,
+              end: 0,
+              height: focused ? 2 : 1,
+              backgroundColor: borderColor,
+            }}
+          />
+        ) : null}
+        {renderSuffix?.(ownerState)}
+      </Root>
+    </NativeInputValueContext.Provider>
   );
 }
 export const InputBase: React.ForwardRefExoticComponent<

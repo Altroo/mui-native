@@ -63,6 +63,7 @@ try {
     'MenuItem',
     'MenuList',
     'Menu',
+    'Select',
     'ListItemIcon',
     'ListItemAvatar',
     'ListSubheader',
@@ -110,6 +111,13 @@ try {
     requireConsumer('@altroo/mui-native/Menu/menuClasses').default,
     material.menuClasses,
   );
+  for (const name of ['selectClasses', 'getSelectUtilityClasses'])
+    assert.equal(requireConsumer('@altroo/mui-native/Select')[name], material[name]);
+  assert.equal(
+    requireConsumer('@altroo/mui-native/Select/selectClasses').default,
+    material.selectClasses,
+  );
+  assert.equal(typeof requireConsumer('@altroo/mui-native/Select/SelectInput').default, 'object');
   assert.equal(typeof requireConsumer('@altroo/mui-native-host').getNativeFocusedView, 'function');
   assert.equal(material.Grow.muiSupportAuto, true);
   requireConsumer('@altroo/mui-native/transitions');

@@ -1,6 +1,6 @@
 # Native lists
 
-The native material package exports List, ListItem, ListItemButton, ListItemText, ListItemIcon, ListItemAvatar, ListItemSecondaryAction and ListSubheader from its root and original deep import paths. The optional [native resolver](installation.md) maps eligible `@mui/material` imports to those same implementations. These primitives are the shared layout foundation for [MenuItem/MenuList](menu-list.md). [Anchored Menu](menu.md) composes those primitives; Select remains subsequent work.
+The native material package exports List, ListItem, ListItemButton, ListItemText, ListItemIcon, ListItemAvatar, ListItemSecondaryAction and ListSubheader from its root and original deep import paths. The optional [native resolver](installation.md) maps eligible `@mui/material` imports to those same implementations. These primitives are the shared layout foundation for [MenuItem/MenuList](menu-list.md). [Anchored Menu](menu.md) composes those primitives; [Select](select.md) adds native selection composition.
 
 ```tsx
 import { List, ListItem, ListItemButton, ListItemText, ListSubheader } from '@mui/material';
@@ -54,4 +54,4 @@ Wrapped/custom subheader components and external scroll hosts own their native s
 
 `node scripts/reference/lists.mjs --check` reproduces the checked-in composition fixtures against integrity-verified original MUI 9.5.0 after the [isolated reference setup](theming.md). Native tests cover those owner states/Typography choices, default composition, slots/ref cleanup, scrolling/indexing/identity, measurement feedback, logical action layout and ButtonBase states. Installed-consumer checks cover root/deep imports, native refs, slot augmentation and invalid browser contracts.
 
-These are finite runtime/type contracts. Browser classes, arbitrary descendant CSS, DOM refs, full upstream list generics/utilities and custom-slot ownerState forwarding beyond the declared callbacks, Select behavior and physical native visual/keyboard/screen-reader/RTL/font-scale/performance gates remain open. No screenshot, release-performance or complete upstream package-support claim follows from mocked layout tests.
+These are finite runtime/type contracts. Browser classes, arbitrary descendant CSS, DOM refs, full upstream list generics/utilities and custom-slot ownerState forwarding beyond the declared callbacks, complete Select/platform-picker behavior and physical native visual/keyboard/screen-reader/RTL/font-scale/performance gates remain open. No screenshot, release-performance or complete upstream package-support claim follows from mocked layout tests.

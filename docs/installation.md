@@ -42,3 +42,5 @@ Keep the existing web tsconfig separate and install the original `@mui/*` packag
 Use the catalog as a setup reference. An npm installation guide with alpha versions will replace tarball paths after verified alpha and namespace ownership checks. React Native peer ranges will only broaden after matrix validation.
 
 SDK 58 uses React Native's strict public TypeScript API. Native refs use `ViewInstance` and `TextInputInstance`; DOM refs are incompatible. The generated native tsconfig selects the `react-native` condition. Keep `skipLibCheck: true`, as recommended by the [React Native migration guide](https://reactnative.dev/docs/strict-typescript-api), because upstream generated declarations contain internal errors. The consumer fixture still checks component usage, native refs, theme augmentation and rejection of unsupported imports.
+
+Native [Select and TextField select](select.md) use the same material/system/host archives and native rebuild requirement as Menu. They add no picker or web-runtime dependency. NativeSelect/platform-picker mode remains unsupported; use MenuItem children with the default Select branch.

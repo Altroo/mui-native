@@ -64,7 +64,10 @@
       "MenuItem",
       "MenuList",
       "Menu",
-      "Menu/menuClasses"
+      "Menu/menuClasses",
+      "Select",
+      "Select/selectClasses",
+      "Select/SelectInput"
     ]
   },
   "@mui/system": {

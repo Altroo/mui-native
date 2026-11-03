@@ -33,6 +33,8 @@ import {
 } from '@altroo/mui-native-system';
 import { Box, Stack, Typography, type BoxProps, type TypographyProps } from './layout';
 import { useForkRef } from './utils/refs';
+import { Select, type SelectProps, type SelectChangeEvent, type SelectInputHandle } from './select';
+import { inputControlFilled } from './nativeInputControl';
 export { useControlled, useFormControl } from './formState';
 export type { InputChangeEvent } from './formState';
 import {
@@ -303,8 +305,10 @@ export const FormControl: React.ForwardRefExoticComponent<
     </FormContext.Provider>
   );
 });
-export interface TextFieldOwnerState extends Omit<TextFieldProps, 'slots' | 'slotProps'> {
+export interface TextFieldOwnerState
+  extends Omit<TextFieldProps, 'slots' | 'slotProps' | 'select'> {
   focused: boolean;
+  select: boolean;
 }
 export type TextFieldRootSlotProps = FormControlProps & React.RefAttributes<ViewInstance>;
 export type TextFieldLabelSlotProps = InputLabelProps & React.RefAttributes<TextInstance>;
@@ -326,7 +330,7 @@ export interface NativeTextFieldInputProps
   hiddenLabel?: boolean;
 }
 export type TextFieldInputSlotProps = NativeTextFieldInputProps & React.RefAttributes<ViewInstance>;
-export interface TextFieldProps
+export interface NativeTextFieldProps
   extends Omit<TextInputProps, 'onChange' | 'value' | 'defaultValue' | 'style'> {
   sx?: SxProps;
   style?: StyleProp<ViewStyle>;
@@ -346,6 +350,8 @@ export interface TextFieldProps
   type?: 'text' | 'password' | 'email' | 'number';
   onChange?: (event: InputChangeEvent) => void;
   inputRef?: React.Ref<TextInputInstance>;
+  select?: false;
+  SelectProps?: Partial<SelectProps<any>>;
   'aria-label'?: string;
   slots?: {
     root?: NativeSlot<TextFieldRootSlotProps>;
@@ -353,6 +359,7 @@ export interface TextFieldProps
     htmlInput?: NativeSlot<TextFieldHtmlInputSlotProps>;
     inputLabel?: NativeSlot<TextFieldLabelSlotProps>;
     formHelperText?: NativeSlot<TextFieldHelperTextSlotProps>;
+    select?: NativeSlot<SelectProps<any> & React.RefAttributes<ViewInstance>>;
   };
   slotProps?: {
     root?: SlotProps<TextFieldRootSlotProps, TextFieldOwnerState>;
@@ -360,6 +367,10 @@ export interface TextFieldProps
     htmlInput?: SlotProps<TextFieldHtmlInputSlotProps, TextFieldOwnerState>;
     inputLabel?: SlotProps<TextFieldLabelSlotProps, TextFieldOwnerState>;
     formHelperText?: SlotProps<TextFieldHelperTextSlotProps, TextFieldOwnerState>;
+    select?: SlotProps<
+      Partial<SelectProps<any>> & React.RefAttributes<ViewInstance>,
+      TextFieldOwnerState
+    >;
   };
 }
 
@@ -384,249 +395,331 @@ export const NativeTextFieldInput: React.ForwardRefExoticComponent<
 
 Object.assign(NativeTextFieldInput, { muiName: 'Input' });
 
-export const TextField: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<TextFieldProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, TextFieldProps>(function TextField(inProps, ref) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiTextField' });
-  const form = useContext(FormContext) ?? {};
-  const {
-    sx,
-    style,
-    label,
-    helperText,
-    error = form.error ?? false,
-    disabled = form.disabled ?? false,
-    required = form.required ?? false,
-    fullWidth,
-    labelDisplay = 'floating',
-    variant = 'outlined',
-    size = 'medium',
-    value,
-    defaultValue = '',
-    name,
-    id: idProp,
-    type = 'text',
-    onChange,
-    onChangeText,
-    inputRef,
-    slots,
-    slotProps,
-    'aria-label': ariaLabel,
-    ...native
-  } = props;
-  const generatedId = useId();
-  const hostInstance = useRef<TextInputInstance>(null);
-  const [rootWidth, setRootWidth] = useState<number>();
-  const [focusedLocal, setFocused] = useState(false);
-  const focused = !disabled && focusedLocal;
-  const ownerState = { ...props, variant, size, error, disabled, required, focused };
-  const {
-    ref: rootSlotRef,
-    sx: rootSx,
-    style: rootStyle,
-    ...rootProps
-  } = resolveSlotProps(slotProps?.root, ownerState) ?? {};
-  const {
-    ref: inputSlotRef,
-    inputRef: inputSlotInputRef,
-    ...inputProps
-  } = resolveSlotProps(slotProps?.input, ownerState) ?? {};
-  useEffect(() => {
-    if (disabled || inputProps.disabled === true) setFocused(false);
-  }, [disabled, inputProps.disabled]);
-  const initialValue = Object.prototype.hasOwnProperty.call(inputProps, 'defaultValue')
-    ? (inputProps.defaultValue ?? '')
-    : defaultValue;
-  const [text, setText] = useControlled(value, initialValue);
-  const htmlInputProps = resolveSlotProps(slotProps?.htmlInput, ownerState) ?? {};
-  const inputLabelProps = resolveSlotProps(slotProps?.inputLabel, ownerState);
-  const helperProps = resolveSlotProps(slotProps?.formHelperText, ownerState);
-  const id =
-    idProp ??
-    htmlInputProps.nativeID ??
-    inputProps.inputProps?.nativeID ??
-    native.nativeID ??
-    generatedId;
-  const labelId = idProp
-    ? `${id}-label`
-    : (inputLabelProps?.id ?? inputLabelProps?.nativeID ?? `${id}-label`);
-  const helperId = idProp
-    ? `${id}-helper-text`
-    : (helperProps?.id ?? helperProps?.nativeID ?? `${id}-helper-text`);
-  const rootRef = useForkRef(ref, rootSlotRef);
-  const mergedInputRef = useForkRef(hostInstance, inputRef, inputSlotInputRef);
-  const mergedHostRef = useForkRef(inputProps.inputProps?.ref, htmlInputProps.ref);
-  const resolved = useComponentStyle('MuiTextField', ownerState, sx, {
-    states: [
-      ...(focused ? ['focused'] : []),
-      ...(error ? ['error'] : []),
-      ...(disabled ? ['disabled'] : []),
-    ],
-  });
-  const rootSlotStyle = useSx(rootSx);
-  const Root = slots?.root ?? FormControl;
-  const Input = slots?.input ?? NativeTextFieldInput;
-  const Label = slots?.inputLabel ?? InputLabel;
-  const Helper = slots?.formHelperText ?? FormHelperText;
-  const change = (event: InputChangeEvent) => {
-    setText(event.target.value);
-    (inputProps.onChange ?? onChange)?.(event);
-  };
-  return (
-    <FormContext.Provider
-      value={{
-        disabled,
-        error,
-        required,
-        size,
-        variant,
-        labelDisplay,
-        width: rootWidth,
-        filled: String(inputProps.value ?? text ?? '').length > 0,
-        focused,
-        adornedStart: Boolean(inputProps.startAdornment),
-        label:
-          label != null && label !== ''
-            ? {
-                id: labelId,
-                htmlFor: id,
-                text: nativeLabelText(label),
-                shrink:
-                  inputLabelProps?.shrink ??
-                  Boolean(
-                    focused ||
-                      String(inputProps.value ?? text ?? '').length ||
-                      inputProps.startAdornment,
-                  ),
-              }
-            : undefined,
-        helper:
-          helperText != null
-            ? { id: helperId, text: nativeLabelText(helperText)?.trim() || undefined }
-            : undefined,
-        focusInput: (target) => {
-          if (!disabled && !inputProps.disabled && (!target || target === (inputProps.id ?? id)))
-            hostInstance.current?.focus();
-        },
-      }}
-    >
-      <Root
-        {...rootProps}
-        {...(Root !== FormControl && Root !== View ? { ownerState } : {})}
-        {...(Root !== View
-          ? { disabled, error, required, fullWidth, variant, size, labelDisplay }
-          : {})}
-        ref={rootRef}
-        onLayout={(event) => {
-          if (Root !== FormControl) setRootWidth(event.nativeEvent.layout.width);
-          rootProps.onLayout?.(event);
-        }}
-        style={[
-          { alignSelf: fullWidth ? 'stretch' : undefined, gap: labelDisplay === 'stacked' ? 4 : 0 },
-          resolved,
-          style,
-          rootSlotStyle,
-          rootStyle,
-        ]}
-      >
-        {label != null && label !== '' ? (
-          <Label
-            htmlFor={id}
-            {...inputLabelProps}
-            {...(Label !== InputLabel ? { ownerState } : {})}
-            nativeID={labelId}
-          >
-            {label}
-          </Label>
-        ) : null}
-        <Input
-          {...native}
-          value={text}
-          name={name}
-          id={id}
-          type={type}
-          label={variant === 'outlined' ? label : undefined}
-          notched={
-            labelDisplay === 'stacked'
-              ? false
-              : variant === 'outlined'
-                ? inputLabelProps?.shrink
-                : undefined
-          }
-          variant={variant}
-          size={size}
-          fullWidth={fullWidth}
-          accessibilityLabel={
+export type TextFieldVariants = 'outlined' | 'filled' | 'standard';
+export interface TextFieldProps<
+  Variant extends TextFieldVariants = TextFieldVariants,
+  Value = string,
+> extends Omit<
+    NativeTextFieldProps,
+    'select' | 'value' | 'defaultValue' | 'onChange' | 'inputRef' | 'variant'
+  > {
+  select?: boolean;
+  variant?: Variant;
+  value?: unknown;
+  defaultValue?: unknown;
+  onChange?: (event: InputChangeEvent | SelectChangeEvent<Value>, child?: React.ReactNode) => void;
+  inputRef?: React.Ref<TextInputInstance | SelectInputHandle<Value>>;
+}
+export interface TextFieldSelectProps<Value = unknown>
+  extends Omit<TextFieldProps, 'value' | 'defaultValue' | 'onChange' | 'inputRef' | 'select'> {
+  select: true;
+  value?: Value;
+  defaultValue?: Value;
+  onChange?: (event: SelectChangeEvent<Value>, child: React.ReactNode) => void;
+  inputRef?: React.Ref<SelectInputHandle<Value>>;
+}
+type TextFieldImplementationProps = Omit<NativeTextFieldProps, 'select'> & { select?: boolean };
+const TextFieldImpl = forwardRef<ViewInstance, TextFieldImplementationProps>(
+  function TextField(inProps, ref) {
+    const props = useDefaultProps({ props: inProps, name: 'MuiTextField' });
+    const form = useContext(FormContext) ?? {};
+    const {
+      sx,
+      style,
+      label,
+      helperText,
+      error = form.error ?? false,
+      disabled = form.disabled ?? false,
+      required = form.required ?? false,
+      fullWidth,
+      labelDisplay = 'floating',
+      variant = 'outlined',
+      size = 'medium',
+      value,
+      defaultValue: defaultValueProp,
+      name,
+      id: idProp,
+      type = 'text',
+      onChange,
+      onChangeText,
+      inputRef,
+      slots,
+      slotProps,
+      select = false,
+      SelectProps: legacySelectProps,
+      children,
+      'aria-label': ariaLabel,
+      ...native
+    } = props;
+    const defaultValue = !select && defaultValueProp === undefined ? '' : defaultValueProp;
+    const generatedId = useId();
+    const hostInstance = useRef<TextInputInstance>(null);
+    const [rootWidth, setRootWidth] = useState<number>();
+    const [focusedLocal, setFocused] = useState(false);
+    const focused = !disabled && focusedLocal;
+    const ownerState = {
+      ...props,
+      select,
+      variant,
+      size,
+      error,
+      disabled,
+      required,
+      focused,
+    } as unknown as TextFieldOwnerState;
+    const {
+      ref: rootSlotRef,
+      sx: rootSx,
+      style: rootStyle,
+      ...rootProps
+    } = resolveSlotProps(slotProps?.root, ownerState) ?? {};
+    const {
+      ref: inputSlotRef,
+      inputRef: inputSlotInputRef,
+      ...inputProps
+    } = resolveSlotProps(slotProps?.input, ownerState) ?? {};
+    useEffect(() => {
+      if (disabled || inputProps.disabled === true) setFocused(false);
+    }, [disabled, inputProps.disabled]);
+    const selectProps =
+      slotProps?.select === undefined
+        ? legacySelectProps
+        : resolveSlotProps(slotProps.select, ownerState);
+    const initialValue =
+      select && selectProps && Object.hasOwn(selectProps, 'defaultValue')
+        ? selectProps.defaultValue
+        : Object.prototype.hasOwnProperty.call(inputProps, 'defaultValue')
+          ? select
+            ? inputProps.defaultValue
+            : (inputProps.defaultValue ?? '')
+          : defaultValue;
+    const controlledValue =
+      select && selectProps && Object.hasOwn(selectProps, 'value') ? selectProps.value : value;
+    const [text, setText] = useControlled<any>(controlledValue, initialValue);
+    const htmlInputProps = resolveSlotProps(slotProps?.htmlInput, ownerState) ?? {};
+    const inputLabelProps = resolveSlotProps(slotProps?.inputLabel, ownerState);
+    const helperProps = resolveSlotProps(slotProps?.formHelperText, ownerState);
+    const SelectSlot = slots?.select ?? Select;
+    const fieldFilled = select
+      ? inputControlFilled(
+          selectProps?.value !== undefined ? selectProps.value : (inputProps.value ?? text),
+        )
+      : String(inputProps.value ?? text ?? '').length > 0;
+    const id =
+      idProp ??
+      htmlInputProps.nativeID ??
+      inputProps.inputProps?.nativeID ??
+      native.nativeID ??
+      generatedId;
+    const labelId = idProp
+      ? `${id}-label`
+      : (inputLabelProps?.id ?? inputLabelProps?.nativeID ?? `${id}-label`);
+    const helperId = idProp
+      ? `${id}-helper-text`
+      : (helperProps?.id ?? helperProps?.nativeID ?? `${id}-helper-text`);
+    const rootRef = useForkRef(ref, rootSlotRef);
+    const mergedInputRef = useForkRef(hostInstance, inputRef, inputSlotInputRef);
+    const mergedHostRef = useForkRef(inputProps.inputProps?.ref, htmlInputProps.ref);
+    const resolved = useComponentStyle('MuiTextField', ownerState, sx, {
+      states: [
+        ...(focused ? ['focused'] : []),
+        ...(error ? ['error'] : []),
+        ...(disabled ? ['disabled'] : []),
+      ],
+    });
+    const rootSlotStyle = useSx(rootSx);
+    const Root = slots?.root ?? FormControl;
+    const Input = slots?.input ?? NativeTextFieldInput;
+    const Label = slots?.inputLabel ?? InputLabel;
+    const Helper = slots?.formHelperText ?? FormHelperText;
+    const change = (event: InputChangeEvent) => {
+      setText(event.target.value);
+      (inputProps.onChange ?? onChange)?.(event);
+    };
+    const inputElement = (
+      <Input
+        {...native}
+        value={text}
+        defaultValue={initialValue}
+        name={name}
+        id={id}
+        type={type}
+        label={variant === 'outlined' ? label : undefined}
+        notched={
+          labelDisplay === 'stacked'
+            ? false
+            : variant === 'outlined'
+              ? inputLabelProps?.shrink
+              : undefined
+        }
+        variant={variant}
+        size={size}
+        fullWidth={fullWidth}
+        accessibilityLabel={
+          ariaLabel ?? native.accessibilityLabel ?? (typeof label === 'string' ? label : undefined)
+        }
+        accessibilityHint={
+          native.accessibilityHint ??
+          (typeof helperText === 'string' && helperText.trim() ? helperText : undefined)
+        }
+        onChangeText={onChangeText}
+        {...inputProps}
+        ref={inputSlotRef}
+        inputRef={mergedInputRef}
+        inputProps={{
+          ...inputProps.inputProps,
+          ...htmlInputProps,
+          ref: mergedHostRef,
+          'aria-label':
+            ariaLabel ?? htmlInputProps['aria-label'] ?? inputProps.inputProps?.['aria-label'],
+          onFocus:
+            (htmlInputProps.onFocus ?? inputProps.inputProps?.onFocus) ===
+            (inputProps.onFocus ?? native.onFocus)
+              ? undefined
+              : (htmlInputProps.onFocus ?? inputProps.inputProps?.onFocus),
+          onBlur:
+            (htmlInputProps.onBlur ?? inputProps.inputProps?.onBlur) ===
+            (inputProps.onBlur ?? native.onBlur)
+              ? undefined
+              : (htmlInputProps.onBlur ?? inputProps.inputProps?.onBlur),
+          accessibilityLabel:
             ariaLabel ??
+            htmlInputProps.accessibilityLabel ??
+            inputProps.inputProps?.accessibilityLabel ??
+            inputProps.accessibilityLabel ??
             native.accessibilityLabel ??
-            (typeof label === 'string' ? label : undefined)
-          }
-          accessibilityHint={
-            native.accessibilityHint ??
-            (typeof helperText === 'string' && helperText.trim() ? helperText : undefined)
-          }
-          onChangeText={onChangeText}
-          {...inputProps}
-          ref={inputSlotRef}
-          inputRef={mergedInputRef}
-          inputProps={{
-            ...inputProps.inputProps,
-            ...htmlInputProps,
-            ref: mergedHostRef,
-            'aria-label':
-              ariaLabel ?? htmlInputProps['aria-label'] ?? inputProps.inputProps?.['aria-label'],
-            onFocus:
-              (htmlInputProps.onFocus ?? inputProps.inputProps?.onFocus) ===
-              (inputProps.onFocus ?? native.onFocus)
-                ? undefined
-                : (htmlInputProps.onFocus ?? inputProps.inputProps?.onFocus),
-            onBlur:
-              (htmlInputProps.onBlur ?? inputProps.inputProps?.onBlur) ===
-              (inputProps.onBlur ?? native.onBlur)
-                ? undefined
-                : (htmlInputProps.onBlur ?? inputProps.inputProps?.onBlur),
-            accessibilityLabel:
-              ariaLabel ??
-              htmlInputProps.accessibilityLabel ??
-              inputProps.inputProps?.accessibilityLabel ??
-              inputProps.accessibilityLabel ??
-              native.accessibilityLabel ??
-              (typeof label === 'string' ? label : undefined),
+            (typeof label === 'string' ? label : undefined),
+        }}
+        slots={{ ...inputProps.slots, ...(slots?.htmlInput ? { input: slots.htmlInput } : {}) }}
+        ownerState={ownerState}
+        disabled={disabled || inputProps.disabled === true}
+        error={inputProps.error ?? error}
+        required={inputProps.required ?? required}
+        readOnly={native.readOnly === true || inputProps.readOnly === true}
+        editable={
+          native.editable === false || inputProps.editable === false
+            ? false
+            : (inputProps.editable ?? native.editable)
+        }
+        onChange={change}
+        onFocus={(event) => {
+          setFocused(true);
+          (inputProps.onFocus ?? native.onFocus)?.(event);
+        }}
+        onBlur={(event) => {
+          setFocused(false);
+          (inputProps.onBlur ?? native.onBlur)?.(event);
+        }}
+      />
+    );
+    return (
+      <FormContext.Provider
+        value={{
+          disabled,
+          error,
+          required,
+          size,
+          variant,
+          labelDisplay,
+          width: rootWidth,
+          filled: fieldFilled,
+          focused,
+          adornedStart: Boolean(inputProps.startAdornment),
+          label:
+            label != null && label !== ''
+              ? {
+                  id: labelId,
+                  htmlFor: id,
+                  text: nativeLabelText(label),
+                  shrink:
+                    inputLabelProps?.shrink ??
+                    Boolean(focused || fieldFilled || inputProps.startAdornment),
+                }
+              : undefined,
+          helper:
+            helperText != null
+              ? { id: helperId, text: nativeLabelText(helperText)?.trim() || undefined }
+              : undefined,
+          focusInput: (target) => {
+            if (!disabled && !inputProps.disabled && (!target || target === (inputProps.id ?? id)))
+              hostInstance.current?.focus();
+          },
+        }}
+      >
+        <Root
+          {...rootProps}
+          {...(Root !== FormControl && Root !== View ? { ownerState } : {})}
+          {...(Root !== View
+            ? { disabled, error, required, fullWidth, variant, size, labelDisplay }
+            : {})}
+          ref={rootRef}
+          onLayout={(event) => {
+            if (Root !== FormControl) setRootWidth(event.nativeEvent.layout.width);
+            rootProps.onLayout?.(event);
           }}
-          slots={{ ...inputProps.slots, ...(slots?.htmlInput ? { input: slots.htmlInput } : {}) }}
-          ownerState={ownerState}
-          disabled={disabled || inputProps.disabled === true}
-          error={inputProps.error ?? error}
-          required={inputProps.required ?? required}
-          readOnly={native.readOnly === true || inputProps.readOnly === true}
-          editable={
-            native.editable === false || inputProps.editable === false
-              ? false
-              : (inputProps.editable ?? native.editable)
-          }
-          onChange={change}
-          onFocus={(event) => {
-            setFocused(true);
-            (inputProps.onFocus ?? native.onFocus)?.(event);
-          }}
-          onBlur={(event) => {
-            setFocused(false);
-            (inputProps.onBlur ?? native.onBlur)?.(event);
-          }}
-        />
-        {helperText != null ? (
-          <Helper
-            {...helperProps}
-            {...(Helper !== FormHelperText ? { ownerState } : {})}
-            nativeID={helperId}
-          >
-            {helperText}
-          </Helper>
-        ) : null}
-      </Root>
-    </FormContext.Provider>
-  );
-});
+          style={[
+            {
+              alignSelf: fullWidth ? 'stretch' : undefined,
+              gap: labelDisplay === 'stacked' ? 4 : 0,
+            },
+            resolved,
+            style,
+            rootSlotStyle,
+            rootStyle,
+          ]}
+        >
+          {label != null && label !== '' ? (
+            <Label
+              htmlFor={id}
+              {...inputLabelProps}
+              {...(Label !== InputLabel ? { ownerState } : {})}
+              nativeID={labelId}
+            >
+              {label}
+            </Label>
+          ) : null}
+          {select ? (
+            <SelectSlot
+              id={id}
+              labelId={labelId}
+              aria-describedby={helperText != null ? helperId : undefined}
+              value={controlledValue}
+              input={inputElement}
+              {...(labelDisplay === 'stacked' ? { notched: false } : {})}
+              {...selectProps}
+              onChange={(event: SelectChangeEvent<any>, child: React.ReactNode) => {
+                setText(event.target.value);
+                ((selectProps?.onChange ?? inputProps.onChange ?? onChange) as any)?.(event, child);
+              }}
+            >
+              {children}
+            </SelectSlot>
+          ) : (
+            inputElement
+          )}
+          {helperText != null ? (
+            <Helper
+              {...helperProps}
+              {...(Helper !== FormHelperText ? { ownerState } : {})}
+              nativeID={helperId}
+            >
+              {helperText}
+            </Helper>
+          ) : null}
+        </Root>
+      </FormContext.Provider>
+    );
+  },
+);
+export const TextField = TextFieldImpl as unknown as {
+  (props: NativeTextFieldProps & React.RefAttributes<ViewInstance>): React.ReactElement;
+  <Value = unknown>(
+    props: TextFieldSelectProps<Value> & React.RefAttributes<ViewInstance>,
+  ): React.ReactElement;
+  <Variant extends TextFieldVariants = TextFieldVariants, Value = string>(
+    props: TextFieldProps<Variant, Value> & React.RefAttributes<ViewInstance>,
+  ): React.ReactElement;
+};
 export interface CheckboxProps {
   checked?: boolean;
   defaultChecked?: boolean;

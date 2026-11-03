@@ -339,6 +339,21 @@
       "types": "./dist/Menu/menuClasses/index.d.ts",
       "react-native": "./src/Menu/menuClasses/index.ts",
       "default": "./dist/Menu/menuClasses/index.js"
+    },
+    "./Select": {
+      "types": "./dist/Select/index.d.ts",
+      "react-native": "./src/Select/index.ts",
+      "default": "./dist/Select/index.js"
+    },
+    "./Select/selectClasses": {
+      "types": "./dist/Select/selectClasses/index.d.ts",
+      "react-native": "./src/Select/selectClasses/index.ts",
+      "default": "./dist/Select/selectClasses/index.js"
+    },
+    "./Select/SelectInput": {
+      "types": "./dist/Select/SelectInput/index.d.ts",
+      "react-native": "./src/Select/SelectInput/index.ts",
+      "default": "./dist/Select/SelectInput/index.js"
     }
   },
   "dependencies": {

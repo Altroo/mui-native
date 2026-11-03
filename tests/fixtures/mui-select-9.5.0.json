@@ -1,0 +1,491 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Select/Select.js": "d3c405c19094e5f86c9ba37e78c348f2e5feb4a94544175f6018df3ee0aea537",
+      "Select/Select.d.ts": "08ba31f6ff9472bc8e2d23a69fe00b21720ef10d6ac7f0d2d3578804ecc72a22",
+      "Select/SelectInput.js": "2cdbd4bf9d51ce991b08c882cf8f3322bfa57b51143541e8dd0e6ebfdcfe1d52",
+      "Select/SelectInput.d.ts": "9091514ad2d4351232895121c094c3c3d769ea5c953a44b7a3b4689fd9237c9d",
+      "NativeSelect/NativeSelectInput.js": "ceba83446f1c4438180d489e82df00826baf476e4e1bdc9f3b003d119a42d10b",
+      "Select/selectClasses.js": "2528b554801f59c9441c2bfe35c5bff1b15775d0aef04be01075a03963fcfe72",
+      "Select/selectClasses.d.ts": "fe6bbd6a216c7347eb6af70f20c9c7e3f676683a9500f8fb7647d7447bb5f5d3",
+      "Select/utils/closedTypeahead.js": "307e249eed83636c9d81c2c3c1f5c94d29fd335ccc7fed59a4d83bb40932bb5d",
+      "Select/utils/areEqualValues.js": "c732005341597134758f8cf5b883bd07e8ae1806cec386807c732df6f9ff2cd8",
+      "Select/utils/getOpenInteractionType.js": "83f02ef748bf97e9ab2ef794dcf30f9733b1fcfc02ed7d9cfd7a3b59f13a8038",
+      "InputBase/InputBase.js": "b8c128eb685ba79f992aa7e2e3650ce59a94459b1cf85426c127f12892c1435c",
+      "InputBase/utils.js": "be551c83c604c85a4e787047828eebc57e81b57f68ae4cdf82c0b1833fc6394e",
+      "TextField/TextField.js": "5177f6c23543deea386289705e754b4ab9115d2a3dcc0eae936721f41953b186",
+      "TextField/TextField.d.ts": "c0bb43ce3f8ca55982157d970edbd1716b475eada87f0115e272a5b462e91e93"
+    }
+  },
+  "scope": "Actual original SelectInput and Select wrapper with controlled DOM refs, clock and Menu slots; no browser layout or physical native input evidence.",
+  "fixtures": [
+    {
+      "input": {
+        "name": "change target remains mutable without changing selection",
+        "mutableTarget": true,
+        "actions": [{ "press": true }, { "click": "b" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 },
+        { "value": "b", "display": "Beta", "open": false, "selected": ["b"], "minWidth": 200 }
+      ],
+      "trace": ["open", "child:b", "change:\"b\":b:choice", "targetMutable:true", "close"]
+    },
+    {
+      "input": {
+        "name": "undefined default changes when choosing an empty value",
+        "props": { "defaultValue": { "$undefined": true } },
+        "options": [
+          { "id": "a", "label": "None", "value": "" },
+          { "id": "b", "label": "Beta", "value": "b" }
+        ],
+        "actions": [{ "press": true }, { "click": "a" }]
+      },
+      "states": [
+        {
+          "value": "value:undefined",
+          "display": "",
+          "open": false,
+          "selected": [],
+          "minWidth": null
+        },
+        {
+          "value": "value:undefined",
+          "display": "",
+          "open": true,
+          "selected": [],
+          "minWidth": 200
+        },
+        { "value": "", "display": "", "open": false, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": ["open", "child:a", "change:\"\":a:choice", "close"]
+    },
+    {
+      "input": {
+        "name": "MenuProps open override retains selection ownership",
+        "props": { "open": false },
+        "forceMenu": true,
+        "actions": [{ "click": "b" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 },
+        { "value": "b", "display": "Beta", "open": true, "selected": ["b"], "minWidth": 200 }
+      ],
+      "trace": ["child:b", "change:\"b\":b:choice", "close"]
+    },
+    {
+      "input": {
+        "name": "controlled closed input retains its anchor minimum",
+        "props": { "open": false }
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "uncontrolled single selection",
+        "actions": [{ "press": true }, { "click": "b" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 },
+        { "value": "b", "display": "Beta", "open": false, "selected": ["b"], "minWidth": 200 }
+      ],
+      "trace": ["open", "child:b", "change:\"b\":b:choice", "close"]
+    },
+    {
+      "input": {
+        "name": "same selected value closes without change",
+        "actions": [{ "press": true }, { "click": "a" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 },
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": ["open", "child:a", "close"]
+    },
+    {
+      "input": {
+        "name": "controlled value and open request",
+        "props": { "value": "a", "open": true },
+        "actions": [{ "click": "b" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 },
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": ["child:b", "change:\"b\":b:choice", "close"]
+    },
+    {
+      "input": {
+        "name": "multiple preserves array order but display follows option order",
+        "props": { "multiple": true, "defaultValue": ["b"] },
+        "actions": [{ "press": true }, { "click": "a" }, { "click": "b" }]
+      },
+      "states": [
+        { "value": ["b"], "display": "Beta", "open": false, "selected": ["b"], "minWidth": null },
+        { "value": ["b"], "display": "Beta", "open": true, "selected": ["b"], "minWidth": 200 },
+        {
+          "value": ["b", "a"],
+          "display": "Alpha, Beta",
+          "open": true,
+          "selected": ["a", "b"],
+          "minWidth": 200
+        },
+        { "value": ["a"], "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": [
+        "open",
+        "child:a",
+        "change:[\"b\",\"a\"]:a:choice",
+        "child:b",
+        "change:[\"a\"]:b:choice"
+      ]
+    },
+    {
+      "input": {
+        "name": "primitive matching stringifies",
+        "options": [{ "id": "a", "label": "One", "value": 1 }],
+        "props": { "value": "1" }
+      },
+      "states": [
+        { "value": "1", "display": "One", "open": false, "selected": ["a"], "minWidth": null }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "object reference matches",
+        "options": [{ "id": "a", "label": "Object", "value": { "$ref": "one" } }],
+        "props": { "value": { "$ref": "one" } }
+      },
+      "states": [
+        {
+          "value": "ref:one",
+          "display": "Object",
+          "open": false,
+          "selected": ["a"],
+          "minWidth": null
+        }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "equal object without identity does not match",
+        "options": [{ "id": "a", "label": "Object", "value": { "$ref": "one" } }],
+        "props": { "value": { "$copy": "one" } }
+      },
+      "states": [
+        { "value": "copy:one", "display": "", "open": false, "selected": [], "minWidth": null }
+      ],
+      "trace": []
+    },
+    {
+      "input": { "name": "empty value has no display", "props": { "defaultValue": "" } },
+      "states": [{ "value": "", "display": "", "open": false, "selected": [], "minWidth": null }],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "displayEmpty shows the empty option",
+        "options": [{ "id": "a", "label": "Choose", "value": "" }],
+        "props": { "defaultValue": "", "displayEmpty": true }
+      },
+      "states": [
+        { "value": "", "display": "Choose", "open": false, "selected": ["a"], "minWidth": null }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "renderValue has precedence",
+        "render": "custom",
+        "props": { "value": "a" }
+      },
+      "states": [
+        { "value": "a", "display": "Custom", "open": false, "selected": ["a"], "minWidth": null }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "empty renderValue whitespace is hidden",
+        "render": "whitespace",
+        "props": { "value": "a" }
+      },
+      "states": [
+        { "value": "a", "display": "", "open": false, "selected": ["a"], "minWidth": null }
+      ],
+      "trace": []
+    },
+    {
+      "input": { "name": "keyboard Enter opens once", "actions": [{ "key": "Enter" }] },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": ["open", "key:Enter"]
+    },
+    {
+      "input": { "name": "keyboard   opens once", "actions": [{ "key": " " }] },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": ["open", "key: "]
+    },
+    {
+      "input": { "name": "keyboard ArrowUp opens once", "actions": [{ "key": "ArrowUp" }] },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": ["open", "key:ArrowUp"]
+    },
+    {
+      "input": { "name": "keyboard ArrowDown opens once", "actions": [{ "key": "ArrowDown" }] },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": ["open", "key:ArrowDown"]
+    },
+    {
+      "input": {
+        "name": "readonly does not open or publish keys",
+        "props": { "readOnly": true },
+        "actions": [{ "press": true }, { "key": "Enter" }, { "key": "b" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "closed typeahead cycles repeated initial",
+        "actions": [{ "key": "b" }, { "key": "b" }, { "key": "b" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "b", "display": "Beta", "open": false, "selected": ["b"], "minWidth": null },
+        { "value": "c", "display": "Bravo", "open": false, "selected": ["c"], "minWidth": null },
+        { "value": "b", "display": "Beta", "open": false, "selected": ["b"], "minWidth": null }
+      ],
+      "trace": [
+        "change:\"b\":b:choice",
+        "key:b",
+        "change:\"c\":c:choice",
+        "key:b",
+        "change:\"b\":b:choice",
+        "key:b"
+      ]
+    },
+    {
+      "input": {
+        "name": "closed typeahead doubled initial is a prefix",
+        "options": [
+          { "id": "a", "label": "Alpha", "value": "a" },
+          { "id": "b", "label": "Bali", "value": "b" },
+          { "id": "c", "label": "Bbad", "value": "c" }
+        ],
+        "actions": [{ "key": "b" }, { "key": "b" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "b", "display": "Bali", "open": false, "selected": ["b"], "minWidth": null },
+        { "value": "c", "display": "Bbad", "open": false, "selected": ["c"], "minWidth": null }
+      ],
+      "trace": ["change:\"b\":b:choice", "key:b", "change:\"c\":c:choice", "key:b"]
+    },
+    {
+      "input": {
+        "name": "closed typeahead resets after 750ms",
+        "actions": [{ "key": "b" }, { "wait": 750 }, { "key": "a" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "b", "display": "Beta", "open": false, "selected": ["b"], "minWidth": null },
+        { "value": "b", "display": "Beta", "open": false, "selected": ["b"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null }
+      ],
+      "trace": ["change:\"b\":b:choice", "key:b", "change:\"a\":a:choice", "key:a"]
+    },
+    {
+      "input": {
+        "name": "closed typeahead ignores disabled options",
+        "options": [
+          { "id": "a", "label": "Alpha", "value": "a" },
+          { "id": "b", "label": "Beta", "value": "b", "disabled": true },
+          { "id": "c", "label": "Bravo", "value": "c" }
+        ],
+        "actions": [{ "key": "b" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "c", "display": "Bravo", "open": false, "selected": ["c"], "minWidth": null }
+      ],
+      "trace": ["change:\"c\":c:choice", "key:b"]
+    },
+    {
+      "input": {
+        "name": "closed typeahead ignores modifier",
+        "actions": [{ "key": "b", "ctrlKey": true }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null }
+      ],
+      "trace": ["key:b"]
+    },
+    {
+      "input": {
+        "name": "multiple does not use closed typeahead",
+        "props": { "multiple": true, "defaultValue": [] },
+        "actions": [{ "key": "b" }]
+      },
+      "states": [
+        { "value": [], "display": "", "open": false, "selected": [], "minWidth": null },
+        { "value": [], "display": "", "open": false, "selected": [], "minWidth": null }
+      ],
+      "trace": ["key:b"]
+    },
+    {
+      "input": {
+        "name": "Space option keydown selects once before keyup",
+        "props": { "multiple": true, "defaultValue": [] },
+        "actions": [
+          { "key": " " },
+          { "itemUp": "a", "key": " " },
+          { "itemKey": "a", "key": " " },
+          { "itemKey": "a", "key": " ", "repeat": true },
+          { "itemUp": "a", "key": " " }
+        ]
+      },
+      "states": [
+        { "value": [], "display": "", "open": false, "selected": [], "minWidth": null },
+        { "value": [], "display": "", "open": true, "selected": [], "minWidth": 200 },
+        { "value": [], "display": "", "open": true, "selected": [], "minWidth": 200 },
+        { "value": ["a"], "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 },
+        { "value": ["a"], "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 },
+        { "value": ["a"], "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": [
+        "open",
+        "key: ",
+        "itemUp:a: ",
+        "itemKey:a: ",
+        "child:a",
+        "change:[\"a\"]:a:choice",
+        "itemKey:a: ",
+        "itemUp:a: "
+      ]
+    },
+    {
+      "input": {
+        "name": "option callback prevention preserves pinned selection order",
+        "preventChild": true,
+        "actions": [{ "press": true }, { "click": "b" }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": null },
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 },
+        { "value": "b", "display": "Beta", "open": false, "selected": ["b"], "minWidth": 200 }
+      ],
+      "trace": ["open", "child:b", "change:\"b\":b:choice", "close"]
+    },
+    {
+      "input": {
+        "name": "menu close requests reach Select",
+        "props": { "defaultOpen": true },
+        "actions": [{ "close": true }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 },
+        { "value": "a", "display": "Alpha", "open": false, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": ["close"]
+    },
+    {
+      "input": {
+        "name": "MenuProps close override owns requests",
+        "props": { "defaultOpen": true },
+        "menuClose": true,
+        "actions": [{ "close": true }]
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 },
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 200 }
+      ],
+      "trace": ["menuClose"]
+    },
+    {
+      "input": {
+        "name": "autoWidth does not reserve anchor width",
+        "props": { "open": true, "autoWidth": true }
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": null }
+      ],
+      "trace": []
+    },
+    {
+      "input": {
+        "name": "paper owner and explicit minimum width",
+        "props": { "open": true, "variant": "filled" },
+        "paperWidth": 317
+      },
+      "states": [
+        { "value": "a", "display": "Alpha", "open": true, "selected": ["a"], "minWidth": 317 }
+      ],
+      "trace": []
+    }
+  ],
+  "wrappers": [
+    {
+      "input": {
+        "name": "custom input props win",
+        "value": "b",
+        "inputValue": "a",
+        "wrapperValue": "b"
+      },
+      "output": { "inputValue": "a", "notched": null }
+    },
+    {
+      "input": { "name": "input props precede outer value", "value": "a", "wrapperValue": "b" },
+      "output": { "inputValue": "b", "notched": null }
+    },
+    {
+      "input": { "name": "outlined displayEmpty forces notch", "displayEmpty": true },
+      "output": { "inputValue": null, "notched": true }
+    }
+  ],
+  "classes": {
+    "root": "MuiSelect-root",
+    "select": "MuiSelect-select",
+    "multiple": "MuiSelect-multiple",
+    "filled": "MuiSelect-filled",
+    "outlined": "MuiSelect-outlined",
+    "standard": "MuiSelect-standard",
+    "disabled": "Mui-disabled",
+    "focused": "Mui-focused",
+    "icon": "MuiSelect-icon",
+    "iconOpen": "MuiSelect-iconOpen",
+    "nativeInput": "MuiSelect-nativeInput",
+    "error": "Mui-error"
+  },
+  "helper": "Mui-focusVisible"
+}
