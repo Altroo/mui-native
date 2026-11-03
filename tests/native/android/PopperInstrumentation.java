@@ -38,6 +38,7 @@ public final class PopperInstrumentation extends Instrumentation {
   private Activity activity;
   private File directory;
   private String relativeDirectory;
+  private String accessibilityQuery = "not queried";
 
   @Override public void onCreate(Bundle arguments) { super.onCreate(arguments); start(); }
 
@@ -61,7 +62,20 @@ public final class PopperInstrumentation extends Instrumentation {
       activity = startActivitySync(launch);
       AccessibilityNodeInfo overlaysTab = waitFor("catalog-tab-Overlays", 35000);
       verifyManagerOperations();
-      tap(overlaysTab);
+      AccessibilityNodeInfo navigationRoot = automation.getRootInActiveWindow();
+      require(navigationRoot != null && PACKAGE.equals(String.valueOf(navigationRoot.getPackageName())) &&
+        overlaysTab.refresh() && PACKAGE.equals(String.valueOf(overlaysTab.getPackageName())) && overlaysTab.isVisibleToUser() &&
+        "catalog-tab-Overlays".equals(overlaysTab.getViewIdResourceName()) && overlaysTab.performAction(AccessibilityNodeInfo.ACTION_CLICK),
+        "Could not activate the catalog Overlays tab");
+      long selectedDeadline = SystemClock.uptimeMillis()+10000;
+      AccessibilityNodeInfo selectedTab; boolean tabSelected = false;
+      do {
+        selectedTab = find("catalog-tab-Overlays");
+        if (selectedTab != null && selectedTab.refresh() && selectedTab.isSelected()) { tabSelected = true; break; }
+        SystemClock.sleep(100);
+      } while (SystemClock.uptimeMillis() < selectedDeadline);
+      require(tabSelected, "Catalog did not select the Overlays tab");
+      steps.put("activate:catalog-tab-Overlays");
       tap(waitFor("delivery-trigger", 10000));
       waitFor("delivery-note", 10000);
       verify("window-popup", false, false, false);
@@ -100,12 +114,13 @@ public final class PopperInstrumentation extends Instrumentation {
         waitForUnmount();
         milestones.put("repeat-close-" + cycle);
       }
+      exerciseSharedAnchors();
       passed = true;
     } catch (Throwable error) {
       try { report.put("error", error.toString()); capture("failure"); } catch (Throwable ignored) { }
     } finally {
       try {
-        report.put("schemaVersion", 1).put("scenario", "popper-window-inline-scroll-transform-v2").put("package", PACKAGE).put("status", passed ? "passed" : "failed")
+        report.put("schemaVersion", 1).put("scenario", "popper-native-anchor-lifecycle-v3").put("package", PACKAGE).put("status", passed ? "passed" : "failed")
           .put("steps", steps).put("milestones", milestones).put("screenshots", screenshots).put("directory", relativeDirectory == null ? JSONObject.NULL : relativeDirectory)
           .put("sdk", android.os.Build.VERSION.SDK_INT).put("model", android.os.Build.MODEL);
         if (directory != null) try (FileOutputStream stream = new FileOutputStream(new File(directory, "report.json"))) {
@@ -114,6 +129,166 @@ public final class PopperInstrumentation extends Instrumentation {
         result.putString("report", report.toString());
       } catch (Throwable error) { passed = false; result.putString("error", error.toString()); }
       finish(passed ? Activity.RESULT_OK : Activity.RESULT_CANCELED, result);
+    }
+  }
+
+  private View viewAt(String identifier) {
+    final View[] result = {null};
+    runOnMainSync(() -> result[0] = nativeView(activity.getWindow().getDecorView(),identifier));
+    return result[0];
+  }
+  private void setChecked(String id, boolean expected) throws Exception {
+    AccessibilityNodeInfo control = waitFor(id,10000);
+    require(control.isCheckable() && control.isChecked() != expected, "Unexpected initial switch state: " + id);
+    tap(control);
+    long deadline = SystemClock.uptimeMillis()+10000;
+    do {
+      control = find(id);
+      if (control != null && control.isChecked() == expected) return;
+      SystemClock.sleep(100);
+    } while (SystemClock.uptimeMillis() < deadline);
+    throw new AssertionError("Switch did not reach its expected checked state: " + id);
+  }
+  private void sharedGeometry(String stage, String anchorId, boolean inline, View previousPopup) throws Exception {
+    long deadline = SystemClock.uptimeMillis()+10000;
+    Throwable last;
+    do {
+      final Throwable[] failure = {null};
+      runOnMainSync(() -> {
+        try {
+          View root = activity.getWindow().getDecorView();
+          View popup = nativeView(root,"shared-note"), anchor = nativeView(root,anchorId), frame = nativeView(root,"shared-frame");
+          require(popup != null && anchor != null && frame != null && popup.getAlpha() > .99f, "Shared popup is not positioned");
+          require(previousPopup == null || popup == previousPopup, "Retarget/recovery remounted the popup root");
+          require(descendant(popup,frame) == inline, "Shared popup has wrong physical inline/window ownership");
+          require(inline || verifyChildBridge(root,popup,root) > 0, "Shared window popup lost its physical owner");
+          RectF a = rectangle(anchor,new Matrix()), p = rectangle(popup,new Matrix());
+          float density = getTargetContext().getResources().getDisplayMetrics().density;
+          float gap = Math.min(Math.abs(p.top-a.bottom-10*density),Math.abs(a.top-p.bottom-10*density));
+          float aligned = Math.min(Math.abs(p.left-a.left),Math.abs(p.right-a.right));
+          require(p.width() > 200*density && gap < 4*density && aligned < 4*density, "Shared popup follows the wrong anchor: " + p + " / " + a);
+        } catch (Throwable error) { failure[0] = error; }
+      });
+      last = failure[0]; if (last == null) break;
+      SystemClock.sleep(100);
+    } while (SystemClock.uptimeMillis() < deadline);
+    if (last != null) throw new AssertionError(stage + ": " + last,last);
+    milestones.put(stage); capture(stage);
+  }
+  private Boolean accessibilityExclusionSnapshot(String identifier) {
+    AccessibilityNodeInfo root = automation.getRootInActiveWindow();
+    if (root == null || !PACKAGE.equals(String.valueOf(root.getPackageName()))) {
+      accessibilityQuery = "missing/foreign root"; return null;
+    }
+    ArrayDeque<AccessibilityNodeInfo> nodes = new ArrayDeque<>(); nodes.add(root);
+    int examined = 0; boolean found = false, control = false, complete = true;
+    while (!nodes.isEmpty() && examined++ < 5000) {
+      AccessibilityNodeInfo node = nodes.remove();
+      // Parent child-ID lists may come from the former include-hidden mode.
+      // Public refresh bypasses that cache without descendant prefetch.
+      if (!node.refresh()) { complete = false; continue; }
+      if (identifies(node,identifier)) found = true;
+      if (identifies(node,"shared-mounted-toggle") && node.isVisibleToUser()) control = true;
+      for (int index = 0; index < node.getChildCount(); index++) {
+        AccessibilityNodeInfo child = android.os.Build.VERSION.SDK_INT >= 33 ? node.getChild(index,0) : node.getChild(index);
+        if (child == null) { complete = false; continue; }
+        nodes.add(child);
+      }
+    }
+    accessibilityQuery = "target=" + found + ",control=" + control + ",complete=" + complete + ",remaining=" + nodes.size() + ",examined=" + examined;
+    // Refreshed presence needs no inference about unrelated missing branches.
+    // Absence needs an exhaustive valid tree plus an independent visible control.
+    if (found && control) return false;
+    return control && complete && nodes.isEmpty() ? true : null;
+  }
+  private Boolean excludedFromAccessibility(String identifier) {
+    AccessibilityServiceInfo service = automation.getServiceInfo();
+    int previousFlags = service.flags;
+    // Geometry inspection deliberately includes NO_HIDE_DESCENDANTS views.
+    // Hold the ordinary-query mode across retries so the cache can settle.
+    service.flags &= ~AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS;
+    automation.setServiceInfo(service);
+    try {
+      long deadline = SystemClock.uptimeMillis()+2000;
+      do {
+        Boolean result = accessibilityExclusionSnapshot(identifier);
+        if (result != null) return result;
+        SystemClock.sleep(100);
+      } while (SystemClock.uptimeMillis() < deadline);
+      return null;
+    } finally { service.flags = previousFlags; automation.setServiceInfo(service); }
+  }
+  private void exerciseSharedAnchors() throws Exception {
+    // Navigate the existing outer scroll view, without introducing a second
+    // screen/device or sending a gesture to an unrelated application.
+    for (int attempt = 0; attempt < 8; attempt++) {
+      AccessibilityNodeInfo scroll = waitFor("overlays-scroll",10000);
+      require(PACKAGE.equals(String.valueOf(scroll.getPackageName())), "Outer scroll left the catalog");
+      if (!scroll.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD)) break;
+      SystemClock.sleep(350);
+    }
+    waitFor("shared-anchor-b",10000);
+    for (boolean inline : new boolean[] {false,true}) {
+      String mode = inline ? "inline" : "window";
+      if (inline) setChecked("shared-inline-toggle",true);
+      tap(waitFor("shared-anchor-a",10000));
+      sharedGeometry("shared-" + mode + "-a","shared-anchor-a",inline,null);
+      View popup = viewAt("shared-note");
+      waitFor("Read count: 0",10000);
+      tap(waitFor("shared-read",10000)); waitFor("Read count: 1",10000);
+      milestones.put("shared-" + mode + "-read-1");
+      tap(waitFor("shared-anchor-b",10000));
+      sharedGeometry("shared-" + mode + "-b","shared-anchor-b",inline,popup);
+      waitFor("Read count: 1",10000);
+      tap(waitFor("shared-read",10000)); waitFor("Read count: 2",10000);
+      milestones.put("shared-" + mode + "-read-2");
+      require(Boolean.FALSE.equals(excludedFromAccessibility("shared-read")), "Visible shared action normal-query check was not valid: " + accessibilityQuery);
+      View oldAnchor = viewAt("shared-anchor-b");
+      final int[] oldTag = {0}; runOnMainSync(() -> oldTag[0] = oldAnchor == null ? 0 : oldAnchor.getId());
+      require(oldTag[0] > 0,"Selected anchor has no React tag");
+      setChecked("shared-mounted-toggle",false);
+      long deadline = SystemClock.uptimeMillis()+10000;
+      final boolean[] hidden = {false}; final String[] facts = {"pending"};
+      do {
+        runOnMainSync(() -> {
+          View root = activity.getWindow().getDecorView();
+          facts[0] = "oldTagPresent=" + (root.findViewById(oldTag[0]) != null) +
+            ",anchorA=" + (nativeView(root,"shared-anchor-a") != null) + ",anchorB=" + (nativeView(root,"shared-anchor-b") != null) +
+            ",samePopup=" + (nativeView(root,"shared-note") == popup) + ",alpha=" + popup.getAlpha() +
+            ",importance=" + popup.getImportantForAccessibility() + ",pointer=" +
+            (popup instanceof com.facebook.react.views.view.ReactViewGroup ? ((com.facebook.react.views.view.ReactViewGroup)popup).getPointerEvents() : popup.getClass().getName());
+          // Fabric may recycle physical View objects. Assert retired React-tag
+          // absence, rather than assuming the old Java object stays detached.
+          hidden[0] = root.findViewById(oldTag[0]) == null &&
+          nativeView(activity.getWindow().getDecorView(),"shared-anchor-a") == null &&
+          nativeView(activity.getWindow().getDecorView(),"shared-anchor-b") == null &&
+          nativeView(activity.getWindow().getDecorView(),"shared-note") == popup && popup.getAlpha() == 0 &&
+          popup.getImportantForAccessibility() == View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS &&
+          popup instanceof com.facebook.react.views.view.ReactViewGroup &&
+          ((com.facebook.react.views.view.ReactViewGroup)popup).getPointerEvents() == com.facebook.react.uimanager.PointerEvents.NONE;
+        });
+        if (hidden[0] && Boolean.TRUE.equals(excludedFromAccessibility("shared-read"))) break;
+        SystemClock.sleep(100);
+      } while (SystemClock.uptimeMillis() < deadline);
+      require(hidden[0] && Boolean.TRUE.equals(excludedFromAccessibility("shared-read")), "Detached anchor left stale shared content interactive or accessible: " + facts[0]);
+      milestones.put("detached-shared-" + mode); capture("detached-shared-" + mode);
+      setChecked("shared-mounted-toggle",true);
+      sharedGeometry("recovered-shared-" + mode,"shared-anchor-b",inline,popup);
+      final int[] recoveredTag = {0};
+      runOnMainSync(() -> {
+        View recovered = nativeView(activity.getWindow().getDecorView(),"shared-anchor-b");
+        recoveredTag[0] = recovered == null ? 0 : recovered.getId();
+      });
+      require(recoveredTag[0] > 0 && recoveredTag[0] != oldTag[0], "Recovery did not mount a new React anchor tag");
+      waitFor("Read count: 2",10000);
+      tap(waitFor("shared-anchor-a",10000));
+      sharedGeometry("returned-shared-" + mode,"shared-anchor-a",inline,popup);
+      waitFor("Read count: 2",10000);
+      tap(waitFor("shared-close",10000));
+      deadline = SystemClock.uptimeMillis()+10000;
+      while (viewAt("shared-note") != null && SystemClock.uptimeMillis() < deadline) SystemClock.sleep(100);
+      require(viewAt("shared-note") == null, "Shared popup did not unmount after closing");
+      milestones.put("shared-" + mode + "-closed"); capture("shared-" + mode + "-closed");
     }
   }
 
@@ -223,6 +398,10 @@ public final class PopperInstrumentation extends Instrumentation {
     verify("restored-" + mode + "-popup", inline, false, false);
   }
 
+  private static boolean identifies(AccessibilityNodeInfo node, String identifier) {
+    return identifier.equals(node.getViewIdResourceName()) || identifier.contentEquals(node.getText() == null ? "" : node.getText()) ||
+      identifier.contentEquals(node.getContentDescription() == null ? "" : node.getContentDescription());
+  }
   private AccessibilityNodeInfo find(String identifier) {
     AccessibilityNodeInfo root = automation.getRootInActiveWindow();
     if (root == null || !PACKAGE.equals(String.valueOf(root.getPackageName()))) return null;
@@ -230,8 +409,7 @@ public final class PopperInstrumentation extends Instrumentation {
     int examined = 0;
     while (!nodes.isEmpty() && examined++ < 5000) {
       AccessibilityNodeInfo node = nodes.remove();
-      if (identifier.equals(node.getViewIdResourceName()) || identifier.contentEquals(node.getText() == null ? "" : node.getText()) ||
-          identifier.contentEquals(node.getContentDescription() == null ? "" : node.getContentDescription())) return node;
+      if (identifies(node,identifier)) return node;
       for (int index = 0; index < node.getChildCount(); index++) {
         AccessibilityNodeInfo child = node.getChild(index); if (child != null) nodes.add(child);
       }
@@ -252,6 +430,10 @@ public final class PopperInstrumentation extends Instrumentation {
   private void tap(AccessibilityNodeInfo node) throws Exception {
     // Injection can target any app. Guard package and current bounds before
     // every touch so a system dialog or unrelated foreground app is not tapped.
+    String originalId = node.getViewIdResourceName(), originalText = String.valueOf(node.getText()), originalDescription = String.valueOf(node.getContentDescription());
+    require(node.refresh(), "Native touch target became obsolete");
+    require(originalId == null ? originalText.equals(String.valueOf(node.getText())) && originalDescription.equals(String.valueOf(node.getContentDescription())) :
+      originalId.equals(node.getViewIdResourceName()), "Native touch target was recycled before injection");
     require(PACKAGE.equals(String.valueOf(node.getPackageName())) && node.isVisibleToUser(), "Touch target left the catalog");
     Rect bounds = new Rect(); node.getBoundsInScreen(bounds);
     require(!bounds.isEmpty(), "Touch target has empty bounds");
