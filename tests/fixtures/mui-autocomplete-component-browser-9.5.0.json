@@ -1,0 +1,634 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Autocomplete/Autocomplete.js": "c7e78eb149762dd84962f442dd943a1e7130fda6aecefd1bb9bf188261df8a73",
+      "Autocomplete/Autocomplete.d.ts": "bec13eada4b2194ee093657580d593b82ed1deb25b964e199b4a2b93de81224f",
+      "Autocomplete/autocompleteClasses.js": "545a6fa5ac7db545cbd76cff0da9575457ee9fb537114a4a52bbb7c1f707dfe5",
+      "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+      "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c"
+    }
+  },
+  "renderer": {
+    "name": "react-dom",
+    "version": "19.3.0",
+    "integrity": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==",
+    "sourceFiles": {
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "cjs/react-dom-client.development.js": "c10b5e5ad37ca22c88b58bf4ada9a3b655ab79934c0b5cc6bad26f42c774584f"
+    }
+  },
+  "scope": "Original Autocomplete component values, callbacks, renderValue, grouped cached exits, slot owner state, loading and free-solo composition in Chromium. Native transport, accessibility and physical keyboards are separate gates.",
+  "observations": [
+    {
+      "scenario": "raw selection",
+      "label": "filtered",
+      "input": "casa",
+      "expanded": "true",
+      "highlighted": null,
+      "rows": [
+        {
+          "label": "Casablanca",
+          "selected": false,
+          "disabled": false
+        }
+      ],
+      "clear": false,
+      "popup": "open",
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": true,
+        "popupOpen": true,
+        "hasClearIcon": false,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": [["input", "casa", "input"]]
+    },
+    {
+      "scenario": "raw selection",
+      "label": "selected",
+      "input": "Casablanca",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [
+        {
+          "label": "Casablanca",
+          "selected": true,
+          "disabled": false
+        }
+      ],
+      "clear": true,
+      "popup": "closed",
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": true,
+        "popupOpen": false,
+        "hasClearIcon": true,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": [
+        ["input", "Casablanca", "selectOption"],
+        [
+          "change",
+          {
+            "id": 2,
+            "label": "Casablanca",
+            "region": "Coast"
+          },
+          "selectOption",
+          {
+            "option": {
+              "id": 2,
+              "label": "Casablanca",
+              "region": "Coast"
+            }
+          }
+        ],
+        ["close", "selectOption"]
+      ]
+    },
+    {
+      "scenario": "mapped controlled",
+      "label": "initial",
+      "input": "Rabat",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [],
+      "clear": true,
+      "popup": "closed",
+      "loading": false,
+      "noOptions": true,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": false,
+        "hasClearIcon": true,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "mapped controlled",
+      "label": "request",
+      "input": "Casablanca",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [
+        {
+          "label": "Casablanca",
+          "selected": false,
+          "disabled": false
+        }
+      ],
+      "clear": true,
+      "popup": "closed",
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": true,
+        "popupOpen": false,
+        "hasClearIcon": true,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": [
+        ["input", "Casa", "input"],
+        ["input", "Casablanca", "selectOption"],
+        [
+          "change",
+          2,
+          "selectOption",
+          {
+            "option": {
+              "id": 2,
+              "label": "Casablanca",
+              "region": "Coast"
+            }
+          }
+        ],
+        ["close", "selectOption"]
+      ]
+    },
+    {
+      "scenario": "mapped multiple",
+      "label": "remaining",
+      "input": "",
+      "expanded": "true",
+      "highlighted": null,
+      "rows": [
+        {
+          "label": "Essaouira",
+          "selected": false,
+          "disabled": false
+        }
+      ],
+      "clear": true,
+      "popup": "open",
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": true,
+        "hasClearIcon": true,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "mapped multiple",
+      "label": "request",
+      "input": "",
+      "expanded": "true",
+      "highlighted": null,
+      "rows": [
+        {
+          "label": "Essaouira",
+          "selected": false,
+          "disabled": false
+        }
+      ],
+      "clear": true,
+      "popup": "open",
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": true,
+        "hasClearIcon": true,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": [
+        [
+          "change",
+          [1, 2, 3],
+          "selectOption",
+          {
+            "option": {
+              "id": 3,
+              "label": "Essaouira",
+              "region": "Coast"
+            }
+          }
+        ],
+        ["close", "selectOption"]
+      ]
+    },
+    {
+      "scenario": "disabled navigation",
+      "label": "skipped",
+      "input": "",
+      "expanded": "true",
+      "highlighted": "Essaouira",
+      "rows": [
+        {
+          "label": "Rabat",
+          "selected": false,
+          "disabled": false
+        },
+        {
+          "label": "Casablanca",
+          "selected": false,
+          "disabled": true
+        },
+        {
+          "label": "Essaouira",
+          "selected": false,
+          "disabled": false
+        }
+      ],
+      "clear": false,
+      "popup": "open",
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": true,
+        "popupOpen": true,
+        "hasClearIcon": false,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "free solo commit",
+      "label": "created",
+      "input": "New city",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [],
+      "clear": true,
+      "popup": null,
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": true,
+        "popupOpen": false,
+        "hasClearIcon": true,
+        "hasPopupIcon": false,
+        "inputFocused": true
+      },
+      "calls": [
+        ["input", "New city", "input"],
+        [
+          "change",
+          "New city",
+          "createOption",
+          {
+            "option": "New city"
+          }
+        ],
+        ["close", "createOption"]
+      ]
+    },
+    {
+      "scenario": "scalar renderValue",
+      "label": "rendered",
+      "input": "",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [],
+      "clear": true,
+      "popup": "closed",
+      "loading": false,
+      "noOptions": true,
+      "renderValue": 1,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": false,
+        "hasClearIcon": true,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": [["input", "", "reset"]]
+    },
+    {
+      "scenario": "loading and empty",
+      "label": "loading",
+      "input": "",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [],
+      "clear": false,
+      "popup": "open",
+      "loading": true,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": true,
+        "hasClearIcon": false,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "loading and empty",
+      "label": "empty",
+      "input": "",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [],
+      "clear": false,
+      "popup": "open",
+      "loading": false,
+      "noOptions": true,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": true,
+        "hasClearIcon": false,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "loading and empty",
+      "label": "free solo suppressed",
+      "input": "",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [],
+      "clear": false,
+      "popup": null,
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": true,
+        "hasClearIcon": false,
+        "hasPopupIcon": false,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "loading and empty",
+      "label": "kept",
+      "input": "",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [],
+      "clear": false,
+      "popup": "open",
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": true,
+        "hasClearIcon": false,
+        "hasPopupIcon": false,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "grouped exit cache",
+      "label": "open",
+      "input": "",
+      "expanded": "true",
+      "highlighted": null,
+      "rows": [
+        {
+          "label": "Rabat",
+          "selected": false,
+          "disabled": false
+        },
+        {
+          "label": "Casablanca",
+          "selected": false,
+          "disabled": false
+        },
+        {
+          "label": "Essaouira",
+          "selected": false,
+          "disabled": false
+        }
+      ],
+      "clear": false,
+      "popup": "open",
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": true,
+        "hasClearIcon": false,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "grouped exit cache",
+      "label": "cached",
+      "input": "",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [
+        {
+          "label": "Rabat",
+          "selected": false,
+          "disabled": false
+        },
+        {
+          "label": "Casablanca",
+          "selected": false,
+          "disabled": false
+        },
+        {
+          "label": "Essaouira",
+          "selected": false,
+          "disabled": false
+        }
+      ],
+      "clear": false,
+      "popup": "closed",
+      "loading": false,
+      "noOptions": false,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": false,
+        "hasClearIcon": false,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "grouped exit cache",
+      "label": "fresh empty",
+      "input": "",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [],
+      "clear": false,
+      "popup": "open",
+      "loading": false,
+      "noOptions": true,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": true,
+        "hasClearIcon": false,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "read only and disabled",
+      "label": "read only",
+      "input": "",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [],
+      "clear": false,
+      "popup": "closed",
+      "loading": false,
+      "noOptions": true,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": false,
+        "hasClearIcon": false,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": []
+    },
+    {
+      "scenario": "read only and disabled",
+      "label": "disabled",
+      "input": "",
+      "expanded": "false",
+      "highlighted": null,
+      "rows": [],
+      "clear": false,
+      "popup": "closed",
+      "loading": false,
+      "noOptions": true,
+      "renderValue": null,
+      "inputParams": {
+        "fullWidth": true,
+        "size": null,
+        "slots": ["htmlInput", "input", "inputLabel"]
+      },
+      "owner": {
+        "focused": false,
+        "popupOpen": false,
+        "hasClearIcon": false,
+        "hasPopupIcon": true,
+        "inputFocused": true
+      },
+      "calls": []
+    }
+  ]
+}

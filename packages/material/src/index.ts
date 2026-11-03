@@ -155,3 +155,9 @@ export type {
   PopperPlacementType,
   PopperVirtualElement,
 } from './popper';
+
+export { Autocomplete, autocompleteClasses, getAutocompleteUtilityClass } from './autocomplete';
+export * from './autocompleteTypes';
+export type { AutocompleteClasses, AutocompleteClassKey } from './autocompleteClasses';
+export { useAutocomplete, createFilterOptions } from './useAutocomplete';
+export * from './useAutocompleteTypes';

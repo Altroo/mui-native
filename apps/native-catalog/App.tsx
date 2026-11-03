@@ -20,6 +20,7 @@ import {
 import { InvoiceGrid } from './InvoiceGrid';
 import { PopperExamples } from './PopperExamples';
 import { KeyboardExamples } from './KeyboardExamples';
+import { AutocompleteExamples } from './AutocompleteExamples';
 import { createCatalogTheme } from './catalogTheme';
 import { RichTreeView } from '@mui/x-tree-view';
 import { BarChart, LineChart } from '@mui/x-charts';
@@ -76,6 +77,7 @@ export default function App() {
                   'Charts',
                   'Dates',
                   'Coverage',
+                  'Autocomplete',
                   'Keyboard',
                 ].map((name) => (
                   <Pressable
@@ -106,6 +108,7 @@ export default function App() {
             </ScrollView>
           </View>
           <View style={{ flex: 1, paddingHorizontal: 16, paddingTop: 16 }}>
+            {section === 'Autocomplete' ? <AutocompleteExamples /> : null}
             {section === 'Keyboard' ? <KeyboardExamples /> : null}
             {section === 'Form' ? (
               <ScrollView

@@ -91,13 +91,16 @@ test('preparation is repeatable and preserves unrelated runners and manually edi
     );
     const first = await prepare(project);
     await prepare(project);
-    assert.equal((await readFile(gradle, 'utf8')).match(/testInstrumentationRunner/g).length, 1);
+    assert.equal(
+      (await readFile(gradle, { encoding: 'utf8' })).match(/testInstrumentationRunner/g).length,
+      1,
+    );
     await writeFile(
       first.source,
-      (await readFile(first.source, 'utf8')) + '\n// contributor edit\n',
+      (await readFile(first.source, { encoding: 'utf8' })) + '\n// contributor edit\n',
     );
     await assert.rejects(prepare(project), /Preserve edits/);
-    assert.match(await readFile(first.source, 'utf8'), /contributor edit/);
+    assert.match(await readFile(first.source, { encoding: 'utf8' }), /contributor edit/);
   } finally {
     await rm(project, { recursive: true, force: true });
   }
@@ -114,7 +117,10 @@ test('runner targets only the explicit ready device, collects scoped artifacts a
     return Buffer.from('Starting: catalog');
   };
   try {
-    await assert.rejects(run({ adb: 'adb', output }, execute), /explicit --serial/);
+    // Deliberately omit the typed required field to verify runtime validation.
+    // noinspection JSCheckFunctionSignatures
+    const missingDevice = run({ adb: 'adb', output }, execute);
+    await assert.rejects(missingDevice, /explicit --serial/);
     assert.equal(calls.length, 0);
     const report = await run({ adb: 'adb', serial: 'emulator-5554', output }, execute);
     assert.deepEqual(report, nativeReport);
@@ -157,7 +163,10 @@ test('an instrumentation failure remains a failure after successful catalog rest
       /Missing popup/,
     );
     assert(calls.at(-1).includes('start'));
-    assert.match(await readFile(join(output, 'instrumentation.txt'), 'utf8'), /Missing popup/);
+    assert.match(
+      await readFile(join(output, 'instrumentation.txt'), { encoding: 'utf8' }),
+      /Missing popup/,
+    );
   } finally {
     await rm(output, { recursive: true, force: true });
   }
@@ -186,7 +195,10 @@ test('failed native reports retain failure screenshots before stopping and resto
       }),
       /Boundary overflow/,
     );
-    assert.equal(await readFile(join(output, 'failure.png'), 'utf8'), 'failure capture');
+    assert.equal(
+      await readFile(join(output, 'failure.png'), { encoding: 'utf8' }),
+      'failure capture',
+    );
     const stop = calls.findIndex((args) => args.includes('force-stop'));
     assert(stop > calls.findIndex((args) => args.includes('exec-out')));
     assert(calls[stop + 1].includes('ps'));
@@ -224,11 +236,11 @@ test('a command abort retains output and cannot restore controls until native te
     );
     assert(!calls.some((args) => args.includes('start')));
     assert.equal(
-      await readFile(join(output, 'instrumentation.txt'), 'utf8'),
+      await readFile(join(output, 'instrumentation.txt'), { encoding: 'utf8' }),
       'partial native output',
     );
     assert.match(
-      await readFile(join(output, 'command-error.txt'), 'utf8'),
+      await readFile(join(output, 'command-error.txt'), { encoding: 'utf8' }),
       /aborted\nconnection interrupted/,
     );
   } finally {
@@ -291,7 +303,7 @@ else console.log('completed');
       }
       controller.abort();
       await rejected;
-      const commands = (await readFile(calls, 'utf8'))
+      const commands = (await readFile(calls, { encoding: 'utf8' }))
         .trim()
         .split('\n')
         .map((line) => JSON.parse(line));
@@ -303,10 +315,13 @@ else console.log('completed');
       // Aborting can beat the parent's pipe read. Require every byte Node
       // observed, rather than assuming the child readiness marker means read.
       assert.equal(
-        await readFile(join(folder, 'result/instrumentation.txt'), 'utf8'),
+        await readFile(join(folder, 'result/instrumentation.txt'), { encoding: 'utf8' }),
         String(abortError.stdout ?? ''),
       );
-      assert.match(await readFile(join(folder, 'result/command-error.txt'), 'utf8'), /AbortError/);
+      assert.match(
+        await readFile(join(folder, 'result/command-error.txt'), { encoding: 'utf8' }),
+        /AbortError/,
+      );
     } finally {
       controller.abort();
       await pending?.catch(() => {});
@@ -328,7 +343,10 @@ test('existing output evidence is never mixed with a later native run', async ()
       /empty output directory/,
     );
     assert(!calls.some((args) => args.includes('instrument')));
-    assert.equal(await readFile(join(output, 'report.json'), 'utf8'), 'previous evidence');
+    assert.equal(
+      await readFile(join(output, 'report.json'), { encoding: 'utf8' }),
+      'previous evidence',
+    );
   } finally {
     await rm(output, { recursive: true, force: true });
   }
@@ -400,7 +418,7 @@ else console.log('NAME');
       await waitFile(stopping);
       child.kill('SIGINT');
       const ending = await closed;
-      const commands = (await readFile(calls, 'utf8'))
+      const commands = (await readFile(calls, { encoding: 'utf8' }))
         .trim()
         .split('\n')
         .map((line) => JSON.parse(line));
@@ -437,12 +455,40 @@ test('empty stderr does not discard command error identity or captured stdout', 
         return 'NAME\n';
       }),
     );
-    assert.equal(await readFile(join(output, 'instrumentation.txt'), 'utf8'), 'captured bytes');
+    assert.equal(
+      await readFile(join(output, 'instrumentation.txt'), { encoding: 'utf8' }),
+      'captured bytes',
+    );
     assert.match(
-      await readFile(join(output, 'command-error.txt'), 'utf8'),
+      await readFile(join(output, 'command-error.txt'), { encoding: 'utf8' }),
       /Error: connection aborted/,
     );
   } finally {
     await rm(output, { recursive: true, force: true });
+  }
+});
+
+test('opaque falsy cleanup failures never permit catalog restoration', async () => {
+  for (const reason of [undefined, null, false, 0, '']) {
+    const output = await mkdtemp(join(tmpdir(), 'mui-android-opaque-cleanup-'));
+    const calls = [];
+    try {
+      await assert.rejects(
+        run({ adb: 'adb', serial: 'chosen', output }, async (_, args) => {
+          calls.push(args);
+          if (args.includes('get-state')) return 'device';
+          if (args.includes('instrument')) throw Error('native test failed');
+          if (args.includes('force-stop')) throw reason;
+          return 'NAME\n';
+        }),
+        (error) =>
+          error instanceof AggregateError &&
+          error.cause === reason &&
+          /termination unconfirmed/.test(error.message),
+      );
+      assert(!calls.some((args) => args.includes('start')));
+    } finally {
+      await rm(output, { recursive: true, force: true });
+    }
   }
 });

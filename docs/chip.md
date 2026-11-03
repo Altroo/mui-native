@@ -1,6 +1,6 @@
 # Native Chip
 
-Chip is a reusable display, action and removable-value component. Original root/deep imports resolve to native Chip; web continues using original MUI. Interactive chips require a development/production build containing the [native interaction host](native-host.md). Autocomplete integration remains unfinished.
+Chip is a reusable display, action and removable-value component. Original root/deep imports resolve to native Chip; web continues using original MUI. Interactive chips require a development/production build containing the [native interaction host](native-host.md). Removable values are integrated with [native Autocomplete](autocomplete.md); its independent Chip release gates remain open.
 
 ```tsx
 import Chip from '@mui/material/Chip';
@@ -37,4 +37,4 @@ With the ignored original-package environment and React DOM artifact available, 
 
 Five additional cases use trusted browser keys. For each `window.chipKeyboardCases` entry, mount it with `window.mountChipReference(input)`, focus `#chip`, record `window.readChipReference()` before and after each Playwright `page.keyboard.press(key)`, and compare the resulting `{input, states}` array with `window.verifyChipKeyboardReference(results)`. Clear with `window.clearChipReference()`. Native modeled-event tests distinguish the documented disabled-deletion and touch-target adaptations.
 
-[Issue #37](https://github.com/Altroo/mui-native/issues/37) tracks delivery; [validation](validation.md) records checks. Physical touch/focus/hardware input, screen readers, RTL/font scaling, nested windows, clipping/truncation geometry, native stability and measured release performance remain open. No native session was operated for this increment. Full Autocomplete and broader Material/X coverage remain unfinished.
+[Issue #37](https://github.com/Altroo/mui-native/issues/37) tracks delivery; [validation](validation.md) records checks. Physical touch/focus/hardware input, screen readers, RTL/font scaling, nested windows, clipping/truncation geometry, native stability and measured release performance remain open. The original Chip increment did not operate a native session. Its removable-value integration now has scoped iOS/Android Autocomplete checks; the independent Chip native matrix and broader Material/X release gates remain unfinished.

@@ -85,7 +85,10 @@
       "Chip/chipClasses",
       "Portal",
       "Popper",
-      "Popper/popperClasses"
+      "Popper/popperClasses",
+      "Autocomplete",
+      "Autocomplete/autocompleteClasses",
+      "useAutocomplete"
     ]
   },
   "@mui/system": {

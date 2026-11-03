@@ -560,10 +560,15 @@ const TextFieldImpl = forwardRef<ViewInstance, TextFieldImplementationProps>(
             ? inputProps.defaultValue
             : (inputProps.defaultValue ?? '')
           : defaultValue;
-    const controlledValue =
-      select && selectProps && Object.hasOwn(selectProps, 'value') ? selectProps.value : value;
-    const [text, setText] = useControlled<any>(controlledValue, initialValue);
     const htmlInputProps = resolveSlotProps(slotProps?.htmlInput, ownerState) ?? {};
+    // Composites such as Autocomplete own the editable slot's value. Respect
+    // that value when no outer value is supplied, while retaining TextField's
+    // explicit controlled-value and disabled/read-only precedence.
+    const controlledValue =
+      select && selectProps && Object.hasOwn(selectProps, 'value')
+        ? selectProps.value
+        : (inputProps.value ?? value ?? (!select ? htmlInputProps.value : undefined));
+    const [text, setText] = useControlled<any>(controlledValue, initialValue);
     const inputLabelProps = resolveSlotProps(slotProps?.inputLabel, ownerState);
     const helperProps = resolveSlotProps(slotProps?.formHelperText, ownerState);
     const SelectSlot: React.ElementType = slots?.select ?? Select;
