@@ -117,6 +117,7 @@ export function PopperExamples() {
         >
           <ScrollView
             testID="delivery-scroll"
+            nestedScrollEnabled
             keyboardShouldPersistTaps="handled"
             contentContainerStyle={{ minHeight: 480 }}
           >
