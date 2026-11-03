@@ -37,7 +37,7 @@ Material UI baseline: 9.5.0. Stable X baseline: 9.15.0. Scheduler: 9.0.0-beta.13
 - [x] Native grid, rich tree, chart and date prototypes.
 - [x] Optional adaptive native grid cards with a shared data model, explicit table mode and application-composed content. Scoped local checks cover model preservation; native visual, accessibility and performance gates remain open.
 - [ ] Verify packed-package imports, TypeScript augmentation, and web isolation together.
-- [ ] Exercise input composition, focus, keyboard and nested overlay behavior on both platforms.
+- [ ] Exercise input composition, focus, keyboard and nested overlay behavior on both platforms. Matched cold-editor controls and authored replacement/clear diagnostics track the intermittent Android omission in [issue #58](https://github.com/Altroo/mui-native/issues/58); passing trials do not resolve its cause.
 - [ ] Measure grid two-axis rendering, editing and row identity under load before scaling the architecture.
 - [ ] Validate date/time editing, locale and timezone behavior against upstream fixtures.
 - [ ] Measure chart hit targets, dense points, labels and accessibility.

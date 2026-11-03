@@ -41,17 +41,20 @@ public final class PopperInstrumentation extends Instrumentation {
   private String accessibilityQuery = "not queried";
   private boolean keyboardScenario;
   private boolean autocompleteScenario;
+  private boolean inputIntegrityScenario;
 
   @Override public void onCreate(Bundle arguments) {
     super.onCreate(arguments);
     keyboardScenario = "keyboard".equals(arguments.getString("scenario"));
     autocompleteScenario = "autocomplete".equals(arguments.getString("scenario"));
+    inputIntegrityScenario = "input-integrity".equals(arguments.getString("scenario"));
     start();
   }
 
   @Override public void onStart() {
     if (keyboardScenario) { KeyboardScenario.run(this); return; }
     if (autocompleteScenario) { AutocompleteScenario.run(this); return; }
+    if (inputIntegrityScenario) { InputIntegrityScenario.run(this); return; }
     JSONObject report = new JSONObject();
     Bundle result = new Bundle();
     boolean passed = false;

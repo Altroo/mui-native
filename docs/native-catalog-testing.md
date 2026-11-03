@@ -124,3 +124,27 @@ The summary requires the complete ordered 17-stage scenario, five named screensh
 Add [AutocompleteCatalogUITests.swift](../tests/native/ios/AutocompleteCatalogUITests.swift) to the existing shared iOS UI test target alongside the Popper and keyboard sources. Use the iOS command above with `-only-testing:PopperCatalogUITests/AutocompleteCatalogUITests` to run its nine cases. Keep a new result bundle for every run and export its attachments for visual review. The software-submission case requires the simulator's software keyboard. Do not substitute a programmatic selection callback for the native Done key.
 
 Native checks verify scoped interactions and geometry. They do not certify physical keyboards, tag navigation/deletion from the editor, composing IMEs, screen readers, large virtualized lists or calibrated release performance. See [Autocomplete](autocomplete.md) for the public contracts and remaining gates.
+
+## Matched cold-editor input comparison
+
+The catalog's **Inputs** scene compares a controlled stock React Native `TextInput`, controlled Material `TextField`, controlled `Autocomplete` and uncontrolled `Autocomplete`. Each mode button remounts its editor. All use the same capitalization/correction policy. The three controlled modes also expose authored replacement and clear controls; those update the value prop without fabricating an input callback receipt.
+
+Prepare and build the existing Android catalog/test project as above, using `node scripts/native-catalog/android-input-integrity.mjs prepare PROJECT` when its generated project is elsewhere. Run the fixed eight-round matrix on one explicitly selected device:
+
+```sh
+adb -s DEVICE_SERIAL shell am instrument -w -r -e scenario input-integrity \
+  dev.altroo.muinative.catalog.test/dev.altroo.muinative.catalog.test.PopperInstrumentation > instrumentation.txt
+node scripts/native-catalog/android-input-integrity.mjs artifact instrumentation.txt
+```
+
+The artifact command validates and prints one relative app-cache directory, including for a failed comparison. Retrieve that directory's `report.json` using `adb -s DEVICE_SERIAL exec-out run-as dev.altroo.muinative.catalog cat VALIDATED_DIRECTORY/report.json > report.json`, then validate both files together:
+
+```sh
+node scripts/native-catalog/android-input-integrity.mjs summarize instrumentation.txt report.json
+```
+
+The validator requires all 32 ordered cold scenes, distinct React tags, native/window focus, complete native text and matching React receipts, bounded traces, touch evidence and authored replacement/clear positive controls. A successful adb process or passing subset is insufficient. Preserve failures and their raw reports. Wait for instrumentation to finish before reopening the catalog; if interrupted, stop only the catalog package and confirm its processes have ended before restoring it. These manual commands do not manage devices or Metro.
+
+React Native suppresses JS-origin `TextWatcher` callbacks. This scenario therefore also installs a final `InputFilter` that returns `null`, preserving text and prior filters. It records replacement proposals separately, proves visibility with authored replace/clear controls and removes only its observer in `finally`. Filters observe proposals, while the native text checks establish their resulting values; neither trace alone certifies every transient value. Truncated or missing observations cannot pass. This synthetic-key comparison does not establish physical-keyboard or IME correctness, and passing runs do not explain the intermittent omission in [issue #58](https://github.com/Altroo/mui-native/issues/58).
+
+`tests/native/ios/InputCatalogUITests.swift` provides a separate touch/software-keyboard smoke test for all four controls and fresh remounts. Include it in the existing XCTest UI-test target alongside the other catalog sources. Android key injection and iOS `typeText` are distinct evidence.
