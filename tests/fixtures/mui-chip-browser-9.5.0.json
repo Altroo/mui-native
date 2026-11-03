@@ -1,0 +1,2792 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Chip/Chip.js": "6703a522ff18b92af19b5bb32a779a0e7b0a8fd3935d57410e7a2be8e31d9c58",
+      "Chip/Chip.d.ts": "755ea1713d61b16ec04db5fc7100a3612ee66c73961ebf1423a5415d2515eab5",
+      "Chip/chipClasses.js": "2f49f810078d3f8059f725e4eb7879987108d115ed99961e718bde492e1f9607",
+      "Chip/chipClasses.d.ts": "15b5af2eb816fdee0410ed682409ad7dac6c1c1c852a5f3d299846293163bc96",
+      "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+      "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+      "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+      "utils/mergeSlotProps.js": "b06b97432a9aaccfb3fb3aa2d0843466878d5ea86d876dfded99c91ffaa0ad5e"
+    }
+  },
+  "renderer": {
+    "name": "react-dom",
+    "version": "19.3.0",
+    "integrity": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==",
+    "sourceFiles": {
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "cjs/react-dom-client.development.js": "c10b5e5ad37ca22c88b58bf4ada9a3b655ab79934c0b5cc6bad26f42c774584f"
+    }
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "scope": "Original MUI Chip in Chromium: source defaults/slots/static computed styles and programmatic callback phases. Interactive native targets deliberately use 44dp; no physical native evidence.",
+  "helpers": {
+    "classes": {
+      "root": "MuiChip-root",
+      "sizeSmall": "MuiChip-sizeSmall",
+      "sizeMedium": "MuiChip-sizeMedium",
+      "colorDefault": "MuiChip-colorDefault",
+      "colorError": "MuiChip-colorError",
+      "colorInfo": "MuiChip-colorInfo",
+      "colorPrimary": "MuiChip-colorPrimary",
+      "colorSecondary": "MuiChip-colorSecondary",
+      "colorSuccess": "MuiChip-colorSuccess",
+      "colorWarning": "MuiChip-colorWarning",
+      "disabled": "Mui-disabled",
+      "clickable": "MuiChip-clickable",
+      "deletable": "MuiChip-deletable",
+      "outlined": "MuiChip-outlined",
+      "filled": "MuiChip-filled",
+      "avatar": "MuiChip-avatar",
+      "icon": "MuiChip-icon",
+      "label": "MuiChip-label",
+      "deleteIcon": "MuiChip-deleteIcon",
+      "focusVisible": "Mui-focusVisible"
+    },
+    "states": {
+      "active": "Mui-active",
+      "disabled": "Mui-disabled",
+      "focusVisible": "Mui-focusVisible",
+      "selected": "Mui-selected",
+      "anything": "MuiChip-anything"
+    }
+  },
+  "fixtures": [
+    {
+      "input": {
+        "name": "static default"
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "static small",
+        "props": {
+          "size": "small"
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeSmall",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "24px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "8px",
+            "paddingRight": "8px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeSmall",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "24px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "8px",
+            "paddingRight": "8px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "static outlined",
+        "props": {
+          "variant": "outlined"
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-outlined",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "1px"
+            }
+          },
+          "label": {
+            "paddingLeft": "11px",
+            "paddingRight": "11px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-outlined",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "1px"
+            }
+          },
+          "label": {
+            "paddingLeft": "11px",
+            "paddingRight": "11px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "static small outlined primary",
+        "props": {
+          "size": "small",
+          "variant": "outlined",
+          "color": "primary"
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-outlined",
+              "MuiChip-sizeSmall",
+              "MuiChip-colorPrimary"
+            ],
+            "style": {
+              "height": "24px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgb(25, 118, 210)",
+              "opacity": "1",
+              "borderTopWidth": "1px"
+            }
+          },
+          "label": {
+            "paddingLeft": "7px",
+            "paddingRight": "7px",
+            "color": "rgb(25, 118, 210)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-outlined",
+              "MuiChip-sizeSmall",
+              "MuiChip-colorPrimary"
+            ],
+            "style": {
+              "height": "24px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgb(25, 118, 210)",
+              "opacity": "1",
+              "borderTopWidth": "1px"
+            }
+          },
+          "label": {
+            "paddingLeft": "7px",
+            "paddingRight": "7px",
+            "color": "rgb(25, 118, 210)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "static primary",
+        "props": {
+          "color": "primary"
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorPrimary"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgb(25, 118, 210)",
+              "color": "rgb(255, 255, 255)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgb(255, 255, 255)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorPrimary"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgb(25, 118, 210)",
+              "color": "rgb(255, 255, 255)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgb(255, 255, 255)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "static secondary dark",
+        "props": {
+          "color": "secondary"
+        },
+        "dark": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorSecondary"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgb(206, 147, 216)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorSecondary"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgb(206, 147, 216)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "click inferred",
+        "click": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["click"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "click explicit true",
+        "props": {
+          "clickable": true
+        },
+        "click": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["click"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "clickable without callback",
+        "props": {
+          "clickable": true
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "explicit false keeps pointer click",
+        "props": {
+          "clickable": false
+        },
+        "click": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["click"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "delete only",
+        "deletable": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["delete"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "click and delete",
+        "click": true,
+        "deletable": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["click"]
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["click", "delete"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "small delete",
+        "props": {
+          "size": "small"
+        },
+        "deletable": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeSmall",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "24px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "8px",
+            "paddingRight": "8px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeSmall",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "24px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "8px",
+            "paddingRight": "8px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeSmall",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "24px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "8px",
+            "paddingRight": "8px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["delete"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "disabled clickable",
+        "props": {
+          "disabled": true
+        },
+        "click": true,
+        "deletable": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": -1,
+            "ariaDisabled": "true",
+            "classes": [
+              "MuiButtonBase-root",
+              "Mui-disabled",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": -1,
+            "ariaDisabled": "true",
+            "classes": [
+              "MuiButtonBase-root",
+              "Mui-disabled",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": -1,
+            "ariaDisabled": "true",
+            "classes": [
+              "MuiButtonBase-root",
+              "Mui-disabled",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["delete"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "disabled delete only",
+        "props": {
+          "disabled": true
+        },
+        "deletable": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["delete"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "disabled skip focus",
+        "props": {
+          "disabled": true,
+          "skipFocusWhenDisabled": true
+        },
+        "deletable": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["delete"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "root sx replacement",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        },
+        "root": {
+          "sx": {
+            "mt": 3
+          }
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "24px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "24px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "root sx clears disjoint",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        },
+        "root": {
+          "sx": {
+            "mr": 2
+          }
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "16px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "16px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "root style last",
+        "props": {
+          "style": {
+            "marginTop": 17
+          }
+        },
+        "root": {
+          "style": {
+            "marginTop": 19
+          }
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "19px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "19px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "root and label owner callbacks",
+        "click": true,
+        "deletable": true,
+        "callbacks": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {
+            "root": {
+              "disabled": false,
+              "clickable": true,
+              "onDelete": true,
+              "size": "medium",
+              "color": "default",
+              "variant": "filled",
+              "iconColor": "default"
+            },
+            "label": {
+              "disabled": false,
+              "clickable": true,
+              "onDelete": true,
+              "size": "medium",
+              "color": "default",
+              "variant": "filled",
+              "iconColor": "default"
+            }
+          },
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {
+            "root": {
+              "disabled": false,
+              "clickable": true,
+              "onDelete": true,
+              "size": "medium",
+              "color": "default",
+              "variant": "filled",
+              "iconColor": "default"
+            },
+            "label": {
+              "disabled": false,
+              "clickable": true,
+              "onDelete": true,
+              "size": "medium",
+              "color": "default",
+              "variant": "filled",
+              "iconColor": "default"
+            }
+          },
+          "trace": ["root-click", "click"]
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {
+            "root": {
+              "disabled": false,
+              "clickable": true,
+              "onDelete": true,
+              "size": "medium",
+              "color": "default",
+              "variant": "filled",
+              "iconColor": "default"
+            },
+            "label": {
+              "disabled": false,
+              "clickable": true,
+              "onDelete": true,
+              "size": "medium",
+              "color": "default",
+              "variant": "filled",
+              "iconColor": "default"
+            }
+          },
+          "trace": ["root-click", "click", "delete"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "theme defaults",
+        "defaults": {
+          "size": "small",
+          "color": "secondary",
+          "variant": "outlined"
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-outlined",
+              "MuiChip-sizeSmall",
+              "MuiChip-colorSecondary"
+            ],
+            "style": {
+              "height": "24px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgb(156, 39, 176)",
+              "opacity": "1",
+              "borderTopWidth": "1px"
+            }
+          },
+          "label": {
+            "paddingLeft": "7px",
+            "paddingRight": "7px",
+            "color": "rgb(156, 39, 176)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-outlined",
+              "MuiChip-sizeSmall",
+              "MuiChip-colorSecondary"
+            ],
+            "style": {
+              "height": "24px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "color": "rgb(156, 39, 176)",
+              "opacity": "1",
+              "borderTopWidth": "1px"
+            }
+          },
+          "label": {
+            "paddingLeft": "7px",
+            "paddingRight": "7px",
+            "color": "rgb(156, 39, 176)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "avatar takes precedence",
+        "avatar": true,
+        "icon": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": "avatar",
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": "avatar",
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "icon content",
+        "icon": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": "icon",
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": "icon",
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "custom delete handler replaced",
+        "click": true,
+        "deletable": true,
+        "customDelete": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["click"]
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["click", "delete"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "named overrides",
+        "overrides": {
+          "root": {
+            "marginTop": 2
+          },
+          "sizeMedium": {
+            "marginTop": 3
+          },
+          "colorDefault": {
+            "marginTop": 4
+          },
+          "clickable": {
+            "marginTop": 5
+          },
+          "deletable": {
+            "marginTop": 6
+          },
+          "filled": {
+            "marginTop": 7
+          }
+        },
+        "click": true,
+        "deletable": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "7px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "7px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["click"]
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": 0,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiButtonBase-root",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable",
+              "MuiChip-deletable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "7px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": ["click", "delete"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "label override and sx",
+        "overrides": {
+          "label": {
+            "paddingLeft": 21,
+            "color": "rgb(211,47,47)"
+          }
+        },
+        "label": {
+          "sx": {
+            "pl": 3
+          }
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "24px",
+            "paddingRight": "12px",
+            "color": "rgb(211, 47, 47)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "24px",
+            "paddingRight": "12px",
+            "color": "rgb(211, 47, 47)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "controlled root sx state",
+        "props": {
+          "disabled": true,
+          "sx": {
+            "opacity": 0.9
+          }
+        },
+        "click": true
+      },
+      "states": [
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": -1,
+            "ariaDisabled": "true",
+            "classes": [
+              "MuiButtonBase-root",
+              "Mui-disabled",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": "button",
+            "tabIndex": -1,
+            "ariaDisabled": "true",
+            "classes": [
+              "MuiButtonBase-root",
+              "Mui-disabled",
+              "MuiChip-root",
+              "MuiChip-filled",
+              "Mui-disabled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault",
+              "MuiChip-clickable"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "0.38",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "13px",
+            "lineHeight": "19.5px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "label relative font",
+        "label": {
+          "sx": {
+            "fontSize": "2em"
+          }
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "26px",
+            "lineHeight": "39px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "26px",
+            "lineHeight": "39px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "root native font",
+        "props": {
+          "style": {
+            "fontSize": 26
+          }
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "26px",
+            "lineHeight": "39px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "26px",
+            "lineHeight": "39px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "label native font",
+        "label": {
+          "style": {
+            "fontSize": 26
+          }
+        }
+      },
+      "states": [
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "26px",
+            "lineHeight": "39px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        },
+        {
+          "root": {
+            "role": null,
+            "tabIndex": -1,
+            "ariaDisabled": null,
+            "classes": [
+              "MuiChip-root",
+              "MuiChip-filled",
+              "MuiChip-sizeMedium",
+              "MuiChip-colorDefault"
+            ],
+            "style": {
+              "height": "32px",
+              "marginTop": "0px",
+              "marginRight": "0px",
+              "backgroundColor": "rgba(0, 0, 0, 0.08)",
+              "color": "rgba(0, 0, 0, 0.87)",
+              "opacity": "1",
+              "borderTopWidth": "0px"
+            }
+          },
+          "label": {
+            "paddingLeft": "12px",
+            "paddingRight": "12px",
+            "color": "rgba(0, 0, 0, 0.87)",
+            "fontSize": "26px",
+            "lineHeight": "39px"
+          },
+          "decoration": null,
+          "owners": {},
+          "trace": []
+        }
+      ]
+    }
+  ]
+}

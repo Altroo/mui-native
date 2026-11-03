@@ -419,6 +419,16 @@
       "types": "./dist/Switch/switchClasses/index.d.ts",
       "react-native": "./src/Switch/switchClasses/index.ts",
       "default": "./dist/Switch/switchClasses/index.js"
+    },
+    "./Chip": {
+      "types": "./dist/Chip/index.d.ts",
+      "react-native": "./src/Chip/index.ts",
+      "default": "./dist/Chip/index.js"
+    },
+    "./Chip/chipClasses": {
+      "types": "./dist/Chip/chipClasses/index.d.ts",
+      "react-native": "./src/Chip/chipClasses/index.ts",
+      "default": "./dist/Chip/chipClasses/index.js"
     }
   },
   "dependencies": {

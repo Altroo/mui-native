@@ -119,3 +119,5 @@ export type {
   NativeSelectOwnerState,
   NativeSelectPickerProps,
 } from './nativeSelect';
+
+export * from './chip';

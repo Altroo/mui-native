@@ -11,7 +11,8 @@ and icon inheritance also adapt these contracts. Select value matching, closed
 typeahead, display/width policy, native selection events and TextField select
 composition adapt the same MIT-licensed references. Checkbox/Radio/Switch state,
 input events, label/group and five-slot switch composition, motion and slot identifiers also adapt those
-MIT-licensed references. Upstream public declaration
+MIT-licensed references. Chip slot, activation/deletion, label and style contracts
+also adapt those MIT-licensed references; native glyph geometry is independently authored. Upstream public declaration
 snapshots and license texts are retained under upstream/. Derived declaration
 inventories are retained under compatibility/inventory/. Their applicable MIT
 notices are preserved in upstream/licenses/. No Pro or Premium source, assets,

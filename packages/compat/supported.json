@@ -80,7 +80,9 @@
       "RadioGroup/radioGroupClasses",
       "FormGroup/formGroupClasses",
       "FormControlLabel/formControlLabelClasses",
-      "Switch/switchClasses"
+      "Switch/switchClasses",
+      "Chip",
+      "Chip/chipClasses"
     ]
   },
   "@mui/system": {

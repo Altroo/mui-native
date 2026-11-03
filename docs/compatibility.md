@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Native [Chip](chip.md) display/action/deletion, root/label slots, native refs, typography and class helpers, with explicit native touch-target and disabled-deletion adaptations. Autocomplete integration and physical native validation remain open.
+
 - A low-level [platform-native picker host](native-picker.md) with UIKit/Android implementations, modeled events, a JVM lifecycle policy check and compile/link evidence. Material integration is documented in [native selection](native-select.md); physical device gates remain unfinished.
 
 - Native Select and TextField select with raw single/multiple values, Menu composition, keyboard/typeahead, value/name events, native refs and Select owner-state slots. See [Select](select.md); NativeSelect/platform-picker integration is described in [native selection](native-select.md); physical device gates remain open.

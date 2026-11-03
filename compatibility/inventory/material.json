@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "26891a80466cfab50981585b57176807716c06f18fe339cb820d44fb3c55e0dc",
+  "nativeSourceSha256": "11f8d7a9995208a4f698c681500002232d647a85c051b41db10580ff3e56f27f",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -3055,7 +3055,7 @@
           "file": "Chip/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/CircularProgress",
@@ -12517,7 +12517,7 @@
           "line": 138
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12536,7 +12536,7 @@
           "line": 45
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12555,7 +12555,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12574,7 +12574,7 @@
           "line": 43
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12593,7 +12593,7 @@
           "line": 9
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12612,7 +12612,7 @@
           "line": 34
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12631,7 +12631,7 @@
           "line": 38
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12650,7 +12650,7 @@
           "line": 139
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12669,7 +12669,7 @@
           "line": 37
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12688,7 +12688,7 @@
           "line": 36
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12707,7 +12707,7 @@
           "line": 35
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12726,7 +12726,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12745,7 +12745,7 @@
           "line": 10
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12764,7 +12764,7 @@
           "line": 22
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17210,7 +17210,7 @@
           "line": 44
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35289,6 +35289,17 @@
       ]
     },
     {
+      "name": "ChipDeleteEvent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/chipTypes.ts",
+          "name": "ChipDeleteEvent",
+          "kind": "type",
+          "line": 38
+        }
+      ]
+    },
+    {
       "name": "colorChannel",
       "origins": [
         {
@@ -35835,6 +35846,39 @@
           "name": "NativeCheckedTarget",
           "kind": "type",
           "line": 18
+        }
+      ]
+    },
+    {
+      "name": "NativeChipComponent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/chipTypes.ts",
+          "name": "NativeChipComponent",
+          "kind": "type",
+          "line": 88
+        }
+      ]
+    },
+    {
+      "name": "NativeChipLabelProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/chipTypes.ts",
+          "name": "NativeChipLabelProps",
+          "kind": "type",
+          "line": 27
+        }
+      ]
+    },
+    {
+      "name": "NativeChipRootProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/chipTypes.ts",
+          "name": "NativeChipRootProps",
+          "kind": "type",
+          "line": 24
         }
       ]
     },
@@ -58855,7 +58899,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipRootSlotPropsOverrides",
+          "file": "src/chipTypes.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipLabelSlotPropsOverrides",
@@ -58865,7 +58916,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipLabelSlotPropsOverrides",
+          "file": "src/chipTypes.ts",
+          "line": 11,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipSlots",
@@ -58883,7 +58941,7 @@
           "line": 15,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -58896,7 +58954,7 @@
           "line": 20,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -58904,7 +58962,14 @@
         "React.ElementType"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipSlots",
+          "file": "src/chipTypes.ts",
+          "line": 34,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipSlotsAndSlotProps",
@@ -58921,7 +58986,14 @@
         "SlotProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipSlotsAndSlotProps",
+          "file": "src/chipTypes.ts",
+          "line": 87,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipOwnerState",
@@ -58934,7 +59006,14 @@
         "Omit"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipOwnerState",
+          "file": "src/chipTypes.ts",
+          "line": 76,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipPropsVariantOverrides",
@@ -58944,7 +59023,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipPropsVariantOverrides",
+          "file": "src/chipTypes.ts",
+          "line": 7,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipPropsSizeOverrides",
@@ -58954,7 +59040,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipPropsSizeOverrides",
+          "file": "src/chipTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipPropsColorOverrides",
@@ -58964,7 +59057,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipPropsColorOverrides",
+          "file": "src/chipTypes.ts",
+          "line": 9,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipOwnProps",
@@ -58982,7 +59082,7 @@
           "line": 42,
           "kind": "property",
           "type": "React.ReactElement<unknown> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -58995,7 +59095,7 @@
           "line": 47,
           "kind": "property",
           "type": "null | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59008,7 +59108,7 @@
           "line": 51,
           "kind": "property",
           "type": "Partial<ChipClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59021,7 +59121,7 @@
           "line": 60,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59034,7 +59134,7 @@
           "line": 67,
           "kind": "property",
           "type": "OverridableStringUnion<'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning', ChipPropsColorOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59047,7 +59147,7 @@
           "line": 71,
           "kind": "property",
           "type": "React.ReactElement<unknown> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59073,7 +59173,7 @@
           "line": 80,
           "kind": "property",
           "type": "React.ReactElement<unknown> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59086,7 +59186,7 @@
           "line": 84,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59099,7 +59199,7 @@
           "line": 89,
           "kind": "event",
           "type": "React.EventHandler<any> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59112,7 +59212,7 @@
           "line": 94,
           "kind": "property",
           "type": "OverridableStringUnion<'small' | 'medium', ChipPropsSizeOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59138,7 +59238,7 @@
           "line": 107,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59177,7 +59277,7 @@
           "line": 120,
           "kind": "property",
           "type": "OverridableStringUnion<'filled' | 'outlined', ChipPropsVariantOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -59195,7 +59295,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipOwnProps",
+          "file": "src/chipTypes.ts",
+          "line": 41,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "ChipProps",
+          "file": "src/chipTypes.ts",
+          "line": 65,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipTypeMap",
@@ -59268,7 +59381,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipProps",
+          "file": "src/chipTypes.ts",
+          "line": 65,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipRootSlotPropsOverrides",
@@ -59278,7 +59398,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipRootSlotPropsOverrides",
+          "file": "src/chipTypes.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipLabelSlotPropsOverrides",
@@ -59288,7 +59415,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipLabelSlotPropsOverrides",
+          "file": "src/chipTypes.ts",
+          "line": 11,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipSlots",
@@ -59306,7 +59440,7 @@
           "line": 15,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59319,7 +59453,7 @@
           "line": 20,
           "kind": "slot",
           "type": "React.ElementType",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -59327,7 +59461,14 @@
         "React.ElementType"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipSlots",
+          "file": "src/chipTypes.ts",
+          "line": 34,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipSlotsAndSlotProps",
@@ -59344,7 +59485,14 @@
         "SlotProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipSlotsAndSlotProps",
+          "file": "src/chipTypes.ts",
+          "line": 87,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipOwnerState",
@@ -59357,7 +59505,14 @@
         "Omit"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipOwnerState",
+          "file": "src/chipTypes.ts",
+          "line": 76,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipPropsVariantOverrides",
@@ -59367,7 +59522,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipPropsVariantOverrides",
+          "file": "src/chipTypes.ts",
+          "line": 7,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipPropsSizeOverrides",
@@ -59377,7 +59539,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipPropsSizeOverrides",
+          "file": "src/chipTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipPropsColorOverrides",
@@ -59387,7 +59556,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipPropsColorOverrides",
+          "file": "src/chipTypes.ts",
+          "line": 9,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipOwnProps",
@@ -59405,7 +59581,7 @@
           "line": 42,
           "kind": "property",
           "type": "React.ReactElement<unknown> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59418,7 +59594,7 @@
           "line": 47,
           "kind": "property",
           "type": "null | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59431,7 +59607,7 @@
           "line": 51,
           "kind": "property",
           "type": "Partial<ChipClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59444,7 +59620,7 @@
           "line": 60,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59457,7 +59633,7 @@
           "line": 67,
           "kind": "property",
           "type": "OverridableStringUnion<'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning', ChipPropsColorOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59470,7 +59646,7 @@
           "line": 71,
           "kind": "property",
           "type": "React.ReactElement<unknown> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59496,7 +59672,7 @@
           "line": 80,
           "kind": "property",
           "type": "React.ReactElement<unknown> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59509,7 +59685,7 @@
           "line": 84,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59522,7 +59698,7 @@
           "line": 89,
           "kind": "event",
           "type": "React.EventHandler<any> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59535,7 +59711,7 @@
           "line": 94,
           "kind": "property",
           "type": "OverridableStringUnion<'small' | 'medium', ChipPropsSizeOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59561,7 +59737,7 @@
           "line": 107,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -59600,7 +59776,7 @@
           "line": 120,
           "kind": "property",
           "type": "OverridableStringUnion<'filled' | 'outlined', ChipPropsVariantOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -59618,7 +59794,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipOwnProps",
+          "file": "src/chipTypes.ts",
+          "line": 41,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "ChipProps",
+          "file": "src/chipTypes.ts",
+          "line": 65,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipTypeMap",
@@ -59691,7 +59880,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipProps",
+          "file": "src/chipTypes.ts",
+          "line": 65,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipClasses",
@@ -59962,7 +60158,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipClasses",
+          "file": "src/chipClasses.ts",
+          "line": 24,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipClassKey",
@@ -59974,7 +60177,14 @@
         "ChipClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipClassKey",
+          "file": "src/chipClasses.ts",
+          "line": 23,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipClasses",
@@ -60245,7 +60455,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipClasses",
+          "file": "src/chipClasses.ts",
+          "line": 24,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ChipClassKey",
@@ -60257,7 +60474,14 @@
         "ChipClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ChipClassKey",
+          "file": "src/chipClasses.ts",
+          "line": 23,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CircularProgressPropsColorOverrides",
@@ -181448,6 +181672,651 @@
       ],
       "references": [
         "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipClassKey",
+      "file": "src/chipClasses.ts",
+      "line": 23,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipClasses",
+      "file": "src/chipClasses.ts",
+      "line": 24,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ChipClassKey",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipPropsVariantOverrides",
+      "file": "src/chipTypes.ts",
+      "line": 7,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipPropsSizeOverrides",
+      "file": "src/chipTypes.ts",
+      "line": 8,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipPropsColorOverrides",
+      "file": "src/chipTypes.ts",
+      "line": 9,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipRootSlotPropsOverrides",
+      "file": "src/chipTypes.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipLabelSlotPropsOverrides",
+      "file": "src/chipTypes.ts",
+      "line": 11,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "OverrideUnion",
+      "file": "src/chipTypes.ts",
+      "line": 12,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Base",
+        "Extract",
+        "K",
+        "Omit",
+        "Overrides",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeChipRootProps",
+      "file": "src/chipTypes.ts",
+      "line": 24,
+      "kind": "type",
+      "members": [
+        {
+          "name": "ownerState",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ownerState?: ChipOwnerState;",
+          "line": 25,
+          "kind": "property",
+          "type": "ChipOwnerState"
+        }
+      ],
+      "references": [
+        "ButtonBaseProps",
+        "ChipOwnerState"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeChipLabelProps",
+      "file": "src/chipTypes.ts",
+      "line": 27,
+      "kind": "type",
+      "members": [
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: StyleProp<NativeStyle>;",
+          "line": 30,
+          "kind": "property",
+          "type": "StyleProp<NativeStyle>"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps;",
+          "line": 31,
+          "kind": "property",
+          "type": "SxProps"
+        },
+        {
+          "name": "ownerState",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ownerState?: ChipOwnerState;",
+          "line": 32,
+          "kind": "property",
+          "type": "ChipOwnerState"
+        }
+      ],
+      "references": [
+        "ChipOwnerState",
+        "NativeStyle",
+        "Omit",
+        "React.RefAttributes",
+        "StyleProp",
+        "SxProps",
+        "ViewInstance",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipSlots",
+      "file": "src/chipTypes.ts",
+      "line": 34,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: React.ComponentType<ButtonBaseRootProps & { ownerState?: ChipOwnerState }>;",
+          "line": 35,
+          "kind": "slot",
+          "type": "React.ComponentType<ButtonBaseRootProps & { ownerState?: ChipOwnerState }>"
+        },
+        {
+          "name": "label",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "label?: React.ComponentType<NativeChipLabelProps>;",
+          "line": 36,
+          "kind": "slot",
+          "type": "React.ComponentType<NativeChipLabelProps>"
+        }
+      ],
+      "references": [
+        "ButtonBaseRootProps",
+        "ChipOwnerState",
+        "NativeChipLabelProps",
+        "React.ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipDeleteEvent",
+      "file": "src/chipTypes.ts",
+      "line": 38,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ButtonBaseActivationEvent",
+        "NonNullable",
+        "Parameters",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipOwnProps",
+      "file": "src/chipTypes.ts",
+      "line": 41,
+      "kind": "type",
+      "members": [
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: null;",
+          "line": 42,
+          "kind": "property",
+          "type": "null"
+        },
+        {
+          "name": "id",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "id?: string;",
+          "line": 43,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "label",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "label?: React.ReactNode;",
+          "line": 44,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "avatar",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "avatar?: React.ReactElement<unknown>;",
+          "line": 45,
+          "kind": "property",
+          "type": "React.ReactElement<unknown>"
+        },
+        {
+          "name": "icon",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "icon?: React.ReactElement<unknown>;",
+          "line": 46,
+          "kind": "property",
+          "type": "React.ReactElement<unknown>"
+        },
+        {
+          "name": "deleteIcon",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "deleteIcon?: React.ReactElement<unknown>;",
+          "line": 47,
+          "kind": "property",
+          "type": "React.ReactElement<unknown>"
+        },
+        {
+          "name": "onDelete",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onDelete?: (event: ChipDeleteEvent) => void;",
+          "line": 48,
+          "kind": "event",
+          "type": "(event: ChipDeleteEvent) => void"
+        },
+        {
+          "name": "clickable",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "clickable?: boolean;",
+          "line": 49,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "skipFocusWhenDisabled",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "skipFocusWhenDisabled?: boolean;",
+          "line": 50,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "color",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "color?: OverrideUnion<\n    'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',\n    ChipPropsColorOverrides\n  >;",
+          "line": 51,
+          "kind": "property",
+          "type": "OverrideUnion<\n    'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',\n    ChipPropsColorOverrides\n  >"
+        },
+        {
+          "name": "size",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "size?: OverrideUnion<'small' | 'medium', ChipPropsSizeOverrides>;",
+          "line": 55,
+          "kind": "property",
+          "type": "OverrideUnion<'small' | 'medium', ChipPropsSizeOverrides>"
+        },
+        {
+          "name": "variant",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant?: OverrideUnion<'filled' | 'outlined', ChipPropsVariantOverrides>;",
+          "line": 56,
+          "kind": "property",
+          "type": "OverrideUnion<'filled' | 'outlined', ChipPropsVariantOverrides>"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<ChipClasses>;",
+          "line": 57,
+          "kind": "property",
+          "type": "Partial<ChipClasses>"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string;",
+          "line": 58,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "slots",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slots?: ChipSlots;",
+          "line": 59,
+          "kind": "slot",
+          "type": "ChipSlots"
+        },
+        {
+          "name": "slotProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slotProps?: {\n    root?: SlotProps<NativeChipRootProps & ChipRootSlotPropsOverrides, ChipOwnerState>;\n    label?: SlotProps<NativeChipLabelProps & ChipLabelSlotPropsOverrides, ChipOwnerState>;\n  };",
+          "line": 60,
+          "kind": "slot",
+          "type": "{\n    root?: SlotProps<NativeChipRootProps & ChipRootSlotPropsOverrides, ChipOwnerState>;\n    label?: SlotProps<NativeChipLabelProps & ChipLabelSlotPropsOverrides, ChipOwnerState>;\n  }"
+        },
+        {
+          "name": "slotProps.root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: SlotProps<NativeChipRootProps & ChipRootSlotPropsOverrides, ChipOwnerState>;",
+          "line": 61,
+          "kind": "slot",
+          "type": "SlotProps<NativeChipRootProps & ChipRootSlotPropsOverrides, ChipOwnerState>"
+        },
+        {
+          "name": "slotProps.label",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "label?: SlotProps<NativeChipLabelProps & ChipLabelSlotPropsOverrides, ChipOwnerState>;",
+          "line": 62,
+          "kind": "slot",
+          "type": "SlotProps<NativeChipLabelProps & ChipLabelSlotPropsOverrides, ChipOwnerState>"
+        }
+      ],
+      "references": [
+        "ButtonBaseProps",
+        "ChipClasses",
+        "ChipDeleteEvent",
+        "ChipLabelSlotPropsOverrides",
+        "ChipOwnerState",
+        "ChipPropsColorOverrides",
+        "ChipPropsSizeOverrides",
+        "ChipPropsVariantOverrides",
+        "ChipRootSlotPropsOverrides",
+        "ChipSlots",
+        "NativeChipLabelProps",
+        "NativeChipRootProps",
+        "Omit",
+        "OverrideUnion",
+        "Partial",
+        "React.ReactElement",
+        "React.ReactNode",
+        "SlotProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipProps",
+      "file": "src/chipTypes.ts",
+      "line": 65,
+      "kind": "type",
+      "members": [
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>",
+          "line": 73,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        }
+      ],
+      "references": [
+        "Additional",
+        "ChipOwnProps",
+        "Omit",
+        "React.ComponentPropsWithoutRef",
+        "React.ComponentType",
+        "React.Ref",
+        "Root",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipOwnerState",
+      "file": "src/chipTypes.ts",
+      "line": 76,
+      "kind": "type",
+      "members": [
+        {
+          "name": "disabled",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disabled: boolean;",
+          "line": 78,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "clickable",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "clickable: boolean | undefined;",
+          "line": 79,
+          "kind": "property",
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "onDelete",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onDelete: boolean;",
+          "line": 80,
+          "kind": "event",
+          "type": "boolean"
+        },
+        {
+          "name": "color",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "color: string;",
+          "line": 81,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "size",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "size: string;",
+          "line": 82,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "variant",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant: string;",
+          "line": 83,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "iconColor",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "iconColor: string;",
+          "line": 84,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "component",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component: React.ElementType;",
+          "line": 85,
+          "kind": "property",
+          "type": "React.ElementType"
+        }
+      ],
+      "references": [
+        "ChipOwnProps",
+        "Omit",
+        "React.ElementType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ChipSlotsAndSlotProps",
+      "file": "src/chipTypes.ts",
+      "line": 87,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ChipOwnProps",
+        "Pick"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeChipComponent",
+      "file": "src/chipTypes.ts",
+      "line": 88,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<Root extends React.ComponentType<any>>(\n    props: ChipProps<Root> & { component: Root },\n  ): React.ReactNode;",
+          "line": 89,
+          "kind": "signature",
+          "type": "<Root extends React.ComponentType<any>>(\n    props: ChipProps<Root> & { component: Root },\n  ): React.ReactNode;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: ChipProps): React.ReactNode;",
+          "line": 92,
+          "kind": "signature",
+          "type": "(props: ChipProps): React.ReactNode;"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string;",
+          "line": 93,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "ChipProps",
+        "React.ComponentType",
+        "React.ReactNode",
+        "Root"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"

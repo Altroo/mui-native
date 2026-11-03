@@ -8,14 +8,14 @@
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
       "package.json": "5b005286c99b7766a420eabc98cc32887667f4481d68faead0f27c23ea90d0e3",
       "packages/compat/package.json": "96f0b851536ec8333bce8db32a0d2e8b12b529e290b4ea333769a1894314ff54",
-      "packages/compat/supported.json": "552a5831e2066584123abec0770b1cc716139a732067c880ff0f1a261a3f086d",
+      "packages/compat/supported.json": "2f3c96fe6c1852fc0c985502e5f2b063a3eadb75df782061fbfd8d08f88a6ef9",
       "packages/icons/package.json": "acb6165d3435cf8b944741a8167e77a162dde02b76b31b3c4136fc26a93cb737",
       "packages/icons/src/Add/index.ts": "98626742b0c19873110d9795934647ddc6fb5f6be09a5d60189115afdd9c8b01",
       "packages/icons/src/Check/index.ts": "fab7a03732117fa85b0210f6cc3551eb29d0aa46a374c7bd7bced61ac85d76cb",
       "packages/icons/src/Close/index.ts": "f2a34cbc09d0a0ec63821425960975c5363c19d61476cb13bcb610a1a39b1a66",
       "packages/icons/src/index.ts": "18700eaefc45ea7df48bc0efbab15b67346db8b5c8c27cb0fd789dd3cb44d320",
       "packages/icons/src/Remove/index.ts": "611c0fd1f80c46a7fc1c83a13a041b91e0066701fcab042c4cc87839151dab00",
-      "packages/material/package.json": "3a4062c00509d20c7b38e5a28f4ecbd3a7d25f717e471941a44172325259fbb2",
+      "packages/material/package.json": "190e3784ecf6b3c92480e66441e2af7fb1dbc743fe7b1aea1b2a178c31428796",
       "packages/material/src/Alert/index.ts": "8c0a7b0a9ca5279bfd70b8db2e05b7d7e7f2a468c119ca83b3dc14fc6b8ca9df",
       "packages/material/src/Backdrop/index.ts": "0d8aa4ae16f18860d1ef4f9bdcaf1ec6a96ac2030aa8338f5d2bbf274dfdaa4d",
       "packages/material/src/Box/index.ts": "285f21b02e025c40b3d9aef941289ad419aef7fbce14c35e82260c2625937537",
@@ -33,6 +33,11 @@
       "packages/material/src/Checkbox/index.ts": "96792b1a1e3aff8a0ba0f3a5c29e950eb0326d780847a1b07f769cab292a8d07",
       "packages/material/src/checkControls.tsx": "ac2b6bc8c5a0f874c51cfdc4981d943e31c8f33141485e9db7b88711c1ba1af1",
       "packages/material/src/checkedTypes.ts": "3082672d7727653cb2ce4a13c70c8ced6bb89a4f6eb029b75b8d17e90567ea7c",
+      "packages/material/src/chip.tsx": "8d1065b629b3068e727b11cf7f120a20592636d1aca9270547e86be52cb393b0",
+      "packages/material/src/Chip/chipClasses/index.ts": "05a85a38b9fa55cef908a0dbdd8767b96154298f8ee22c8905dac57618b76f24",
+      "packages/material/src/Chip/index.ts": "624f21e1468440f84575eed42ec5c8ac530ff35b236c8770d18fb0a5082ce39c",
+      "packages/material/src/chipClasses.ts": "59cef73b597e7dd6305903ebb0b550c6cef177c5bb782da98ee9b1775cfae77a",
+      "packages/material/src/chipTypes.ts": "8ab645f60215dac7b510a42bb9c63e53b465372dd5d8689eb2cbb138d0aab3e4",
       "packages/material/src/CircularProgress/index.ts": "563332ab256201e1396a837f5de5d909d2d63324811ca3b0e99246b8a5479e3c",
       "packages/material/src/controlClasses.ts": "ee815e05e92faece5b7289b09ec0c1949dbaf7c0ebe09149f44e77111218b293",
       "packages/material/src/controlGroups.tsx": "879f17d27b06f3b36d9ee76e3e65fd769d7cf8679d9706a64775fd896c4b3eb1",
@@ -62,7 +67,7 @@
       "packages/material/src/Grow/index.ts": "7e747efc5a2eed3c1a6762294ea9600bce4aeb7bce21521ddfee59ae34b5d8a8",
       "packages/material/src/IconButton/iconButtonClasses/index.ts": "bfa2f781c240af1c02802c3b286511dceaf96c3a7d882d52c1a8e5e74c467c5f",
       "packages/material/src/IconButton/index.ts": "7cc501394f4693c7531333c28a281ce3364d147ae012e435e4e7c54d640a801a",
-      "packages/material/src/index.ts": "0fcf338dcd4b3c0beb6c108964ff398aecca6fbbe2616c6234c173953c72f3e1",
+      "packages/material/src/index.ts": "9111fdd4431e683cde8f9dcfb47c25a6b956d6a5dd60dac9704dec29a54a14f7",
       "packages/material/src/Input/index.ts": "9c6687959c875f6a480ba0bc5620a5d74c5259ce607526ca64a0a4db2442b50c",
       "packages/material/src/InputAdornment/index.ts": "8ee899763437210b3027f092a116ffd21c58f26e142d931f23199ad9837a5bbb",
       "packages/material/src/InputBase/index.ts": "b0034ca1d11f85b615c3518f0c23a2d99c8442a2f194c4ca42cc73e310cb6fbc",
@@ -268,7 +273,7 @@
   },
   "documentation": {
     "path": "docs/coverage.md",
-    "sha256": "bb8cb6e43f6a9904638c0801348e45646250de2e5d374e8ed50fea4859ec5673"
+    "sha256": "7f311e36ad4e861a80a53c481b8b7e5eb856a006a1c69e0cf2a38bd3438184ed"
   },
   "referenceDependencies": [
     {
@@ -290,11 +295,11 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "26891a80466cfab50981585b57176807716c06f18fe339cb820d44fb3c55e0dc",
+      "nativeSourceSha256": "11f8d7a9995208a4f698c681500002232d647a85c051b41db10580ff3e56f27f",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
-      "locallyDeclaredRootNames": 309,
+      "locallyDeclaredRootNames": 324,
       "directMembers": 4046,
       "eventDeclarations": 112,
       "slotDeclarations": 219,
@@ -302,7 +307,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "ad7415782b6885714c7b8a0a9a44970cd5914233897959f7a748be1bd6706020"
+      "sha256": "fd6d65167e700c9970c94f8fb17373e79bff61854c4928721998da5b1160ef6b"
     },
     {
       "package": "@mui/system",

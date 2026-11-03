@@ -76,6 +76,8 @@ Release gates:
 - [ ] npm namespace ownership and distribution notices reviewed.
 - [ ] `0.1.0-alpha.1` publication only after the above.
 
+Native [Chip](docs/chip.md) adds the reusable display/action/deletion dependency for Autocomplete; see [issue #37](https://github.com/Altroo/mui-native/issues/37). Autocomplete still needs popup/input composition and full native validation.
+
 ## 4. Complete Material UI
 
 Implement remaining eligible exports in dependency order, including navigation, lists, menus, tabs, drawers, popovers, tooltips, remaining Select/NativeSelect contracts, Autocomplete, Slider, Rating, Accordion, Stepper, Pagination, Breadcrumbs, SpeedDial, Table, ImageList, TransferList and other actual baseline exports. Do not ship empty stand-ins. Generate coverage from the inventory, not a manually inflated percentage. Audit Lab separately.

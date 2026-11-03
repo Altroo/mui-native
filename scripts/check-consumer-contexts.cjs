@@ -119,6 +119,7 @@ try {
     material.menuClasses,
   );
   for (const [component, classes, helper] of [
+    ['Chip', 'chipClasses', 'getChipUtilityClass'],
     ['Button', 'buttonClasses', 'getButtonUtilityClass'],
     ['IconButton', 'iconButtonClasses', 'getIconButtonUtilityClass'],
     ['Switch', 'switchClasses', 'getSwitchUtilityClass'],
@@ -130,6 +131,7 @@ try {
   ]) {
     const entry = requireConsumer('@altroo/mui-native/' + component);
     const deep = requireConsumer('@altroo/mui-native/' + component + '/' + classes);
+    assert.equal(entry.default, material[component]);
     assert.equal(entry[classes], material[classes]);
     assert.equal(entry[helper], material[helper]);
     assert.equal(deep.default, material[classes]);
