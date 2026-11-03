@@ -213,9 +213,9 @@ test('a command abort retains output and cannot restore controls until native te
       await readFile(join(output, 'instrumentation.txt'), 'utf8'),
       'partial native output',
     );
-    assert.equal(
+    assert.match(
       await readFile(join(output, 'command-error.txt'), 'utf8'),
-      'connection interrupted',
+      /aborted\nconnection interrupted/,
     );
   } finally {
     await rm(output, { recursive: true, force: true });
@@ -244,8 +244,8 @@ const args=process.argv.slice(2);
 appendFileSync(${JSON.stringify(calls)},JSON.stringify(args)+'\\n');
 if(args.includes('get-state')) console.log('device');
 else if(args.includes('instrument')) {
- writeFileSync(${JSON.stringify(started)},'started');
- console.log('native in progress');setInterval(()=>{},1000);
+ process.stdout.write('native in progress\\n',()=>writeFileSync(${JSON.stringify(started)},'started'));
+ setInterval(()=>{},1000);
 } else if(args.includes('ps')) console.log('NAME');
 else console.log('completed');
 `,
@@ -258,12 +258,13 @@ else console.log('completed');
         signal: controller.signal,
       });
       // Register rejection observation before abort to avoid an unhandled promise.
-      const rejected = assert.rejects(
-        pending,
-        (error) =>
+      let abortError;
+      const rejected = assert.rejects(pending, (error) => {
+        abortError =
           error instanceof AggregateError &&
-          error.errors.some((entry) => entry.name === 'AbortError'),
-      );
+          error.errors.find((entry) => entry.name === 'AbortError');
+        return !!abortError;
+      });
       const deadline = Date.now() + 10000;
       for (;;) {
         try {
@@ -281,14 +282,17 @@ else console.log('completed');
         .split('\n')
         .map((line) => JSON.parse(line));
       assert(commands.every((args) => args[0] === '-s' && args[1] === 'one-device'));
-      assert(
-        commands.findIndex((args) => args.includes('force-stop')) <
-          commands.findIndex((args) => args.includes('start')),
-      );
-      assert.match(
+      const stopIndex = commands.findIndex((args) => args.includes('force-stop'));
+      const confirmIndex = commands.findIndex((args) => args.includes('ps'));
+      const restoreIndex = commands.findIndex((args) => args.includes('start'));
+      assert(stopIndex >= 0 && confirmIndex > stopIndex && restoreIndex > confirmIndex);
+      // Aborting can beat the parent's pipe read. Require every byte Node
+      // observed, rather than assuming the child readiness marker means read.
+      assert.equal(
         await readFile(join(folder, 'result/instrumentation.txt'), 'utf8'),
-        /native in progress/,
+        String(abortError.stdout ?? ''),
       );
+      assert.match(await readFile(join(folder, 'result/command-error.txt'), 'utf8'), /AbortError/);
     } finally {
       controller.abort();
       await pending?.catch(() => {});
@@ -404,3 +408,27 @@ else console.log('NAME');
     }
   },
 );
+
+test('empty stderr does not discard command error identity or captured stdout', async () => {
+  const output = await mkdtemp(join(tmpdir(), 'mui-android-empty-stderr-'));
+  try {
+    await assert.rejects(
+      run({ adb: 'adb', serial: 'chosen', output }, (_, args) => {
+        if (args.includes('get-state')) return 'device';
+        if (args.includes('instrument'))
+          throw Object.assign(Error('connection aborted'), {
+            stdout: 'captured bytes',
+            stderr: '',
+          });
+        return 'NAME\n';
+      }),
+    );
+    assert.equal(await readFile(join(output, 'instrumentation.txt'), 'utf8'), 'captured bytes');
+    assert.match(
+      await readFile(join(output, 'command-error.txt'), 'utf8'),
+      /Error: connection aborted/,
+    );
+  } finally {
+    await rm(output, { recursive: true, force: true });
+  }
+});

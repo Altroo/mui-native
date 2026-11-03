@@ -172,7 +172,10 @@ export async function run({ adb, serial, output, signal }, execute = executeFile
     } catch (error) {
       failure = error;
       text = String(error.stdout ?? '');
-      await writeFile(join(output, 'command-error.txt'), String(error.stderr ?? error));
+      await writeFile(
+        join(output, 'command-error.txt'),
+        String(error) + '\n' + String(error.stderr ?? ''),
+      );
     }
     await writeFile(join(output, 'instrumentation.txt'), text);
     report = inspectReport(text);
