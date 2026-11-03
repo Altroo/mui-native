@@ -21,6 +21,16 @@ class AltrooMUIPortalHostManager : ViewGroupManager<AltrooMUIPortalHost>(), Altr
   override fun setLayer(view: AltrooMUIPortalHost, value: Double) { view.layer = value }
   @ReactProp(name = "observedTag", defaultInt = 0)
   override fun setObservedTag(view: AltrooMUIPortalHost, value: Int) { view.observedTag = value }
+  @ReactProp(name = "popperTag", defaultInt = 0)
+  override fun setPopperTag(view: AltrooMUIPortalHost, value: Int) { view.popperTag = value }
+  @ReactProp(name = "arrowTag", defaultInt = 0)
+  override fun setArrowTag(view: AltrooMUIPortalHost, value: Int) { view.arrowTag = value }
+  @ReactProp(name = "observationOnly", defaultBoolean = false)
+  override fun setObservationOnly(view: AltrooMUIPortalHost, value: Boolean) { view.observationOnly = value }
+  @ReactProp(name = "boundaryTags")
+  override fun setBoundaryTags(view: AltrooMUIPortalHost, value: com.facebook.react.bridge.ReadableArray?) {
+    view.boundaryTags = if (value == null) emptyList() else (0 until value.size()).map { value.getInt(it) }
+  }
   @ReactProp(name = "observationRevision")
   override fun setObservationRevision(view: AltrooMUIPortalHost, value: String?) { view.observationRevision = value ?: "" }
   @ReactProp(name="viewportX", defaultDouble=0.0)

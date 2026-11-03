@@ -10,7 +10,13 @@ struct AltrooObservedClip {
   std::optional<AltrooObservedRect> rect;
 };
 AltrooObservedRect AltrooIntersectObservedRect(AltrooObservedRect a, AltrooObservedRect b);
+// UIWindow is its own geometry window; ordinary views use their attached window.
+UIWindow *AltrooObservationWindow(UIView *view);
 bool AltrooCanObserveView(UIView *view);
-std::optional<AltrooObservedRect> AltrooObserveRect(UIView *view, CGRect bounds);
-AltrooObservedClip AltrooObserveClippingParents(UIView *view);
+std::optional<AltrooObservedRect> AltrooObserveRect(UIView *view, CGRect bounds, UIView *relativeTo = nil, CGPoint origin = CGPointZero, bool clipping = false);
+AltrooObservedClip AltrooObserveClippingParents(UIView *view, UIView *relativeTo = nil, CGPoint origin = CGPointZero);
 AltrooObservedRect AltrooObserveViewport(UIWindow *window);
+
+CGRect AltrooPositionPaddingFrame(UIView *view);
+CGRect AltrooPositionLayoutFrame(UIView *view);
+bool AltrooPositionSwapsInsets(UIView *view);

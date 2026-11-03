@@ -73,11 +73,12 @@ const provenance = {
     'Native Popper positioning adapts the current MIT Core algorithms behind the pinned MUI contract. Geometry and modifier reference evidence is separate from native device validation and does not advance verified MUI support.',
   core,
   localFiles: [
-    'packages/material/src/popper/types.ts',
-    'packages/material/src/popper/geometry.ts',
-    'packages/material/src/popper/overflow.ts',
-    'packages/material/src/popper/modifiers.ts',
-    'packages/material/src/popper/engine.ts',
+    'packages/material/src/nativePopper/types.ts',
+    'packages/material/src/nativePopper/geometry.ts',
+    'packages/material/src/nativePopper/overflow.ts',
+    'packages/material/src/nativePopper/modifiers.ts',
+    'packages/material/src/nativePopper/engine.ts',
+    'packages/material/src/nativePopper/nativeAdapter.ts',
   ],
 };
 try {

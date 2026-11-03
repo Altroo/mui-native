@@ -1,13 +1,13 @@
 import type { ViewInstance } from 'react-native';
 import reference from './fixtures/mui-popper-geometry-9.5.0.json';
-import { createNativePopper } from '../packages/material/src/popper/engine';
-import { intersect } from '../packages/material/src/popper/geometry';
+import { createNativePopper } from '../packages/material/src/nativePopper/engine';
+import { intersect } from '../packages/material/src/nativePopper/geometry';
 import type {
   NativePopperModifier,
   NativePopperPlatform,
   NativePopperRect,
   NativePopperOptions,
-} from '../packages/material/src/popper/types';
+} from '../packages/material/src/nativePopper/types';
 function resolveStyle(
   style: Record<string, any>,
   size: { width: number; height: number },

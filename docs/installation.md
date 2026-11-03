@@ -13,7 +13,7 @@ Install the generated system, material and native-host archives together in the 
 ```sh
 npm install /absolute/path/artifacts/packages/altroo-mui-native-system-0.0.0-dev.0.tgz \
   /absolute/path/artifacts/packages/altroo-mui-native-0.0.0-dev.0.tgz \
-  /absolute/path/artifacts/packages/altroo-mui-native-host-0.0.2-dev.0.tgz \
+  /absolute/path/artifacts/packages/altroo-mui-native-host-0.0.5-dev.0.tgz \
   /absolute/path/artifacts/packages/altroo-mui-native-compat-0.0.0-dev.0.tgz
 ```
 
@@ -50,3 +50,5 @@ Button and IconButton now use the native ButtonBase host as well. Rebuild an app
 Checkbox and Radio also use the native ButtonBase host. Rebuild apps that previously used their stock Pressable implementation. See [checked controls](check-controls.md) for native input handles, slots, group/label behavior and migration boundaries.
 
 Switch now requires the same native interaction host and native build. See [Switch](switch.md) for five-slot composition, event migration and native refs.
+
+[Native Popper](popper.md) requires native-host 0.0.5-dev.0 and a native application rebuild for its containing-frame, arrow and explicit-boundary observation protocol. JavaScript refreshes cannot upgrade an older host. Its root/deep imports use the same compatibility resolver as the other Material components.

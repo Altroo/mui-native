@@ -58,6 +58,8 @@ export function createNativePopper(
     attributes: {},
     native: initial,
   };
+  // Geometry reads and effect setup have separate epochs: a modifier can synchronously
+  // reconfigure or destroy the instance while an older read/setup is still unwinding.
   let cleanups: (() => void)[] = [],
     destroyed = false,
     generation = 0,
@@ -78,7 +80,11 @@ export function createNativePopper(
     if (errors.length)
       throw new AggregateError(errors, 'MUI Native: Popper modifier cleanup failed.');
   }
-  function execute(data: NativePopperMeasurements | null, token: number): NativePopperState {
+  function execute(
+    data: NativePopperMeasurements | null,
+    token: number,
+    retries: number,
+  ): NativePopperState | Promise<NativePopperState> {
     if (
       destroyed ||
       token !== generation ||
@@ -87,6 +93,8 @@ export function createNativePopper(
       !data
     )
       return state;
+    if (retries > 16) throw new Error('MUI Native: Popper native geometry did not stabilize.');
+    if (platform.isMeasurementCurrent?.(data) === false) return read(retries + 1);
     if (!validMeasurements(data))
       throw new Error('MUI Native: Popper received invalid native measurements.');
     state.native = data;
@@ -94,6 +102,7 @@ export function createNativePopper(
     state.placement = state.options.placement;
     state.reset = false;
     registerPlatform(state, platform);
+    platform.bindMeasurement?.(state, data);
     for (const modifier of state.orderedModifiers)
       state.modifiersData[modifier.name] = { ...modifier.data };
     let resets = 0;
@@ -116,10 +125,14 @@ export function createNativePopper(
         });
         // A callback can synchronously reconfigure, update or destroy this instance.
         if (destroyed || generation !== token) return state;
+        if (platform.isMeasurementCurrent?.(data) === false) return read(retries + 1);
         state = next || state;
+        if (!state.native) state.native = data;
         registerPlatform(state, platform);
+        platform.bindMeasurement?.(state, data);
       }
     }
+    platform.didUpdate?.(state);
     if (!firstDelivered) {
       firstDelivered = true;
       const firstState = state;
@@ -130,15 +143,15 @@ export function createNativePopper(
     }
     return state;
   }
-  function read() {
+  function read(retries = 0): NativePopperState | Promise<NativePopperState> {
     if (destroyed || !connected(state.elements.reference) || !connected(state.elements.popper))
       return state;
     const token = ++generation,
       measurement = platform.measure(state);
     return measurement &&
       typeof (measurement as PromiseLike<NativePopperMeasurements | null>).then === 'function'
-      ? Promise.resolve(measurement).then((data) => execute(data, token))
-      : execute(measurement as NativePopperMeasurements | null, token);
+      ? Promise.resolve(measurement).then((data) => execute(data, token, retries))
+      : execute(measurement as NativePopperMeasurements | null, token, retries);
   }
   const instance: NativePopperInstance = {
     get state() {

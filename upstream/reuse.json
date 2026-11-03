@@ -2457,6 +2457,50 @@
       "adaptations": [
         "Container callbacks resolve in a layout effect; same-container state survives, retargeting remounts, and inline mode composes refs. Native nonmodal Host/Canvas replaces ReactDOM.createPortal and preserves the actual React context tree. NativePortalHandle replaces the original container Element ref; native layer, attachment readiness and affine bounds are explicit extensions. No DOM or complete native validation claim."
       ]
+    },
+    {
+      "localFile": "packages/material/src/popper.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Popper/Popper.js": "b6959cfdeaa94d47e7637a7e9e7522d76182095fc9c28c7cad6352340e3d18ab",
+          "Popper/Popper.d.ts": "66bf3a451a562ee85612888aad2c97112648d5fa37e9d7c69d5d76797115133e",
+          "Popper/BasePopper.js": "a1ab3fc4c197ae00cb38d9782ea3322fa222093e4ad35895d922d2999bf507c1",
+          "Popper/BasePopper.types.d.ts": "7dbea087c1b8c55f53b350f6ad0b2611e3fb97fb4d40d11969ce1f78858d6c64",
+          "Popper/popperClasses.js": "8870d5346e772f9f4b14ebfe6f4b4d5d5490883298b0cefed16969cf63d4ac56",
+          "Popper/popperClasses.d.ts": "9bab9e8d65ff83bceec753685598d1d522ca1735a2983eb8c881dc8389b6c008"
+        }
+      },
+      "adaptations": [
+        "Native root/instance refs, original import/class entries, theme defaults and root slots; source component replacement, RTL, keepMounted and transition lifecycle adapted to native Portal and native overlay readiness.",
+        "DOM elements, selectors and browser CSS positioning are excluded; native geometry, context and boundary leases gate visibility, interaction and accessibility."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/useNativePopper.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Popper/Popper.js": "b6959cfdeaa94d47e7637a7e9e7522d76182095fc9c28c7cad6352340e3d18ab",
+          "Popper/Popper.d.ts": "66bf3a451a562ee85612888aad2c97112648d5fa37e9d7c69d5d76797115133e",
+          "Popper/BasePopper.js": "a1ab3fc4c197ae00cb38d9782ea3322fa222093e4ad35895d922d2999bf507c1",
+          "Popper/BasePopper.types.d.ts": "7dbea087c1b8c55f53b350f6ad0b2611e3fb97fb4d40d11969ce1f78858d6c64",
+          "Popper/popperClasses.js": "8870d5346e772f9f4b14ebfe6f4b4d5d5490883298b0cefed16969cf63d4ac56",
+          "Popper/popperClasses.d.ts": "9bab9e8d65ff83bceec753685598d1d522ca1735a2983eb8c881dc8389b6c008"
+        }
+      },
+      "adaptations": [
+        "Source placement/default/modifier concatenation and instance lifecycle use the native measurement adapter instead of the DOM Popper runtime.",
+        "Native Portal leases and inline observation-only hosts retain immutable per-cycle geometry, current refs and stale cleanup guards."
+      ]
     }
   ]
 }

@@ -83,7 +83,9 @@
       "Switch/switchClasses",
       "Chip",
       "Chip/chipClasses",
-      "Portal"
+      "Portal",
+      "Popper",
+      "Popper/popperClasses"
     ]
   },
   "@mui/system": {

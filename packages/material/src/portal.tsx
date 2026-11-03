@@ -24,7 +24,7 @@ import { useMenuEvent } from './useMenuEvent';
 import { NativeOverlayReadiness } from './nativeOverlayReadiness';
 import { NativeModalParentContext } from './nativeModalContext';
 import { nativeModalManager as manager } from './nativeModalManager';
-import { NativePortalContext } from './portalContext';
+import { NativePortalContext, type NativePortalPositionOptions } from './portalContext';
 import {
   PortalObservationRegistry,
   type PortalObservationLease,
@@ -92,9 +92,24 @@ export const Portal = forwardRef<
   const [observation, setObservation] = useState<PortalObservationLease | null>(null);
   const [observations] = useState(() => new PortalObservationRegistry(setObservation));
   const observeAnchor = useCallback(
-    (node: ViewInstance | null, listener: PortalObservationListener) => {
+    (
+      node: ViewInstance | null,
+      listener: PortalObservationListener,
+      options?: NativePortalPositionOptions,
+    ) => {
       const tag = node == null ? 0 : (findNodeHandle(node) ?? -1);
-      return observations.observe(node, tag, listener);
+      return observations.observe(
+        node,
+        tag,
+        listener,
+        options
+          ? {
+              popperTag: findNodeHandle(options.popper) ?? -1,
+              arrowTag: options.arrow ? (findNodeHandle(options.arrow) ?? -1) : 0,
+              boundaryTags: options.boundaries?.map((node) => findNodeHandle(node) ?? -1),
+            }
+          : undefined,
+      );
     },
     [observations],
   );
@@ -256,6 +271,9 @@ export const Portal = forwardRef<
       presented={presented}
       onPortalLayout={report}
       observedTag={observation?.tag ?? 0}
+      popperTag={observation?.popperTag ?? 0}
+      arrowTag={observation?.arrowTag ?? 0}
+      boundaryTags={observation?.boundaryTags as number[] | undefined}
       observationRevision={observation?.revision ?? ''}
       onPortalObservation={reportObservation}
       collapsable={false}

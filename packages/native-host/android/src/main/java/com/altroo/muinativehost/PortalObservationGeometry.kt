@@ -31,18 +31,19 @@ internal fun portalWindowMatrix(view: View): Matrix? {
   matrix.getValues(values)
   return if (values.all { it.isFinite() } && kotlin.math.abs(values[0]*values[4]-values[1]*values[3]) > 1e-10) matrix else null
 }
-internal fun portalWindowRect(view: View, rect: Rect = Rect(0, 0, view.width, view.height), clipping: Boolean = false): PortalObservationRect? {
-  val matrix = portalWindowMatrix(view) ?: return null
+internal fun portalWindowRect(view: View, rect: Rect = Rect(0, 0, view.width, view.height), clipping: Boolean = false, relative: Matrix? = null): PortalObservationRect? {
+  val window = portalWindowMatrix(view) ?: return null
+  val matrix = if (relative == null) window else Matrix().apply { setConcat(relative,window) }
   return portalObservedBounds(rect.left.toDouble(),rect.top.toDouble(),rect.right.toDouble(),rect.bottom.toDouble(),clipping) { x,y ->
     val point = floatArrayOf(x.toFloat(),y.toFloat()); matrix.mapPoints(point)
     Pair(point[0].toDouble(),point[1].toDouble())
   }
 }
 internal data class PortalClippingResult(val valid: Boolean, val rect: PortalObservationRect?)
-internal fun portalClippingParents(view: View): PortalClippingResult {
+internal fun portalClippingParents(view: View, relative: Matrix? = null): PortalClippingResult {
   var current = view.parent as? View; var result: PortalObservationRect? = null
   fun include(node: View, bounds: Rect): Boolean {
-    val rect = portalWindowRect(node, bounds, clipping = true) ?: return false
+    val rect = portalWindowRect(node, bounds, clipping = true, relative = relative) ?: return false
     result = result?.intersect(rect) ?: rect
     return true
   }
@@ -82,3 +83,18 @@ internal fun portalWindowBounds(view: View): PortalWindowBounds {
   val clipped = viewport.intersect(document)
   return PortalWindowBounds(PortalObservationRect(clipped.x,clipped.y,maxOf(0.0,clipped.width),maxOf(0.0,clipped.height)), document)
 }
+
+internal data class PortalPositionFrame(val toWindow: Matrix, val fromWindow: Matrix, val width: Double, val height: Double)
+internal fun portalPositionFrame(popper: View): PortalPositionFrame? {
+  val parent = popper.parent as? View ?: return null
+  val padding = if (parent is ReactViewGroup) PortalPaddingBox.bounds(parent) else Rect(0,0,parent.width,parent.height)
+  val forward = portalWindowMatrix(parent) ?: return null
+  // Yoga absolute offsets begin at the padding box; ViewGroup scrolling shifts child coordinates.
+  forward.preTranslate((padding.left-parent.scrollX).toFloat(),(padding.top-parent.scrollY).toFloat())
+  val inverse = Matrix(); if (!forward.invert(inverse)) return null
+  return PortalPositionFrame(forward,inverse,maxOf(0,padding.width()).toDouble(),maxOf(0,padding.height()).toDouble())
+}
+internal fun portalMapWindowRect(rect: PortalObservationRect, matrix: Matrix): PortalObservationRect =
+  portalObservedBounds(rect.x,rect.y,rect.x+rect.width,rect.y+rect.height,true) { x,y ->
+    val point = floatArrayOf(x.toFloat(),y.toFloat()); matrix.mapPoints(point); Pair(point[0].toDouble(),point[1].toDouble())
+  }

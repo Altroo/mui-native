@@ -23,4 +23,5 @@ export type {
   NativePortalLayout,
   NativePortalRect,
   NativePortalObservation,
+  NativePortalPosition,
 } from './nativePortal';

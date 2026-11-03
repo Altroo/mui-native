@@ -19,6 +19,82 @@ type PortalLayout = Readonly<{
   d: CodegenTypes.Double;
 }>;
 type PortalObservation = Readonly<{
+  position: Readonly<{
+    popperTag: CodegenTypes.Int32;
+    leftRightSwapped: boolean;
+    arrow: Readonly<{
+      tag: CodegenTypes.Int32;
+      available: boolean;
+      leftRightSwapped: boolean;
+      x: CodegenTypes.Double;
+      y: CodegenTypes.Double;
+      width: CodegenTypes.Double;
+      height: CodegenTypes.Double;
+      parentWidth: CodegenTypes.Double;
+      parentHeight: CodegenTypes.Double;
+      clientLeft: CodegenTypes.Double;
+      clientTop: CodegenTypes.Double;
+    }>;
+    available: boolean;
+    anchorAvailable: boolean;
+    reference: Readonly<{
+      x: CodegenTypes.Double;
+      y: CodegenTypes.Double;
+      width: CodegenTypes.Double;
+      height: CodegenTypes.Double;
+    }>;
+    popper: Readonly<{
+      x: CodegenTypes.Double;
+      y: CodegenTypes.Double;
+      width: CodegenTypes.Double;
+      height: CodegenTypes.Double;
+    }>;
+    viewport: Readonly<{
+      x: CodegenTypes.Double;
+      y: CodegenTypes.Double;
+      width: CodegenTypes.Double;
+      height: CodegenTypes.Double;
+    }>;
+    window: Readonly<{
+      x: CodegenTypes.Double;
+      y: CodegenTypes.Double;
+      width: CodegenTypes.Double;
+      height: CodegenTypes.Double;
+    }>;
+    referenceClip: Readonly<{
+      present: boolean;
+      x: CodegenTypes.Double;
+      y: CodegenTypes.Double;
+      width: CodegenTypes.Double;
+      height: CodegenTypes.Double;
+    }>;
+    popperClip: Readonly<{
+      present: boolean;
+      x: CodegenTypes.Double;
+      y: CodegenTypes.Double;
+      width: CodegenTypes.Double;
+      height: CodegenTypes.Double;
+    }>;
+    containing: Readonly<{
+      x: CodegenTypes.Double;
+      y: CodegenTypes.Double;
+      width: CodegenTypes.Double;
+      height: CodegenTypes.Double;
+      a: CodegenTypes.Double;
+      b: CodegenTypes.Double;
+      c: CodegenTypes.Double;
+      d: CodegenTypes.Double;
+    }>;
+    boundaries: {
+      tag: CodegenTypes.Int32;
+      available: boolean;
+      x: CodegenTypes.Double;
+      y: CodegenTypes.Double;
+      width: CodegenTypes.Double;
+      height: CodegenTypes.Double;
+    }[];
+  }>;
+
   revision: string;
   observationRevision: string;
   observedTag: CodegenTypes.Int32;
@@ -64,6 +140,10 @@ export interface NativeProps extends ViewProps {
   containerTag?: CodegenTypes.WithDefault<CodegenTypes.Int32, 0>;
   layer?: CodegenTypes.WithDefault<CodegenTypes.Double, 0>;
   observedTag?: CodegenTypes.WithDefault<CodegenTypes.Int32, 0>;
+  popperTag?: CodegenTypes.WithDefault<CodegenTypes.Int32, 0>;
+  arrowTag?: CodegenTypes.WithDefault<CodegenTypes.Int32, 0>;
+  observationOnly?: CodegenTypes.WithDefault<boolean, false>;
+  boundaryTags?: ReadonlyArray<CodegenTypes.Int32>;
   observationRevision?: string;
   onPortalObservation?: CodegenTypes.DirectEventHandler<PortalObservation>;
   viewportX?: CodegenTypes.WithDefault<CodegenTypes.Double, 0>;

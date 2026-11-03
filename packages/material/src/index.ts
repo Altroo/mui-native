@@ -130,3 +130,28 @@ export type {
   NativePortalInlineHandle,
   NativePortalBounds,
 } from './portal';
+
+export { Popper, popperClasses, getPopperUtilityClass } from './popper';
+export type {
+  PopperProps,
+  PopperOwnProps,
+  PopperRootProps,
+  PopperSlots,
+  PopperOwnerState,
+  PopperTypeMap,
+  PopperRootSlotPropsOverrides,
+  PopperChildrenProps,
+  PopperTransitionProps,
+  PopperClasses,
+  PopperClassKey,
+  NativePopperAnchor,
+  NativePopperInstance,
+  NativePopperModifier,
+  NativePopperOptions,
+  NativePopperState,
+  NativePopperBoundary,
+  NativePopperRect,
+  NativePopperOverflowOptions,
+  PopperPlacementType,
+  PopperVirtualElement,
+} from './popper';
