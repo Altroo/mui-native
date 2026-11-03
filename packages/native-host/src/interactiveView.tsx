@@ -1,5 +1,6 @@
 import React, { forwardRef, useCallback, useRef } from 'react';
 import type { ColorValue, ViewInstance, ViewProps } from 'react-native';
+import { recordNativeFocus, clearNativeFocus } from './nativeFocus';
 import type { NativeProps } from './AltrooMUIInteractiveViewNativeComponent';
 let implementation: typeof import('./AltrooMUIInteractiveViewNativeComponent') | undefined;
 function nativeImplementation() {
@@ -144,10 +145,22 @@ export const InteractiveView: React.ForwardRefExoticComponent<
         onMUIFocusCapture: onFocusCapture,
         onMUIBlurCapture: onBlurCapture,
       }}
-      onFocus={onNativeFocus}
-      onBlur={onNativeBlur}
-      onMUIFocus={onFocus as NativeProps['onMUIFocus']}
-      onMUIBlur={onBlur as NativeProps['onMUIBlur']}
+      onFocus={(event: Parameters<NonNullable<ViewProps['onFocus']>>[0]) => {
+        recordNativeFocus(event.target);
+        onNativeFocus?.(event);
+      }}
+      onBlur={(event: Parameters<NonNullable<ViewProps['onBlur']>>[0]) => {
+        clearNativeFocus(event.target);
+        onNativeBlur?.(event);
+      }}
+      onMUIFocus={(event: Parameters<NonNullable<NativeProps['onMUIFocus']>>[0]) => {
+        recordNativeFocus(event.target);
+        onFocus?.(event as Parameters<NonNullable<typeof onFocus>>[0]);
+      }}
+      onMUIBlur={(event: Parameters<NonNullable<NativeProps['onMUIBlur']>>[0]) => {
+        clearNativeFocus(event.target);
+        onBlur?.(event as Parameters<NonNullable<typeof onBlur>>[0]);
+      }}
       onMUIKeyDown={onKeyDown as NativeProps['onMUIKeyDown']}
       onMUIKeyUp={onKeyUp as NativeProps['onMUIKeyUp']}
     />

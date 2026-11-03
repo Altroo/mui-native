@@ -1,7 +1,12 @@
 import React from 'react';
 import { Text, type ViewInstance } from 'react-native';
 import { render, screen, fireEvent, act, cleanup } from '@testing-library/react-native';
-import { InteractiveView, NativePressable } from '../packages/native-host/src';
+import {
+  InteractiveView,
+  NativePressable,
+  getNativeFocusedView,
+} from '../packages/native-host/src';
+import { clearNativeFocus } from '../packages/native-host/src/nativeFocus';
 import { Commands } from '../packages/native-host/src/AltrooMUIInteractiveViewNativeComponent';
 beforeEach(() => {
   for (const key of ['focus', 'blur', 'setPressed', 'setHotspot'] as const)
@@ -9,6 +14,7 @@ beforeEach(() => {
 });
 afterEach(() => {
   cleanup();
+  clearNativeFocus(getNativeFocusedView());
   jest.restoreAllMocks();
 });
 const keyEvent = () => ({
@@ -104,7 +110,9 @@ test('native private key/focus events and capture phases map to the public callb
     expect(handler).toHaveBeenCalledTimes(1);
   }
   expect(screen.getByTestId('host').props.onKeyDown).toBeUndefined();
-  expect(screen.getByTestId('host').props.onFocus).toBeUndefined();
+  expect(typeof screen.getByTestId('host').props.onFocus).toBe('function');
+  fireEvent(screen.getByTestId('host'), 'focus', keyEvent());
+  expect(focus).toHaveBeenCalledTimes(1);
 });
 test('explicit native focusability is independent from the traversal tab index', () => {
   const { rerender } = render(<InteractiveView focusable tabIndex={-1} testID="host" />);
@@ -218,4 +226,53 @@ test('standard descendant focus observers remain separate from private host even
   expect(focus).toHaveBeenCalledTimes(1);
   expect(blur).toHaveBeenCalledTimes(1);
   expect(screen.getByTestId('host').props.onNativeFocus).toBeUndefined();
+});
+
+test('observed focus tracks native buttons and standard descendants without optimistic requests', () => {
+  const first = React.createRef<ViewInstance>(),
+    second = React.createRef<ViewInstance>();
+  const tree = render(
+    <>
+      <InteractiveView ref={first} testID="one" />
+      <InteractiveView ref={second} testID="two" />
+    </>,
+  );
+  act(() => first.current?.focus());
+  expect(getNativeFocusedView()).toBeNull();
+  const event = (target: unknown) => ({ ...keyEvent(), target, currentTarget: target });
+  fireEvent(screen.getByTestId('one'), 'MUIFocus', event(first.current));
+  expect(getNativeFocusedView() === first.current).toBe(true);
+  fireEvent(screen.getByTestId('two'), 'focus', event(second.current));
+  fireEvent(screen.getByTestId('one'), 'MUIBlur', event(first.current));
+  expect(getNativeFocusedView() === second.current).toBe(true);
+  const focused = second.current!;
+  tree.unmount();
+  Object.defineProperty(focused, 'isConnected', { configurable: true, value: false });
+  expect(getNativeFocusedView()).toBeNull();
+});
+test('disconnected observed native focus targets are released', () => {
+  const ref = React.createRef<ViewInstance>();
+  render(<InteractiveView ref={ref} testID="host" />);
+  fireEvent(screen.getByTestId('host'), 'MUIFocus', { ...keyEvent(), target: ref.current });
+  Object.defineProperty(ref.current, 'isConnected', { configurable: true, value: false });
+  expect(getNativeFocusedView()).toBeNull();
+});
+
+test('replacing a callback ref preserves the same still-connected observed focus target', () => {
+  let native: ViewInstance | null = null;
+  const first: React.RefCallback<ViewInstance> = (node) => {
+    if (node) native = node;
+  };
+  const second: React.RefCallback<ViewInstance> = (node) => {
+    if (node) native = node;
+  };
+  const tree = render(<InteractiveView testID="host" ref={first} />);
+  Object.defineProperty(native, 'isConnected', { configurable: true, value: true });
+  fireEvent(screen.getByTestId('host'), 'MUIFocus', { ...keyEvent(), target: native });
+  tree.rerender(<InteractiveView testID="host" ref={second} />);
+  expect(getNativeFocusedView() === native).toBe(true);
+  const disconnected = native;
+  tree.unmount();
+  Object.defineProperty(disconnected, 'isConnected', { configurable: true, value: false });
+  expect(getNativeFocusedView()).toBeNull();
 });

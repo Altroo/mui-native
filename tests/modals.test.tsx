@@ -20,6 +20,7 @@ import {
   type ModalProps,
   type ModalRootProps,
 } from '../packages/material/src';
+import { Commands } from '../packages/native-host/src/AltrooMUIInteractiveViewNativeComponent';
 import { nativeModalManager as manager } from '../packages/material/src/nativeModalManager';
 afterEach(() => {
   cleanup();
@@ -185,7 +186,7 @@ test('auto-focus waits for presentation; iOS restoration waits for dismissal', (
     Content = node(inside, 'content');
   jest.spyOn(TextInput.State, 'currentlyFocusedInput').mockReturnValue(origin as any);
   const { rerender } = render(
-    <Modal open>
+    <Modal open initialFocusRef={{ current: inside }}>
       <Content />
     </Modal>,
   );
@@ -193,7 +194,7 @@ test('auto-focus waits for presentation; iOS restoration waits for dismissal', (
   fireEvent(screen.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} });
   expect(inside.focus).toHaveBeenCalledTimes(1);
   rerender(
-    <Modal open={false}>
+    <Modal open={false} initialFocusRef={{ current: inside }}>
       <Content />
     </Modal>,
   );
@@ -333,7 +334,13 @@ test('focus enforcement only retries observable outside text input focus and res
     Content = node(inside, 'content');
   jest.spyOn(TextInput.State, 'currentlyFocusedInput').mockReturnValue(outside as any);
   const field = (open: boolean, disabled = false) => (
-    <Modal open={open} disablePortal disableEnforceFocus={disabled} testID="root">
+    <Modal
+      open={open}
+      disablePortal
+      disableEnforceFocus={disabled}
+      initialFocusRef={{ current: inside }}
+      testID="root"
+    >
       <Content />
     </Modal>
   );
@@ -462,20 +469,21 @@ test('default Dialog onShow focuses safely with its actual keyboard-container in
   ).not.toThrow();
 });
 
-test('default Dialog container refs and autofocus reach the underlying native view', () => {
+test('Dialog preserves container refs while default autofocus uses the explicit native root', () => {
   const { KeyboardAvoidingView } = require('react-native');
-  const container = React.createRef<ViewInstance>();
+  const container = React.createRef<ViewInstance>(),
+    root = React.createRef<ViewInstance>();
   render(
-    <Dialog open slotProps={{ container: { ref: container } }}>
+    <Dialog open ref={root} slotProps={{ container: { ref: container } }}>
       Content
     </Dialog>,
   );
   const keyboard = screen.UNSAFE_getByType(KeyboardAvoidingView).instance;
   expect(container.current === keyboard.viewRef.current).toBe(true);
   expect(container.current === keyboard).toBe(false);
-  const focus = jest.spyOn(container.current!, 'focus').mockClear();
+  const focus = jest.spyOn(Commands, 'focus').mockImplementation(() => {});
   fireEvent(screen.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} });
-  expect(focus).toHaveBeenCalledTimes(1);
+  expect(focus).toHaveBeenCalledWith(root.current);
 });
 
 test('Dialog top-level native props and sx style the root, with paper props explicitly scoped', () => {

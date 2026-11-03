@@ -30,12 +30,14 @@ export interface ModelInput {
 export class NativeMenuModel {
   items: ModelItem[];
   readonly nodes = new Map<string, any>();
+  readonly parents = new Map<string, string | null>();
   readonly trace: string[] = [];
   readonly visible = new Map<string, boolean>();
   readonly callbacks = new Map<string, (node: any) => any>();
   current: any = null;
   time = 0;
   tree: ReturnType<typeof render> | undefined;
+  extra: React.ReactNode = null;
   listProps: Partial<MenuListProps> = {};
   itemProps: Partial<MenuItemProps> = {};
   constructor(readonly input: ModelInput) {
@@ -48,6 +50,7 @@ export class NativeMenuModel {
       let connected = true;
       this.nodes.set(id, node);
       Object.defineProperties(node, {
+        nodeType: { configurable: true, value: 1 },
         isConnected: { configurable: true, get: () => connected },
         textContent: {
           configurable: true,
@@ -55,12 +58,23 @@ export class NativeMenuModel {
         },
         contains: {
           configurable: true,
-          value: (other: any) =>
-            node === other ||
-            (id === 'list' &&
-              [...this.nodes.entries()].some(
-                ([key, value]) => key !== 'list' && value === other && value.isConnected,
-              )),
+          value: (other: any) => {
+            if (node === other) return true;
+            let entry = [...this.nodes.entries()].find(
+              ([, value]) => value === other && value.isConnected,
+            )?.[0];
+            const visited = new Set<string>();
+            while (entry && !visited.has(entry)) {
+              visited.add(entry);
+              entry = this.parents.has(entry)
+                ? (this.parents.get(entry) ?? undefined)
+                : entry === 'list'
+                  ? undefined
+                  : 'list';
+              if (entry === id) return true;
+            }
+            return false;
+          },
         },
         compareDocumentPosition: {
           configurable: true,
@@ -116,32 +130,44 @@ export class NativeMenuModel {
       persist() {},
     } as any;
   }
+  eventPath(node: any) {
+    const path = [node],
+      seen = new Set<string>();
+    let id = [...this.nodes.entries()].find(([, value]) => value === node)?.[0];
+    while (id && !seen.has(id)) {
+      seen.add(id);
+      const parent = this.parents.has(id) ? this.parents.get(id) : id === 'list' ? null : 'list';
+      if (!parent || !this.nodes.has(parent)) break;
+      path.push(this.nodes.get(parent));
+      id = parent;
+    }
+    return path;
+  }
+  focusEvent(kind: 'Focus' | 'Blur', node: any) {
+    const path = this.eventPath(node);
+    const event = this.event(node);
+    for (const target of [...path].reverse()) {
+      event.currentTarget = target;
+      target.props?.['onMUI' + kind + 'Capture']?.(event);
+    }
+    for (const target of path) {
+      event.currentTarget = target;
+      target.props?.['onMUI' + kind]?.(event);
+    }
+  }
   focus(node: any) {
     if (!node?.isConnected || node.props.nativeFocusable === false) return;
     const old = this.current;
     this.current = node;
-    if (old && old !== node) {
-      const e = this.event(old);
-      old.props.onMUIBlur?.(e);
-      if (old !== this.nodes.get('list')) {
-        e.currentTarget = this.nodes.get('list');
-        e.currentTarget?.props.onMUIBlur?.(e);
-      }
-    }
-    const e = this.event(node);
-    node.props.onMUIFocus?.(e);
-    if (node !== this.nodes.get('list')) {
-      e.currentTarget = this.nodes.get('list');
-      e.currentTarget?.props.onMUIFocus?.(e);
-    }
+    if (old && old !== node) this.focusEvent('Blur', old);
+    this.focusEvent('Focus', node);
   }
   installCommands() {
     jest.spyOn(Commands, 'focus').mockImplementation((node: any) => this.focus(node));
     jest.spyOn(Commands, 'blur').mockImplementation((node: any) => {
       if (this.current === node) {
-        const e = this.event(node);
-        node.props.onMUIBlur?.(e);
         this.current = null;
+        this.focusEvent('Blur', node);
       }
     });
     jest.spyOn(Commands, 'setPressed').mockImplementation(() => {});
@@ -187,6 +213,7 @@ export class NativeMenuModel {
             {item.label}
           </MenuItem>
         ))}
+        {this.extra}
       </MenuList>
     );
   }
@@ -229,20 +256,18 @@ export class NativeMenuModel {
       const root = this.nodes.get('list'),
         target = this.current ?? root,
         e = this.event(target, action.key ?? action.keyUp, action);
-      if (action.key) {
-        e.currentTarget = root;
-        root.props.onMUIKeyDownCapture?.(e);
-        if (target !== root) {
-          e.currentTarget = target;
-          target.props.onMUIKeyDownCapture?.(e);
-        }
-        e.currentTarget = target;
-        target.props.onMUIKeyDown?.(e);
-        if (target !== root && !e.isPropagationStopped()) {
-          e.currentTarget = root;
-          root.props.onMUIKeyDown?.(e);
-        }
-      } else target.props.onMUIKeyUp?.(e);
+      const kind = action.key ? 'KeyDown' : 'KeyUp';
+      const path = this.eventPath(target);
+      for (const node of [...path].reverse()) {
+        e.currentTarget = node;
+        node.props?.['onMUI' + kind + 'Capture']?.(e);
+        if (e.isPropagationStopped()) return;
+      }
+      for (const node of path) {
+        e.currentTarget = node;
+        node.props?.['onMUI' + kind]?.(e);
+        if (e.isPropagationStopped()) return;
+      }
     });
   }
   snapshot() {

@@ -33,6 +33,12 @@ import {
   type SlotProps,
   type SxProps,
 } from '@altroo/mui-native-system';
+import {
+  InteractiveView,
+  getNativeFocusedView,
+  type InteractiveViewProps,
+} from '@altroo/mui-native-host';
+import { NativeOverlayReadiness } from './nativeOverlayReadiness';
 import { useTheme, useComponentStyle, useSx } from './themeProvider';
 import { useForkRef } from './utils';
 import { Fade, type FadeProps } from './fade';
@@ -200,7 +206,7 @@ export interface NativeModalControlProps {
   onDismiss?: NativeWindowProps['onDismiss'];
 }
 export interface ModalComponentsPropsOverrides {}
-export interface ModalRootProps extends ViewProps, ModalComponentsPropsOverrides {
+export interface ModalRootProps extends InteractiveViewProps, ModalComponentsPropsOverrides {
   ownerState?: ModalOwnerState;
   sx?: SxProps;
   ref?: React.Ref<ViewInstance>;
@@ -216,7 +222,7 @@ export interface ModalSlots {
   >;
 }
 export interface ModalProps
-  extends Omit<ViewProps, 'children' | 'onClick'>,
+  extends Omit<InteractiveViewProps, 'children' | 'onClick'>,
     NativeModalControlProps {
   children: React.ReactElement<any>;
   sx?: SxProps;
@@ -234,7 +240,9 @@ export interface ModalProps
   };
 }
 export type ModalOwnProps = ModalProps;
-const ParentContext = createContext<{ id: symbol; host: symbol } | undefined>(undefined);
+const ParentContext = createContext<
+  { id: symbol; host: symbol; nativeWindow: boolean; presented: boolean } | undefined
+>(undefined);
 const noSubscribe = () => () => {};
 function contains(root: ViewInstance | null, target: NativeFocusTarget) {
   return (
@@ -280,25 +288,41 @@ export const Modal: React.ForwardRefExoticComponent<
   } = props;
   const parent = useContext(ParentContext);
   const id = useRef(Symbol('native-modal')).current;
+  const nativeWindowHost = !disablePortal || Boolean(parent?.nativeWindow);
   const root = useRef<ViewInstance | null>(null),
     content = useRef<ViewInstance | null>(null);
   const lastFocus = useRef<NativeFocusTarget | null>(null);
   const active = useRef(false),
     activated = useRef(false),
-    focused = useRef(false);
+    focused = useRef(false),
+    pendingInlineFocus = useRef(false);
   const restore = useRef<(() => void) | undefined>(undefined);
   const hasTransition = Object.hasOwn(children.props, 'in');
   const [exited, setExited] = useState(!open);
   const [windowShown, setWindowShown] = useState(open);
+  const [presented, setPresented] = useState(false);
+  const presentationReady = disablePortal ? (parent?.presented ?? true) : presented;
+  const currentPresentation = useRef(presentationReady);
   const retained = open || (hasTransition && !exited);
   const registered = open || (hasTransition && !exited && closeAfterTransition);
+  useLayoutEffect(() => {
+    // Android does not deliver onDismiss; a fully hidden host needs a new onShow.
+    // An interrupted exit retains its existing presented native window.
+    if (!retained && Platform.OS !== 'ios') setPresented(false);
+  }, [retained]);
   const previousFocus = useMemo(
-    () => (registered ? TextInput.State.currentlyFocusedInput() : undefined),
+    () =>
+      registered ? (getNativeFocusedView() ?? TextInput.State.currentlyFocusedInput()) : undefined,
     [registered],
   );
   const parentValue = useMemo(
-    () => ({ id, host: disablePortal ? (parent?.host ?? id) : id }),
-    [id, disablePortal, parent?.host],
+    () => ({
+      id,
+      host: disablePortal ? (parent?.host ?? id) : id,
+      nativeWindow: nativeWindowHost,
+      presented: presentationReady,
+    }),
+    [id, disablePortal, parent?.host, nativeWindowHost, presentationReady],
   );
   const committed = useRef(props);
   const transitionCycle = useMemo(() => Symbol('transition-cycle'), [open]);
@@ -319,12 +343,12 @@ export const Modal: React.ForwardRefExoticComponent<
         ),
       focus: () => {
         const current = committed.current;
-        if (!active.current || current.disableAutoFocus) return;
+        if (!active.current || !currentPresentation.current) return;
         const target = [
           current.initialFocusRef?.current,
           lastFocus.current,
-          content.current,
           root.current,
+          content.current,
         ].find((node) => node && typeof node.focus === 'function' && node.isConnected !== false);
         target?.focus();
       },
@@ -339,6 +363,7 @@ export const Modal: React.ForwardRefExoticComponent<
   // No focus or state updates run in this insertion effect.
   useInsertionEffect(() => {
     committed.current = props;
+    currentPresentation.current = presentationReady;
     active.current = open;
     committedCycle.current = transitionCycle;
     layer.open = open;
@@ -430,7 +455,7 @@ export const Modal: React.ForwardRefExoticComponent<
       zIndex: 1300 + manager.index(layer),
     },
   });
-  const Root = slots.root ?? component ?? View,
+  const Root = slots.root ?? component ?? InteractiveView,
     BackdropSlot = slots.backdrop ?? Backdrop;
   const rootNative = { ...native, ...rootProps };
   const {
@@ -442,10 +467,52 @@ export const Modal: React.ForwardRefExoticComponent<
   } = rootNative as ModalRootProps;
   const slotStyle = useSx(rootSx);
   const focusInitial = () => {
-    if (!active.current || focused.current || !manager.isTop(layer)) return;
+    if (
+      !active.current ||
+      focused.current ||
+      !manager.isTop(layer) ||
+      committed.current.disableAutoFocus ||
+      !currentPresentation.current
+    )
+      return false;
     focused.current = true;
-    const current = TextInput.State.currentlyFocusedInput();
+    const current = getNativeFocusedView() ?? TextInput.State.currentlyFocusedInput();
     if (!current || !layer.contains(current)) layer.focus();
+    return true;
+  };
+  useLayoutEffect(() => {
+    if (disablePortal && presentationReady && pendingInlineFocus.current && focusInitial())
+      pendingInlineFocus.current = false;
+  }, [disablePortal, presentationReady, open, top]);
+  const enforcement = useRef(0);
+  const observeFocus: NonNullable<ViewProps['onFocus']> = (event) => {
+    if (!active.current || !manager.isTop(layer)) return;
+    activated.current = true;
+    const target = event.target;
+    if (
+      target &&
+      typeof target === 'object' &&
+      typeof target.focus === 'function' &&
+      layer.contains(target)
+    ) {
+      lastFocus.current = target;
+      enforcement.current++;
+    }
+  };
+  const enforceFocus = () => {
+    const generation = ++enforcement.current;
+    queueMicrotask(() => {
+      if (
+        generation !== enforcement.current ||
+        !active.current ||
+        !activated.current ||
+        !manager.isTop(layer) ||
+        committed.current.disableEnforceFocus
+      )
+        return;
+      const current = getNativeFocusedView() ?? TextInput.State.currentlyFocusedInput();
+      if (!current || !layer.contains(current)) layer.focus();
+    });
   };
   const childProps: Record<string, unknown> = {
     ref: childRef,
@@ -467,112 +534,115 @@ export const Modal: React.ForwardRefExoticComponent<
   }
   const rendering = retained || (keepMounted && disablePortal) || (!disablePortal && windowShown);
   const tree = rendering ? (
-    <ParentContext.Provider value={parentValue}>
-      <NativeTextScope
-        theme={modalTheme}
-        reset={!disablePortal}
-        content={React.cloneElement(children, childProps)}
-        style={[
-          computed,
-          style,
-          slotStyle,
-          rootStyle,
-          !retained && (disablePortal || !windowShown) && { display: 'none' },
-        ]}
-      >
-        {(scopedStyle, scopedContent) => (
-          <Root
-            {...rootRest}
-            {...(Root === View ? {} : { ownerState })}
-            ref={rootRef}
-            collapsable={false}
-            accessible={rootRest.accessible ?? false}
-            accessibilityViewIsModal={retained && !covered}
-            accessibilityElementsHidden={
-              covered || !retained || rootRest.accessibilityElementsHidden
-            }
-            importantForAccessibility={
-              covered || !retained ? 'no-hide-descendants' : rootRest.importantForAccessibility
-            }
-            pointerEvents={covered || !retained ? 'none' : rootRest.pointerEvents}
-            style={scopedStyle}
-            onLayout={(event) => {
-              rootRest.onLayout?.(event);
-              if (disablePortal) focusInitial();
-            }}
-            onAccessibilityEscape={() => {
-              rootRest.onAccessibilityEscape?.();
-              manager.requestFrom(layer, null);
-            }}
-            onKeyDown={(event) => {
-              rootRest.onKeyDown?.(event);
-              if (
-                event.nativeEvent.key === 'Escape' &&
-                !event.nativeEvent.isComposing &&
-                manager.isTop(layer)
-              ) {
-                event.stopPropagation();
-                manager.requestFrom(layer, event);
+    <NativeOverlayReadiness.Provider value={open && presentationReady && manager.isTop(layer)}>
+      <ParentContext.Provider value={parentValue}>
+        <NativeTextScope
+          theme={modalTheme}
+          reset={!disablePortal}
+          content={React.cloneElement(children, childProps)}
+          style={[
+            computed,
+            style,
+            slotStyle,
+            rootStyle,
+            !retained && (disablePortal || !windowShown) && { display: 'none' },
+          ]}
+        >
+          {(scopedStyle, scopedContent) => (
+            <Root
+              {...rootRest}
+              {...(Root === View || Root === InteractiveView ? {} : { ownerState })}
+              ref={rootRef}
+              {...(Root === View
+                ? {}
+                : {
+                    managedKeys: [...new Set(['Escape', ...(rootRest.managedKeys ?? [])])],
+                    focusable: rootRest.focusable ?? true,
+                    tabIndex: rootRest.tabIndex ?? -1,
+                  })}
+              collapsable={false}
+              accessible={rootRest.accessible ?? false}
+              accessibilityViewIsModal={retained && !covered}
+              accessibilityElementsHidden={
+                covered || !retained || rootRest.accessibilityElementsHidden
               }
-            }}
-            onFocusCapture={(event) => {
-              rootRest.onFocusCapture?.(event);
-              if (manager.isTop(layer)) {
-                activated.current = true;
-                const target = event.target;
-                if (
-                  target &&
-                  typeof target === 'object' &&
-                  typeof target.focus === 'function' &&
-                  layer.contains(target)
-                )
-                  lastFocus.current = target;
+              importantForAccessibility={
+                covered || !retained ? 'no-hide-descendants' : rootRest.importantForAccessibility
               }
-            }}
-            onBlurCapture={(event) => {
-              rootRest.onBlurCapture?.(event);
-              queueMicrotask(() => {
-                if (
-                  !active.current ||
-                  !activated.current ||
-                  !manager.isTop(layer) ||
-                  committed.current.disableEnforceFocus
-                )
-                  return;
-                const current = TextInput.State.currentlyFocusedInput();
-                if (current && !layer.contains(current)) {
-                  const target = [lastFocus.current, content.current, root.current].find(
-                    (node) =>
-                      node && typeof node.focus === 'function' && node.isConnected !== false,
-                  );
-                  target?.focus();
+              pointerEvents={covered || !retained ? 'none' : rootRest.pointerEvents}
+              style={scopedStyle}
+              onLayout={(event) => {
+                rootRest.onLayout?.(event);
+                if (disablePortal) {
+                  if (!presentationReady) pendingInlineFocus.current = true;
+                  else if (focusInitial()) pendingInlineFocus.current = false;
                 }
-              });
-            }}
-          >
-            {!hideBackdrop && (
-              <BackdropSlot
-                {...backdropProps}
-                {...(BackdropSlot === Backdrop ? {} : { ownerState })}
-                open={open}
-                onPress={(event) => {
-                  (backdropProps.onPress ?? backdropProps.onClick)?.(event);
-                  if (!active.current || !manager.isTop(layer)) return;
-                  if (
-                    event.target !== undefined &&
-                    event.currentTarget !== undefined &&
-                    event.target !== event.currentTarget
-                  )
-                    return;
-                  committed.current.onClose?.(event, 'backdropClick');
-                }}
-              />
-            )}
-            {scopedContent}
-          </Root>
-        )}
-      </NativeTextScope>
-    </ParentContext.Provider>
+              }}
+              onAccessibilityEscape={() => {
+                rootRest.onAccessibilityEscape?.();
+                manager.requestFrom(layer, null);
+              }}
+              onKeyDown={(event) => {
+                rootRest.onKeyDown?.(event);
+                if (
+                  event.nativeEvent.key === 'Escape' &&
+                  !event.nativeEvent.isComposing &&
+                  !(event.nativeEvent as { isCanceled?: boolean }).isCanceled &&
+                  active.current &&
+                  // Android Dialog owns Escape key-up and reports onRequestClose.
+                  // Defer window-hosted layers to that route to avoid two requests.
+                  !(Platform.OS === 'android' && nativeWindowHost) &&
+                  manager.isTop(layer)
+                ) {
+                  event.stopPropagation();
+                  manager.requestFrom(layer, event);
+                }
+              }}
+              onFocusCapture={(event) => {
+                rootRest.onFocusCapture?.(event);
+                observeFocus(event);
+              }}
+              onBlurCapture={(event) => {
+                rootRest.onBlurCapture?.(event);
+                enforceFocus();
+              }}
+              {...(Root === View
+                ? {}
+                : {
+                    onNativeFocus: (event: Parameters<NonNullable<ViewProps['onFocus']>>[0]) => {
+                      rootRest.onNativeFocus?.(event);
+                      observeFocus(event);
+                    },
+                    onNativeBlur: (event: Parameters<NonNullable<ViewProps['onBlur']>>[0]) => {
+                      rootRest.onNativeBlur?.(event);
+                      enforceFocus();
+                    },
+                  })}
+            >
+              {!hideBackdrop && (
+                <BackdropSlot
+                  {...backdropProps}
+                  {...(BackdropSlot === Backdrop ? {} : { ownerState })}
+                  open={open}
+                  onPress={(event) => {
+                    (backdropProps.onPress ?? backdropProps.onClick)?.(event);
+                    if (!active.current || !manager.isTop(layer)) return;
+                    if (
+                      event.target !== undefined &&
+                      event.currentTarget !== undefined &&
+                      event.target !== event.currentTarget
+                    )
+                      return;
+                    committed.current.onClose?.(event, 'backdropClick');
+                  }}
+                />
+              )}
+              {scopedContent}
+            </Root>
+          )}
+        </NativeTextScope>
+      </ParentContext.Provider>
+    </NativeOverlayReadiness.Provider>
   ) : null;
   if (disablePortal) return tree;
   return (
@@ -583,12 +653,17 @@ export const Modal: React.ForwardRefExoticComponent<
       visible={retained}
       onRequestClose={() => manager.requestFrom(layer, null)}
       onShow={(event) => {
+        if (!active.current) return;
+        currentPresentation.current = true;
+        setPresented(true);
         focusInitial();
         committed.current.onShow?.(event);
       }}
       onDismiss={() => {
         if (active.current) return;
+        currentPresentation.current = false;
         setWindowShown(false);
+        setPresented(false);
         const release = restore.current;
         restore.current = undefined;
         release?.();

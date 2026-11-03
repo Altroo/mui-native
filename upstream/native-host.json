@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "name": "react-native",
   "version": "0.88.1",
-  "description": "Native host integrates public Fabric, View and Pressability contracts. API adapters and Java/Kotlin bridge handling follow installed MIT-licensed React Native source. This is not a runtime compatibility or device-validation claim. Standard descendant focus observers preserve native TextInput focus bubbling separately from private host events.",
+  "description": "Native host integrates public Fabric, View and Pressability contracts. API adapters and Java/Kotlin bridge handling follow installed MIT-licensed React Native source. This is not a runtime compatibility or device-validation claim. Standard descendant focus observers preserve native TextInput focus bubbling separately from private host events. Weak observed native focus supports overlay restoration, and the native Modal lifecycle determines presentation readiness; no optimistic requested-focus or global flag changes.",
   "licenseFile": "upstream/licenses/react-native-0.88.1.txt",
   "licenseSha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
   "sourceFiles": {
@@ -13,12 +13,21 @@
     "Libraries/NativeComponent/BaseViewConfig.android.js": "7f652698d8805d356fb9c946d0796d3ab3e20902d33c8b241a95d5e23fe25b8b",
     "Libraries/NativeComponent/BaseViewConfig.ios.js": "957a3dbf606155b1664ea04a0f1888cc2a41bdcc1fd4db8c9c7932395e0dc394",
     "Libraries/Renderer/implementations/ReactFabric-dev.js": "416ebef1c631eebfd0372a439e1ee74ad2f179018f427ef9ef3d2100c423522f",
-    "Libraries/Components/TextInput/AndroidTextInputNativeComponent.js": "d4bee2b883bcd7c16bf52befc629df16080ef9c18624881de037ae2ba7e03696"
+    "Libraries/Components/TextInput/AndroidTextInputNativeComponent.js": "d4bee2b883bcd7c16bf52befc629df16080ef9c18624881de037ae2ba7e03696",
+    "Libraries/Modal/Modal.js": "379c4af89b5981baa9ab409f88743bb06c71ba4a435ba3563dcfd553707a758b",
+    "src/private/webapis/dom/nodes/ReadOnlyNode.js": "a8f76b52ea437f4a8d8bb0044fe2f45c21da0be76594a0aa2ca9a2d5e47b290b",
+    "ReactCommon/react/runtime/hermes/HermesInstance.cpp": "2499065570f9802b1f67e3d9e78880235a5ec20386a0ce1151a8cec1c5c6e127",
+    "sdks/hermes-engine/version.properties": "7a45e9f54b3bf311805352b4f2f9d930c7bbeafcde46018ccd6a22ed10122720",
+    "ReactAndroid/src/main/java/com/facebook/react/views/modal/ReactModalHostView.kt": "800b4173ab9c2cdf3919706bbb756a8dcf00f683bccaca4c852d71e16a154668"
   },
   "localFiles": [
     "packages/native-host/src/NativePressable.tsx",
     "packages/native-host/src/interactiveView.tsx",
     "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveViewManager.kt",
-    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveViewDelegate.java"
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveViewDelegate.java",
+    "packages/native-host/src/nativeFocus.ts",
+    "packages/material/src/modal.tsx",
+    "packages/material/src/nativeOverlayReadiness.ts",
+    "packages/material/src/menuList.tsx"
   ]
 }

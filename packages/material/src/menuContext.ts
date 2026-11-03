@@ -13,6 +13,7 @@ export interface NativeMenuContextValue {
   reportBlur(id: string, node: ViewInstance): void;
 }
 export const NativeMenuContext = createContext<NativeMenuContextValue | null>(null);
+export const NativeMenuFocusReadiness = createContext(true);
 export const NativeMenuFocusSource = createContext<MenuFocusSource>(null);
 export function useNativeMenuContext() {
   const value = useContext(NativeMenuContext);

@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Anchored native Menu with five slots, source-shaped close/focus policy, native presentation gates, observed trigger restoration and nested keyboard ownership. See [native Menu](menu.md); Select, foreign-input hardware keys and physical overlay gates remain open.
+
 - Registered native MenuItem/MenuList composition, connected-node order, focus handoff, keyboard/typeahead, checkable roles and owned scrolling. See [native menu lists](menu-list.md) for the tested subset, native differences and open Menu/Select/device gates.
 
 - Eight native List composition primitives with density, slots, natural action sizing and optional owned scrolling/sticky subheaders. See [native lists](lists.md) for the tested subset and native boundaries.

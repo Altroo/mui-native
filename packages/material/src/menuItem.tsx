@@ -24,7 +24,7 @@ import {
 } from './buttonBase';
 import { useTheme } from './themeProvider';
 import { ListContext } from './listContext';
-import { useNativeMenuContext } from './menuContext';
+import { NativeMenuFocusReadiness, useNativeMenuContext } from './menuContext';
 import { useMenuRegistration } from './useMenuRegistration';
 import { useMenuEvent } from './useMenuEvent';
 import { nativeListProps, listDirection } from './listStyles';
@@ -70,6 +70,7 @@ export const MenuItem: React.ForwardRefExoticComponent<
   const { style, onHoverIn, onHoverOut, onFocus, onBlur } = base,
     menu = useNativeMenuContext(),
     inherited = useContext(ListContext),
+    focusReady = useContext(NativeMenuFocusReadiness),
     theme = useTheme(),
     parent = useNativeTextContext(),
     { width } = useWindowDimensions();
@@ -99,8 +100,8 @@ export const MenuItem: React.ForwardRefExoticComponent<
   });
   const ref = useForkRef(node, registration, forwarded);
   useLayoutEffect(() => {
-    if (autoFocus) focus(menu.focusSource);
-  }, [autoFocus, focus]);
+    if (autoFocus && focusReady) focus(menu.focusSource);
+  }, [autoFocus, focus, focusReady]);
   const tabIndex =
     explicitTabIndex !== undefined
       ? explicitTabIndex

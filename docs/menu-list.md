@@ -1,6 +1,6 @@
 # Native MenuItem and MenuList
 
-MenuItem and MenuList are exported from the material root and original deep import paths. The optional native resolver maps eligible `@mui/material` imports to the same implementations. They require a native development/production build containing the [interaction host](native-host.md). This is an adapted subset of the pinned MUI 9.5.0 contracts. Anchored Menu and Select integration remain subsequent work.
+MenuItem and MenuList are exported from the material root and original deep import paths. The optional native resolver maps eligible `@mui/material` imports to the same implementations. They require a native development/production build containing the [interaction host](native-host.md). This is an adapted subset of the pinned MUI 9.5.0 contracts. [Anchored Menu](menu.md) composes this foundation; Select integration remains subsequent work.
 
 ```tsx
 import React from 'react';
@@ -21,7 +21,7 @@ const actions = React.createRef<MenuListActions>();
 
 ## Registration and keyboard
 
-Items register their actual connected native refs, stable identities, selected/disabled/focus metadata and text. Native `compareDocumentPosition` determines traversal after keyed reordering, including wrapped items. Removed or disconnected nodes do not remain traversal targets; attachment tokens protect a replacement from stale ref cleanup. MenuItem requires an owning MenuList, as in the pinned source. A nested MenuList owns an independent registry.
+Items register their actual connected native refs, stable identities, selected/disabled/focus metadata and text. Native `compareDocumentPosition` determines traversal after keyed reordering, including wrapped items. Removed or disconnected nodes do not remain traversal targets; attachment tokens protect a replacement from stale ref cleanup. MenuItem requires an owning MenuList, as in the pinned source. A nested MenuList owns an independent registry and navigation/typeahead for its bubbling native key. Ancestor external callbacks still run.
 
 The default `variant="selectedMenu"` initially favors the first eligible selected item; `variant="menu"` favors the first eligible item. The list root defaults to native `role="menu"` and `tabIndex={-1}`. The selected-menu active item participates in native traversal; menu-variant items use explicit focus. `autoFocus` targets the root and `autoFocusItem` targets the eligible item, with root fallback when both are enabled and no item is available. A late connected item can complete the pending item handoff.
 
@@ -58,4 +58,4 @@ The helper forwards native focus/keyboard channels and scrolling carriers. Arbit
 
 Eighteen original pinned MenuList/MenuItem runtime traces execute against controlled connected DOM nodes, focus, clock and keyboard propagation. Native regressions use actual native mock refs augmented with an explicit public-node model. These tests cover registration, ordering, initial focus, disabled policy, keyboard/typeahead, activation and native adaptations. They do not constitute device evidence. See [validation](validation.md) and [issue #28](https://github.com/Altroo/mui-native/issues/28).
 
-Physical hardware-key behavior, focus-engine traversal, scroll-to-focused visibility, touch/ripple, screen-reader announcements, RTL/font scaling, IME/layout-specific keyboards, nested overlays and release performance remain open on both platforms. Browser CSS selectors/classes, arbitrary DOM roots, complete generic/helper types and browser scroll locking are not established. Native Menu, Select, complete SvgIcon/icon coverage and overall alpha support remain unfinished. No upstream baseline or released-support status is advanced by this increment.
+Physical hardware-key behavior, focus-engine traversal, scroll-to-focused visibility, touch/ripple, screen-reader announcements, RTL/font scaling, IME/layout-specific keyboards, nested overlays and release performance remain open on both platforms. Browser CSS selectors/classes, arbitrary DOM roots, complete generic/helper types and browser scroll locking are not established. Select, complete SvgIcon/icon coverage and overall alpha support remain unfinished. No upstream baseline or released-support status is advanced by this increment.

@@ -1,0 +1,387 @@
+{
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "Menu/Menu.js": "5525a9a88c13e806949cc2a539056c63f3179cdf608bc46b54c9fd3af717cf35",
+        "Menu/Menu.d.ts": "3fdaa3385f869e4824a0f53e8c0abaaea7692621227d36165d0dfdff42c5e224",
+        "Menu/menuClasses.js": "cfb294f813c86d982e9abf1990faabe74e07620639d4dfcf7e31fb47e2e418b6",
+        "Menu/menuClasses.d.ts": "4198bc4505f06500bd9b7db780972b9a301cc946896287e0c9da7d140849ea46",
+        "Popover/Popover.js": "4e197927566e2ec009098234f8a9a775332c3e374008031646ebd9778dab60e2",
+        "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+        "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "RtlProvider/index.js": "791d4454366a950cff318fe2b97006e51431441d44d6696aa0aa8333a456f878"
+      }
+    }
+  ],
+  "renderer": "Actual original Menu and Popover with controlled DOM geometry and slot probes; no CSS layout or native-device proof",
+  "helpers": {
+    "classes": { "root": "MuiMenu-root", "paper": "MuiMenu-paper", "list": "MuiMenu-list" },
+    "utility": [
+      ["root", "MuiMenu-root"],
+      ["paper", "MuiMenu-paper"],
+      ["list", "MuiMenu-list"],
+      ["selected", "Mui-selected"],
+      ["focusVisible", "Mui-focusVisible"],
+      ["custom", "MuiMenu-custom"]
+    ],
+    "paperHasHeightReservation": true
+  },
+  "fixtures": [
+    {
+      "input": { "name": "default selected menu" },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering"]
+    },
+    {
+      "input": { "name": "RTL default attachment", "rtl": true },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 20, "origin": "120px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:rtl", "focus", "entering"]
+    },
+    {
+      "input": { "name": "closed retained menu", "props": { "open": false, "keepMounted": true } },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": false, "keepMounted": true },
+        "list": { "autoFocus": false, "autoFocusItem": false, "variant": "selectedMenu" },
+        "paper": { "top": null, "left": null },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": false
+        }
+      },
+      "trace": ["adjust:true:ltr", "entering"]
+    },
+    {
+      "input": { "name": "caller manages focus", "props": { "autoFocus": false } },
+      "snapshot": {
+        "root": { "disableAutoFocus": false, "open": true, "keepMounted": false },
+        "list": { "autoFocus": false, "autoFocusItem": false, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": false,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "entering"]
+    },
+    {
+      "input": {
+        "name": "focus list instead of active item",
+        "props": { "disableAutoFocusItem": true }
+      },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": false, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": true,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering"]
+    },
+    {
+      "input": { "name": "menu variant", "props": { "variant": "menu" } },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "menu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "menu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering"]
+    },
+    {
+      "input": {
+        "name": "explicit Popover autofocus override",
+        "props": { "disableAutoFocus": false }
+      },
+      "snapshot": {
+        "root": { "disableAutoFocus": false, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering"]
+    },
+    {
+      "input": {
+        "name": "authored origins override RTL defaults",
+        "rtl": true,
+        "props": {
+          "anchorOrigin": { "vertical": "center", "horizontal": "left" },
+          "transformOrigin": { "vertical": "bottom", "horizontal": "center" }
+        }
+      },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 130, "left": 40, "origin": "60px 80px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:rtl", "focus", "entering"]
+    },
+    {
+      "input": {
+        "name": "list slot overrides initial policy",
+        "list": { "autoFocus": false, "autoFocusItem": false, "variant": "menu" }
+      },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": false, "autoFocusItem": false, "variant": "menu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering"]
+    },
+    {
+      "input": { "name": "slot owner callbacks", "callbacks": true },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        },
+        "callbacks": {
+          "root": {
+            "autoFocus": true,
+            "disableAutoFocusItem": false,
+            "variant": "selectedMenu",
+            "transitionDuration": "auto",
+            "open": true
+          },
+          "paper": {
+            "autoFocus": true,
+            "disableAutoFocusItem": false,
+            "variant": "selectedMenu",
+            "transitionDuration": "auto",
+            "open": true
+          },
+          "list": {
+            "autoFocus": true,
+            "disableAutoFocusItem": false,
+            "variant": "selectedMenu",
+            "transitionDuration": "auto",
+            "open": true
+          }
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering"]
+    },
+    {
+      "input": { "name": "numeric transition", "props": { "transitionDuration": 31 } },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": 31,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": 31,
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering"]
+    },
+    {
+      "input": { "name": "automatic duration support", "auto": true },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": "auto",
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering"]
+    },
+    {
+      "input": { "name": "Tab closes before external handler", "key": "Tab" },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering", "close:tabKeyDown", "external:Tab:true"]
+    },
+    {
+      "input": { "name": "Shift Tab closes", "key": "Tab", "shiftKey": true },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering", "close:tabKeyDown", "external:Tab:true"]
+    },
+    {
+      "input": {
+        "name": "preprevented Tab still requests closure",
+        "key": "Tab",
+        "prevented": true
+      },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering", "close:tabKeyDown", "external:Tab:true"]
+    },
+    {
+      "input": { "name": "ordinary list key remains external", "key": "ArrowDown" },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering", "external:ArrowDown:false"]
+    },
+    {
+      "input": { "name": "root close slot precedence", "rootClose": true },
+      "snapshot": {
+        "root": { "disableAutoFocus": true, "open": true, "keepMounted": false },
+        "list": { "autoFocus": true, "autoFocusItem": true, "variant": "selectedMenu" },
+        "paper": { "top": 220, "left": 100, "origin": "0px 0px" },
+        "timeout": null,
+        "owner": {
+          "autoFocus": true,
+          "disableAutoFocusItem": false,
+          "variant": "selectedMenu",
+          "transitionDuration": "auto",
+          "open": true
+        }
+      },
+      "trace": ["adjust:true:ltr", "focus", "entering", "rootClose:backdropClick"]
+    }
+  ]
+}

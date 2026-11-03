@@ -62,7 +62,9 @@
       "ListItemButton",
       "ListItemText",
       "MenuItem",
-      "MenuList"
+      "MenuList",
+      "Menu",
+      "Menu/menuClasses"
     ]
   },
   "@mui/system": {

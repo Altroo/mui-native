@@ -275,7 +275,7 @@ test('theme defaults and focus/disabled selectors compose with inline state styl
       {field({ style: (state) => ({ margin: state.focusVisible ? 4 : 0 }) })}
     </ThemeProvider>,
   );
-  fireEvent(screen.getByTestId('base'), 'focus', event());
+  fireEvent(screen.getByTestId('base'), 'MUIFocus', event());
   expect(screen.getByTestId('base')).toHaveStyle({ padding: 7, borderWidth: 2, margin: 4 });
   rerender(<ThemeProvider theme={theme}>{field({ disabled: true })}</ThemeProvider>);
   expect(screen.getByTestId('base')).toHaveStyle({ opacity: 0.4 });

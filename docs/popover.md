@@ -1,6 +1,6 @@
 # Native Popover
 
-Popover is available from @mui/material/Popover and the root @mui/material import through the native resolver. It uses the reusable native Modal, Paper and Grow components. Menu and Select remain separate work.
+Popover is available from @mui/material/Popover and the root @mui/material import through the native resolver. It uses the reusable native Modal, Paper and Grow components. [Menu](menu.md) adds registered list focus and dismissal; Select remains subsequent work.
 
 ```tsx
 import React from 'react';

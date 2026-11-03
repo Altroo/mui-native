@@ -329,6 +329,16 @@
       "types": "./dist/MenuList/index.d.ts",
       "react-native": "./src/MenuList/index.ts",
       "default": "./dist/MenuList/index.js"
+    },
+    "./Menu": {
+      "types": "./dist/Menu/index.d.ts",
+      "react-native": "./src/Menu/index.ts",
+      "default": "./dist/Menu/index.js"
+    },
+    "./Menu/menuClasses": {
+      "types": "./dist/Menu/menuClasses/index.d.ts",
+      "react-native": "./src/Menu/menuClasses/index.ts",
+      "default": "./dist/Menu/menuClasses/index.js"
     }
   },
   "dependencies": {

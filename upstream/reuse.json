@@ -1341,6 +1341,66 @@
       "adaptations": [
         "Inherited native text color and fontSize=inherit plus menu icon density adapt SvgIcon inherited sizing and color; original icon paths remain independently authored."
       ]
+    },
+    {
+      "localFile": "packages/material/src/menu.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Menu/Menu.js": "5525a9a88c13e806949cc2a539056c63f3179cdf608bc46b54c9fd3af717cf35",
+          "Menu/Menu.d.ts": "3fdaa3385f869e4824a0f53e8c0abaaea7692621227d36165d0dfdff42c5e224",
+          "Menu/menuClasses.js": "cfb294f813c86d982e9abf1990faabe74e07620639d4dfcf7e31fb47e2e418b6",
+          "Menu/menuClasses.d.ts": "4198bc4505f06500bd9b7db780972b9a301cc946896287e0c9da7d140849ea46",
+          "Popover/Popover.js": "4e197927566e2ec009098234f8a9a775332c3e374008031646ebd9778dab60e2",
+          "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+        }
+      },
+      "adaptations": [
+        "Five native slots, initial focus policy, open/keepMounted guards, direction-based origins, entering order, Tab reasons and menu height reservation adapt pinned Menu; native readiness and observed focus replace browser window focus assumptions."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/menu.tsx",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574"
+        }
+      },
+      "adaptations": [
+        "Default Menu slot and global-state identifiers follow generateUtilityClass. Browser ClassNameGenerator customization and CSS class styling are not implemented."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/menuList.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Menu/Menu.js": "5525a9a88c13e806949cc2a539056c63f3179cdf608bc46b54c9fd3af717cf35",
+          "Menu/Menu.d.ts": "3fdaa3385f869e4824a0f53e8c0abaaea7692621227d36165d0dfdff42c5e224",
+          "Menu/menuClasses.js": "cfb294f813c86d982e9abf1990faabe74e07620639d4dfcf7e31fb47e2e418b6",
+          "Menu/menuClasses.d.ts": "4198bc4505f06500bd9b7db780972b9a301cc946896287e0c9da7d140849ea46",
+          "Popover/Popover.js": "4e197927566e2ec009098234f8a9a775332c3e374008031646ebd9778dab60e2",
+          "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+        }
+      },
+      "adaptations": [
+        "Native overlay readiness defers initial focus until presentation/placement/top ownership; nested native MenuLists isolate keyboard navigation and typeahead while preserving ancestor callbacks."
+      ]
     }
   ]
 }

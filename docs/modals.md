@@ -5,7 +5,7 @@ Modal and Backdrop are reusable native library components through the original @
 ```tsx
 import React from 'react';
 import { View, TextInput, type ViewInstance, type TextInputInstance } from 'react-native';
-import { Button, Modal } from '@mui/material';
+import { ButtonBase, Modal } from '@mui/material';
 
 export function EditModal() {
   const [open, setOpen] = React.useState(false);
@@ -13,9 +13,9 @@ export function EditModal() {
   const field = React.useRef<TextInputInstance>(null);
   return (
     <>
-      <Button ref={trigger} onClick={() => setOpen(true)}>
+      <ButtonBase ref={trigger} onClick={() => setOpen(true)}>
         Edit
-      </Button>
+      </ButtonBase>
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -31,7 +31,7 @@ export function EditModal() {
 }
 ```
 
-Use a single content element that forwards a native ref. A wrapper without focus/containment methods falls back safely to the native modal root. initialFocusRef and returnFocusRef are native extensions for explicit targets. Without a return ref, the opening modal captures the currently focused native text input; it cannot discover every focused button or custom native control automatically.
+Use a single content element that forwards a native ref. A wrapper without focus/containment methods falls back safely to the native modal root. initialFocusRef and returnFocusRef are native extensions for explicit targets. Without a return ref, the opening modal captures the observed native interaction-host target or current TextInput fallback. Host-rendered button triggers can be restored automatically. Arbitrary unobserved custom controls still need explicit refs. Default Modal/Popover roots now use the explicit [interaction host](native-host.md) and require a native development build. Generic Modal/Dialog autofocus prefers that root over a stock child View whose focus method can be gated off; initialFocusRef still takes precedence.
 
 ## Dismissal and focus ownership
 
@@ -39,11 +39,11 @@ Modal is controlled: onClose requests closure and does not change open. Backdrop
 
 Only the top layer dismisses. A native parent window routes a back request to an inline child that owns that window. Child-first React layout effects still register descendants above ancestors. Reopened inline siblings receive the corresponding default z order. Covered independent modal roots disable hit testing and native accessibility exposure; ancestor roots retain their descendants. This does not implement arbitrary application-wide sibling hiding for inline overlays.
 
-External native handlers run before internal close behavior. Backdrop onPress takes precedence over its onClick alias; presses originating from a different target do not close. preventDefault alone does not cancel the pinned close behavior. Inactive and stale deliveries cannot close a hidden modal.
+External native handlers run before internal close behavior. Backdrop onPress takes precedence over its onClick alias; presses originating from a different target do not close. preventDefault alone does not cancel the pinned close behavior. Inactive and stale deliveries cannot close a hidden modal. Android window-hosted Escape uses the native Dialog key-up request-close route, including inline child ownership, rather than also closing on private host key-down.
 
-Autofocus waits for native presentation or inline layout. Native content refs are capability-checked. iOS ordinary focus restoration waits for onDismiss; inline/Android cleanup uses guarded deferred work, and unmount attempts cleanup restoration. Disconnected targets are skipped. A new top focus owner cancels stale restoration, while removal of an unrelated background layer does not. Restoring behind another open modal falls back inside that layer.
+Autofocus waits for native presentation or inline layout. Native content refs are capability-checked. iOS ordinary focus restoration waits for onDismiss; inline/Android cleanup uses guarded deferred work, and unmount attempts cleanup restoration. Disconnected targets are skipped. Android resets child focus readiness when retention fully ends because its native Modal does not deliver onDismiss; interrupted exits retain presentation readiness. A new top focus owner cancels stale restoration, while removal of an unrelated background layer does not. Restoring behind another open modal falls back inside that layer.
 
-Focus capture records native handles when available. On blur, enforce-focus checks can recover observable outside TextInput focus through the public native containment API. disableAutoFocus, disableRestoreFocus and disableEnforceFocus control those paths. This is not complete hardware Tab cycling or a proven VoiceOver/TalkBack trap. Physical window stacking, dismissal timing, screen-reader isolation and keyboard behavior still require device validation.
+Focus capture records native handles when available. Private-host and standard TextInput focus observations update ownership. On blur, guarded work can recover outside observed native targets or TextInput focus through public containment, with an explicit native root fallback. disableAutoFocus, disableRestoreFocus and disableEnforceFocus control those paths. Foreign-control hardware-key routing, complete hardware Tab cycling and a proven VoiceOver/TalkBack trap remain open. Physical window stacking, dismissal timing, screen-reader isolation and keyboard behavior still require device validation.
 
 ## Rendering and transitions
 

@@ -17,6 +17,7 @@ import {
   type SlotProps,
   type SxProps,
 } from '@altroo/mui-native-system';
+import { InteractiveView } from '@altroo/mui-native-host';
 import { useTheme, useComponentStyle } from './themeProvider';
 import { Modal, type ModalProps, type ModalRootProps, type BackdropProps } from './modal';
 import { Paper, type PaperProps } from './layout';
@@ -118,7 +119,7 @@ const CoordinateSurface = forwardRef<ViewInstance, ModalRootProps>(function Coor
 ) {
   const coordinates = useContext(PopoverCoordinates),
     theme = useTheme();
-  const Surface = coordinates?.surface ?? View;
+  const Surface = coordinates?.surface ?? InteractiveView;
   const authored = StyleSheet.flatten(style);
   const direction =
     authored?.direction === 'rtl' || authored?.direction === 'ltr'
@@ -128,7 +129,7 @@ const CoordinateSurface = forwardRef<ViewInstance, ModalRootProps>(function Coor
     <PopoverCoordinates.Provider value={{ ...coordinates, direction }}>
       <Surface
         {...props}
-        {...(Surface === View ? {} : { ownerState })}
+        {...(Surface === View || Surface === InteractiveView ? {} : { ownerState })}
         ref={ref}
         style={[style, coordinateStyle]}
       />
@@ -163,7 +164,7 @@ export const PopoverRoot: React.ForwardRefExoticComponent<
   const coordinates = useContext(PopoverCoordinates),
     theme = useTheme();
   const modalDefaults = useDefaultProps({ props, name: 'MuiModal' });
-  const surface = modalDefaults.slots?.root ?? modalDefaults.component ?? View;
+  const surface = modalDefaults.slots?.root ?? modalDefaults.component ?? InteractiveView;
   return (
     <PopoverCoordinates.Provider
       value={{ ...coordinates, direction: coordinates?.direction ?? theme.direction, surface }}

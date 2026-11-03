@@ -25,6 +25,7 @@ import {
 import {
   NativeMenuContext,
   NativeMenuFocusSource,
+  NativeMenuFocusReadiness,
   type NativeMenuContextValue,
 } from './menuContext';
 import { NativeCompositeKeys } from './nativeCompositeKeys';
@@ -58,6 +59,9 @@ export interface MenuListOwnProps {
 export interface MenuListProps
   extends Omit<ListProps, 'onKeyDown' | 'onKeyDownCapture'>,
     MenuListOwnProps {}
+// React Native key events bubble through nested composites. Only the innermost
+// MenuList owns navigation/typeahead; ancestor consumer callbacks still run.
+const handledMenuKeys = new WeakSet<object>();
 function targetNode(value: unknown): ViewInstance | null {
   return value && typeof value === 'object' && 'focus' in value ? (value as ViewInstance) : null;
 }
@@ -99,6 +103,7 @@ export const MenuList: React.ForwardRefExoticComponent<
   });
   const scrollable = listDefaults.scrollable ?? false;
   const effectiveScrollProps = listDefaults.scrollViewProps;
+  const focusReady = useContext(NativeMenuFocusReadiness);
   const inheritedSource = useContext(NativeMenuFocusSource),
     focusSource = sourceProp === undefined ? inheritedSource : sourceProp;
   const node = useRef<ViewInstance | null>(null),
@@ -154,7 +159,7 @@ export const MenuList: React.ForwardRefExoticComponent<
     if (focused.current?.id === id && focused.current.element === element) focused.current = null;
   });
   const initialTarget = useMenuEvent((force = false) => {
-    if (!node.current || (!force && initial.current)) return null;
+    if (!focusReady || !node.current || (!force && initial.current)) return null;
     if (autoFocusItem) {
       const item = getActive();
       if (item) {
@@ -190,11 +195,12 @@ export const MenuList: React.ForwardRefExoticComponent<
       initial.current = false;
       setSuppressInitialFocusVisible(false);
     } else initialTarget();
-  }, [activeId, autoFocus, autoFocusItem, initialTarget]);
+  }, [activeId, autoFocus, autoFocusItem, initialTarget, focusReady]);
   useImperativeHandle(
     actions,
     () => ({
       focusInitialTarget() {
+        if (!focusReady) return null;
         const current = focused.current;
         if (
           current?.element.isConnected &&
@@ -207,7 +213,7 @@ export const MenuList: React.ForwardRefExoticComponent<
         return node.current;
       },
     }),
-    [initialTarget],
+    [initialTarget, focusReady],
   );
   const currentIndex = (items: NativeMenuRecord[]) => {
     const current = focused.current;
@@ -232,6 +238,14 @@ export const MenuList: React.ForwardRefExoticComponent<
   };
   const handleKeyDown = (native: Parameters<NonNullable<ViewProps['onKeyDown']>>[0]) => {
     const event = buttonKeyEvent(native);
+    if (handledMenuKeys.has(native)) {
+      onKeyDown?.(event);
+      return;
+    }
+    // Native SyntheticEvents are pooled. Persist before tagging so a later
+    // dispatch cannot reuse this object and inherit a prior owner.
+    native.persist();
+    handledMenuKeys.add(native);
     if (suppressInitialFocusVisible) setSuppressInitialFocusVisible(false);
     if (event.isComposing || event.isCanceled || typeof event.key !== 'string') {
       onKeyDown?.(event);
