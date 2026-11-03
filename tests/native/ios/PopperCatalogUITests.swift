@@ -184,4 +184,68 @@ final class PopperCatalogUITests: XCTestCase {
       waitFor("Reopened content must unmount on close") { !note.exists && !popup.exists }
     }
   }
+  private func sharedAttachment(_ anchorId: String, inline: Bool, stage: String) {
+    let popup = node("shared-note"), anchor = node(anchorId)
+    waitFor(stage) {
+      guard popup.exists && anchor.exists && popup.frame.width > 200 else { return false }
+      let gap = min(abs(popup.frame.minY-anchor.frame.maxY-10), abs(anchor.frame.minY-popup.frame.maxY-10))
+      let aligned = min(abs(popup.frame.minX-anchor.frame.minX), abs(popup.frame.maxX-anchor.frame.maxX))
+      let count = self.node("shared-frame").descendants(matching: .any).matching(identifier: "shared-note").count
+      return gap < 4 && aligned < 4 && count == (inline ? 1 : 0) && self.node("shared-read").isHittable
+    }
+    capture(stage)
+  }
+  private func scrollToSharedExample() {
+    let outer = node("overlays-scroll"), scene = node("shared-example")
+    for _ in 0..<5 {
+      let viewport = outer.frame.intersection(app.frame)
+      if scene.exists && viewport.insetBy(dx: -1, dy: -1).contains(scene.frame) { return }
+      XCTAssertEqual(app.state, .runningForeground)
+      // Stay in the outer gutter so the placement example's nested ScrollView
+      // cannot consume this navigation gesture.
+      let origin = app.coordinate(withNormalizedOffset: .zero)
+      let start = origin.withOffset(CGVector(dx: viewport.minX+2-app.frame.minX,dy: viewport.maxY-25-app.frame.minY))
+      let end = origin.withOffset(CGVector(dx: viewport.minX+2-app.frame.minX,dy: viewport.minY+25-app.frame.minY))
+      start.press(forDuration: 0.1,thenDragTo: end,withVelocity: .fast,thenHoldForDuration: 0.2)
+    }
+    waitFor("Shared-anchor example must settle inside the existing scroll viewport") {
+      let viewport = outer.frame.intersection(self.app.frame)
+      return scene.exists && viewport.insetBy(dx: -1,dy: -1).contains(scene.frame)
+    }
+  }
+  func testSharedAnchorRetargetAndRecovery() {
+    let tab = node("catalog-tab-Overlays")
+    XCTAssertTrue(tab.waitForExistence(timeout: 30)); tab.tap()
+    scrollToSharedExample()
+    for inline in [false,true] {
+      let mode = inline ? "inline" : "window"
+      if inline { toggle("shared-inline-toggle",checked: true) }
+      node("shared-anchor-a").tap()
+      sharedAttachment("shared-anchor-a",inline: inline,stage: "shared-\(mode)-a")
+      XCTAssertTrue(app.staticTexts["Read count: 0"].exists)
+      node("shared-read").tap()
+      XCTAssertTrue(app.staticTexts["Read count: 1"].waitForExistence(timeout: 10))
+      node("shared-anchor-b").tap()
+      sharedAttachment("shared-anchor-b",inline: inline,stage: "shared-\(mode)-b")
+      XCTAssertTrue(app.staticTexts["Read count: 1"].exists, "Retargeting must preserve popup child state")
+      node("shared-read").tap()
+      XCTAssertTrue(app.staticTexts["Read count: 2"].waitForExistence(timeout: 10))
+      toggle("shared-mounted-toggle",checked: false)
+      waitFor("Detached anchors must hide stale popup actions from native accessibility and hit testing") {
+        !self.node("shared-anchor-a").exists && !self.node("shared-anchor-b").exists &&
+        !self.node("shared-read").exists && !self.node("shared-note").isHittable
+      }
+      capture("detached-shared-\(mode)")
+      toggle("shared-mounted-toggle",checked: true)
+      sharedAttachment("shared-anchor-b",inline: inline,stage: "recovered-shared-\(mode)")
+      XCTAssertTrue(app.staticTexts["Read count: 2"].exists, "Anchor recovery must preserve popup child state")
+      node("shared-anchor-a").tap()
+      sharedAttachment("shared-anchor-a",inline: inline,stage: "returned-shared-\(mode)")
+      XCTAssertTrue(app.staticTexts["Read count: 2"].exists)
+      node("shared-close").tap()
+      waitFor("Shared popup must unmount after closing") { !self.node("shared-note").exists }
+      capture("shared-\(mode)-closed")
+    }
+  }
+
 }

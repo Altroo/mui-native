@@ -75,6 +75,14 @@ export const screenshotStages = [
     'clipped-' + mode + '-anchor',
     'restored-' + mode + '-popup',
   ]),
+  ...['window', 'inline'].flatMap((mode) => [
+    'shared-' + mode + '-a',
+    'shared-' + mode + '-b',
+    'detached-shared-' + mode,
+    'recovered-shared-' + mode,
+    'returned-shared-' + mode,
+    'shared-' + mode + '-closed',
+  ]),
 ];
 export const requiredMilestones = [
   ...screenshotStages,
@@ -89,6 +97,10 @@ export const requiredMilestones = [
   'confirm-3',
   'confirm-4',
   ...[0, 1, 2].flatMap((cycle) => ['repeat-open-' + cycle, 'repeat-close-' + cycle]),
+  ...['window', 'inline'].flatMap((mode) => [
+    'shared-' + mode + '-read-1',
+    'shared-' + mode + '-read-2',
+  ]),
 ];
 
 /** Decode safe artifact locations even when native assertions failed. */
@@ -101,7 +113,7 @@ export function inspectReport(output) {
     typeof report !== 'object' ||
     report.schemaVersion !== 1 ||
     report.package !== catalogPackage ||
-    report.scenario !== 'popper-window-inline-scroll-transform-v2' ||
+    report.scenario !== 'popper-native-anchor-lifecycle-v3' ||
     !['passed', 'failed'].includes(report.status) ||
     (!(report.directory === null && report.status === 'failed') &&
       (typeof report.directory !== 'string' ||

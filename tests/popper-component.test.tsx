@@ -282,3 +282,47 @@ test('utility helpers preserve original class identifiers', () => {
   expect(popperClasses).toEqual({ root: 'MuiPopper-root' });
   expect(getPopperUtilityClass('focusVisible')).toBe('Mui-focusVisible');
 });
+
+test.each([false, true])(
+  'native anchor retarget/null/recovery rejects retired observations without remounting children (inline=%s)',
+  async (inline) => {
+    const first = { measureInWindow: jest.fn(), isConnected: true } as any;
+    const second = { measureInWindow: jest.fn(), isConnected: true } as any;
+    const m = new NativePopperModel();
+    m.props.anchorEl = first;
+    m.props.disablePortal = inline;
+    await m.mount();
+    await m.ready();
+    const oldObservation = await m.observe();
+    const oldHost = m.host().props;
+    const root = m.root.current,
+      initialInstance = m.instance.current;
+    expect(m.style().opacity).not.toBe(0);
+    m.props.anchorEl = second;
+    await m.update();
+    expect(m.instance.current).not.toBe(initialInstance);
+    expect(m.host().props.observedTag).not.toBe(oldHost.observedTag);
+    expect(m.style().opacity).toBe(0);
+    await m.invoke(() => oldHost.onPortalObservation({ nativeEvent: oldObservation }));
+    expect(m.style().opacity).toBe(0);
+    await m.observe((value) => {
+      value.position!.reference.y += 80;
+    });
+    expect(m.style().opacity).not.toBe(0);
+    expect(m.root.current).toBe(root);
+    expect(m.mounts).toBe(1);
+    m.props.anchorEl = null;
+    await m.update();
+    expect(m.instance.current).toBeNull();
+    expect(m.style().opacity).toBe(0);
+    expect(m.tree!.getByTestId('popup', { includeHiddenElements: true }).props.pointerEvents).toBe(
+      'none',
+    );
+    m.props.anchorEl = first;
+    await m.update();
+    await m.observe();
+    expect(m.style().opacity).not.toBe(0);
+    expect(m.root.current).toBe(root);
+    expect(m.mounts).toBe(1);
+  },
+);

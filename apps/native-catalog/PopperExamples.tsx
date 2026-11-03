@@ -17,6 +17,7 @@ import {
   type PopperPlacementType,
 } from '@mui/material';
 import { catalogArrowEdge } from './popperArrow';
+import { PopperAnchorExamples } from './PopperAnchorExamples';
 
 export function PopperExamples() {
   const theme = useTheme();
@@ -184,6 +185,7 @@ export function PopperExamples() {
             </View>
           </ScrollView>
         </View>
+        <PopperAnchorExamples />
       </Stack>
     </ScrollView>
   );

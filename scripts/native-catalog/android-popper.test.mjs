@@ -16,7 +16,7 @@ import {
 
 const nativeReport = {
   schemaVersion: 1,
-  scenario: 'popper-window-inline-scroll-transform-v2',
+  scenario: 'popper-native-anchor-lifecycle-v3',
   package: catalogPackage,
   status: 'passed',
   directory: 'popper-checks/run-1793712000000',
@@ -36,6 +36,14 @@ const nativeReport = {
       'returned-' + mode + '-popup.png',
       'clipped-' + mode + '-anchor.png',
       'restored-' + mode + '-popup.png',
+    ]),
+    ...['window', 'inline'].flatMap((mode) => [
+      'shared-' + mode + '-a.png',
+      'shared-' + mode + '-b.png',
+      'detached-shared-' + mode + '.png',
+      'recovered-shared-' + mode + '.png',
+      'returned-shared-' + mode + '.png',
+      'shared-' + mode + '-closed.png',
     ]),
   ],
 };
@@ -123,7 +131,7 @@ test('runner targets only the explicit ready device, collects scoped artifacts a
       '-n',
       catalogPackage + '/.MainActivity',
     ]);
-    assert.equal((await readdir(output)).length, 18);
+    assert.equal((await readdir(output)).length, 30);
     assert(
       calls
         .filter(({ args }) => args.includes('exec-out'))
