@@ -1,4 +1,5 @@
 #import "AltrooMUIInteractiveViewComponentView.h"
+#import "AltrooPortalLogicalParent.h"
 #import <react/renderer/components/AltrooMuiNativeHostSpec/ComponentDescriptors.h>
 #import <react/renderer/components/AltrooMuiNativeHostSpec/EventEmitters.h>
 #import <react/renderer/components/AltrooMuiNativeHostSpec/Props.h>
@@ -84,23 +85,27 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
 }
 - (UIView<RCTTouchableComponentViewProtocol> *)descendantTargetForKey:(NSString *)name responder:(UIView *__autoreleasing *)responder {
   if (!name || !self.window || ![_managedDescendantKeys containsObject:name]) return nil;
-  UIView *source = AltrooFirstResponder(self);
+  UIView *source = AltrooFirstResponder(self.window);
   if (!source) {
     id<UIFocusItem> item = [UIFocusSystem focusSystemForEnvironment:self].focusedItem;
-    if ([(id)item isKindOfClass:UIView.class] && [(UIView *)item isDescendantOfView:self]) source = (UIView *)item;
+    if ([(id)item isKindOfClass:UIView.class]) source = (UIView *)item;
   }
   if (!source || [source isKindOfClass:AltrooMUIInteractiveViewComponentView.class]) return nil;
   BOOL editor = [source conformsToProtocol:@protocol(UIKeyInput)];
   if (editor && ![source conformsToProtocol:@protocol(UITextInput)]) return nil;
   if ([source conformsToProtocol:@protocol(UITextInput)] && ((id<UITextInput>)source).markedTextRange) return nil;
-  for (UIView *view = source.superview; view; view = view.superview) {
+  BOOL owned = NO;
+  NSHashTable<UIView *> *seen = [NSHashTable weakObjectsHashTable];
+  for (UIView *view = AltrooLogicalParent(source); view && ![seen containsObject:view]; view = AltrooLogicalParent(view)) {
+    [seen addObject:view];
     if ([view isKindOfClass:AltrooMUIInteractiveViewComponentView.class] &&
         [((AltrooMUIInteractiveViewComponentView *)view)->_managedDescendantKeys containsObject:name]) {
-      if (view != self) return nil;
+      owned = view == self;
       break;
     }
   }
-  for (UIView *view = source; view && view != self; view = view.superview) {
+  if (!owned) return nil;
+  for (UIView *view = source; view && view != self; view = AltrooLogicalParent(view)) {
     if ([view conformsToProtocol:@protocol(RCTTouchableComponentViewProtocol)]) {
       auto target = (UIView<RCTTouchableComponentViewProtocol> *)view;
       if ([target touchEventEmitterAtPoint:CGPointZero]) {
@@ -224,7 +229,7 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
   while (view) {
     if ([view isKindOfClass:AltrooMUIInteractiveViewComponentView.class] &&
         [((AltrooMUIInteractiveViewComponentView *)view)->_managedKeys containsObject:key]) return YES;
-    view = view.superview;
+    view = AltrooLogicalParent(view);
   }
   return NO;
 }

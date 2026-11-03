@@ -1,7 +1,7 @@
 {
   "name": "@altroo/mui-native-host",
-  "version": "0.0.2-dev.0",
-  "description": "Native interaction and platform picker hosts for independent MUI compatibility",
+  "version": "0.0.3-dev.0",
+  "description": "Native interaction, portal and picker hosts for independent MUI compatibility",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -23,7 +23,8 @@
     "AltrooMuiNativeHost.podspec",
     "react-native.config.js",
     "LICENSE",
-    "NOTICE"
+    "NOTICE",
+    "common"
   ],
   "exports": {
     ".": {
@@ -48,7 +49,9 @@
     "ios": {
       "componentProvider": {
         "AltrooMUIInteractiveView": "AltrooMUIInteractiveViewComponentView",
-        "AltrooMUINativePicker": "AltrooMUINativePickerComponentView"
+        "AltrooMUINativePicker": "AltrooMUINativePickerComponentView",
+        "AltrooMUIPortalHost": "AltrooMUIPortalHostComponentView",
+        "AltrooMUIPortalCanvas": "AltrooMUIPortalCanvasComponentView"
       }
     }
   },

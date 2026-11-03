@@ -1,8 +1,8 @@
 # Native interaction host
 
-`@altroo/mui-native-host` is an independent native dependency of the material package. It provides `InteractiveView` and `NativePressable` for native keyboard/focus composition, plus the separate [NativePicker anchor](native-picker.md) for platform selection surfaces. Its Fabric spec, Android manager/view and iOS component view ship in the local archive and are autolinked into the application. The interaction primitive adds no containing native View or global React Native feature-flag override. Picker presentation uses its own transparent native anchor.
+`@altroo/mui-native-host` is an independent native dependency of the material package. It provides `InteractiveView` and `NativePressable` for native keyboard/focus composition, plus the separate [NativePicker anchor](native-picker.md) for platform selection surfaces. Its Fabric spec, Android manager/view and iOS component view ship in the local archive and are autolinked into the application. The interaction primitive adds no containing native View or global React Native feature-flag override. Picker presentation uses its own transparent native anchor. The [Portal host and canvas](portal.md) provide a separate in-window nonmodal rendering boundary.
 
-The current peer matrix is React 19.3.0 / React Native 0.88.1, with the catalog on Expo SDK 58. The host archive is `0.0.2-dev.0`; other library archives remain `0.0.0-dev.0`. The host version also satisfies CocoaPods' default minimum-version constraint, unlike a `0.0.0` prerelease. Nothing is published to npm.
+The current peer matrix is React 19.3.0 / React Native 0.88.1, with the catalog on Expo SDK 58. The host archive is `0.0.3-dev.0`; other library archives remain `0.0.0-dev.0`. The host version also satisfies CocoaPods' default minimum-version constraint, unlike a `0.0.0` prerelease. Nothing is published to npm.
 
 ## Consumer setup
 
@@ -62,3 +62,7 @@ For compile-only catalog checks, generate ignored native projects with `pnpm exe
 See [native selection](native-select.md) for NativeSelect and Select/TextField platform-picker composition, string events and native handle routing. Native-host 0.0.2-dev.0 requires rebuilding the application.
 
 Button and IconButton now require this host through shared ButtonBase composition; see [native buttons](button.md). This increment adds no native schema/backend changes.
+
+## Missing native components in Expo Go
+
+If the catalog displays `UnimplementedView` for `AltrooMUIInteractiveView` or another `AltrooMUI...` component, check the running application. Expo Go does not contain this native library; JavaScript refreshes cannot add its native classes. Use a development build with `@altroo/mui-native-host` autolinked, and rebuild after native host upgrades. Do not hide the error behind stock View fallbacks, since that would remove the promised keyboard and interaction behavior.

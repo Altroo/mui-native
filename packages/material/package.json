@@ -429,6 +429,11 @@
       "types": "./dist/Chip/chipClasses/index.d.ts",
       "react-native": "./src/Chip/chipClasses/index.ts",
       "default": "./dist/Chip/chipClasses/index.js"
+    },
+    "./Portal": {
+      "types": "./dist/Portal/index.d.ts",
+      "react-native": "./src/Portal/index.ts",
+      "default": "./dist/Portal/index.js"
     }
   },
   "dependencies": {

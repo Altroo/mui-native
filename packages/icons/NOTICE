@@ -55,7 +55,9 @@ React DOM 19.3.0 select behavior recorded in upstream/native-selection.json.
 
 The native interaction host integrates React Native Fabric and public
 Pressability/View APIs. Related API adapters follow MIT-licensed React Native
-0.88.1 source as recorded in upstream/native-host.json.
+0.88.1 source as recorded in upstream/native-host.json and
+upstream/native-rendering.json. The native Portal adapts modal root mounting,
+touch dispatch, Fabric measurement boundaries and clipped child bookkeeping.
 The following notice applies to these adaptations:
 
 MIT License

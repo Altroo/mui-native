@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "description": "Supporting React Native source provenance for the in-window portal root. This is separate from MUI release detection and does not promote verified compatibility.",
+  "package": {
+    "name": "react-native",
+    "version": "0.88.1",
+    "integrity": "sha512-wajWcLZ93GCN7k4Uwh4CS4L2Ah8ohcvkOXnvIYmh4Yvuqho5j3APZ9qozK+nQrHWSgauq4h8D3HN5DKK84SrHA==",
+    "license": "MIT",
+    "licenseSha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+    "sourceCommit": null,
+    "sourceFiles": {
+      "ReactAndroid/src/main/java/com/facebook/react/views/modal/ReactModalHostView.kt": "800b4173ab9c2cdf3919706bbb756a8dcf00f683bccaca4c852d71e16a154668",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/RootView.kt": "551a35e95365aa200027a528c4cf2bec6e42a18e87e9d03fa46da2e886f64708",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/TouchTargetHelper.kt": "1b24431fa8135034babe6dbdb627935588b42fd3662ead1f5f20f1afb0c42bbf",
+      "React/Fabric/Mounting/ComponentViews/Modal/RCTModalHostViewComponentView.mm": "7d7e13e8e871f886dfe48457021ddcde6d31c697b7b000c90dd03d0f35afe12f",
+      "React/Fabric/RCTSurfaceTouchHandler.mm": "7a3f2f2598c72902e4488b0853aa6e4538c5cb23954c56348d54e354e9e5a7dc",
+      "React/Fabric/Mounting/ComponentViews/View/RCTViewComponentView.mm": "f59e0d96a534f5a377612c51c52f87470f9429b11c6728d2bdbec434946e3fba",
+      "React/Fabric/Mounting/RCTComponentViewProtocol.h": "134118e2d04bd248cb32c23a5f09d92a1b12535ae454d41adb32c17d9a268493",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/JSTouchDispatcher.kt": "e781e85b566d299d866ad5dfe0f265406ead73baf5ac98222a24a6615c9a4997",
+      "ReactAndroid/src/main/java/com/facebook/react/views/view/ReactClippingViewManager.kt": "614cd3fcce0daf6a38da274e39f98f38a1e50c6c492edcdef8370db18e8ab446",
+      "ReactAndroid/src/main/java/com/facebook/react/views/view/ReactViewGroup.kt": "802d60e0dfd68101b7ad4041ea12cf0d6fb172f27e591f91f070049264aaf2fc",
+      "ReactCommon/react/renderer/components/modal/ModalHostViewShadowNode.h": "d1a69f429bf5e815f6241cbd5015e4036a533b557b64fed4706d7b7dd9a8e0d2",
+      "ReactCommon/react/renderer/components/view/ConcreteViewShadowNode.h": "30bfd409b9596cbb6e6fc77cb6fd04026419cf9e6f3996d6c60b55264960a866",
+      "ReactCommon/react/renderer/core/LayoutableShadowNode.cpp": "79fd3d48a39acd6680710a505c87ec151a6db38b7ec9d5dc071e7578e6e56e60"
+    }
+  },
+  "localFiles": [
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIPortalHost.kt",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/PortalLogicalParent.kt",
+    "packages/native-host/common/cpp/AltrooPortalShadowNodes.cpp",
+    "packages/native-host/common/cpp/AltrooPortalShadowNodes.h",
+    "packages/native-host/common/cpp/react/renderer/components/AltrooMuiNativeHostSpec/ComponentDescriptors.h",
+    "packages/native-host/ios/AltrooMUIPortalCanvasComponentView.mm",
+    "packages/native-host/ios/AltrooMUIPortalHostComponentView.mm",
+    "packages/native-host/ios/AltrooPortalClipping.h",
+    "packages/native-host/ios/AltrooPortalClipping.mm",
+    "packages/native-host/ios/AltrooPortalLogicalParent.h",
+    "packages/native-host/src/portalCoordinates.ts"
+  ],
+  "adaptations": [
+    "Native root child mounting and React Native touch/pointer dispatch follow the verified MIT reference. The new implementation attaches within an existing native window/container, does not create a modal or request focus, preserves React context, and reports actual native affine container bounds.",
+    "Custom Fabric shadow nodes adapt the modal root and uncullable traits, stop obsolete logical measurement ancestry, and calibrate descendant measurements to the actual touch dispatcher and window. Native rendering remains identity-transformed in its real container.",
+    "Custom ordinary View targets reuse the existing dispatcher; default window roots own one dispatcher. UIKit mounts through its guarded RN 0.88 content surface. Root subview order agrees with drawing and touch layers. Logical keyboard ancestry crosses the native root boundary.",
+    "Active clipped-subview containers are rejected. If clipping is enabled after attachment, source-pinned manager/protocol cleanup removes the captured root by identity after RN traversal, with a pending-cleanup barrier. UIKit validates its tracked-child adapter before mounting."
+  ]
+}

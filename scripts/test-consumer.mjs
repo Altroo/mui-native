@@ -49,6 +49,23 @@ for (const directory of await readdir('packages')) {
 const nativeHost = `${consumer}/node_modules/@altroo/mui-native-host`;
 for (const file of [
   'react-native.config.js',
+  'src/AltrooMUIPortalHostNativeComponent.ts',
+  'src/AltrooMUIPortalCanvasNativeComponent.ts',
+  'src/nativePortal.tsx',
+  'src/portalCoordinates.ts',
+  'android/CMakeLists.txt',
+  'common/cpp/AltrooPortalShadowNodes.h',
+  'common/cpp/AltrooPortalShadowNodes.cpp',
+  'common/cpp/react/renderer/components/AltrooMuiNativeHostSpec/ComponentDescriptors.h',
+  'android/src/main/java/com/altroo/muinativehost/AltrooMUIPortalHost.kt',
+  'android/src/main/java/com/altroo/muinativehost/AltrooMUIPortalHostManager.kt',
+  'android/src/main/java/com/altroo/muinativehost/AltrooMUIPortalCanvasManager.kt',
+  'android/src/main/java/com/altroo/muinativehost/PortalLogicalParent.kt',
+  'ios/AltrooMUIPortalHostComponentView.mm',
+  'ios/AltrooMUIPortalCanvasComponentView.mm',
+  'ios/AltrooPortalLogicalParent.h',
+  'ios/AltrooPortalClipping.h',
+  'ios/AltrooPortalClipping.mm',
   'AltrooMuiNativeHost.podspec',
   'src/AltrooMUIInteractiveViewNativeComponent.ts',
   'src/nativeKeyboard.ts',
@@ -84,6 +101,10 @@ if (
   'AltrooMUINativePickerComponentView'
 )
   throw new Error('Missing native picker Fabric registration');
+for (const name of ['AltrooMUIPortalHost', 'AltrooMUIPortalCanvas']) {
+  if (hostManifest.codegenConfig.ios.componentProvider[name] !== name + 'ComponentView')
+    throw new Error('Missing Portal Fabric registration: ' + name);
+}
 console.log('Installed native host retains autolinking, codegen and platform sources.');
 await cp('fixtures/native-consumer', consumer, { recursive: true });
 await writeFile(

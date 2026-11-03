@@ -9,6 +9,7 @@ Pod::Spec.new do |s|
   s.author = { "Altroo" => "Altroo@users.noreply.github.com" }
   s.platforms = { :ios => min_ios_version_supported }
   s.source = { :git => "https://github.com/Altroo/mui-native.git", :tag => s.version.to_s }
-  s.source_files = "ios/**/*.{h,m,mm,cpp}"
+  s.source_files = "ios/**/*.{h,m,mm,cpp}", "common/cpp/**/*.{h,cpp}"
+  s.pod_target_xcconfig = { "HEADER_SEARCH_PATHS" => "$(inherited) \"$(PODS_TARGET_SRCROOT)/common/cpp\"" }
   install_modules_dependencies(s)
 end

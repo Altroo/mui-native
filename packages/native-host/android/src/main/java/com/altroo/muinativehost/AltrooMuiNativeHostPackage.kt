@@ -5,5 +5,5 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
 class AltrooMuiNativeHostPackage : ReactPackage {
   override fun createNativeModules(context: ReactApplicationContext): List<NativeModule> = emptyList()
-  override fun createViewManagers(context: ReactApplicationContext): List<ViewManager<*, *>> = listOf(AltrooMUIInteractiveViewManager(), AltrooMUINativePickerManager())
+  override fun createViewManagers(context: ReactApplicationContext): List<ViewManager<*, *>> = listOf(AltrooMUIInteractiveViewManager(), AltrooMUINativePickerManager(), AltrooMUIPortalHostManager(), AltrooMUIPortalCanvasManager())
 }

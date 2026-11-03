@@ -82,7 +82,8 @@
       "FormControlLabel/formControlLabelClasses",
       "Switch/switchClasses",
       "Chip",
-      "Chip/chipClasses"
+      "Chip/chipClasses",
+      "Portal"
     ]
   },
   "@mui/system": {

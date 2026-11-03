@@ -18,3 +18,12 @@ tasks.register("verifyPickerPolicy", JavaExec) {
   classpath = files(providers.provider { tasks.named("testDebugUnitTest").get().classpath })
   mainClass.set("com.altroo.muinativehost.PickerPresentationStateTestKt")
 }
+
+
+// Device-free portal attachment and affine-composition policy assertions.
+tasks.register("verifyPortalPolicy", JavaExec) {
+  group = "verification"
+  dependsOn("compileDebugUnitTestKotlin", "compileDebugUnitTestJavaWithJavac")
+  classpath = files(providers.provider { tasks.named("testDebugUnitTest").get().classpath })
+  mainClass.set("com.altroo.muinativehost.PortalPresentationStateTestKt")
+}

@@ -121,3 +121,12 @@ export type {
 } from './nativeSelect';
 
 export * from './chip';
+
+export { Portal } from './portal';
+export type {
+  PortalProps,
+  NativePortalHandle,
+  NativePortalContainer,
+  NativePortalInlineHandle,
+  NativePortalBounds,
+} from './portal';

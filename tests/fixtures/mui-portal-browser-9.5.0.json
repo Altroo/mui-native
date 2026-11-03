@@ -1,0 +1,87 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Portal/Portal.js": "bbb90219aadd72e08cfa0b3f444f03272ecb1ddb07371c98520fd6ca6fae5cc4",
+      "Portal/Portal.d.ts": "5ca32089fa4a40b1369f085635aadc4bf853bc4ea4dd49eac0779bf9f62423a3",
+      "Portal/Portal.types.d.ts": "ef5813952c53ea286963133baf66787308c84eed7338d8c61613a8762167bf79"
+    }
+  },
+  "renderer": {
+    "name": "react-dom",
+    "version": "19.3.0",
+    "integrity": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==",
+    "sourceFiles": {
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "cjs/react-dom-client.development.js": "c10b5e5ad37ca22c88b58bf4ada9a3b655ab79934c0b5cc6bad26f42c774584f"
+    }
+  },
+  "scope": "Original MUI Portal in Chromium: default/custom containers, layout-effect resolution, React context/event ancestry, state/ref cleanup and retargeting. This is DOM reference behavior, not native device evidence.",
+  "states": [
+    {
+      "name": "default body",
+      "parent": "body",
+      "ref": "body",
+      "context": true,
+      "id": 1,
+      "ownRef": true,
+      "trace": []
+    },
+    {
+      "name": "logical event ancestry",
+      "parent": "body",
+      "ref": "body",
+      "context": true,
+      "id": 1,
+      "ownRef": true,
+      "trace": ["child", "ancestor"]
+    },
+    {
+      "name": "custom container",
+      "parent": "a",
+      "ref": "a",
+      "context": true,
+      "id": 2,
+      "ownRef": true,
+      "trace": ["child", "ancestor"]
+    },
+    {
+      "name": "same container callback retains state",
+      "parent": "a",
+      "ref": "a",
+      "context": true,
+      "id": 2,
+      "ownRef": true,
+      "trace": ["child", "ancestor"]
+    },
+    {
+      "name": "retarget remounts",
+      "parent": "b",
+      "ref": "b",
+      "context": true,
+      "id": 3,
+      "ownRef": true,
+      "trace": ["child", "ancestor"]
+    },
+    {
+      "name": "inline child ref",
+      "parent": "inline",
+      "ref": "child",
+      "context": true,
+      "id": 4,
+      "ownRef": true,
+      "trace": ["child", "ancestor"]
+    },
+    {
+      "name": "cleanup",
+      "ref": "null",
+      "ownRef": true,
+      "children": 0,
+      "callbackCalls": 1
+    }
+  ]
+}

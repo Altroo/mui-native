@@ -70,20 +70,11 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
     var view: View? = this
     while(view != null) {
       if(view is AltrooMUIInteractiveView && key in view.managedKeys) return true
-      view = view.parent as? View
+      view = logicalParent(view)
     }
     return false
   }
-  private fun descendantOwner(focused: View, key: String): AltrooMUIInteractiveView? {
-    var current: View? = focused
-    while (current != null) {
-      // Host-focused events already use their own private key channel.
-      if (current === focused && current is AltrooMUIInteractiveView) return null
-      if (current is AltrooMUIInteractiveView && key in current.managedDescendantKeys) return current
-      current = current.parent as? View
-    }
-    return null
-  }
+  private fun descendantOwner(focused: View, key: String) = logicalKeyOwner(focused, key)
   private fun reactTarget(focused: View): View? {
     val manager = UIManagerHelper.getUIManager(context as ThemedReactContext, UIManagerType.FABRIC) ?: return null
     var current: View? = focused
@@ -92,11 +83,11 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
         try { if (manager.resolveView(current.id) === current) return current }
         catch (_: IllegalViewOperationException) { /* Pure native subview; use its React component. */ }
       }
-      current = current.parent as? View
+      current = logicalParent(current)
     }
     return null
   }
-  private fun dispatchDescendantKey(event: KeyEvent, focused: View): Boolean {
+  internal fun dispatchDescendantKey(event: KeyEvent, focused: View): Boolean {
     val key = keyName(event)
     if (descendantOwner(focused, key) !== this || event.flags and KeyEvent.FLAG_SOFT_KEYBOARD != 0) return false
     val editor = focused.onCheckIsTextEditor()

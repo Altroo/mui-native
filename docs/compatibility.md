@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Native [Portal](portal.md) with same-window rendering, ordinary View containers, context/state/ref preservation, native bounds and guarded touch/keyboard ownership. Active clipped-subview containers and full physical device validation remain open.
+
 - Native [Chip](chip.md) display/action/deletion, root/label slots, native refs, typography and class helpers, with explicit native touch-target and disabled-deletion adaptations. Autocomplete integration and physical native validation remain open.
 
 - A low-level [platform-native picker host](native-picker.md) with UIKit/Android implementations, modeled events, a JVM lifecycle policy check and compile/link evidence. Material integration is documented in [native selection](native-select.md); physical device gates remain unfinished.

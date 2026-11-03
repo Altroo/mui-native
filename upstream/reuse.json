@@ -2439,6 +2439,24 @@
       "adaptations": [
         "Chip wrapper/default/slot/owner/event/keyboard/style and class-identifier contracts follow integrity-verified MUI 9.5.0 source and actual original Chromium cases. Native View/Text/ButtonBase surfaces, circular-X geometry, 44dp action targets, native refs/accessibility actions and guarded disabled/composing/covered lifecycles replace DOM/SVG. Native disabled deletion is blocked even where original programmatic/keyboard paths publish it. Physical native and complete inherited/DOM/CSS parity remain open."
       ]
+    },
+    {
+      "localFile": "packages/material/src/portal.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Portal/Portal.js": "bbb90219aadd72e08cfa0b3f444f03272ecb1ddb07371c98520fd6ca6fae5cc4",
+          "Portal/Portal.d.ts": "5ca32089fa4a40b1369f085635aadc4bf853bc4ea4dd49eac0779bf9f62423a3",
+          "Portal/Portal.types.d.ts": "ef5813952c53ea286963133baf66787308c84eed7338d8c61613a8762167bf79"
+        }
+      },
+      "adaptations": [
+        "Container callbacks resolve in a layout effect; same-container state survives, retargeting remounts, and inline mode composes refs. Native nonmodal Host/Canvas replaces ReactDOM.createPortal and preserves the actual React context tree. NativePortalHandle replaces the original container Element ref; native layer, attachment readiness and affine bounds are explicit extensions. No DOM or complete native validation claim."
+      ]
     }
   ]
 }

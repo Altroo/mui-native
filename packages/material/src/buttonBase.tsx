@@ -41,6 +41,10 @@ import { NativeButtonActivationKeys } from './nativeButtonActivationKeys';
 import { NativeCompositeKeys } from './nativeCompositeKeys';
 import { useNativeButtonAutoFocus } from './useNativeButtonAutoFocus';
 import { useMenuEvent } from './useMenuEvent';
+import { NativeOverlayReadiness } from './nativeOverlayReadiness';
+import { NativeMenuFocusReadiness } from './menuContext';
+import { NativeModalParentContext } from './nativeModalContext';
+import { nativeModalManager as manager } from './nativeModalManager';
 import { nativeButtonModality } from './nativeButtonModality';
 export type { ButtonBaseKeyEvent, ButtonBaseActivationEvent } from './nativeButtonEvents';
 export interface ButtonBaseActions {
@@ -141,6 +145,28 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   const [focused, setFocused] = useState(false);
   const focusVisible = focused && !disabled && !suppressFocusVisible;
   if ((disabled || suppressFocusVisible) && focused) setFocused(false);
+  const overlayReady = useContext(NativeOverlayReadiness),
+    menuReady = useContext(NativeMenuFocusReadiness),
+    modalParent = useContext(NativeModalParentContext);
+  const interactionReady = useMenuEvent(
+    () =>
+      mounted.current &&
+      overlayReady &&
+      menuReady &&
+      modalParent?.open !== false &&
+      modalParent?.presented !== false &&
+      (!manager.top() || (node.current != null && manager.top()!.contains(node.current))),
+  );
+  const requestFocusVisible = useMenuEvent(() => {
+    if (
+      (disabled && !focusableWhenDisabled) ||
+      !interactionReady() ||
+      node.current?.isConnected === false
+    )
+      return;
+    setFocused(true);
+    node.current?.focus();
+  });
   const theme = useTheme(),
     parent = useNativeTextContext();
   const isLink = Boolean(href || to);
@@ -176,15 +202,12 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   useImperativeHandle(
     action,
     () => ({
-      focusVisible() {
-        setFocused(true);
-        node.current?.focus();
-      },
+      focusVisible: requestFocusVisible,
     }),
     [],
   );
   const activate = useMenuEvent((event: ButtonBaseActivationEvent) => {
-    if (!mounted.current || disabled || node.current?.isConnected === false) {
+    if (!interactionReady() || disabled || node.current?.isConnected === false) {
       event.preventDefault?.();
       return;
     }
@@ -249,7 +272,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
       'ButtonBase to requires an application-owned native link component.',
     );
   const handleKeyDown = useMenuEvent((event) => {
-    if (!mounted.current) return;
+    if (!interactionReady()) return;
     nativeButtonModality.keyboard();
     const key = buttonKeyEvent(event);
     if (disabled) {
@@ -266,7 +289,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     }
   });
   const handleKeyUp = useMenuEvent((event) => {
-    if (!mounted.current) return;
+    if (!interactionReady()) return;
     nativeButtonModality.keyboard();
     if (disabled) return;
     const key = buttonKeyEvent(event);

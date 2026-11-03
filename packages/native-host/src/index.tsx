@@ -16,3 +16,6 @@ export type {
   NativePickerPresentation,
   NativePickerPresentationContext,
 } from './nativePicker';
+
+export { NativePortalHost } from './nativePortal';
+export type { NativePortalHostProps, NativePortalLayout } from './nativePortal';
