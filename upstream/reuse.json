@@ -1170,6 +1170,177 @@
       "adaptations": [
         "Private density/alignment/gutter context adapts pinned ListContext; private action measurement/space extends native composition."
       ]
+    },
+    {
+      "localFile": "packages/material/src/menuList.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+          "MenuList/MenuList.d.ts": "8ba0c3329dd73b8da0be21357da0dcf8c59e56df9378548e2baa7c05ddd1ee7b",
+          "MenuList/MenuListContext.js": "ca5ceca42eb79d384fbf19996cd6bdcd84832ecfb3c162acc92d6b42b8e357a0",
+          "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+          "MenuItem/MenuItem.d.ts": "66cda9a9b310d97f3002ab34f3c76f05dcd7d3f84ea12a9fdfe54ec82217af1b",
+          "utils/useRovingTabIndex.js": "3847b96779421873a8df029c36b4639b25e1e06272adee2c34b9da171ee46494",
+          "utils/focusWithVisible.js": "462f5813f956c538e6d6f9bf1cd9118455abd76f74cea30fe1bfb3ca7ea357b5",
+          "Select/utils/SelectFocusSourceContext.js": "d1cff1959089d5c441010541002c505b5f53d68f548f45eaf2e94361c305325d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "utils/useFocusableWhenDisabled.js": "54fef8925c39d3e73e88e5b71ed50635c45f5013af4b67159d59074e1eef9bab",
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d"
+        }
+      },
+      "adaptations": [
+        "Registered native focus, keyboard traversal, 500 ms typeahead, initial focus and context follow pinned MUI contracts. Public connected native nodes replace DOM queries and activeElement. Native initial handoff retains keyboard focus indication."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/menuItem.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+          "MenuList/MenuList.d.ts": "8ba0c3329dd73b8da0be21357da0dcf8c59e56df9378548e2baa7c05ddd1ee7b",
+          "MenuList/MenuListContext.js": "ca5ceca42eb79d384fbf19996cd6bdcd84832ecfb3c162acc92d6b42b8e357a0",
+          "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+          "MenuItem/MenuItem.d.ts": "66cda9a9b310d97f3002ab34f3c76f05dcd7d3f84ea12a9fdfe54ec82217af1b",
+          "utils/useRovingTabIndex.js": "3847b96779421873a8df029c36b4639b25e1e06272adee2c34b9da171ee46494",
+          "utils/focusWithVisible.js": "462f5813f956c538e6d6f9bf1cd9118455abd76f74cea30fe1bfb3ca7ea357b5",
+          "Select/utils/SelectFocusSourceContext.js": "d1cff1959089d5c441010541002c505b5f53d68f548f45eaf2e94361c305325d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "utils/useFocusableWhenDisabled.js": "54fef8925c39d3e73e88e5b71ed50635c45f5013af4b67159d59074e1eef9bab",
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d"
+        }
+      },
+      "adaptations": [
+        "Native ButtonBase composition, registered item metadata, selected/dense states and initial input source adapt pinned MenuItem. Native roles map checkable menu items to checkbox/radio accessibility semantics."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/menuContext.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+          "MenuList/MenuList.d.ts": "8ba0c3329dd73b8da0be21357da0dcf8c59e56df9378548e2baa7c05ddd1ee7b",
+          "MenuList/MenuListContext.js": "ca5ceca42eb79d384fbf19996cd6bdcd84832ecfb3c162acc92d6b42b8e357a0",
+          "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+          "MenuItem/MenuItem.d.ts": "66cda9a9b310d97f3002ab34f3c76f05dcd7d3f84ea12a9fdfe54ec82217af1b",
+          "utils/useRovingTabIndex.js": "3847b96779421873a8df029c36b4639b25e1e06272adee2c34b9da171ee46494",
+          "utils/focusWithVisible.js": "462f5813f956c538e6d6f9bf1cd9118455abd76f74cea30fe1bfb3ca7ea357b5",
+          "Select/utils/SelectFocusSourceContext.js": "d1cff1959089d5c441010541002c505b5f53d68f548f45eaf2e94361c305325d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "utils/useFocusableWhenDisabled.js": "54fef8925c39d3e73e88e5b71ed50635c45f5013af4b67159d59074e1eef9bab",
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d"
+        }
+      },
+      "adaptations": [
+        "Private native registry and initial focus source replace DOM MenuList and Select focus contexts."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/nativeMenuRegistry.ts",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "useRovingTabIndex/useRovingTabIndex.js": "39514e3fa2e155f1fa242b5f9925bf206f3f231e9481cfada87fc7b327e8d26f",
+          "useRovingTabIndex/useRovingTabIndex.d.ts": "c6881834ad232b97b12ea8444f90eb2b9e0e6c26058b8bf7b7d9f75e10fa69a8",
+          "useRovingTabIndex/RovingTabIndexContext.js": "2f339435f2b698016f4ae056b75ac8ca43895f536b4c9065e12a2563ce49a692"
+        }
+      },
+      "adaptations": [
+        "Connected native refs and compareDocumentPosition order replace DOM registration; finite bounded traversal handles empty and all-disabled lists."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/useMenuRegistration.ts",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "useRovingTabIndex/useRovingTabIndex.js": "39514e3fa2e155f1fa242b5f9925bf206f3f231e9481cfada87fc7b327e8d26f",
+          "useRovingTabIndex/useRovingTabIndex.d.ts": "c6881834ad232b97b12ea8444f90eb2b9e0e6c26058b8bf7b7d9f75e10fa69a8",
+          "useRovingTabIndex/RovingTabIndexContext.js": "2f339435f2b698016f4ae056b75ac8ca43895f536b4c9065e12a2563ce49a692"
+        }
+      },
+      "adaptations": [
+        "React 19 ref cleanup uses attachment tokens and deferred removal to protect replacement native nodes."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/buttonBase.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+          "MenuList/MenuList.d.ts": "8ba0c3329dd73b8da0be21357da0dcf8c59e56df9378548e2baa7c05ddd1ee7b",
+          "MenuList/MenuListContext.js": "ca5ceca42eb79d384fbf19996cd6bdcd84832ecfb3c162acc92d6b42b8e357a0",
+          "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+          "MenuItem/MenuItem.d.ts": "66cda9a9b310d97f3002ab34f3c76f05dcd7d3f84ea12a9fdfe54ec82217af1b",
+          "utils/useRovingTabIndex.js": "3847b96779421873a8df029c36b4639b25e1e06272adee2c34b9da171ee46494",
+          "utils/focusWithVisible.js": "462f5813f956c538e6d6f9bf1cd9118455abd76f74cea30fe1bfb3ca7ea357b5",
+          "Select/utils/SelectFocusSourceContext.js": "d1cff1959089d5c441010541002c505b5f53d68f548f45eaf2e94361c305325d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "utils/useFocusableWhenDisabled.js": "54fef8925c39d3e73e88e5b71ed50635c45f5013af4b67159d59074e1eef9bab",
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d"
+        }
+      },
+      "adaptations": [
+        "Owning native menu navigation keys bypass disabled-focus prevention while activation remains guarded. The original ButtonBase currently omits passing focusableWhenDisabled into its hook."
+      ]
+    },
+    {
+      "localFile": "packages/icons/src/index.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+          "MenuList/MenuList.d.ts": "8ba0c3329dd73b8da0be21357da0dcf8c59e56df9378548e2baa7c05ddd1ee7b",
+          "MenuList/MenuListContext.js": "ca5ceca42eb79d384fbf19996cd6bdcd84832ecfb3c162acc92d6b42b8e357a0",
+          "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+          "MenuItem/MenuItem.d.ts": "66cda9a9b310d97f3002ab34f3c76f05dcd7d3f84ea12a9fdfe54ec82217af1b",
+          "utils/useRovingTabIndex.js": "3847b96779421873a8df029c36b4639b25e1e06272adee2c34b9da171ee46494",
+          "utils/focusWithVisible.js": "462f5813f956c538e6d6f9bf1cd9118455abd76f74cea30fe1bfb3ca7ea357b5",
+          "Select/utils/SelectFocusSourceContext.js": "d1cff1959089d5c441010541002c505b5f53d68f548f45eaf2e94361c305325d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "utils/useFocusableWhenDisabled.js": "54fef8925c39d3e73e88e5b71ed50635c45f5013af4b67159d59074e1eef9bab",
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d"
+        }
+      },
+      "adaptations": [
+        "Inherited native text color and fontSize=inherit plus menu icon density adapt SvgIcon inherited sizing and color; original icon paths remain independently authored."
+      ]
     }
   ]
 }

@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef, useState, useContext } from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -30,6 +30,7 @@ import {
   type ButtonBaseActivationEvent,
 } from './nativeButtonEvents';
 import { NativePressable } from '@altroo/mui-native-host';
+import { NativeCompositeKeys } from './nativeCompositeKeys';
 import { nativeButtonModality } from './nativeButtonModality';
 export type { ButtonBaseKeyEvent, ButtonBaseActivationEvent } from './nativeButtonEvents';
 export interface ButtonBaseActions {
@@ -85,6 +86,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ButtonBaseProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ButtonBaseProps>(function ButtonBase(inProps, forwarded) {
   const props = useDefaultProps({ props: inProps, name: 'MuiButtonBase' });
+  const compositeKeys = useContext(NativeCompositeKeys);
   const {
     action,
     children,
@@ -274,7 +276,8 @@ export const ButtonBase: React.ForwardRefExoticComponent<
         nativeButtonModality.keyboard();
         const key = buttonKeyEvent(event);
         if (disabled) {
-          if (focusableWhenDisabled && key.key !== 'Tab') key.preventDefault();
+          if (focusableWhenDisabled && key.key !== 'Tab' && !compositeKeys?.includes(key.key))
+            key.preventDefault();
           return;
         }
         onKeyDown?.(key);

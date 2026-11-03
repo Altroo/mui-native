@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- Registered native MenuItem/MenuList composition, connected-node order, focus handoff, keyboard/typeahead, checkable roles and owned scrolling. See [native menu lists](menu-list.md) for the tested subset, native differences and open Menu/Select/device gates.
+
 - Eight native List composition primitives with density, slots, natural action sizing and optional owned scrolling/sticky subheaders. See [native lists](lists.md) for the tested subset and native boundaries.
 - Native ButtonBase activation, disabled/focus coordination, native keyboard event adapters and touch feedback, with a Fabric interaction host. A native development build is required; Expo Go does not contain the host. See [ButtonBase](button-base.md) and [native host](native-host.md) for scope and open gates.
 - Anchored native Popover with window/local coordinate conversion, origin/margin adjustment, default Grow, typed refs/actions and slots. See [Popover](popover.md) for native boundaries and device gates.

@@ -16,7 +16,12 @@ try {
   const hooks = requireConsumer('@altroo/mui-native-system/useThemeProps');
   const material = requireConsumer('@altroo/mui-native');
   const materialDefaults = requireConsumer('@altroo/mui-native/DefaultPropsProvider');
-  for (const name of ['NativeTextScope', 'NativeTextStyleContext', 'useNativeTextContext'])
+  for (const name of [
+    'NativeTextScope',
+    'NativeTextStyleContext',
+    'useNativeTextContext',
+    'NativeIconStyleContext',
+  ])
     assert.equal(material[name], root[name]);
   for (const [actual, expected] of [
     [defaults.default, root.DefaultPropsProvider],
@@ -55,6 +60,8 @@ try {
     'Popover',
     'ButtonBase',
     'List',
+    'MenuItem',
+    'MenuList',
     'ListItemIcon',
     'ListItemAvatar',
     'ListSubheader',
@@ -95,6 +102,7 @@ try {
     );
   for (const name of ['PopoverRoot', 'PopoverPaper', 'getOffsetTop', 'getOffsetLeft'])
     assert.equal(requireConsumer('@altroo/mui-native/Popover')[name], material[name]);
+  assert.equal(requireConsumer('@altroo/mui-native/MenuList').MenuListRoot, material.MenuListRoot);
   assert.equal(material.Grow.muiSupportAuto, true);
   requireConsumer('@altroo/mui-native/transitions');
   requireConsumer('@altroo/mui-native/transitions/types');

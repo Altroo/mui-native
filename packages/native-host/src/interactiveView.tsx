@@ -7,6 +7,9 @@ function nativeImplementation() {
   return (implementation ??= require('./AltrooMUIInteractiveViewNativeComponent'));
 }
 export interface InteractiveViewProps extends ViewProps {
+  /** Observe standard descendant focus events, including native TextInput. */
+  onNativeFocus?: ViewProps['onFocus'];
+  onNativeBlur?: ViewProps['onBlur'];
   managedKeys?: readonly string[];
   rippleColor?: ColorValue;
   rippleEnabled?: boolean;
@@ -65,6 +68,8 @@ export const InteractiveView: React.ForwardRefExoticComponent<
     onKeyUpCapture,
     onFocusCapture,
     onBlurCapture,
+    onNativeFocus,
+    onNativeBlur,
     ...props
   },
   forwarded,
@@ -139,6 +144,8 @@ export const InteractiveView: React.ForwardRefExoticComponent<
         onMUIFocusCapture: onFocusCapture,
         onMUIBlurCapture: onBlurCapture,
       }}
+      onFocus={onNativeFocus}
+      onBlur={onNativeBlur}
       onMUIFocus={onFocus as NativeProps['onMUIFocus']}
       onMUIBlur={onBlur as NativeProps['onMUIBlur']}
       onMUIKeyDown={onKeyDown as NativeProps['onMUIKeyDown']}

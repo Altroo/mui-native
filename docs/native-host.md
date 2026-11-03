@@ -37,6 +37,8 @@ const Root = React.forwardRef<ViewInstance, ButtonBaseRootProps>((props, ref) =>
 
 The public native ref is the actual view and retains measurement/DOM-compatible native methods. Its focus/blur methods are decorated with explicit commands during attachment and restored during cleanup. `NativePressable` composes public React Native `usePressability` with one InteractiveView, including press/long press, retention, hover delays, accessibility aliases and Android ripple options. `setInteractivePressed` and `setInteractiveHotspot` are lower-level feedback helpers for the same host. Stock native custom roots remain application-owned.
 
+`onNativeFocus` and `onNativeBlur` optionally observe the standard native descendant focus channel, including TextInput. They remain separate from public `onFocus`/`onBlur`, which map the explicit host's private events. MenuList composes both channels and deduplicates the same target; these observers do not enable global View focus flags.
+
 The key payload includes common navigation/activation names, letter/digit physical codes, modifiers and repetition. Punctuation/keypad/layout-specific `code` normalization and IME are not complete browser keyboard contracts. Focus restoration, native focus-engine traversal, nested overlays, accessibility activation and keyboard layouts require actual platform interaction checks.
 
 ## Reproducible build checks

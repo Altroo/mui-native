@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "15612af697882f072e4ce7c1dcaadc95c7595191dfdf6a55beb2c173edfeaba4",
+  "nativeSourceSha256": "1cfcddc607488c6a95a3c17cf27cc919cafe9a572dcf5cf5b52e624e3b99d303",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7247,6 +7247,28 @@
           "name": "MotionOptions",
           "kind": "type",
           "line": 54
+        }
+      ]
+    },
+    {
+      "name": "NativeIconStyle",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/iconContext.ts",
+          "name": "NativeIconStyle",
+          "kind": "type",
+          "line": 2
+        }
+      ]
+    },
+    {
+      "name": "NativeIconStyleContext",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/iconContext.ts",
+          "name": "NativeIconStyleContext",
+          "kind": "value",
+          "line": 6
         }
       ]
     },
@@ -17704,6 +17726,28 @@
           "line": 1,
           "kind": "property",
           "type": "string"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "NativeIconStyle",
+      "file": "src/iconContext.ts",
+      "line": 2,
+      "kind": "type",
+      "members": [
+        {
+          "name": "fontSize",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "fontSize?: number;",
+          "line": 3,
+          "kind": "property",
+          "type": "number"
         }
       ],
       "references": [],

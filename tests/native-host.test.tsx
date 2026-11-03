@@ -192,3 +192,30 @@ test('explicit disabled state takes precedence over the accessibility alias', ()
   rerender(<NativePressable testID="host" disabled={false} aria-disabled />);
   expect(screen.getByTestId('host').props.accessibilityState.disabled).toBe(false);
 });
+
+test('standard descendant focus observers remain separate from private host events', () => {
+  const focus = jest.fn(),
+    blur = jest.fn(),
+    nativeFocus = jest.fn(),
+    nativeBlur = jest.fn();
+  render(
+    <InteractiveView
+      testID="host"
+      onFocus={focus}
+      onBlur={blur}
+      onNativeFocus={nativeFocus}
+      onNativeBlur={nativeBlur}
+    />,
+  );
+  fireEvent(screen.getByTestId('host'), 'focus', keyEvent());
+  fireEvent(screen.getByTestId('host'), 'blur', keyEvent());
+  expect(nativeFocus).toHaveBeenCalledTimes(1);
+  expect(nativeBlur).toHaveBeenCalledTimes(1);
+  expect(focus).not.toHaveBeenCalled();
+  expect(blur).not.toHaveBeenCalled();
+  fireEvent(screen.getByTestId('host'), 'MUIFocus', keyEvent());
+  fireEvent(screen.getByTestId('host'), 'MUIBlur', keyEvent());
+  expect(focus).toHaveBeenCalledTimes(1);
+  expect(blur).toHaveBeenCalledTimes(1);
+  expect(screen.getByTestId('host').props.onNativeFocus).toBeUndefined();
+});

@@ -60,7 +60,9 @@
       "ListItem",
       "ListItemSecondaryAction",
       "ListItemButton",
-      "ListItemText"
+      "ListItemText",
+      "MenuItem",
+      "MenuList"
     ]
   },
   "@mui/system": {

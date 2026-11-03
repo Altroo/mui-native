@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 export interface NativeListContext {
   dense?: boolean;
+  menuItem?: boolean;
   direction?: 'ltr' | 'rtl';
   alignItems?: 'center' | 'flex-start';
   disableGutters?: boolean;

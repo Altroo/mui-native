@@ -59,7 +59,7 @@ export const ListItemText: React.ForwardRefExoticComponent<
     sx,
     ...native
   } = props;
-  const { dense } = useContext(ListContext),
+  const { dense, menuItem } = useContext(ListContext),
     theme = useTheme(),
     parent = useNativeTextContext(),
     { width } = useWindowDimensions();
@@ -139,7 +139,14 @@ export const ListItemText: React.ForwardRefExoticComponent<
   return (
     <NativeTextScope
       theme={theme}
-      style={[resolved, style, rootStyle]}
+      style={[
+        resolved,
+        menuItem
+          ? { marginTop: 0, marginBottom: 0, ...(inset ? { paddingStart: 36 } : {}) }
+          : undefined,
+        style,
+        rootStyle,
+      ]}
       content={
         <>
           <React.Fragment key="primary">{primary}</React.Fragment>

@@ -319,6 +319,16 @@
       "types": "./dist/ListItemText/index.d.ts",
       "react-native": "./src/ListItemText/index.ts",
       "default": "./dist/ListItemText/index.js"
+    },
+    "./MenuItem": {
+      "types": "./dist/MenuItem/index.d.ts",
+      "react-native": "./src/MenuItem/index.ts",
+      "default": "./dist/MenuItem/index.js"
+    },
+    "./MenuList": {
+      "types": "./dist/MenuList/index.d.ts",
+      "react-native": "./src/MenuList/index.ts",
+      "default": "./dist/MenuList/index.js"
     }
   },
   "dependencies": {

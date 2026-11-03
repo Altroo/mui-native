@@ -1,6 +1,6 @@
 # Native lists
 
-The native material package exports List, ListItem, ListItemButton, ListItemText, ListItemIcon, ListItemAvatar, ListItemSecondaryAction and ListSubheader from its root and original deep import paths. The optional [native resolver](installation.md) maps eligible `@mui/material` imports to those same implementations. These primitives are the shared layout foundation for MenuItem/MenuList/Menu and Select, which remain subsequent work.
+The native material package exports List, ListItem, ListItemButton, ListItemText, ListItemIcon, ListItemAvatar, ListItemSecondaryAction and ListSubheader from its root and original deep import paths. The optional [native resolver](installation.md) maps eligible `@mui/material` imports to those same implementations. These primitives are the shared layout foundation for [MenuItem/MenuList](menu-list.md). Anchored Menu and Select remain subsequent work.
 
 ```tsx
 import { List, ListItem, ListItemButton, ListItemText, ListSubheader } from '@mui/material';

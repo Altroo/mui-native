@@ -5,7 +5,8 @@ Material UI and MUI X are names used to identify upstream compatibility targets.
 Native rendering code is independently authored. Palette, color, spacing,
 breakpoint, typography, default/slot-prop, slot routing, ref lifecycle, input/adornment state, label/helper state/layout, nested/scoped theme providers, modal/focus coordination, transition timing/lifecycle and height-based opacity/scale, reduced-motion configuration, container text inheritance, anchored popover positioning, ButtonBase activation, list composition and responsive-style algorithms adapt
 MIT-licensed Material UI/System/Utils
-code as recorded in upstream/reuse.json. Upstream public declaration
+code as recorded in upstream/reuse.json. Native registered menu navigation,
+initial focus, typeahead and icon inheritance also adapt these contracts. Upstream public declaration
 snapshots and license texts are retained under upstream/. Derived declaration
 inventories are retained under compatibility/inventory/. Their applicable MIT
 notices are preserved in upstream/licenses/. No Pro or Premium source, assets,

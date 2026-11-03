@@ -1,0 +1,889 @@
+{
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+        "MenuList/MenuList.d.ts": "8ba0c3329dd73b8da0be21357da0dcf8c59e56df9378548e2baa7c05ddd1ee7b",
+        "MenuList/MenuListContext.js": "ca5ceca42eb79d384fbf19996cd6bdcd84832ecfb3c162acc92d6b42b8e357a0",
+        "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+        "MenuItem/MenuItem.d.ts": "66cda9a9b310d97f3002ab34f3c76f05dcd7d3f84ea12a9fdfe54ec82217af1b",
+        "utils/useRovingTabIndex.js": "3847b96779421873a8df029c36b4639b25e1e06272adee2c34b9da171ee46494",
+        "utils/focusWithVisible.js": "462f5813f956c538e6d6f9bf1cd9118455abd76f74cea30fe1bfb3ca7ea357b5",
+        "Select/utils/SelectFocusSourceContext.js": "d1cff1959089d5c441010541002c505b5f53d68f548f45eaf2e94361c305325d",
+        "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+        "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+        "utils/useFocusableWhenDisabled.js": "54fef8925c39d3e73e88e5b71ed50635c45f5013af4b67159d59074e1eef9bab",
+        "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "useRovingTabIndex/useRovingTabIndex.js": "39514e3fa2e155f1fa242b5f9925bf206f3f231e9481cfada87fc7b327e8d26f",
+        "useRovingTabIndex/useRovingTabIndex.d.ts": "c6881834ad232b97b12ea8444f90eb2b9e0e6c26058b8bf7b7d9f75e10fa69a8",
+        "useRovingTabIndex/RovingTabIndexContext.js": "2f339435f2b698016f4ae056b75ac8ca43895f536b4c9065e12a2563ce49a692"
+      }
+    }
+  ],
+  "renderer": "Original React test renderer with controlled connected DOM nodes, focus, clock and keyboard propagation; no CSS frames or native-device proof",
+  "fixtures": [
+    {
+      "input": {
+        "name": "container arrows boundaries and wrapping",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber", "disabled": true },
+          { "id": "c", "label": "Beta" }
+        ],
+        "actions": [
+          { "focus": "list" },
+          { "key": "ArrowDown" },
+          { "key": "ArrowDown" },
+          { "key": "ArrowDown" },
+          { "key": "ArrowUp" },
+          { "key": "Home" },
+          { "key": "End" }
+        ]
+      },
+      "snapshots": [
+        {
+          "focus": null,
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "list",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:true"]
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": ["key:ArrowDown:true", "key:ArrowDown:true"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:true", "key:ArrowDown:true", "key:ArrowDown:true"]
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": [
+            "key:ArrowDown:true",
+            "key:ArrowDown:true",
+            "key:ArrowDown:true",
+            "key:ArrowUp:true"
+          ]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": [
+            "key:ArrowDown:true",
+            "key:ArrowDown:true",
+            "key:ArrowDown:true",
+            "key:ArrowUp:true",
+            "key:Home:true"
+          ]
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": [
+            "key:ArrowDown:true",
+            "key:ArrowDown:true",
+            "key:ArrowDown:true",
+            "key:ArrowUp:true",
+            "key:Home:true",
+            "key:End:true"
+          ]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "selected item owns initial focus and tab stop",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber", "selected": true },
+          { "id": "c", "label": "Beta" }
+        ],
+        "autoFocus": true,
+        "autoFocusItem": true,
+        "actions": [{ "key": "ArrowUp" }]
+      },
+      "snapshots": [
+        {
+          "focus": "b",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowUp:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "menu variant ignores selection and suppresses the initial handoff",
+        "nativeInitialHandoffFix": true,
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber", "selected": true },
+          { "id": "c", "label": "Beta" }
+        ],
+        "variant": "menu",
+        "autoFocus": true,
+        "autoFocusItem": true,
+        "actions": [{ "key": "ArrowDown" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "b",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "disabled selected item is skipped",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber", "selected": true, "disabled": true },
+          { "id": "c", "label": "Beta" }
+        ],
+        "autoFocusItem": true,
+        "actions": [{ "key": "End" }, { "key": "Home" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": ["key:End:true"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:End:true", "key:Home:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "focusable disabled items preserve navigation",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber", "disabled": true },
+          { "id": "c", "label": "Beta" }
+        ],
+        "disabledItemsFocusable": true,
+        "autoFocusItem": true,
+        "actions": [{ "key": "ArrowDown" }, { "key": "ArrowDown" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "b",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:true"]
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": ["key:ArrowDown:true", "key:ArrowDown:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "arrow wrapping can be disabled",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "disableListWrap": true,
+        "autoFocusItem": true,
+        "actions": [{ "key": "ArrowUp" }, { "key": "End" }, { "key": "ArrowDown" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowUp:true"]
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": ["key:ArrowUp:true", "key:End:true"]
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": ["key:ArrowUp:true", "key:End:true", "key:ArrowDown:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "typeahead repeats cycles and resets after timeout",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "autoFocusItem": true,
+        "actions": [{ "key": "a" }, { "key": "a" }, { "wait": 501 }, { "key": "b" }, { "key": "e" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "b",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:a:true"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:a:true", "key:a:true"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:a:true", "key:a:true"]
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": ["key:a:true", "key:a:true", "key:b:true"]
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": ["key:a:true", "key:a:true", "key:b:true", "key:e:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "failed prefix latches until timeout",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "autoFocusItem": true,
+        "actions": [{ "key": "x" }, { "key": "a" }, { "wait": 501 }, { "key": "a" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:x:false"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:x:false", "key:a:false"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:x:false", "key:a:false"]
+        },
+        {
+          "focus": "b",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:x:false", "key:a:false", "key:a:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "typeahead wraps despite disabled arrow wrapping",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "disableListWrap": true,
+        "autoFocusItem": true,
+        "actions": [{ "key": "End" }, { "key": "a" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": ["key:End:true"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:End:true", "key:a:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "modifier and shifted navigation remain external",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "autoFocusItem": true,
+        "actions": [
+          { "key": "ArrowDown", "shiftKey": true },
+          { "key": "a", "ctrlKey": true },
+          { "key": "ArrowDown", "altKey": true }
+        ]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:false"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:false", "key:a:false"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:false", "key:a:false", "key:ArrowDown:false"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "capture prevention cancels roving navigation",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "autoFocusItem": true,
+        "cancelCapture": true,
+        "actions": [{ "key": "ArrowDown" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Enter and Space activation do not double dispatch",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "autoFocusItem": true,
+        "actions": [{ "key": "Enter" }, { "keyUp": "Enter" }, { "key": " " }, { "keyUp": " " }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["click:a", "key:Enter:true"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["click:a", "key:Enter:true"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["click:a", "key:Enter:true", "key: :true"]
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["click:a", "key:Enter:true", "key: :true", "click:a"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "keyed reorder uses current native tree order",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "autoFocusItem": true,
+        "actions": [{ "focus": "b" }, { "reorder": ["c", "b", "a"] }, { "key": "ArrowDown" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "b",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "b",
+          "items": [
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "a",
+          "items": [
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": ["key:ArrowDown:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "removing focused registration recovers the tab stop",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "autoFocusItem": true,
+        "actions": [{ "focus": "b" }, { "remove": "b" }, { "key": "ArrowDown" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "b",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": 0, "disabled": false, "focusVisible": true },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "b",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "c",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": 0, "disabled": false, "focusVisible": true }
+          ],
+          "trace": ["key:ArrowDown:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "all disabled items fall back to the container",
+        "items": [
+          { "id": "a", "label": "Alpha", "disabled": true },
+          { "id": "b", "label": "Amber", "disabled": true },
+          { "id": "c", "label": "Beta", "disabled": true }
+        ],
+        "autoFocus": true,
+        "autoFocusItem": true,
+        "actions": [{ "key": "ArrowDown" }, { "key": "Home" }, { "key": "End" }]
+      },
+      "snapshots": [
+        {
+          "focus": "list",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": true, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "list",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": true, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:true"]
+        },
+        {
+          "focus": "list",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": true, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:true", "key:Home:true"]
+        },
+        {
+          "focus": "list",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": true, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": true, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:true", "key:Home:true", "key:End:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "empty menus keep bounded navigation",
+        "items": [],
+        "autoFocus": true,
+        "autoFocusItem": true,
+        "actions": [{ "key": "ArrowDown" }, { "key": "ArrowUp" }]
+      },
+      "snapshots": [
+        { "focus": "list", "items": [], "trace": [] },
+        { "focus": "list", "items": [], "trace": ["key:ArrowDown:true"] },
+        { "focus": "list", "items": [], "trace": ["key:ArrowDown:true", "key:ArrowUp:true"] }
+      ]
+    },
+    {
+      "input": {
+        "name": "keyboard focus source preserves focus indication",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "variant": "menu",
+        "focusSource": "keyboard",
+        "autoFocusItem": true,
+        "actions": [{ "key": "ArrowDown" }]
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": true },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        },
+        {
+          "focus": "b",
+          "items": [
+            { "id": "a", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": true },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": ["key:ArrowDown:true"]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "pointer focus source suppresses focus indication",
+        "items": [
+          { "id": "a", "label": "Alpha" },
+          { "id": "b", "label": "Amber" },
+          { "id": "c", "label": "Beta" }
+        ],
+        "focusSource": "pointer",
+        "autoFocusItem": true,
+        "actions": []
+      },
+      "snapshots": [
+        {
+          "focus": "a",
+          "items": [
+            { "id": "a", "tabIndex": 0, "disabled": false, "focusVisible": false },
+            { "id": "b", "tabIndex": -1, "disabled": false, "focusVisible": false },
+            { "id": "c", "tabIndex": -1, "disabled": false, "focusVisible": false }
+          ],
+          "trace": []
+        }
+      ]
+    }
+  ]
+}

@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-icons",
-  "nativeSourceSha256": "1539a2a7cbf9530c4009010bf8c2052c5ee2aaa027aa524906c0dd06f255da52",
+  "nativeSourceSha256": "ad33d1d16e1aefbd8511ac74b7704b14fc8a5984bc9429716e45cdfaef22e07c",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -397824,7 +397824,7 @@
           "module": "@altroo/mui-native-icons:src/index.ts",
           "name": "createSvgIcon",
           "kind": "value",
-          "line": 9
+          "line": 10
         }
       ]
     },
@@ -397835,7 +397835,7 @@
           "module": "@altroo/mui-native-icons:src/index.ts",
           "name": "SvgIconProps",
           "kind": "type",
-          "line": 4
+          "line": 5
         }
       ]
     }
@@ -397866,7 +397866,7 @@
     {
       "name": "SvgIconProps",
       "file": "src/index.ts",
-      "line": 4,
+      "line": 5,
       "kind": "type",
       "members": [
         {
@@ -397876,7 +397876,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color?: 'inherit' | 'primary' | 'secondary' | 'error' | 'action' | 'disabled';",
-          "line": 5,
+          "line": 6,
           "kind": "property",
           "type": "'inherit' | 'primary' | 'secondary' | 'error' | 'action' | 'disabled'"
         },
@@ -397887,7 +397887,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fontSize?: 'inherit' | 'small' | 'medium' | 'large';",
-          "line": 6,
+          "line": 7,
           "kind": "property",
           "type": "'inherit' | 'small' | 'medium' | 'large'"
         },
@@ -397898,7 +397898,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "titleAccess?: string;",
-          "line": 7,
+          "line": 8,
           "kind": "property",
           "type": "string"
         }

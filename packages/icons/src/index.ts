@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { NativeIconStyleContext, useNativeTextContext } from '@altroo/mui-native-system';
 import Svg, { Path, type SvgProps } from 'react-native-svg';
 import { useTheme } from '@altroo/mui-native/styles';
 export interface SvgIconProps extends Omit<SvgProps, 'color'> {
@@ -8,16 +9,26 @@ export interface SvgIconProps extends Omit<SvgProps, 'color'> {
 }
 export function createSvgIcon(path: string, displayName: string) {
   function Icon({ color = 'inherit', fontSize = 'medium', titleAccess, ...props }: SvgIconProps) {
-    const theme = useTheme();
+    const theme = useTheme(),
+      inherited = useNativeTextContext(),
+      iconStyle = useContext(NativeIconStyleContext);
     const fill =
       color === 'inherit'
-        ? theme.palette.text.primary
+        ? (inherited?.style.color ?? theme.palette.text.primary)
         : color === 'action'
           ? theme.palette.text.secondary
           : color === 'disabled'
             ? theme.palette.text.disabled
             : theme.palette[color].main;
-    const size = fontSize === 'small' ? 20 : fontSize === 'large' ? 35 : 24;
+    const size =
+      iconStyle?.fontSize ??
+      (fontSize === 'inherit' && typeof inherited?.style.fontSize === 'number'
+        ? inherited.style.fontSize
+        : fontSize === 'small'
+          ? 20
+          : fontSize === 'large'
+            ? 35
+            : 24);
     return React.createElement(
       Svg,
       {

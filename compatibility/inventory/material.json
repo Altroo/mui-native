@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "c627972fc53f5ca5c29206da8e386f27024da2d41622d9ab099dec76b433ecc1",
+  "nativeSourceSha256": "9d028c0dcfb628dd60ad033244d34f48be2d09fb0ff691a5be6e259d1101dca8",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -4645,7 +4645,7 @@
           "file": "MenuItem/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/MenuList",
@@ -4675,7 +4675,7 @@
           "file": "MenuList/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/MobileStepper",
@@ -22378,7 +22378,7 @@
           "line": 66
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -22454,7 +22454,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -22473,7 +22473,7 @@
           "line": 67
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -22511,7 +22511,7 @@
           "line": 58
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -22549,7 +22549,7 @@
           "line": 4
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -22568,7 +22568,7 @@
           "line": 59
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35262,7 +35262,7 @@
           "module": "@altroo/mui-native:src/buttonBase.tsx",
           "name": "ButtonBaseRootProps",
           "kind": "type",
-          "line": 42
+          "line": 43
         }
       ]
     },
@@ -35273,7 +35273,7 @@
           "module": "@altroo/mui-native:src/buttonBase.tsx",
           "name": "ButtonBaseState",
           "kind": "type",
-          "line": 38
+          "line": 39
         }
       ]
     },
@@ -35559,7 +35559,7 @@
           "module": "@altroo/mui-native:src/lists.tsx",
           "name": "ListItemAvatarOwnProps",
           "kind": "type",
-          "line": 48
+          "line": 49
         }
       ]
     },
@@ -35570,7 +35570,7 @@
           "module": "@altroo/mui-native:src/lists.tsx",
           "name": "ListItemIconOwnProps",
           "kind": "type",
-          "line": 44
+          "line": 45
         }
       ]
     },
@@ -35593,6 +35593,39 @@
           "name": "ListItemTextTypographySlotProps",
           "kind": "type",
           "line": 18
+        }
+      ]
+    },
+    {
+      "name": "MenuListActions",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/menuList.tsx",
+          "name": "MenuListActions",
+          "kind": "type",
+          "line": 37
+        }
+      ]
+    },
+    {
+      "name": "MenuListRoot",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/menuListRoot.tsx",
+          "name": "NativeMenuListRoot",
+          "kind": "value",
+          "line": 15
+        }
+      ]
+    },
+    {
+      "name": "MenuListRootProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/menuListRoot.tsx",
+          "name": "MenuListRootProps",
+          "kind": "type",
+          "line": 5
         }
       ]
     },
@@ -35652,13 +35685,35 @@
       ]
     },
     {
+      "name": "NativeIconStyle",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/iconContext.ts",
+          "name": "NativeIconStyle",
+          "kind": "type",
+          "line": 2
+        }
+      ]
+    },
+    {
+      "name": "NativeIconStyleContext",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/iconContext.ts",
+          "name": "NativeIconStyleContext",
+          "kind": "value",
+          "line": 6
+        }
+      ]
+    },
+    {
       "name": "NativeListComponent",
       "origins": [
         {
           "module": "@altroo/mui-native:src/lists.tsx",
           "name": "NativeListComponent",
           "kind": "type",
-          "line": 29
+          "line": 30
         }
       ]
     },
@@ -35669,7 +35724,7 @@
           "module": "@altroo/mui-native:src/lists.tsx",
           "name": "NativeListRootProps",
           "kind": "type",
-          "line": 24
+          "line": 25
         }
       ]
     },
@@ -51017,13 +51072,13 @@
         {
           "name": "ButtonBaseOwnProps",
           "file": "src/buttonBase.tsx",
-          "line": 47,
+          "line": 48,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 71,
+          "line": 72,
           "package": "@altroo/mui-native"
         }
       ]
@@ -51161,7 +51216,7 @@
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 71,
+          "line": 72,
           "package": "@altroo/mui-native"
         }
       ]
@@ -51192,7 +51247,7 @@
         {
           "name": "ButtonBaseActions",
           "file": "src/buttonBase.tsx",
-          "line": 35,
+          "line": 36,
           "package": "@altroo/mui-native"
         }
       ]
@@ -51445,13 +51500,13 @@
         {
           "name": "ButtonBaseOwnProps",
           "file": "src/buttonBase.tsx",
-          "line": 47,
+          "line": 48,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 71,
+          "line": 72,
           "package": "@altroo/mui-native"
         }
       ]
@@ -51589,7 +51644,7 @@
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 71,
+          "line": 72,
           "package": "@altroo/mui-native"
         }
       ]
@@ -51620,7 +51675,7 @@
         {
           "name": "ButtonBaseActions",
           "file": "src/buttonBase.tsx",
-          "line": 35,
+          "line": 36,
           "package": "@altroo/mui-native"
         }
       ]
@@ -80752,13 +80807,13 @@
         {
           "name": "ListOwnProps",
           "file": "src/lists.tsx",
-          "line": 30,
+          "line": 31,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ListProps",
           "file": "src/lists.tsx",
-          "line": 40,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -80894,7 +80949,7 @@
         {
           "name": "ListProps",
           "file": "src/lists.tsx",
-          "line": 40,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -80996,13 +81051,13 @@
         {
           "name": "ListOwnProps",
           "file": "src/lists.tsx",
-          "line": 30,
+          "line": 31,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ListProps",
           "file": "src/lists.tsx",
-          "line": 40,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -81138,7 +81193,7 @@
         {
           "name": "ListProps",
           "file": "src/lists.tsx",
-          "line": 40,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -82352,7 +82407,7 @@
         {
           "name": "ListItemAvatarProps",
           "file": "src/lists.tsx",
-          "line": 45,
+          "line": 46,
           "package": "@altroo/mui-native"
         }
       ]
@@ -82418,7 +82473,7 @@
         {
           "name": "ListItemAvatarProps",
           "file": "src/lists.tsx",
-          "line": 45,
+          "line": 46,
           "package": "@altroo/mui-native"
         }
       ]
@@ -83300,7 +83355,7 @@
         {
           "name": "ListItemIconProps",
           "file": "src/lists.tsx",
-          "line": 41,
+          "line": 42,
           "package": "@altroo/mui-native"
         }
       ]
@@ -83366,7 +83421,7 @@
         {
           "name": "ListItemIconProps",
           "file": "src/lists.tsx",
-          "line": 41,
+          "line": 42,
           "package": "@altroo/mui-native"
         }
       ]
@@ -84649,13 +84704,13 @@
         {
           "name": "ListSubheaderOwnProps",
           "file": "src/lists.tsx",
-          "line": 49,
+          "line": 50,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ListSubheaderProps",
           "file": "src/lists.tsx",
-          "line": 56,
+          "line": 57,
           "package": "@altroo/mui-native"
         }
       ]
@@ -84734,7 +84789,7 @@
         {
           "name": "ListSubheaderProps",
           "file": "src/lists.tsx",
-          "line": 56,
+          "line": 57,
           "package": "@altroo/mui-native"
         }
       ]
@@ -84849,13 +84904,13 @@
         {
           "name": "ListSubheaderOwnProps",
           "file": "src/lists.tsx",
-          "line": 49,
+          "line": 50,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ListSubheaderProps",
           "file": "src/lists.tsx",
-          "line": 56,
+          "line": 57,
           "package": "@altroo/mui-native"
         }
       ]
@@ -84934,7 +84989,7 @@
         {
           "name": "ListSubheaderProps",
           "file": "src/lists.tsx",
-          "line": 56,
+          "line": 57,
           "package": "@altroo/mui-native"
         }
       ]
@@ -85945,7 +86000,7 @@
           "line": 13,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -85971,7 +86026,7 @@
           "line": 23,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -85997,7 +86052,7 @@
           "line": 33,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86010,7 +86065,7 @@
           "line": 38,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86023,7 +86078,7 @@
           "line": 44,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86047,7 +86102,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "MenuItemOwnProps",
+          "file": "src/menuItem.tsx",
+          "line": 34,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "MenuItemProps",
+          "file": "src/menuItem.tsx",
+          "line": 44,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "MenuItemTypeMap",
@@ -86093,7 +86161,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "MenuItemProps",
+          "file": "src/menuItem.tsx",
+          "line": 44,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "MenuItemOwnProps",
@@ -86111,7 +86186,7 @@
           "line": 13,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86137,7 +86212,7 @@
           "line": 23,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86163,7 +86238,7 @@
           "line": 33,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86176,7 +86251,7 @@
           "line": 38,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86189,7 +86264,7 @@
           "line": 44,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86213,7 +86288,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "MenuItemOwnProps",
+          "file": "src/menuItem.tsx",
+          "line": 34,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "MenuItemProps",
+          "file": "src/menuItem.tsx",
+          "line": 44,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "MenuItemTypeMap",
@@ -86259,7 +86347,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "MenuItemProps",
+          "file": "src/menuItem.tsx",
+          "line": 44,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "MenuItemClasses",
@@ -86505,7 +86600,7 @@
           "line": 9,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86518,7 +86613,7 @@
           "line": 15,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86544,7 +86639,7 @@
           "line": 24,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86557,7 +86652,7 @@
           "line": 29,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86570,7 +86665,7 @@
           "line": 35,
           "kind": "property",
           "type": "'menu' | 'selectedMenu' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -86578,7 +86673,20 @@
         "React.ReactNode"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "MenuListOwnProps",
+          "file": "src/menuList.tsx",
+          "line": 45,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "MenuListProps",
+          "file": "src/menuList.tsx",
+          "line": 58,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "MenuListTypeMap",
@@ -86637,7 +86745,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "MenuListProps",
+          "file": "src/menuList.tsx",
+          "line": 58,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "MenuListOwnProps",
@@ -86655,7 +86770,7 @@
           "line": 9,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86668,7 +86783,7 @@
           "line": 15,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86694,7 +86809,7 @@
           "line": 24,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86707,7 +86822,7 @@
           "line": 29,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -86720,7 +86835,7 @@
           "line": 35,
           "kind": "property",
           "type": "'menu' | 'selectedMenu' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -86728,7 +86843,20 @@
         "React.ReactNode"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "MenuListOwnProps",
+          "file": "src/menuList.tsx",
+          "line": 45,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "MenuListProps",
+          "file": "src/menuList.tsx",
+          "line": 58,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "MenuListTypeMap",
@@ -86787,7 +86915,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "MenuListProps",
+          "file": "src/menuList.tsx",
+          "line": 58,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "MenuListContextValue",
@@ -177182,7 +177317,7 @@
     {
       "name": "ButtonBaseActions",
       "file": "src/buttonBase.tsx",
-      "line": 35,
+      "line": 36,
       "kind": "type",
       "members": [
         {
@@ -177192,7 +177327,7 @@
           "computed": false,
           "memberKind": "TSMethodSignature",
           "declaration": "focusVisible(): void;",
-          "line": 36,
+          "line": 37,
           "kind": "property",
           "type": "focusVisible(): void;"
         }
@@ -177204,7 +177339,7 @@
     {
       "name": "ButtonBaseState",
       "file": "src/buttonBase.tsx",
-      "line": 38,
+      "line": 39,
       "kind": "type",
       "members": [
         {
@@ -177214,7 +177349,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusVisible: boolean;",
-          "line": 39,
+          "line": 40,
           "kind": "property",
           "type": "boolean"
         },
@@ -177225,7 +177360,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 40,
+          "line": 41,
           "kind": "property",
           "type": "boolean"
         }
@@ -177239,7 +177374,7 @@
     {
       "name": "ButtonBaseRootProps",
       "file": "src/buttonBase.tsx",
-      "line": 42,
+      "line": 43,
       "kind": "type",
       "members": [
         {
@@ -177249,7 +177384,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>;",
-          "line": 43,
+          "line": 44,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         },
@@ -177260,7 +177395,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "href?: string;",
-          "line": 44,
+          "line": 45,
           "kind": "property",
           "type": "string"
         },
@@ -177271,7 +177406,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "to?: unknown;",
-          "line": 45,
+          "line": 46,
           "kind": "property",
           "type": "unknown"
         }
@@ -177287,7 +177422,7 @@
     {
       "name": "ButtonBaseOwnProps",
       "file": "src/buttonBase.tsx",
-      "line": 47,
+      "line": 48,
       "kind": "type",
       "members": [
         {
@@ -177297,7 +177432,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean;",
-          "line": 48,
+          "line": 49,
           "kind": "property",
           "type": "boolean"
         },
@@ -177308,7 +177443,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>;",
-          "line": 49,
+          "line": 50,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         },
@@ -177319,7 +177454,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "action?: React.Ref<ButtonBaseActions>;",
-          "line": 50,
+          "line": 51,
           "kind": "property",
           "type": "React.Ref<ButtonBaseActions>"
         },
@@ -177330,7 +177465,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode | ((state: ButtonBaseState) => React.ReactNode);",
-          "line": 51,
+          "line": 52,
           "kind": "property",
           "type": "React.ReactNode | ((state: ButtonBaseState) => React.ReactNode)"
         },
@@ -177341,7 +177476,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 52,
+          "line": 53,
           "kind": "property",
           "type": "SxProps"
         },
@@ -177352,7 +177487,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle> | ((state: ButtonBaseState) => StyleProp<NativeStyle>);",
-          "line": 53,
+          "line": 54,
           "kind": "property",
           "type": "StyleProp<NativeStyle> | ((state: ButtonBaseState) => StyleProp<NativeStyle>)"
         },
@@ -177363,7 +177498,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<ButtonBaseRootProps>;",
-          "line": 54,
+          "line": 55,
           "kind": "property",
           "type": "React.ComponentType<ButtonBaseRootProps>"
         },
@@ -177374,7 +177509,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "LinkComponent?: React.ComponentType<ButtonBaseRootProps>;",
-          "line": 55,
+          "line": 56,
           "kind": "property",
           "type": "React.ComponentType<ButtonBaseRootProps>"
         },
@@ -177385,7 +177520,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "href?: string;",
-          "line": 56,
+          "line": 57,
           "kind": "property",
           "type": "string"
         },
@@ -177396,7 +177531,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "to?: unknown;",
-          "line": 57,
+          "line": 58,
           "kind": "property",
           "type": "unknown"
         },
@@ -177407,7 +177542,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClick?: (event: ButtonBaseActivationEvent) => void;",
-          "line": 58,
+          "line": 59,
           "kind": "event",
           "type": "(event: ButtonBaseActivationEvent) => void"
         },
@@ -177418,7 +177553,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onPress?: (event: ButtonBaseActivationEvent) => void;",
-          "line": 59,
+          "line": 60,
           "kind": "event",
           "type": "(event: ButtonBaseActivationEvent) => void"
         },
@@ -177429,7 +177564,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onKeyDown?: (event: ButtonBaseKeyEvent) => void;",
-          "line": 60,
+          "line": 61,
           "kind": "event",
           "type": "(event: ButtonBaseKeyEvent) => void"
         },
@@ -177440,7 +177575,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onKeyUp?: (event: ButtonBaseKeyEvent) => void;",
-          "line": 61,
+          "line": 62,
           "kind": "event",
           "type": "(event: ButtonBaseKeyEvent) => void"
         },
@@ -177451,7 +177586,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onFocusVisible?: PressableProps['onFocus'];",
-          "line": 62,
+          "line": 63,
           "kind": "event",
           "type": "PressableProps['onFocus']"
         },
@@ -177462,7 +177597,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableRipple?: boolean;",
-          "line": 63,
+          "line": 64,
           "kind": "property",
           "type": "boolean"
         },
@@ -177473,7 +177608,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableTouchRipple?: boolean;",
-          "line": 64,
+          "line": 65,
           "kind": "property",
           "type": "boolean"
         },
@@ -177484,7 +177619,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusRipple?: boolean;",
-          "line": 65,
+          "line": 66,
           "kind": "property",
           "type": "boolean"
         },
@@ -177495,7 +177630,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusableWhenDisabled?: boolean;",
-          "line": 67,
+          "line": 68,
           "kind": "property",
           "type": "boolean"
         },
@@ -177506,7 +177641,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "suppressFocusVisible?: boolean;",
-          "line": 69,
+          "line": 70,
           "kind": "property",
           "type": "boolean"
         }
@@ -177532,7 +177667,7 @@
     {
       "name": "ButtonBaseProps",
       "file": "src/buttonBase.tsx",
-      "line": 71,
+      "line": 72,
       "kind": "type",
       "members": [],
       "references": [
@@ -181468,13 +181603,24 @@
           "type": "boolean"
         },
         {
+          "name": "menuItem",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "menuItem?: boolean;",
+          "line": 4,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
           "name": "direction",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl';",
-          "line": 4,
+          "line": 5,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -181485,7 +181631,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "alignItems?: 'center' | 'flex-start';",
-          "line": 5,
+          "line": 6,
           "kind": "property",
           "type": "'center' | 'flex-start'"
         },
@@ -181496,7 +181642,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableGutters?: boolean;",
-          "line": 6,
+          "line": 7,
           "kind": "property",
           "type": "boolean"
         },
@@ -181507,7 +181653,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "secondaryAction?: number;",
-          "line": 7,
+          "line": 8,
           "kind": "property",
           "type": "number"
         },
@@ -181518,7 +181664,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "reportActionSize?: (width: number, height: number) => void;",
-          "line": 8,
+          "line": 9,
           "kind": "property",
           "type": "(width: number, height: number) => void"
         }
@@ -182167,7 +182313,7 @@
     {
       "name": "NativeListRootProps",
       "file": "src/lists.tsx",
-      "line": 24,
+      "line": 25,
       "kind": "type",
       "members": [
         {
@@ -182177,7 +182323,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle>;",
-          "line": 25,
+          "line": 26,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -182188,7 +182334,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 26,
+          "line": 27,
           "kind": "property",
           "type": "SxProps"
         },
@@ -182199,7 +182345,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>;",
-          "line": 27,
+          "line": 28,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         }
@@ -182219,7 +182365,7 @@
     {
       "name": "NativeListComponent",
       "file": "src/lists.tsx",
-      "line": 29,
+      "line": 30,
       "kind": "type",
       "members": [],
       "references": [
@@ -182232,7 +182378,7 @@
     {
       "name": "ListOwnProps",
       "file": "src/lists.tsx",
-      "line": 30,
+      "line": 31,
       "kind": "type",
       "members": [
         {
@@ -182242,7 +182388,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 31,
+          "line": 32,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -182253,7 +182399,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: NativeListComponent;",
-          "line": 32,
+          "line": 33,
           "kind": "property",
           "type": "NativeListComponent"
         },
@@ -182264,7 +182410,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "dense?: boolean;",
-          "line": 33,
+          "line": 34,
           "kind": "property",
           "type": "boolean"
         },
@@ -182275,7 +182421,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disablePadding?: boolean;",
-          "line": 34,
+          "line": 35,
           "kind": "property",
           "type": "boolean"
         },
@@ -182286,7 +182432,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "subheader?: React.ReactNode;",
-          "line": 35,
+          "line": 36,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -182297,7 +182443,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "scrollable?: boolean;",
-          "line": 37,
+          "line": 38,
           "kind": "property",
           "type": "boolean"
         },
@@ -182308,7 +182454,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "scrollViewProps?: Omit<ScrollViewProps, 'ref' | 'children' | 'style'>;",
-          "line": 38,
+          "line": 39,
           "kind": "property",
           "type": "Omit<ScrollViewProps, 'ref' | 'children' | 'style'>"
         }
@@ -182325,7 +182471,7 @@
     {
       "name": "ListProps",
       "file": "src/lists.tsx",
-      "line": 40,
+      "line": 41,
       "kind": "type",
       "members": [],
       "references": [
@@ -182339,7 +182485,7 @@
     {
       "name": "ListItemIconProps",
       "file": "src/lists.tsx",
-      "line": 41,
+      "line": 42,
       "kind": "type",
       "members": [
         {
@@ -182349,7 +182495,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: NativeListComponent;",
-          "line": 42,
+          "line": 43,
           "kind": "property",
           "type": "NativeListComponent"
         }
@@ -182364,7 +182510,7 @@
     {
       "name": "ListItemIconOwnProps",
       "file": "src/lists.tsx",
-      "line": 44,
+      "line": 45,
       "kind": "type",
       "members": [],
       "references": [
@@ -182376,7 +182522,7 @@
     {
       "name": "ListItemAvatarProps",
       "file": "src/lists.tsx",
-      "line": 45,
+      "line": 46,
       "kind": "type",
       "members": [
         {
@@ -182386,7 +182532,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: NativeListComponent;",
-          "line": 46,
+          "line": 47,
           "kind": "property",
           "type": "NativeListComponent"
         }
@@ -182401,7 +182547,7 @@
     {
       "name": "ListItemAvatarOwnProps",
       "file": "src/lists.tsx",
-      "line": 48,
+      "line": 49,
       "kind": "type",
       "members": [],
       "references": [
@@ -182413,7 +182559,7 @@
     {
       "name": "ListSubheaderOwnProps",
       "file": "src/lists.tsx",
-      "line": 49,
+      "line": 50,
       "kind": "type",
       "members": [
         {
@@ -182423,7 +182569,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color?: 'default' | 'primary' | 'inherit';",
-          "line": 50,
+          "line": 51,
           "kind": "property",
           "type": "'default' | 'primary' | 'inherit'"
         },
@@ -182434,7 +182580,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: NativeListComponent;",
-          "line": 51,
+          "line": 52,
           "kind": "property",
           "type": "NativeListComponent"
         },
@@ -182445,7 +182591,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableGutters?: boolean;",
-          "line": 52,
+          "line": 53,
           "kind": "property",
           "type": "boolean"
         },
@@ -182456,7 +182602,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableSticky?: boolean;",
-          "line": 53,
+          "line": 54,
           "kind": "property",
           "type": "boolean"
         },
@@ -182467,7 +182613,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inset?: boolean;",
-          "line": 54,
+          "line": 55,
           "kind": "property",
           "type": "boolean"
         }
@@ -182481,12 +182627,486 @@
     {
       "name": "ListSubheaderProps",
       "file": "src/lists.tsx",
-      "line": 56,
+      "line": 57,
       "kind": "type",
       "members": [],
       "references": [
         "ListSubheaderOwnProps",
         "NativeListRootProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeMenuContextValue",
+      "file": "src/menuContext.ts",
+      "line": 4,
+      "kind": "type",
+      "members": [
+        {
+          "name": "registry",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "registry: NativeMenuRegistry;",
+          "line": 5,
+          "kind": "property",
+          "type": "NativeMenuRegistry"
+        },
+        {
+          "name": "activeId",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "activeId: string | null;",
+          "line": 6,
+          "kind": "property",
+          "type": "string | null"
+        },
+        {
+          "name": "variant",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant: 'menu' | 'selectedMenu';",
+          "line": 7,
+          "kind": "property",
+          "type": "'menu' | 'selectedMenu'"
+        },
+        {
+          "name": "disabledItemsFocusable",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disabledItemsFocusable: boolean;",
+          "line": 8,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "suppressInitialFocusVisible",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "suppressInitialFocusVisible: boolean;",
+          "line": 9,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "focusSource",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "focusSource: MenuFocusSource;",
+          "line": 10,
+          "kind": "property",
+          "type": "MenuFocusSource"
+        },
+        {
+          "name": "focusItem",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "focusItem(id: string, source?: MenuFocusSource): ViewInstance | null;",
+          "line": 11,
+          "kind": "property",
+          "type": "focusItem(id: string, source?: MenuFocusSource): ViewInstance | null;"
+        },
+        {
+          "name": "reportFocus",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "reportFocus(id: string, node: ViewInstance): void;",
+          "line": 12,
+          "kind": "property",
+          "type": "reportFocus(id: string, node: ViewInstance): void;"
+        },
+        {
+          "name": "reportBlur",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "reportBlur(id: string, node: ViewInstance): void;",
+          "line": 13,
+          "kind": "property",
+          "type": "reportBlur(id: string, node: ViewInstance): void;"
+        }
+      ],
+      "references": [
+        "MenuFocusSource",
+        "NativeMenuRegistry",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "MenuItemOwnProps",
+      "file": "src/menuItem.tsx",
+      "line": 34,
+      "kind": "type",
+      "members": [
+        {
+          "name": "autoFocus",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "autoFocus?: boolean;",
+          "line": 35,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "dense",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "dense?: boolean;",
+          "line": 36,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableGutters",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableGutters?: boolean;",
+          "line": 37,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "divider",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "divider?: boolean;",
+          "line": 38,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "selected",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "selected?: boolean;",
+          "line": 39,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "role",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "role?: ButtonBaseProps['role'] | 'menuitemcheckbox' | 'menuitemradio';",
+          "line": 40,
+          "kind": "property",
+          "type": "ButtonBaseProps['role'] | 'menuitemcheckbox' | 'menuitemradio'"
+        },
+        {
+          "name": "textValue",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "textValue?: string;",
+          "line": 42,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "ButtonBaseProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "MenuItemProps",
+      "file": "src/menuItem.tsx",
+      "line": 44,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ButtonBaseProps",
+        "MenuItemOwnProps",
+        "Omit"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "MenuListActions",
+      "file": "src/menuList.tsx",
+      "line": 37,
+      "kind": "type",
+      "members": [
+        {
+          "name": "focusInitialTarget",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "focusInitialTarget(): ViewInstance | null;",
+          "line": 38,
+          "kind": "property",
+          "type": "focusInitialTarget(): ViewInstance | null;"
+        },
+        {
+          "name": "adjustStyleForScrollbar",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "adjustStyleForScrollbar(\n    container?: ViewInstance | null,\n    options?: { direction?: 'ltr' | 'rtl' },\n  ): ViewInstance | null;",
+          "line": 40,
+          "kind": "property",
+          "type": "adjustStyleForScrollbar(\n    container?: ViewInstance | null,\n    options?: { direction?: 'ltr' | 'rtl' },\n  ): ViewInstance | null;"
+        }
+      ],
+      "references": [
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "MenuListOwnProps",
+      "file": "src/menuList.tsx",
+      "line": 45,
+      "kind": "type",
+      "members": [
+        {
+          "name": "autoFocus",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "autoFocus?: boolean;",
+          "line": 46,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "autoFocusItem",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "autoFocusItem?: boolean;",
+          "line": 47,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disabledItemsFocusable",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disabledItemsFocusable?: boolean;",
+          "line": 48,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableListWrap",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableListWrap?: boolean;",
+          "line": 49,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "variant",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant?: 'menu' | 'selectedMenu';",
+          "line": 50,
+          "kind": "property",
+          "type": "'menu' | 'selectedMenu'"
+        },
+        {
+          "name": "actions",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "actions?: React.Ref<MenuListActions>;",
+          "line": 51,
+          "kind": "property",
+          "type": "React.Ref<MenuListActions>"
+        },
+        {
+          "name": "focusSource",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "focusSource?: MenuFocusSource;",
+          "line": 53,
+          "kind": "property",
+          "type": "MenuFocusSource"
+        },
+        {
+          "name": "managedKeys",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "managedKeys?: readonly string[];",
+          "line": 54,
+          "kind": "property",
+          "type": "readonly string[]"
+        },
+        {
+          "name": "onKeyDown",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onKeyDown?: (event: ButtonBaseKeyEvent) => void;",
+          "line": 55,
+          "kind": "event",
+          "type": "(event: ButtonBaseKeyEvent) => void"
+        },
+        {
+          "name": "onKeyDownCapture",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onKeyDownCapture?: (event: ButtonBaseKeyEvent) => void;",
+          "line": 56,
+          "kind": "event",
+          "type": "(event: ButtonBaseKeyEvent) => void"
+        }
+      ],
+      "references": [
+        "ButtonBaseKeyEvent",
+        "MenuFocusSource",
+        "MenuListActions",
+        "React.Ref"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "MenuListProps",
+      "file": "src/menuList.tsx",
+      "line": 58,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ListProps",
+        "MenuListOwnProps",
+        "Omit"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "MenuListRootProps",
+      "file": "src/menuListRoot.tsx",
+      "line": 5,
+      "kind": "type",
+      "members": [
+        {
+          "name": "onNativeFocus",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onNativeFocus?: ScrollViewProps['onFocus'];",
+          "line": 8,
+          "kind": "event",
+          "type": "ScrollViewProps['onFocus']"
+        },
+        {
+          "name": "onNativeBlur",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onNativeBlur?: ScrollViewProps['onBlur'];",
+          "line": 9,
+          "kind": "event",
+          "type": "ScrollViewProps['onBlur']"
+        },
+        {
+          "name": "managedKeys",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "managedKeys?: readonly string[];",
+          "line": 10,
+          "kind": "property",
+          "type": "readonly string[]"
+        },
+        {
+          "name": "nativeScrollable",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "nativeScrollable?: boolean;",
+          "line": 11,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "nativeScrollProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "nativeScrollProps?: ScrollViewProps;",
+          "line": 12,
+          "kind": "property",
+          "type": "ScrollViewProps"
+        },
+        {
+          "name": "nativeRootProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "nativeRootProps?: NativeListRootProps;",
+          "line": 13,
+          "kind": "property",
+          "type": "NativeListRootProps"
+        }
+      ],
+      "references": [
+        "NativeListRootProps",
+        "Omit",
+        "ScrollViewProps"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -183389,6 +184009,184 @@
         "ButtonBaseKeyEvent",
         "GestureResponderEvent"
       ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "MenuFocusSource",
+      "file": "src/nativeMenuRegistry.ts",
+      "line": 2,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeMenuRecord",
+      "file": "src/nativeMenuRegistry.ts",
+      "line": 3,
+      "kind": "type",
+      "members": [
+        {
+          "name": "id",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "id: string;",
+          "line": 4,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "element",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "element: ViewInstance;",
+          "line": 5,
+          "kind": "property",
+          "type": "ViewInstance"
+        },
+        {
+          "name": "token",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "token: object;",
+          "line": 6,
+          "kind": "property",
+          "type": "object"
+        },
+        {
+          "name": "disabled",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disabled: boolean;",
+          "line": 7,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "focusableWhenDisabled",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "focusableWhenDisabled: boolean;",
+          "line": 8,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "focusable",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "focusable: boolean;",
+          "line": 9,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "selected",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "selected: boolean;",
+          "line": 10,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "textValue",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "textValue?: string;",
+          "line": 11,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "focus",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "focus(source: MenuFocusSource): void;",
+          "line": 12,
+          "kind": "property",
+          "type": "focus(source: MenuFocusSource): void;"
+        }
+      ],
+      "references": [
+        "MenuFocusSource",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "MenuTextCriteria",
+      "file": "src/nativeMenuRegistry.ts",
+      "line": 24,
+      "kind": "type",
+      "members": [
+        {
+          "name": "keys",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "keys: string[];",
+          "line": 25,
+          "kind": "property",
+          "type": "string[]"
+        },
+        {
+          "name": "repeating",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "repeating: boolean;",
+          "line": 26,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "previousKeyMatched",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "previousKeyMatched: boolean;",
+          "line": 27,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "lastTime",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "lastTime: number | null;",
+          "line": 28,
+          "kind": "property",
+          "type": "number | null"
+        }
+      ],
+      "references": [],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
     },
@@ -185381,6 +186179,19 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "Metadata",
+      "file": "src/useMenuRegistration.ts",
+      "line": 5,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativeMenuRecord",
+        "Omit"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "Parameters",
       "file": "src/usePopoverPosition.ts",
       "line": 13,
@@ -186024,6 +186835,28 @@
           "line": 1,
           "kind": "property",
           "type": "string"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "NativeIconStyle",
+      "file": "src/iconContext.ts",
+      "line": 2,
+      "kind": "type",
+      "members": [
+        {
+          "name": "fontSize",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "fontSize?: number;",
+          "line": 3,
+          "kind": "property",
+          "type": "number"
         }
       ],
       "references": [],

@@ -12,6 +12,7 @@ import {
 import {
   useDefaultProps,
   NativeTextScope,
+  NativeIconStyleContext,
   useNativeTextContext,
   nativeTextStyleContext,
   type NativeStyle,
@@ -186,35 +187,42 @@ export const List: React.ForwardRefExoticComponent<
   );
 });
 function useAccessory(name: string, props: NativeListRootProps, icon: boolean) {
-  const { alignItems } = useContext(ListContext),
+  const { alignItems, menuItem, dense } = useContext(ListContext),
     theme = useTheme(),
     parent = useNativeTextContext();
   const resolved = useComponentStyle(name, { ...props, alignItems }, props.sx, {
     ...nativeTextStyleContext(parent, props.style, theme),
     overrideKeys: alignItems === 'flex-start' ? ['alignItemsFlexStart'] : [],
     baseStyle: {
-      minWidth: icon ? theme.spacing(4.5) : 56,
+      minWidth: icon ? (menuItem ? 36 : theme.spacing(4.5)) : 56,
       flexShrink: 0,
       ...(icon ? { color: theme.palette.action.active } : {}),
       ...(alignItems === 'flex-start' ? { marginTop: 8 } : {}),
     },
   });
-  return { theme, resolved };
+  return { theme, resolved, menuItem, dense };
 }
 export const ListItemIcon: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ListItemIconProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ListItemIconProps>(function ListItemIcon(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiListItemIcon' });
   const { component: Root = View, children, style, sx, ...native } = props;
-  const { theme, resolved } = useAccessory('MuiListItemIcon', props, true);
+  const { theme, resolved, menuItem, dense } = useAccessory('MuiListItemIcon', props, true);
+  const inheritedIcon = useContext(NativeIconStyleContext);
+  const iconScope = useMemo(
+    () => (menuItem && dense ? { ...inheritedIcon, fontSize: 20 } : inheritedIcon),
+    [menuItem, dense, inheritedIcon],
+  );
   return (
-    <NativeTextScope theme={theme} style={[resolved, style]} content={children}>
-      {(style, content) => (
-        <Root {...nativeListProps(native)} ref={ref} style={style}>
-          {content}
-        </Root>
-      )}
-    </NativeTextScope>
+    <NativeIconStyleContext.Provider value={iconScope}>
+      <NativeTextScope theme={theme} style={[resolved, style]} content={children}>
+        {(style, content) => (
+          <Root {...nativeListProps(native)} ref={ref} style={style}>
+            {content}
+          </Root>
+        )}
+      </NativeTextScope>
+    </NativeIconStyleContext.Provider>
   );
 });
 export const ListItemAvatar: React.ForwardRefExoticComponent<

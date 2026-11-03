@@ -32,22 +32,22 @@ pnpm check
 pnpm catalog
 ```
 
-The catalog uses Expo SDK 58. Rendering ButtonBase or ListItemButton requires a native development build because Expo Go does not include the library's interaction host. See [installation](docs/installation.md) and [native host](docs/native-host.md). Press `i` or `a` from Expo's terminal interface to launch the corresponding simulator. `pnpm --filter native-catalog ios` and `pnpm --filter native-catalog android` create development builds when native build prerequisites are installed.
+The catalog uses Expo SDK 58. Rendering ButtonBase, ListItemButton, MenuItem or MenuList requires a native development build because Expo Go does not include the library's interaction host. See [installation](docs/installation.md) and [native host](docs/native-host.md). Press `i` or `a` from Expo's terminal interface to launch the corresponding simulator. `pnpm --filter native-catalog ios` and `pnpm --filter native-catalog android` create development builds when native build prerequisites are installed.
 
 Do not run `npm install @altroo/mui-native` yet. For testing a separate application before publication, use the local tarball instructions in [installation](docs/installation.md).
 
 ## Packages
 
-| Package                             | Implemented development subset                                                                                      |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `@altroo/mui-native`                | Layout, typography, buttons, inputs, checkbox/radio/switch, dialog, popover, alert, progress, snackbar              |
-| `@altroo/mui-native-system`         | Theme provider, tokens, responsive `sx`, supported state selectors, component defaults/overrides/variants, `styled` |
-| `@altroo/mui-native-icons`          | Four original geometric icons; the full upstream icon inventory is tracked                                          |
-| `@altroo/mui-native-compat`         | Opt-in Metro import resolver and native TypeScript configuration generator                                          |
-| `@altroo/mui-native-x-data-grid`    | Recycled rows, fixed columns, single sorting/filtering, pagination, selection, basic server modes                   |
-| `@altroo/mui-native-x-tree-view`    | Rich tree expansion, single/multiple selection, custom item accessors                                               |
-| `@altroo/mui-native-x-charts`       | Native SVG bar and line charts, labels, item callbacks                                                              |
-| `@altroo/mui-native-x-date-pickers` | Day.js adapter, strict date field, calendar, dialog picker                                                          |
+| Package                             | Implemented development subset                                                                                                  |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `@altroo/mui-native`                | Layout, typography, buttons, inputs, lists, menu items/lists, checkbox/radio/switch, dialog, popover, alert, progress, snackbar |
+| `@altroo/mui-native-system`         | Theme provider, tokens, responsive `sx`, supported state selectors, component defaults/overrides/variants, `styled`             |
+| `@altroo/mui-native-icons`          | Four original geometric icons; the full upstream icon inventory is tracked                                                      |
+| `@altroo/mui-native-compat`         | Opt-in Metro import resolver and native TypeScript configuration generator                                                      |
+| `@altroo/mui-native-x-data-grid`    | Recycled rows, fixed columns, single sorting/filtering, pagination, selection, basic server modes                               |
+| `@altroo/mui-native-x-tree-view`    | Rich tree expansion, single/multiple selection, custom item accessors                                                           |
+| `@altroo/mui-native-x-charts`       | Native SVG bar and line charts, labels, item callbacks                                                                          |
+| `@altroo/mui-native-x-date-pickers` | Day.js adapter, strict date field, calendar, dialog picker                                                                      |
 
 These are prototypes with limited contracts. See [compatibility](docs/compatibility.md) before migrating application code. Scheduler and Chat are monitored but not implemented. Pro/Premium source and paid-only feature parity are excluded.
 
@@ -100,6 +100,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Native anchored Popover](docs/popover.md)
 - [Native ButtonBase activation and focus](docs/button-base.md)
 - [Native List composition, slots and scrolling](docs/lists.md)
+- [Native MenuItem/MenuList registration and keyboard](docs/menu-list.md)
 - [Native interaction host and custom roots](docs/native-host.md)
 - [Text rendering and inheritance in native containers](docs/text-containers.md)
 - [Spacing, breakpoints and responsive styles](docs/layout-system.md)
