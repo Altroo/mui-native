@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { InvoiceGrid } from './InvoiceGrid';
 import { PopperExamples } from './PopperExamples';
+import { KeyboardExamples } from './KeyboardExamples';
 import { createCatalogTheme } from './catalogTheme';
 import { RichTreeView } from '@mui/x-tree-view';
 import { BarChart, LineChart } from '@mui/x-charts';
@@ -61,12 +62,22 @@ export default function App() {
               />
             </View>
             <ScrollView
+              testID="catalog-tabs"
               horizontal
               showsHorizontalScrollIndicator={false}
               keyboardShouldPersistTaps="handled"
             >
               <View style={{ flexDirection: 'row', gap: 24 }} accessibilityRole="tablist">
-                {['Form', 'Grid', 'Overlays', 'Tree', 'Charts', 'Dates', 'Coverage'].map((name) => (
+                {[
+                  'Form',
+                  'Grid',
+                  'Overlays',
+                  'Tree',
+                  'Charts',
+                  'Dates',
+                  'Coverage',
+                  'Keyboard',
+                ].map((name) => (
                   <Pressable
                     key={name}
                     testID={`catalog-tab-${name}`}
@@ -95,6 +106,7 @@ export default function App() {
             </ScrollView>
           </View>
           <View style={{ flex: 1, paddingHorizontal: 16, paddingTop: 16 }}>
+            {section === 'Keyboard' ? <KeyboardExamples /> : null}
             {section === 'Form' ? (
               <ScrollView
                 keyboardShouldPersistTaps="handled"

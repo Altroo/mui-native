@@ -1,0 +1,323 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Autocomplete/Autocomplete.js": "c7e78eb149762dd84962f442dd943a1e7130fda6aecefd1bb9bf188261df8a73",
+      "Autocomplete/Autocomplete.d.ts": "bec13eada4b2194ee093657580d593b82ed1deb25b964e199b4a2b93de81224f",
+      "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+      "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c"
+    }
+  },
+  "renderer": {
+    "name": "react-dom",
+    "version": "19.3.0",
+    "integrity": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==",
+    "sourceFiles": {
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "cjs/react-dom-client.development.js": "c10b5e5ad37ca22c88b58bf4ada9a3b655ab79934c0b5cc6bad26f42c774584f"
+    }
+  },
+  "scope": "Original Autocomplete navigation default prevention, actual input target/focus, highlight, selection and IME-229 guard in Chromium. Native transport and physical keyboards are separate.",
+  "observations": [
+    {
+      "scenario": "navigation",
+      "key": "ArrowDown",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 00",
+      "inputValue": "",
+      "calls": [["caller", "ArrowDown", true]]
+    },
+    {
+      "scenario": "navigation",
+      "key": "ArrowDown",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 01",
+      "inputValue": "",
+      "calls": [["caller", "ArrowDown", true]]
+    },
+    {
+      "scenario": "navigation",
+      "key": "ArrowUp",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 00",
+      "inputValue": "",
+      "calls": [["caller", "ArrowUp", true]]
+    },
+    {
+      "scenario": "navigation",
+      "key": "End",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 11",
+      "inputValue": "",
+      "calls": [["caller", "End", true]]
+    },
+    {
+      "scenario": "navigation",
+      "key": "PageUp",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 06",
+      "inputValue": "",
+      "calls": [["caller", "PageUp", true]]
+    },
+    {
+      "scenario": "navigation",
+      "key": "PageDown",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 11",
+      "inputValue": "",
+      "calls": [["caller", "PageDown", true]]
+    },
+    {
+      "scenario": "navigation",
+      "key": "Home",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 00",
+      "inputValue": "",
+      "calls": [["caller", "Home", true]]
+    },
+    {
+      "scenario": "navigation",
+      "key": "Enter",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "false",
+      "highlighted": null,
+      "inputValue": "Option 00",
+      "calls": [
+        ["caller", "Enter", true],
+        ["change", "Option 00", "selectOption"],
+        ["close", "selectOption"]
+      ]
+    },
+    {
+      "scenario": "open from closed",
+      "key": "ArrowDown",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [
+        ["caller", "ArrowDown", true],
+        ["open", "keydown"]
+      ]
+    },
+    {
+      "scenario": "open from closed",
+      "key": "ArrowDown",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 00",
+      "inputValue": "",
+      "calls": [["caller", "ArrowDown", true]]
+    },
+    {
+      "scenario": "open from closed",
+      "key": "Escape",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "false",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [
+        ["caller", "Escape", true],
+        ["close", "escape"]
+      ]
+    },
+    {
+      "scenario": "free solo native home end",
+      "key": "Home",
+      "which": 0,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "Home", true]]
+    },
+    {
+      "scenario": "free solo native home end",
+      "key": "End",
+      "which": 0,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "End", true]]
+    },
+    {
+      "scenario": "explicit native home end",
+      "key": "Home",
+      "which": 0,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "Home", true]]
+    },
+    {
+      "scenario": "explicit native home end",
+      "key": "End",
+      "which": 0,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "End", true]]
+    },
+    {
+      "scenario": "skip disabled option",
+      "key": "ArrowDown",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 00",
+      "inputValue": "",
+      "calls": [["caller", "ArrowDown", true]]
+    },
+    {
+      "scenario": "skip disabled option",
+      "key": "ArrowDown",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 02",
+      "inputValue": "",
+      "calls": [["caller", "ArrowDown", true]]
+    },
+    {
+      "scenario": "IME settling",
+      "key": "ArrowDown",
+      "which": 229,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "ArrowDown", true]]
+    },
+    {
+      "scenario": "external cancellation",
+      "key": "ArrowDown",
+      "which": 0,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "ArrowDown", true]]
+    },
+    {
+      "scenario": "unowned editing",
+      "key": "a",
+      "which": 0,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "a", true]]
+    },
+    {
+      "scenario": "unowned editing",
+      "key": "Backspace",
+      "which": 0,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "Backspace", true]]
+    },
+    {
+      "scenario": "unowned editing",
+      "key": "Delete",
+      "which": 0,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "Delete", true]]
+    },
+    {
+      "scenario": "unowned editing",
+      "key": "ArrowLeft",
+      "which": 0,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "ArrowLeft", true]]
+    },
+    {
+      "scenario": "unowned editing",
+      "key": "ArrowRight",
+      "which": 0,
+      "prevented": false,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": null,
+      "inputValue": "",
+      "calls": [["caller", "ArrowRight", true]]
+    },
+    {
+      "scenario": "modified navigation",
+      "key": "End",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 11",
+      "inputValue": "",
+      "calls": [["caller", "End", true]]
+    },
+    {
+      "scenario": "modified navigation",
+      "key": "Home",
+      "which": 0,
+      "prevented": true,
+      "inputFocused": true,
+      "expanded": "true",
+      "highlighted": "Option 00",
+      "inputValue": "",
+      "calls": [["caller", "Home", true]]
+    }
+  ]
+}

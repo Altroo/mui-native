@@ -7,6 +7,7 @@ import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { createHash } from 'node:crypto';
+import { prepareKeyboardSource } from './android-keyboard-source.mjs';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -16,7 +17,7 @@ export const component = catalogPackage + '.test/' + runner;
 
 export async function prepare(project) {
   const gradlePath = join(project, 'app/build.gradle');
-  let gradle = await readFile(gradlePath, 'utf8');
+  let gradle = await readFile(gradlePath, { encoding: 'utf8' });
   if (!gradle.includes("applicationId '" + catalogPackage + "'"))
     throw Error('Expected the generated native catalog Android project');
   const marker = '// Native Popper catalog instrumentation';
@@ -27,17 +28,16 @@ export async function prepare(project) {
       throw Error('Preserve the existing instrumentation runner');
     gradle += `\n${marker}\nandroid { defaultConfig { testInstrumentationRunner '${runner}' } }\n`;
   }
-  const source = await readFile(
-    join(root, 'tests/native/android/PopperInstrumentation.java'),
-    'utf8',
-  );
+  const source = await readFile(join(root, 'tests/native/android/PopperInstrumentation.java'), {
+    encoding: 'utf8',
+  });
   const target = join(
     project,
     'app/src/androidTest/java/dev/altroo/muinative/catalog/test/PopperInstrumentation.java',
   );
   let previous;
   try {
-    previous = await readFile(target, 'utf8');
+    previous = await readFile(target, { encoding: 'utf8' });
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
@@ -46,13 +46,14 @@ export async function prepare(project) {
   if (previous !== undefined && previous !== source) {
     let record;
     try {
-      record = JSON.parse(await readFile(ownership, 'utf8'));
+      record = JSON.parse(await readFile(ownership, { encoding: 'utf8' }));
     } catch (error) {
       if (error.code !== 'ENOENT') throw error;
     }
     if (record?.sourceSha256 !== digest(previous))
       throw Error('Preserve edits to the generated instrumentation source');
   }
+  await prepareKeyboardSource(project);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, source);
   await writeFile(gradlePath, gradle);
@@ -239,6 +240,7 @@ export async function run({ adb, serial, output, signal }, execute = executeFile
         }
         await delay(100);
       } while (Date.now() < deadline);
+      // This error intentionally joins the test failure in the catch below.
       if (!stopped) throw Error('Catalog instrumentation is still active; restoration skipped');
     } catch (error) {
       throw new AggregateError(

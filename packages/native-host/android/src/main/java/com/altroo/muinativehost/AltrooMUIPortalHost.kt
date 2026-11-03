@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.common.annotations.UnstableReactNativeAPI
-import com.facebook.react.config.ReactFeatureFlags
 import com.facebook.react.uimanager.JSPointerDispatcher
 import com.facebook.react.uimanager.JSTouchDispatcher
 import com.facebook.react.uimanager.PointerEvents
@@ -265,6 +264,10 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
 
 /** No focus request, Dialog or new window. Empty regions fall through to the app root. */
 private var portalInsertionOrder = 0L
+// RN 0.88.1's own roots still use this flag; the generated feature flags have
+// no replacement for it. Keep pointer delivery consistent with those roots.
+@Suppress("DEPRECATION")
+private fun portalPointerEventsEnabled() = com.facebook.react.config.ReactFeatureFlags.dispatchPointerEvents
 private open class PortalContainer(protected val react: ThemedReactContext, source: View) : ReactViewGroup(react), PortalLogicalParent {
   private val sourceReference = WeakReference(source)
   override val portalSource: View? get() = sourceReference.get()
@@ -274,8 +277,8 @@ private open class PortalContainer(protected val react: ThemedReactContext, sour
   override fun dispatchKeyEvent(event: KeyEvent): Boolean {
     val focused = findFocus()
     if (focused != null && event.action in listOf(KeyEvent.ACTION_DOWN,KeyEvent.ACTION_UP)) {
-      val key = when(event.keyCode) { KeyEvent.KEYCODE_TAB -> "Tab"; KeyEvent.KEYCODE_ESCAPE -> "Escape"; else -> "" }
-      val owner = logicalKeyOwner(focused,key)
+      val key = interactiveKeyName(event)
+      val owner = logicalKeySequenceOwner(focused,event) ?: logicalKeyOwner(focused,key)
       if (owner != null && owner.dispatchDescendantKey(event,focused)) return true
     }
     return super.dispatchKeyEvent(event)
@@ -283,7 +286,7 @@ private open class PortalContainer(protected val react: ThemedReactContext, sour
 }
 private class PortalWindowRoot(react: ThemedReactContext, source: View) : PortalContainer(react,source), RootView {
   private val touch = JSTouchDispatcher(this)
-  private val pointer = if (ReactFeatureFlags.dispatchPointerEvents) JSPointerDispatcher(this) else null
+  private val pointer = if (portalPointerEventsEnabled()) JSPointerDispatcher(this) else null
   private val coords = FloatArray(2)
   private var ownsGesture = false
   private val dispatcher get() = UIManagerHelper.getEventDispatcher(react)

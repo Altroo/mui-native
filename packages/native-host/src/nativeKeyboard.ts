@@ -1,5 +1,15 @@
 import type { ViewProps } from 'react-native';
-export type NativeDescendantKey = 'Tab' | 'Escape';
+/** Commands a composite can declare before native text/focus defaults run. */
+export type NativeDescendantKey =
+  | 'Tab'
+  | 'Escape'
+  | 'ArrowUp'
+  | 'ArrowDown'
+  | 'PageUp'
+  | 'PageDown'
+  | 'Home'
+  | 'End'
+  | 'Enter';
 export interface NativeKeyMetadata {
   /** Hardware event on Android, or a UIKit keyboard-command invocation. */
   muiKeySource?: 'hardware' | 'command';

@@ -1,3 +1,4 @@
+/* Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 #import "AltrooMUIInteractiveViewComponentView.h"
 #import "AltrooPortalLogicalParent.h"
 #import <react/renderer/components/AltrooMuiNativeHostSpec/ComponentDescriptors.h>
@@ -14,10 +15,20 @@ static UIView *AltrooFirstResponder(UIView *root) {
   for (UIView *child in root.subviews) { UIView *found = AltrooFirstResponder(child); if (found) return found; }
   return nil;
 }
+/** Keep a finite command set. Ordinary text/caret/deletion keys stay native. */
+static NSDictionary<NSString *, NSString *> *AltrooDescendantInputs(void) {
+  static NSDictionary<NSString *, NSString *> *inputs;
+  static dispatch_once_t once;
+  dispatch_once(&once, ^{
+    inputs = @{@"Tab": @"\t", @"Escape": UIKeyInputEscape, @"Enter": @"\r",
+      @"ArrowUp": UIKeyInputUpArrow, @"ArrowDown": UIKeyInputDownArrow,
+      @"PageUp": UIKeyInputPageUp, @"PageDown": UIKeyInputPageDown,
+      @"Home": UIKeyInputHome, @"End": UIKeyInputEnd};
+  });
+  return inputs;
+}
 static NSString *AltrooDescendantKey(UIKeyCommand *command) {
-  if ([command.input isEqualToString:@"\t"]) return @"Tab";
-  if ([command.input isEqualToString:UIKeyInputEscape]) return @"Escape";
-  return nil;
+  return command.input ? [AltrooDescendantInputs() allKeysForObject:command.input].firstObject : nil;
 }
 @interface AltrooMUIInteractiveViewComponentView () <RCTAltrooMUIInteractiveViewViewProtocol>
 @end
@@ -54,13 +65,13 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
   NSMutableSet<NSString *> *descendants = [NSMutableSet set];
   for (const auto &key : next.managedDescendantKeys) {
     NSString *name = RCTNSStringFromString(key);
-    if ([name isEqualToString:@"Tab"] || [name isEqualToString:@"Escape"]) [descendants addObject:name];
+    if (AltrooDescendantInputs()[name]) [descendants addObject:name];
   }
   if (![_managedDescendantKeys isEqualToSet:descendants]) {
     _managedDescendantKeys = descendants;
     NSMutableArray<UIKeyCommand *> *commands = [NSMutableArray array];
     for (NSString *name in descendants) {
-      NSString *input = [name isEqualToString:@"Tab"] ? @"\t" : UIKeyInputEscape;
+      NSString *input = AltrooDescendantInputs()[name];
       for (NSUInteger combination = 0; combination < 32; combination++) {
         UIKeyModifierFlags flags = 0;
         if (combination & 1) flags |= UIKeyModifierShift;
@@ -201,6 +212,8 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
     case UIKeyboardHIDUsageKeyboardEscape: return @"Escape";
     case UIKeyboardHIDUsageKeyboardUpArrow: return @"ArrowUp";
     case UIKeyboardHIDUsageKeyboardDownArrow: return @"ArrowDown";
+    case UIKeyboardHIDUsageKeyboardPageUp: return @"PageUp";
+    case UIKeyboardHIDUsageKeyboardPageDown: return @"PageDown";
     case UIKeyboardHIDUsageKeyboardLeftArrow: return @"ArrowLeft";
     case UIKeyboardHIDUsageKeyboardRightArrow: return @"ArrowRight";
     case UIKeyboardHIDUsageKeyboardHome: return @"Home";

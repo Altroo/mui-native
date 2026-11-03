@@ -1,9 +1,8 @@
+/* Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 package com.altroo.muinativehost
 import com.facebook.react.ReactPackage
-import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.uimanager.ViewManager
 class AltrooMuiNativeHostPackage : ReactPackage {
-  override fun createNativeModules(context: ReactApplicationContext): List<NativeModule> = emptyList()
-  override fun createViewManagers(context: ReactApplicationContext): List<ViewManager<*, *>> = listOf(AltrooMUIInteractiveViewManager(), AltrooMUINativePickerManager(), AltrooMUIPortalHostManager(), AltrooMUIPortalCanvasManager())
+  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> = listOf(AltrooMUIInteractiveViewManager(), AltrooMUINativePickerManager(), AltrooMUIPortalHostManager(), AltrooMUIPortalCanvasManager())
 }

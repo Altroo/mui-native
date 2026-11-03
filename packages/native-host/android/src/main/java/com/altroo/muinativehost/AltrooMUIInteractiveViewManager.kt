@@ -1,3 +1,4 @@
+/* Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 package com.altroo.muinativehost
 
 import com.facebook.react.bridge.ReadableArray
@@ -58,7 +59,7 @@ class AltrooMUIInteractiveViewManager : ReactViewManager(),
   @ReactProp(name = "managedDescendantKeys")
   override fun setManagedDescendantKeys(view: ReactViewGroup, value: ReadableArray?) {
     (view as AltrooMUIInteractiveView).managedDescendantKeys =
-        (0 until (value?.size() ?: 0)).mapNotNull { value?.getString(it) }.filter { it == "Tab" || it == "Escape" }.toSet()
+        (0 until (value?.size() ?: 0)).mapNotNull { value?.getString(it) }.filter { it in descendantNavigationKeys }.toSet()
   }
 
   @ReactProp(name = "rippleEnabled", defaultBoolean = false)

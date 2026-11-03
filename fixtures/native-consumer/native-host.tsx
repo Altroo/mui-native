@@ -18,7 +18,17 @@ const props: InteractiveViewProps = {
   focusable: true,
   tabIndex: -1,
   managedKeys: ['ArrowDown', 'ArrowUp', 'Home', 'End'],
-  managedDescendantKeys: ['Tab', 'Escape'],
+  managedDescendantKeys: [
+    'Tab',
+    'Escape',
+    'ArrowUp',
+    'ArrowDown',
+    'PageUp',
+    'PageDown',
+    'Home',
+    'End',
+    'Enter',
+  ],
   onKeyDown: (event: NativeHostKeyEvent) => {
     const metadata: NativeKeyMetadata = event.nativeEvent;
     if (metadata.muiKeySource === 'command') event.nativeEvent.code;
@@ -42,8 +52,10 @@ export const browserRef = <InteractiveView ref={React.createRef<HTMLDivElement>(
 
 const command: NativeDescendantKey = 'Tab';
 void command;
-// @ts-expect-error Descendant ownership is restricted to Tab and Escape.
-export const editingKey = <InteractiveView managedDescendantKeys={['Enter']} />;
+// @ts-expect-error Ordinary character editing is not a declared navigation command.
+export const editingKey = <InteractiveView managedDescendantKeys={['a']} />;
+// @ts-expect-error Caret/tag-boundary navigation needs a separate native policy.
+export const caretKey = <InteractiveView managedDescendantKeys={['ArrowLeft']} />;
 
 // The low-level geometry channel remains separate from the public Portal layout callback.
 export const observedPortal = (

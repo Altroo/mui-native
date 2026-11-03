@@ -4,7 +4,7 @@ import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 const require = createRequire(import.meta.url);
 const consumer = resolve('.cache/consumer');
-const workspace = JSON.parse(await readFile('package.json', 'utf8'));
+const workspace = JSON.parse(await readFile('package.json', { encoding: 'utf8' }));
 const versions = workspace.devDependencies;
 execFileSync('pnpm', ['pack:all'], { stdio: 'inherit' });
 // Every run is a fresh install, including after workspace dependency upgrades.
@@ -38,7 +38,9 @@ execFileSync('npm', ['install', '--no-audit', '--no-fund', ...tarballs], {
   stdio: 'inherit',
 });
 for (const directory of await readdir('packages')) {
-  const manifest = JSON.parse(await readFile(`packages/${directory}/package.json`, 'utf8'));
+  const manifest = JSON.parse(
+    await readFile(`packages/${directory}/package.json`, { encoding: 'utf8' }),
+  );
   for (const notice of ['LICENSE', 'NOTICE']) {
     const expected = await readFile(`packages/${directory}/${notice}`, 'utf8');
     const installed = await readFile(`${consumer}/node_modules/${manifest.name}/${notice}`, 'utf8');
@@ -56,6 +58,8 @@ for (const file of [
   'android/src/main/java/com/altroo/muinativehost/PortalObservationGeometry.kt',
   'android/src/main/java/com/altroo/muinativehost/PortalObservationRect.kt',
   'android/src/main/java/com/altroo/muinativehost/PortalObservationEvent.kt',
+  'android/src/main/java/com/altroo/muinativehost/DescendantKeyPolicy.kt',
+  'android/src/main/java/com/altroo/muinativehost/DescendantKeyWindow.kt',
   'android/src/main/java/com/altroo/muinativehost/PortalPaddingBox.java',
   'ios/AltrooPortalObservation.h',
   'ios/AltrooPortalObservation.mm',
@@ -97,7 +101,8 @@ for (const directory of ['build', '.cxx', '.gradle']) {
   }
   throw new Error(`Native host archive includes Android build output: ${directory}`);
 }
-const hostManifest = JSON.parse(await readFile(`${nativeHost}/package.json`, 'utf8'));
+/** @type {{codegenConfig: {ios: {componentProvider: Record<string, string>}}}} */
+const hostManifest = JSON.parse(await readFile(`${nativeHost}/package.json`, { encoding: 'utf8' }));
 if (
   hostManifest.codegenConfig.ios.componentProvider.AltrooMUIInteractiveView !==
   'AltrooMUIInteractiveViewComponentView'
@@ -126,7 +131,7 @@ execFileSync(
 execFileSync(process.execPath, ['scripts/check-consumer-contexts.cjs', consumer], {
   stdio: 'inherit',
 });
-const lock = JSON.parse(await readFile(`${consumer}/package-lock.json`, 'utf8'));
+const lock = JSON.parse(await readFile(`${consumer}/package-lock.json`, { encoding: 'utf8' }));
 if (
   Object.keys(lock.packages).some(
     (name) => name.endsWith('/react-dom') || name.includes('node_modules/@mui/'),

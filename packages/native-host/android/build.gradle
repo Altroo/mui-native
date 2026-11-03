@@ -35,3 +35,11 @@ tasks.register("verifyPortalObservationPolicy", JavaExec) {
   classpath = files(providers.provider { tasks.named("testDebugUnitTest").get().classpath })
   mainClass.set("com.altroo.muinativehost.PortalObservationRectTestKt")
 }
+
+// The actual hardware sequence policy, including popup close/focus-change races.
+tasks.register("verifyDescendantKeyPolicy", JavaExec) {
+  group = "verification"
+  dependsOn("compileDebugUnitTestKotlin", "compileDebugUnitTestJavaWithJavac")
+  classpath = files(providers.provider { tasks.named("testDebugUnitTest").get().classpath })
+  mainClass.set("com.altroo.muinativehost.DescendantKeyPolicyTestKt")
+}
