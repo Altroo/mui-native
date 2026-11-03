@@ -51,6 +51,7 @@ for (const file of [
   'react-native.config.js',
   'AltrooMuiNativeHost.podspec',
   'src/AltrooMUIInteractiveViewNativeComponent.ts',
+  'src/nativeKeyboard.ts',
   'android/build.gradle',
   'android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveViewDelegate.java',
   'ios/AltrooMUIInteractiveViewComponentView.mm',

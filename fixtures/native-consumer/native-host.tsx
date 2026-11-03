@@ -6,13 +6,21 @@ import {
   setInteractiveHotspot,
   setInteractivePressed,
   type InteractiveViewProps,
+  type NativeDescendantKey,
+  type NativeHostKeyEvent,
+  type NativeKeyMetadata,
 } from '@altroo/mui-native-host';
 const ref = React.createRef<ViewInstance>();
 const props: InteractiveViewProps = {
   focusable: true,
   tabIndex: -1,
   managedKeys: ['ArrowDown', 'ArrowUp', 'Home', 'End'],
-  onKeyDown: (event) => event.nativeEvent.key,
+  managedDescendantKeys: ['Tab', 'Escape'],
+  onKeyDown: (event: NativeHostKeyEvent) => {
+    const metadata: NativeKeyMetadata = event.nativeEvent;
+    if (metadata.muiKeySource === 'command') event.nativeEvent.code;
+    return event.nativeEvent.key;
+  },
 };
 export const host = <InteractiveView {...props} ref={ref} />;
 export const control = (
@@ -28,3 +36,8 @@ export function focus() {
 }
 // @ts-expect-error This host exposes a native view, not a browser element.
 export const browserRef = <InteractiveView ref={React.createRef<HTMLDivElement>()} />;
+
+const command: NativeDescendantKey = 'Tab';
+void command;
+// @ts-expect-error Descendant ownership is restricted to Tab and Escape.
+export const editingKey = <InteractiveView managedDescendantKeys={['Enter']} />;

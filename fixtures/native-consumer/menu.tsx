@@ -58,7 +58,12 @@ void overrides;
 const slotProps: MenuSlotsAndSlotProps['slotProps'] = {
   root: (owner: MenuOwnerState) => ({ rootTone: owner.open ? 'strong' : 'quiet' }),
   paper: { ref: paper, sx: { maxWidth: 320 } },
-  list: (owner) => ({ ref: list, dense: owner.variant === 'menu' }),
+  list: (owner) => ({
+    ref: list,
+    dense: owner.variant === 'menu',
+    managedDescendantKeys: ['Tab'],
+    onKeyDown: (event) => event.muiKeySource,
+  }),
   transition: { onEntering: (node) => node.measureInWindow(() => {}) },
   backdrop: { invisible: true },
 };

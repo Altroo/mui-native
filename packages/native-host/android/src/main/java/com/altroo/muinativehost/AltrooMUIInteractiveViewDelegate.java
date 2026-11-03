@@ -29,6 +29,7 @@ final class AltrooMUIInteractiveViewDelegate extends
       case "nativeFocusable":
       case "nativeTabIndex":
       case "managedKeys":
+      case "managedDescendantKeys":
       case "rippleEnabled":
       case "rippleColor":
       case "rippleRadius":

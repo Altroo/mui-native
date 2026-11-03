@@ -18,11 +18,27 @@ type KeyData = Readonly<{
   isComposing: boolean;
   isCanceled: boolean;
 }>;
+type DescendantKeyData = Readonly<{
+  key: string;
+  code: string;
+  altKey: boolean;
+  ctrlKey: boolean;
+  metaKey: boolean;
+  shiftKey: boolean;
+  repeat?: boolean;
+  isComposing?: boolean;
+  isCanceled?: boolean;
+  muiKeySource?: string;
+  isEditable?: boolean;
+}>;
 type FocusData = Readonly<{ target: CodegenTypes.Int32 }>;
 export interface NativeProps extends ViewProps {
   nativeFocusable?: CodegenTypes.WithDefault<boolean, true>;
   nativeTabIndex?: CodegenTypes.WithDefault<CodegenTypes.Int32, 0>;
   managedKeys?: ReadonlyArray<string>;
+  managedDescendantKeys?: ReadonlyArray<string>;
+  onKeyDown?: CodegenTypes.BubblingEventHandler<DescendantKeyData>;
+  onKeyUp?: CodegenTypes.BubblingEventHandler<DescendantKeyData>;
   rippleEnabled?: CodegenTypes.WithDefault<boolean, false>;
   rippleColor?: ColorValue;
   rippleRadius?: CodegenTypes.WithDefault<CodegenTypes.Float, -1>;

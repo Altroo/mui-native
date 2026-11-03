@@ -6,7 +6,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
-- Anchored native Menu with five slots, source-shaped close/focus policy, native presentation gates, observed trigger restoration and nested keyboard ownership. See [native Menu](menu.md); Select, foreign-input hardware keys and physical overlay gates remain open.
+- Anchored native Menu with five slots, source-shaped close/focus policy, native presentation gates, observed trigger restoration and nested keyboard ownership. Declared descendant Tab/Escape retains actual control targets and callbacks; UIKit command metadata is limited. See [native Menu](menu.md) and [native host](native-host.md); Select, broader foreign-input keyboard contracts and physical overlay gates remain open.
 
 - Registered native MenuItem/MenuList composition, connected-node order, focus handoff, keyboard/typeahead, checkable roles and owned scrolling. See [native menu lists](menu-list.md) for the tested subset, native differences and open Menu/Select/device gates.
 

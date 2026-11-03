@@ -109,7 +109,9 @@ test('native private key/focus events and capture phases map to the public callb
     fireEvent(screen.getByTestId('host'), name, keyEvent());
     expect(handler).toHaveBeenCalledTimes(1);
   }
-  expect(screen.getByTestId('host').props.onKeyDown).toBeUndefined();
+  expect(typeof screen.getByTestId('host').props.onKeyDown).toBe('function');
+  fireEvent(screen.getByTestId('host'), 'keyDown', keyEvent());
+  expect(down).toHaveBeenCalledTimes(1);
   expect(typeof screen.getByTestId('host').props.onFocus).toBe('function');
   fireEvent(screen.getByTestId('host'), 'focus', keyEvent());
   expect(focus).toHaveBeenCalledTimes(1);

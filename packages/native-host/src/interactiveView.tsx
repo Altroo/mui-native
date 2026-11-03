@@ -1,5 +1,10 @@
 import React, { forwardRef, useCallback, useRef } from 'react';
 import type { ColorValue, ViewInstance, ViewProps } from 'react-native';
+import {
+  isDescendantKeyEvent,
+  type NativeDescendantKey,
+  type NativeHostKeyEvent,
+} from './nativeKeyboard';
 import { recordNativeFocus, clearNativeFocus } from './nativeFocus';
 import type { NativeProps } from './AltrooMUIInteractiveViewNativeComponent';
 let implementation: typeof import('./AltrooMUIInteractiveViewNativeComponent') | undefined;
@@ -11,7 +16,13 @@ export interface InteractiveViewProps extends ViewProps {
   /** Observe standard descendant focus events, including native TextInput. */
   onNativeFocus?: ViewProps['onFocus'];
   onNativeBlur?: ViewProps['onBlur'];
+  onKeyDown?: (event: NativeHostKeyEvent) => void;
+  onKeyUp?: (event: NativeHostKeyEvent) => void;
+  onKeyDownCapture?: (event: NativeHostKeyEvent) => void;
+  onKeyUpCapture?: (event: NativeHostKeyEvent) => void;
   managedKeys?: readonly string[];
+  /** Predeclared native commands from foreign descendants; editing keys stay native. */
+  managedDescendantKeys?: readonly NativeDescendantKey[];
   rippleColor?: ColorValue;
   rippleEnabled?: boolean;
   rippleRadius?: number;
@@ -144,6 +155,20 @@ export const InteractiveView: React.ForwardRefExoticComponent<
         onMUIKeyUpCapture: onKeyUpCapture,
         onMUIFocusCapture: onFocusCapture,
         onMUIBlurCapture: onBlurCapture,
+      }}
+      onKeyDown={(event: Parameters<NonNullable<ViewProps['onKeyDown']>>[0]) => {
+        if (isDescendantKeyEvent(event)) onKeyDown?.(event);
+      }}
+      onKeyUp={(event: Parameters<NonNullable<ViewProps['onKeyUp']>>[0]) => {
+        if (isDescendantKeyEvent(event)) onKeyUp?.(event);
+      }}
+      {...{
+        onKeyDownCapture: (event: Parameters<NonNullable<ViewProps['onKeyDown']>>[0]) => {
+          if (isDescendantKeyEvent(event)) onKeyDownCapture?.(event);
+        },
+        onKeyUpCapture: (event: Parameters<NonNullable<ViewProps['onKeyUp']>>[0]) => {
+          if (isDescendantKeyEvent(event)) onKeyUpCapture?.(event);
+        },
       }}
       onFocus={(event: Parameters<NonNullable<ViewProps['onFocus']>>[0]) => {
         recordNativeFocus(event.target);

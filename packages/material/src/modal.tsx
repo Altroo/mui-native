@@ -557,6 +557,15 @@ export const Modal: React.ForwardRefExoticComponent<
                 ? {}
                 : {
                     managedKeys: [...new Set(['Escape', ...(rootRest.managedKeys ?? [])])],
+                    managedDescendantKeys:
+                      open && presentationReady && manager.isTop(layer)
+                        ? [
+                            ...new Set([
+                              'Escape' as const,
+                              ...(rootRest.managedDescendantKeys ?? []),
+                            ]),
+                          ]
+                        : [],
                     focusable: rootRest.focusable ?? true,
                     tabIndex: rootRest.tabIndex ?? -1,
                   })}

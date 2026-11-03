@@ -4,12 +4,26 @@
 #import <react/renderer/components/AltrooMuiNativeHostSpec/Props.h>
 #import <react/renderer/components/AltrooMuiNativeHostSpec/RCTComponentViewHelpers.h>
 #import <React/RCTConversions.h>
+#import <React/RCTTouchableComponentViewProtocol.h>
+#import <react/renderer/core/RawEvent.h>
 using namespace facebook::react;
 
+static UIView *AltrooFirstResponder(UIView *root) {
+  if (root.isFirstResponder) return root;
+  for (UIView *child in root.subviews) { UIView *found = AltrooFirstResponder(child); if (found) return found; }
+  return nil;
+}
+static NSString *AltrooDescendantKey(UIKeyCommand *command) {
+  if ([command.input isEqualToString:@"\t"]) return @"Tab";
+  if ([command.input isEqualToString:UIKeyInputEscape]) return @"Escape";
+  return nil;
+}
 @interface AltrooMUIInteractiveViewComponentView () <RCTAltrooMUIInteractiveViewViewProtocol>
 @end
 @implementation AltrooMUIInteractiveViewComponentView {
   NSSet<NSString *> *_managedKeys;
+  NSSet<NSString *> *_managedDescendantKeys;
+  NSArray<UIKeyCommand *> *_descendantCommands;
   NSMutableSet<NSNumber *> *_pressedKeys;
   NSInteger _nativeTabIndex;
   BOOL _allowKeyboardFocus;
@@ -24,7 +38,7 @@ using namespace facebook::react;
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
     _props = std::make_shared<const AltrooMUIInteractiveViewProps>();
-    _managedKeys = [NSSet set]; _pressedKeys = [NSMutableSet set];
+    _managedKeys = [NSSet set]; _managedDescendantKeys = [NSSet set]; _descendantCommands = @[]; _pressedKeys = [NSMutableSet set];
   }
   return self;
 }
@@ -36,7 +50,90 @@ using namespace facebook::react;
   NSMutableSet *keys = [NSMutableSet set];
   for (const auto &key : next.managedKeys) [keys addObject:RCTNSStringFromString(key)];
   _managedKeys = keys;
+  NSMutableSet<NSString *> *descendants = [NSMutableSet set];
+  for (const auto &key : next.managedDescendantKeys) {
+    NSString *name = RCTNSStringFromString(key);
+    if ([name isEqualToString:@"Tab"] || [name isEqualToString:@"Escape"]) [descendants addObject:name];
+  }
+  if (![_managedDescendantKeys isEqualToSet:descendants]) {
+    _managedDescendantKeys = descendants;
+    NSMutableArray<UIKeyCommand *> *commands = [NSMutableArray array];
+    for (NSString *name in descendants) {
+      NSString *input = [name isEqualToString:@"Tab"] ? @"\t" : UIKeyInputEscape;
+      for (NSUInteger combination = 0; combination < 32; combination++) {
+        UIKeyModifierFlags flags = 0;
+        if (combination & 1) flags |= UIKeyModifierShift;
+        if (combination & 2) flags |= UIKeyModifierControl;
+        if (combination & 4) flags |= UIKeyModifierAlternate;
+        if (combination & 8) flags |= UIKeyModifierCommand;
+        if (combination & 16) flags |= UIKeyModifierAlphaShift;
+        UIKeyCommand *command = [UIKeyCommand keyCommandWithInput:input modifierFlags:flags action:@selector(altroo_handleDescendantKeyCommand:)];
+        command.wantsPriorityOverSystemBehavior = YES;
+        command.allowsAutomaticLocalization = NO; command.allowsAutomaticMirroring = NO;
+        [commands addObject:command];
+      }
+    }
+    _descendantCommands = commands;
+  }
   [super updateProps:props oldProps:oldProps];
+}
+- (NSArray<UIKeyCommand *> *)keyCommands {
+  NSArray<UIKeyCommand *> *inherited = [super keyCommands];
+  if (!_descendantCommands.count) return inherited;
+  return inherited.count ? [inherited arrayByAddingObjectsFromArray:_descendantCommands] : _descendantCommands;
+}
+- (UIView<RCTTouchableComponentViewProtocol> *)descendantTargetForKey:(NSString *)name responder:(UIView *__autoreleasing *)responder {
+  if (!name || !self.window || ![_managedDescendantKeys containsObject:name]) return nil;
+  UIView *source = AltrooFirstResponder(self);
+  if (!source) {
+    id<UIFocusItem> item = [UIFocusSystem focusSystemForEnvironment:self].focusedItem;
+    if ([(id)item isKindOfClass:UIView.class] && [(UIView *)item isDescendantOfView:self]) source = (UIView *)item;
+  }
+  if (!source || [source isKindOfClass:AltrooMUIInteractiveViewComponentView.class]) return nil;
+  BOOL editor = [source conformsToProtocol:@protocol(UIKeyInput)];
+  if (editor && ![source conformsToProtocol:@protocol(UITextInput)]) return nil;
+  if ([source conformsToProtocol:@protocol(UITextInput)] && ((id<UITextInput>)source).markedTextRange) return nil;
+  for (UIView *view = source.superview; view; view = view.superview) {
+    if ([view isKindOfClass:AltrooMUIInteractiveViewComponentView.class] &&
+        [((AltrooMUIInteractiveViewComponentView *)view)->_managedDescendantKeys containsObject:name]) {
+      if (view != self) return nil;
+      break;
+    }
+  }
+  for (UIView *view = source; view && view != self; view = view.superview) {
+    if ([view conformsToProtocol:@protocol(RCTTouchableComponentViewProtocol)]) {
+      auto target = (UIView<RCTTouchableComponentViewProtocol> *)view;
+      if ([target touchEventEmitterAtPoint:CGPointZero]) {
+        if (responder) *responder = source;
+        return target;
+      }
+    }
+  }
+  return nil;
+}
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+  if (action != @selector(altroo_handleDescendantKeyCommand:)) return [super canPerformAction:action withSender:sender];
+  if ([sender isKindOfClass:UIKeyCommand.class]) return [self descendantTargetForKey:AltrooDescendantKey(sender) responder:nil] != nil;
+  for (NSString *name in _managedDescendantKeys) if ([self descendantTargetForKey:name responder:nil]) return YES;
+  return NO;
+}
+- (void)altroo_handleDescendantKeyCommand:(UIKeyCommand *)command {
+  NSString *name = AltrooDescendantKey(command);
+  UIView *source = nil;
+  UIView<RCTTouchableComponentViewProtocol> *target = [self descendantTargetForKey:name responder:&source];
+  if (!target) return;
+  const auto emitter = [target touchEventEmitterAtPoint:CGPointZero];
+  if (!emitter) return;
+  UIKeyModifierFlags flags = command.modifierFlags;
+  auto payload = folly::dynamic::object
+    ("key", RCTStringFromNSString(name))("code", "Unidentified")
+    ("altKey", (flags & UIKeyModifierAlternate) != 0)("ctrlKey", (flags & UIKeyModifierControl) != 0)
+    ("metaKey", (flags & UIKeyModifierCommand) != 0)("shiftKey", (flags & UIKeyModifierShift) != 0)
+    ("isComposing", false)("isCanceled", false)("muiKeySource", "command")
+    ("isEditable", (bool)[source conformsToProtocol:@protocol(UITextInput)])("target", (int)target.tag);
+  // UIKit commands carry no physical key-up, scan code or repeat metadata.
+  // Use the descendant emitter so target identity and the child's handlers are preserved.
+  emitter->dispatchEvent("keyDown", std::move(payload), RawEvent::Category::Discrete);
 }
 - (BOOL)canBecomeFirstResponder { return _allowKeyboardFocus && !_releasingFocus; }
 - (BOOL)canBecomeFocused { return _allowKeyboardFocus && !_releasingFocus && (_nativeTabIndex >= 0 || _requestingFocus || self.focused); }
@@ -192,6 +289,7 @@ using namespace facebook::react;
 }
 - (void)prepareForRecycle {
   [self resignFirstResponder]; [_pressedKeys removeAllObjects]; _focusReported = NO;
+  _managedDescendantKeys = [NSSet set]; _descendantCommands = @[];
   _managedKeys = [NSSet set]; _nativeTabIndex = 0; _allowKeyboardFocus = NO; _focusOnAttach = NO; _releasingFocus = NO;
   [super prepareForRecycle];
 }

@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "c1472ae8e09f159748020670466f7f84556f5e20f93f31f4d7e455fc1096a624",
+  "nativeSourceSha256": "b7ed2e0fa93c95c07453ca308e4f545f61df46cd4bde56561ec8b316fd864fc6",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -35240,7 +35240,7 @@
           "module": "@altroo/mui-native:src/nativeButtonEvents.ts",
           "name": "ButtonBaseActivationEvent",
           "kind": "type",
-          "line": 7
+          "line": 8
         }
       ]
     },
@@ -35251,7 +35251,7 @@
           "module": "@altroo/mui-native:src/nativeButtonEvents.ts",
           "name": "ButtonBaseKeyEvent",
           "kind": "type",
-          "line": 4
+          "line": 5
         }
       ]
     },
@@ -35603,7 +35603,7 @@
           "module": "@altroo/mui-native:src/menuList.tsx",
           "name": "MenuListActions",
           "kind": "type",
-          "line": 38
+          "line": 39
         }
       ]
     },
@@ -35614,7 +35614,7 @@
           "module": "@altroo/mui-native:src/menuListRoot.tsx",
           "name": "NativeMenuListRoot",
           "kind": "value",
-          "line": 15
+          "line": 16
         }
       ]
     },
@@ -86864,13 +86864,13 @@
         {
           "name": "MenuListOwnProps",
           "file": "src/menuList.tsx",
-          "line": 46,
+          "line": 47,
           "package": "@altroo/mui-native"
         },
         {
           "name": "MenuListProps",
           "file": "src/menuList.tsx",
-          "line": 59,
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -86936,7 +86936,7 @@
         {
           "name": "MenuListProps",
           "file": "src/menuList.tsx",
-          "line": 59,
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -87034,13 +87034,13 @@
         {
           "name": "MenuListOwnProps",
           "file": "src/menuList.tsx",
-          "line": 46,
+          "line": 47,
           "package": "@altroo/mui-native"
         },
         {
           "name": "MenuListProps",
           "file": "src/menuList.tsx",
-          "line": 59,
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -87106,7 +87106,7 @@
         {
           "name": "MenuListProps",
           "file": "src/menuList.tsx",
-          "line": 59,
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -183624,7 +183624,7 @@
     {
       "name": "MenuListActions",
       "file": "src/menuList.tsx",
-      "line": 38,
+      "line": 39,
       "kind": "type",
       "members": [
         {
@@ -183634,7 +183634,7 @@
           "computed": false,
           "memberKind": "TSMethodSignature",
           "declaration": "focusInitialTarget(): ViewInstance | null;",
-          "line": 39,
+          "line": 40,
           "kind": "property",
           "type": "focusInitialTarget(): ViewInstance | null;"
         },
@@ -183645,7 +183645,7 @@
           "computed": false,
           "memberKind": "TSMethodSignature",
           "declaration": "adjustStyleForScrollbar(\n    container?: ViewInstance | null,\n    options?: { direction?: 'ltr' | 'rtl' },\n  ): ViewInstance | null;",
-          "line": 41,
+          "line": 42,
           "kind": "property",
           "type": "adjustStyleForScrollbar(\n    container?: ViewInstance | null,\n    options?: { direction?: 'ltr' | 'rtl' },\n  ): ViewInstance | null;"
         }
@@ -183659,7 +183659,7 @@
     {
       "name": "MenuListOwnProps",
       "file": "src/menuList.tsx",
-      "line": 46,
+      "line": 47,
       "kind": "type",
       "members": [
         {
@@ -183669,7 +183669,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "autoFocus?: boolean;",
-          "line": 47,
+          "line": 48,
           "kind": "property",
           "type": "boolean"
         },
@@ -183680,7 +183680,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "autoFocusItem?: boolean;",
-          "line": 48,
+          "line": 49,
           "kind": "property",
           "type": "boolean"
         },
@@ -183691,7 +183691,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabledItemsFocusable?: boolean;",
-          "line": 49,
+          "line": 50,
           "kind": "property",
           "type": "boolean"
         },
@@ -183702,7 +183702,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableListWrap?: boolean;",
-          "line": 50,
+          "line": 51,
           "kind": "property",
           "type": "boolean"
         },
@@ -183713,7 +183713,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: 'menu' | 'selectedMenu';",
-          "line": 51,
+          "line": 52,
           "kind": "property",
           "type": "'menu' | 'selectedMenu'"
         },
@@ -183724,7 +183724,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "actions?: React.Ref<MenuListActions>;",
-          "line": 52,
+          "line": 53,
           "kind": "property",
           "type": "React.Ref<MenuListActions>"
         },
@@ -183735,7 +183735,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusSource?: MenuFocusSource;",
-          "line": 54,
+          "line": 55,
           "kind": "property",
           "type": "MenuFocusSource"
         },
@@ -183746,9 +183746,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "managedKeys?: readonly string[];",
-          "line": 55,
+          "line": 56,
           "kind": "property",
           "type": "readonly string[]"
+        },
+        {
+          "name": "managedDescendantKeys",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "managedDescendantKeys?: readonly NativeDescendantKey[];",
+          "line": 57,
+          "kind": "property",
+          "type": "readonly NativeDescendantKey[]"
         },
         {
           "name": "onKeyDown",
@@ -183757,7 +183768,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onKeyDown?: (event: ButtonBaseKeyEvent) => void;",
-          "line": 56,
+          "line": 58,
           "kind": "event",
           "type": "(event: ButtonBaseKeyEvent) => void"
         },
@@ -183768,7 +183779,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onKeyDownCapture?: (event: ButtonBaseKeyEvent) => void;",
-          "line": 57,
+          "line": 59,
           "kind": "event",
           "type": "(event: ButtonBaseKeyEvent) => void"
         }
@@ -183777,6 +183788,7 @@
         "ButtonBaseKeyEvent",
         "MenuFocusSource",
         "MenuListActions",
+        "NativeDescendantKey",
         "React.Ref"
       ],
       "inheritanceResolved": false,
@@ -183785,7 +183797,7 @@
     {
       "name": "MenuListProps",
       "file": "src/menuList.tsx",
-      "line": 59,
+      "line": 61,
       "kind": "type",
       "members": [],
       "references": [
@@ -183836,13 +183848,24 @@
           "type": "readonly string[]"
         },
         {
+          "name": "managedDescendantKeys",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "managedDescendantKeys?: readonly NativeDescendantKey[];",
+          "line": 11,
+          "kind": "property",
+          "type": "readonly NativeDescendantKey[]"
+        },
+        {
           "name": "nativeScrollable",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeScrollable?: boolean;",
-          "line": 11,
+          "line": 12,
           "kind": "property",
           "type": "boolean"
         },
@@ -183853,7 +183876,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeScrollProps?: ScrollViewProps;",
-          "line": 12,
+          "line": 13,
           "kind": "property",
           "type": "ScrollViewProps"
         },
@@ -183864,12 +183887,13 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeRootProps?: NativeListRootProps;",
-          "line": 13,
+          "line": 14,
           "kind": "property",
           "type": "NativeListRootProps"
         }
       ],
       "references": [
+        "NativeDescendantKey",
         "NativeListRootProps",
         "Omit",
         "ScrollViewProps"
@@ -184704,7 +184728,7 @@
     {
       "name": "NativeKeyEvent",
       "file": "src/nativeButtonEvents.ts",
-      "line": 2,
+      "line": 3,
       "kind": "type",
       "members": [],
       "references": [
@@ -184718,23 +184742,12 @@
     {
       "name": "KeyDetails",
       "file": "src/nativeButtonEvents.ts",
-      "line": 3,
+      "line": 4,
       "kind": "type",
-      "members": [
-        {
-          "name": "isCanceled",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "isCanceled?: boolean",
-          "line": 3,
-          "kind": "property",
-          "type": "boolean"
-        }
-      ],
+      "members": [],
       "references": [
-        "NativeKeyEvent"
+        "NativeKeyEvent",
+        "NativeKeyMetadata"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -184742,7 +184755,7 @@
     {
       "name": "ButtonBaseKeyEvent",
       "file": "src/nativeButtonEvents.ts",
-      "line": 4,
+      "line": 5,
       "kind": "type",
       "members": [
         {
@@ -184752,7 +184765,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeEvent: KeyDetails;",
-          "line": 5,
+          "line": 6,
           "kind": "property",
           "type": "KeyDetails"
         }
@@ -184768,7 +184781,7 @@
     {
       "name": "ButtonBaseActivationEvent",
       "file": "src/nativeButtonEvents.ts",
-      "line": 7,
+      "line": 8,
       "kind": "type",
       "members": [],
       "references": [

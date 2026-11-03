@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import { ScrollView, type ViewInstance, type ScrollViewProps } from 'react-native';
-import { InteractiveView } from '@altroo/mui-native-host';
+import { InteractiveView, type NativeDescendantKey } from '@altroo/mui-native-host';
 import type { NativeListRootProps } from './lists';
 export interface MenuListRootProps
   extends NativeListRootProps,
@@ -8,6 +8,7 @@ export interface MenuListRootProps
   onNativeFocus?: ScrollViewProps['onFocus'];
   onNativeBlur?: ScrollViewProps['onBlur'];
   managedKeys?: readonly string[];
+  managedDescendantKeys?: readonly NativeDescendantKey[];
   nativeScrollable?: boolean;
   nativeScrollProps?: ScrollViewProps;
   nativeRootProps?: NativeListRootProps;

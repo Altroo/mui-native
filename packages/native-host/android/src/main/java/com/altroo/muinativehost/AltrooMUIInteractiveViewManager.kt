@@ -55,6 +55,12 @@ class AltrooMUIInteractiveViewManager : ReactViewManager(),
         (0 until (value?.size() ?: 0)).mapNotNull { value?.getString(it) }.toSet()
   }
 
+  @ReactProp(name = "managedDescendantKeys")
+  override fun setManagedDescendantKeys(view: ReactViewGroup, value: ReadableArray?) {
+    (view as AltrooMUIInteractiveView).managedDescendantKeys =
+        (0 until (value?.size() ?: 0)).mapNotNull { value?.getString(it) }.filter { it == "Tab" || it == "Escape" }.toSet()
+  }
+
   @ReactProp(name = "rippleEnabled", defaultBoolean = false)
   override fun setRippleEnabled(view: ReactViewGroup, value: Boolean) {
     (view as AltrooMUIInteractiveView).apply { rippleEnabled = value; updateRipple() }
@@ -109,7 +115,7 @@ class AltrooMUIInteractiveViewManager : ReactViewManager(),
   override fun getExportedCustomBubblingEventTypeConstants(): MutableMap<String, Any> {
     val events = super.getExportedCustomBubblingEventTypeConstants()?.toMutableMap()
         ?: mutableMapOf()
-    for (name in listOf("MUIKeyDown", "MUIKeyUp", "MUIFocus", "MUIBlur")) {
+    for (name in listOf("MUIKeyDown", "MUIKeyUp", "MUIFocus", "MUIBlur", "KeyDown", "KeyUp")) {
       events["top$name"] = mapOf("phasedRegistrationNames" to mapOf(
         "bubbled" to "on$name", "captured" to "on${name}Capture",
       ))

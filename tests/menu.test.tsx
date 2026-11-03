@@ -28,7 +28,7 @@ import { RtlProvider } from '../packages/system/src';
 import { getNativeFocusedView } from '../packages/native-host/src';
 import { Commands } from '../packages/native-host/src/AltrooMUIInteractiveViewNativeComponent';
 import { clearNativeFocus } from '../packages/native-host/src/nativeFocus';
-import { NativeMenuModel } from './helpers/nativeMenuModel';
+import { NativeMenuOverlayModel as MenuModel } from './helpers/nativeMenuOverlayModel';
 import { useForkRef } from '../packages/material/src/utils';
 import { nativeModalManager } from '../packages/material/src/nativeModalManager';
 import reference from './fixtures/mui-menu-9.5.0.json';
@@ -197,62 +197,6 @@ test('Menu class helpers retain pinned identifiers without claiming native CSS r
   for (const [slot, value] of reference.helpers.utility)
     expect(getMenuUtilityClass(slot)).toBe(value);
 });
-class MenuModel extends NativeMenuModel {
-  open = true;
-  menuProps: Partial<MenuProps> = {};
-  Root: React.ComponentType<MenuRootProps>;
-  Paper: React.ComponentType<MenuPaperProps>;
-  constructor(input: ConstructorParameters<typeof NativeMenuModel>[0]) {
-    super(input);
-    this.parents.set('overlay', null);
-    this.parents.set('paper', 'overlay');
-    this.parents.set('list', 'paper');
-    const model = this;
-    this.Root = forwardRef<ViewInstance, MenuRootProps>((props, ref) => {
-      const merged = useForkRef(
-        ref,
-        (node) => {
-          if (node) geometry(node, true);
-        },
-        model.attach('overlay'),
-      );
-      return <PopoverRoot {...props} ref={merged} />;
-    });
-    this.Paper = forwardRef<ViewInstance, MenuPaperProps>((props, ref) => {
-      const merged = useForkRef(
-        ref,
-        (node) => {
-          if (node) geometry(node, false);
-        },
-        model.attach('paper'),
-      );
-      return <MenuPaper {...props} ref={merged} />;
-    });
-  }
-  element() {
-    const list = super.element(),
-      props: any = { ...list.props };
-    for (const key of Object.keys(props)) if (props[key] === undefined) delete props[key];
-    return (
-      <Menu
-        open={this.open}
-        disablePortal
-        anchorEl={anchor}
-        transitionDuration={10}
-        slots={{ root: this.Root, paper: this.Paper }}
-        {...this.menuProps}
-        slotProps={{
-          root: { testID: 'overlay' },
-          paper: { testID: 'paper' },
-          list: props,
-          ...this.menuProps.slotProps,
-        }}
-      >
-        {list.props.children}
-      </Menu>
-    );
-  }
-}
 test('default Menu focuses the selected connected item after placement', async () => {
   const model = await new MenuModel({
     items: [

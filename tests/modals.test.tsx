@@ -133,11 +133,11 @@ test('hardware key dispatch respects top ownership and ignores composing Escape'
     nativeEvent: { key: 'Escape', isComposing },
     stopPropagation: stop,
   });
-  fireEvent(screen.getByTestId('a', { includeHiddenElements: true }), 'keyDown', event());
-  fireEvent(screen.getByTestId('b'), 'keyDown', event(true));
+  fireEvent(screen.getByTestId('a', { includeHiddenElements: true }), 'MUIKeyDown', event());
+  fireEvent(screen.getByTestId('b'), 'MUIKeyDown', event(true));
   expect(a).not.toHaveBeenCalled();
   expect(b).not.toHaveBeenCalled();
-  fireEvent(screen.getByTestId('b'), 'keyDown', event());
+  fireEvent(screen.getByTestId('b'), 'MUIKeyDown', event());
   expect(external).toHaveBeenCalledTimes(2);
   expect(b.mock.calls[0][1]).toBe('escapeKeyDown');
   expect(stop).toHaveBeenCalledTimes(1);

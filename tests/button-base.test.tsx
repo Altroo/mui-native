@@ -146,7 +146,7 @@ test.each(reference.disabledFocus)(
     expect(screen.getByTestId('base').props.nativeTabIndex).toBe(fixture.tabIndex);
     for (const input of fixture.keys) {
       const e = event(input.key);
-      fireEvent(screen.getByTestId('base'), 'keyDown', e);
+      fireEvent(screen.getByTestId('base'), 'MUIKeyDown', e);
       expect(e.defaultPrevented).toBe(input.prevented);
     }
     expect(down).toHaveBeenCalledTimes(fixture.disabled ? 0 : fixture.keys.length);
@@ -215,7 +215,7 @@ test('keyboard adapter preserves native provenance, cancellation and event metho
     }),
   );
   const e = event('a');
-  fireEvent(screen.getByTestId('base'), 'keyDown', e);
+  fireEvent(screen.getByTestId('base'), 'MUIKeyDown', e);
   expect(received.key).toBe('a');
   expect(received.nativeEvent).toBe(e.nativeEvent);
   expect(received.defaultPrevented).toBe(true);
@@ -226,19 +226,19 @@ test('keyboard adapter preserves native provenance, cancellation and event metho
 test('composing IME keys do not activate native buttons', () => {
   const click = jest.fn();
   render(field({ onClick: click }));
-  fireEvent(screen.getByTestId('base'), 'keyDown', event('Enter', false, { isComposing: true }));
-  fireEvent(screen.getByTestId('base'), 'keyUp', event(' ', false, { isComposing: true }));
+  fireEvent(screen.getByTestId('base'), 'MUIKeyDown', event('Enter', false, { isComposing: true }));
+  fireEvent(screen.getByTestId('base'), 'MUIKeyUp', event(' ', false, { isComposing: true }));
   expect(click).not.toHaveBeenCalled();
 });
 test('native link activation honors click cancellation including the separate keyboard activation', () => {
   const open = jest.spyOn(Linking, 'openURL').mockResolvedValue(undefined);
   const { rerender } = render(field({ href: 'https://example.com' }));
-  fireEvent(screen.getByTestId('base'), 'keyDown', event('Enter'));
+  fireEvent(screen.getByTestId('base'), 'MUIKeyDown', event('Enter'));
   expect(open).toHaveBeenCalledTimes(1);
   expect(open).toHaveBeenCalledWith('https://example.com');
   rerender(field({ href: 'https://example.com', onClick: (e) => e.preventDefault() }));
   fireEvent.press(screen.getByTestId('base'), event());
-  fireEvent(screen.getByTestId('base'), 'keyUp', event(' '));
+  fireEvent(screen.getByTestId('base'), 'MUIKeyUp', event(' '));
   expect(open).toHaveBeenCalledTimes(1);
   expect(screen.getByTestId('base').props.accessibilityRole).toBe('link');
 });

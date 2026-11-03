@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import type { NativeDescendantKey } from '@altroo/mui-native-host';
 import type { ViewInstance, ViewProps } from 'react-native';
 import { useDefaultProps } from '@altroo/mui-native-system';
 import { List, type ListProps } from './lists';
@@ -53,6 +54,7 @@ export interface MenuListOwnProps {
   /** Optional native initial-input signal; Select also supplies this internally. */
   focusSource?: MenuFocusSource;
   managedKeys?: readonly string[];
+  managedDescendantKeys?: readonly NativeDescendantKey[];
   onKeyDown?: (event: ButtonBaseKeyEvent) => void;
   onKeyDownCapture?: (event: ButtonBaseKeyEvent) => void;
 }

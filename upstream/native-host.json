@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "name": "react-native",
   "version": "0.88.1",
-  "description": "Native host integrates public Fabric, View and Pressability contracts. API adapters and Java/Kotlin bridge handling follow installed MIT-licensed React Native source. This is not a runtime compatibility or device-validation claim. Standard descendant focus observers preserve native TextInput focus bubbling separately from private host events. Weak observed native focus supports overlay restoration, and the native Modal lifecycle determines presentation readiness; no optimistic requested-focus or global flag changes.",
+  "description": "Native host integrates public Fabric, View and Pressability contracts. API adapters and Java/Kotlin bridge handling follow installed MIT-licensed React Native source. This is not a runtime compatibility or device-validation claim. Standard descendant focus observers preserve native TextInput focus bubbling separately from private host events. Weak observed native focus supports overlay restoration, and the native Modal lifecycle determines presentation readiness; no optimistic requested-focus or global flag changes. Declared Tab/Escape from foreign native descendants dispatch at the actual React target through public Fabric event APIs. Android hardware events and UIKit command invocations retain distinct metadata and composition guards; native window request-close remains a separate route.",
   "licenseFile": "upstream/licenses/react-native-0.88.1.txt",
   "licenseSha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
   "sourceFiles": {
@@ -18,7 +18,15 @@
     "src/private/webapis/dom/nodes/ReadOnlyNode.js": "a8f76b52ea437f4a8d8bb0044fe2f45c21da0be76594a0aa2ca9a2d5e47b290b",
     "ReactCommon/react/runtime/hermes/HermesInstance.cpp": "2499065570f9802b1f67e3d9e78880235a5ec20386a0ce1151a8cec1c5c6e127",
     "sdks/hermes-engine/version.properties": "7a45e9f54b3bf311805352b4f2f9d930c7bbeafcde46018ccd6a22ed10122720",
-    "ReactAndroid/src/main/java/com/facebook/react/views/modal/ReactModalHostView.kt": "800b4173ab9c2cdf3919706bbb756a8dcf00f683bccaca4c852d71e16a154668"
+    "ReactAndroid/src/main/java/com/facebook/react/views/modal/ReactModalHostView.kt": "800b4173ab9c2cdf3919706bbb756a8dcf00f683bccaca4c852d71e16a154668",
+    "React/Fabric/RCTTouchableComponentViewProtocol.h": "36a4b9d5a872280dcdd488bf1d3b2d2e910300ccdd82f8657ccdac299a3cd6a3",
+    "React/Fabric/Mounting/ComponentViews/View/RCTViewComponentView.mm": "f59e0d96a534f5a377612c51c52f87470f9429b11c6728d2bdbec434946e3fba",
+    "React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm": "796c5a19c1edcfa290f301ce0cbe67f42f9966336d90c210e1ab8b164c3f9f15",
+    "ReactCommon/react/renderer/core/EventEmitter.h": "a933d5c91c2cfa0d6c511c4df3330c2d5340a8a8a4a3dcacffeaa01133e1218d",
+    "ReactCommon/react/renderer/core/RawEvent.h": "71d1d9b3d739ab56bf37efa0c0f898abf94468f1b329099cf9d6a92ecd747f98",
+    "ReactAndroid/src/main/java/com/facebook/react/uimanager/UIManagerHelper.kt": "89a9f4b9c60719605902a90a2848d55d50bc5c1cfa400392baaaae0ff5a0b30a",
+    "ReactAndroid/src/main/java/com/facebook/react/uimanager/events/Event.kt": "98bb0f1ed18a3c6a5c40abd71b239e37b40c181920cb4767b9a4b0eeaf8b0511",
+    "ReactAndroid/src/main/java/com/facebook/react/fabric/FabricUIManager.java": "e813136b094d6855d097181e4a8da4a9a5a240c6729688b857dbbb84a97dd968"
   },
   "localFiles": [
     "packages/native-host/src/NativePressable.tsx",
@@ -28,6 +36,11 @@
     "packages/native-host/src/nativeFocus.ts",
     "packages/material/src/modal.tsx",
     "packages/material/src/nativeOverlayReadiness.ts",
-    "packages/material/src/menuList.tsx"
+    "packages/material/src/menuList.tsx",
+    "packages/native-host/src/nativeKeyboard.ts",
+    "packages/native-host/src/AltrooMUIInteractiveViewNativeComponent.ts",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveView.kt",
+    "packages/native-host/ios/AltrooMUIInteractiveViewComponentView.mm",
+    "packages/material/src/menu.tsx"
   ]
 }

@@ -8,6 +8,10 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.RippleDrawable
 import android.view.KeyEvent
+import android.view.inputmethod.BaseInputConnection
+import android.widget.EditText
+import com.facebook.react.uimanager.common.UIManagerType
+import com.facebook.react.uimanager.IllegalViewOperationException
 import android.view.View
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableMap
@@ -16,14 +20,17 @@ import com.facebook.react.uimanager.UIManagerHelper
 import com.facebook.react.uimanager.events.Event
 import com.facebook.react.views.view.ReactViewGroup
 
-internal class HostEvent(surface: Int, tag: Int, private val name: String, private val data: WritableMap) : Event<HostEvent>(surface, tag) {
+internal class HostEvent(surface: Int, tag: Int, private val name: String, private val data: WritableMap, private val discrete: Boolean = false) : Event<HostEvent>(surface, tag) {
   override fun getEventName() = name
   override fun canCoalesce() = false
   override fun getEventData() = data
+  // RN RawEvent::Category::Discrete. The category constants are Kotlin-internal.
+  override fun getEventCategory(): Int = if (discrete) 3 else super.getEventCategory()
 }
 class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(context) {
   var nativeTabIndex = 0
   var managedKeys: Set<String> = emptySet()
+  var managedDescendantKeys: Set<String> = emptySet()
   var allowKeyboardFocus = true
   var rippleEnabled = false
   var rippleColor: Int? = null
@@ -67,8 +74,56 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
     }
     return false
   }
+  private fun descendantOwner(focused: View, key: String): AltrooMUIInteractiveView? {
+    var current: View? = focused
+    while (current != null) {
+      // Host-focused events already use their own private key channel.
+      if (current === focused && current is AltrooMUIInteractiveView) return null
+      if (current is AltrooMUIInteractiveView && key in current.managedDescendantKeys) return current
+      current = current.parent as? View
+    }
+    return null
+  }
+  private fun reactTarget(focused: View): View? {
+    val manager = UIManagerHelper.getUIManager(context as ThemedReactContext, UIManagerType.FABRIC) ?: return null
+    var current: View? = focused
+    while (current != null && current !== this) {
+      if (current.id != View.NO_ID) {
+        try { if (manager.resolveView(current.id) === current) return current }
+        catch (_: IllegalViewOperationException) { /* Pure native subview; use its React component. */ }
+      }
+      current = current.parent as? View
+    }
+    return null
+  }
+  private fun dispatchDescendantKey(event: KeyEvent, focused: View): Boolean {
+    val key = keyName(event)
+    if (descendantOwner(focused, key) !== this || event.flags and KeyEvent.FLAG_SOFT_KEYBOARD != 0) return false
+    val editor = focused.onCheckIsTextEditor()
+    if (editor && focused !is EditText) return false // Unknown composition API is application-owned.
+    if (focused is EditText && (BaseInputConnection.getComposingSpanStart(focused.editableText) >= 0 || BaseInputConnection.getComposingSpanEnd(focused.editableText) >= 0)) return false
+    val target = reactTarget(focused) ?: return false
+    val reactContext = context as ThemedReactContext
+    val dispatcher = UIManagerHelper.getEventDispatcher(reactContext) ?: return false
+    val surface = UIManagerHelper.getSurfaceId(target)
+    if (surface < 0) return false
+    val data = Arguments.createMap().apply {
+      putString("key", key); putString("code", codeName(event,key))
+      putBoolean("altKey",event.isAltPressed); putBoolean("ctrlKey",event.isCtrlPressed)
+      putBoolean("metaKey",event.isMetaPressed); putBoolean("shiftKey",event.isShiftPressed)
+      putBoolean("repeat",event.repeatCount > 0); putBoolean("isComposing",false); putBoolean("isCanceled",event.isCanceled)
+      putString("muiKeySource","hardware"); putBoolean("isEditable",editor); putInt("target",target.id)
+    }
+    dispatcher.dispatchEvent(HostEvent(surface,target.id,if(event.action == KeyEvent.ACTION_DOWN) "topKeyDown" else "topKeyUp",data,true))
+    return !event.isCanceled
+  }
   override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-    if(findFocus() !== this || event.action !in listOf(KeyEvent.ACTION_DOWN,KeyEvent.ACTION_UP)) return super.dispatchKeyEvent(event)
+    if(event.action !in listOf(KeyEvent.ACTION_DOWN,KeyEvent.ACTION_UP)) return super.dispatchKeyEvent(event)
+    val focused = findFocus() ?: return super.dispatchKeyEvent(event)
+    if (focused !== this) {
+      if (dispatchDescendantKey(event,focused)) return true
+      return super.dispatchKeyEvent(event)
+    }
     val key = keyName(event)
     val data = Arguments.createMap().apply {
       putString("key",key); putString("code",codeName(event,key)); putBoolean("altKey",event.isAltPressed)

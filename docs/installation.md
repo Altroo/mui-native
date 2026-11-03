@@ -17,7 +17,7 @@ npm install /absolute/path/artifacts/packages/altroo-mui-native-system-0.0.0-dev
   /absolute/path/artifacts/packages/altroo-mui-native-compat-0.0.0-dev.0.tgz
 ```
 
-Keep `@altroo/mui-native-host` as a direct native application dependency for autolinking. Rebuild the native application after installing it. Expo Go does not contain the Fabric interaction host required by interactive rows and Modal/Dialog/Popover/Menu. Use an Expo development build (`npx expo run:ios` or `npx expo run:android`) or the application's existing bare React Native native build. Existing controls have not all been migrated to the host. See [native host setup and custom roots](native-host.md).
+Keep `@altroo/mui-native-host` as a direct native application dependency for autolinking. Rebuild the native application after installing it or updating native host source/schema. The descendant Tab/Escape bridge also needs that rebuild; a JavaScript reload is insufficient. Expo Go does not contain the Fabric interaction host required by interactive rows and Modal/Dialog/Popover/Menu. Use an Expo development build (`npx expo run:ios` or `npx expo run:android`) or the application's existing bare React Native native build. Existing controls have not all been migrated to the host. See [native host setup and custom roots](native-host.md).
 
 For explicit native imports, use `@altroo/mui-native` and the separate X packages. For shared application source that retains `@mui/...`, configure Metro:
 

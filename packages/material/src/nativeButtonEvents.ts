@@ -1,6 +1,7 @@
+import type { NativeKeyMetadata } from '@altroo/mui-native-host';
 import type { PressableProps, GestureResponderEvent } from 'react-native';
 type NativeKeyEvent = Parameters<NonNullable<PressableProps['onKeyDown']>>[0];
-type KeyDetails = NativeKeyEvent['nativeEvent'] & { isCanceled?: boolean };
+type KeyDetails = NativeKeyEvent['nativeEvent'] & NativeKeyMetadata;
 export type ButtonBaseKeyEvent = Omit<NativeKeyEvent, 'nativeEvent'> & {
   nativeEvent: KeyDetails;
 } & KeyDetails;
@@ -15,6 +16,8 @@ const keyFields = [
   'repeat',
   'isComposing',
   'isCanceled',
+  'muiKeySource',
+  'isEditable',
 ] as const;
 /** Keep native provenance and event methods while supplying familiar keyboard fields. */
 export function buttonKeyEvent(event: NativeKeyEvent): ButtonBaseKeyEvent {

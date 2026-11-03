@@ -172,6 +172,11 @@ function MenuListBridge({ surface: List, listProps, open, onTab }: ListBridgePro
       <List
         {...listProps}
         managedKeys={[...new Set(['Tab', ...(listProps.managedKeys ?? [])])]}
+        managedDescendantKeys={
+          open && overlayReady
+            ? [...new Set(['Tab' as const, ...(listProps.managedDescendantKeys ?? [])])]
+            : []
+        }
         onKeyDown={(event) => {
           if (
             open &&
