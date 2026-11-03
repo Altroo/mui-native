@@ -1,0 +1,287 @@
+// Copyright (c) 2026 Altroo and contributors.
+// SPDX-License-Identifier: MIT
+import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { resolve, join, dirname } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { parseArgs } from 'node:util';
+import { createHash } from 'node:crypto';
+import { setTimeout as delay } from 'node:timers/promises';
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+export const catalogPackage = 'dev.altroo.muinative.catalog';
+export const runner = catalogPackage + '.test.PopperInstrumentation';
+export const component = catalogPackage + '.test/' + runner;
+
+export async function prepare(project) {
+  const gradlePath = join(project, 'app/build.gradle');
+  let gradle = await readFile(gradlePath, 'utf8');
+  if (!gradle.includes("applicationId '" + catalogPackage + "'"))
+    throw Error('Expected the generated native catalog Android project');
+  const marker = '// Native Popper catalog instrumentation';
+  if (gradle.includes(marker) && !gradle.includes("testInstrumentationRunner '" + runner + "'"))
+    throw Error('The generated runner configuration was modified');
+  if (!gradle.includes(marker)) {
+    if (gradle.includes('testInstrumentationRunner'))
+      throw Error('Preserve the existing instrumentation runner');
+    gradle += `\n${marker}\nandroid { defaultConfig { testInstrumentationRunner '${runner}' } }\n`;
+  }
+  const source = await readFile(
+    join(root, 'tests/native/android/PopperInstrumentation.java'),
+    'utf8',
+  );
+  const target = join(
+    project,
+    'app/src/androidTest/java/dev/altroo/muinative/catalog/test/PopperInstrumentation.java',
+  );
+  let previous;
+  try {
+    previous = await readFile(target, 'utf8');
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+  const ownership = join(project, '.mui-native-popper-instrumentation.json');
+  const digest = (value) => createHash('sha256').update(value).digest('hex');
+  if (previous !== undefined && previous !== source) {
+    let record;
+    try {
+      record = JSON.parse(await readFile(ownership, 'utf8'));
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+    if (record?.sourceSha256 !== digest(previous))
+      throw Error('Preserve edits to the generated instrumentation source');
+  }
+  await mkdir(dirname(target), { recursive: true });
+  await writeFile(target, source);
+  await writeFile(gradlePath, gradle);
+  await writeFile(ownership, JSON.stringify({ sourceSha256: digest(source) }) + '\n');
+  return { project, source: target, runner };
+}
+
+export const screenshotStages = [
+  'window-popup',
+  'inline-popup',
+  'transformed-inline-popup',
+  'bounded-transformed-popup',
+  'reset-inline-popup',
+  'transformed-window-popup',
+  'reset-window-popup',
+  'closed-popup',
+];
+export const requiredMilestones = [
+  ...screenshotStages,
+  'repeat-0-reset',
+  'repeat-0-transformed',
+  'repeat-1-reset',
+  'repeat-1-transformed',
+  'confirm-1',
+  'confirm-2',
+  'confirm-3',
+  'confirm-4',
+];
+
+/** Decode safe artifact locations even when native assertions failed. */
+export function inspectReport(output) {
+  const reports = [...output.matchAll(/^INSTRUMENTATION_RESULT: report=(.*)\r?$/gm)];
+  if (reports.length !== 1) throw Error('No unambiguous instrumentation report');
+  const report = JSON.parse(reports[0][1]);
+  if (
+    !report ||
+    typeof report !== 'object' ||
+    report.schemaVersion !== 1 ||
+    report.package !== catalogPackage ||
+    report.scenario !== 'popper-window-inline-transform-v1' ||
+    !['passed', 'failed'].includes(report.status) ||
+    (!(report.directory === null && report.status === 'failed') &&
+      (typeof report.directory !== 'string' ||
+        !/^popper-checks\/run-\d+$/.test(report.directory))) ||
+    !Array.isArray(report.steps) ||
+    report.steps.some((value) => typeof value !== 'string') ||
+    !Array.isArray(report.milestones) ||
+    report.milestones.some((value) => typeof value !== 'string') ||
+    !Array.isArray(report.screenshots) ||
+    report.screenshots.some((file) => typeof file !== 'string' || !/^[a-z-]+\.png$/.test(file)) ||
+    new Set(report.screenshots).size !== report.screenshots.length
+  )
+    throw Error('Incomplete or unsafe native artifact report');
+  if (report.directory === null && report.screenshots.length)
+    throw Error('Artifacts have no native directory');
+  return report;
+}
+
+function assertCompleted(output, report) {
+  const codes = [...output.matchAll(/^INSTRUMENTATION_CODE: (-?\d+)\r?$/gm)];
+  if (
+    codes.length !== 1 ||
+    codes[0][1] !== '-1' ||
+    /^INSTRUMENTATION_(FAILED|ABORTED|STATUS_CODE: -2)/m.test(output) ||
+    /^INSTRUMENTATION_RESULT: (shortMsg|Error)=/m.test(output) ||
+    report.status !== 'passed'
+  )
+    throw Error('Native Popper check failed: ' + (report.error ?? report.status));
+  if (
+    report.steps.length < 15 ||
+    new Set(report.milestones).size !== report.milestones.length ||
+    requiredMilestones.some((stage) => !report.milestones.includes(stage)) ||
+    screenshotStages.some((stage) => !report.screenshots.includes(stage + '.png'))
+  )
+    throw Error('Missing required native geometry/touch milestones');
+}
+
+export function parseReport(output) {
+  const report = inspectReport(output);
+  assertCompleted(output, report);
+  return report;
+}
+
+const execAsync = promisify(execFile);
+async function executeFile(file, args, options) {
+  const { stdout } = await execAsync(file, args, options);
+  return stdout;
+}
+
+/**
+ * Run on one explicitly selected device and restore only the catalog.
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal}} options
+ * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
+ */
+export async function run({ adb, serial, output, signal }, execute = executeFile) {
+  if (typeof serial !== 'string' || !serial.trim())
+    throw Error('Choose one explicit --serial; devices are never selected automatically');
+  signal?.throwIfAborted();
+  const call = (args, instrument = false) =>
+    execute(adb, ['-s', serial, ...args], {
+      timeout: instrument ? 180000 : 10000,
+      maxBuffer: 20 * 1024 * 1024,
+      encoding: 'buffer',
+      signal: instrument ? signal : undefined,
+    });
+  if (String(await call(['get-state'])).trim() !== 'device')
+    throw Error('The selected device is not ready');
+  await mkdir(output, { recursive: true });
+  if ((await readdir(output)).length)
+    throw Error('Choose an empty output directory; preserve existing test evidence');
+  let report, failure, text;
+  try {
+    try {
+      text = String(await call(['shell', 'am', 'instrument', '-w', '-r', component], true));
+    } catch (error) {
+      failure = error;
+      text = String(error.stdout ?? '');
+      await writeFile(join(output, 'command-error.txt'), String(error.stderr ?? error));
+    }
+    await writeFile(join(output, 'instrumentation.txt'), text);
+    report = inspectReport(text);
+    await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
+    for (const file of report.screenshots) {
+      const bytes = await call([
+        'exec-out',
+        'run-as',
+        catalogPackage,
+        'cat',
+        'cache/' + report.directory + '/' + file,
+      ]);
+      await writeFile(join(output, file), bytes);
+    }
+    signal?.throwIfAborted();
+    assertCompleted(text, report);
+  } catch (error) {
+    failure =
+      failure && failure !== error
+        ? new AggregateError([failure, error], 'Instrumentation and diagnostics failed')
+        : error;
+  }
+  if (failure) {
+    // Killing a timed-out adb client does not cancel on-device instrumentation.
+    // Stop this target package and confirm all its processes ended before a
+    // restore can place fresh controls under an old test's pending touches.
+    try {
+      await call(['shell', 'am', 'force-stop', catalogPackage]);
+      let stopped = false;
+      const deadline = Date.now() + 5000;
+      do {
+        const processes = String(await call(['shell', 'ps', '-A', '-o', 'NAME']))
+          .split(/\r?\n/)
+          .map((name) => name.trim());
+        if (
+          !processes.some(
+            (name) => name === catalogPackage || name.startsWith(catalogPackage + ':'),
+          )
+        ) {
+          stopped = true;
+          break;
+        }
+        await delay(100);
+      } while (Date.now() < deadline);
+      if (!stopped) throw Error('Catalog instrumentation is still active; restoration skipped');
+    } catch (error) {
+      throw new AggregateError(
+        [failure, error],
+        'Test failed; termination unconfirmed and catalog restoration skipped',
+        { cause: error },
+      );
+    }
+  }
+  try {
+    await call(['shell', 'am', 'start', '-n', catalogPackage + '/.MainActivity']);
+  } catch (error) {
+    failure = failure
+      ? new AggregateError([failure, error], 'Test and catalog restoration failed')
+      : error;
+  }
+  if (failure) throw failure;
+  return report;
+}
+
+if (import.meta.url === pathToFileURL(resolve(process.argv[1] ?? '')).href) {
+  const { positionals, values } = parseArgs({
+    allowPositionals: true,
+    options: {
+      project: { type: 'string' },
+      serial: { type: 'string' },
+      output: { type: 'string' },
+      adb: { type: 'string' },
+    },
+  });
+  if (positionals.length !== 1 || !['prepare', 'run'].includes(positionals[0]))
+    throw Error('Use prepare --project PATH or run --serial DEVICE --output PATH');
+  if (positionals[0] === 'prepare') {
+    console.log(
+      JSON.stringify(
+        await prepare(resolve(values.project ?? join(root, 'apps/native-catalog/android'))),
+        null,
+        2,
+      ),
+    );
+  } else {
+    const sdk = process.env.ANDROID_HOME ?? process.env.ANDROID_SDK_ROOT;
+    const adb =
+      values.adb ??
+      (sdk ? join(sdk, 'platform-tools', process.platform === 'win32' ? 'adb.exe' : 'adb') : 'adb');
+    const output = resolve(
+      values.output ??
+        join(root, '.cache/native-popper-android', new Date().toISOString().replaceAll(':', '-')),
+    );
+    const controller = new AbortController();
+    const abort = () => controller.abort(Error('Native catalog check interrupted'));
+    process.on('SIGINT', abort);
+    process.on('SIGTERM', abort);
+    try {
+      console.log(
+        JSON.stringify(
+          {
+            output,
+            report: await run({ adb, serial: values.serial, output, signal: controller.signal }),
+          },
+          null,
+          2,
+        ),
+      );
+    } finally {
+      process.removeListener('SIGINT', abort);
+      process.removeListener('SIGTERM', abort);
+    }
+  }
+}
