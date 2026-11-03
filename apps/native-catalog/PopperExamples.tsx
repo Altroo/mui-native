@@ -160,7 +160,9 @@ export function PopperExamples() {
                     </View>
                     <Paper elevation={1} sx={{ p: 2, borderWidth: 1, borderColor: 'divider' }}>
                       <Stack spacing={1}>
-                        <Typography variant="subtitle1">Arrives Thursday</Typography>
+                        <Typography testID="delivery-note-title" variant="subtitle1">
+                          Arrives Thursday
+                        </Typography>
                         <Typography variant="body2" color="text.secondary">
                           Your delivery window is 14:00 to 16:00.
                         </Typography>

@@ -65,9 +65,11 @@ public final class PopperInstrumentation extends Instrumentation {
       tap(waitFor("delivery-trigger", 10000));
       waitFor("delivery-note", 10000);
       verify("window-popup", false, false, false);
+      exerciseScrolling("window", false);
       confirm(1);
       toggle("Render inline");
       verify("inline-popup", true, false, false);
+      exerciseScrolling("inline", true);
       confirm(2);
       toggle("Transform the frame");
       verify("transformed-inline-popup", true, true, false);
@@ -88,27 +90,22 @@ public final class PopperInstrumentation extends Instrumentation {
       toggle("Transform the frame");
       verify("reset-window-popup", false, false, true);
       tap(waitFor("delivery-trigger", 10000));
-      long deadline = SystemClock.uptimeMillis() + 10000;
-      while (find("delivery-note") != null && SystemClock.uptimeMillis() < deadline) SystemClock.sleep(100);
-      require(find("delivery-note") == null, "Closed popup remains in the native hierarchy");
-      // Read on the UI thread, but report failures on the instrumentation
-      // thread. Throwing inside runOnMainSync would crash the catalog itself.
-      final boolean[] mounted = {true};
-      deadline = SystemClock.uptimeMillis() + 10000;
-      do {
-        runOnMainSync(() -> mounted[0] = nativeView(activity.getWindow().getDecorView(), "delivery-note") != null);
-        if (!mounted[0]) break;
-        SystemClock.sleep(100);
-      } while (SystemClock.uptimeMillis() < deadline);
-      require(!mounted[0], "Closed popup is still mounted as a native View");
+      waitForUnmount();
       milestones.put("closed-popup");
       capture("closed-popup");
+      for (int cycle = 0; cycle < 3; cycle++) {
+        tap(waitFor("delivery-trigger", 10000));
+        verify("repeat-open-" + cycle, false, false, true);
+        tap(waitFor("delivery-trigger", 10000));
+        waitForUnmount();
+        milestones.put("repeat-close-" + cycle);
+      }
       passed = true;
     } catch (Throwable error) {
       try { report.put("error", error.toString()); capture("failure"); } catch (Throwable ignored) { }
     } finally {
       try {
-        report.put("schemaVersion", 1).put("scenario", "popper-window-inline-transform-v1").put("package", PACKAGE).put("status", passed ? "passed" : "failed")
+        report.put("schemaVersion", 1).put("scenario", "popper-window-inline-scroll-transform-v2").put("package", PACKAGE).put("status", passed ? "passed" : "failed")
           .put("steps", steps).put("milestones", milestones).put("screenshots", screenshots).put("directory", relativeDirectory == null ? JSONObject.NULL : relativeDirectory)
           .put("sdk", android.os.Build.VERSION.SDK_INT).put("model", android.os.Build.MODEL);
         if (directory != null) try (FileOutputStream stream = new FileOutputStream(new File(directory, "report.json"))) {
@@ -118,6 +115,112 @@ public final class PopperInstrumentation extends Instrumentation {
       } catch (Throwable error) { passed = false; result.putString("error", error.toString()); }
       finish(passed ? Activity.RESULT_OK : Activity.RESULT_CANCELED, result);
     }
+  }
+
+  private void waitForUnmount() {
+    // Read on the UI thread, but report failures on the instrumentation thread.
+    // Throwing in runOnMainSync would crash the catalog instead of recording evidence.
+    final boolean[] mounted = {true};
+    long deadline = SystemClock.uptimeMillis() + 10000;
+    do {
+      runOnMainSync(() -> mounted[0] = nativeView(activity.getWindow().getDecorView(), "delivery-note") != null);
+      if (!mounted[0] && find("delivery-note") == null) return;
+      SystemClock.sleep(100);
+    } while (SystemClock.uptimeMillis() < deadline);
+    throw new AssertionError("Closed popup remains mounted or accessible");
+  }
+
+  private int scrollOffset() {
+    final int[] offset = {-1};
+    runOnMainSync(() -> {
+      View scroll = nativeView(activity.getWindow().getDecorView(), "delivery-scroll");
+      if (scroll != null) offset[0] = scroll.getScrollY();
+    });
+    require(offset[0] >= 0, "Native delivery scroll view is missing");
+    return offset[0];
+  }
+
+  private void dragScroll(int distanceDp) throws Exception {
+    AccessibilityNodeInfo scroll = waitFor("delivery-scroll", 10000);
+    require(PACKAGE.equals(String.valueOf(scroll.getPackageName())), "Scroll target left the catalog");
+    Rect bounds = new Rect(); scroll.getBoundsInScreen(bounds);
+    float density = getTargetContext().getResources().getDisplayMetrics().density;
+    float distance = Math.min(Math.abs(distanceDp)*density, bounds.height()-40*density);
+    require(distance > 0 && bounds.width() > 40*density, "Scroll viewport is too small");
+    float x = bounds.right-18*density;
+    float start = distanceDp > 0 ? bounds.bottom-20*density : bounds.top+20*density;
+    float end = start + (distanceDp > 0 ? -distance : distance);
+    AccessibilityNodeInfo foreground = automation.getRootInActiveWindow();
+    require(foreground != null && PACKAGE.equals(String.valueOf(foreground.getPackageName())), "Catalog is no longer foreground");
+    int before = scrollOffset();
+    long down = SystemClock.uptimeMillis();
+    // Use the empty right gutter, outside the popup, and stop before releasing
+    // so this checks anchor tracking without relying on a fling's device speed.
+    for (int step = 0; step <= 13; step++) {
+      int action = step == 0 ? MotionEvent.ACTION_DOWN : step == 13 ? MotionEvent.ACTION_UP : MotionEvent.ACTION_MOVE;
+      float y = start + (end-start)*Math.min(step,10)/10;
+      MotionEvent event = MotionEvent.obtain(down, SystemClock.uptimeMillis(), action, x, y, 0);
+      event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+      try { require(automation.injectInputEvent(event,true), "Native scroll injection failed"); }
+      finally { event.recycle(); }
+      SystemClock.sleep(35);
+    }
+    int previous = scrollOffset(), stable = 0;
+    long deadline = SystemClock.uptimeMillis()+5000;
+    do {
+      SystemClock.sleep(100); int current = scrollOffset();
+      stable = current == previous ? stable+1 : 0; previous = current;
+    } while (stable < 3 && SystemClock.uptimeMillis() < deadline);
+    require(stable == 3, "Native scroll did not settle");
+    steps.put("scroll:" + before + ":" + previous);
+  }
+
+  private void exerciseScrolling(String mode, boolean inline) throws Exception {
+    float density = getTargetContext().getResources().getDisplayMetrics().density;
+    require(scrollOffset() <= density, "Scrolling scenario must start at the top");
+    dragScroll(48);
+    require(scrollOffset() >= 24*density, "Native gesture did not move the inner scroll view");
+    verify("scrolled-" + mode + "-popup", inline, false, false);
+    dragScroll(-180);
+    require(scrollOffset() <= density, "Reverse native scroll did not restore the top");
+    verify("returned-" + mode + "-popup", inline, false, false);
+    dragScroll(240);
+    final Throwable[] failure = {null};
+    runOnMainSync(() -> {
+      try {
+        View root = activity.getWindow().getDecorView();
+        View trigger = nativeView(root,"delivery-trigger"), popup = nativeView(root,"delivery-note"), scroll = nativeView(root,"delivery-scroll"), title = nativeView(root,"delivery-note-title");
+        require(trigger != null && popup != null && scroll instanceof ViewGroup && title != null, "Clipping fixture views are missing");
+        Rect viewport = new Rect(); require(scroll.getGlobalVisibleRect(viewport), "Scroll viewport is not visible");
+        RectF anchor = rectangle(trigger,new Matrix());
+        require(anchor.bottom <= viewport.top+2*density, "Anchor did not leave the physical scroll clip: " + anchor + " / " + viewport);
+        require(descendant(popup,scroll) == inline, "Scroll changed inline/window physical ownership");
+        Rect visible = new Rect(); boolean shown = popup.getGlobalVisibleRect(visible);
+        if (inline) {
+          RectF titleRect = rectangle(title,new Matrix());
+          require(titleRect.bottom < viewport.top, "Inline title must be wholly outside the scroll clip");
+          Matrix scrollGlobal = new Matrix(), inverse = new Matrix(); scroll.transformMatrixToGlobal(scrollGlobal);
+          require(scrollGlobal.invert(inverse), "Scroll transform is singular");
+          float[] point = {titleRect.centerX(),titleRect.centerY()}; inverse.mapPoints(point);
+          int[] nativeTarget = {0};
+          // RN clips overflow in its canvas while leaving clipChildren false.
+          // getGlobalVisibleRect is not a pixel-clip oracle. Check the actual RN
+          // touch path at the clipped title and retain screenshots for visual review.
+          com.facebook.react.uimanager.TouchTargetHelper.findTargetTagAndCoordinatesForTouch(
+            point[0],point[1],(ViewGroup)scroll,new float[2],nativeTarget);
+          View target = nativeTarget[0] == 0 ? null : root.findViewById(nativeTarget[0]);
+          require(target == null || (target != popup && !descendant(target,popup)),
+            "Clipped inline content remains in the native scroll touch path");
+        }
+        if (!inline) require(shown && popup.getAlpha() > 0 && verifyChildBridge(root,popup,root) > 0,
+          "Window popup lost its attached overlay when its anchor was clipped");
+      } catch (Throwable error) { failure[0] = error; }
+    });
+    if (failure[0] != null) throw new AssertionError("Clipped " + mode + " anchor check failed: " + failure[0],failure[0]);
+    milestones.put("clipped-" + mode + "-anchor"); capture("clipped-" + mode + "-anchor");
+    dragScroll(-300);
+    require(scrollOffset() <= density, "Clipped anchor did not return to the scroll viewport");
+    verify("restored-" + mode + "-popup", inline, false, false);
   }
 
   private AccessibilityNodeInfo find(String identifier) {
