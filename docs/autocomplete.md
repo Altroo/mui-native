@@ -98,7 +98,9 @@ A closing transitioned popup retains its previous nonempty options and grouping 
 - Ordinary text, caret movement and IME composition remain owned by the native editor. `selectOnFocus` uses the native selection policy. The finite editable-command transport and its platform limits are described in [native host](native-host.md) and [issue #55](https://github.com/Altroo/mui-native/issues/55).
 - Chip key handling is modeled, but complete physical tag navigation/deletion from a native editor remains an open gate. Passing a JavaScript key handler is not proof that a platform delivers every key.
 - The native list exposes the platform's available list/option roles and a polite status live region. Complete combobox announcements, active-descendant behavior and VoiceOver/TalkBack operation remain unverified.
+- In full-screen native modals, apply safe-area insets inside the modal layout. An outer screen wrapper does not inset a separate native window. The catalog uses its existing safe-area provider.
 - Keep the containing screen usable with the keyboard open. Popper observes native keyboard/viewport changes; application scroll and keyboard-avoidance layout still matter when selected Chips wrap.
+- An intermittent Android first-character omission under synthetic burst typing remains under investigation. Later passing bursts do not establish its cause or a fix; see [validation](validation.md).
 - RTL, large fonts, custom windows/containers, interrupted transitions, physical devices/IMEs and calibrated release performance remain validation gates. No full Material UI compatibility claim is made.
 
 ## Validation

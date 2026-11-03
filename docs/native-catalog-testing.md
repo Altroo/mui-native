@@ -103,3 +103,24 @@ The host's `verifyDescendantKeyPolicy` Gradle task runs 26 device-free assertion
 For iOS, include [KeyboardCatalogUITests.swift](../tests/native/ios/KeyboardCatalogUITests.swift) in the existing UI test target described above. The inline, nested/Portal and Dialog tests use public XCTest key synthesis. Text deletion uses XCTest's text API because its single-key Delete command does not edit the plain React Native positive control on the recorded iOS 27.0 runtime. The extended navigation and Dialog Enter tests first require Delete/Return to work in that plain control. A failed driver prerequisite produces an explicit XCTest skip with an attachment, never a passing compatibility result. If the prerequisite succeeds, all extended assertions are mandatory. Inspect passed, failed and skipped counts separately in the result bundle; physical keyboards and real IMEs remain required gates.
 
 Original Material UI 9.5.0 navigation expectations are recorded separately in the [browser fixture](../tests/fixtures/mui-autocomplete-keyboard-browser-9.5.0.json). Build its integrity-checked probe with `node scripts/reference/autocomplete-keyboard.mjs --check` and serve the generated `.cache/autocomplete-keyboard-reference` directory on loopback. `window.verifyReference()` checks 26 original-browser observations, including default prevention, selection/highlight, disabled options and the upstream IME-229 guard. That reference does not certify native transport or full Autocomplete.
+
+## Autocomplete integration
+
+The Autocomplete scene exercises native search, mapped selections, removable multiple-value Chips, grouping, free-solo software submission, disabled/read-only/loading states and ordinary/full-screen native Dialogs. Its Keyboard edge mode intentionally places an editor low enough to test suggestions above the docked keyboard. Mode changes require the new scene identifier before another action, preventing retained controls from the previous scene being used. The iOS full-screen example applies safe-area insets inside its modal, since the outer screen's SafeAreaView does not inset a separate modal layout. These checks use a development build containing the native host; Expo Go is insufficient.
+
+Android reuses the explicitly selected device, generated project and test runner above:
+
+```sh
+node scripts/native-catalog/android-autocomplete.mjs prepare apps/native-catalog/android
+# Rebuild and install the catalog and test APK as described above.
+adb -s "$MUI_QA_DEVICE" shell am instrument -w -r -e scenario autocomplete \
+  dev.altroo.muinative.catalog.test/dev.altroo.muinative.catalog.test.PopperInstrumentation \
+  > autocomplete-native.txt
+node scripts/native-catalog/android-autocomplete.mjs summarize autocomplete-native.txt
+```
+
+The summary requires the complete ordered 17-stage scenario, five named screenshots, valid native touch coordinates and a successful native report. The free-solo stage repeats eight synthetic typing/submission bursts and retains native edit-range/selection traces. Selected Chips must be fully visible. Screenshots wait for a fresh hardware frame from the current editor window to be submitted; this is a capture boundary, not a measurement of physical presentation latency. Preserve failed transcripts and screenshots too. The report's `artifactDirectory` identifies the catalog-owned cache folder; copy each reported image with `adb -s "$MUI_QA_DEVICE" exec-out run-as dev.altroo.muinative.catalog cat ARTIFACT_DIRECTORY/IMAGE.png`. Reopen the catalog after instrumentation. If a command is interrupted, first stop only its target package and confirm instrumentation has ended before restoring interactive controls.
+
+Add [AutocompleteCatalogUITests.swift](../tests/native/ios/AutocompleteCatalogUITests.swift) to the existing shared iOS UI test target alongside the Popper and keyboard sources. Use the iOS command above with `-only-testing:PopperCatalogUITests/AutocompleteCatalogUITests` to run its nine cases. Keep a new result bundle for every run and export its attachments for visual review. The software-submission case requires the simulator's software keyboard. Do not substitute a programmatic selection callback for the native Done key.
+
+Native checks verify scoped interactions and geometry. They do not certify physical keyboards, tag navigation/deletion from the editor, composing IMEs, screen readers, large virtualized lists or calibrated release performance. See [Autocomplete](autocomplete.md) for the public contracts and remaining gates.

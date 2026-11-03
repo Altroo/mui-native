@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: MIT
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { execFile } from 'node:child_process';
-import { promisify } from 'node:util';
 import { resolve, join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs } from 'node:util';
 import { createHash } from 'node:crypto';
 import { prepareKeyboardSource } from './android-keyboard-source.mjs';
+import { prepareAutocompleteSource } from './android-autocomplete-source.mjs';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -54,6 +54,7 @@ export async function prepare(project) {
       throw Error('Preserve edits to the generated instrumentation source');
   }
   await prepareKeyboardSource(project);
+  await prepareAutocompleteSource(project);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, source);
   await writeFile(gradlePath, gradle);
@@ -158,10 +159,20 @@ export function parseReport(output) {
   return report;
 }
 
-const execAsync = promisify(execFile);
-async function executeFile(file, args, options) {
-  const { stdout } = await execAsync(file, args, options);
-  return stdout;
+/**
+ * Preserve command output on rejection so interrupted tests retain diagnostics.
+ * @param {string} file
+ * @param {string[]} args
+ * @param {import('node:child_process').ExecFileOptionsWithBufferEncoding} options
+ * @returns {Promise<Buffer>}
+ */
+function executeFile(file, args, options) {
+  return new Promise((resolve, reject) => {
+    execFile(file, args, options, (error, stdout, stderr) => {
+      if (error) reject(Object.assign(error, { stdout, stderr }));
+      else resolve(stdout);
+    });
+  });
 }
 
 /**
@@ -173,8 +184,9 @@ export async function run({ adb, serial, output, signal }, execute = executeFile
   if (typeof serial !== 'string' || !serial.trim())
     throw Error('Choose one explicit --serial; devices are never selected automatically');
   signal?.throwIfAborted();
-  const call = (args, instrument = false) =>
-    execute(adb, ['-s', serial, ...args], {
+  /** @returns {Promise<Uint8Array | string>} */
+  const call = async (args, instrument = false) =>
+    await execute(adb, ['-s', serial, ...args], {
       timeout: instrument ? 180000 : 10000,
       maxBuffer: 20 * 1024 * 1024,
       encoding: 'buffer',
@@ -222,6 +234,8 @@ export async function run({ adb, serial, output, signal }, execute = executeFile
     // Killing a timed-out adb client does not cancel on-device instrumentation.
     // Stop this target package and confirm all its processes ended before a
     // restore can place fresh controls under an old test's pending touches.
+    let terminationError;
+    let terminationFailed = false;
     try {
       await call(['shell', 'am', 'force-stop', catalogPackage]);
       let stopped = false;
@@ -240,13 +254,19 @@ export async function run({ adb, serial, output, signal }, execute = executeFile
         }
         await delay(100);
       } while (Date.now() < deadline);
-      // This error intentionally joins the test failure in the catch below.
-      if (!stopped) throw Error('Catalog instrumentation is still active; restoration skipped');
+      if (!stopped) {
+        terminationFailed = true;
+        terminationError = Error('Catalog instrumentation is still active; restoration skipped');
+      }
     } catch (error) {
+      terminationFailed = true;
+      terminationError = error;
+    }
+    if (terminationFailed) {
       throw new AggregateError(
-        [failure, error],
+        [failure, terminationError],
         'Test failed; termination unconfirmed and catalog restoration skipped',
-        { cause: error },
+        { cause: terminationError },
       );
     }
   }
