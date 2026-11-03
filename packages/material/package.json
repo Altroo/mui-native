@@ -1,11 +1,11 @@
 {
   "name": "@altroo/mui-native",
-  "version": "0.0.0-dev.0",
-  "description": "Independent native compatibility for @mui/material",
+  "version": "0.0.6-prealpha.0",
+  "description": "Experimental React Native compatibility for Material UI.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Altroo/mui-native.git",
+    "url": "git+https://github.com/Altroo/mui-native.git",
     "directory": "packages/material"
   },
   "main": "./dist/index.js",
@@ -16,7 +16,8 @@
     "dist",
     "src",
     "LICENSE",
-    "NOTICE"
+    "NOTICE",
+    "README.md"
   ],
   "exports": {
     ".": {
@@ -455,7 +456,14 @@
     "react-native": ">=0.88.1 <0.89"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "prealpha",
+    "registry": "https://registry.npmjs.org/"
   },
-  "private": true
+  "private": false,
+  "author": "Altroo",
+  "homepage": "https://github.com/Altroo/mui-native#readme",
+  "bugs": {
+    "url": "https://github.com/Altroo/mui-native/issues"
+  }
 }
