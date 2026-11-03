@@ -25,7 +25,7 @@ export function Example() {
 }
 ```
 
-Use the [native resolver](installation.md) for original imports, or import from `@altroo/mui-native/Portal` directly. Native host `0.0.3-dev.0` and an application rebuild are required. Expo Go does not include this library's custom native components.
+Use the [native resolver](installation.md) for original imports, or import from `@altroo/mui-native/Portal` directly. Native host `0.0.4-dev.0` and an application rebuild are required. Expo Go does not include this library's custom native components.
 
 Without `container`, or when a container callback returns `null`, Portal uses the current native window. A container callback resolves in a React layout effect, after sibling refs attach. Explicit containers must be mounted, non-collapsed ordinary native Views in the same window with nonempty bounds. ScrollView, foreign windows, circular targets and Views using `removeClippedSubviews` are unsupported. Use `collapsable={false}` on container Views.
 

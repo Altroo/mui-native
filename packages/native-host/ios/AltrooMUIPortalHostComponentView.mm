@@ -5,6 +5,7 @@
 #import "AltrooMUIPortalCanvasComponentView.h"
 #import "AltrooPortalLogicalParent.h"
 #import "AltrooPortalClipping.h"
+#import "AltrooPortalObservation.h"
 #import "AltrooPortalShadowNodes.h"
 #import <React/RCTSurfaceTouchHandler.h>
 #import <UIKit/UIKit.h>
@@ -84,13 +85,16 @@ static AltrooPortalMatrix AltrooWindowMatrix(UIView *view) {
   BOOL _pendingDetach;
   __weak RCTViewComponentView *_mountedTarget;
   NSArray *_lastLayout;
+  NSString *_observationRevision;
+  NSInteger _observedTag;
+  NSArray *_lastObservation;
 }
 - (instancetype)initWithFrame:(CGRect)frame {
   if (self = [super initWithFrame:frame]) {
     _props = std::make_shared<const AltrooMUIPortalHostProps>();
     _root = [AltrooPortalRoot new]; _root.portalSource = self;
     _root.backgroundColor = UIColor.clearColor; _root.accessibilityViewIsModal = NO;
-    _revision = @"";
+    _revision = @""; _observationRevision = @"";
   }
   return self;
 }
@@ -100,6 +104,7 @@ static AltrooPortalMatrix AltrooWindowMatrix(UIView *view) {
 - (void)updateProps:(const Props::Shared &)props oldProps:(const Props::Shared &)oldProps {
   const auto &next = static_cast<const AltrooMUIPortalHostProps &>(*props);
   _active = next.active; _revision = [NSString stringWithUTF8String:next.revision.c_str()]; _containerTag = next.containerTag; _layer = next.layer;
+  _observedTag = next.observedTag; _observationRevision = [NSString stringWithUTF8String:next.observationRevision.c_str()];
   [super updateProps:props oldProps:oldProps]; [self syncPortal];
 }
 - (void)didMoveToWindow { [super didMoveToWindow]; [self syncPortal]; }
@@ -145,10 +150,48 @@ static AltrooPortalMatrix AltrooWindowMatrix(UIView *view) {
   }
   CGFloat width = target ? target.bounds.size.width : 0, height = target ? target.bounds.size.height : 0;
   NSArray *signature = @[_revision, @(presented), reason, @(matrix.origin.x), @(matrix.origin.y), @(width), @(height), @(matrix.a), @(matrix.b), @(matrix.c), @(matrix.d), @(root.origin.x), @(root.origin.y), @(root.a), @(root.b), @(root.c), @(root.d)];
-  if ([_lastLayout isEqualToArray:signature] || !_eventEmitter) return;
+  if (!_eventEmitter) return;
+  if ([_lastLayout isEqualToArray:signature]) { [self emitObservation:presented reason:reason]; return; }
   _lastLayout = signature;
   auto emitter = std::static_pointer_cast<const AltrooMUIPortalHostEventEmitter>(_eventEmitter);
   emitter->onPortalLayout({.revision = std::string(_revision.UTF8String), .presented = static_cast<bool>(presented), .reason = std::string(reason.UTF8String), .x = matrix.origin.x, .y = matrix.origin.y, .width = width, .height = height, .rootX = root.origin.x, .rootY = root.origin.y, .rootA = root.a, .rootB = root.b, .rootC = root.c, .rootD = root.d, .a = matrix.a, .b = matrix.b, .c = matrix.c, .d = matrix.d});
+  [self emitObservation:presented reason:reason];
+}
+- (void)emitObservation:(BOOL)presented reason:(NSString *)portalReason {
+  if (_observationRevision.length == 0) { _lastObservation = nil; return; }
+  if (!_eventEmitter) return;
+  UIView *anchor = _observedTag > 0 ? [self.window viewWithTag:_observedTag] : nil;
+  BOOL anchorAvailable = presented && anchor && anchor.window == self.window && AltrooCanObserveView(anchor);
+  auto anchorRect = anchorAvailable ? AltrooObserveRect(anchor,anchor.bounds) : std::nullopt;
+  auto reference = anchorAvailable ? AltrooObserveClippingParents(anchor) : AltrooObservedClip{};
+  auto popper = presented ? AltrooObserveClippingParents(_root) : AltrooObservedClip{};
+  auto viewport = presented ? AltrooObserveViewport(self.window) : AltrooObservedRect{};
+  CGRect windowBounds = presented ? self.window.bounds : CGRectZero;
+  AltrooObservedRect document = {windowBounds.origin.x,windowBounds.origin.y,windowBounds.size.width,windowBounds.size.height};
+  BOOL valid = presented && reference.valid && popper.valid && (!anchorAvailable || anchorRect.has_value());
+  NSString *reason = !presented ? portalReason : !valid ? @"unsupported-geometry" : _observedTag > 0 && !anchorAvailable ? @"unavailable-anchor" : @"observed";
+  auto rectSignature = [](AltrooObservedRect rect) { return @[@(rect.x),@(rect.y),@(rect.width),@(rect.height)]; };
+  NSArray *signature = @[_revision,_observationRevision,@(_observedTag),@(valid),@(anchorAvailable),reason,
+    rectSignature(anchorRect.value_or(AltrooObservedRect{})),@(reference.rect.has_value()),rectSignature(reference.rect.value_or(AltrooObservedRect{})),
+    @(popper.rect.has_value()),rectSignature(popper.rect.value_or(AltrooObservedRect{})),rectSignature(viewport),rectSignature(document)];
+  if ([_lastObservation isEqualToArray:signature]) return;
+  _lastObservation = signature;
+  auto anchorValue = anchorRect.value_or(AltrooObservedRect{}), referenceValue = reference.rect.value_or(AltrooObservedRect{}), popperValue = popper.rect.value_or(AltrooObservedRect{});
+  auto emitter = std::static_pointer_cast<const AltrooMUIPortalHostEventEmitter>(_eventEmitter);
+  AltrooMUIPortalHostEventEmitter::OnPortalObservation event = {.revision=std::string(_revision.UTF8String), .observationRevision=std::string(_observationRevision.UTF8String), .observedTag=static_cast<int>(_observedTag),
+    .presented=static_cast<bool>(valid), .anchorAvailable=static_cast<bool>(anchorAvailable && anchorRect.has_value()), .reason=std::string(reason.UTF8String),
+    .anchor={.x=anchorValue.x,.y=anchorValue.y,.width=anchorValue.width,.height=anchorValue.height},
+    .referenceClip={.present=reference.rect.has_value(),.x=referenceValue.x,.y=referenceValue.y,.width=referenceValue.width,.height=referenceValue.height},
+    .popperClip={.present=popper.rect.has_value(),.x=popperValue.x,.y=popperValue.y,.width=popperValue.width,.height=popperValue.height},
+    .viewport={.x=viewport.x,.y=viewport.y,.width=viewport.width,.height=viewport.height},
+    .window={.x=document.x,.y=document.y,.width=document.width,.height=document.height}};
+  auto rectangle = [](auto rect) -> folly::dynamic { return folly::dynamic::object("x",rect.x)("y",rect.y)("width",rect.width)("height",rect.height); };
+  auto clip = [&](auto value) { auto payload = rectangle(value); payload["present"] = value.present; return payload; };
+  folly::dynamic payload = folly::dynamic::object("revision",event.revision)("observationRevision",event.observationRevision)("observedTag",event.observedTag)
+    ("presented",event.presented)("anchorAvailable",event.anchorAvailable)("reason",event.reason)
+    ("anchor",rectangle(event.anchor))("referenceClip",clip(event.referenceClip))("popperClip",clip(event.popperClip))
+    ("viewport",rectangle(event.viewport))("window",rectangle(event.window));
+  emitter->dispatchUniqueEvent("portalObservation",std::move(payload));
 }
 - (void)syncPortal {
   if (_syncing || _pendingDetach) return; _syncing = YES;
@@ -178,7 +221,7 @@ static AltrooPortalMatrix AltrooWindowMatrix(UIView *view) {
 }
 - (void)prepareForRecycle {
   [self stopTracking]; [self detachRoot]; [self setOwnDispatch:NO];
-  _lastLayout = nil; _active = NO; _revision = @""; _containerTag = 0; _layer = 0;
+  _lastLayout = nil; _lastObservation = nil; _observationRevision = @""; _observedTag = 0; _active = NO; _revision = @""; _containerTag = 0; _layer = 0;
   [super prepareForRecycle];
 }
 - (void)dealloc {

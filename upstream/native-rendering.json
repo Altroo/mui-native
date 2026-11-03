@@ -21,7 +21,15 @@
       "ReactAndroid/src/main/java/com/facebook/react/views/view/ReactViewGroup.kt": "802d60e0dfd68101b7ad4041ea12cf0d6fb172f27e591f91f070049264aaf2fc",
       "ReactCommon/react/renderer/components/modal/ModalHostViewShadowNode.h": "d1a69f429bf5e815f6241cbd5015e4036a533b557b64fed4706d7b7dd9a8e0d2",
       "ReactCommon/react/renderer/components/view/ConcreteViewShadowNode.h": "30bfd409b9596cbb6e6fc77cb6fd04026419cf9e6f3996d6c60b55264960a866",
-      "ReactCommon/react/renderer/core/LayoutableShadowNode.cpp": "79fd3d48a39acd6680710a505c87ec151a6db38b7ec9d5dc071e7578e6e56e60"
+      "ReactCommon/react/renderer/core/LayoutableShadowNode.cpp": "79fd3d48a39acd6680710a505c87ec151a6db38b7ec9d5dc071e7578e6e56e60",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/BackgroundStyleApplicator.kt": "ab254b7ba8a08cc133a0a42dd71b0fe8fc03dc5e5335cba17a0b76460c66b1df",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/CompositeBackgroundDrawable.kt": "317f7371ad7086a5b0b0c070515f751aaf84c16bd85e26da2373501d0cebc5d4",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/style/BorderInsets.kt": "35d00f1a6771a2197ad98a4a08040807f375000dced7f5edf3653b98fa9f9f7f",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/PixelUtil.kt": "e1df4d3d4ae6775aba49215dbc68aed318086b0be3874de7277a713c8b71faf9",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/events/Event.kt": "98bb0f1ed18a3c6a5c40abd71b239e37b40c181920cb4767b9a4b0eeaf8b0511",
+      "ReactCommon/react/renderer/core/EventEmitter.h": "a933d5c91c2cfa0d6c511c4df3330c2d5340a8a8a4a3dcacffeaa01133e1218d",
+      "ReactCommon/react/renderer/core/EventEmitter.cpp": "892993afa65eb62554792517f027491144861984b1a6406f00c876beafc17b78",
+      "ReactCommon/react/renderer/core/RawEvent.h": "71d1d9b3d739ab56bf37efa0c0f898abf94468f1b329099cf9d6a92ecd747f98"
     }
   },
   "localFiles": [
@@ -35,12 +43,20 @@
     "packages/native-host/ios/AltrooPortalClipping.h",
     "packages/native-host/ios/AltrooPortalClipping.mm",
     "packages/native-host/ios/AltrooPortalLogicalParent.h",
-    "packages/native-host/src/portalCoordinates.ts"
+    "packages/native-host/src/portalCoordinates.ts",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/PortalPaddingBox.java",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/PortalObservationGeometry.kt",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/PortalObservationRect.kt",
+    "packages/native-host/ios/AltrooPortalObservation.h",
+    "packages/native-host/ios/AltrooPortalObservation.mm",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/PortalObservationEvent.kt"
   ],
   "adaptations": [
     "Native root child mounting and React Native touch/pointer dispatch follow the verified MIT reference. The new implementation attaches within an existing native window/container, does not create a modal or request focus, preserves React context, and reports actual native affine container bounds.",
     "Custom Fabric shadow nodes adapt the modal root and uncullable traits, stop obsolete logical measurement ancestry, and calibrate descendant measurements to the actual touch dispatcher and window. Native rendering remains identity-transformed in its real container.",
     "Custom ordinary View targets reuse the existing dispatcher; default window roots own one dispatcher. UIKit mounts through its guarded RN 0.88 content surface. Root subview order agrees with drawing and touch layers. Logical keyboard ancestry crosses the native root boundary.",
-    "Active clipped-subview containers are rejected. If clipping is enabled after attachment, source-pinned manager/protocol cleanup removes the captured root by identity after RN traversal, with a pending-cleanup barrier. UIKit validates its tracked-child adapter before mounting."
+    "Active clipped-subview containers are rejected. If clipping is enabled after attachment, source-pinned manager/protocol cleanup removes the captured root by identity after RN traversal, with a pending-cleanup barrier. UIKit validates its tracked-child adapter before mounting.",
+    "Native positioning observations reuse active Portal frame tracking and deduplicate window-space anchor, clipping and viewport geometry. The Java padding-box adapter follows RN's pinned border-inset resolution and pixel rounding without enabling feature flags; UIKit reads the pinned RN shape-mask path boundary.",
+    "Replaceable geometry uses a coalescible Android event with monotonic same-millisecond ordering and Fabric dispatchUniqueEvent on UIKit; activation and key events remain separate. Invalidation renews the observation generation while cleanup retains its owner token. Empty clipping regions stay empty before affine AABB conversion."
   ]
 }

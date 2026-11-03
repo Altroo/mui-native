@@ -27,3 +27,11 @@ tasks.register("verifyPortalPolicy", JavaExec) {
   classpath = files(providers.provider { tasks.named("testDebugUnitTest").get().classpath })
   mainClass.set("com.altroo.muinativehost.PortalPresentationStateTestKt")
 }
+
+// Device-free clipping intersection and density policy assertions.
+tasks.register("verifyPortalObservationPolicy", JavaExec) {
+  group = "verification"
+  dependsOn("compileDebugUnitTestKotlin", "compileDebugUnitTestJavaWithJavac")
+  classpath = files(providers.provider { tasks.named("testDebugUnitTest").get().classpath })
+  mainClass.set("com.altroo.muinativehost.PortalObservationRectTestKt")
+}

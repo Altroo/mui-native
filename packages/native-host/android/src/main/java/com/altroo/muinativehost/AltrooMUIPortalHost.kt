@@ -30,6 +30,9 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
   var revision = ""
   var containerTag = 0
   var layer = 0.0
+  var observedTag = 0
+  var observationRevision = ""
+  private var lastObservation: List<Any?>? = null
   private var overlay: PortalContainer = PortalWindowRoot(context, this)
   private var mountedTarget: WeakReference<ViewGroup>? = null
   private var pendingDetach = false
@@ -49,13 +52,19 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     disposed = false
-    observer = rootView.viewTreeObserver.also { it.addOnPreDrawListener(preDraw) }
     syncPortal()
   }
   override fun onDetachedFromWindow() {
     observer?.takeIf { it.isAlive }?.removeOnPreDrawListener(preDraw); observer = null
     detach(); emit(false, "detached", null)
     super.onDetachedFromWindow()
+  }
+  private fun startTracking() {
+    if (observer?.isAlive == true) return
+    observer = rootView.viewTreeObserver.also { it.addOnPreDrawListener(preDraw) }
+  }
+  private fun stopTracking() {
+    observer?.takeIf { it.isAlive }?.removeOnPreDrawListener(preDraw); observer = null
   }
   private fun isBelow(view: View, ancestor: View): Boolean {
     var current: View? = view
@@ -88,7 +97,11 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
       val target = if (containerTag == 0) windowRoot else windowRoot?.findViewById<View>(containerTag) as? ViewGroup
       val decision = portalDecision(active, isAttachedToWindow, target != null, target?.windowToken == windowToken,
         target === this || (target != null && isBelow(target, overlay)), target != null && target.width > 0 && target.height > 0, containerTag == 0 || (target is ReactViewGroup && !target.removeClippedSubviews))
-      if (!decision.presented || target == null) { detach(); emit(false, decision.reason, null); return }
+      if (!decision.presented || target == null) {
+        detach(); if (!active || !isAttachedToWindow) stopTracking() else startTracking()
+        emit(false, decision.reason, null); return
+      }
+      startTracking()
       if (mountedTarget?.get()?.let { it !== target } == true) {
         detach()
         if (pendingDetach) { emit(false,"pending-container-cleanup",null); return }
@@ -144,7 +157,7 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
     val x = origin[0] / density; val y = origin[1] / density
     val width = (target?.width ?: 0) / density; val height = (target?.height ?: 0) / density
     val signature = listOf(revision, presented, reason, x, y, width, height, linear.a, linear.b, linear.c, linear.d, rootOrigin[0], rootOrigin[1], rootLinear)
-    if (signature == lastLayout) return
+    if (signature == lastLayout) { emitObservation(presented, reason); return }
     lastLayout = signature
     val data = Arguments.createMap().apply {
       putString("revision", revision); putBoolean("presented", presented); putString("reason", reason)
@@ -155,11 +168,40 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
     }
     val react = context as ThemedReactContext
     UIManagerHelper.getEventDispatcher(react)?.dispatchEvent(HostEvent(UIManagerHelper.getSurfaceId(react), id, "topPortalLayout", data))
+    emitObservation(presented, reason)
+  }
+  private fun emitObservation(presented: Boolean, portalReason: String) {
+    if (observationRevision.isEmpty()) { lastObservation = null; return }
+    val anchor = if (observedTag > 0 && isAttachedToWindow) rootView.findViewById<View>(observedTag) else null
+    val anchorAvailable = presented && anchor != null && anchor.isAttachedToWindow && anchor.isShown && anchor.windowToken == windowToken
+    val anchorRect = if (anchorAvailable) portalWindowRect(anchor!!) else null
+    val reference = if (anchorAvailable) portalClippingParents(anchor!!) else PortalClippingResult(true, null)
+    val popper = if (presented) portalClippingParents(overlay) else PortalClippingResult(true, null)
+    val bounds = if (presented) portalWindowBounds(this) else PortalWindowBounds(PortalObservationRect(), PortalObservationRect())
+    val valid = presented && reference.valid && popper.valid && (!anchorAvailable || anchorRect != null)
+    val reason = if (!presented) portalReason else if (!valid) "unsupported-transform" else if (observedTag > 0 && !anchorAvailable) "unavailable-anchor" else "observed"
+    val signature = listOf(revision,observationRevision,observedTag,valid,anchorAvailable,reason,anchorRect,reference.rect,popper.rect,bounds)
+    if (signature == lastObservation) return
+    lastObservation = signature
+    val density = resources.displayMetrics.density.toDouble()
+    fun rect(value: PortalObservationRect?) = Arguments.createMap().apply {
+      val scaled = (value ?: PortalObservationRect()).scale(density)
+      putDouble("x",scaled.x); putDouble("y",scaled.y); putDouble("width",scaled.width); putDouble("height",scaled.height)
+    }
+    fun clip(value: PortalObservationRect?) = rect(value).apply { putBoolean("present",value != null) }
+    val data = Arguments.createMap().apply {
+      putString("revision",revision); putString("observationRevision",observationRevision); putInt("observedTag",observedTag)
+      putBoolean("presented",valid); putBoolean("anchorAvailable",anchorAvailable && anchorRect != null); putString("reason",reason)
+      putMap("anchor",rect(anchorRect)); putMap("referenceClip",clip(reference.rect)); putMap("popperClip",clip(popper.rect))
+      putMap("viewport",rect(bounds.viewport)); putMap("window",rect(bounds.window))
+    }
+    val react = context as ThemedReactContext
+    UIManagerHelper.getEventDispatcher(react)?.dispatchEvent(PortalObservationEvent(UIManagerHelper.getSurfaceId(react), id, data))
   }
   fun dispose() {
     disposed = true
     observer?.takeIf { it.isAlive }?.removeOnPreDrawListener(preDraw); observer = null
-    detach(); lastLayout = null
+    detach(); lastLayout = null; lastObservation = null
   }
 }
 

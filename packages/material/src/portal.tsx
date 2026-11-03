@@ -26,6 +26,11 @@ import { NativeOverlayReadiness } from './nativeOverlayReadiness';
 import { NativeModalParentContext } from './nativeModalContext';
 import { nativeModalManager as manager } from './nativeModalManager';
 import { NativePortalContext } from './portalContext';
+import {
+  PortalObservationRegistry,
+  type PortalObservationLease,
+  type PortalObservationListener,
+} from './portalObservation';
 import { portalBounds, portalWindowRect, type NativePortalBounds } from './portalGeometry';
 export type { NativePortalBounds } from './portalGeometry';
 export type NativePortalInlineHandle = ViewInstance | TextInstance | TextInputInstance;
@@ -85,13 +90,29 @@ export const Portal = forwardRef<
   const [host, setHost] = useState<ViewInstance | null>(null),
     canvas = useRef<ViewInstance | null>(null);
   const [layout, setLayout] = useState<NativePortalLayout | null>(null);
+  const [observation, setObservation] = useState<PortalObservationLease | null>(null);
+  const [observations] = useState(() => new PortalObservationRegistry(setObservation));
+  const observeAnchor = useCallback(
+    (node: ViewInstance | null, listener: PortalObservationListener) => {
+      const tag = node == null ? 0 : (findNodeHandle(node) ?? -1);
+      return observations.observe(node, tag, listener);
+    },
+    [observations],
+  );
+  // Insertion cleanup only closes the registration gate. Notifications stay in layout cleanup,
+  // where state publication is permitted; StrictMode's layout replay can then register again.
+  useInsertionEffect(() => {
+    observations.activate();
+    return () => observations.deactivate();
+  }, [observations]);
   const mounted = useRef(false);
   useLayoutEffect(() => {
     mounted.current = true;
     return () => {
       mounted.current = false;
+      observations.clear();
     };
-  }, []);
+  }, [observations]);
   useLayoutEffect(() => {
     if (disablePortal) return;
     const node = (typeof container === 'function' ? container() : container) ?? null;
@@ -118,6 +139,9 @@ export const Portal = forwardRef<
       parent?.presented !== false &&
       (!top || (host ? top.contains(host) : parent?.id === top.id)),
   );
+  useLayoutEffect(() => {
+    observations.invalidate();
+  }, [eligible, target.revision, observations]);
   const bounds = useMemo(
     () => (layout?.revision === target.revision ? portalBounds(layout) : null),
     [layout, target.revision],
@@ -177,6 +201,21 @@ export const Portal = forwardRef<
       setLayout({ ...value });
     },
   );
+  const reportObservation = useMenuEvent(
+    (
+      event: Parameters<
+        NonNullable<React.ComponentProps<typeof NativePortalHost>['onPortalObservation']>
+      >[0],
+    ) => {
+      if (!mounted.current || disablePortal) return;
+      const result = observations.receive(event.nativeEvent, target.revision, eligible);
+      if (result === 'invalid')
+        diagnostic(
+          'portal-observation',
+          'The native Portal reported invalid observation geometry.',
+        );
+    },
+  );
   const layoutCallback = useMenuEvent(onContainerLayout ?? (() => {}));
   const publicBounds = presented ? bounds : null;
   useLayoutEffect(() => {
@@ -192,8 +231,9 @@ export const Portal = forwardRef<
       },
       bounds: publicBounds,
       presented,
+      observeAnchor,
     }),
-    [publicBounds, presented],
+    [publicBounds, presented, observeAnchor],
   );
   if (!Number.isFinite(layer)) throw new Error('MUI Native: Portal layer must be finite.');
   if (disablePortal) {
@@ -216,6 +256,9 @@ export const Portal = forwardRef<
       surfaceRef={canvas}
       presented={presented}
       onPortalLayout={report}
+      observedTag={observation?.tag ?? 0}
+      observationRevision={observation?.revision ?? ''}
+      onPortalObservation={reportObservation}
       collapsable={false}
       pointerEvents="none"
       style={placeholderStyle}

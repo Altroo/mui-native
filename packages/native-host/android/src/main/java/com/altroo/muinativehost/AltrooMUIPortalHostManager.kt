@@ -19,6 +19,10 @@ class AltrooMUIPortalHostManager : ViewGroupManager<AltrooMUIPortalHost>(), Altr
   override fun setContainerTag(view: AltrooMUIPortalHost, value: Int) { view.containerTag = value }
   @ReactProp(name = "layer", defaultDouble = 0.0)
   override fun setLayer(view: AltrooMUIPortalHost, value: Double) { view.layer = value }
+  @ReactProp(name = "observedTag", defaultInt = 0)
+  override fun setObservedTag(view: AltrooMUIPortalHost, value: Int) { view.observedTag = value }
+  @ReactProp(name = "observationRevision")
+  override fun setObservationRevision(view: AltrooMUIPortalHost, value: String?) { view.observationRevision = value ?: "" }
   @ReactProp(name="viewportX", defaultDouble=0.0)
   override fun setViewportX(view: AltrooMUIPortalHost, value: Double) = Unit
   @ReactProp(name="viewportY", defaultDouble=0.0)
@@ -33,5 +37,5 @@ class AltrooMUIPortalHostManager : ViewGroupManager<AltrooMUIPortalHost>(), Altr
   override fun setViewportD(view: AltrooMUIPortalHost, value: Double) = Unit
   override fun onAfterUpdateTransaction(view: AltrooMUIPortalHost) { super.onAfterUpdateTransaction(view); view.syncPortal() }
   override fun onDropViewInstance(view: AltrooMUIPortalHost) { view.dispose(); super.onDropViewInstance(view) }
-  override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Any> = mutableMapOf("topPortalLayout" to mapOf("registrationName" to "onPortalLayout"))
+  override fun getExportedCustomDirectEventTypeConstants(): MutableMap<String, Any> = mutableMapOf("topPortalLayout" to mapOf("registrationName" to "onPortalLayout"), "topPortalObservation" to mapOf("registrationName" to "onPortalObservation"))
 }

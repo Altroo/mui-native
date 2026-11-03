@@ -57,7 +57,8 @@ The native interaction host integrates React Native Fabric and public
 Pressability/View APIs. Related API adapters follow MIT-licensed React Native
 0.88.1 source as recorded in upstream/native-host.json and
 upstream/native-rendering.json. The native Portal adapts modal root mounting,
-touch dispatch, Fabric measurement boundaries and clipped child bookkeeping.
+touch dispatch, Fabric measurement boundaries, clipped child bookkeeping and
+source-pinned native positioning clip geometry.
 The following notice applies to these adaptations:
 
 MIT License

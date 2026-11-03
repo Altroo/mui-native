@@ -350,3 +350,98 @@ test('portal affine coordinates invert translations, rotations and scale', () =>
   expect(windowPointToPortal(0, 90, bounds)).toEqual({ x: 20, y: 10 });
   expect(portalWindowRect(bounds)).toEqual({ x: -210, y: 50, width: 240, height: 200 });
 });
+
+test('private observation leases do not turn anchor movement into public container-layout callbacks', async () => {
+  const model = new NativePortalModel(),
+    layout = jest.fn(),
+    listener = jest.fn();
+  let surface: React.ContextType<typeof NativePortalContext>;
+  function Probe() {
+    surface = useContext(NativePortalContext);
+    return <RN.Text>Observed</RN.Text>;
+  }
+  model.content = <Probe />;
+  model.props.onContainerLayout = layout;
+  await model.mount();
+  await model.layout();
+  let stop!: () => void;
+  await act(async () => {
+    stop = surface!.observeAnchor(model.nodes.get('container')!, listener);
+  });
+  const props = model.host().props,
+    count = layout.mock.calls.length;
+  const rect = { x: 0, y: 0, width: 390, height: 844 };
+  const value = {
+    revision: props.revision,
+    observationRevision: props.observationRevision,
+    observedTag: props.observedTag,
+    presented: true,
+    anchorAvailable: true,
+    reason: 'observed',
+    anchor: { ...rect, width: 120, height: 40 },
+    referenceClip: { present: false, ...rect },
+    popperClip: { present: true, ...rect },
+    viewport: rect,
+    window: rect,
+  };
+  await act(async () => {
+    props.onPortalObservation({ nativeEvent: value });
+  });
+  expect(listener).toHaveBeenLastCalledWith(value);
+  expect(layout).toHaveBeenCalledTimes(count);
+  await act(async () => {
+    stop();
+  });
+  expect(model.host().props.observationRevision).toBe('');
+  expect(listener).toHaveBeenLastCalledWith(null);
+  const calls = listener.mock.calls.length;
+  await act(async () => {
+    props.onPortalObservation({ nativeEvent: value });
+  });
+  expect(listener).toHaveBeenCalledTimes(calls);
+  model.tree!.unmount();
+});
+
+test('StrictMode layout replay retains the latest native observation subscription', async () => {
+  const model = new NativePortalModel(),
+    listener = jest.fn();
+  model.wrapper = (node) => <React.StrictMode>{node}</React.StrictMode>;
+  function Probe() {
+    const surface = useContext(NativePortalContext)!;
+    React.useLayoutEffect(
+      () => surface.observeAnchor(model.nodes.get('container')!, listener),
+      [surface.observeAnchor],
+    );
+    return <RN.Text>Strict observation</RN.Text>;
+  }
+  model.content = <Probe />;
+  await model.mount();
+  await model.layout();
+  const props = model.host().props,
+    rect = { x: 0, y: 0, width: 390, height: 844 };
+  expect(props.observationRevision).not.toBe('');
+  const value = {
+    revision: props.revision,
+    observationRevision: props.observationRevision,
+    observedTag: props.observedTag,
+    presented: true,
+    anchorAvailable: true,
+    reason: 'observed',
+    anchor: rect,
+    referenceClip: { present: false, ...rect },
+    popperClip: { present: true, ...rect },
+    viewport: rect,
+    window: rect,
+  };
+  await act(async () => {
+    props.onPortalObservation({ nativeEvent: value });
+  });
+  expect(listener).toHaveBeenLastCalledWith(value);
+  model.tree!.unmount();
+  expect(listener).toHaveBeenLastCalledWith(null);
+  const count = listener.mock.calls.length;
+  await act(async () => {
+    props.onPortalObservation({ nativeEvent: value });
+  });
+  expect(listener).toHaveBeenCalledTimes(count);
+});

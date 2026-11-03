@@ -2,7 +2,7 @@
 
 `@altroo/mui-native-host` is an independent native dependency of the material package. It provides `InteractiveView` and `NativePressable` for native keyboard/focus composition, plus the separate [NativePicker anchor](native-picker.md) for platform selection surfaces. Its Fabric spec, Android manager/view and iOS component view ship in the local archive and are autolinked into the application. The interaction primitive adds no containing native View or global React Native feature-flag override. Picker presentation uses its own transparent native anchor. The [Portal host and canvas](portal.md) provide a separate in-window nonmodal rendering boundary.
 
-The current peer matrix is React 19.3.0 / React Native 0.88.1, with the catalog on Expo SDK 58. The host archive is `0.0.3-dev.0`; other library archives remain `0.0.0-dev.0`. The host version also satisfies CocoaPods' default minimum-version constraint, unlike a `0.0.0` prerelease. Nothing is published to npm.
+The current peer matrix is React 19.3.0 / React Native 0.88.1, with the catalog on Expo SDK 58. The host archive is `0.0.4-dev.0`; other library archives remain `0.0.0-dev.0`. The host version also satisfies CocoaPods' default minimum-version constraint, unlike a `0.0.0` prerelease. Nothing is published to npm.
 
 ## Consumer setup
 
@@ -66,3 +66,11 @@ Button and IconButton now require this host through shared ButtonBase compositio
 ## Missing native components in Expo Go
 
 If the catalog displays `UnimplementedView` for `AltrooMUIInteractiveView` or another `AltrooMUI...` component, check the running application. Expo Go does not contain this native library; JavaScript refreshes cannot add its native classes. Use a development build with `@altroo/mui-native-host` autolinked, and rebuild after native host upgrades. Do not hide the error behind stock View fallbacks, since that would remove the promised keyboard and interaction behavior.
+
+## Native positioning observations
+
+Host 0.0.4 adds a separate `onPortalObservation` event to the low-level Portal host. An `observationRevision` enables one native observation lease; `observedTag` selects its native anchor or zero for viewport/container-only tracking. The event includes both revision strings and the tag, window-space anchor/clipping/viewport/window rectangles, anchor availability and presentation readiness. An empty revision disables observation publication. Material's registration and stale-event handling are private; they are not additional public Portal props.
+
+Clipping rectangles carry an explicit `present` flag and can have negative sizes after disjoint intersections. Consumers must check presentation and anchor availability, preserve those signed edges and use the revision lease to reject queued events. This transport is an internal dependency of the unfinished [Popper integration](native-positioning.md). Its existence does not make the native Popper import supported.
+
+Geometry events coalesce on each platform so pending movement snapshots can be replaced by newer geometry. This is a queue safeguard, not a measured performance result. Container/eligibility invalidation renews the native observation revision, preventing pre-close snapshots from being accepted after reopening. Empty local clipping regions remain empty under rotation; affine bounds otherwise use axis-aligned rectangles, not exact rounded or rotated polygon intersections.

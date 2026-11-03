@@ -18,4 +18,9 @@ export type {
 } from './nativePicker';
 
 export { NativePortalHost } from './nativePortal';
-export type { NativePortalHostProps, NativePortalLayout } from './nativePortal';
+export type {
+  NativePortalHostProps,
+  NativePortalLayout,
+  NativePortalRect,
+  NativePortalObservation,
+} from './nativePortal';

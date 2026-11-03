@@ -21,7 +21,29 @@ export interface NativePortalLayout {
   rootC: number;
   rootD: number;
 }
-export interface NativePortalHostProps extends Omit<NativeProps, 'onPortalLayout'> {
+export interface NativePortalRect {
+  readonly x: number;
+  readonly y: number;
+  readonly width: number;
+  readonly height: number;
+}
+/** Window-space native geometry. Signed clipping sizes retain disjoint intersections. */
+export interface NativePortalObservation {
+  readonly revision: string;
+  readonly observationRevision: string;
+  readonly observedTag: number;
+  readonly presented: boolean;
+  readonly anchorAvailable: boolean;
+  readonly reason: string;
+  readonly anchor: NativePortalRect;
+  readonly referenceClip: NativePortalRect & { readonly present: boolean };
+  readonly popperClip: NativePortalRect & { readonly present: boolean };
+  readonly viewport: NativePortalRect;
+  readonly window: NativePortalRect;
+}
+export interface NativePortalHostProps
+  extends Omit<NativeProps, 'onPortalLayout' | 'onPortalObservation'> {
+  onPortalObservation?: (event: NativeSyntheticEvent<NativePortalObservation>) => void;
   onPortalLayout?: (event: NativeSyntheticEvent<NativePortalLayout>) => void;
   geometry?: NativePortalLayout | null;
   surfaceRef?: React.Ref<ViewInstance>;

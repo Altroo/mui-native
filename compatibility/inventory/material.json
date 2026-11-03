@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "62ceec7867d4b121e4bde75072ea364373104569c617e50d32a475f1f34ba6ae",
+  "nativeSourceSha256": "a44eb76b6d9664b80282e330d9b69cddfeb4b1e05ccc11e632a1a10be146a486",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -35977,7 +35977,7 @@
           "module": "@altroo/mui-native:src/portal.tsx",
           "name": "NativePortalContainer",
           "kind": "type",
-          "line": 32
+          "line": 37
         }
       ]
     },
@@ -35988,7 +35988,7 @@
           "module": "@altroo/mui-native:src/portal.tsx",
           "name": "NativePortalHandle",
           "kind": "type",
-          "line": 33
+          "line": 38
         }
       ]
     },
@@ -35999,7 +35999,7 @@
           "module": "@altroo/mui-native:src/portal.tsx",
           "name": "NativePortalInlineHandle",
           "kind": "type",
-          "line": 31
+          "line": 36
         }
       ]
     },
@@ -100690,7 +100690,7 @@
         {
           "name": "PortalProps",
           "file": "src/portal.tsx",
-          "line": 48,
+          "line": 53,
           "package": "@altroo/mui-native"
         }
       ]
@@ -100750,7 +100750,7 @@
         {
           "name": "PortalProps",
           "file": "src/portal.tsx",
-          "line": 48,
+          "line": 53,
           "package": "@altroo/mui-native"
         }
       ]
@@ -194064,7 +194064,7 @@
     {
       "name": "NativePortalInlineHandle",
       "file": "src/portal.tsx",
-      "line": 31,
+      "line": 36,
       "kind": "type",
       "members": [],
       "references": [
@@ -194078,7 +194078,7 @@
     {
       "name": "NativePortalContainer",
       "file": "src/portal.tsx",
-      "line": 32,
+      "line": 37,
       "kind": "type",
       "members": [],
       "references": [
@@ -194090,7 +194090,7 @@
     {
       "name": "NativePortalHandle",
       "file": "src/portal.tsx",
-      "line": 33,
+      "line": 38,
       "kind": "type",
       "members": [
         {
@@ -194100,7 +194100,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly node: ViewInstance | null;",
-          "line": 34,
+          "line": 39,
           "kind": "property",
           "type": "ViewInstance | null"
         },
@@ -194111,7 +194111,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly container: ViewInstance | null;",
-          "line": 35,
+          "line": 40,
           "kind": "property",
           "type": "ViewInstance | null"
         },
@@ -194122,7 +194122,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly bounds: NativePortalBounds | null;",
-          "line": 36,
+          "line": 41,
           "kind": "property",
           "type": "NativePortalBounds | null"
         },
@@ -194133,7 +194133,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly presented: boolean;",
-          "line": 37,
+          "line": 42,
           "kind": "property",
           "type": "boolean"
         },
@@ -194144,7 +194144,7 @@
           "computed": false,
           "memberKind": "TSMethodSignature",
           "declaration": "measureInWindow(callback: (x: number, y: number, width: number, height: number) => void): void;",
-          "line": 38,
+          "line": 43,
           "kind": "property",
           "type": "measureInWindow(callback: (x: number, y: number, width: number, height: number) => void): void;"
         }
@@ -194159,7 +194159,7 @@
     {
       "name": "SharedPortalProps",
       "file": "src/portal.tsx",
-      "line": 40,
+      "line": 45,
       "kind": "type",
       "members": [
         {
@@ -194169,7 +194169,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 41,
+          "line": 46,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -194180,7 +194180,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "container?: NativePortalContainer;",
-          "line": 42,
+          "line": 47,
           "kind": "property",
           "type": "NativePortalContainer"
         },
@@ -194191,7 +194191,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "layer?: number;",
-          "line": 44,
+          "line": 49,
           "kind": "property",
           "type": "number"
         },
@@ -194202,7 +194202,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onContainerLayout?: (bounds: NativePortalBounds | null) => void;",
-          "line": 46,
+          "line": 51,
           "kind": "event",
           "type": "(bounds: NativePortalBounds | null) => void"
         }
@@ -194218,7 +194218,7 @@
     {
       "name": "PortalProps",
       "file": "src/portal.tsx",
-      "line": 48,
+      "line": 53,
       "kind": "type",
       "members": [
         {
@@ -194228,7 +194228,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disablePortal?: DisablePortal;",
-          "line": 49,
+          "line": 54,
           "kind": "property",
           "type": "DisablePortal"
         },
@@ -194239,7 +194239,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<DisablePortal extends true ? NativePortalInlineHandle : NativePortalHandle>;",
-          "line": 50,
+          "line": 55,
           "kind": "property",
           "type": "React.Ref<DisablePortal extends true ? NativePortalInlineHandle : NativePortalHandle>"
         }
@@ -194257,7 +194257,7 @@
     {
       "name": "NativePortalComponent",
       "file": "src/portal.tsx",
-      "line": 52,
+      "line": 57,
       "kind": "type",
       "members": [
         {
@@ -194267,7 +194267,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "<DisablePortal extends boolean | undefined = undefined>(\n    props: PortalProps<DisablePortal>,\n  ): React.ReactNode;",
-          "line": 53,
+          "line": 58,
           "kind": "signature",
           "type": "<DisablePortal extends boolean | undefined = undefined>(\n    props: PortalProps<DisablePortal>,\n  ): React.ReactNode;"
         },
@@ -194278,7 +194278,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "displayName?: string;",
-          "line": 56,
+          "line": 61,
           "kind": "property",
           "type": "string"
         }
@@ -194294,7 +194294,7 @@
     {
       "name": "NativePortalSurface",
       "file": "src/portalContext.ts",
-      "line": 4,
+      "line": 5,
       "kind": "type",
       "members": [
         {
@@ -194304,7 +194304,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly node: ViewInstance | null;",
-          "line": 5,
+          "line": 6,
           "kind": "property",
           "type": "ViewInstance | null"
         },
@@ -194315,7 +194315,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly bounds: NativePortalBounds | null;",
-          "line": 6,
+          "line": 7,
           "kind": "property",
           "type": "NativePortalBounds | null"
         },
@@ -194326,13 +194326,25 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly presented: boolean;",
-          "line": 7,
+          "line": 8,
           "kind": "property",
           "type": "boolean"
+        },
+        {
+          "name": "observeAnchor",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "observeAnchor(node: ViewInstance | null, listener: PortalObservationListener): () => void;",
+          "line": 10,
+          "kind": "property",
+          "type": "observeAnchor(node: ViewInstance | null, listener: PortalObservationListener): () => void;"
         }
       ],
       "references": [
         "NativePortalBounds",
+        "PortalObservationListener",
         "ViewInstance"
       ],
       "inheritanceResolved": false,
@@ -194434,6 +194446,64 @@
         }
       ],
       "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PortalObservationLease",
+      "file": "src/portalObservation.ts",
+      "line": 3,
+      "kind": "type",
+      "members": [
+        {
+          "name": "node",
+          "optional": false,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly node: ViewInstance | null;",
+          "line": 4,
+          "kind": "property",
+          "type": "ViewInstance | null"
+        },
+        {
+          "name": "tag",
+          "optional": false,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly tag: number;",
+          "line": 5,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "revision",
+          "optional": false,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly revision: string;",
+          "line": 6,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PortalObservationListener",
+      "file": "src/portalObservation.ts",
+      "line": 8,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativePortalObservation"
+      ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
     },

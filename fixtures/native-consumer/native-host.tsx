@@ -2,6 +2,9 @@ import React from 'react';
 import { Text, type ViewInstance } from 'react-native';
 import {
   InteractiveView,
+  NativePortalHost,
+  type NativePortalObservation,
+  type NativePortalRect,
   NativePressable,
   setInteractiveHotspot,
   setInteractivePressed,
@@ -41,3 +44,18 @@ const command: NativeDescendantKey = 'Tab';
 void command;
 // @ts-expect-error Descendant ownership is restricted to Tab and Escape.
 export const editingKey = <InteractiveView managedDescendantKeys={['Enter']} />;
+
+// The low-level geometry channel remains separate from the public Portal layout callback.
+export const observedPortal = (
+  <NativePortalHost
+    active
+    revision="surface"
+    observedTag={0}
+    observationRevision="anchor-lease"
+    onPortalObservation={({ nativeEvent }) => {
+      const value: NativePortalObservation = nativeEvent;
+      const viewport: NativePortalRect = value.viewport;
+      void [viewport.width, value.referenceClip.present, value.observationRevision];
+    }}
+  />
+);
