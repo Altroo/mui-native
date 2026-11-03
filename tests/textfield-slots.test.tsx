@@ -21,7 +21,7 @@ import {
   type TextFieldHtmlInputSlotProps,
   type TextFieldLabelSlotProps,
   type TextFieldOwnerState,
-} from '../packages/material/src';
+} from '@altroo/mui-native';
 type Owned<P> = P & { ownerState?: TextFieldOwnerState };
 
 test('all five slots mount distinctly, receive live state and retain form context', () => {
@@ -383,3 +383,22 @@ test.each(reference.inputDefaults)(
     expect(screen.getByLabelText('Defaults').props.value).toBe('Edited');
   },
 );
+
+test('an editable slot can control value when the outer TextField has no value', () => {
+  const change = jest.fn();
+  const { rerender } = render(
+    <TextField label="Composite" slotProps={{ htmlInput: { value: 'Rabat', onChange: change } }} />,
+  );
+  expect(screen.getByLabelText('Composite').props.value).toBe('Rabat');
+  rerender(
+    <TextField
+      label="Composite"
+      slotProps={{ htmlInput: { value: 'Casablanca', onChange: change } }}
+    />,
+  );
+  expect(screen.getByLabelText('Composite').props.value).toBe('Casablanca');
+  const event = { nativeEvent: { text: 'Draft', eventCount: 1, target: 1 } };
+  fireEvent(screen.getByLabelText('Composite'), 'change', event);
+  expect(change).toHaveBeenCalledWith(event);
+  expect(screen.getByLabelText('Composite').props.value).toBe('Casablanca');
+});

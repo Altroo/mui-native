@@ -73,6 +73,7 @@ export const Chip = forwardRef<
     style,
     classes,
     className,
+    _muiNativeClassName,
     children,
     id,
     action,
@@ -186,7 +187,7 @@ export const Chip = forwardRef<
     );
   if (React.isValidElement(avatar) && React.isValidElement(icon))
     diagnostic('chip-icon', 'Chip displays avatar before icon when both are supplied.');
-  if (classes || className)
+  if (classes || (className && className !== _muiNativeClassName))
     diagnostic(
       'chip-classes',
       'Chip class helpers identify slots; use native styles, sx or theme overrides.',
@@ -269,7 +270,7 @@ export const Chip = forwardRef<
           : {}),
         ...(clickable
           ? {
-              '&:hover': {
+              '&.Mui-hover': {
                 backgroundColor: outlined
                   ? palette?.main
                     ? alpha(palette.main, theme.palette.action.hoverOpacity)

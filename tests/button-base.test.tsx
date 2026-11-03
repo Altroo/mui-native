@@ -9,7 +9,7 @@ import {
   type ButtonBaseActions,
   type ButtonBaseProps,
   type ButtonBaseRootProps,
-} from '../packages/material/src';
+} from '@altroo/mui-native';
 import { nativeButtonModality } from '../packages/material/src/nativeButtonModality';
 import reference from './fixtures/mui-button-base-9.5.0.json';
 import { Commands } from '../packages/native-host/src/AltrooMUIInteractiveViewNativeComponent';
@@ -331,4 +331,49 @@ test('private native key events activate once and canceled keys remain non-activ
   fireEvent(screen.getByTestId('base'), 'mUIKeyDown', event('Enter', false, { isCanceled: true }));
   fireEvent(screen.getByTestId('base'), 'mUIKeyUp', event(' ', false, { isCanceled: true }));
   expect(click).toHaveBeenCalledTimes(1);
+});
+
+test('virtual option state styles without focusing or firing native focus callbacks', () => {
+  const focus = jest.fn(),
+    onFocus = jest.fn(),
+    onFocusVisible = jest.fn();
+  const diagnostic = jest.fn();
+  const restore = require('../packages/system/src').configureDiagnostics(diagnostic);
+  const authored = 'MuiAutocomplete-option Mui-focused Mui-focusVisible';
+  try {
+    const { rerender } = render(
+      field({
+        component: Capture,
+        className: authored,
+        _muiNativeClassName: authored,
+        _muiNativeItemState: { focused: true, focusVisible: true, selected: true },
+        onFocus,
+        onFocusVisible,
+        sx: {
+          '&.Mui-focused': { opacity: 0.8 },
+          '&.Mui-focusVisible': { backgroundColor: '#123456' },
+          '&.Mui-selected': { borderWidth: 2 },
+        },
+      } as any),
+    );
+    const style = StyleSheet.flatten(screen.getByTestId('base').props.style);
+    expect(style).toMatchObject({ opacity: 0.8, backgroundColor: '#123456', borderWidth: 2 });
+    expect(captured).not.toHaveProperty('_muiNativeItemState');
+    expect(captured).not.toHaveProperty('_muiNativeClassName');
+    expect(focus).not.toHaveBeenCalled();
+    expect(Commands.focus).not.toHaveBeenCalled();
+    expect(onFocus).not.toHaveBeenCalled();
+    expect(onFocusVisible).not.toHaveBeenCalled();
+    expect(diagnostic).not.toHaveBeenCalled();
+    rerender(
+      field({
+        component: Capture,
+        className: 'authored-css',
+        _muiNativeClassName: authored,
+      } as any),
+    );
+    expect(diagnostic).toHaveBeenCalledWith(expect.objectContaining({ code: 'button-classes' }));
+  } finally {
+    restore();
+  }
 });

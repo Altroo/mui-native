@@ -10,9 +10,9 @@ import {
   decomposeColor,
   chipClasses,
   getChipUtilityClass,
-} from '../packages/material/src';
+} from '@altroo/mui-native';
 import { clearNativeFocus } from '../packages/native-host/src/nativeFocus';
-import { getNativeFocusedView } from '../packages/native-host/src';
+import { getNativeFocusedView } from '@altroo/mui-native-host';
 import { NativeOverlayReadiness } from '../packages/material/src/nativeOverlayReadiness';
 import { nativeModalManager } from '../packages/material/src/nativeModalManager';
 import { NativeChipModel } from './helpers/nativeChipModel';
@@ -396,4 +396,29 @@ test('invalid optional glyph elements are ignored and default deletion remains v
   await model.mount();
   expect(model.tree!.queryByText('bad', { includeHiddenElements: true })).toBe(null);
   expect(model.tree!.getByTestId('chip-delete-icon', { includeHiddenElements: true })).toBeTruthy();
+});
+
+test('clickable native hover changes color without unsupported selector warnings', () => {
+  const messages: string[] = [],
+    done = configureDiagnostics(({ code }) => messages.push(code));
+  try {
+    const theme = createTheme({ palette: { primary: { main: '#224488' } } });
+    const tree = render(
+      <ThemeProvider theme={theme}>
+        <Chip testID="hover-chip" label="Hover" clickable variant="outlined" color="primary" />
+      </ThemeProvider>,
+    );
+    const before = StyleSheet.flatten(tree.getByTestId('hover-chip').props.style).backgroundColor;
+    fireEvent(tree.getByTestId('hover-chip'), 'hoverIn', { nativeEvent: {} });
+    const after = StyleSheet.flatten(tree.getByTestId('hover-chip').props.style).backgroundColor;
+    expect(after).not.toBe(before);
+    expect(decomposeColor(after).values.at(-1)).toBe(theme.palette.action.hoverOpacity);
+    fireEvent(tree.getByTestId('hover-chip'), 'hoverOut', { nativeEvent: {} });
+    expect(StyleSheet.flatten(tree.getByTestId('hover-chip').props.style).backgroundColor).toBe(
+      before,
+    );
+    expect(messages).not.toContain('selector');
+  } finally {
+    done();
+  }
 });

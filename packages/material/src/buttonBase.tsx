@@ -60,6 +60,10 @@ export interface ButtonBaseRootProps extends PressableProps {
   to?: unknown;
 }
 export interface ButtonBaseOwnProps {
+  /** @internal Visual state for composites that keep native focus in an input. */
+  _muiNativeItemState?: { focused: boolean; focusVisible: boolean; selected: boolean };
+  /** @internal Exact generated class metadata; authored CSS still diagnoses. */
+  _muiNativeClassName?: string;
   disabled?: boolean;
   autoFocus?: boolean;
   ref?: React.Ref<ViewInstance>;
@@ -117,6 +121,8 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     focusRipple = false,
     focusableWhenDisabled = false,
     suppressFocusVisible = false,
+    _muiNativeItemState,
+    _muiNativeClassName,
     onClick,
     onPress,
     onKeyDown,
@@ -144,6 +150,9 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   }, []);
   const [focused, setFocused] = useState(false);
   const focusVisible = focused && !disabled && !suppressFocusVisible;
+  // Virtual option highlight must not move the editor's focus, invoke focus
+  // callbacks, or grant activation to disabled rows. It only affects styling.
+  const visualFocusVisible = focusVisible || Boolean(_muiNativeItemState?.focusVisible);
   if ((disabled || suppressFocusVisible) && focused) setFocused(false);
   const overlayReady = useContext(NativeOverlayReadiness),
     menuReady = useContext(NativeMenuFocusReadiness),
@@ -180,11 +189,24 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   const staticStyle = typeof style === 'function' ? undefined : style;
   const computed = useComponentStyle(
     'MuiButtonBase',
-    { ...props, disabled, disableRipple, disableTouchRipple, focusRipple, tabIndex, focusVisible },
+    {
+      ...props,
+      disabled,
+      disableRipple,
+      disableTouchRipple,
+      focusRipple,
+      tabIndex,
+      focusVisible: visualFocusVisible,
+    },
     sx,
     {
       ...nativeTextStyleContext(parent, staticStyle, theme),
-      states: [...(disabled ? ['disabled'] : []), ...(focusVisible ? ['focusVisible'] : [])],
+      states: [
+        ...(disabled ? ['disabled'] : []),
+        ...(_muiNativeItemState?.focused ? ['focused'] : []),
+        ...(_muiNativeItemState?.selected ? ['selected'] : []),
+        ...(visualFocusVisible ? ['focusVisible'] : []),
+      ],
       baseStyle: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -224,7 +246,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   });
   const stateFor = (state: PressableStateCallbackType): ButtonBaseState => ({
     ...state,
-    focusVisible,
+    focusVisible: visualFocusVisible,
     disabled,
   });
   const effectiveStyle = (state: PressableStateCallbackType): StyleProp<NativeStyle> => [
@@ -249,7 +271,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     formAction,
     ...host
   } = native as typeof native & Record<string, unknown>;
-  if (classes || className || focusVisibleClassName)
+  if (classes || (className && className !== _muiNativeClassName) || focusVisibleClassName)
     diagnostic(
       'button-classes',
       'Use native ButtonBase sx state selectors or style callbacks instead of CSS classes.',

@@ -14,7 +14,9 @@ input events, label/group and five-slot switch composition, motion and slot iden
 MIT-licensed references. Chip slot, activation/deletion, label and style contracts
 also adapt those MIT-licensed references; native glyph geometry is independently authored.
 Popper wrapper, slots, refs, RTL and transition/instance composition also adapt
-those MIT-licensed references. Upstream public declaration
+those MIT-licensed references. Autocomplete filtering, value mapping, state transitions,
+component/slot composition and public contracts also adapt those MIT-licensed
+references; native scrolling and indicator geometry are independently authored. Upstream public declaration
 snapshots and license texts are retained under upstream/. Derived declaration
 inventories are retained under compatibility/inventory/. Their applicable MIT
 notices are preserved in upstream/licenses/. No Pro or Premium source, assets,

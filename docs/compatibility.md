@@ -8,7 +8,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 - Native [Portal](portal.md) with same-window rendering, ordinary View containers, context/state/ref preservation, native bounds and guarded touch/keyboard ownership. Active clipped-subview containers and full physical device validation remain open.
 
-- Native [Chip](chip.md) display/action/deletion, root/label slots, native refs, typography and class helpers, with explicit native touch-target and disabled-deletion adaptations. Autocomplete integration and physical native validation remain open.
+- Native [Chip](chip.md) display/action/deletion, root/label slots, native refs, typography and class helpers, with explicit native touch-target and disabled-deletion adaptations. Autocomplete composition is implemented; physical native validation remains open.
 
 - A low-level [platform-native picker host](native-picker.md) with UIKit/Android implementations, modeled events, a JVM lifecycle policy check and compile/link evidence. Material integration is documented in [native selection](native-select.md); physical device gates remain unfinished.
 
@@ -50,6 +50,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 - Strict Day.js field parsing, partial invalid text, calendar-day bounds and named timezone parsing. DatePicker currently publishes calendar selection when the user accepts, which differs from upstream live-selection callback timing.
 
 - Native Popper with measured native/virtual anchors, Portal/inline rendering, root slots, instance refs, modifier/placement lifecycle and original imports. See [Popper](popper.md) for explicit native boundaries and remaining device/release gates.
+
+- Native [Autocomplete](autocomplete.md) input/listbox composition, mapped and multiple selections, renderValue, grouping, all slots and headless imports have source-backed checks and scoped emulator evidence. Physical/tag keyboard completeness, screen readers, large-option performance and full parity remain open.
 
 ## Unsupported or not yet verified
 

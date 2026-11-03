@@ -2501,6 +2501,166 @@
         "Source placement/default/modifier concatenation and instance lifecycle use the native measurement adapter instead of the DOM Popper runtime.",
         "Native Portal leases and inline observation-only hosts retain immutable per-cycle geometry, current refs and stale cleanup guards."
       ]
+    },
+    {
+      "localFile": "packages/material/src/autocompleteValues.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+          "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c",
+          "useAutocomplete/utils/useOptionValue.js": "cedd77adeab6954adf2d7eb4b1cf9557ae40cfbfc473c98df0f9ddcc93b4aba7",
+          "useAutocomplete/utils/validateOptionValues.js": "5b0467d690110dfc3ac45847220ba166afacacab6f54cda4ff72494d1f544bab"
+        }
+      },
+      "adaptations": [
+        "Typed original filtering order, identity, limit and early-stop behavior with no browser runtime dependency.",
+        "Memoized native selection resolution preserves mapped keys, custom equality, generated-option retention and controlled rejection. Diagnostic wording identifies MUI Native."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/useAutocompleteTypes.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+          "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c",
+          "useAutocomplete/utils/useOptionValue.js": "cedd77adeab6954adf2d7eb4b1cf9557ae40cfbfc473c98df0f9ddcc93b4aba7",
+          "useAutocomplete/utils/validateOptionValues.js": "5b0467d690110dfc3ac45847220ba166afacacab6f54cda4ff72494d1f544bab"
+        }
+      },
+      "adaptations": [
+        "Source-shaped option/mapped-value/free-solo/multiple generics, props, reason unions and hook getters.",
+        "Native refs, input/listbox/root interaction props and synthetic events replace browser element contracts. Public component integration is tracked separately."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/autocompleteNativeNodes.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+          "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c",
+          "useAutocomplete/utils/useOptionValue.js": "cedd77adeab6954adf2d7eb4b1cf9557ae40cfbfc473c98df0f9ddcc93b4aba7",
+          "useAutocomplete/utils/validateOptionValues.js": "5b0467d690110dfc3ac45847220ba166afacacab6f54cda4ff72494d1f544bab"
+        }
+      },
+      "adaptations": [
+        "Native active-option scrolling uses measured content coordinates in place of DOM offsets, with stale native callback rejection and per-instance ref ownership."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/useNativeAutocomplete.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+          "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c",
+          "useAutocomplete/utils/useOptionValue.js": "cedd77adeab6954adf2d7eb4b1cf9557ae40cfbfc473c98df0f9ddcc93b4aba7",
+          "useAutocomplete/utils/validateOptionValues.js": "5b0467d690110dfc3ac45847220ba166afacacab6f54cda4ff72494d1f544bab"
+        }
+      },
+      "adaptations": [
+        "Native option/value/input/open state transitions, selection reasons, filtering/grouping and highlight navigation follow the pinned hook.",
+        "Native refs, measured scrolling, AppState and real input/press events replace browser globals and element mutation. Software submission uses actual native event provenance.",
+        "Native types expose null programmatic callbacks and the runtime createOption input-reset reason omitted by the upstream declaration. Public component integration and native behavior verification remain unfinished."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/autocomplete.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Autocomplete/Autocomplete.js": "c7e78eb149762dd84962f442dd943a1e7130fda6aecefd1bb9bf188261df8a73",
+          "Autocomplete/Autocomplete.d.ts": "bec13eada4b2194ee093657580d593b82ed1deb25b964e199b4a2b93de81224f",
+          "Autocomplete/autocompleteClasses.js": "545a6fa5ac7db545cbd76cff0da9575457ee9fb537114a4a52bbb7c1f707dfe5",
+          "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+          "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c"
+        }
+      },
+      "adaptations": [
+        "Native TextField/Chip/Popper composition, eight slots, grouped sticky headers, retained input focus, inert cached exit rows and source-shaped callback/owner contracts. No browser elements or CSS engine."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/autocompleteTypes.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Autocomplete/Autocomplete.js": "c7e78eb149762dd84962f442dd943a1e7130fda6aecefd1bb9bf188261df8a73",
+          "Autocomplete/Autocomplete.d.ts": "bec13eada4b2194ee093657580d593b82ed1deb25b964e199b4a2b93de81224f",
+          "Autocomplete/autocompleteClasses.js": "545a6fa5ac7db545cbd76cff0da9575457ee9fb537114a4a52bbb7c1f707dfe5",
+          "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+          "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c"
+        }
+      },
+      "adaptations": [
+        "Native public component, generic mapped/free-solo values, slot and rendering declarations. Native refs/events replace DOM contracts."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/autocompleteClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Autocomplete/Autocomplete.js": "c7e78eb149762dd84962f442dd943a1e7130fda6aecefd1bb9bf188261df8a73",
+          "Autocomplete/Autocomplete.d.ts": "bec13eada4b2194ee093657580d593b82ed1deb25b964e199b4a2b93de81224f",
+          "Autocomplete/autocompleteClasses.js": "545a6fa5ac7db545cbd76cff0da9575457ee9fb537114a4a52bbb7c1f707dfe5",
+          "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+          "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c"
+        }
+      },
+      "adaptations": [
+        "Source-shaped class identifiers are metadata; native sx and theme overrides implement supported styling."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/useAutocomplete.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Autocomplete/Autocomplete.js": "c7e78eb149762dd84962f442dd943a1e7130fda6aecefd1bb9bf188261df8a73",
+          "Autocomplete/Autocomplete.d.ts": "bec13eada4b2194ee093657580d593b82ed1deb25b964e199b4a2b93de81224f",
+          "Autocomplete/autocompleteClasses.js": "545a6fa5ac7db545cbd76cff0da9575457ee9fb537114a4a52bbb7c1f707dfe5",
+          "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+          "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c"
+        }
+      },
+      "adaptations": [
+        "Source-shaped public overloads for mapped/raw selections and grouped option-facing results. Native node/event getters replace DOM contracts."
+      ]
     }
   ]
 }

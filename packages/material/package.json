@@ -445,6 +445,21 @@
       "types": "./dist/Popper/popperClasses/index.d.ts",
       "react-native": "./src/Popper/popperClasses/index.ts",
       "default": "./dist/Popper/popperClasses/index.js"
+    },
+    "./Autocomplete": {
+      "types": "./dist/Autocomplete/index.d.ts",
+      "react-native": "./src/Autocomplete/index.ts",
+      "default": "./dist/Autocomplete/index.js"
+    },
+    "./Autocomplete/autocompleteClasses": {
+      "types": "./dist/Autocomplete/autocompleteClasses/index.d.ts",
+      "react-native": "./src/Autocomplete/autocompleteClasses/index.ts",
+      "default": "./dist/Autocomplete/autocompleteClasses/index.js"
+    },
+    "./useAutocomplete": {
+      "types": "./dist/useAutocomplete/index.d.ts",
+      "react-native": "./src/useAutocomplete/index.ts",
+      "default": "./dist/useAutocomplete/index.js"
     }
   },
   "dependencies": {

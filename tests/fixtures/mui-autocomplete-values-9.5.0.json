@@ -1,0 +1,443 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510",
+      "useAutocomplete/useAutocomplete.d.ts": "5ef4e7805a78365415e5419d12249d1aef2a4bc9cd45552efbedea961276b22c",
+      "useAutocomplete/utils/useOptionValue.js": "cedd77adeab6954adf2d7eb4b1cf9557ae40cfbfc473c98df0f9ddcc93b4aba7",
+      "useAutocomplete/utils/validateOptionValues.js": "5b0467d690110dfc3ac45847220ba166afacacab6f54cda4ff72494d1f544bab",
+      "Autocomplete/autocompleteClasses.js": "545a6fa5ac7db545cbd76cff0da9575457ee9fb537114a4a52bbb7c1f707dfe5"
+    }
+  },
+  "scope": "Original filtering, identity, limit and early-stop behavior. Class identifiers are source-backed metadata; value-resolution hooks and native UI have separate checks.",
+  "observations": [
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "",
+      "config": {},
+      "stringifyIds": false,
+      "indices": [0, 1, 2, 3, 4, 5, 6],
+      "sameArray": true,
+      "calls": 0
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "",
+      "config": { "ignoreCase": false },
+      "stringifyIds": false,
+      "indices": [0, 1, 2, 3, 4, 5, 6],
+      "sameArray": true,
+      "calls": 0
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "",
+      "config": { "ignoreAccents": false },
+      "stringifyIds": false,
+      "indices": [0, 1, 2, 3, 4, 5, 6],
+      "sameArray": true,
+      "calls": 0
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "",
+      "config": { "matchFrom": "start" },
+      "stringifyIds": false,
+      "indices": [0, 1, 2, 3, 4, 5, 6],
+      "sameArray": true,
+      "calls": 0
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "",
+      "config": { "trim": true },
+      "stringifyIds": false,
+      "indices": [0, 1, 2, 3, 4, 5, 6],
+      "sameArray": true,
+      "calls": 0
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "ra",
+      "config": {},
+      "stringifyIds": false,
+      "indices": [0, 5],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "ra",
+      "config": { "ignoreCase": false },
+      "stringifyIds": false,
+      "indices": [],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "ra",
+      "config": { "ignoreAccents": false },
+      "stringifyIds": false,
+      "indices": [0, 5],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "ra",
+      "config": { "matchFrom": "start" },
+      "stringifyIds": false,
+      "indices": [0],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "ra",
+      "config": { "trim": true },
+      "stringifyIds": false,
+      "indices": [0, 5],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "CAFE",
+      "config": {},
+      "stringifyIds": false,
+      "indices": [2, 3, 6],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "CAFE",
+      "config": { "ignoreCase": false },
+      "stringifyIds": false,
+      "indices": [3],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "CAFE",
+      "config": { "ignoreAccents": false },
+      "stringifyIds": false,
+      "indices": [3, 6],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "CAFE",
+      "config": { "matchFrom": "start" },
+      "stringifyIds": false,
+      "indices": [2, 3, 6],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "CAFE",
+      "config": { "trim": true },
+      "stringifyIds": false,
+      "indices": [2, 3, 6],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "café",
+      "config": {},
+      "stringifyIds": false,
+      "indices": [2, 3, 6],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "café",
+      "config": { "ignoreCase": false },
+      "stringifyIds": false,
+      "indices": [6],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "café",
+      "config": { "ignoreAccents": false },
+      "stringifyIds": false,
+      "indices": [2],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "café",
+      "config": { "matchFrom": "start" },
+      "stringifyIds": false,
+      "indices": [2, 3, 6],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "café",
+      "config": { "trim": true },
+      "stringifyIds": false,
+      "indices": [2, 3, 6],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "  ra ",
+      "config": {},
+      "stringifyIds": false,
+      "indices": [],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "  ra ",
+      "config": { "ignoreCase": false },
+      "stringifyIds": false,
+      "indices": [],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "  ra ",
+      "config": { "ignoreAccents": false },
+      "stringifyIds": false,
+      "indices": [],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "  ra ",
+      "config": { "matchFrom": "start" },
+      "stringifyIds": false,
+      "indices": [],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "  ra ",
+      "config": { "trim": true },
+      "stringifyIds": false,
+      "indices": [0, 5],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "malaga",
+      "config": {},
+      "stringifyIds": false,
+      "indices": [4],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "malaga",
+      "config": { "ignoreCase": false },
+      "stringifyIds": false,
+      "indices": [],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "malaga",
+      "config": { "ignoreAccents": false },
+      "stringifyIds": false,
+      "indices": [],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "malaga",
+      "config": { "matchFrom": "start" },
+      "stringifyIds": false,
+      "indices": [4],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "malaga",
+      "config": { "trim": true },
+      "stringifyIds": false,
+      "indices": [4],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "",
+      "config": { "limit": 0 },
+      "stringifyIds": false,
+      "indices": [],
+      "sameArray": false,
+      "calls": 0
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "ca",
+      "config": { "limit": 0 },
+      "stringifyIds": false,
+      "indices": [],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "",
+      "config": { "limit": 1 },
+      "stringifyIds": false,
+      "indices": [0],
+      "sameArray": false,
+      "calls": 0
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "ca",
+      "config": { "limit": 1 },
+      "stringifyIds": false,
+      "indices": [1],
+      "sameArray": false,
+      "calls": 2
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "",
+      "config": { "limit": 2 },
+      "stringifyIds": false,
+      "indices": [0, 1],
+      "sameArray": false,
+      "calls": 0
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "ca",
+      "config": { "limit": 2 },
+      "stringifyIds": false,
+      "indices": [1, 2],
+      "sameArray": false,
+      "calls": 3
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "",
+      "config": { "limit": -1 },
+      "stringifyIds": false,
+      "indices": [0, 1, 2, 3, 4, 5],
+      "sameArray": false,
+      "calls": 0
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "ca",
+      "config": { "limit": -1 },
+      "stringifyIds": false,
+      "indices": [1, 2, 3],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "",
+      "config": { "limit": 2.5 },
+      "stringifyIds": false,
+      "indices": [0, 1],
+      "sameArray": false,
+      "calls": 0
+    },
+    {
+      "options": ["Rabat", "Casablanca", "Café", "CAFETERIA", "Málaga", "  Rabat", "café"],
+      "inputValue": "ca",
+      "config": { "limit": 2.5 },
+      "stringifyIds": false,
+      "indices": [1, 2],
+      "sameArray": false,
+      "calls": 7
+    },
+    {
+      "options": [
+        { "id": 0, "label": "Rabat" },
+        { "id": 1, "label": "Casablanca" },
+        { "id": 2, "label": "Café" },
+        { "id": 3, "label": "CAFETERIA" },
+        { "id": 4, "label": "Málaga" },
+        { "id": 5, "label": "  Rabat" },
+        { "id": 6, "label": "café" }
+      ],
+      "inputValue": "2 ",
+      "config": {},
+      "stringifyIds": true,
+      "indices": [2],
+      "sameArray": false,
+      "calls": 7
+    }
+  ],
+  "classMetadata": {
+    "classes": {
+      "root": "MuiAutocomplete-root",
+      "expanded": "Mui-expanded",
+      "fullWidth": "MuiAutocomplete-fullWidth",
+      "focused": "Mui-focused",
+      "focusVisible": "Mui-focusVisible",
+      "tag": "MuiAutocomplete-tag",
+      "tagSizeSmall": "MuiAutocomplete-tagSizeSmall",
+      "tagSizeMedium": "MuiAutocomplete-tagSizeMedium",
+      "hasPopupIcon": "MuiAutocomplete-hasPopupIcon",
+      "hasClearIcon": "MuiAutocomplete-hasClearIcon",
+      "inputRoot": "MuiAutocomplete-inputRoot",
+      "input": "MuiAutocomplete-input",
+      "inputFocused": "MuiAutocomplete-inputFocused",
+      "endAdornment": "MuiAutocomplete-endAdornment",
+      "clearIndicator": "MuiAutocomplete-clearIndicator",
+      "popupIndicator": "MuiAutocomplete-popupIndicator",
+      "popupIndicatorOpen": "MuiAutocomplete-popupIndicatorOpen",
+      "popper": "MuiAutocomplete-popper",
+      "popperDisablePortal": "MuiAutocomplete-popperDisablePortal",
+      "paper": "MuiAutocomplete-paper",
+      "listbox": "MuiAutocomplete-listbox",
+      "loading": "MuiAutocomplete-loading",
+      "noOptions": "MuiAutocomplete-noOptions",
+      "status": "MuiAutocomplete-status",
+      "option": "MuiAutocomplete-option",
+      "groupLabel": "MuiAutocomplete-groupLabel",
+      "groupUl": "MuiAutocomplete-groupUl"
+    },
+    "utilities": {
+      "active": "Mui-active",
+      "checked": "Mui-checked",
+      "completed": "Mui-completed",
+      "disabled": "Mui-disabled",
+      "error": "Mui-error",
+      "expanded": "Mui-expanded",
+      "focused": "Mui-focused",
+      "focusVisible": "Mui-focusVisible",
+      "open": "Mui-open",
+      "readOnly": "Mui-readOnly",
+      "required": "Mui-required",
+      "selected": "Mui-selected",
+      "loading": "MuiAutocomplete-loading",
+      "hover": "MuiAutocomplete-hover"
+    }
+  }
+}

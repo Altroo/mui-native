@@ -36,6 +36,8 @@ Native implementations of selected Material components. APIs and behavior are pa
 
 See the [component status](https://github.com/Altroo/mui-native#status), [compatibility contract](https://github.com/Altroo/mui-native/blob/main/docs/compatibility.md) and [package guide](https://github.com/Altroo/mui-native/blob/main/docs/compatibility.md). Scoped emulator tests and type checks do not certify full physical-device, accessibility or release-performance behavior.
 
+Autocomplete and its headless hook are implemented in the current source. Published `0.0.6-prealpha.0` packages predate this addition. See the [Autocomplete guide](https://github.com/Altroo/mui-native/blob/main/docs/autocomplete.md) for source-build usage, mapped/multiple values, renderers, slots and remaining native gates.
+
 ## License
 
 Original code is [MIT licensed](https://github.com/Altroo/mui-native/blob/main/LICENSE), Copyright (c) 2026 Altroo and contributors. This package includes `LICENSE` and `NOTICE`; adapted upstream code retains its original notices. See [upstream attribution](https://github.com/Altroo/mui-native/blob/main/NOTICE).

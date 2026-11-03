@@ -112,8 +112,8 @@ function palette(theme: Theme, color: string, inherited: unknown) {
   diagnostic('button-color', `Native button color ${color} needs a palette entry with main.`);
   return theme.palette.primary;
 }
-function classDiagnostic(classes: unknown, className: unknown) {
-  if (classes || className)
+function classDiagnostic(classes: unknown, className: unknown, generated?: string) {
+  if (classes || (className && className !== generated))
     diagnostic(
       'button-classes',
       'Native button class helpers identify slots; use sx, native styles and theme overrides for styling.',
@@ -200,6 +200,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     disableFocusRipple = false,
     classes,
     className,
+    _muiNativeClassName,
     focusVisibleClassName,
     id,
     'aria-label': ariaLabel,
@@ -207,7 +208,11 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     onHoverOut,
     ...other
   } = props;
-  classDiagnostic(classes, className ?? focusVisibleClassName);
+  classDiagnostic(
+    classes,
+    className ?? focusVisibleClassName,
+    focusVisibleClassName ? undefined : _muiNativeClassName,
+  );
   const theme = useTheme(),
     parent = useNativeTextContext(),
     { width } = useWindowDimensions(),
@@ -521,6 +526,7 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
       loadingIndicator,
       classes,
       className,
+      _muiNativeClassName,
       focusVisibleClassName,
       id,
       'aria-label': ariaLabel,
@@ -528,7 +534,11 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
       onHoverOut,
       ...other
     } = props;
-    classDiagnostic(classes, className ?? focusVisibleClassName);
+    classDiagnostic(
+      classes,
+      className ?? focusVisibleClassName,
+      focusVisibleClassName ? undefined : _muiNativeClassName,
+    );
     const theme = useTheme(),
       parent = useNativeTextContext(),
       { width } = useWindowDimensions(),
