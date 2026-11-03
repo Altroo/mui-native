@@ -72,6 +72,8 @@ export const screenshotStages = [
 ];
 export const requiredMilestones = [
   ...screenshotStages,
+  'react-physical-child-bridge',
+  'react-manager-operations',
   'repeat-0-reset',
   'repeat-0-transformed',
   'repeat-1-reset',

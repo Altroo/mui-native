@@ -59,7 +59,9 @@ public final class PopperInstrumentation extends Instrumentation {
       require(launch != null, "Catalog launch activity is missing");
       launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity = startActivitySync(launch);
-      tap(waitFor("catalog-tab-Overlays", 35000));
+      AccessibilityNodeInfo overlaysTab = waitFor("catalog-tab-Overlays", 35000);
+      verifyManagerOperations();
+      tap(overlaysTab);
       tap(waitFor("delivery-trigger", 10000));
       waitFor("delivery-note", 10000);
       verify("window-popup", false, false, false);
@@ -223,7 +225,65 @@ public final class PopperInstrumentation extends Instrumentation {
     } while (SystemClock.uptimeMillis() < deadline);
     if (last != null) throw new AssertionError(stage + ": " + last.getMessage(), last);
     milestones.put(stage);
+    if (stage.equals("window-popup")) milestones.put("react-physical-child-bridge");
     if (!stage.startsWith("repeat-")) capture(stage);
+  }
+  private void verifyManagerOperations() {
+    final Throwable[] failure = {null};
+    runOnMainSync(() -> {
+      try {
+        View tab = nativeView(activity.getWindow().getDecorView(), "catalog-tab-Overlays");
+        require(tab != null && tab.getContext() instanceof com.facebook.react.uimanager.ThemedReactContext,
+          "Native React context is unavailable for the child-manager regression");
+        com.altroo.muinativehost.AltrooMUIPortalHost host = new com.altroo.muinativehost.AltrooMUIPortalHost(
+          (com.facebook.react.uimanager.ThemedReactContext)tab.getContext());
+        com.facebook.react.uimanager.ViewGroupManager<com.altroo.muinativehost.AltrooMUIPortalHost> manager =
+          new com.altroo.muinativehost.AltrooMUIPortalHostManager();
+        View first = new View(tab.getContext()), second = new View(tab.getContext()), inserted = new View(tab.getContext());
+        try {
+          manager.addView(host,first,0); manager.addView(host,second,1);
+          manager.addViews(host,java.util.Arrays.asList(inserted));
+          require(host.getChildCount() == 0 && manager.getChildCount(host) == 3,
+            "Framework and React child counts are conflated");
+          require(manager.getChildAt(host,0) == inserted && manager.getChildAt(host,1) == first && manager.getChildAt(host,2) == second,
+            "Batched React insertion changed child order");
+          // Fabric can remove directly from the real parent during reparenting.
+          ((ViewGroup)first.getParent()).removeView(first);
+          require(manager.getChildCount(host) == 2 && manager.getChildAt(host,1) == second,
+            "React child getters retain a stale cached list");
+          manager.removeView(host,second);
+          require(manager.getChildCount(host) == 1 && manager.getChildAt(host,0) == inserted,
+            "Inherited manager removal bypassed logical children");
+          manager.removeAllViews(host);
+          require(manager.getChildCount(host) == 0 && inserted.getParent() == null,
+            "Inherited removeAllViews retained portal children");
+          manager.addView(host,first,0); manager.removeViewAt(host,0);
+          require(manager.getChildCount(host) == 0 && first.getParent() == null,
+            "React re-add/remove lost the physical parent");
+        } finally { manager.removeAllViews(host); host.dispose(); }
+      } catch (Throwable error) { failure[0] = error; }
+    });
+    if (failure[0] != null) throw new AssertionError("Native child-manager contract failed",failure[0]);
+    milestones.put("react-manager-operations");
+  }
+  private int verifyChildBridge(View view, View popup, View decor) {
+    int owners = 0;
+    if (view instanceof com.altroo.muinativehost.AltrooMUIPortalHost) {
+      com.altroo.muinativehost.AltrooMUIPortalHost host = (com.altroo.muinativehost.AltrooMUIPortalHost)view;
+      com.altroo.muinativehost.AltrooMUIPortalHostManager manager = new com.altroo.muinativehost.AltrooMUIPortalHostManager();
+      require(host.getChildCount() == 0, "Logical host exposes nonphysical Android children");
+      int count = manager.getChildCount(host);
+      for (int index = 0; index < count; index++) {
+        View child = manager.getChildAt(host,index);
+        require(child != null && child.getParent() != host && child.getParent() instanceof ViewGroup,
+          "React child manager lost its physical overlay parent");
+        if (host.getActive() && !host.getObservationOnly() && child.isAttachedToWindow() &&
+            (child == popup || descendant(popup,child)) && descendant(child,decor)) owners++;
+      }
+    }
+    if (view instanceof ViewGroup) for (int index = 0; index < ((ViewGroup)view).getChildCount(); index++)
+      owners += verifyChildBridge(((ViewGroup)view).getChildAt(index),popup,decor);
+    return owners;
   }
   private void verifyGeometry(boolean inline, boolean transformed, boolean bounded) {
     // Read actual Views on the UI thread. Accessibility rectangles are already
@@ -231,6 +291,8 @@ public final class PopperInstrumentation extends Instrumentation {
     View root = activity.getWindow().getDecorView();
     View popup = nativeView(root, "delivery-note"), trigger = nativeView(root, "delivery-trigger"), frame = nativeView(root, "delivery-frame");
     require(popup != null && trigger != null && frame != null, "Native fixture views are missing");
+    int owners = verifyChildBridge(root,popup,root);
+    require(inline || owners > 0, "Window popup has no matching active, physically attached React child owner");
     require(descendant(popup, frame) == inline, "Physical inline/window ancestry is wrong");
     float[] transform = new float[9]; frame.getMatrix().getValues(transform);
     double angle = transformed ? Math.toRadians(6) : 0, scale = transformed ? .92 : 1;

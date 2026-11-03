@@ -187,7 +187,7 @@
       "packages/material/src/utils/index.ts": "9a7dd641da278c2d8fe5cf9abaf310874ff083ddedc6a3d8643cd6025dd2255b",
       "packages/material/src/utils/mergeSlotProps.ts": "268ef0c162be5c867d4e841076c60c3f1ee49882cca33b92eb84a5e9e7a32c90",
       "packages/material/src/utils/refs.ts": "907124cd99a8df3f5ad2f6887a07f43f8896db226d477a81be6a0462f28c6a3e",
-      "packages/native-host/package.json": "ea2ffe54007d09fc7e7f334b7cc451b137bd016dcf0767fee098bf5553fd00cf",
+      "packages/native-host/package.json": "3e02a02a6ff3398577065a54ab861c82b46bf5d0ada2dbbf08489af9bb79977c",
       "packages/native-host/src/AltrooMUIInteractiveViewNativeComponent.ts": "72b3c8253265ab89d02084ce3343489c9280b4cc195260f9e26c4286061319b9",
       "packages/native-host/src/AltrooMUINativePickerNativeComponent.ts": "58fb6423239186f0896280f109235b0db84eed6b4f04c233df4575b049ec399d",
       "packages/native-host/src/AltrooMUIPortalCanvasNativeComponent.ts": "df5bb6912d680d010801db8420fb08804868454132c8aa58d649415064b7e543",

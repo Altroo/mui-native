@@ -1,5 +1,6 @@
 /* Native root touch dispatch adapts React Native's MIT-licensed ReactModalHostView.
- * Copyright (c) Meta Platforms, Inc. and affiliates. See NOTICE and provenance. */
+ * Copyright (c) Meta Platforms, Inc. and affiliates. See NOTICE and provenance.
+ * Native adaptation copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 package com.altroo.muinativehost
 
 import android.annotation.SuppressLint
@@ -48,11 +49,14 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
   private val preDraw = ViewTreeObserver.OnPreDrawListener { syncPortal(); true }
   init { setWillNotDraw(true); isFocusable = false; clipChildren = true; clipToPadding = true }
   override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) = Unit
-  override fun addView(child: View, index: Int) { overlay.addView(child, index) }
-  override fun getChildCount(): Int = overlay.childCount
-  override fun getChildAt(index: Int): View? = overlay.getChildAt(index)
-  override fun removeView(child: View) { overlay.removeView(child) }
-  override fun removeViewAt(index: Int) { overlay.removeViewAt(index) }
+  // React owns logical children through the manager. Android framework traversal
+  // must see this ViewGroup's real empty child list: the overlay is a sibling,
+  // and exposing its children here crashes accessibility coordinate conversion.
+  // Read the live overlay list, including direct Fabric reparent/removal changes.
+  internal fun addReactChild(child: View, index: Int) { overlay.addView(child, index) }
+  internal fun reactChildCount(): Int = overlay.childCount
+  internal fun reactChildAt(index: Int): View? = overlay.getChildAt(index)
+  internal fun removeReactChildAt(index: Int) { overlay.removeViewAt(index) }
   override fun onAttachedToWindow() {
     super.onAttachedToWindow()
     disposed = false

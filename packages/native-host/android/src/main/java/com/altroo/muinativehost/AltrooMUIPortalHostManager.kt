@@ -1,4 +1,7 @@
+// Copyright (c) 2026 Altroo and contributors
+// SPDX-License-Identifier: MIT
 package com.altroo.muinativehost
+import android.view.View
 import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.ViewGroupManager
@@ -11,6 +14,12 @@ class AltrooMUIPortalHostManager : ViewGroupManager<AltrooMUIPortalHost>(), Altr
   override fun getDelegate() = delegate
   override fun getName() = "AltrooMUIPortalHost"
   override fun createViewInstance(context: ThemedReactContext) = AltrooMUIPortalHost(context)
+  // Keep React's child API separate from the host's physical Android hierarchy.
+  // Inherited removeView/removeAllViews dispatch through these same live getters.
+  override fun addView(parent: AltrooMUIPortalHost, child: View, index: Int) { parent.addReactChild(child,index) }
+  override fun getChildCount(parent: AltrooMUIPortalHost): Int = parent.reactChildCount()
+  override fun getChildAt(parent: AltrooMUIPortalHost, index: Int): View? = parent.reactChildAt(index)
+  override fun removeViewAt(parent: AltrooMUIPortalHost, index: Int) { parent.removeReactChildAt(index) }
   @ReactProp(name = "active", defaultBoolean = false)
   override fun setActive(view: AltrooMUIPortalHost, value: Boolean) { view.active = value }
   @ReactProp(name = "revision")
