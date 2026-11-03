@@ -11,7 +11,8 @@ import {
 import { useTheme } from './themeProvider';
 import { NativeCheckedControl, type NativeCheckedVisualState } from './checkControls';
 import { useNativeReducedMotion } from './motionPreference';
-import { namedStyle, authoredStyle, directionOf, mergeNativeStyles } from './switchStyles';
+import { namedStyle, authoredStyle } from './switchStyles';
+import { directionOf, mergeNativeStyles } from './nativeControlStyles';
 import { nativeEasing } from './nativeTransitionTiming';
 import type { CheckboxProps } from './checkedTypes';
 import type { SwitchProps, SwitchOwnerState } from './switchTypes';

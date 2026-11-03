@@ -40,6 +40,10 @@ Plain labels supply a readable native name. Opaque rich labels retain their visi
 
 Checkbox/Radio retain at least 44 dp targets and native geometric glyphs. Custom icon/checkedIcon and Checkbox indeterminateIcon are supported, with inherited font size/color; no new icon runtime is required. Color/size augmentation, root styles/variants, supported sx states, native style callbacks and logical edge margins are available. FormGroup supports row wrapping and inherited error styles. Native style shorthands preserve caller precedence. Class helpers identify original slots; classes/className do not implement CSS.
 
+For Checkbox/Radio, an own `slotProps.root.sx` replaces the entire top-level `sx`, including an explicit `undefined` or `null`. Root-slot callbacks, theme callbacks, arrays and responsive values use the same policy. Native top-level `style` follows resolved theme/sx styles, and root-slot `style` follows top-level `style`. These inline layers can override a checked-state color. Plain `sx.color` has lower specificity than the built-in checked/disabled state rules; use `sx={{ '&.Mui-checked': { color: 'error.main' } }}` to customize that state. Supported named theme overrides retain original component order and state specificity.
+
+Root/controller disabled state determines styled disabled selectors. A separately disabled input always blocks activation and reports disabled accessibility/handle state, even when the original wrapper keeps its enabled root color. The default-color Checkbox and Radio retain their distinct original disabled-color policies. RadioGroup direction reaches child layout and logical insets; horizontal arrows use the final child direction, including `inherit`.
+
 Checkbox, Radio, RadioGroup, FormGroup and FormControlLabel expose original class-helper subpaths. Checkbox/Radio size/color and slot override interfaces support module augmentation. Complete upstream TypeMap/DOM polymorphism, arbitrary CSS and all inherited browser APIs remain open.
 
 Switch now provides five native slots and shares the checked-control activation pipeline. See [native Switch](switch.md) for callback phases, refs, styling, motion and migration from the earlier stock-control prototype.
@@ -66,6 +70,8 @@ for (const input of inputs) {
 await page.evaluate((result) => window.verifyKeyboardReference(result), observed);
 await page.evaluate(() => window.clearKeyboardReference());
 ```
+
+An additional static-style reference runs `node scripts/reference/checked-styles.mjs --check`. Serve `.cache/checked-styles-reference` and execute `window.verifyReference()` in Chromium at a 390 by 844 viewport. Its 47 original-browser cases cover root `sx` replacement, explicit empty values, callbacks, arrays/responsive values, state specificity, named overrides, disabled ownership and native-inline-equivalent CSS style precedence. Transitions and animations are disabled. These observations establish source style rules, not native pixel geometry. The regression and delivery are tracked in [issue #36](https://github.com/Altroo/mui-native/issues/36).
 
 Native regression tests use modeled nodes/events and do not run native hardware. Fresh archive consumers check imports, refs, events, slots, augmentation and shared root/deep identity. See [validation](validation.md) and [issue #34](https://github.com/Altroo/mui-native/issues/34).
 

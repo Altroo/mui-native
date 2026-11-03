@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "373a726675b27215ea0215494dcec3f18581bc23fdbcb3c0da1429d6e3198fb9",
+  "nativeSourceSha256": "494d2bd340fe79822cae769588d3ae68415f6836a83d74bca4c689d343804d94",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7015,7 +7015,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 361
+          "line": 362
         }
       ]
     },
@@ -7279,7 +7279,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeStyle",
           "kind": "type",
-          "line": 11
+          "line": 12
         }
       ]
     },
@@ -7466,7 +7466,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "resolveSx",
           "kind": "value",
-          "line": 354
+          "line": 355
         }
       ]
     },
@@ -7521,7 +7521,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "StyleContext",
           "kind": "type",
-          "line": 12
+          "line": 13
         }
       ]
     },
@@ -18074,7 +18074,7 @@
     {
       "name": "NativeStyle",
       "file": "src/sx.ts",
-      "line": 11,
+      "line": 12,
       "kind": "type",
       "members": [],
       "references": [
@@ -18087,7 +18087,7 @@
     {
       "name": "StyleContext",
       "file": "src/sx.ts",
-      "line": 12,
+      "line": 13,
       "kind": "type",
       "members": [
         {
@@ -18097,7 +18097,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "baseStyle?: SxProps;",
-          "line": 13,
+          "line": 14,
           "kind": "property",
           "type": "SxProps"
         },
@@ -18108,7 +18108,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideKeys?: readonly string[];",
-          "line": 14,
+          "line": 15,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -18119,7 +18119,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "width?: number;",
-          "line": 15,
+          "line": 16,
           "kind": "property",
           "type": "number"
         },
@@ -18130,7 +18130,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "states?: readonly string[];",
-          "line": 16,
+          "line": 17,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -18141,7 +18141,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slot?: string;",
-          "line": 17,
+          "line": 18,
           "kind": "slot",
           "type": "string"
         },
@@ -18152,7 +18152,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootSlot?: string;",
-          "line": 18,
+          "line": 19,
           "kind": "slot",
           "type": "string"
         },
@@ -18163,7 +18163,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "skipVariants?: boolean;",
-          "line": 19,
+          "line": 20,
           "kind": "property",
           "type": "boolean"
         },
@@ -18174,7 +18174,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };",
-          "line": 20,
+          "line": 21,
           "kind": "property",
           "type": "{ parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' }"
         },
@@ -18185,7 +18185,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection: 'ltr' | 'rtl';",
-          "line": 20,
+          "line": 21,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -18196,7 +18196,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | 'inherit'",
-          "line": 20,
+          "line": 21,
           "kind": "property",
           "type": "'ltr' | 'rtl' | 'inherit'"
         },
@@ -18207,7 +18207,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode?: 'sx' | 'css';",
-          "line": 21,
+          "line": 22,
           "kind": "property",
           "type": "'sx' | 'css'"
         }
@@ -18222,7 +18222,7 @@
     {
       "name": "StyleRule",
       "file": "src/sx.ts",
-      "line": 127,
+      "line": 128,
       "kind": "type",
       "members": [
         {
@@ -18232,7 +18232,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style: Record<string, unknown>;",
-          "line": 127,
+          "line": 128,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -18243,7 +18243,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "specificity: number",
-          "line": 127,
+          "line": 128,
           "kind": "property",
           "type": "number"
         }
@@ -18257,7 +18257,7 @@
     {
       "name": "StyleNode",
       "file": "src/sx.ts",
-      "line": 128,
+      "line": 129,
       "kind": "type",
       "members": [
         {
@@ -18267,7 +18267,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "base: Record<string, unknown>;",
-          "line": 129,
+          "line": 130,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -18278,7 +18278,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "conditions?: Map<string, StyleNode[] | undefined>;",
-          "line": 130,
+          "line": 131,
           "kind": "property",
           "type": "Map<string, StyleNode[] | undefined>"
         }

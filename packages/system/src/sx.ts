@@ -5,9 +5,10 @@ import { diagnostic } from './diagnostics';
 import { normalizeTextStyle, textMetricKeys, type NativeTextContext } from './nativeText';
 export type SxObject = { [key: string]: unknown };
 export type SxProps<T extends Theme = Theme> =
+  | null
   | SxObject
-  | ((theme: T) => SxObject)
-  | readonly (false | null | undefined | SxObject | ((theme: T) => SxObject))[];
+  | ((theme: T) => SxObject | null)
+  | readonly (false | null | undefined | SxObject | ((theme: T) => SxObject | null))[];
 export type NativeStyle = ViewStyle & TextStyle;
 export type StyleContext = NativeTextContext & {
   baseStyle?: SxProps;

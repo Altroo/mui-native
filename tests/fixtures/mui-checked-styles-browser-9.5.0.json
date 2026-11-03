@@ -1,0 +1,1506 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Checkbox/Checkbox.js": "7d831f188602bb24baf375c95f33e575d30c7ecfe8ce1c47e05e2725eb363b98",
+      "Radio/Radio.js": "81678057e011dd627032282e689ad598607bf0f46b8fe1656ff4d6a9cb103b66",
+      "internal/SwitchBase.js": "847f4c9543c8fa87373a840f3a999f160ae6d98b9d342f3f3afecf4674001227",
+      "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+      "utils/mergeSlotProps.js": "b06b97432a9aaccfb3fb3aa2d0843466878d5ea86d876dfded99c91ffaa0ad5e"
+    }
+  },
+  "system": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "styleFunctionSx/styleFunctionSx.d.ts": "0a0b4bb98d3ecaf505bf795cd22cc5ee81571bb1425d4dba87336bee0daca9ec"
+    }
+  },
+  "renderer": {
+    "name": "react-dom",
+    "version": "19.3.0",
+    "integrity": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==",
+    "sourceFiles": {
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "cjs/react-dom-client.development.js": "c10b5e5ad37ca22c88b58bf4ada9a3b655ab79934c0b5cc6bad26f42c774584f"
+    }
+  },
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "scope": "Actual original MUI in Chromium: Checkbox/Radio root-slot sx, native inline style and state CSS precedence; transitions disabled, no physical native evidence.",
+  "fixtures": [
+    {
+      "input": {
+        "name": "Checkbox top sx",
+        "kind": "Checkbox",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "8px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox slot sx replaces top",
+        "kind": "Checkbox",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        },
+        "root": {
+          "sx": {
+            "mt": 3
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "24px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox slot sx replaces disjoint top",
+        "kind": "Checkbox",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        },
+        "root": {
+          "sx": {
+            "mr": 2
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "16px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox null slot sx clears top",
+        "kind": "Checkbox",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        },
+        "root": {
+          "sx": null
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox undefined slot sx clears top",
+        "kind": "Checkbox",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        },
+        "rootUndefined": true
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox owner callback sx",
+        "kind": "Checkbox",
+        "rootCallback": true,
+        "actions": [
+          {
+            "props": {
+              "color": "secondary"
+            }
+          }
+        ]
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        },
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "24px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox theme callback sx",
+        "kind": "Checkbox",
+        "rootThemeFunction": true
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox array sx",
+        "kind": "Checkbox",
+        "root": {
+          "sx": [
+            {
+              "mt": 1
+            },
+            {
+              "mt": 2
+            }
+          ]
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox native style beats slot sx",
+        "kind": "Checkbox",
+        "props": {
+          "style": {
+            "marginTop": 17
+          }
+        },
+        "root": {
+          "sx": {
+            "mt": 3
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "17px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox root style beats outer style",
+        "kind": "Checkbox",
+        "props": {
+          "style": {
+            "marginTop": 17
+          }
+        },
+        "root": {
+          "style": {
+            "marginTop": 19
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "19px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox checked base sx loses to state rule",
+        "kind": "Checkbox",
+        "props": {
+          "checked": true,
+          "sx": {
+            "color": "error.main"
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox checked slot state sx wins",
+        "kind": "Checkbox",
+        "props": {
+          "checked": true
+        },
+        "root": {
+          "sx": {
+            "&.Mui-checked": {
+              "color": "error.main"
+            }
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(211, 47, 47)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox disabled checked state wins base sx",
+        "kind": "Checkbox",
+        "props": {
+          "checked": true,
+          "disabled": true,
+          "sx": {
+            "color": "error.main"
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.26)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox default disabled",
+        "kind": "Checkbox",
+        "props": {
+          "checked": true,
+          "disabled": true,
+          "color": "default"
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox inline color beats checked rule",
+        "kind": "Checkbox",
+        "props": {
+          "checked": true,
+          "style": {
+            "color": "rgb(123,45,67)"
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(123, 45, 67)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox theme base color loses to checked rule",
+        "kind": "Checkbox",
+        "props": {
+          "checked": true
+        },
+        "overrides": {
+          "root": {
+            "color": "rgb(211,47,47)"
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox theme checked color wins",
+        "kind": "Checkbox",
+        "props": {
+          "checked": true
+        },
+        "overrides": {
+          "root": {
+            "&.Mui-checked": {
+              "color": "rgb(211,47,47)"
+            }
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(211, 47, 47)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox slot sx controls unchecked and changed state",
+        "kind": "Checkbox",
+        "root": {
+          "sx": {
+            "color": "error.main",
+            "mt": 2
+          }
+        },
+        "actions": [
+          {
+            "click": true
+          }
+        ]
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(211, 47, 47)"
+          }
+        },
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox responsive slot sx",
+        "kind": "Checkbox",
+        "root": {
+          "sx": {
+            "mt": {
+              "xs": 1,
+              "sm": 3
+            }
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "8px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox theme defaults slot sx",
+        "kind": "Checkbox",
+        "defaults": {
+          "sx": {
+            "mt": 1
+          },
+          "slotProps": {
+            "root": {
+              "sx": {
+                "mt": 2
+              }
+            }
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio top sx",
+        "kind": "Radio",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "8px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio slot sx replaces top",
+        "kind": "Radio",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        },
+        "root": {
+          "sx": {
+            "mt": 3
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "24px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio slot sx replaces disjoint top",
+        "kind": "Radio",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        },
+        "root": {
+          "sx": {
+            "mr": 2
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "16px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio null slot sx clears top",
+        "kind": "Radio",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        },
+        "root": {
+          "sx": null
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio undefined slot sx clears top",
+        "kind": "Radio",
+        "props": {
+          "sx": {
+            "mt": 1
+          }
+        },
+        "rootUndefined": true
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio owner callback sx",
+        "kind": "Radio",
+        "rootCallback": true,
+        "actions": [
+          {
+            "props": {
+              "color": "secondary"
+            }
+          }
+        ]
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        },
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "24px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio theme callback sx",
+        "kind": "Radio",
+        "rootThemeFunction": true
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio array sx",
+        "kind": "Radio",
+        "root": {
+          "sx": [
+            {
+              "mt": 1
+            },
+            {
+              "mt": 2
+            }
+          ]
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio native style beats slot sx",
+        "kind": "Radio",
+        "props": {
+          "style": {
+            "marginTop": 17
+          }
+        },
+        "root": {
+          "sx": {
+            "mt": 3
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "17px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio root style beats outer style",
+        "kind": "Radio",
+        "props": {
+          "style": {
+            "marginTop": 17
+          }
+        },
+        "root": {
+          "style": {
+            "marginTop": 19
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "19px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio checked base sx loses to state rule",
+        "kind": "Radio",
+        "props": {
+          "checked": true,
+          "sx": {
+            "color": "error.main"
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio checked slot state sx wins",
+        "kind": "Radio",
+        "props": {
+          "checked": true
+        },
+        "root": {
+          "sx": {
+            "&.Mui-checked": {
+              "color": "error.main"
+            }
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(211, 47, 47)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio disabled checked state wins base sx",
+        "kind": "Radio",
+        "props": {
+          "checked": true,
+          "disabled": true,
+          "sx": {
+            "color": "error.main"
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.26)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio default disabled",
+        "kind": "Radio",
+        "props": {
+          "checked": true,
+          "disabled": true,
+          "color": "default"
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.26)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio inline color beats checked rule",
+        "kind": "Radio",
+        "props": {
+          "checked": true,
+          "style": {
+            "color": "rgb(123,45,67)"
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(123, 45, 67)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio theme base color loses to checked rule",
+        "kind": "Radio",
+        "props": {
+          "checked": true
+        },
+        "overrides": {
+          "root": {
+            "color": "rgb(211,47,47)"
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio theme checked color wins",
+        "kind": "Radio",
+        "props": {
+          "checked": true
+        },
+        "overrides": {
+          "root": {
+            "&.Mui-checked": {
+              "color": "rgb(211,47,47)"
+            }
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(211, 47, 47)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio slot sx controls unchecked and changed state",
+        "kind": "Radio",
+        "root": {
+          "sx": {
+            "color": "error.main",
+            "mt": 2
+          }
+        },
+        "actions": [
+          {
+            "click": true
+          }
+        ]
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(211, 47, 47)"
+          }
+        },
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio responsive slot sx",
+        "kind": "Radio",
+        "root": {
+          "sx": {
+            "mt": {
+              "xs": 1,
+              "sm": 3
+            }
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "8px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio theme defaults slot sx",
+        "kind": "Radio",
+        "defaults": {
+          "sx": {
+            "mt": 1
+          },
+          "slotProps": {
+            "root": {
+              "sx": {
+                "mt": 2
+              }
+            }
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "16px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox indeterminate state beats base sx",
+        "kind": "Checkbox",
+        "props": {
+          "indeterminate": true,
+          "sx": {
+            "color": "error.main"
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox named override order",
+        "kind": "Checkbox",
+        "props": {
+          "indeterminate": true
+        },
+        "overrides": {
+          "indeterminate": {
+            "marginTop": 11
+          },
+          "sizeMedium": {
+            "marginTop": 13
+          },
+          "colorPrimary": {
+            "marginTop": 17
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "17px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio default color override",
+        "kind": "Radio",
+        "props": {
+          "color": "default"
+        },
+        "overrides": {
+          "colorDefault": {
+            "marginTop": 23
+          }
+        }
+      },
+      "states": [
+        {
+          "checked": false,
+          "styles": {
+            "marginTop": "23px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.6)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox root disabled uses wrapper variant ownership",
+        "kind": "Checkbox",
+        "props": {
+          "checked": true
+        },
+        "root": {
+          "disabled": true
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgba(0, 0, 0, 0.26)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Checkbox input disabled does not add a root state class",
+        "kind": "Checkbox",
+        "props": {
+          "checked": true
+        },
+        "input": {
+          "disabled": true
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio root disabled uses wrapper variant ownership",
+        "kind": "Radio",
+        "props": {
+          "checked": true
+        },
+        "root": {
+          "disabled": true
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Radio input disabled does not add a root state class",
+        "kind": "Radio",
+        "props": {
+          "checked": true
+        },
+        "input": {
+          "disabled": true
+        }
+      },
+      "states": [
+        {
+          "checked": true,
+          "styles": {
+            "marginTop": "0px",
+            "marginRight": "0px",
+            "marginBottom": "0px",
+            "marginLeft": "0px",
+            "paddingTop": "9px",
+            "paddingRight": "9px",
+            "paddingBottom": "9px",
+            "paddingLeft": "9px",
+            "color": "rgb(25, 118, 210)"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -71,7 +71,10 @@ const checkbox: CheckboxProps = {
   checkedIcon: <Text>Checked</Text>,
   slots: { root: Root, input: Input },
   slotProps: {
-    root: (owner) => ({ style: (state) => ({ opacity: state.focusVisible ? 1 : 0.8 }) }),
+    root: (owner) => ({
+      sx: [{ mt: 1 }, (theme) => ({ mb: theme.spacing(owner.checked ? 2 : 1) })],
+      style: (state) => ({ opacity: state.focusVisible ? 1 : 0.8 }),
+    }),
     input: (owner) => ({
       ref: surface,
       tag: 'check',
@@ -94,12 +97,16 @@ const radio: RadioProps = {
   value: { key: 'one' },
   inputRef: input,
   color: 'brand',
-  slotProps: { input: (owner) => ({ tag: owner.checked ? 'checked' : 'empty' }) },
+  slotProps: {
+    root: { sx: undefined },
+    input: (owner) => ({ tag: owner.checked ? 'checked' : 'empty' }),
+  },
 };
 export const controls = (
   <FormGroup row>
     <Checkbox {...checkbox} ref={root} />
-    <DeepCheckbox defaultChecked indeterminate />
+    <DeepCheckbox defaultChecked indeterminate slotProps={{ root: { sx: null } }} />
+    <DeepRadio sx={null} slotProps={{ root: { sx: () => null } }} />
     <RadioGroup
       actions={group}
       ref={root}

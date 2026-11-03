@@ -59,3 +59,13 @@ test('registered states apply only to active state', () => {
   expect(resolveSx(sx, createTheme())).toEqual({});
   expect(resolveSx(sx, createTheme(), { states: ['disabled'] })).toEqual({ opacity: 0.2 });
 });
+
+test('null sx and nullable theme callbacks are empty style layers', () => {
+  const theme = createTheme();
+  expect(resolveSx(null, theme)).toEqual({});
+  expect(resolveSx(() => null, theme)).toEqual({});
+  expect(resolveSx([{ mt: 1 }, () => null, null, { mb: 2 }], theme)).toEqual({
+    marginTop: 8,
+    marginBottom: 16,
+  });
+});

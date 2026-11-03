@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "01b2eabf2288329ee234c754c358face0d11140ca2fe3f055401d3553b6406df",
+  "nativeSourceSha256": "26891a80466cfab50981585b57176807716c06f18fe339cb820d44fb3c55e0dc",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -35328,7 +35328,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 361
+          "line": 362
         }
       ]
     },
@@ -36054,7 +36054,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeStyle",
           "kind": "type",
-          "line": 11
+          "line": 12
         }
       ]
     },
@@ -36362,7 +36362,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "resolveSx",
           "kind": "value",
-          "line": 354
+          "line": 355
         }
       ]
     },
@@ -36516,7 +36516,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "StyleContext",
           "kind": "type",
-          "line": 12
+          "line": 13
         }
       ]
     },
@@ -194087,7 +194087,7 @@
     {
       "name": "InsetContext",
       "file": "src/switchStyles.ts",
-      "line": 58,
+      "line": 14,
       "kind": "type",
       "members": [
         {
@@ -194097,7 +194097,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection: 'ltr' | 'rtl';",
-          "line": 59,
+          "line": 15,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -194108,7 +194108,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeDirection?: NativeStyle['direction'];",
-          "line": 60,
+          "line": 16,
           "kind": "property",
           "type": "NativeStyle['direction']"
         }
@@ -196070,7 +196070,7 @@
     {
       "name": "NativeStyle",
       "file": "src/sx.ts",
-      "line": 11,
+      "line": 12,
       "kind": "type",
       "members": [],
       "references": [
@@ -196083,7 +196083,7 @@
     {
       "name": "StyleContext",
       "file": "src/sx.ts",
-      "line": 12,
+      "line": 13,
       "kind": "type",
       "members": [
         {
@@ -196093,7 +196093,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "baseStyle?: SxProps;",
-          "line": 13,
+          "line": 14,
           "kind": "property",
           "type": "SxProps"
         },
@@ -196104,7 +196104,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideKeys?: readonly string[];",
-          "line": 14,
+          "line": 15,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -196115,7 +196115,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "width?: number;",
-          "line": 15,
+          "line": 16,
           "kind": "property",
           "type": "number"
         },
@@ -196126,7 +196126,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "states?: readonly string[];",
-          "line": 16,
+          "line": 17,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -196137,7 +196137,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slot?: string;",
-          "line": 17,
+          "line": 18,
           "kind": "slot",
           "type": "string"
         },
@@ -196148,7 +196148,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootSlot?: string;",
-          "line": 18,
+          "line": 19,
           "kind": "slot",
           "type": "string"
         },
@@ -196159,7 +196159,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "skipVariants?: boolean;",
-          "line": 19,
+          "line": 20,
           "kind": "property",
           "type": "boolean"
         },
@@ -196170,7 +196170,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };",
-          "line": 20,
+          "line": 21,
           "kind": "property",
           "type": "{ parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' }"
         },
@@ -196181,7 +196181,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection: 'ltr' | 'rtl';",
-          "line": 20,
+          "line": 21,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -196192,7 +196192,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | 'inherit'",
-          "line": 20,
+          "line": 21,
           "kind": "property",
           "type": "'ltr' | 'rtl' | 'inherit'"
         },
@@ -196203,7 +196203,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode?: 'sx' | 'css';",
-          "line": 21,
+          "line": 22,
           "kind": "property",
           "type": "'sx' | 'css'"
         }

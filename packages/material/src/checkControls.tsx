@@ -43,7 +43,7 @@ import { useForkRef } from './utils';
 import { useMenuEvent } from './useMenuEvent';
 import { selectionEvent } from './selectionEvent';
 import { buttonActivationEvent } from './nativeButtonEvents';
-import { nativeInsets } from './nativeInsets';
+import { directionOf, mergeNativeStyles } from './nativeControlStyles';
 import { useLabelActivation } from './controlLabelContext';
 import { RadioContext, equalRadioValue } from './radioContext';
 import { NativeButtonActivationKeys } from './nativeButtonActivationKeys';
@@ -292,7 +292,8 @@ export function NativeCheckedControl({ kind, props, forwarded, presentation }: C
       'Native checked-control class helpers identify slots; use sx, slot props and native styles for presentation.',
     );
   const isRadio = kind === 'radio',
-    radioGroup = isRadio ? group : undefined;
+    radioGroup = isRadio ? group : undefined,
+    parentDirection = radioGroup?.direction ?? theme.direction;
   const wrapperOwner = presentation?.owner ?? {
     ...props,
     color,
@@ -324,9 +325,8 @@ export function NativeCheckedControl({ kind, props, forwarded, presentation }: C
     Boolean(root.defaultChecked ?? defaultChecked),
   );
   const actual = Boolean(input.checked !== undefined ? input.checked : selected);
-  const disabled = Boolean(
-    (root.disabled ?? disabledProp ?? form?.disabled ?? false) || input.disabled,
-  );
+  const controllerDisabled = Boolean(root.disabled ?? disabledProp ?? form?.disabled ?? false);
+  const disabled = controllerDisabled || Boolean(input.disabled);
   const readOnly = Boolean(input.readOnly ?? root.readOnly ?? readOnlyProp),
     required = Boolean(input.required ?? root.required ?? requiredProp);
   const mixed = !isRadio && Boolean((props as CheckboxProps).indeterminate);
@@ -560,55 +560,70 @@ export function NativeCheckedControl({ kind, props, forwarded, presentation }: C
   };
   const rootStyle = presentation
     ? presentation.style(visualState, StyleSheet.flatten([authoredStyle, slotStyle]))
-    : componentStyle(theme, isRadio ? 'MuiRadio' : 'MuiCheckbox', wrapperOwner, sx, {
-        width,
-        states: [
-          ...(selected ? ['checked'] : []),
-          ...(disabled ? ['disabled'] : []),
-          ...(mixed ? ['indeterminate'] : []),
-          ...(hovered && !disabled ? ['hover'] : []),
-          ...(focusVisible ? ['focusVisible'] : []),
-        ],
-        overrideKeys: [
-          ...(!isRadio || size !== 'medium' ? [`size${cap(size)}`] : []),
-          ...(color !== 'default' ? [`color${cap(color)}`] : []),
-          ...(mixed ? ['indeterminate'] : []),
-        ],
-        baseStyle: {
-          alignSelf: 'flex-start',
-          minWidth: 44,
-          minHeight: 44,
-          padding: 9,
-          borderRadius: 9999,
-          alignItems: 'center',
-          justifyContent: 'center',
-          position: 'relative',
-          ...(edge
-            ? { [edge === 'start' ? 'marginStart' : 'marginEnd']: size === 'small' ? -3 : -12 }
-            : {}),
-          color: disabled
-            ? theme.palette.action.disabled
-            : (selected || mixed) && color !== 'default'
-              ? ((theme.palette as any)[color]?.main ?? theme.palette.primary.main)
-              : theme.palette.text.secondary,
-          backgroundColor:
-            hovered && !disabled && !disableRipple
-              ? alpha(
-                  (theme.palette as any)[color]?.main ?? theme.palette.action.active,
-                  theme.palette.action.hoverOpacity,
-                )
-              : 'transparent',
+    : componentStyle(
+        theme,
+        isRadio ? 'MuiRadio' : 'MuiCheckbox',
+        wrapperOwner,
+        Object.hasOwn(root, 'sx') ? root.sx : sx,
+        {
+          width,
+          logicalInsets: {
+            parentDirection,
+            direction: StyleSheet.flatten([authoredStyle, slotStyle])?.direction,
+          },
+          states: [
+            ...(selected ? ['checked'] : []),
+            ...(controllerDisabled ? ['disabled'] : []),
+            ...(mixed ? ['indeterminate'] : []),
+            ...(hovered && !disabled ? ['hover'] : []),
+            ...(focusVisible ? ['focusVisible'] : []),
+          ],
+          overrideKeys: [
+            ...(!isRadio && mixed ? ['indeterminate'] : []),
+            ...(!isRadio || size !== 'medium' ? [`size${cap(size)}`] : []),
+            ...(isRadio || color !== 'default' ? [`color${cap(color)}`] : []),
+          ],
+          baseStyle: {
+            alignSelf: 'flex-start',
+            minWidth: 44,
+            minHeight: 44,
+            padding: 9,
+            borderRadius: 9999,
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            ...(edge
+              ? { [edge === 'start' ? 'marginStart' : 'marginEnd']: size === 'small' ? -3 : -12 }
+              : {}),
+            direction: parentDirection,
+            color: theme.palette.text.secondary,
+            ...(isRadio ? { '&.Mui-disabled': { color: theme.palette.action.disabled } } : {}),
+            ...((theme.palette as any)[color]?.main && color !== 'default'
+              ? {
+                  ...(!isRadio || !wrapperOwner.disabled
+                    ? { '&.Mui-checked': { color: (theme.palette as any)[color].main } }
+                    : {}),
+                  ...(!isRadio
+                    ? {
+                        '&.Mui-indeterminate': { color: (theme.palette as any)[color].main },
+                        '&.Mui-disabled': { color: theme.palette.action.disabled },
+                      }
+                    : {}),
+                }
+              : {}),
+            backgroundColor:
+              hovered && !disabled && !disableRipple
+                ? alpha(
+                    (theme.palette as any)[color]?.main ?? theme.palette.action.active,
+                    theme.palette.action.hoverOpacity,
+                  )
+                : 'transparent',
+          },
         },
-      });
+      );
   const computed = presentation?.mergeStyle
     ? presentation.mergeStyle(rootStyle, authoredStyle, slotStyle)
-    : StyleSheet.flatten([
-        rootStyle,
-        authoredStyle,
-        nativeInsets(authoredStyle, 'padding'),
-        slotStyle,
-        nativeInsets(slotStyle, 'padding'),
-      ] as StyleProp<NativeStyle>);
+    : mergeNativeStyles(parentDirection, rootStyle, authoredStyle, slotStyle);
   const glyphSize = size === 'small' ? 20 : size === 'large' ? 35 : 24,
     chosen = mixed ? (props as CheckboxProps).indeterminateIcon : selected ? checkedIcon : icon;
   const glyph = presentation ? (
@@ -787,7 +802,7 @@ export function NativeCheckedControl({ kind, props, forwarded, presentation }: C
                     radioId,
                     (event.key === 'ArrowUp' || event.key === 'ArrowLeft' ? -1 : 1) *
                       (['ArrowLeft', 'ArrowRight'].includes(event.key) &&
-                      (computed?.direction ?? radioGroup?.direction ?? theme.direction) === 'rtl'
+                      directionOf(computed?.direction, parentDirection) === 'rtl'
                         ? -1
                         : 1),
                     buttonActivationEvent(event),
