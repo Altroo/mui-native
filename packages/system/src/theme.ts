@@ -1,3 +1,5 @@
+import { merge } from './merge';
+export { merge } from './merge';
 import {
   createTransitions,
   createMotion,
@@ -172,18 +174,7 @@ export interface ThemeOptions {
   transitions?: TransitionsOptions;
   motion?: MotionOptions;
 }
-export function merge<T>(base: T, value: unknown): T {
-  if (!value || typeof value !== 'object' || Array.isArray(value))
-    return (value === undefined ? base : value) as T;
-  const out: Record<string, unknown> = { ...(base as object) };
-  for (const [key, next] of Object.entries(value))
-    if (!['__proto__', 'prototype', 'constructor'].includes(key))
-      out[key] =
-        next && typeof next === 'object' && !Array.isArray(next)
-          ? merge(out[key] ?? {}, next)
-          : next;
-  return out as T;
-}
+
 function createPalette(options: PaletteOptions = {}): Palette {
   const { mode = 'light', contrastThreshold = 3, tonalOffset = 0.2, ...other } = options;
   const dark = mode === 'dark';

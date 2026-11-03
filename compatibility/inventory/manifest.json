@@ -6,7 +6,7 @@
     "files": {
       ".nvmrc": "45507e6d96329a845faa642c0f485313bcb2ca1e08b043589cde4ddd15969cd6",
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
-      "package.json": "cae0c96a2fe6da80befa8d052e2de8a2cb54053f458d8a3bc3b96981f9fbad2b",
+      "package.json": "5cd231e6f7bc42abb28b7df7b8b1654162b28975ca4a60dbfbd0da31346f6f9a",
       "packages/compat/package.json": "96f0b851536ec8333bce8db32a0d2e8b12b529e290b4ea333769a1894314ff54",
       "packages/compat/supported.json": "9fb60844788183f0adc20071c5cd68ef6bcd81ab680a8b5802219858e28923b2",
       "packages/icons/package.json": "acb6165d3435cf8b944741a8167e77a162dde02b76b31b3c4136fc26a93cb737",
@@ -204,16 +204,17 @@
       "packages/system/src/diagnostics.ts": "af837654ed858a549ddea518e7190afae5f8cdfc3ca119c55038db175dc84f1c",
       "packages/system/src/iconContext.ts": "c5687b1f3ff1673cfb7ada68c013c56f114a123224f248861a3df62611b264bf",
       "packages/system/src/index.ts": "0b87eee67fa359cebb31ac917e10743f270a32387888a96db33c26abc43b1f23",
+      "packages/system/src/merge.ts": "aaa8c24fac35a4abdeacb8e3ca8ab84dbeecab8634034328b4517dbf24f949ea",
       "packages/system/src/nativeText.ts": "942325d76775120750c442f8dc24218cf143343112a723b8642cecff8321eb71",
       "packages/system/src/provider.tsx": "42de40a795a024d88dd3005cebf19833895c3dd3b1e3ab96b4c8892effef298a",
       "packages/system/src/RtlProvider/index.tsx": "fea327d6abaf69ecf9a1f8be71d29a4ec74990ecf1637f5af9c5bc66b4155301",
       "packages/system/src/spacing.ts": "95cb1c41dcd2c19ac970f6adad5fe4307f9f0f3db0ea8b8cd7334cad9dec964b",
       "packages/system/src/sx.ts": "13a46f238ca747398c1032113cfb234ba8a8f283f8daa0788dae0e2aab2930b6",
       "packages/system/src/textScope.tsx": "66f944849e90ea926091831b3d584ffa21d5af6414e7c85e544e9d5a3674bb93",
-      "packages/system/src/theme.ts": "e5de314ddaf02fdbcec7c87bff91beece97fe0b5a5fa0444a3c8698f7c4b0390",
+      "packages/system/src/theme.ts": "3bdd140160e1fe46cb1d75d60747e83ec4098fbf60f92291e5a0eabc71f95abb",
       "packages/system/src/ThemeProvider/index.ts": "ab3008c2fe41aee2a32d75c3d7b9d353f41d7f922e286275f428b24ff8257c2b",
       "packages/system/src/transitions.ts": "0c6ac12047d28e614c17e3d3be0c146856b5ed0460e498288974ba1927350e46",
-      "packages/system/src/typography.ts": "aeb45326c314c58e662c5a7820aabcf53e3f5e497a20dc8a04c3552960e3c971",
+      "packages/system/src/typography.ts": "2cc8c8ce5c1d2ded14e4253c69efd2a5543763f84e18c5077c9623a9beefffd6",
       "packages/system/src/useTheme/index.ts": "998e13d9f217a06d6a708222dd857075e0591d3fc8365839f0c7589948b12d55",
       "packages/system/src/useThemeProps/index.ts": "fe007d932c2702a17079cff686db8ec806f1a7da45364cc291f3cc0820a3eb0a",
       "packages/system/src/useThemeWithoutDefault/index.ts": "c705e41a3796bc2f31cb97d78ad32fb4aba3278e86cb7c2e3b5f69b7b0595472",
@@ -321,7 +322,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "a88fda373e5b9a8536f9c8ece4875bc125b431901bf38d0585bced23d845df14"
+      "sha256": "c939372f8b800c426baebd0f80c252479a221dd3e433d5990b7302407bb9ba9a"
     },
     {
       "package": "@mui/system",
@@ -331,7 +332,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "d17e7eea97d99cb111bbba3794532d40b54114714314d68f75f938b6b2ddb0f4",
+      "nativeSourceSha256": "7538edd88c06ed3ca91a571bb05aebb01926e8b1c728647c8c60bf29aaeb7237",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -343,7 +344,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "d3fb6f1a8029ed22456d41ab913a150042a2fe15bb9d3b054b05bde8b3347685"
+      "sha256": "da29af26105e27b385a8d2db360c485d632cd53b5a5aa753a50d51f0942bd64d"
     },
     {
       "package": "@mui/icons-material",
