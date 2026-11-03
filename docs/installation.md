@@ -46,3 +46,5 @@ SDK 58 uses React Native's strict public TypeScript API. Native refs use `ViewIn
 Native [Select and TextField select](select.md) use the same material/system/host archives and native rebuild requirement as Menu. They add no picker or web-runtime dependency. For platform-native selection, use option/optgroup configuration with [NativeSelect or Select native](native-select.md). The changed presentation acknowledgement protocol requires native-host 0.0.2-dev.0 and a native rebuild. Use MenuItem children with the default Select branch.
 
 Button and IconButton now use the native ButtonBase host as well. Rebuild an application that previously used only their stock Pressable implementation; Expo Go cannot render these controls. See [native buttons](button.md) for native event/ref and custom-root migration.
+
+Checkbox and Radio also use the native ButtonBase host. Rebuild apps that previously used their stock Pressable implementation. See [checked controls](check-controls.md) for native input handles, slots, group/label behavior and migration boundaries.

@@ -37,6 +37,7 @@ import {
   type ButtonBaseActivationEvent,
 } from './nativeButtonEvents';
 import { NativePressable } from '@altroo/mui-native-host';
+import { NativeButtonActivationKeys } from './nativeButtonActivationKeys';
 import { NativeCompositeKeys } from './nativeCompositeKeys';
 import { useNativeButtonAutoFocus } from './useNativeButtonAutoFocus';
 import { useMenuEvent } from './useMenuEvent';
@@ -97,6 +98,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
 > = forwardRef<ViewInstance, ButtonBaseProps>(function ButtonBase(inProps, forwarded) {
   const props = useDefaultProps({ props: inProps, name: 'MuiButtonBase' });
   const compositeKeys = useContext(NativeCompositeKeys);
+  const activationKeys = useContext(NativeButtonActivationKeys);
   const {
     action,
     autoFocus = false,
@@ -257,8 +259,8 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     }
     onKeyDown?.(key);
     if (key.target !== key.currentTarget || key.isComposing || key.isCanceled) return;
-    if (key.key === ' ') key.preventDefault();
-    else if (key.key === 'Enter') {
+    if (key.key === ' ' && activationKeys.includes(' ')) key.preventDefault();
+    else if (key.key === 'Enter' && activationKeys.includes('Enter')) {
       key.preventDefault();
       activate(buttonActivationEvent(key));
     }
@@ -274,6 +276,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
       !key.isComposing &&
       !key.isCanceled &&
       key.key === ' ' &&
+      activationKeys.includes(' ') &&
       !isButtonEventPrevented(key)
     )
       activate(buttonActivationEvent(key));

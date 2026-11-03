@@ -81,6 +81,11 @@ try {
     'Typography',
     'Button',
     'IconButton',
+    'Checkbox',
+    'Radio',
+    'RadioGroup',
+    'FormGroup',
+    'FormControlLabel',
     'InputBase',
     'Input',
     'FilledInput',
@@ -115,6 +120,11 @@ try {
   for (const [component, classes, helper] of [
     ['Button', 'buttonClasses', 'getButtonUtilityClass'],
     ['IconButton', 'iconButtonClasses', 'getIconButtonUtilityClass'],
+    ['Checkbox', 'checkboxClasses', 'getCheckboxUtilityClass'],
+    ['Radio', 'radioClasses', 'getRadioUtilityClass'],
+    ['RadioGroup', 'radioGroupClasses', 'getRadioGroupUtilityClass'],
+    ['FormGroup', 'formGroupClasses', 'getFormGroupUtilityClass'],
+    ['FormControlLabel', 'formControlLabelClasses', 'getFormControlLabelUtilityClasses'],
   ]) {
     const entry = requireConsumer('@altroo/mui-native/' + component);
     const deep = requireConsumer('@altroo/mui-native/' + component + '/' + classes);
@@ -123,6 +133,14 @@ try {
     assert.equal(deep.default, material[classes]);
     assert.equal(deep[helper], material[helper]);
   }
+  assert.equal(
+    requireConsumer('@altroo/mui-native/RadioGroup/useRadioGroup').default,
+    material.useRadioGroup,
+  );
+  assert.equal(
+    requireConsumer('@altroo/mui-native/RadioGroup').useRadioGroup,
+    material.useRadioGroup,
+  );
   for (const name of ['selectClasses', 'getSelectUtilityClasses'])
     assert.equal(requireConsumer('@altroo/mui-native/Select')[name], material[name]);
   assert.equal(

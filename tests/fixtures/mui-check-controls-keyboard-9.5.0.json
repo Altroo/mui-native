@@ -1,0 +1,812 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Checkbox/Checkbox.js": "7d831f188602bb24baf375c95f33e575d30c7ecfe8ce1c47e05e2725eb363b98",
+      "Checkbox/Checkbox.d.ts": "27e0945cf79e64094abc67c052ecf885270451962eaf3453c7e7faeda51068b3",
+      "Checkbox/checkboxClasses.js": "99cd5ec3d30060e72e7910eacce66ba29c0e79f655d8fe46dd439dbe9ccac09a",
+      "Radio/Radio.js": "81678057e011dd627032282e689ad598607bf0f46b8fe1656ff4d6a9cb103b66",
+      "Radio/Radio.d.ts": "22f273ce016495159b7c0ddba1521435c4ae8f05329efe96fcec598508d5a682",
+      "Radio/radioClasses.js": "5f3d0e5fa60055802cf23206428ad50a8706fab4d3b0154f426b575f8d986220",
+      "RadioGroup/RadioGroup.js": "6bd09cf315a30cd72ada6138bb818c1e12f31d08fc95a00a2e042f81a63fbf62",
+      "RadioGroup/RadioGroup.d.ts": "1a95f139da85d7daf0a3e6de7aaf243cad13900f61ed2764a9bbdf64d64ac8ce",
+      "RadioGroup/radioGroupClasses.js": "766250d9b5bac16e012928071bae06782df8462795e9b3097b33aa8016befd9a",
+      "FormGroup/FormGroup.js": "d5340a89a30a2b3a87545327bceb13a81eddb66fd9fbc7c3950e50dbbb5dfffa",
+      "FormGroup/FormGroup.d.ts": "eb203bc5bcac0edfc18f2079033038917a42d99775d78566f9844810845aa49d",
+      "FormGroup/formGroupClasses.js": "910f689d4d467dc5bb760e6797b7ff913ebcc97d6fb83a077f4cd1bb2c31369a",
+      "FormControlLabel/FormControlLabel.js": "88d38097cedbc16a56e2fb9238cd0e3a84fe1a6d724f43118e5548eab1c7b938",
+      "FormControlLabel/FormControlLabel.d.ts": "e2e18915e649a78ab00870603f504e9a0171f0ab98e21226f925c79788280496",
+      "FormControlLabel/formControlLabelClasses.js": "db2564ed2e9a7ae673c671d8dd93ff7d41e8828c2a2e42edb0ac5cb669cab54f",
+      "internal/SwitchBase.js": "847f4c9543c8fa87373a840f3a999f160ae6d98b9d342f3f3afecf4674001227",
+      "internal/SwitchBase.d.ts": "ad7c704f844817979571445db6272bf50c51c04ddbba03b549e0a18b1cb5200c",
+      "RadioGroup/useRadioGroup.js": "e2e0cfad02dca72f90ef5366021ec0d315edfbd0946c50b9b6e057759d113811",
+      "RadioGroup/RadioGroupContext.js": "cfa9e87fd296f3fb90c7533884263bfcea356b865772e40f2616764401637ced",
+      "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+      "FormControl/FormControl.js": "eddfe9ff9afe7b79398b20da84646c7393df663933d3cc36ca68abe6a9b81c6e",
+      "utils/mergeSlotProps.js": "b06b97432a9aaccfb3fb3aa2d0843466878d5ea86d876dfded99c91ffaa0ad5e"
+    }
+  },
+  "renderer": {
+    "name": "react-dom",
+    "version": "19.3.0",
+    "integrity": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==",
+    "sourceFiles": {
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "cjs/react-dom-client.development.js": "c10b5e5ad37ca22c88b58bf4ada9a3b655ab79934c0b5cc6bad26f42c774584f"
+    }
+  },
+  "scope": "Actual original MUI in Chromium with trusted Playwright keyboard presses; native hardware delivery remains unverified.",
+  "fixtures": [
+    {
+      "input": {
+        "name": "checkbox Enter",
+        "kind": "Checkbox",
+        "keys": ["Enter"]
+      },
+      "states": [
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "checkbox Space",
+        "kind": "Checkbox",
+        "keys": ["Space"]
+      },
+      "states": [
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "on",
+              "name": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "checkbox canceled Space",
+        "kind": "Checkbox",
+        "cancelSpace": true,
+        "keys": ["Space"]
+      },
+      "states": [
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "radio LTR wraps",
+        "kind": "group",
+        "keys": ["ArrowRight", "ArrowRight", "ArrowRight"]
+      },
+      "states": [
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "b",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": true,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "b",
+              "checked": true,
+              "value": "b",
+              "name": "choice"
+            },
+            {
+              "group": "b"
+            }
+          ]
+        },
+        {
+          "active": "c",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "b",
+              "checked": true,
+              "value": "b",
+              "name": "choice"
+            },
+            {
+              "group": "b"
+            },
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice"
+            },
+            {
+              "group": "c"
+            }
+          ]
+        },
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "b",
+              "checked": true,
+              "value": "b",
+              "name": "choice"
+            },
+            {
+              "group": "b"
+            },
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice"
+            },
+            {
+              "group": "c"
+            },
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice"
+            },
+            {
+              "group": "a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "radio RTL",
+        "kind": "group",
+        "rtl": true,
+        "keys": ["ArrowRight", "ArrowLeft"]
+      },
+      "states": [
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "c",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice"
+            },
+            {
+              "group": "c"
+            }
+          ]
+        },
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice"
+            },
+            {
+              "group": "c"
+            },
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice"
+            },
+            {
+              "group": "a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "radio skips disabled",
+        "kind": "group",
+        "options": [
+          {
+            "id": "a",
+            "value": "a"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "disabled": true
+          },
+          {
+            "id": "c",
+            "value": "c"
+          }
+        ],
+        "keys": ["ArrowRight", "ArrowRight"]
+      },
+      "states": [
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": true
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "c",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": true
+            },
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice"
+            },
+            {
+              "group": "c"
+            }
+          ]
+        },
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": true
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice"
+            },
+            {
+              "group": "c"
+            },
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice"
+            },
+            {
+              "group": "a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "radio own name separate traversal",
+        "kind": "group",
+        "options": [
+          {
+            "id": "a",
+            "value": "a"
+          },
+          {
+            "id": "b",
+            "value": "b",
+            "name": "own"
+          },
+          {
+            "id": "c",
+            "value": "c"
+          }
+        ],
+        "keys": ["ArrowRight"]
+      },
+      "states": [
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "own",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "c",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "own",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "c",
+              "checked": true,
+              "value": "c",
+              "name": "choice"
+            },
+            {
+              "group": "c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "radio Space",
+        "kind": "group",
+        "focus": "b",
+        "keys": ["Space"]
+      },
+      "states": [
+        {
+          "active": "b",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "b",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": true,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "b",
+              "checked": true,
+              "value": "b",
+              "name": "choice"
+            },
+            {
+              "group": "b"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "radio Enter",
+        "kind": "group",
+        "focus": "b",
+        "keys": ["Enter"]
+      },
+      "states": [
+        {
+          "active": "b",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "b",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "a",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "b",
+              "checked": false,
+              "value": "b",
+              "name": "choice",
+              "disabled": false
+            },
+            {
+              "id": "c",
+              "checked": false,
+              "value": "c",
+              "name": "choice",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        }
+      ]
+    }
+  ]
+}

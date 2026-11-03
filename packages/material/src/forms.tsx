@@ -28,7 +28,7 @@ import {
   Switch as NativeSwitch,
   type TextInputProps,
   type TextInputInstance,
-  type GestureResponderEvent,
+  type SwitchProps as ReactNativeSwitchProps,
 } from 'react-native';
 import {
   useDefaultProps,
@@ -65,22 +65,35 @@ import {
   type FormHelperTextProps,
 } from './labels';
 export * from './labels';
-export type CheckChangeEvent = {
-  target: { checked: boolean; value?: string; name?: string };
-  nativeEvent: GestureResponderEvent['nativeEvent'] | null;
-};
-type LabelActivation = (event: GestureResponderEvent) => void;
-const LabelActivationContext = createContext<React.RefObject<LabelActivation | null> | null>(null);
-function useLabelActivation(activate: LabelActivation) {
-  const target = useContext(LabelActivationContext);
-  useLayoutEffect(() => {
-    if (!target) return;
-    target.current = activate;
-    return () => {
-      target.current = null;
-    };
-  }, [target, activate]);
-}
+type NativeSwitchSource = Parameters<NonNullable<ReactNativeSwitchProps['onChange']>>[0];
+export type NativeSwitchChangeEvent =
+  | import('./checkedTypes').NativeCheckedChangeEvent
+  | (Omit<NativeSwitchSource, 'target' | 'currentTarget'> & {
+      target: import('./checkedTypes').NativeCheckedTarget;
+      currentTarget: import('./checkedTypes').NativeCheckedTarget;
+    });
+export type CheckChangeEvent = NativeSwitchChangeEvent;
+import { selectionEvent } from './selectionEvent';
+import { useMenuEvent } from './useMenuEvent';
+import { useLabelActivation } from './controlLabelContext';
+export { Checkbox, Radio } from './checkControls';
+export type * from './checkedTypes';
+export { NativeCheckedInputSurface } from './checkControls';
+export * from './controlClasses';
+export { FormGroup, RadioGroup, useRadioGroup } from './controlGroups';
+export type {
+  FormGroupProps,
+  RadioGroupProps,
+  RadioGroupActions,
+  RadioGroupState,
+} from './controlGroups';
+export { FormControlLabel } from './controlLabel';
+export type {
+  FormControlLabelProps,
+  FormControlLabelSlots,
+  FormControlLabelSlotsAndSlotProps,
+  FormControlLabelTypographySlotPropsOverrides,
+} from './controlLabel';
 export interface FormControlProps
   extends Omit<BoxProps, 'component'>,
     Pick<
@@ -794,11 +807,15 @@ export const TextField = TextFieldImpl as unknown as {
     props: TextFieldProps<Variant, Value> & React.RefAttributes<ViewInstance>,
   ): React.ReactElement;
 };
-export interface CheckboxProps {
+export interface SwitchProps {
+  accessibilityLabel?: string;
+  accessibilityLabelledBy?: ReactNativeSwitchProps['accessibilityLabelledBy'];
+  'aria-labelledby'?: ReactNativeSwitchProps['aria-labelledby'];
+  required?: boolean;
+  id?: string;
   checked?: boolean;
   defaultChecked?: boolean;
   disabled?: boolean;
-  indeterminate?: boolean;
   value?: string;
   name?: string;
   onChange?: (event: CheckChangeEvent, checked: boolean) => void;
@@ -808,63 +825,16 @@ export interface CheckboxProps {
   'aria-label'?: string;
   testID?: string;
 }
-export function Checkbox(inProps: CheckboxProps) {
+export function Switch(inProps: SwitchProps) {
   const {
     checked,
     defaultChecked = false,
     disabled,
-    indeterminate,
-    value,
-    name,
-    onChange,
-    sx,
-    inputProps,
-    'aria-label': label,
-    testID,
-  } = useDefaultProps({ props: inProps, name: 'MuiCheckbox' });
-
-  const [selected, setSelected] = useControlled(checked, defaultChecked);
-  const theme = useTheme();
-  const style = useComponentStyle('MuiCheckbox', { checked: selected, disabled }, sx);
-  const activate = (event: GestureResponderEvent) => {
-    if (disabled) return;
-    const next = !selected;
-    setSelected(next);
-    onChange?.({ target: { checked: next, value, name }, nativeEvent: event.nativeEvent }, next);
-  };
-  useLabelActivation(activate);
-  return (
-    <Pressable
-      testID={testID}
-      disabled={disabled}
-      accessibilityRole="checkbox"
-      accessibilityLabel={label ?? inputProps?.['aria-label']}
-      accessibilityState={{ checked: indeterminate ? 'mixed' : selected, disabled }}
-      onPress={activate}
-      style={[{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }, style]}
-    >
-      <View
-        style={{
-          width: 20,
-          height: 20,
-          borderWidth: 2,
-          borderRadius: 2,
-          borderColor: disabled ? theme.palette.action.disabled : theme.palette.primary.main,
-          backgroundColor: selected || indeterminate ? theme.palette.primary.main : 'transparent',
-        }}
-      >
-        <Typography style={{ color: '#fff', fontSize: 14, lineHeight: 16, textAlign: 'center' }}>
-          {indeterminate ? '−' : selected ? '✓' : ''}
-        </Typography>
-      </View>
-    </Pressable>
-  );
-}
-export function Switch(inProps: CheckboxProps) {
-  const {
-    checked,
-    defaultChecked = false,
-    disabled,
+    required = false,
+    id = '',
+    accessibilityLabel,
+    accessibilityLabelledBy,
+    'aria-labelledby': labelledBy,
     onChange,
     name,
     value,
@@ -874,175 +844,42 @@ export function Switch(inProps: CheckboxProps) {
 
   const [selected, setSelected] = useControlled(checked, defaultChecked);
   const theme = useTheme();
-  const change = (next: boolean) => {
-    if (disabled) return;
-    setSelected(next);
-    onChange?.({ target: { checked: next, value, name }, nativeEvent: null }, next);
-  };
-  useLabelActivation(() => change(!selected));
+  const change = useMenuEvent(
+    (
+      next: boolean,
+      source: NativeSwitchSource | import('./buttonBase').ButtonBaseActivationEvent,
+    ) => {
+      if (disabled || source.defaultPrevented || source.isDefaultPrevented?.()) return;
+      const event = selectionEvent(source, {
+        checked: next,
+        value: value ?? 'on',
+        name: name ?? '',
+        id,
+        type: 'checkbox',
+        indeterminate: false,
+        disabled: Boolean(disabled),
+        readOnly: false,
+        required,
+        node: null,
+      }) as NativeSwitchChangeEvent;
+      setSelected(next);
+      onChange?.(event, next);
+    },
+  );
+  useLabelActivation((source) => change(!selected, source));
   return (
     <NativeSwitch
       testID={testID}
-      accessibilityLabel={label}
+      accessibilityLabel={label ?? accessibilityLabel}
+      accessibilityLabelledBy={labelledBy ?? accessibilityLabelledBy}
       accessibilityRole="switch"
       disabled={disabled}
       value={selected}
       style={{ alignSelf: 'center' }}
       trackColor={{ true: theme.palette.primary.main }}
-      onValueChange={change}
+      nativeID={id || undefined}
+      aria-required={required}
+      onChange={(event) => change(event.nativeEvent.value, event)}
     />
-  );
-}
-const RadioContext = createContext<{
-  value?: string;
-  name?: string;
-  onChange?: (e: CheckChangeEvent, value: string) => void;
-}>({});
-export interface RadioGroupProps extends Omit<BoxProps, 'onChange'> {
-  value?: string;
-  defaultValue?: string;
-  name?: string;
-  row?: boolean;
-  onChange?: (e: CheckChangeEvent, value: string) => void;
-}
-export function RadioGroup(inProps: RadioGroupProps) {
-  const {
-    value,
-    defaultValue = '',
-    name,
-    onChange,
-    row,
-    children,
-    ...props
-  } = useDefaultProps({ props: inProps, name: 'MuiRadioGroup' });
-
-  const [selected, setSelected] = useControlled(value, defaultValue);
-  return (
-    <RadioContext.Provider
-      value={{
-        value: selected,
-        name,
-        onChange: (e, next) => {
-          setSelected(next);
-          onChange?.(e, next);
-        },
-      }}
-    >
-      <Stack {...props} direction={row ? 'row' : 'column'}>
-        {children}
-      </Stack>
-    </RadioContext.Provider>
-  );
-}
-export function Radio(inProps: CheckboxProps) {
-  const {
-    value = '',
-    checked,
-    defaultChecked = false,
-    onChange,
-    disabled,
-    'aria-label': label,
-    testID,
-  } = useDefaultProps({ props: inProps, name: 'MuiRadio' });
-
-  const group = useContext(RadioContext);
-  const [local, setLocal] = useControlled(checked, defaultChecked);
-  const selected = group.value !== undefined ? group.value === value : local;
-  const theme = useTheme();
-  const activate = (e: GestureResponderEvent) => {
-    if (disabled || selected) return;
-    setLocal(true);
-    const event = {
-      target: { checked: true, value, name: group.name },
-      nativeEvent: e.nativeEvent,
-    };
-    onChange?.(event, true);
-    group.onChange?.(event, value);
-  };
-  useLabelActivation(activate);
-  return (
-    <Pressable
-      testID={testID}
-      disabled={disabled}
-      accessibilityRole="radio"
-      accessibilityLabel={label}
-      accessibilityState={{ checked: selected, disabled }}
-      style={{ width: 44, height: 44, justifyContent: 'center', alignItems: 'center' }}
-      onPress={activate}
-    >
-      <View
-        style={{
-          width: 20,
-          height: 20,
-          borderRadius: 10,
-          borderWidth: 2,
-          borderColor: theme.palette.primary.main,
-          padding: 3,
-        }}
-      >
-        {selected ? (
-          <View
-            style={{ flex: 1, borderRadius: 10, backgroundColor: theme.palette.primary.main }}
-          />
-        ) : null}
-      </View>
-    </Pressable>
-  );
-}
-function labelText(label: React.ReactNode): string | undefined {
-  if (label == null || typeof label === 'boolean') return '';
-  if (typeof label === 'string' || typeof label === 'number') return String(label);
-  if (Array.isArray(label)) {
-    const parts = label.map(labelText);
-    return parts.every((part) => part !== undefined) ? parts.join('') : undefined;
-  }
-  if (React.isValidElement<{ children?: React.ReactNode }>(label) && label.type === React.Fragment)
-    return labelText(label.props.children);
-  return undefined;
-}
-export function FormControlLabel(inProps: {
-  control: React.ReactElement<CheckboxProps>;
-  label: React.ReactNode;
-  disabled?: boolean;
-}) {
-  const { control, label, disabled } = useDefaultProps({
-    props: inProps,
-    name: 'MuiFormControlLabel',
-  });
-
-  const activate = useRef<LabelActivation | null>(null);
-  const form = useContext(FormContext) ?? {};
-  const inactive = disabled ?? control.props.disabled ?? form.disabled;
-  const accessibleName =
-    control.props['aria-label'] ?? control.props.inputProps?.['aria-label'] ?? labelText(label);
-  return (
-    <LabelActivationContext.Provider value={activate}>
-      <Stack direction="row" style={{ alignItems: 'center', gap: 8 }}>
-        {React.cloneElement(control, {
-          disabled: inactive,
-          'aria-label': accessibleName,
-        })}
-        <Pressable
-          accessible={false}
-          disabled={inactive}
-          onPress={(event) => activate.current?.(event)}
-          style={{
-            flexGrow: 1,
-            flexShrink: 1,
-            minWidth: 0,
-            minHeight: 44,
-            paddingVertical: 8,
-            justifyContent: 'center',
-          }}
-        >
-          <Typography
-            accessible={!accessibleName}
-            color={inactive ? 'text.disabled' : 'text.primary'}
-          >
-            {label}
-          </Typography>
-        </Pressable>
-      </Stack>
-    </LabelActivationContext.Provider>
   );
 }

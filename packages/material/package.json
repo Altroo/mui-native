@@ -379,6 +379,41 @@
       "types": "./dist/IconButton/iconButtonClasses/index.d.ts",
       "react-native": "./src/IconButton/iconButtonClasses/index.ts",
       "default": "./dist/IconButton/iconButtonClasses/index.js"
+    },
+    "./FormGroup": {
+      "types": "./dist/FormGroup/index.d.ts",
+      "react-native": "./src/FormGroup/index.ts",
+      "default": "./dist/FormGroup/index.js"
+    },
+    "./RadioGroup/useRadioGroup": {
+      "types": "./dist/RadioGroup/useRadioGroup/index.d.ts",
+      "react-native": "./src/RadioGroup/useRadioGroup/index.ts",
+      "default": "./dist/RadioGroup/useRadioGroup/index.js"
+    },
+    "./Checkbox/checkboxClasses": {
+      "types": "./dist/Checkbox/checkboxClasses/index.d.ts",
+      "react-native": "./src/Checkbox/checkboxClasses/index.ts",
+      "default": "./dist/Checkbox/checkboxClasses/index.js"
+    },
+    "./Radio/radioClasses": {
+      "types": "./dist/Radio/radioClasses/index.d.ts",
+      "react-native": "./src/Radio/radioClasses/index.ts",
+      "default": "./dist/Radio/radioClasses/index.js"
+    },
+    "./RadioGroup/radioGroupClasses": {
+      "types": "./dist/RadioGroup/radioGroupClasses/index.d.ts",
+      "react-native": "./src/RadioGroup/radioGroupClasses/index.ts",
+      "default": "./dist/RadioGroup/radioGroupClasses/index.js"
+    },
+    "./FormGroup/formGroupClasses": {
+      "types": "./dist/FormGroup/formGroupClasses/index.d.ts",
+      "react-native": "./src/FormGroup/formGroupClasses/index.ts",
+      "default": "./dist/FormGroup/formGroupClasses/index.js"
+    },
+    "./FormControlLabel/formControlLabelClasses": {
+      "types": "./dist/FormControlLabel/formControlLabelClasses/index.d.ts",
+      "react-native": "./src/FormControlLabel/formControlLabelClasses/index.ts",
+      "default": "./dist/FormControlLabel/formControlLabelClasses/index.js"
     }
   },
   "dependencies": {
