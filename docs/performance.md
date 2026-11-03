@@ -23,6 +23,6 @@ Rust supports [iOS and Android compilation targets](https://doc.rust-lang.org/ru
 
 Before adopting Rust, compare optimized JavaScript with the native prototype using the actual dataset. Include call/serialization costs, threading, memory, binary size, build time and installation complexity. Calling native code synchronously can still block interaction. Require an end-to-end improvement large enough to justify the extra maintenance. A custom native module needs a development/release build; the stock Expo Go application cannot load arbitrary native code. See [Expo development builds](https://docs.expo.dev/develop/development-builds/introduction/).
 
-No performance target has been certified for this pre-alpha. The native crash encountered during development reload on 2026-11-02 also requires follow-up before any stability claim.
+No performance target has been certified for this pre-alpha. The reproduced transform/reset and Android Portal traversal crashes are corrected in [#41](https://github.com/Altroo/mui-native/issues/41) and [#43](https://github.com/Altroo/mui-native/issues/43). Their tested emulator interactions do not establish complete native stability or physical-device release performance.
 
 References: [React Native performance](https://reactnative.dev/docs/performance), [Rust platform support](https://doc.rust-lang.org/rustc/platform-support.html), [Expo development builds](https://docs.expo.dev/develop/development-builds/introduction/).

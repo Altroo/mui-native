@@ -16,7 +16,7 @@ import {
 
 const nativeReport = {
   schemaVersion: 1,
-  scenario: 'popper-window-inline-transform-v1',
+  scenario: 'popper-window-inline-scroll-transform-v2',
   package: catalogPackage,
   status: 'passed',
   directory: 'popper-checks/run-1793712000000',
@@ -31,6 +31,12 @@ const nativeReport = {
     'transformed-window-popup.png',
     'reset-window-popup.png',
     'closed-popup.png',
+    ...['window', 'inline'].flatMap((mode) => [
+      'scrolled-' + mode + '-popup.png',
+      'returned-' + mode + '-popup.png',
+      'clipped-' + mode + '-anchor.png',
+      'restored-' + mode + '-popup.png',
+    ]),
   ],
 };
 const completion = (report = nativeReport, code = -1) =>
@@ -117,7 +123,7 @@ test('runner targets only the explicit ready device, collects scoped artifacts a
       '-n',
       catalogPackage + '/.MainActivity',
     ]);
-    assert.equal((await readdir(output)).length, 10);
+    assert.equal((await readdir(output)).length, 18);
     assert(
       calls
         .filter(({ args }) => args.includes('exec-out'))
@@ -320,8 +326,8 @@ test('existing output evidence is never mixed with a later native run', async ()
   }
 });
 
-test('a passed report must include the repeat resets and each confirmed child tap', () => {
-  for (const omitted of ['repeat-0-reset', 'confirm-4']) {
+test('a passed report requires every transform, scrolling, child-tap and reopen milestone', () => {
+  for (const omitted of requiredMilestones) {
     const milestones = [...nativeReport.milestones].filter((stage) => stage !== omitted);
     assert.throws(() => parseReport(completion({ ...nativeReport, milestones })));
   }

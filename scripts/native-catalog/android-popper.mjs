@@ -69,6 +69,12 @@ export const screenshotStages = [
   'transformed-window-popup',
   'reset-window-popup',
   'closed-popup',
+  ...['window', 'inline'].flatMap((mode) => [
+    'scrolled-' + mode + '-popup',
+    'returned-' + mode + '-popup',
+    'clipped-' + mode + '-anchor',
+    'restored-' + mode + '-popup',
+  ]),
 ];
 export const requiredMilestones = [
   ...screenshotStages,
@@ -82,6 +88,7 @@ export const requiredMilestones = [
   'confirm-2',
   'confirm-3',
   'confirm-4',
+  ...[0, 1, 2].flatMap((cycle) => ['repeat-open-' + cycle, 'repeat-close-' + cycle]),
 ];
 
 /** Decode safe artifact locations even when native assertions failed. */
@@ -94,7 +101,7 @@ export function inspectReport(output) {
     typeof report !== 'object' ||
     report.schemaVersion !== 1 ||
     report.package !== catalogPackage ||
-    report.scenario !== 'popper-window-inline-transform-v1' ||
+    report.scenario !== 'popper-window-inline-scroll-transform-v2' ||
     !['passed', 'failed'].includes(report.status) ||
     (!(report.directory === null && report.status === 'failed') &&
       (typeof report.directory !== 'string' ||
