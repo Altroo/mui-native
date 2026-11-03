@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "494d2bd340fe79822cae769588d3ae68415f6836a83d74bca4c689d343804d94",
+  "nativeSourceSha256": "d17e7eea97d99cb111bbba3794532d40b54114714314d68f75f938b6b2ddb0f4",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7301,7 +7301,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "NativeTextScope",
           "kind": "value",
-          "line": 113
+          "line": 117
         }
       ]
     },
@@ -7312,7 +7312,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "NativeTextScopeProps",
           "kind": "type",
-          "line": 100
+          "line": 104
         }
       ]
     },
@@ -7444,7 +7444,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "renderNativeTextChildren",
           "kind": "value",
-          "line": 137
+          "line": 141
         }
       ]
     },
@@ -18351,7 +18351,7 @@
     {
       "name": "NativeTextScopeProps",
       "file": "src/textScope.tsx",
-      "line": 100,
+      "line": 104,
       "kind": "type",
       "members": [
         {
@@ -18361,7 +18361,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme: Theme;",
-          "line": 101,
+          "line": 105,
           "kind": "property",
           "type": "Theme"
         },
@@ -18372,7 +18372,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle>;",
-          "line": 102,
+          "line": 106,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -18383,7 +18383,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "kind?: 'view' | 'text';",
-          "line": 103,
+          "line": 107,
           "kind": "property",
           "type": "'view' | 'text'"
         },
@@ -18394,7 +18394,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "reset?: boolean;",
-          "line": 104,
+          "line": 108,
           "kind": "property",
           "type": "boolean"
         },
@@ -18405,7 +18405,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "content?: React.ReactNode;",
-          "line": 105,
+          "line": 109,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -18416,7 +18416,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: (\n    style: NativeStyle,\n    content: React.ReactNode,\n    scope: NativeTextScopeValue,\n  ) => React.ReactNode;",
-          "line": 106,
+          "line": 110,
           "kind": "property",
           "type": "(\n    style: NativeStyle,\n    content: React.ReactNode,\n    scope: NativeTextScopeValue,\n  ) => React.ReactNode"
         }
