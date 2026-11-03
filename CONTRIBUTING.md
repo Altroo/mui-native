@@ -6,6 +6,8 @@ Use Node from .nvmrc, pnpm from package.json, then `pnpm install --frozen-lockfi
 
 `pnpm lint` runs ESLint with zero warnings allowed for JavaScript, MJS and CJS, then the current TypeScript compiler for TS/TSX. TypeScript checks unused imports, locals, private declarations and parameters across library code, tests and the catalog. Installed-consumer fixtures also enable unused-code checks. `pnpm check` starts with this gate, and CI runs the same command before package-consumer checks. Generated output, dependencies and immutable upstream snapshots are excluded from source linting.
 
+Consumer fixtures resolve native declaration output in this checkout. Run `pnpm build` before editing them, then `pnpm typecheck:consumer` to check every fixture locally, including expected rejection cases. `pnpm check` runs this gate after building. `pnpm test:consumer` separately installs fresh archives and replaces the workspace mappings with installed-package mappings; both checks are required.
+
 Review WebStorm inspections on changed source files before delivery. The project supplies `eslint.config.mjs`; TypeScript checks use the project's compiler. Keep exported library APIs even when examples do not consume them. A leading underscore is reserved for intentionally unused callback parameters whose signatures must be retained.
 
 Preserve MIT notices for reused source and register source commit/path/hash in the provenance manifest. Do not copy commercial code or implement paid-only parity. New dependencies need license review. Keep upstream reference updates separate from claims of native support.
