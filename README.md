@@ -17,6 +17,339 @@ At work, I was tasked with migrating existing web applications to React Native. 
 
 I started MUI Native to address that gap: preserve familiar MUI component APIs and theming while rendering native iOS and Android interfaces. The aim is to make similar migrations more practical and provide a reusable library for other developers facing the same challenge.
 
+## Status
+
+Updated: **3 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
+
+For component/module rows: **0%** = not implemented, **25%** = prototype/subset, **50%** = an implemented subset with source-backed contract and installed-consumer coverage, **75%** = that coverage plus scoped iOS and Android interaction evidence, **100%** = the agreed full contract and release gates are complete. Foundation rows describe their explicitly bounded work. No component family is certified as fully compatible.
+
+The expandable tables list **135 Material component/helper modules** and **84 modules across the four stable X Community families**, plus System, styling and icons. Native subsets currently exist for **57 of the Material entries** and **9 of the stable X entries**. These are top-level public modules from the pinned inventory, not a count of every nested component, prop or export. The [full declaration inventory](docs/coverage.md) tracks the deeper contracts. Pro/Premium behavior remains excluded, including paid-only behavior behind shared Community helpers.
+
+### Foundations and release gates
+
+| State | Part                                 |                                                  Progress | What it means                                                                                                                                                                |
+| ----- | ------------------------------------ | --------------------------------------------------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ✅    | **Repository and package structure** | [100%](ROADMAP.md#0-repository-provenance-and-automation) | One public monorepo with separate development packages and contribution/release guidance.                                                                                    |
+| ✅    | **Declared import routing**          |                              [100%](docs/installation.md) | Metro and TypeScript routing for registered native imports, with unsupported-path guards and installed-package checks. Full MUI import coverage remains in the tables below. |
+| ✅    | **Declaration inventory tooling**    |                                  [100%](docs/coverage.md) | Pinned source/API/license records and repeatable inventory generation/freshness checks exist; unresolved contracts stay visible.                                             |
+| ✅    | **Contract/consumer check pipeline** |                                [100%](docs/validation.md) | Automated contract/type checks and fresh tarball installation checks are in place. This is tooling completion, not complete API test coverage.                               |
+| 🔧    | **Native rendering foundation**      |                                [75%](docs/native-host.md) | Native iOS/Android hosts and scoped emulator interactions are exercised. Complete physical-device and accessibility matrices remain.                                         |
+| ✅    | **Upstream release detection**       |                                  [100%](docs/upstream.md) | Twice-daily detection and deduplicated review issues work. Each detected update still needs a separate compatibility review.                                                 |
+| 🔧    | **Full native validation matrix**    |                                 [25%](docs/validation.md) | Scoped emulator scenarios exist. Broad keyboard/IME, screen-reader, RTL, font-scaling and physical-device matrices remain.                                                   |
+| 🗺️    | **Calibrated release performance**   |                                 [0%](docs/performance.md) | Accepted input/scrolling/memory baselines and physical-device calibration remain outstanding.                                                                                |
+| 🗺️    | **Verified alpha publication**       |                         [0%](ROADMAP.md#3-verified-alpha) | The alpha release checklist is open; no packages are published to npm.                                                                                                       |
+
+### Component and module progress
+
+Expand a family to see individual entries. Percentages link to the implementation guide or remaining-work plan.
+
+<details>
+<summary>Material UI: 135 component/helper modules</summary>
+
+| State | Part                        |                                         Progress | What it means                                                                                                                                                         |
+| ----- | --------------------------- | -----------------------------------------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🗺️    | **Accordion**               |          [0%](ROADMAP.md#4-complete-material-ui) | Native expansion, slots, transitions and accessibility contracts are not implemented.                                                                                 |
+| 🗺️    | **AccordionActions**        |          [0%](ROADMAP.md#4-complete-material-ui) | Native expansion, slots, transitions and accessibility contracts are not implemented.                                                                                 |
+| 🗺️    | **AccordionDetails**        |          [0%](ROADMAP.md#4-complete-material-ui) | Native expansion, slots, transitions and accessibility contracts are not implemented.                                                                                 |
+| 🗺️    | **AccordionSummary**        |          [0%](ROADMAP.md#4-complete-material-ui) | Native expansion, slots, transitions and accessibility contracts are not implemented.                                                                                 |
+| 🔧    | **Alert**                   | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **AlertTitle**              |          [0%](ROADMAP.md#4-complete-material-ui) | Dedicated composition, styling and slot contracts are not implemented.                                                                                                |
+| 🗺️    | **AppBar**                  |          [0%](ROADMAP.md#4-complete-material-ui) | Native app-bar layout, slots and responsive behavior are not implemented.                                                                                             |
+| 🗺️    | **Autocomplete**            |          [0%](ROADMAP.md#4-complete-material-ui) | Chip, Portal and Popper dependencies exist; editable input/listbox integration is not implemented.                                                                    |
+| 🗺️    | **Avatar**                  |          [0%](ROADMAP.md#4-complete-material-ui) | Native image/fallback, sizing and group contracts are not implemented.                                                                                                |
+| 🗺️    | **AvatarGroup**             |          [0%](ROADMAP.md#4-complete-material-ui) | Native image/fallback, sizing and group contracts are not implemented.                                                                                                |
+| 🔧    | **Backdrop**                |                            [50%](docs/modals.md) | Native overlay coordination, dismissal, slots, refs and transitions have contract/consumer coverage; wider native matrices remain.                                    |
+| 🗺️    | **Badge**                   |          [0%](ROADMAP.md#4-complete-material-ui) | Native badge content, overlap and anchor contracts are not implemented.                                                                                               |
+| 🗺️    | **BottomNavigation**        |          [0%](ROADMAP.md#4-complete-material-ui) | Native selection, actions and navigation semantics are not implemented.                                                                                               |
+| 🗺️    | **BottomNavigationAction**  |          [0%](ROADMAP.md#4-complete-material-ui) | Native selection, actions and navigation semantics are not implemented.                                                                                               |
+| 🔧    | **Box**                     | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **Breadcrumbs**             |          [0%](ROADMAP.md#4-complete-material-ui) | Native link composition, overflow/collapse and navigation behavior are not implemented.                                                                               |
+| 🔧    | **Button**                  |                            [50%](docs/button.md) | Native activation, state, refs, slots and loading contracts are covered in the implemented subset; inherited APIs and device gates remain.                            |
+| 🔧    | **ButtonBase**              |                       [50%](docs/button-base.md) | Native activation/focus host, refs and key adapters have contract/consumer coverage; full physical accessibility/performance gates remain.                            |
+| 🗺️    | **ButtonGroup**             |          [0%](ROADMAP.md#4-complete-material-ui) | Group context, inherited button states and layout contracts are not implemented.                                                                                      |
+| 🔧    | **Card**                    | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **CardActionArea**          |          [0%](ROADMAP.md#4-complete-material-ui) | Specialized card interaction, header/media and slot contracts are not implemented.                                                                                    |
+| 🔧    | **CardActions**             | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🔧    | **CardContent**             | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **CardHeader**              |          [0%](ROADMAP.md#4-complete-material-ui) | Specialized card interaction, header/media and slot contracts are not implemented.                                                                                    |
+| 🗺️    | **CardMedia**               |          [0%](ROADMAP.md#4-complete-material-ui) | Specialized card interaction, header/media and slot contracts are not implemented.                                                                                    |
+| 🔧    | **Checkbox**                |                    [50%](docs/check-controls.md) | Native checked/value events, groups, labels, slots and refs are covered in the implemented subset; broader validation remains.                                        |
+| 🔧    | **Chip**                    |                              [50%](docs/chip.md) | Native display, activation, deletion and slots have contract/consumer coverage; Autocomplete integration remains.                                                     |
+| 🔧    | **CircularProgress**        | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **ClickAwayListener**       |          [0%](ROADMAP.md#4-complete-material-ui) | A native outside-touch/ownership contract is not implemented.                                                                                                         |
+| 🗺️    | **Collapse**                |          [0%](ROADMAP.md#4-complete-material-ui) | Native transition, ref and lifecycle contracts are not implemented.                                                                                                   |
+| 🗺️    | **Container**               |          [0%](ROADMAP.md#4-complete-material-ui) | Native container/grid breakpoint and layout APIs are not implemented.                                                                                                 |
+| 🗺️    | **CssBaseline**             |          [0%](ROADMAP.md#4-complete-material-ui) | DOM/CSS-specific API: native policy or migration behavior is unresolved; browser CSS parity is not implied.                                                           |
+| 🔧    | **DefaultPropsProvider**    |                     [50%](docs/default-props.md) | Native defaults/context and slot composition have contract and consumer checks; full upstream semantics remain.                                                       |
+| 🔧    | **Dialog**                  |                            [50%](docs/modals.md) | Native overlay coordination, dismissal, slots, refs and transitions have contract/consumer coverage; wider native matrices remain.                                    |
+| 🔧    | **DialogActions**           | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🔧    | **DialogContent**           | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **DialogContentText**       |          [0%](ROADMAP.md#4-complete-material-ui) | Dedicated composition, styling and slot contracts are not implemented.                                                                                                |
+| 🔧    | **DialogTitle**             | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🔧    | **Divider**                 | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **Drawer**                  |          [0%](ROADMAP.md#4-complete-material-ui) | Native drawer, gestures, focus and keyboard interactions are not implemented.                                                                                         |
+| 🗺️    | **Fab**                     |          [0%](ROADMAP.md#4-complete-material-ui) | Native floating-action composition and interaction contracts are not implemented.                                                                                     |
+| 🔧    | **Fade**                    |                       [50%](docs/transitions.md) | Native opacity/lifecycle and reduced-motion subset is covered; complete transition interoperability remains.                                                          |
+| 🔧    | **FilledInput**             |                            [50%](docs/inputs.md) | Native input state, adornments, refs and form coordination have contract/consumer coverage; complete upstream contracts remain.                                       |
+| 🔧    | **FormControl**             |                       [50%](docs/form-labels.md) | Scoped native label/helper/form-state behavior is covered; browser form semantics and wider device cases remain.                                                      |
+| 🔧    | **FormControlLabel**        |                    [50%](docs/check-controls.md) | Native checked/value events, groups, labels, slots and refs are covered in the implemented subset; broader validation remains.                                        |
+| 🔧    | **FormGroup**               |                    [50%](docs/check-controls.md) | Native checked/value events, groups, labels, slots and refs are covered in the implemented subset; broader validation remains.                                        |
+| 🔧    | **FormHelperText**          |                       [50%](docs/form-labels.md) | Scoped native label/helper/form-state behavior is covered; browser form semantics and wider device cases remain.                                                      |
+| 🔧    | **FormLabel**               |                       [50%](docs/form-labels.md) | Scoped native label/helper/form-state behavior is covered; browser form semantics and wider device cases remain.                                                      |
+| 🗺️    | **GlobalStyles**            |          [0%](ROADMAP.md#4-complete-material-ui) | DOM/CSS-specific API: native policy or migration behavior is unresolved; browser CSS parity is not implied.                                                           |
+| 🗺️    | **Grid**                    |          [0%](ROADMAP.md#4-complete-material-ui) | Native container/grid breakpoint and layout APIs are not implemented.                                                                                                 |
+| 🔧    | **Grow**                    |                              [50%](docs/grow.md) | Native opacity/scale and measured-height timing have contract/consumer coverage; full native matrices remain.                                                         |
+| 🗺️    | **Icon**                    |          [0%](ROADMAP.md#4-complete-material-ui) | These Material public imports are not implemented; the separate native icon package has four glyphs.                                                                  |
+| 🔧    | **IconButton**              |                            [50%](docs/button.md) | Native activation, state, refs, slots and loading contracts are covered in the implemented subset; inherited APIs and device gates remain.                            |
+| 🗺️    | **ImageList**               |          [0%](ROADMAP.md#4-complete-material-ui) | Native image-list layout, item and caption contracts are not implemented.                                                                                             |
+| 🗺️    | **ImageListItem**           |          [0%](ROADMAP.md#4-complete-material-ui) | Native image-list layout, item and caption contracts are not implemented.                                                                                             |
+| 🗺️    | **ImageListItemBar**        |          [0%](ROADMAP.md#4-complete-material-ui) | Native image-list layout, item and caption contracts are not implemented.                                                                                             |
+| 🗺️    | **InitColorSchemeScript**   |          [0%](ROADMAP.md#4-complete-material-ui) | DOM/CSS-specific API: native policy or migration behavior is unresolved; browser CSS parity is not implied.                                                           |
+| 🔧    | **Input**                   |                            [50%](docs/inputs.md) | Native input state, adornments, refs and form coordination have contract/consumer coverage; complete upstream contracts remain.                                       |
+| 🔧    | **InputAdornment**          |                            [50%](docs/inputs.md) | Native input state, adornments, refs and form coordination have contract/consumer coverage; complete upstream contracts remain.                                       |
+| 🔧    | **InputBase**               |                            [50%](docs/inputs.md) | Native input state, adornments, refs and form coordination have contract/consumer coverage; complete upstream contracts remain.                                       |
+| 🔧    | **InputLabel**              |                       [50%](docs/form-labels.md) | Scoped native label/helper/form-state behavior is covered; browser form semantics and wider device cases remain.                                                      |
+| 🔧    | **LinearProgress**          | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **Link**                    |          [0%](ROADMAP.md#4-complete-material-ui) | The standalone native text/link component contract is not implemented.                                                                                                |
+| 🔧    | **List**                    |                             [50%](docs/lists.md) | Native list composition, density, slots and text/action layout have contract/consumer coverage; complete device/API gates remain.                                     |
+| 🔧    | **ListItem**                |                             [50%](docs/lists.md) | Native list composition, density, slots and text/action layout have contract/consumer coverage; complete device/API gates remain.                                     |
+| 🔧    | **ListItemAvatar**          |                             [50%](docs/lists.md) | Native list composition, density, slots and text/action layout have contract/consumer coverage; complete device/API gates remain.                                     |
+| 🔧    | **ListItemButton**          |                             [50%](docs/lists.md) | Native list composition, density, slots and text/action layout have contract/consumer coverage; complete device/API gates remain.                                     |
+| 🔧    | **ListItemIcon**            |                             [50%](docs/lists.md) | Native list composition, density, slots and text/action layout have contract/consumer coverage; complete device/API gates remain.                                     |
+| 🔧    | **ListItemSecondaryAction** |                             [50%](docs/lists.md) | Native list composition, density, slots and text/action layout have contract/consumer coverage; complete device/API gates remain.                                     |
+| 🔧    | **ListItemText**            |                             [50%](docs/lists.md) | Native list composition, density, slots and text/action layout have contract/consumer coverage; complete device/API gates remain.                                     |
+| 🔧    | **ListSubheader**           |                             [50%](docs/lists.md) | Native list composition, density, slots and text/action layout have contract/consumer coverage; complete device/API gates remain.                                     |
+| 🔧    | **Menu**                    |                              [50%](docs/menu.md) | Native anchored menu slots, dismissal and focus ownership have contract/consumer coverage; wider native validation remains.                                           |
+| 🔧    | **MenuItem**                |                         [50%](docs/menu-list.md) | Native registration, focus, keyboard/typeahead and roles have contract/consumer coverage; broader keyboard/device contracts remain.                                   |
+| 🔧    | **MenuList**                |                         [50%](docs/menu-list.md) | Native registration, focus, keyboard/typeahead and roles have contract/consumer coverage; broader keyboard/device contracts remain.                                   |
+| 🗺️    | **MobileStepper**           |          [0%](ROADMAP.md#4-complete-material-ui) | Step state, connectors, actions and native accessibility contracts are not implemented.                                                                               |
+| 🔧    | **Modal**                   |                            [50%](docs/modals.md) | Native overlay coordination, dismissal, slots, refs and transitions have contract/consumer coverage; wider native matrices remain.                                    |
+| 🔧    | **NativeSelect**            |                     [50%](docs/native-select.md) | Native platform-picker composition and selectedOptions/value/ref contracts are covered; physical picker validation remains.                                           |
+| 🗺️    | **NoSsr**                   |          [0%](ROADMAP.md#4-complete-material-ui) | Native applicability and migration policy for this browser/SSR helper are unresolved.                                                                                 |
+| 🔧    | **OutlinedInput**           |                            [50%](docs/inputs.md) | Native input state, adornments, refs and form coordination have contract/consumer coverage; complete upstream contracts remain.                                       |
+| 🗺️    | **OverridableComponent**    |          [0%](ROADMAP.md#4-complete-material-ui) | This public polymorphic type-helper module is not implemented; it is not a visual component.                                                                          |
+| 🗺️    | **Pagination**              |          [0%](ROADMAP.md#4-complete-material-ui) | Native page models, items and interaction contracts are not implemented.                                                                                              |
+| 🗺️    | **PaginationItem**          |          [0%](ROADMAP.md#4-complete-material-ui) | Native page models, items and interaction contracts are not implemented.                                                                                              |
+| 🔧    | **Paper**                   | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **PigmentContainer**        |          [0%](ROADMAP.md#4-complete-material-ui) | DOM/CSS-specific API: native policy or migration behavior is unresolved; browser CSS parity is not implied.                                                           |
+| 🗺️    | **PigmentGrid**             |          [0%](ROADMAP.md#4-complete-material-ui) | DOM/CSS-specific API: native policy or migration behavior is unresolved; browser CSS parity is not implied.                                                           |
+| 🗺️    | **PigmentStack**            |          [0%](ROADMAP.md#4-complete-material-ui) | DOM/CSS-specific API: native policy or migration behavior is unresolved; browser CSS parity is not implied.                                                           |
+| 🔧    | **Popover**                 |                           [50%](docs/popover.md) | Anchored native origins, margins, slots and actions have contract/consumer coverage; broader device gates remain.                                                     |
+| 🔧    | **Popper**                  |                            [75%](docs/popper.md) | Public native API, contract/consumer checks and scoped iOS/Android interaction evidence exist; remaining native scenarios and release performance prevent completion. |
+| 🔧    | **Portal**                  |                            [75%](docs/portal.md) | Public native API, contract/consumer checks and scoped iOS/Android interaction evidence exist; remaining native scenarios and release performance prevent completion. |
+| 🔧    | **Radio**                   |                    [50%](docs/check-controls.md) | Native checked/value events, groups, labels, slots and refs are covered in the implemented subset; broader validation remains.                                        |
+| 🔧    | **RadioGroup**              |                    [50%](docs/check-controls.md) | Native checked/value events, groups, labels, slots and refs are covered in the implemented subset; broader validation remains.                                        |
+| 🗺️    | **Rating**                  |          [0%](ROADMAP.md#4-complete-material-ui) | Native gestures, controlled values, keyboard and accessibility contracts are not implemented.                                                                         |
+| 🗺️    | **ScopedCssBaseline**       |          [0%](ROADMAP.md#4-complete-material-ui) | DOM/CSS-specific API: native policy or migration behavior is unresolved; browser CSS parity is not implied.                                                           |
+| 🔧    | **Select**                  |                            [50%](docs/select.md) | Native single/multiple values, events, Menu composition and refs have contract/consumer coverage; full inherited/device gates remain.                                 |
+| 🗺️    | **Skeleton**                |          [0%](ROADMAP.md#4-complete-material-ui) | Native shapes, animation and reduced-motion contracts are not implemented.                                                                                            |
+| 🗺️    | **Slide**                   |          [0%](ROADMAP.md#4-complete-material-ui) | Native transition, ref and lifecycle contracts are not implemented.                                                                                                   |
+| 🗺️    | **Slider**                  |          [0%](ROADMAP.md#4-complete-material-ui) | Native gestures, controlled values, keyboard and accessibility contracts are not implemented.                                                                         |
+| 🔧    | **Snackbar**                | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **SnackbarContent**         |          [0%](ROADMAP.md#4-complete-material-ui) | Dedicated composition, styling and slot contracts are not implemented.                                                                                                |
+| 🗺️    | **SpeedDial**               |          [0%](ROADMAP.md#4-complete-material-ui) | Native floating-action composition and interaction contracts are not implemented.                                                                                     |
+| 🗺️    | **SpeedDialAction**         |          [0%](ROADMAP.md#4-complete-material-ui) | Native floating-action composition and interaction contracts are not implemented.                                                                                     |
+| 🗺️    | **SpeedDialIcon**           |          [0%](ROADMAP.md#4-complete-material-ui) | Native floating-action composition and interaction contracts are not implemented.                                                                                     |
+| 🔧    | **Stack**                   | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                      |
+| 🗺️    | **Step**                    |          [0%](ROADMAP.md#4-complete-material-ui) | Step state, connectors, actions and native accessibility contracts are not implemented.                                                                               |
+| 🗺️    | **StepButton**              |          [0%](ROADMAP.md#4-complete-material-ui) | Step state, connectors, actions and native accessibility contracts are not implemented.                                                                               |
+| 🗺️    | **StepConnector**           |          [0%](ROADMAP.md#4-complete-material-ui) | Step state, connectors, actions and native accessibility contracts are not implemented.                                                                               |
+| 🗺️    | **StepContent**             |          [0%](ROADMAP.md#4-complete-material-ui) | Step state, connectors, actions and native accessibility contracts are not implemented.                                                                               |
+| 🗺️    | **StepIcon**                |          [0%](ROADMAP.md#4-complete-material-ui) | Step state, connectors, actions and native accessibility contracts are not implemented.                                                                               |
+| 🗺️    | **StepLabel**               |          [0%](ROADMAP.md#4-complete-material-ui) | Step state, connectors, actions and native accessibility contracts are not implemented.                                                                               |
+| 🗺️    | **Stepper**                 |          [0%](ROADMAP.md#4-complete-material-ui) | Step state, connectors, actions and native accessibility contracts are not implemented.                                                                               |
+| 🗺️    | **SvgIcon**                 |          [0%](ROADMAP.md#4-complete-material-ui) | These Material public imports are not implemented; the separate native icon package has four glyphs.                                                                  |
+| 🗺️    | **SwipeableDrawer**         |          [0%](ROADMAP.md#4-complete-material-ui) | Native drawer, gestures, focus and keyboard interactions are not implemented.                                                                                         |
+| 🔧    | **Switch**                  |                            [50%](docs/switch.md) | Five native slots, checked events and thumb motion have contract/consumer coverage; browser and full device behavior remain.                                          |
+| 🗺️    | **Tab**                     |          [0%](ROADMAP.md#4-complete-material-ui) | Native tab selection, indicators, scrolling and keyboard contracts are not implemented.                                                                               |
+| 🗺️    | **TabScrollButton**         |          [0%](ROADMAP.md#4-complete-material-ui) | Native tab selection, indicators, scrolling and keyboard contracts are not implemented.                                                                               |
+| 🗺️    | **Table**                   |          [0%](ROADMAP.md#4-complete-material-ui) | Native table composition, cells, headers, sorting/pagination contracts are not implemented; Data Grid is a separate track.                                            |
+| 🗺️    | **TableBody**               |          [0%](ROADMAP.md#4-complete-material-ui) | Native table composition, cells, headers, sorting/pagination contracts are not implemented; Data Grid is a separate track.                                            |
+| 🗺️    | **TableCell**               |          [0%](ROADMAP.md#4-complete-material-ui) | Native table composition, cells, headers, sorting/pagination contracts are not implemented; Data Grid is a separate track.                                            |
+| 🗺️    | **TableContainer**          |          [0%](ROADMAP.md#4-complete-material-ui) | Native table composition, cells, headers, sorting/pagination contracts are not implemented; Data Grid is a separate track.                                            |
+| 🗺️    | **TableFooter**             |          [0%](ROADMAP.md#4-complete-material-ui) | Native table composition, cells, headers, sorting/pagination contracts are not implemented; Data Grid is a separate track.                                            |
+| 🗺️    | **TableHead**               |          [0%](ROADMAP.md#4-complete-material-ui) | Native table composition, cells, headers, sorting/pagination contracts are not implemented; Data Grid is a separate track.                                            |
+| 🗺️    | **TablePagination**         |          [0%](ROADMAP.md#4-complete-material-ui) | Native table composition, cells, headers, sorting/pagination contracts are not implemented; Data Grid is a separate track.                                            |
+| 🗺️    | **TablePaginationActions**  |          [0%](ROADMAP.md#4-complete-material-ui) | Native table composition, cells, headers, sorting/pagination contracts are not implemented; Data Grid is a separate track.                                            |
+| 🗺️    | **TableRow**                |          [0%](ROADMAP.md#4-complete-material-ui) | Native table composition, cells, headers, sorting/pagination contracts are not implemented; Data Grid is a separate track.                                            |
+| 🗺️    | **TableSortLabel**          |          [0%](ROADMAP.md#4-complete-material-ui) | Native table composition, cells, headers, sorting/pagination contracts are not implemented; Data Grid is a separate track.                                            |
+| 🗺️    | **Tabs**                    |          [0%](ROADMAP.md#4-complete-material-ui) | Native tab selection, indicators, scrolling and keyboard contracts are not implemented.                                                                               |
+| 🔧    | **TextField**               |                   [50%](docs/textfield-slots.md) | Native input/select composition, slots, refs and value events have contract/consumer checks; complete inherited APIs remain.                                          |
+| 🗺️    | **TextareaAutosize**        |          [0%](ROADMAP.md#4-complete-material-ui) | Standalone native multiline measurement and ref contracts are not implemented.                                                                                        |
+| 🗺️    | **ToggleButton**            |          [0%](ROADMAP.md#4-complete-material-ui) | Native selection, grouping and interaction contracts are not implemented.                                                                                             |
+| 🗺️    | **ToggleButtonGroup**       |          [0%](ROADMAP.md#4-complete-material-ui) | Native selection, grouping and interaction contracts are not implemented.                                                                                             |
+| 🗺️    | **Toolbar**                 |          [0%](ROADMAP.md#4-complete-material-ui) | Native app-bar layout, slots and responsive behavior are not implemented.                                                                                             |
+| 🗺️    | **Tooltip**                 |          [0%](ROADMAP.md#4-complete-material-ui) | Native anchoring, hover/long-press, dismissal and accessibility contracts are not implemented.                                                                        |
+| 🔧    | **Typography**              |                        [50%](docs/typography.md) | Native typography, theme variants and inherited text have contract/consumer coverage; remaining native gates are open.                                                |
+| 🗺️    | **Unstable_TrapFocus**      |          [0%](ROADMAP.md#4-complete-material-ui) | The public focus-boundary helper contract is not implemented; existing modal coordination is a narrower subset.                                                       |
+| 🗺️    | **Zoom**                    |          [0%](ROADMAP.md#4-complete-material-ui) | Native transition, ref and lifecycle contracts are not implemented.                                                                                                   |
+
+</details>
+
+<details>
+<summary>System and styling: 9 top-level modules plus core styling work</summary>
+
+| State | Part                                       |                                                    Progress | What it means                                                                                                         |
+| ----- | ------------------------------------------ | ----------------------------------------------------------: | --------------------------------------------------------------------------------------------------------------------- |
+| 🗺️    | **Box**                                    | [0%](docs/compatibility.md#unsupported-or-not-yet-verified) | This System module import is not implemented. A same-named Material component does not imply System import support.   |
+| 🗺️    | **Container**                              | [0%](docs/compatibility.md#unsupported-or-not-yet-verified) | This System module import is not implemented. A same-named Material component does not imply System import support.   |
+| 🔧    | **DefaultPropsProvider**                   |                              [50%](docs/theme-providers.md) | Native provider/context subset has contract and consumer coverage; complete upstream and device gates remain.         |
+| 🗺️    | **GlobalStyles**                           | [0%](docs/compatibility.md#unsupported-or-not-yet-verified) | This System module import is not implemented. A same-named Material component does not imply System import support.   |
+| 🗺️    | **Grid**                                   | [0%](docs/compatibility.md#unsupported-or-not-yet-verified) | This System module import is not implemented. A same-named Material component does not imply System import support.   |
+| 🗺️    | **InitColorSchemeScript**                  | [0%](docs/compatibility.md#unsupported-or-not-yet-verified) | This System module import is not implemented. A same-named Material component does not imply System import support.   |
+| 🔧    | **RtlProvider**                            |                              [50%](docs/theme-providers.md) | Native provider/context subset has contract and consumer coverage; complete upstream and device gates remain.         |
+| 🗺️    | **Stack**                                  | [0%](docs/compatibility.md#unsupported-or-not-yet-verified) | This System module import is not implemented. A same-named Material component does not imply System import support.   |
+| 🔧    | **ThemeProvider**                          |                              [50%](docs/theme-providers.md) | Native provider/context subset has contract and consumer coverage; complete upstream and device gates remain.         |
+| 🔧    | **createTheme / palette**                  |                                      [50%](docs/theming.md) | Native palette/theme derivation and augmentation subset is covered; full upstream theme contracts remain.             |
+| 🔧    | **Typography theming**                     |                                   [50%](docs/typography.md) | Native tokens, variants, units and inherited text are covered in the implemented subset; wider contracts remain.      |
+| 🔧    | **Spacing / breakpoints**                  |                                [50%](docs/layout-system.md) | Native spacing, breakpoint methods and width-responsive subsets have source/consumer coverage.                        |
+| 🔧    | **sx evaluation**                          |                                [50%](docs/compatibility.md) | Native supported styles, tokens and state selectors exist; arbitrary CSS and descendant selectors remain unsupported. |
+| 🔧    | **styled / defaults / slots**              |                                [50%](docs/default-props.md) | Native styled/default/slot composition subsets have contract/consumer coverage; complete upstream semantics remain.   |
+| 🗺️    | **CSS variables / color-scheme providers** | [0%](docs/compatibility.md#unsupported-or-not-yet-verified) | Full CSS-variable and color-scheme provider APIs are not implemented.                                                 |
+
+</details>
+
+<details>
+<summary>Community Data Grid: 1 top-level public module</summary>
+
+| State | Part         |                     Progress | What it means                                                                                                                                    |
+| ----- | ------------ | ---------------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 🔧    | **DataGrid** | [25%](docs/adaptive-grid.md) | Adaptive cards/tables, recycled rows, sorting/filtering, pagination and selection exist; editing, column virtualization and broader APIs remain. |
+
+</details>
+
+<details>
+<summary>Community Tree View: 8 top-level public modules</summary>
+
+| State | Part                           |                                                         Progress | What it means                                                                                                  |
+| ----- | ------------------------------ | ---------------------------------------------------------------: | -------------------------------------------------------------------------------------------------------------- |
+| 🔧    | **RichTreeView**               |                 [25%](docs/compatibility.md#currently-exercised) | Native expansion and selection prototype exists; complete composition, hook and API contracts remain.          |
+| 🗺️    | **SimpleTreeView**             | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.                  |
+| 🗺️    | **TreeItem**                   | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.                  |
+| 🗺️    | **TreeItemDragAndDropOverlay** | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | Shared helper is not implemented. Community eligibility must be reviewed separately from Pro/Premium behavior. |
+| 🗺️    | **TreeItemIcon**               | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.                  |
+| 🗺️    | **TreeItemLabelInput**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | Shared helper is not implemented. Community eligibility must be reviewed separately from Pro/Premium behavior. |
+| 🗺️    | **TreeItemLoader**             | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.                  |
+| 🗺️    | **TreeItemProvider**           | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.                  |
+
+</details>
+
+<details>
+<summary>Community Charts: 34 top-level public modules</summary>
+
+| State | Part                           |                                                         Progress | What it means                                                                                             |
+| ----- | ------------------------------ | ---------------------------------------------------------------: | --------------------------------------------------------------------------------------------------------- |
+| 🔧    | **BarChart**                   |                 [25%](docs/compatibility.md#currently-exercised) | Native SVG bars, labels and item callbacks exist; full axes/composition/tooltips and validation remain.   |
+| 🗺️    | **ChartsAxis**                 | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsAxisHighlight**        | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsAxisHighlightValue**   | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsBrushOverlay**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsClipPath**             | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsContainer**            | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsDataProvider**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsGrid**                 | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsLabel**                | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsLayerContainer**       | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsLegend**               | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsLocalizationProvider** | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsOverlay**              | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsRadialAxisHighlight**  | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsRadialDataProvider**   | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsRadialGrid**           | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsRadiusAxis**           | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsReferenceLine**        | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsRotationAxis**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsSurface**              | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsSvgLayer**             | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsText**                 | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsTooltip**              | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsWrapper**              | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsXAxis**                | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ChartsYAxis**                | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **Gauge**                      | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🔧    | **LineChart**                  |                 [25%](docs/compatibility.md#currently-exercised) | Native SVG lines, null gaps, labels and item callbacks exist; full chart contracts and validation remain. |
+| 🗺️    | **PieChart**                   | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **RadarChart**                 | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **ScatterChart**               | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **SparkLineChart**             | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+| 🗺️    | **Toolbar**                    | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.             |
+
+</details>
+
+<details>
+<summary>Community Date/Time Pickers: 41 top-level public modules</summary>
+
+| State | Part                         |                                                         Progress | What it means                                                                                            |
+| ----- | ---------------------------- | ---------------------------------------------------------------: | -------------------------------------------------------------------------------------------------------- |
+| 🗺️    | **AdapterDateFns**           | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **AdapterDateFnsBase**       | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **AdapterDateFnsJalali**     | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **AdapterDateFnsJalaliV2**   | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **AdapterDateFnsV2**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🔧    | **AdapterDayjs**             |                 [25%](docs/compatibility.md#currently-exercised) | Day.js adapter subset exists; complete locale, calendar, timezone and upstream adapter contracts remain. |
+| 🗺️    | **AdapterDayjsBuddhist**     | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **AdapterLuxon**             | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **AdapterMoment**            | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **AdapterMomentHijri**       | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **AdapterMomentJalaali**     | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🔧    | **DateCalendar**             |                 [25%](docs/compatibility.md#currently-exercised) | Native calendar/date-bound subset exists; full view, slot, event and accessibility contracts remain.     |
+| 🔧    | **DateField**                |                 [25%](docs/compatibility.md#currently-exercised) | Strict native date-field parsing subset exists; section editing and full field contracts remain.         |
+| 🔧    | **DatePicker**               |                 [25%](docs/compatibility.md#currently-exercised) | Native dialog/date-selection prototype exists; complete lifecycle and live-selection timing remain.      |
+| 🗺️    | **DateTimeField**            | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **DateTimePicker**           | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **DayCalendarSkeleton**      | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **DesktopDatePicker**        | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **DesktopDateTimePicker**    | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **DesktopTimePicker**        | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **DigitalClock**             | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🔧    | **LocalizationProvider**     |                 [25%](docs/compatibility.md#currently-exercised) | Native Day.js localization context subset exists; complete locale/adapter contracts remain.              |
+| 🗺️    | **MobileDatePicker**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **MobileDateTimePicker**     | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **MobileTimePicker**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **MonthCalendar**            | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **MultiSectionDigitalClock** | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **PickerDay**                | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **PickersActionBar**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **PickersCalendarHeader**    | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **PickersLayout**            | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **PickersSectionList**       | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **PickersShortcuts**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **PickersTextField**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **StaticDatePicker**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **StaticDateTimePicker**     | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **StaticTimePicker**         | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **TimeClock**                | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **TimeField**                | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **TimePicker**               | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+| 🗺️    | **YearCalendar**             | [0%](ROADMAP.md#5-complete-the-four-stable-x-community-families) | This native public module is not implemented; only eligible Community contracts are in scope.            |
+
+</details>
+
+<details>
+<summary>Icons: 4 native glyphs; 10,750 tracked upstream names</summary>
+
+| State | Part                                    |                                  Progress | What it means                                                                                            |
+| ----- | --------------------------------------- | ----------------------------------------: | -------------------------------------------------------------------------------------------------------- |
+| 🔧    | **Add**                                 |    [25%](packages/icons/src/Add/index.ts) | Original native geometric glyph exists; full upstream icon props/variants and validation are incomplete. |
+| 🔧    | **Check**                               |  [25%](packages/icons/src/Check/index.ts) | Original native geometric glyph exists; full upstream icon props/variants and validation are incomplete. |
+| 🔧    | **Close**                               |  [25%](packages/icons/src/Close/index.ts) | Original native geometric glyph exists; full upstream icon props/variants and validation are incomplete. |
+| 🔧    | **Remove**                              | [25%](packages/icons/src/Remove/index.ts) | Original native geometric glyph exists; full upstream icon props/variants and validation are incomplete. |
+| 🗺️    | **Remaining 10,746 tracked icon names** |                    [0%](docs/coverage.md) | The complete icon-name inventory is tracked; these names have no native implementation.                  |
+
+</details>
+
+<details>
+<summary>Experimental families (separate scope)</summary>
+
+| State | Part          |                                 Progress | What it means                                                                            |
+| ----- | ------------- | ---------------------------------------: | ---------------------------------------------------------------------------------------- |
+| 🗺️    | **Scheduler** | [0%](ROADMAP.md#7-experimental-families) | Preview baseline is monitored; no native implementation is present.                      |
+| 🗺️    | **Chat**      | [0%](ROADMAP.md#7-experimental-families) | Source reuse is blocked pending license provenance; no native implementation is present. |
+
+</details>
+
+The [roadmap](ROADMAP.md) defines the full target and release gates. This table does not promote any package to verified or released support.
+
 ## What you can explore
 
 - Native Material components with shared theme tokens, supported `sx` styles and familiar root/deep imports.
@@ -44,17 +377,17 @@ Do not run `npm install @altroo/mui-native` yet. For testing a separate applicat
 
 ## Packages
 
-| Package                             | Implemented development subset                                                                                                                                 |
-| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@altroo/mui-native`                | Layout, typography, buttons, inputs, Select/TextField select, lists, menu items/lists, checkbox/radio/switch, dialog, popover, menu, alert, progress, snackbar |
-| `@altroo/mui-native-system`         | Theme provider, tokens, responsive `sx`, supported state selectors, component defaults/overrides/variants, `styled`                                            |
-| `@altroo/mui-native-icons`          | Four original geometric icons; the full upstream icon inventory is tracked                                                                                     |
-| `@altroo/mui-native-host`           | Fabric keyboard/focus, in-window Portal and platform picker hosts; native rebuild required                                                                     |
-| `@altroo/mui-native-compat`         | Opt-in Metro import resolver and native TypeScript configuration generator                                                                                     |
-| `@altroo/mui-native-x-data-grid`    | Recycled rows, fixed columns, single sorting/filtering, pagination, selection, basic server modes                                                              |
-| `@altroo/mui-native-x-tree-view`    | Rich tree expansion, single/multiple selection, custom item accessors                                                                                          |
-| `@altroo/mui-native-x-charts`       | Native SVG bar and line charts, labels, item callbacks                                                                                                         |
-| `@altroo/mui-native-x-date-pickers` | Day.js adapter, strict date field, calendar, dialog picker                                                                                                     |
+| Package                             | Implemented development subset                                                                                                                                       |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@altroo/mui-native`                | Layout, typography, buttons, inputs, Select/NativeSelect/TextField select, lists, checked controls, dialog, popover, menu, Portal, Popper, alert, progress, snackbar |
+| `@altroo/mui-native-system`         | Theme provider, tokens, responsive `sx`, supported state selectors, component defaults/overrides/variants, `styled`                                                  |
+| `@altroo/mui-native-icons`          | Four original geometric icons; the full upstream icon inventory is tracked                                                                                           |
+| `@altroo/mui-native-host`           | Fabric keyboard/focus, in-window Portal and platform picker hosts; native rebuild required                                                                           |
+| `@altroo/mui-native-compat`         | Opt-in Metro import resolver and native TypeScript configuration generator                                                                                           |
+| `@altroo/mui-native-x-data-grid`    | Recycled rows, fixed columns, single sorting/filtering, pagination, selection, basic server modes                                                                    |
+| `@altroo/mui-native-x-tree-view`    | Rich tree expansion, single/multiple selection, custom item accessors                                                                                                |
+| `@altroo/mui-native-x-charts`       | Native SVG bar and line charts, labels, item callbacks                                                                                                               |
+| `@altroo/mui-native-x-date-pickers` | Day.js adapter, strict date field, calendar, dialog picker                                                                                                           |
 
 These are prototypes with limited contracts. See [compatibility](docs/compatibility.md) before migrating application code. Scheduler and Chat are monitored but not implemented. Pro/Premium source and paid-only feature parity are excluded.
 
@@ -110,6 +443,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Native MenuItem/MenuList registration and keyboard](docs/menu-list.md)
 - [Native anchored Menu and overlay focus](docs/menu.md)
 - [Native Select and TextField selection](docs/select.md)
+- [NativeSelect and platform-picker composition](docs/native-select.md)
 - [Native interaction host and custom roots](docs/native-host.md)
 - [Platform-native picker host](docs/native-picker.md)
 - [Text rendering and inheritance in native containers](docs/text-containers.md)
@@ -128,6 +462,8 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Security reporting](SECURITY.md)
 - [Upstream collaboration proposal, not submitted](docs/upstream-proposal.md)
 
-Original implementation: [MIT](LICENSE). Upstream references and notices: [NOTICE](NOTICE), `upstream/licenses/`, and `upstream/state.json`.
+## License
 
-NativeSelect and the native Select/TextField branch use platform picker rows with string/selectedOptions events and native refs. See the [native selection guide](docs/native-select.md). Physical device gates remain open.
+Original MUI Native code is licensed under the [MIT License](LICENSE). Copyright (c) 2026 Altroo and contributors.
+
+Adapted upstream code and retained declaration snapshots preserve their original copyright and license notices. See [NOTICE](NOTICE) and the [upstream license texts](upstream/licenses). Source attribution and adaptation records are maintained for [Material UI/MUI X references](upstream/state.json), [MUI adaptations](upstream/reuse.json) and [Popper positioning](upstream/native-positioning.json).
