@@ -208,7 +208,7 @@ function preventOverflow(platform: NativePopperPlatform): NativePopperModifier {
         const arrow = state.elements.arrow,
           arrowRect =
             tether && arrow
-              ? (platform.layout(arrow) ?? { width: 0, height: 0 })
+              ? (platform.layout(arrow, state) ?? { width: 0, height: 0 })
               : { width: 0, height: 0 },
           arrowPadding = state.modifiersData['arrow#persistent']?.padding ?? padding(),
           arrowLength = within(0, reference[length], arrowRect[length]);
@@ -301,7 +301,7 @@ function arrow(platform: NativePopperPlatform): NativePopperModifier {
             ? options.padding({ ...state.rects, placement: state.placement })
             : options.padding,
         p = padding(raw),
-        rect = platform.layout(element);
+        rect = platform.layout(element, state);
       if (!rect) return;
       const minSide = axis === 'y' ? 'top' : 'left',
         maxSide = axis === 'y' ? 'bottom' : 'right',
@@ -447,6 +447,7 @@ export function defaultModifiers(platform: NativePopperPlatform): NativePopperMo
           arrow: { position: 'absolute' },
           reference: {},
         };
+        return platform.beginStyles?.(state);
       },
       fn: ({ state }) => {
         for (const style of Object.values(state.styles)) {

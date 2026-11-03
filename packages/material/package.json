@@ -434,6 +434,16 @@
       "types": "./dist/Portal/index.d.ts",
       "react-native": "./src/Portal/index.ts",
       "default": "./dist/Portal/index.js"
+    },
+    "./Popper": {
+      "types": "./dist/Popper/index.d.ts",
+      "react-native": "./src/Popper/index.ts",
+      "default": "./dist/Popper/index.js"
+    },
+    "./Popper/popperClasses": {
+      "types": "./dist/Popper/popperClasses/index.d.ts",
+      "react-native": "./src/Popper/popperClasses/index.ts",
+      "default": "./dist/Popper/popperClasses/index.js"
     }
   },
   "dependencies": {

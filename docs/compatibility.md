@@ -49,6 +49,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 - Bar/line chart numeric values, null gaps, basic categorical labels, item callbacks.
 - Strict Day.js field parsing, partial invalid text, calendar-day bounds and named timezone parsing. DatePicker currently publishes calendar selection when the user accepts, which differs from upstream live-selection callback timing.
 
+- Native Popper with measured native/virtual anchors, Portal/inline rendering, root slots, instance refs, modifier/placement lifecycle and original imports. See [Popper](popper.md) for explicit native boundaries and remaining device/release gates.
+
 ## Unsupported or not yet verified
 
 Do not assume unlisted props work. Public TypeScript interfaces describe the implemented subset. JavaScript callers should run migration diagnostics and review source usage before adoption.

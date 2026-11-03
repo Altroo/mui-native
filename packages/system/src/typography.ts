@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Palette } from './theme';
-import { merge } from './theme';
+import { merge } from './merge';
 
 // Adapted from @mui/material 9.5.0 createTypography (MIT).
 // Copyright (c) 2014 Call-Em-All. See NOTICE and upstream/reuse.json.

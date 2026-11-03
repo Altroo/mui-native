@@ -31,6 +31,10 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
   var containerTag = 0
   var layer = 0.0
   var observedTag = 0
+  var popperTag = 0
+  var arrowTag = 0
+  var observationOnly = false
+  var boundaryTags: List<Int> = emptyList()
   var observationRevision = ""
   private var lastObservation: List<Any?>? = null
   private var overlay: PortalContainer = PortalWindowRoot(context, this)
@@ -93,6 +97,13 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
     if (disposed || syncing || pendingDetach) return
     syncing = true
     try {
+      if (observationOnly) {
+        detach()
+        val ready = active && isAttachedToWindow
+        if (ready) startTracking() else stopTracking()
+        emitObservation(ready,if (ready) "observing" else "inactive")
+        return
+      }
       val windowRoot = rootView as? ViewGroup
       val target = if (containerTag == 0) windowRoot else windowRoot?.findViewById<View>(containerTag) as? ViewGroup
       val decision = portalDecision(active, isAttachedToWindow, target != null, target?.windowToken == windowToken,
@@ -176,11 +187,14 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
     val anchorAvailable = presented && anchor != null && anchor.isAttachedToWindow && anchor.isShown && anchor.windowToken == windowToken
     val anchorRect = if (anchorAvailable) portalWindowRect(anchor!!) else null
     val reference = if (anchorAvailable) portalClippingParents(anchor!!) else PortalClippingResult(true, null)
-    val popper = if (presented) portalClippingParents(overlay) else PortalClippingResult(true, null)
+    val popup = if (popperTag > 0 && isAttachedToWindow) rootView.findViewById<View>(popperTag) else null
+    val popupAvailable = presented && popup != null && popup.isAttachedToWindow && popup.isShown && popup.windowToken == windowToken
+    val popper = if (presented) portalClippingParents(if (popupAvailable) popup!! else overlay) else PortalClippingResult(true, null)
     val bounds = if (presented) portalWindowBounds(this) else PortalWindowBounds(PortalObservationRect(), PortalObservationRect())
     val valid = presented && reference.valid && popper.valid && (!anchorAvailable || anchorRect != null)
     val reason = if (!presented) portalReason else if (!valid) "unsupported-transform" else if (observedTag > 0 && !anchorAvailable) "unavailable-anchor" else "observed"
-    val signature = listOf(revision,observationRevision,observedTag,valid,anchorAvailable,reason,anchorRect,reference.rect,popper.rect,bounds)
+    val position = position(popup?.takeIf { popupAvailable },anchor?.takeIf { anchorAvailable },bounds)
+    val signature = listOf(revision,observationRevision,observedTag,valid,anchorAvailable,reason,anchorRect,reference.rect,popper.rect,bounds,position.toString())
     if (signature == lastObservation) return
     lastObservation = signature
     val density = resources.displayMetrics.density.toDouble()
@@ -193,10 +207,50 @@ class AltrooMUIPortalHost(context: ThemedReactContext) : ViewGroup(context) {
       putString("revision",revision); putString("observationRevision",observationRevision); putInt("observedTag",observedTag)
       putBoolean("presented",valid); putBoolean("anchorAvailable",anchorAvailable && anchorRect != null); putString("reason",reason)
       putMap("anchor",rect(anchorRect)); putMap("referenceClip",clip(reference.rect)); putMap("popperClip",clip(popper.rect))
-      putMap("viewport",rect(bounds.viewport)); putMap("window",rect(bounds.window))
+      putMap("viewport",rect(bounds.viewport)); putMap("window",rect(bounds.window)); putMap("position",position)
     }
     val react = context as ThemedReactContext
     UIManagerHelper.getEventDispatcher(react)?.dispatchEvent(PortalObservationEvent(UIManagerHelper.getSurfaceId(react), id, data))
+  }
+  private fun position(popup: View?, anchor: View?, bounds: PortalWindowBounds): com.facebook.react.bridge.WritableMap {
+    val density = resources.displayMetrics.density.toDouble()
+    val frame = popup?.let { portalPositionFrame(it) }
+    val reference = if (frame != null && anchor != null) portalWindowRect(anchor,relative=frame.fromWindow) else null
+    val referenceClip = if (frame != null && anchor != null) portalClippingParents(anchor,frame.fromWindow) else PortalClippingResult(true,null)
+    val popperClip = if (frame != null) portalClippingParents(popup,frame.fromWindow) else PortalClippingResult(true,null)
+    val viewport = frame?.let { portalMapWindowRect(bounds.viewport,it.fromWindow) }
+    val document = frame?.let { portalMapWindowRect(bounds.window,it.fromWindow) }
+    val boundaryValues = boundaryTags.map { tag ->
+      val view = if (isAttachedToWindow) rootView.findViewById<View>(tag) else null
+      val rect = if (frame != null && view != null && view.windowToken == windowToken && view.isAttachedToWindow) portalWindowRect(view,if (view is ReactViewGroup) PortalPaddingBox.bounds(view) else android.graphics.Rect(0,0,view.width,view.height),clipping=true,relative=frame.fromWindow) else null
+      Pair(tag,rect)
+    }
+    fun rect(value: PortalObservationRect?) = Arguments.createMap().apply {
+      val scaled = (value ?: PortalObservationRect()).scale(density)
+      putDouble("x",scaled.x);putDouble("y",scaled.y);putDouble("width",scaled.width);putDouble("height",scaled.height)
+    }
+    fun clip(value: PortalObservationRect?) = rect(value).apply { putBoolean("present",value != null) }
+    val matrix = FloatArray(9); frame?.toWindow?.getValues(matrix)
+    val containing = rect(frame?.let { PortalObservationRect(matrix[2].toDouble(),matrix[5].toDouble(),it.width,it.height) }).apply {
+      putDouble("a",if(frame != null) matrix[0].toDouble() else 1.0);putDouble("b",matrix[3].toDouble());putDouble("c",matrix[1].toDouble());putDouble("d",if(frame != null) matrix[4].toDouble() else 1.0)
+    }
+    fun swapped(view: View?) = view?.layoutDirection == View.LAYOUT_DIRECTION_RTL && com.facebook.react.modules.i18nmanager.I18nUtil.instance.doLeftAndRightSwapInRTL(context)
+    val arrow = if (arrowTag > 0 && isAttachedToWindow) rootView.findViewById<View>(arrowTag) else null
+    val arrowAvailable = arrow != null && arrow.isAttachedToWindow && arrow.windowToken == windowToken && popup != null && isBelow(arrow,popup)
+    val arrowParent = if (arrowAvailable) arrow?.parent as? View else null
+    val arrowPadding = if (arrowParent is ReactViewGroup) PortalPaddingBox.bounds(arrowParent) else android.graphics.Rect(0,0,arrowParent?.width ?: 0,arrowParent?.height ?: 0)
+    val arrowValue = rect(if (arrowAvailable) PortalObservationRect(arrow!!.left.toDouble(),arrow.top.toDouble(),arrow.width.toDouble(),arrow.height.toDouble()) else null).apply {
+      putInt("tag",arrowTag);putBoolean("available",arrowAvailable);putBoolean("leftRightSwapped",swapped(arrow))
+      putDouble("parentWidth",maxOf(0,arrowPadding.width())/density);putDouble("parentHeight",maxOf(0,arrowPadding.height())/density)
+      putDouble("clientLeft",arrowPadding.left/density);putDouble("clientTop",arrowPadding.top/density)
+    }
+    return Arguments.createMap().apply {
+      putBoolean("leftRightSwapped",swapped(popup));putMap("arrow",arrowValue)
+      putInt("popperTag",popperTag);putBoolean("available",frame != null && referenceClip.valid && popperClip.valid);putBoolean("anchorAvailable",reference != null)
+      putMap("reference",rect(reference));putMap("popper",rect(popup?.let { PortalObservationRect(0.0,0.0,it.width.toDouble(),it.height.toDouble()) }))
+      putMap("referenceClip",clip(referenceClip.rect));putMap("popperClip",clip(popperClip.rect));putMap("viewport",rect(viewport));putMap("window",rect(document));putMap("containing",containing)
+      putArray("boundaries",Arguments.createArray().apply { boundaryValues.forEach { (tag,value) -> pushMap(rect(value).apply { putInt("tag",tag);putBoolean("available",value != null) }) } })
+    }
   }
   fun dispose() {
     disposed = true

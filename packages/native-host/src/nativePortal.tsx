@@ -27,6 +27,37 @@ export interface NativePortalRect {
   readonly width: number;
   readonly height: number;
 }
+export interface NativePortalPosition {
+  readonly popperTag: number;
+  readonly leftRightSwapped: boolean;
+  readonly arrow: NativePortalRect & {
+    readonly tag: number;
+    readonly available: boolean;
+    readonly leftRightSwapped: boolean;
+    readonly parentWidth: number;
+    readonly parentHeight: number;
+    readonly clientLeft: number;
+    readonly clientTop: number;
+  };
+  readonly available: boolean;
+  readonly anchorAvailable: boolean;
+  readonly reference: NativePortalRect;
+  readonly popper: NativePortalRect;
+  readonly referenceClip: NativePortalRect & { readonly present: boolean };
+  readonly popperClip: NativePortalRect & { readonly present: boolean };
+  readonly viewport: NativePortalRect;
+  readonly window: NativePortalRect;
+  readonly containing: NativePortalRect & {
+    readonly a: number;
+    readonly b: number;
+    readonly c: number;
+    readonly d: number;
+  };
+  readonly boundaries: readonly (NativePortalRect & {
+    readonly tag: number;
+    readonly available: boolean;
+  })[];
+}
 /** Window-space native geometry. Signed clipping sizes retain disjoint intersections. */
 export interface NativePortalObservation {
   readonly revision: string;
@@ -36,6 +67,8 @@ export interface NativePortalObservation {
   readonly anchorAvailable: boolean;
   readonly reason: string;
   readonly anchor: NativePortalRect;
+  /** Host 0.0.5: measurements in the actual popup containing block. */
+  readonly position?: NativePortalPosition;
   readonly referenceClip: NativePortalRect & { readonly present: boolean };
   readonly popperClip: NativePortalRect & { readonly present: boolean };
   readonly viewport: NativePortalRect;

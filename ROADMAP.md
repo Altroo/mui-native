@@ -42,6 +42,8 @@ Material UI baseline: 9.5.0. Stable X baseline: 9.15.0. Scheduler: 9.0.0-beta.13
 - [ ] Validate date/time editing, locale and timezone behavior against upstream fixtures.
 - [ ] Measure chart hit targets, dense points, labels and accessibility.
 
+Finish each component family against its agreed API, imports, native behavior and validation checklist before moving to the next family. Partial catalog prototypes remain unfinished inventory entries.
+
 Performance is a gate for each family, starting with the alpha foundation. See [the performance contract](docs/performance.md) for workloads, native release-build evidence and the criteria for introducing Rust.
 
 ## 2. Compatibility foundation
@@ -62,6 +64,8 @@ Default-prop context, deferred slot callbacks and explicit slot composition have
 
 Native Select and TextField select now have pinned original-runtime fixtures, raw value/event/ref regressions, owner-state slot composition and installed-package checks. See [Select](docs/select.md) and [issue #30](https://github.com/Altroo/mui-native/issues/30). The [platform-native picker host](docs/native-picker.md) supplies the next native selection foundation. Material NativeSelect/platform-picker composition is documented in [native selection](docs/native-select.md); physical keyboard/focus/accessibility/RTL/performance gates remain unfinished.
 
+Native Popper now composes the positioning engine with measured native frames, window/inline Portal routing, native/virtual anchors, root slots/ref/instance lifecycle, keepMounted and transitions. See [Popper](docs/popper.md) and [issue #39](https://github.com/Altroo/mui-native/issues/39). Physical native and release-performance gates remain open. Autocomplete still needs editable keyboard ownership and complete component integration.
+
 ## 3. Verified alpha
 
 Core scope: Box, Stack, Typography, Divider, Paper, Card, Button, IconButton, initial icons, TextField/FormControl parts, Checkbox, Radio, Switch, Dialog, Alert, progress and Snackbar.
@@ -76,7 +80,7 @@ Release gates:
 - [ ] npm namespace ownership and distribution notices reviewed.
 - [ ] `0.1.0-alpha.1` publication only after the above.
 
-Native [Chip](docs/chip.md) adds the reusable display/action/deletion dependency for Autocomplete; see [issue #37](https://github.com/Altroo/mui-native/issues/37). Autocomplete still needs popup/input composition and full native validation. Its [Portal foundation](docs/portal.md) now has source-backed container/ref contracts and native rendering code; [issue #38](https://github.com/Altroo/mui-native/issues/38) tracks this reusable dependency. The [native positioning engine](docs/native-positioning.md) now has source-backed placement/modifier/lifecycle comparisons; [issue #39](https://github.com/Altroo/mui-native/issues/39) tracks the complete Popper integration. Native anchor/clipping observation transport now has model and compile checks. The measured component adapter, public Popper component/imports, editable keyboard navigation, Autocomplete and physical validation remain unfinished.
+Native [Chip](docs/chip.md) adds the reusable display/action/deletion dependency for Autocomplete; see [issue #37](https://github.com/Altroo/mui-native/issues/37). Autocomplete still needs popup/input composition and full native validation. Its [Portal foundation](docs/portal.md) now has source-backed container/ref contracts and native rendering code; [issue #38](https://github.com/Altroo/mui-native/issues/38) tracks this reusable dependency. The [native positioning engine](docs/native-positioning.md) now has source-backed placement/modifier/lifecycle comparisons; [issue #39](https://github.com/Altroo/mui-native/issues/39) tracks the complete Popper integration. Native anchor/clipping observation transport now has model and compile checks. The measured adapter and public Popper component/imports are implemented; editable keyboard navigation, full Autocomplete, physical validation and calibrated release performance remain unfinished.
 
 ## 4. Complete Material UI
 
@@ -108,3 +112,10 @@ Scheduler and Chat remain isolated preview tracks. Resolve Chat licensing proven
 Review update issues weekly, prioritize relevant security changes, and implement candidates against immutable source/API/license comparisons. Keep one active candidate per family/channel/major, preserve human edits, and process missed publications after outages. Upgrade Expo/React Native/tooling in separate changes. Check scheduler health monthly, including GitHub's inactivity disabling behavior for public repositories. Never equate a dependency bump with a completed native port.
 
 NativeSelect, native Select and native TextField now parse option/group configuration, preserve DOM-shaped string/selectedOptions semantics and native refs, and hold overlay ownership through actual native dismissal. See [native selection](docs/native-select.md) and [issue #32](https://github.com/Altroo/mui-native/issues/32). Full browser forms, inline list layout and physical picker/accessibility/performance gates remain open.
+
+## After alpha: simplify installation
+
+- [ ] Provide a short, verified setup flow for Expo and bare React Native, with automatic native configuration where possible, compatible peer checks and clear rebuild diagnostics.
+- [ ] Replace the development tarball workflow with a concise published-package quickstart, a minimal consumer example and actionable troubleshooting.
+
+Installation improvements follow alpha integration and release gates; they do not replace the current native rebuild requirement.

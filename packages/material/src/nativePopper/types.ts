@@ -34,6 +34,7 @@ export interface NativePopperRect {
   height: number;
 }
 export interface PopperVirtualElement {
+  readonly nodeType?: never;
   getBoundingClientRect(): Pick<NativePopperRect, 'width' | 'height'> &
     ({ x: number; y: number } | { left: number; top: number });
   contextElement?: ViewInstance;
@@ -119,12 +120,16 @@ export interface NativePopperPlatform {
     boundary: Exclude<NativePopperBoundary, 'clippingParents'>,
     state: NativePopperState,
   ): NativePopperRect | null;
-  layout(element: ViewInstance): NativePopperRect | null;
+  layout(element: ViewInstance, state?: NativePopperState): NativePopperRect | null;
   parent(element: ViewInstance, state: NativePopperState): NativePopperMeasurements['offsetParent'];
   contains(parent: ViewInstance, child: ViewInstance): boolean;
   subscribe?(
     instance: NativePopperInstance,
     options: { scroll: boolean; resize: boolean },
   ): () => void;
+  bindMeasurement?(state: NativePopperState, measurement: NativePopperMeasurements): void;
+  isMeasurementCurrent?(measurement: NativePopperMeasurements): boolean;
+  didUpdate?(state: NativePopperState): void;
+  beginStyles?(state: NativePopperState): void | (() => void);
   apply?(state: NativePopperState): void;
 }

@@ -1,12 +1,12 @@
 import type { ViewInstance } from 'react-native';
-import { createNativePopper } from '../packages/material/src/popper/engine';
-import { orderModifiers, intersect } from '../packages/material/src/popper/geometry';
+import { createNativePopper } from '../packages/material/src/nativePopper/engine';
+import { orderModifiers, intersect } from '../packages/material/src/nativePopper/geometry';
 import type {
   NativePopperModifier,
   NativePopperOptions,
   NativePopperPlatform,
   NativePopperMeasurements,
-} from '../packages/material/src/popper/types';
+} from '../packages/material/src/nativePopper/types';
 function fixture(
   options: Partial<NativePopperOptions> = {},
   adjust: Partial<NativePopperMeasurements> = {},

@@ -119,6 +119,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Native Switch slots, events and motion](docs/switch.md)
 - [Native Chip display, activation and deletion](docs/chip.md)
 - [Native in-window Portal](docs/portal.md)
+- [Native Popper](docs/popper.md)
 - [Native form controls and calendar behavior](docs/native-controls.md)
 - [Adaptive grid cards and table mode](docs/adaptive-grid.md)
 - [Performance measurement gates](docs/performance.md)

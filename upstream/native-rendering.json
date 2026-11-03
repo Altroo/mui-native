@@ -29,7 +29,11 @@
       "ReactAndroid/src/main/java/com/facebook/react/uimanager/events/Event.kt": "98bb0f1ed18a3c6a5c40abd71b239e37b40c181920cb4767b9a4b0eeaf8b0511",
       "ReactCommon/react/renderer/core/EventEmitter.h": "a933d5c91c2cfa0d6c511c4df3330c2d5340a8a8a4a3dcacffeaa01133e1218d",
       "ReactCommon/react/renderer/core/EventEmitter.cpp": "892993afa65eb62554792517f027491144861984b1a6406f00c876beafc17b78",
-      "ReactCommon/react/renderer/core/RawEvent.h": "71d1d9b3d739ab56bf37efa0c0f898abf94468f1b329099cf9d6a92ecd747f98"
+      "ReactCommon/react/renderer/core/RawEvent.h": "71d1d9b3d739ab56bf37efa0c0f898abf94468f1b329099cf9d6a92ecd747f98",
+      "React/Fabric/Mounting/ComponentViews/View/RCTViewComponentView.h": "c635519b9070a059fbf289310693e1084b9c21dc44648c8ef74bd52c9247beba",
+      "ReactCommon/react/renderer/core/LayoutMetrics.h": "065354d1db1231badcbc0fca1e02aa22715c51b5d33366754e5b1ac19a3e0565",
+      "ReactCommon/react/renderer/components/view/conversions.h": "e040421c84ef4fd1abaaf6c567df2826fc573f31837645288d949a93df33bdb7",
+      "ReactCommon/react/renderer/graphics/Transform.cpp": "ae7718e1702be80d6d5075e7291ab21a355f67d6afdaeef02f9fbbb03732b00b"
     }
   },
   "localFiles": [
@@ -49,7 +53,8 @@
     "packages/native-host/android/src/main/java/com/altroo/muinativehost/PortalObservationRect.kt",
     "packages/native-host/ios/AltrooPortalObservation.h",
     "packages/native-host/ios/AltrooPortalObservation.mm",
-    "packages/native-host/android/src/main/java/com/altroo/muinativehost/PortalObservationEvent.kt"
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/PortalObservationEvent.kt",
+    "packages/native-host/ios/AltrooPortalPlanarTransform.h"
   ],
   "adaptations": [
     "Native root child mounting and React Native touch/pointer dispatch follow the verified MIT reference. The new implementation attaches within an existing native window/container, does not create a modal or request focus, preserves React context, and reports actual native affine container bounds.",
@@ -57,6 +62,9 @@
     "Custom ordinary View targets reuse the existing dispatcher; default window roots own one dispatcher. UIKit mounts through its guarded RN 0.88 content surface. Root subview order agrees with drawing and touch layers. Logical keyboard ancestry crosses the native root boundary.",
     "Active clipped-subview containers are rejected. If clipping is enabled after attachment, source-pinned manager/protocol cleanup removes the captured root by identity after RN traversal, with a pending-cleanup barrier. UIKit validates its tracked-child adapter before mounting.",
     "Native positioning observations reuse active Portal frame tracking and deduplicate window-space anchor, clipping and viewport geometry. The Java padding-box adapter follows RN's pinned border-inset resolution and pixel rounding without enabling feature flags; UIKit reads the pinned RN shape-mask path boundary.",
-    "Replaceable geometry uses a coalescible Android event with monotonic same-millisecond ordering and Fabric dispatchUniqueEvent on UIKit; activation and key events remain separate. Invalidation renews the observation generation while cleanup retains its owner token. Empty clipping regions stay empty before affine AABB conversion."
+    "Replaceable geometry uses a coalescible Android event with monotonic same-millisecond ordering and Fabric dispatchUniqueEvent on UIKit; activation and key events remain separate. Invalidation renews the observation generation while cleanup retains its owner token. Empty clipping regions stay empty before affine AABB conversion.",
+    "Positioning payloads map native anchor, popup, clipping and explicit boundary geometry directly into the actual padding-box containing frame before AABB conversion. Arrow layout/parent metrics and actual RN left/right swapping are included. UIKit reads pinned protected layout metrics through a prefixed category; Android composes public View matrices without enabling flags.",
+    "Observation-only hosts support inline Popper without attaching a native Portal root or requesting focus. Empty native/window clipping remains empty before inverse affine conversion. Native host 0.0.5 requires an application rebuild.",
+    "UIKit observations accept invertible planar XY transforms with an independent finite Z scale, including RN uniform scale. Perspective, tilted planes, nonfinite and singular transforms remain unavailable geometry."
   ]
 }

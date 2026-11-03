@@ -56,6 +56,7 @@ try {
   assert.notEqual(material.useTheme, root.useTheme);
   for (const name of [
     'Portal',
+    'Popper',
     'Fade',
     'Grow',
     'Popover',
@@ -120,6 +121,7 @@ try {
     material.menuClasses,
   );
   for (const [component, classes, helper] of [
+    ['Popper', 'popperClasses', 'getPopperUtilityClass'],
     ['Chip', 'chipClasses', 'getChipUtilityClass'],
     ['Button', 'buttonClasses', 'getButtonUtilityClass'],
     ['IconButton', 'iconButtonClasses', 'getIconButtonUtilityClass'],

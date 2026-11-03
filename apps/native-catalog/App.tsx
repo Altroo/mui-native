@@ -18,6 +18,7 @@ import {
   Snackbar,
 } from '@mui/material';
 import { InvoiceGrid } from './InvoiceGrid';
+import { PopperExamples } from './PopperExamples';
 import { createCatalogTheme } from './catalogTheme';
 import { RichTreeView } from '@mui/x-tree-view';
 import { BarChart, LineChart } from '@mui/x-charts';
@@ -65,9 +66,10 @@ export default function App() {
               keyboardShouldPersistTaps="handled"
             >
               <View style={{ flexDirection: 'row', gap: 24 }} accessibilityRole="tablist">
-                {['Form', 'Grid', 'Tree', 'Charts', 'Dates', 'Coverage'].map((name) => (
+                {['Form', 'Grid', 'Overlays', 'Tree', 'Charts', 'Dates', 'Coverage'].map((name) => (
                   <Pressable
                     key={name}
+                    testID={`catalog-tab-${name}`}
                     accessibilityRole="tab"
                     accessibilityState={{ selected: section === name }}
                     onPress={() => setSection(name)}
@@ -142,6 +144,7 @@ export default function App() {
               </ScrollView>
             ) : null}
             {section === 'Grid' ? <InvoiceGrid /> : null}
+            {section === 'Overlays' ? <PopperExamples /> : null}
             {section === 'Tree' ? (
               <RichTreeView
                 height={400}

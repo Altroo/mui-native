@@ -69,6 +69,10 @@ function resolveScope(
         ) as TextStyle)
       : {});
   const own = { ...flat, ...ownText(normalized), ...ownText(adjusted) };
+  // Fabric processes an explicitly cleared transform before sending the reset.
+  // Use the identity array, preserving the last style layer's reset semantics;
+  // leave absent keys absent so they do not override another owner's transform.
+  if (Object.hasOwn(own, 'transform') && own.transform == null) own.transform = [];
   for (const key of Object.keys(own))
     if (
       isNativeTextStyleProperty(key) &&
