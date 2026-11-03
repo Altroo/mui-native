@@ -1,11 +1,11 @@
 {
   "name": "@altroo/mui-native-host",
-  "version": "0.0.5-dev.1",
-  "description": "Native interaction, portal and picker hosts for independent MUI compatibility",
+  "version": "0.0.6-prealpha.0",
+  "description": "Fabric interaction, portal and platform picker hosts for MUI Native.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Altroo/mui-native.git",
+    "url": "git+https://github.com/Altroo/mui-native.git",
     "directory": "packages/native-host"
   },
   "main": "./dist/index.js",
@@ -24,7 +24,8 @@
     "react-native.config.js",
     "LICENSE",
     "NOTICE",
-    "common"
+    "common",
+    "README.md"
   ],
   "exports": {
     ".": {
@@ -56,7 +57,14 @@
     }
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "prealpha",
+    "registry": "https://registry.npmjs.org/"
   },
-  "private": true
+  "private": false,
+  "author": "Altroo",
+  "homepage": "https://github.com/Altroo/mui-native#readme",
+  "bugs": {
+    "url": "https://github.com/Altroo/mui-native/issues"
+  }
 }

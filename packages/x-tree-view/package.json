@@ -1,6 +1,6 @@
 {
   "name": "@altroo/mui-native-x-tree-view",
-  "version": "0.0.0-dev.0",
+  "version": "0.0.6-prealpha.0",
   "license": "MIT",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,8 @@
     "src",
     "dist",
     "LICENSE",
-    "NOTICE"
+    "NOTICE",
+    "README.md"
   ],
   "exports": {
     ".": {
@@ -33,5 +34,21 @@
     "react": ">=19.3.0 <20",
     "react-native": ">=0.88.1 <0.89"
   },
-  "private": true
+  "private": false,
+  "description": "Experimental native Tree View compatibility for MUI X Community.",
+  "author": "Altroo",
+  "homepage": "https://github.com/Altroo/mui-native#readme",
+  "bugs": {
+    "url": "https://github.com/Altroo/mui-native/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Altroo/mui-native.git",
+    "directory": "packages/x-tree-view"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "prealpha",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

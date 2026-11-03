@@ -1,6 +1,6 @@
 {
   "name": "@altroo/mui-native-compat",
-  "version": "0.0.0-dev.0",
+  "version": "0.0.6-prealpha.0",
   "license": "MIT",
   "main": "index.cjs",
   "files": [
@@ -14,5 +14,21 @@
     ".": "./index.cjs",
     "./metro": "./index.cjs"
   },
-  "private": true
+  "private": false,
+  "description": "Opt-in Metro and TypeScript import routing for MUI Native. Experimental pre-alpha.",
+  "author": "Altroo",
+  "homepage": "https://github.com/Altroo/mui-native#readme",
+  "bugs": {
+    "url": "https://github.com/Altroo/mui-native/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Altroo/mui-native.git",
+    "directory": "packages/compat"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "prealpha",
+    "registry": "https://registry.npmjs.org/"
+  }
 }
