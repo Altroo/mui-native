@@ -11,3 +11,7 @@ upstream/licenses
 
 # Deterministic generated declaration records; use pnpm coverage:generate.
 compatibility/inventory/
+
+# Generated native applications, not maintained source.
+apps/*/android
+apps/*/ios

@@ -236,6 +236,36 @@ importers:
         specifier: 7.0.2
         version: 7.0.2
 
+  apps/native-benchmark:
+    dependencies:
+      '@altroo/mui-native':
+        specifier: workspace:*
+        version: link:../../packages/material
+      '@altroo/mui-native-compat':
+        specifier: workspace:*
+        version: link:../../packages/compat
+      '@altroo/mui-native-host':
+        specifier: workspace:*
+        version: link:../../packages/native-host
+      '@altroo/mui-native-system':
+        specifier: workspace:*
+        version: link:../../packages/system
+      expo:
+        specifier: 58.0.22
+        version: 58.0.22(@babel/core@7.29.7(supports-color@8.1.1))(react-native@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)(supports-color@8.1.1)(typescript@7.0.2)
+      react:
+        specifier: 19.3.0
+        version: 19.3.0
+      react-native:
+        specifier: 0.88.1
+        version: 0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
+      react-native-safe-area-context:
+        specifier: 5.10.1
+        version: 5.10.1(react-native@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
+      react-native-svg:
+        specifier: 15.16.0
+        version: 15.16.0(react-native@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
+
   apps/native-catalog:
     dependencies:
       '@altroo/mui-native':

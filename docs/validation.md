@@ -2,6 +2,14 @@
 
 Status: public pre-alpha prototype. The records below describe scoped checks and unresolved gates. Historical hosted runs preceded the public repository; current runs are available in [Actions](https://github.com/Altroo/mui-native/actions/workflows/ci.yml).
 
+## 2026-11-03 Android positioning benchmark tooling
+
+The separate [Popper benchmark](performance-popper.md) builds a non-debuggable production-Hermes application and matching Android instrumentation. It validates build fingerprints, native input/scroll displacement, popup attachment and child state before summarizing input feedback, frame deadlines, CPU and memory snapshots. It rejects incomplete reports, collector loss, missing device/storage metadata and invalid gestures, including warmup. Missing or ambiguous JS-thread identity produces an unknown result.
+
+One API 37 arm64 emulator pilot completed all eight trials with zero lost frame callbacks. A repeat was rejected after four trials by a baseline swipe assertion. Both results and their exact source manifests/APK hashes are retained locally. Repeatability remains unresolved, and no performance conclusion follows from the accepted pilot. iOS collection, physical calibration, presentation latency, continuous peak memory and larger workloads remain open; [issue #39](https://github.com/Altroo/mui-native/issues/39) remains unfinished.
+
+Local validation passes 1,657 Jest tests, 89 Node checks, lint/unused checks, root/catalog/benchmark/consumer types, inventory freshness, eight runtime builds with 112 entries, both codegen targets, nine freshly installed archives and formatting. Unpacked audit archives remain preserved and are excluded from Jest's Haste crawl. Independent review findings were fixed and re-reviewed; WebStorm and comment/attribution review are clear. Native compilation and the pilot do not certify physical-device performance.
+
 ## 2026-10-14 initial prototype
 
 These historical checks preceded the SDK 58 upgrade and do not describe the current public baseline.

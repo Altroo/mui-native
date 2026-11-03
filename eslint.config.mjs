@@ -16,6 +16,8 @@ export default defineConfig([
     'upstream/**',
     'apps/native-catalog/android/**',
     'apps/native-catalog/ios/**',
+    'apps/native-benchmark/android/**',
+    'apps/native-benchmark/ios/**',
   ]),
   {
     files: ['**/*.{js,mjs,cjs}'],

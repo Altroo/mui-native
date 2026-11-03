@@ -42,6 +42,7 @@ test('ESLint warning threshold returns a failing exit status', () => {
 for (const config of [
   'tsconfig.json',
   'apps/native-catalog/tsconfig.json',
+  'apps/native-benchmark/tsconfig.json',
   'fixtures/native-consumer/tsconfig.json',
 ]) {
   test(`TypeScript unused-code gate covers ${config} and preserves exports`, async () => {

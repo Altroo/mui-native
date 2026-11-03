@@ -6,7 +6,7 @@
     "files": {
       ".nvmrc": "45507e6d96329a845faa642c0f485313bcb2ca1e08b043589cde4ddd15969cd6",
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
-      "package.json": "0049e38862328288a1f78acdc32da67a099f94b65052ced7b3d2cdf84140cf34",
+      "package.json": "3e835500e43b39da474c75f29ad0d23ad7f421fea38ab162891c0af168f3031f",
       "packages/compat/package.json": "3a43b5f2b9afae62fcccab5d5c03a50273f256e1ead7a4ddd7ee6dd5747ca9c3",
       "packages/compat/supported.json": "567d9cfd8b4b1ead58bc26ec848c1c75fc52d22646a21172b44ce90182610952",
       "packages/icons/package.json": "14d3e7764e47388239b648d10730985046fafd9334bbbc1c10a4f1eedc347b8e",
@@ -246,7 +246,7 @@
       "packages/x-tree-view/src/index.ts": "ab22b3b9ae39b7c4ab4cd4fbabfeabba4c6f49624be7566810efc44adc1d4560",
       "packages/x-tree-view/src/RichTreeView.tsx": "3082d26cd7c55f248338dc2e4e81ef4764e733879082e2d601823359d2a49852",
       "packages/x-tree-view/src/RichTreeView/index.ts": "b4492fdbf2f10d6f6d2d368d9fc5932c5a784fb24b5cbd0e58604c5050eb0853",
-      "pnpm-lock.yaml": "37bb473f0baa27a711e9bd989726d45ebb8c29c74cf53b170194d59021cecd96",
+      "pnpm-lock.yaml": "d64dc6922dce3528116574d2874539af1c7329af7cfbf3c1d65cd60a495dbb86",
       "scripts/inventory/declarations.mjs": "7de3a26694ecbdabc9da1a1a6a855e45dbc8dcaad1a27783855d3cb0a30323f4",
       "scripts/inventory/declarations.test.mjs": "12fd46e1f0891265d541594bc787db2ca122d5b9f4c36fdf24885e8f73889a2f",
       "scripts/inventory/freshness.mjs": "af1f40f6729ab487233cafdd4d36d102c306dab26e5430b73c4d5d566a3469f6",
