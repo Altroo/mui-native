@@ -11,6 +11,12 @@ The runtime uses native views on iOS and Android. The optional Metro resolver re
 
 [ROADMAP.md](ROADMAP.md) records project scope, progress, and next steps.
 
+## Why I started this project
+
+At work, I was tasked with migrating existing web applications to React Native. Those applications were built with Material UI (`@mui/material`), and I could not find a React Native solution that provided the API compatibility they needed.
+
+I started MUI Native to address that gap: preserve familiar MUI component APIs and theming while rendering native iOS and Android interfaces. The aim is to make similar migrations more practical and provide a reusable library for other developers facing the same challenge.
+
 ## What you can explore
 
 - Native Material components with shared theme tokens, supported `sx` styles and familiar root/deep imports.
