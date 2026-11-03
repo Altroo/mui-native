@@ -58,7 +58,18 @@ AltrooObservedClip AltrooObserveClippingParents(UIView *view, UIView *relativeTo
 AltrooObservedRect AltrooObserveViewport(UIWindow *window) {
   CGRect safe = UIEdgeInsetsInsetRect(window.bounds,window.safeAreaInsets);
   safe.size.width = std::max<CGFloat>(0,safe.size.width); safe.size.height = std::max<CGFloat>(0,safe.size.height);
-  CGRect keyboard = window.keyboardLayoutGuide.layoutFrame;
+  // UIWindow's guide can remain empty while its controller's root view tracks
+  // the keyboard. A layout guide's frame belongs to its owning view; convert
+  // it into this window's coordinates before intersecting the safe viewport.
+  UIView *keyboardOwner = nil;
+  // A full-screen presentation can detach the underlying controller's view.
+  // Prefer the connected full-window root, or an attached presented root.
+  for (UIViewController *controller = window.rootViewController; controller; controller = controller.presentedViewController) {
+    UIView *candidate = controller.viewIfLoaded;
+    if (candidate.window == window) { keyboardOwner = candidate; break; }
+  }
+  keyboardOwner = keyboardOwner ?: window;
+  CGRect keyboard = [keyboardOwner convertRect:keyboardOwner.keyboardLayoutGuide.layoutFrame toView:window];
   // Keep the host's existing guide configuration. Floating keyboards do not form a rectangle
   // spanning the viewport; docked keyboards and the hidden safe-area guide do.
   if (keyboard.size.width > 0 && keyboard.size.height > 0 &&
