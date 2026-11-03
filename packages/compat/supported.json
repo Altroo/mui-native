@@ -79,7 +79,8 @@
       "Radio/radioClasses",
       "RadioGroup/radioGroupClasses",
       "FormGroup/formGroupClasses",
-      "FormControlLabel/formControlLabelClasses"
+      "FormControlLabel/formControlLabelClasses",
+      "Switch/switchClasses"
     ]
   },
   "@mui/system": {

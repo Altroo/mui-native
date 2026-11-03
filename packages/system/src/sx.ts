@@ -15,6 +15,9 @@ export type StyleContext = NativeTextContext & {
   width?: number;
   states?: readonly string[];
   slot?: string;
+  rootSlot?: string;
+  skipVariants?: boolean;
+  logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };
   mode?: 'sx' | 'css';
 };
 const aliases: Record<string, string[]> = {
@@ -310,8 +313,20 @@ function resolveRules(
 function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {}): NativeStyle {
   const result: Record<string, unknown> = {};
   // Stable sorting preserves upstream rule order within equal specificity.
-  for (const rule of rules.sort((a, b) => a.specificity - b.specificity)) {
-    for (const [key, value] of Object.entries(rule.style)) {
+  const ordered = rules.sort((a, b) => a.specificity - b.specificity);
+  let inheritedDirection = context.logicalInsets?.parentDirection ?? theme.direction;
+  let cssDirection: unknown;
+  if (context.logicalInsets)
+    for (const rule of ordered)
+      if (rule.style.direction != null) cssDirection = rule.style.direction;
+  const direction = context.logicalInsets?.direction ?? cssDirection;
+  const rtl =
+    (direction === 'inherit' || direction == null ? inheritedDirection : direction) === 'rtl';
+  for (const rule of ordered) {
+    for (const [rawKey, value] of Object.entries(rule.style)) {
+      let key = rawKey;
+      const logical = context.logicalInsets && key.match(/^(margin|padding)(Start|End)$/);
+      if (logical) key = logical[1] + ((logical[2] === 'Start') !== rtl ? 'Left' : 'Right');
       if (value == null) continue;
       if (key === 'boxShadow' || key === 'border') {
         mergeStyles(result, value as Record<string, unknown>);
@@ -352,13 +367,13 @@ export function componentStyle(
 ): NativeStyle {
   const entry = theme.components[name];
   const config = entry && typeof entry === 'object' ? entry : undefined;
-  const bases = ['root', ...(context.overrideKeys ?? [])].flatMap((key) => {
+  const bases = [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].flatMap((key) => {
     const override = config?.styleOverrides?.[key];
     const style =
       typeof override === 'function' ? override({ theme, ownerState: props }) : override;
     return resolveRules(style, theme, { ...context, mode: 'css' });
   });
-  const variants = (config?.variants ?? []).filter((v) =>
+  const variants = (context.skipVariants ? [] : (config?.variants ?? [])).filter((v) =>
     typeof v.props === 'function'
       ? v.props(props)
       : Object.entries(v.props).every(([k, value]) => props[k] === value),

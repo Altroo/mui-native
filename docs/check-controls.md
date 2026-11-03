@@ -34,7 +34,7 @@ A custom input receives native interaction props, model fields and a value-aware
 
 ## Labels, layout and themes
 
-FormControlLabel copies checked/name/value/onChange only when the control does not supply them. Disabled precedence is label, control, then FormControl. Required precedence is label, then control; FormControl alone does not make a control-label required. Error inherits from FormControl unless supplied. All four placements are supported, with native spacing and a separate 44 dp label hit area. Checkbox/Radio label activation enters the same control pipeline and respects disabled/readOnly/cancellation and presentation ownership. Retained Switch label activation checks disabled state and cancellation; it does not yet share the checked-control presentation guards.
+FormControlLabel copies checked/name/value/onChange only when the control does not supply them. Disabled precedence is label, control, then FormControl. Required precedence is label, then control; FormControl alone does not make a control-label required. Error inherits from FormControl unless supplied. All four placements are supported, with native spacing and a separate 44 dp label hit area. Checkbox/Radio label activation enters the same control pipeline and respects disabled/readOnly/cancellation and presentation ownership. Switch now shares that checked-control presentation and activation pipeline; see [native Switch](switch.md).
 
 Plain labels supply a readable native name. Opaque rich labels retain their visible text and a native accessibilityLabelledBy association; provide an explicit aria-label/accessibilityLabel when the platform cannot derive the desired name. Actual VoiceOver/TalkBack behavior remains open. Existing Typography labels are preserved, disableTypography skips wrapping, and slots.typography/slotProps.typography customize generated labels. Default wrapping uses a text span for text content and a native View boundary for opaque content, preserving typography defaults/metrics without placing Views under Text. Explicit typography slot components own their native content/forwarding contract.
 
@@ -42,7 +42,7 @@ Checkbox/Radio retain at least 44 dp targets and native geometric glyphs. Custom
 
 Checkbox, Radio, RadioGroup, FormGroup and FormControlLabel expose original class-helper subpaths. Checkbox/Radio size/color and slot override interfaces support module augmentation. Complete upstream TypeMap/DOM polymorphism, arbitrary CSS and all inherited browser APIs remain open.
 
-Native Switch keeps its existing native implementation. Its label and native onChange paths now retain genuine source event methods and checked target fields, with no synthetic null native payload. This is label interoperability, not the complete Switch API port.
+Switch now provides five native slots and shares the checked-control activation pipeline. See [native Switch](switch.md) for callback phases, refs, styling, motion and migration from the earlier stock-control prototype.
 
 ## Evidence and reproduction
 

@@ -25,10 +25,8 @@ import {
   type StyleProp,
   type ViewStyle,
   Pressable,
-  Switch as NativeSwitch,
   type TextInputProps,
   type TextInputInstance,
-  type SwitchProps as ReactNativeSwitchProps,
 } from 'react-native';
 import {
   useDefaultProps,
@@ -65,17 +63,11 @@ import {
   type FormHelperTextProps,
 } from './labels';
 export * from './labels';
-type NativeSwitchSource = Parameters<NonNullable<ReactNativeSwitchProps['onChange']>>[0];
-export type NativeSwitchChangeEvent =
-  | import('./checkedTypes').NativeCheckedChangeEvent
-  | (Omit<NativeSwitchSource, 'target' | 'currentTarget'> & {
-      target: import('./checkedTypes').NativeCheckedTarget;
-      currentTarget: import('./checkedTypes').NativeCheckedTarget;
-    });
-export type CheckChangeEvent = NativeSwitchChangeEvent;
-import { selectionEvent } from './selectionEvent';
-import { useMenuEvent } from './useMenuEvent';
-import { useLabelActivation } from './controlLabelContext';
+export type CheckChangeEvent = import('./checkedTypes').NativeCheckedChangeEvent;
+export { Switch } from './switch';
+export type * from './switchTypes';
+export { switchClasses, getSwitchUtilityClass } from './switchClasses';
+export type { SwitchClasses, SwitchClassKey } from './switchClasses';
 export { Checkbox, Radio } from './checkControls';
 export type * from './checkedTypes';
 export { NativeCheckedInputSurface } from './checkControls';
@@ -807,79 +799,3 @@ export const TextField = TextFieldImpl as unknown as {
     props: TextFieldProps<Variant, Value> & React.RefAttributes<ViewInstance>,
   ): React.ReactElement;
 };
-export interface SwitchProps {
-  accessibilityLabel?: string;
-  accessibilityLabelledBy?: ReactNativeSwitchProps['accessibilityLabelledBy'];
-  'aria-labelledby'?: ReactNativeSwitchProps['aria-labelledby'];
-  required?: boolean;
-  id?: string;
-  checked?: boolean;
-  defaultChecked?: boolean;
-  disabled?: boolean;
-  value?: string;
-  name?: string;
-  onChange?: (event: CheckChangeEvent, checked: boolean) => void;
-  size?: 'small' | 'medium';
-  sx?: SxProps;
-  inputProps?: { 'aria-label'?: string };
-  'aria-label'?: string;
-  testID?: string;
-}
-export function Switch(inProps: SwitchProps) {
-  const {
-    checked,
-    defaultChecked = false,
-    disabled,
-    required = false,
-    id = '',
-    accessibilityLabel,
-    accessibilityLabelledBy,
-    'aria-labelledby': labelledBy,
-    onChange,
-    name,
-    value,
-    'aria-label': label,
-    testID,
-  } = useDefaultProps({ props: inProps, name: 'MuiSwitch' });
-
-  const [selected, setSelected] = useControlled(checked, defaultChecked);
-  const theme = useTheme();
-  const change = useMenuEvent(
-    (
-      next: boolean,
-      source: NativeSwitchSource | import('./buttonBase').ButtonBaseActivationEvent,
-    ) => {
-      if (disabled || source.defaultPrevented || source.isDefaultPrevented?.()) return;
-      const event = selectionEvent(source, {
-        checked: next,
-        value: value ?? 'on',
-        name: name ?? '',
-        id,
-        type: 'checkbox',
-        indeterminate: false,
-        disabled: Boolean(disabled),
-        readOnly: false,
-        required,
-        node: null,
-      }) as NativeSwitchChangeEvent;
-      setSelected(next);
-      onChange?.(event, next);
-    },
-  );
-  useLabelActivation((source) => change(!selected, source));
-  return (
-    <NativeSwitch
-      testID={testID}
-      accessibilityLabel={label ?? accessibilityLabel}
-      accessibilityLabelledBy={labelledBy ?? accessibilityLabelledBy}
-      accessibilityRole="switch"
-      disabled={disabled}
-      value={selected}
-      style={{ alignSelf: 'center' }}
-      trackColor={{ true: theme.palette.primary.main }}
-      nativeID={id || undefined}
-      aria-required={required}
-      onChange={(event) => change(event.nativeEvent.value, event)}
-    />
-  );
-}

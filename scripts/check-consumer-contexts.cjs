@@ -81,6 +81,7 @@ try {
     'Typography',
     'Button',
     'IconButton',
+    'Switch',
     'Checkbox',
     'Radio',
     'RadioGroup',
@@ -120,6 +121,7 @@ try {
   for (const [component, classes, helper] of [
     ['Button', 'buttonClasses', 'getButtonUtilityClass'],
     ['IconButton', 'iconButtonClasses', 'getIconButtonUtilityClass'],
+    ['Switch', 'switchClasses', 'getSwitchUtilityClass'],
     ['Checkbox', 'checkboxClasses', 'getCheckboxUtilityClass'],
     ['Radio', 'radioClasses', 'getRadioUtilityClass'],
     ['RadioGroup', 'radioGroupClasses', 'getRadioGroupUtilityClass'],

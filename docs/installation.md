@@ -48,3 +48,5 @@ Native [Select and TextField select](select.md) use the same material/system/hos
 Button and IconButton now use the native ButtonBase host as well. Rebuild an application that previously used only their stock Pressable implementation; Expo Go cannot render these controls. See [native buttons](button.md) for native event/ref and custom-root migration.
 
 Checkbox and Radio also use the native ButtonBase host. Rebuild apps that previously used their stock Pressable implementation. See [checked controls](check-controls.md) for native input handles, slots, group/label behavior and migration boundaries.
+
+Switch now requires the same native interaction host and native build. See [Switch](switch.md) for five-slot composition, event migration and native refs.

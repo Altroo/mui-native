@@ -226,12 +226,31 @@ const rootOnlyOmissions = new Set([
 function viewProps(props: object) {
   return Object.fromEntries(Object.entries(props).filter(([key]) => !rootOnlyOmissions.has(key)));
 }
+export interface NativeCheckedVisualState extends NativeCheckedState {
+  pressed: boolean;
+  hovered: boolean;
+  focusVisible: boolean;
+}
+export interface NativeCheckedPresentation {
+  owner: Record<string, unknown>;
+  role: 'switch';
+  bubbleChange?: boolean;
+  style: (state: NativeCheckedVisualState, native: NativeStyle | null | undefined) => NativeStyle;
+  mergeStyle?: (
+    base: NativeStyle,
+    authored: NativeStyle | null | undefined,
+    slot: NativeStyle | null | undefined,
+  ) => NativeStyle;
+  content: (state: NativeCheckedVisualState, style: NativeStyle) => React.ReactNode;
+  wrap: (content: React.ReactElement, state: NativeCheckedVisualState) => React.ReactElement;
+}
 interface CoreProps {
   kind: 'checkbox' | 'radio';
   props: CheckboxProps | RadioProps;
   forwarded: React.ForwardedRef<ViewInstance>;
+  presentation?: NativeCheckedPresentation;
 }
-function CheckedControl({ kind, props, forwarded }: CoreProps) {
+export function NativeCheckedControl({ kind, props, forwarded, presentation }: CoreProps) {
   const form = useContext(FormContext),
     group = useContext(RadioContext),
     theme = useTheme();
@@ -274,7 +293,7 @@ function CheckedControl({ kind, props, forwarded }: CoreProps) {
     );
   const isRadio = kind === 'radio',
     radioGroup = isRadio ? group : undefined;
-  const wrapperOwner = {
+  const wrapperOwner = presentation?.owner ?? {
     ...props,
     color,
     size,
@@ -433,7 +452,7 @@ function CheckedControl({ kind, props, forwarded }: CoreProps) {
         next = requested ?? (isRadio ? true : !previous),
         changed = next !== previous;
       const target = { ...currentTarget(next), type: kind } as NativeCheckedTarget;
-      const event = selectionEvent(source, target) as NativeCheckedChangeEvent;
+      let event = selectionEvent(source, target) as NativeCheckedChangeEvent;
       proposal.current = target;
       try {
         if (click) {
@@ -443,21 +462,44 @@ function CheckedControl({ kind, props, forwarded }: CoreProps) {
             (root.onPress ?? root.onClick ?? props.onPress ?? props.onClick)?.(event);
         }
         if (!mounted.current || (click && !changed)) return;
+        if (presentation?.bubbleChange && click) {
+          const clickEvent = event;
+          let stopped = false;
+          event = Object.create(clickEvent);
+          Object.defineProperties(event, {
+            isPropagationStopped: { value: () => stopped },
+            stopPropagation: {
+              value: () => {
+                stopped = true;
+                clickEvent.stopPropagation?.();
+              },
+            },
+          });
+        }
         input.onChange?.(event);
-        if (
-          !eligible() ||
-          latest.current.disabled ||
-          latest.current.readOnly ||
-          sourcePrevented(event)
-        )
-          return;
-        const checked = Boolean(event.target.checked);
-        setSelected(checked);
-        if (isRadio) {
-          root.onChange?.(event, checked);
-          props.onChange?.(event, checked);
-          radioGroup?.onChange(event, event.target.value);
-        } else (root.onChange ?? props.onChange)?.(event, checked);
+        try {
+          if (
+            !eligible() ||
+            latest.current.disabled ||
+            latest.current.readOnly ||
+            sourcePrevented(event)
+          )
+            return;
+          const checked = Boolean(event.target.checked);
+          setSelected(checked);
+          if (isRadio) {
+            root.onChange?.(event, checked);
+            props.onChange?.(event, checked);
+            radioGroup?.onChange(event, event.target.value);
+          } else
+            (presentation?.bubbleChange ? props.onChange : (root.onChange ?? props.onChange))?.(
+              event,
+              checked,
+            );
+        } finally {
+          if (presentation?.bubbleChange && eligible() && !event.isPropagationStopped?.())
+            (root.onChange as ((event: NativeCheckedChangeEvent) => void) | undefined)?.(event);
+        }
       } finally {
         proposal.current = null;
       }
@@ -504,77 +546,89 @@ function CheckedControl({ kind, props, forwarded }: CoreProps) {
     (registry ? registry.tabIndex(radioId, name) : 0);
   const inputViewRef = useForkRef(node, input.ref),
     rootRef = useForkRef(outer, forwarded, root.ref);
-  const rootStyle = componentStyle(theme, isRadio ? 'MuiRadio' : 'MuiCheckbox', wrapperOwner, sx, {
-    width,
-    states: [
-      ...(selected ? ['checked'] : []),
-      ...(disabled ? ['disabled'] : []),
-      ...(mixed ? ['indeterminate'] : []),
-      ...(hovered && !disabled ? ['hover'] : []),
-      ...(focusVisible ? ['focusVisible'] : []),
-    ],
-    overrideKeys: [
-      ...(!isRadio || size !== 'medium' ? [`size${cap(size)}`] : []),
-      ...(color !== 'default' ? [`color${cap(color)}`] : []),
-      ...(mixed ? ['indeterminate'] : []),
-    ],
-    baseStyle: {
-      alignSelf: 'flex-start',
-      minWidth: 44,
-      minHeight: 44,
-      padding: 9,
-      borderRadius: 9999,
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'relative',
-      ...(edge
-        ? { [edge === 'start' ? 'marginStart' : 'marginEnd']: size === 'small' ? -3 : -12 }
-        : {}),
-      color: disabled
-        ? theme.palette.action.disabled
-        : (selected || mixed) && color !== 'default'
-          ? ((theme.palette as any)[color]?.main ?? theme.palette.primary.main)
-          : theme.palette.text.secondary,
-      backgroundColor:
-        hovered && !disabled && !disableRipple
-          ? alpha(
-              (theme.palette as any)[color]?.main ?? theme.palette.action.active,
-              theme.palette.action.hoverOpacity,
-            )
-          : 'transparent',
-    },
-  });
   const stateStyle = { pressed, focusVisible, disabled };
   const authoredStyle = StyleSheet.flatten(typeof style === 'function' ? style(stateStyle) : style);
   const slotStyle = StyleSheet.flatten(
     typeof root.style === 'function' ? root.style(stateStyle) : root.style,
   );
-  const computed = StyleSheet.flatten([
-    rootStyle,
-    authoredStyle,
-    nativeInsets(authoredStyle, 'padding'),
-    slotStyle,
-    nativeInsets(slotStyle, 'padding'),
-  ] as StyleProp<NativeStyle>);
+  const visualState: NativeCheckedVisualState = {
+    ...state,
+    checked: Boolean(selected),
+    pressed,
+    hovered,
+    focusVisible,
+  };
+  const rootStyle = presentation
+    ? presentation.style(visualState, StyleSheet.flatten([authoredStyle, slotStyle]))
+    : componentStyle(theme, isRadio ? 'MuiRadio' : 'MuiCheckbox', wrapperOwner, sx, {
+        width,
+        states: [
+          ...(selected ? ['checked'] : []),
+          ...(disabled ? ['disabled'] : []),
+          ...(mixed ? ['indeterminate'] : []),
+          ...(hovered && !disabled ? ['hover'] : []),
+          ...(focusVisible ? ['focusVisible'] : []),
+        ],
+        overrideKeys: [
+          ...(!isRadio || size !== 'medium' ? [`size${cap(size)}`] : []),
+          ...(color !== 'default' ? [`color${cap(color)}`] : []),
+          ...(mixed ? ['indeterminate'] : []),
+        ],
+        baseStyle: {
+          alignSelf: 'flex-start',
+          minWidth: 44,
+          minHeight: 44,
+          padding: 9,
+          borderRadius: 9999,
+          alignItems: 'center',
+          justifyContent: 'center',
+          position: 'relative',
+          ...(edge
+            ? { [edge === 'start' ? 'marginStart' : 'marginEnd']: size === 'small' ? -3 : -12 }
+            : {}),
+          color: disabled
+            ? theme.palette.action.disabled
+            : (selected || mixed) && color !== 'default'
+              ? ((theme.palette as any)[color]?.main ?? theme.palette.primary.main)
+              : theme.palette.text.secondary,
+          backgroundColor:
+            hovered && !disabled && !disableRipple
+              ? alpha(
+                  (theme.palette as any)[color]?.main ?? theme.palette.action.active,
+                  theme.palette.action.hoverOpacity,
+                )
+              : 'transparent',
+        },
+      });
+  const computed = presentation?.mergeStyle
+    ? presentation.mergeStyle(rootStyle, authoredStyle, slotStyle)
+    : StyleSheet.flatten([
+        rootStyle,
+        authoredStyle,
+        nativeInsets(authoredStyle, 'padding'),
+        slotStyle,
+        nativeInsets(slotStyle, 'padding'),
+      ] as StyleProp<NativeStyle>);
   const glyphSize = size === 'small' ? 20 : size === 'large' ? 35 : 24,
     chosen = mixed ? (props as CheckboxProps).indeterminateIcon : selected ? checkedIcon : icon;
-  const glyph =
-    chosen === undefined ? (
-      <Glyph
-        kind={kind}
-        checked={Boolean(selected)}
-        mixed={mixed}
-        size={glyphSize}
-        color={computed?.color}
-        markColor={theme.palette.background.paper}
-      />
-    ) : React.isValidElement<any>(chosen) && chosen.type !== View && chosen.type !== Text ? (
-      React.cloneElement(chosen as React.ReactElement<{ fontSize?: unknown }>, {
-        fontSize: (chosen.props as { fontSize?: unknown }).fontSize ?? size,
-      })
-    ) : (
-      chosen
-    );
+  const glyph = presentation ? (
+    presentation.content(visualState, computed ?? {})
+  ) : chosen === undefined ? (
+    <Glyph
+      kind={kind}
+      checked={Boolean(selected)}
+      mixed={mixed}
+      size={glyphSize}
+      color={computed?.color}
+      markColor={theme.palette.background.paper}
+    />
+  ) : React.isValidElement<any>(chosen) && chosen.type !== View && chosen.type !== Text ? (
+    React.cloneElement(chosen as React.ReactElement<{ fontSize?: unknown }>, {
+      fontSize: (chosen.props as { fontSize?: unknown }).fontSize ?? size,
+    })
+  ) : (
+    chosen
+  );
   const Root = slots.root ?? component ?? View;
   const {
     ref: _inputRef,
@@ -617,7 +671,7 @@ function CheckedControl({ kind, props, forwarded }: CoreProps) {
         change(source, Boolean(source.target.checked), false),
     },
   };
-  return (
+  const result = (
     <Root
       {...viewProps(other)}
       {...viewProps(rootNative)}
@@ -658,7 +712,12 @@ function CheckedControl({ kind, props, forwarded }: CoreProps) {
             disableTouchRipple={root.disableTouchRipple ?? props.disableTouchRipple}
             focusRipple={root.focusRipple ?? props.focusRipple ?? !disableFocusRipple}
             hitSlop={input.hitSlop ?? root.hitSlop ?? props.hitSlop}
-            accessibilityRole={isRadio ? 'radio' : 'checkbox'}
+            accessibilityRole={
+              input.accessibilityRole ??
+              input.role ??
+              presentation?.role ??
+              (isRadio ? 'radio' : 'checkbox')
+            }
             nativeID={id || undefined}
             testID={input.testID ?? props.testID}
             accessibilityLabel={
@@ -747,7 +806,10 @@ function CheckedControl({ kind, props, forwarded }: CoreProps) {
               if (!eligible() || latest.current.disabled) return;
               const event = selectionEvent(source, { ...currentTarget(), type: kind });
               input.onFocus?.(event);
-              (root.onFocus ?? props.onFocus)?.(event);
+              if (presentation?.bubbleChange) {
+                root.onFocus?.(event);
+                if (mounted.current) props.onFocus?.(event);
+              } else (root.onFocus ?? props.onFocus)?.(event);
               form?.onFocus?.();
             }}
             onFocusVisible={(source) => {
@@ -759,7 +821,10 @@ function CheckedControl({ kind, props, forwarded }: CoreProps) {
               setFocusVisible(false);
               const event = selectionEvent(source, { ...currentTarget(), type: kind });
               input.onBlur?.(event);
-              (root.onBlur ?? props.onBlur)?.(event);
+              if (presentation?.bubbleChange) {
+                root.onBlur?.(event);
+                if (mounted.current) props.onBlur?.(event);
+              } else (root.onBlur ?? props.onBlur)?.(event);
               form?.onBlur?.();
             }}
             onHoverIn={(source) => {
@@ -793,16 +858,17 @@ function CheckedControl({ kind, props, forwarded }: CoreProps) {
       </InputContext.Provider>
     </Root>
   );
+  return presentation ? presentation.wrap(result, visualState) : result;
 }
 export const Checkbox: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<CheckboxProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, CheckboxProps>(function Checkbox(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiCheckbox' });
-  return <CheckedControl kind="checkbox" props={props} forwarded={ref} />;
+  return <NativeCheckedControl kind="checkbox" props={props} forwarded={ref} />;
 });
 export const Radio: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<RadioProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, RadioProps>(function Radio(inProps, ref) {
   const props = useDefaultProps({ props: inProps, name: 'MuiRadio' });
-  return <CheckedControl kind="radio" props={props} forwarded={ref} />;
+  return <NativeCheckedControl kind="radio" props={props} forwarded={ref} />;
 });

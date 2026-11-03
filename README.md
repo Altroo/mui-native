@@ -110,6 +110,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Spacing, breakpoints and responsive styles](docs/layout-system.md)
 - [Native Button and IconButton](docs/button.md)
 - [Native Checkbox, Radio, groups and labels](docs/check-controls.md)
+- [Native Switch slots, events and motion](docs/switch.md)
 - [Native form controls and calendar behavior](docs/native-controls.md)
 - [Adaptive grid cards and table mode](docs/adaptive-grid.md)
 - [Performance measurement gates](docs/performance.md)

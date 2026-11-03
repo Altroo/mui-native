@@ -3,7 +3,7 @@ export function installKeyboardReference(
   React,
   createRoot,
   flushSync,
-  { Checkbox, Radio, RadioGroup },
+  { Checkbox, Radio, RadioGroup, Switch },
 ) {
   let current;
   window.mountKeyboardReference = (test) => {
@@ -26,8 +26,8 @@ export function installKeyboardReference(
     const change = (id) => (event, checked) =>
       trace.push({ id, checked, value: event.target.value, name: event.target.name });
     const body =
-      test.kind === 'Checkbox'
-        ? React.createElement(Checkbox, {
+      test.kind === 'Checkbox' || test.kind === 'Switch'
+        ? React.createElement(test.kind === 'Switch' ? Switch : Checkbox, {
             id: 'a',
             onChange: change('a'),
             slotProps: { input: { onKeyDown } },

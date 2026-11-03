@@ -8,14 +8,14 @@
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
       "package.json": "5b005286c99b7766a420eabc98cc32887667f4481d68faead0f27c23ea90d0e3",
       "packages/compat/package.json": "96f0b851536ec8333bce8db32a0d2e8b12b529e290b4ea333769a1894314ff54",
-      "packages/compat/supported.json": "c64d82343b7d34a1cc11cb80f1ce95fa8986f8a5859d223c62c9aef077644d90",
+      "packages/compat/supported.json": "552a5831e2066584123abec0770b1cc716139a732067c880ff0f1a261a3f086d",
       "packages/icons/package.json": "acb6165d3435cf8b944741a8167e77a162dde02b76b31b3c4136fc26a93cb737",
       "packages/icons/src/Add/index.ts": "98626742b0c19873110d9795934647ddc6fb5f6be09a5d60189115afdd9c8b01",
       "packages/icons/src/Check/index.ts": "fab7a03732117fa85b0210f6cc3551eb29d0aa46a374c7bd7bced61ac85d76cb",
       "packages/icons/src/Close/index.ts": "f2a34cbc09d0a0ec63821425960975c5363c19d61476cb13bcb610a1a39b1a66",
       "packages/icons/src/index.ts": "18700eaefc45ea7df48bc0efbab15b67346db8b5c8c27cb0fd789dd3cb44d320",
       "packages/icons/src/Remove/index.ts": "611c0fd1f80c46a7fc1c83a13a041b91e0066701fcab042c4cc87839151dab00",
-      "packages/material/package.json": "ab597b34a414e987fbb98aa44da2cfdca3b454e680e32bcee6c91ca82a1f0e7e",
+      "packages/material/package.json": "3a4062c00509d20c7b38e5a28f4ecbd3a7d25f717e471941a44172325259fbb2",
       "packages/material/src/Alert/index.ts": "8c0a7b0a9ca5279bfd70b8db2e05b7d7e7f2a468c119ca83b3dc14fc6b8ca9df",
       "packages/material/src/Backdrop/index.ts": "0d8aa4ae16f18860d1ef4f9bdcaf1ec6a96ac2030aa8338f5d2bbf274dfdaa4d",
       "packages/material/src/Box/index.ts": "285f21b02e025c40b3d9aef941289ad419aef7fbce14c35e82260c2625937537",
@@ -31,7 +31,7 @@
       "packages/material/src/CardContent/index.ts": "63a9523f7a59d89b71d11e2189189073b7c5e6aa0980252e436c9c9109e1e633",
       "packages/material/src/Checkbox/checkboxClasses/index.ts": "62d078199522e1498d906c1005775ed0349ee1b60a065c8c5e81d2dff998b4fb",
       "packages/material/src/Checkbox/index.ts": "96792b1a1e3aff8a0ba0f3a5c29e950eb0326d780847a1b07f769cab292a8d07",
-      "packages/material/src/checkControls.tsx": "ac1827fcfd865791a49a572295bf7109454a5a1851d16651ada1cfdd598e7be6",
+      "packages/material/src/checkControls.tsx": "deecf30a4134897c3ace224c8e075dee14df0c75ac6a8c32eeec82b7e97fe4ec",
       "packages/material/src/checkedTypes.ts": "3082672d7727653cb2ce4a13c70c8ced6bb89a4f6eb029b75b8d17e90567ea7c",
       "packages/material/src/CircularProgress/index.ts": "563332ab256201e1396a837f5de5d909d2d63324811ca3b0e99246b8a5479e3c",
       "packages/material/src/controlClasses.ts": "ee815e05e92faece5b7289b09ec0c1949dbaf7c0ebe09149f44e77111218b293",
@@ -56,7 +56,7 @@
       "packages/material/src/FormGroup/index.ts": "c2c5ed5fa09c4a844877dc5a20f361165917340d201ecfee9b6dbac6bacd0c1f",
       "packages/material/src/FormHelperText/index.ts": "5815ed5b6f543a3064ec5c080901759359228554f127ccb3dcdee8ae3447b76e",
       "packages/material/src/FormLabel/index.ts": "d8c2df23bf3189fc2a06beebdf1cea7bb944c09dad85e48355d67982f3423475",
-      "packages/material/src/forms.tsx": "f286236acd01dc75d44abef70dbaffb67d1b38925fb2d8c7cb5e645e4cb20170",
+      "packages/material/src/forms.tsx": "842fcff174e75fc34dea8a3739b0d2fbfd0a32caf090eada1203d16c539a15d3",
       "packages/material/src/formState.ts": "306d198468d185b4835f13f25ad220a08f0fd2b74dc48152200e034dc5e0a5cf",
       "packages/material/src/grow.tsx": "6e59f2dacaa81c7988f5dbec8ac66f6093da8132d873cbe1ed85df838f92f38a",
       "packages/material/src/Grow/index.ts": "7e747efc5a2eed3c1a6762294ea9600bce4aeb7bce21521ddfee59ae34b5d8a8",
@@ -145,7 +145,12 @@
       "packages/material/src/styles/ThemeProvider/index.ts": "1c4f6f7a0819dba07717bd541b1ee25bb9342f17a11f3f70d097b63c3ce8e62d",
       "packages/material/src/styles/useTheme/index.ts": "a481e21cb98b9b158197e539630f0f388e739c36fc19769cff815ba4e34c1d98",
       "packages/material/src/styles/useThemeProps/index.ts": "74459c3505453641848a35ef1c66e004e7ad36fa154b8059649e65f258965084",
-      "packages/material/src/Switch/index.ts": "86be7dc1056c8c540b3d2945645404e270a1345795eb8f49ff3b99e72ac12217",
+      "packages/material/src/switch.tsx": "5ae3c7a206874bc099648c89ffb869def6b33e081b70455cc21b2aa3fe358f55",
+      "packages/material/src/Switch/index.ts": "97ea7afcb797d31c1e801d65e430d4a2ddcd592b14d145d9b392186525beafa4",
+      "packages/material/src/Switch/switchClasses/index.ts": "a1285e231f8026c30c648d893e084ecd09065943ed52209ee775ab77c91d842b",
+      "packages/material/src/switchClasses.ts": "ba8d4b9492b67562ceec1e7f5fc40e1d3864911ef53beacdc7da59e3ba60c1f1",
+      "packages/material/src/switchStyles.ts": "0b9d565f7dff678e6f3e62e871649634aa907abd424522954a52ed6a98073d2e",
+      "packages/material/src/switchTypes.ts": "6aa392fca52bab3cd0b5c611020d99697f3c5c72d1393273e5c783747e5cbbe1",
       "packages/material/src/TextField/index.ts": "09d175ad9a5284adba213076e847ca9df592241b342d7be930528fcbeef4fadd",
       "packages/material/src/themeProvider.tsx": "959780c07b5bba1576b907c9b79e0433c85d74c5207f521a24fda9bbcac0a019",
       "packages/material/src/transitionReadiness.ts": "7cd66b0245b59e533c8147c7b58eae1dc14f63e46b2a9a2ae62b60ebacfd2e1b",
@@ -183,7 +188,7 @@
       "packages/system/src/provider.tsx": "42de40a795a024d88dd3005cebf19833895c3dd3b1e3ab96b4c8892effef298a",
       "packages/system/src/RtlProvider/index.tsx": "fea327d6abaf69ecf9a1f8be71d29a4ec74990ecf1637f5af9c5bc66b4155301",
       "packages/system/src/spacing.ts": "95cb1c41dcd2c19ac970f6adad5fe4307f9f0f3db0ea8b8cd7334cad9dec964b",
-      "packages/system/src/sx.ts": "76176145862fa1f8142661ca1b4ba4ab7bdd5ceeee72e7f4bccda9e01eeb2100",
+      "packages/system/src/sx.ts": "85751766ea32b105ed90b9b42477f3771ab8b677457b2787ae1eb5cc5ea62c0b",
       "packages/system/src/textScope.tsx": "05ec95b0f5e01ee31db166f066adb6a6057c3299826ba58bb77030b4286bb4d1",
       "packages/system/src/theme.ts": "e5de314ddaf02fdbcec7c87bff91beece97fe0b5a5fa0444a3c8698f7c4b0390",
       "packages/system/src/ThemeProvider/index.ts": "ab3008c2fe41aee2a32d75c3d7b9d353f41d7f922e286275f428b24ff8257c2b",
@@ -262,7 +267,7 @@
   },
   "documentation": {
     "path": "docs/coverage.md",
-    "sha256": "1f9a57713f2badb14ab75523adf2f65b6a3d4c4607284e77b3d98e35ac779c35"
+    "sha256": "bb8cb6e43f6a9904638c0801348e45646250de2e5d374e8ed50fea4859ec5673"
   },
   "referenceDependencies": [
     {
@@ -284,11 +289,11 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "61684fe43ab4abdb49d77f9f640061426611d9efb5177e649ae216d69670e995",
+      "nativeSourceSha256": "01b2eabf2288329ee234c754c358face0d11140ca2fe3f055401d3553b6406df",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
-      "locallyDeclaredRootNames": 295,
+      "locallyDeclaredRootNames": 309,
       "directMembers": 4046,
       "eventDeclarations": 112,
       "slotDeclarations": 219,
@@ -296,7 +301,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "a05d5b2d98a8ed9544a005fd479d1988864feb490849f586f30466d71dc044f3"
+      "sha256": "e894cdd049970859bb6f56ed546a06d48a353a1cc3ba80ce54b5f3ea34ff1246"
     },
     {
       "package": "@mui/system",
@@ -306,7 +311,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "1cfcddc607488c6a95a3c17cf27cc919cafe9a572dcf5cf5b52e624e3b99d303",
+      "nativeSourceSha256": "373a726675b27215ea0215494dcec3f18581bc23fdbcb3c0da1429d6e3198fb9",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -318,7 +323,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "6d848c71130088bb8f2422c4d2adf07d8cb228f673e4bcfe5e92721f943cc02e"
+      "sha256": "716c6872e3616b0fa1cad5b4da4786827a8b91b015e27d4d1dec321ee478267b"
     },
     {
       "package": "@mui/icons-material",

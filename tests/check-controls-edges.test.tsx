@@ -304,19 +304,19 @@ test('custom label typography slot receives owner state and explicit slot compon
   expect(owner).toMatchObject({ required: true, disabled: true, labelPlacement: 'top' });
   expect(tree.getByText('Label')).toBeTruthy();
 });
-test('native Switch and label callbacks retain actual source event methods', () => {
+test('Switch and label callbacks retain actual native activation methods', () => {
   const change = jest.fn();
   const tree = render(<FormControlLabel label="Mode" onChange={change} control={<Switch />} />);
   const persist = jest.fn(),
     preventDefault = jest.fn();
   const source = {
-    nativeEvent: { value: true, target: 7 },
+    nativeEvent: { pageX: 11, target: 7 },
     persist,
     preventDefault,
     stopPropagation: jest.fn(),
     isDefaultPrevented: () => false,
   };
-  fireEvent(tree.getByRole('switch'), 'change', source);
+  fireEvent.press(tree.getByRole('switch'), source);
   expect(change).toHaveBeenCalledTimes(1);
   const event = change.mock.calls[0][0];
   expect(event.nativeEvent).toBe(source.nativeEvent);

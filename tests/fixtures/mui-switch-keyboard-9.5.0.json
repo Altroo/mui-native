@@ -1,0 +1,145 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Switch/Switch.js": "b177856fcb597ff0d7b0a67674d520dd50d8d2ba69dc4422a9fc301aa4a112aa",
+      "Switch/Switch.d.ts": "7a5bcb70a2b1b72d52636ef8aed8b8c8a374067367667fcb8517e492f37329c3",
+      "Switch/switchClasses.js": "21563a3827a96b72641927b49e3a1a83559e9f10c6508611549d377cf809c188",
+      "Switch/switchClasses.d.ts": "9087d62992fb955a421851106b0e8c815f3e24120b95c56e8373d384e273e0e5",
+      "internal/SwitchBase.js": "847f4c9543c8fa87373a840f3a999f160ae6d98b9d342f3f3afecf4674001227",
+      "internal/SwitchBase.d.ts": "ad7c704f844817979571445db6272bf50c51c04ddbba03b549e0a18b1cb5200c",
+      "FormControlLabel/FormControlLabel.js": "88d38097cedbc16a56e2fb9238cd0e3a84fe1a6d724f43118e5548eab1c7b938",
+      "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+      "styles/shadows.js": "6f8f7c7e8c6c9ab7d1d0c6383d48d4430d9bf423fe138fc9e73be607c2bc8f91"
+    }
+  },
+  "renderer": {
+    "name": "react-dom",
+    "version": "19.3.0",
+    "integrity": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==",
+    "sourceFiles": {
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "cjs/react-dom-client.development.js": "c10b5e5ad37ca22c88b58bf4ada9a3b655ab79934c0b5cc6bad26f42c774584f"
+    }
+  },
+  "scope": "Actual original MUI Switch in Chromium with trusted Playwright keyboard presses; native hardware delivery remains unverified.",
+  "fixtures": [
+    {
+      "input": {
+        "name": "Switch Enter",
+        "kind": "Switch",
+        "keys": ["Enter"]
+      },
+      "states": [
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Switch Space",
+        "kind": "Switch",
+        "keys": ["Space"]
+      },
+      "states": [
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": [
+            {
+              "id": "a",
+              "checked": true,
+              "value": "on",
+              "name": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "input": {
+        "name": "Switch canceled Space",
+        "kind": "Switch",
+        "cancelSpace": true,
+        "keys": ["Space"]
+      },
+      "states": [
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        },
+        {
+          "active": "a",
+          "controls": [
+            {
+              "id": "a",
+              "checked": false,
+              "value": "on",
+              "name": "",
+              "disabled": false
+            }
+          ],
+          "trace": []
+        }
+      ]
+    }
+  ]
+}

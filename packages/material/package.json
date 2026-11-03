@@ -414,6 +414,11 @@
       "types": "./dist/FormControlLabel/formControlLabelClasses/index.d.ts",
       "react-native": "./src/FormControlLabel/formControlLabelClasses/index.ts",
       "default": "./dist/FormControlLabel/formControlLabelClasses/index.js"
+    },
+    "./Switch/switchClasses": {
+      "types": "./dist/Switch/switchClasses/index.d.ts",
+      "react-native": "./src/Switch/switchClasses/index.ts",
+      "default": "./dist/Switch/switchClasses/index.js"
     }
   },
   "dependencies": {
