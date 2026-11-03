@@ -995,6 +995,181 @@
       "adaptations": [
         "Native keyboard adapters retain the original non-button click/default-prevention ordering while exposing truthful native key payloads rather than a browser MouseEvent."
       ]
+    },
+    {
+      "localFile": "packages/material/src/lists.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "List/List.js": "dd68db6acbfdc9a26ea46a0d597e471f1a8a7f775020a70faeb4b4feb55c3982",
+          "List/List.d.ts": "4f61dfa590d72cd0dd636c7e675a9bc0e78e55d9a187f4ed8065766517f16e9b",
+          "ListItem/ListItem.js": "37ebb4b8746f9c32a8576d0462501b01062a2b0c9212bf856e491155ebe8ac5c",
+          "ListItem/ListItem.d.ts": "7c0ce070497cc4b72ee7191d89d1f42ef7edd727f408926e51a367a7f44593c5",
+          "ListItemButton/ListItemButton.js": "abededff4fe15c71fc8c1a268094c1809505adf2c0075cd981e39770f0d94f17",
+          "ListItemButton/ListItemButton.d.ts": "95cb883d931944e9716e253a8cd868d844492e36f83e55b711b7797b4a17bc5e",
+          "ListItemText/ListItemText.js": "79031f4f4f934200556d9de8dcb52040c24195aaa6a86470771c85cdb51fc964",
+          "ListItemText/ListItemText.d.ts": "1b3db7c58ec0eb07cd02bef0c20bc8665842f021d41c7238f43760b6f59ce7e3",
+          "ListItemIcon/ListItemIcon.js": "a504165c16674bc925faecb4d2d2bbf9ad3f28f25e7f2cb0539417f9eea3e7bd",
+          "ListItemIcon/ListItemIcon.d.ts": "a123906a4c450f3dbb7d7233fed51b686baa11743082af151c0b7740e1106854",
+          "ListItemAvatar/ListItemAvatar.js": "2914dcf38c93a0577faf78664611c41ab613a324f2a158826b2b2ff35ac892c7",
+          "ListItemAvatar/ListItemAvatar.d.ts": "1c671fa97ad69902c110c7890527f5720a785a2e0b68efcb77c16f37d6274d67",
+          "ListItemSecondaryAction/ListItemSecondaryAction.js": "2bfa661cc8f90e8524ae9ca44e451a938ea8a9c332a7573aada7fd3af18f54bd",
+          "ListItemSecondaryAction/ListItemSecondaryAction.d.ts": "4fd980415963365d1b88bca5012054aaf84ccda2f2c46af0e56220754eaf5769",
+          "ListSubheader/ListSubheader.js": "6e580efd6839072f3d1574fcd1c3d64d9742e1c8972a3e352287644e0f7e30ca",
+          "ListSubheader/ListSubheader.d.ts": "60f18383bd4a5f6d9135931c75b5338a6975359f9b9896cf439d809023292a0e",
+          "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7"
+        }
+      },
+      "adaptations": [
+        "Native List context, padding, icon/avatar/subheader style contracts adapt the pinned MIT source. Owned ScrollView/sticky indices and fragment identity are native extensions."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/listItem.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "List/List.js": "dd68db6acbfdc9a26ea46a0d597e471f1a8a7f775020a70faeb4b4feb55c3982",
+          "List/List.d.ts": "4f61dfa590d72cd0dd636c7e675a9bc0e78e55d9a187f4ed8065766517f16e9b",
+          "ListItem/ListItem.js": "37ebb4b8746f9c32a8576d0462501b01062a2b0c9212bf856e491155ebe8ac5c",
+          "ListItem/ListItem.d.ts": "7c0ce070497cc4b72ee7191d89d1f42ef7edd727f408926e51a367a7f44593c5",
+          "ListItemButton/ListItemButton.js": "abededff4fe15c71fc8c1a268094c1809505adf2c0075cd981e39770f0d94f17",
+          "ListItemButton/ListItemButton.d.ts": "95cb883d931944e9716e253a8cd868d844492e36f83e55b711b7797b4a17bc5e",
+          "ListItemText/ListItemText.js": "79031f4f4f934200556d9de8dcb52040c24195aaa6a86470771c85cdb51fc964",
+          "ListItemText/ListItemText.d.ts": "1b3db7c58ec0eb07cd02bef0c20bc8665842f021d41c7238f43760b6f59ce7e3",
+          "ListItemIcon/ListItemIcon.js": "a504165c16674bc925faecb4d2d2bbf9ad3f28f25e7f2cb0539417f9eea3e7bd",
+          "ListItemIcon/ListItemIcon.d.ts": "a123906a4c450f3dbb7d7233fed51b686baa11743082af151c0b7740e1106854",
+          "ListItemAvatar/ListItemAvatar.js": "2914dcf38c93a0577faf78664611c41ab613a324f2a158826b2b2ff35ac892c7",
+          "ListItemAvatar/ListItemAvatar.d.ts": "1c671fa97ad69902c110c7890527f5720a785a2e0b68efcb77c16f37d6274d67",
+          "ListItemSecondaryAction/ListItemSecondaryAction.js": "2bfa661cc8f90e8524ae9ca44e451a938ea8a9c332a7573aada7fd3af18f54bd",
+          "ListItemSecondaryAction/ListItemSecondaryAction.d.ts": "4fd980415963365d1b88bca5012054aaf84ccda2f2c46af0e56220754eaf5769",
+          "ListSubheader/ListSubheader.js": "6e580efd6839072f3d1574fcd1c3d64d9742e1c8972a3e352287644e0f7e30ca",
+          "ListSubheader/ListSubheader.d.ts": "60f18383bd4a5f6d9135931c75b5338a6975359f9b9896cf439d809023292a0e",
+          "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7"
+        }
+      },
+      "adaptations": [
+        "Native ListItem root/secondary-action slots, density/gutters/divider and absolute logical-end action geometry adapt the pinned MIT source. Natural-size fitting excludes parent-dependent axes."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/listItemText.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "List/List.js": "dd68db6acbfdc9a26ea46a0d597e471f1a8a7f775020a70faeb4b4feb55c3982",
+          "List/List.d.ts": "4f61dfa590d72cd0dd636c7e675a9bc0e78e55d9a187f4ed8065766517f16e9b",
+          "ListItem/ListItem.js": "37ebb4b8746f9c32a8576d0462501b01062a2b0c9212bf856e491155ebe8ac5c",
+          "ListItem/ListItem.d.ts": "7c0ce070497cc4b72ee7191d89d1f42ef7edd727f408926e51a367a7f44593c5",
+          "ListItemButton/ListItemButton.js": "abededff4fe15c71fc8c1a268094c1809505adf2c0075cd981e39770f0d94f17",
+          "ListItemButton/ListItemButton.d.ts": "95cb883d931944e9716e253a8cd868d844492e36f83e55b711b7797b4a17bc5e",
+          "ListItemText/ListItemText.js": "79031f4f4f934200556d9de8dcb52040c24195aaa6a86470771c85cdb51fc964",
+          "ListItemText/ListItemText.d.ts": "1b3db7c58ec0eb07cd02bef0c20bc8665842f021d41c7238f43760b6f59ce7e3",
+          "ListItemIcon/ListItemIcon.js": "a504165c16674bc925faecb4d2d2bbf9ad3f28f25e7f2cb0539417f9eea3e7bd",
+          "ListItemIcon/ListItemIcon.d.ts": "a123906a4c450f3dbb7d7233fed51b686baa11743082af151c0b7740e1106854",
+          "ListItemAvatar/ListItemAvatar.js": "2914dcf38c93a0577faf78664611c41ab613a324f2a158826b2b2ff35ac892c7",
+          "ListItemAvatar/ListItemAvatar.d.ts": "1c671fa97ad69902c110c7890527f5720a785a2e0b68efcb77c16f37d6274d67",
+          "ListItemSecondaryAction/ListItemSecondaryAction.js": "2bfa661cc8f90e8524ae9ca44e451a938ea8a9c332a7573aada7fd3af18f54bd",
+          "ListItemSecondaryAction/ListItemSecondaryAction.d.ts": "4fd980415963365d1b88bca5012054aaf84ccda2f2c46af0e56220754eaf5769",
+          "ListSubheader/ListSubheader.js": "6e580efd6839072f3d1574fcd1c3d64d9742e1c8972a3e352287644e0f7e30ca",
+          "ListSubheader/ListSubheader.d.ts": "60f18383bd4a5f6d9135931c75b5338a6975359f9b9896cf439d809023292a0e",
+          "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7"
+        }
+      },
+      "adaptations": [
+        "Primary fallback, dense Typography choices, truthy multiline state and three native slot contracts follow pinned source; native wrapping and ref types replace browser hosts."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/listItemButton.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "List/List.js": "dd68db6acbfdc9a26ea46a0d597e471f1a8a7f775020a70faeb4b4feb55c3982",
+          "List/List.d.ts": "4f61dfa590d72cd0dd636c7e675a9bc0e78e55d9a187f4ed8065766517f16e9b",
+          "ListItem/ListItem.js": "37ebb4b8746f9c32a8576d0462501b01062a2b0c9212bf856e491155ebe8ac5c",
+          "ListItem/ListItem.d.ts": "7c0ce070497cc4b72ee7191d89d1f42ef7edd727f408926e51a367a7f44593c5",
+          "ListItemButton/ListItemButton.js": "abededff4fe15c71fc8c1a268094c1809505adf2c0075cd981e39770f0d94f17",
+          "ListItemButton/ListItemButton.d.ts": "95cb883d931944e9716e253a8cd868d844492e36f83e55b711b7797b4a17bc5e",
+          "ListItemText/ListItemText.js": "79031f4f4f934200556d9de8dcb52040c24195aaa6a86470771c85cdb51fc964",
+          "ListItemText/ListItemText.d.ts": "1b3db7c58ec0eb07cd02bef0c20bc8665842f021d41c7238f43760b6f59ce7e3",
+          "ListItemIcon/ListItemIcon.js": "a504165c16674bc925faecb4d2d2bbf9ad3f28f25e7f2cb0539417f9eea3e7bd",
+          "ListItemIcon/ListItemIcon.d.ts": "a123906a4c450f3dbb7d7233fed51b686baa11743082af151c0b7740e1106854",
+          "ListItemAvatar/ListItemAvatar.js": "2914dcf38c93a0577faf78664611c41ab613a324f2a158826b2b2ff35ac892c7",
+          "ListItemAvatar/ListItemAvatar.d.ts": "1c671fa97ad69902c110c7890527f5720a785a2e0b68efcb77c16f37d6274d67",
+          "ListItemSecondaryAction/ListItemSecondaryAction.js": "2bfa661cc8f90e8524ae9ca44e451a938ea8a9c332a7573aada7fd3af18f54bd",
+          "ListItemSecondaryAction/ListItemSecondaryAction.d.ts": "4fd980415963365d1b88bca5012054aaf84ccda2f2c46af0e56220754eaf5769",
+          "ListSubheader/ListSubheader.js": "6e580efd6839072f3d1574fcd1c3d64d9742e1c8972a3e352287644e0f7e30ca",
+          "ListSubheader/ListSubheader.d.ts": "60f18383bd4a5f6d9135931c75b5338a6975359f9b9896cf439d809023292a0e",
+          "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7"
+        }
+      },
+      "adaptations": [
+        "Native ButtonBase composition, density/alignment, selected/disabled/hover/focus styling and autofocus follow pinned source with native touch-size and measured action-space adaptations."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/listContext.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "List/List.js": "dd68db6acbfdc9a26ea46a0d597e471f1a8a7f775020a70faeb4b4feb55c3982",
+          "List/List.d.ts": "4f61dfa590d72cd0dd636c7e675a9bc0e78e55d9a187f4ed8065766517f16e9b",
+          "ListItem/ListItem.js": "37ebb4b8746f9c32a8576d0462501b01062a2b0c9212bf856e491155ebe8ac5c",
+          "ListItem/ListItem.d.ts": "7c0ce070497cc4b72ee7191d89d1f42ef7edd727f408926e51a367a7f44593c5",
+          "ListItemButton/ListItemButton.js": "abededff4fe15c71fc8c1a268094c1809505adf2c0075cd981e39770f0d94f17",
+          "ListItemButton/ListItemButton.d.ts": "95cb883d931944e9716e253a8cd868d844492e36f83e55b711b7797b4a17bc5e",
+          "ListItemText/ListItemText.js": "79031f4f4f934200556d9de8dcb52040c24195aaa6a86470771c85cdb51fc964",
+          "ListItemText/ListItemText.d.ts": "1b3db7c58ec0eb07cd02bef0c20bc8665842f021d41c7238f43760b6f59ce7e3",
+          "ListItemIcon/ListItemIcon.js": "a504165c16674bc925faecb4d2d2bbf9ad3f28f25e7f2cb0539417f9eea3e7bd",
+          "ListItemIcon/ListItemIcon.d.ts": "a123906a4c450f3dbb7d7233fed51b686baa11743082af151c0b7740e1106854",
+          "ListItemAvatar/ListItemAvatar.js": "2914dcf38c93a0577faf78664611c41ab613a324f2a158826b2b2ff35ac892c7",
+          "ListItemAvatar/ListItemAvatar.d.ts": "1c671fa97ad69902c110c7890527f5720a785a2e0b68efcb77c16f37d6274d67",
+          "ListItemSecondaryAction/ListItemSecondaryAction.js": "2bfa661cc8f90e8524ae9ca44e451a938ea8a9c332a7573aada7fd3af18f54bd",
+          "ListItemSecondaryAction/ListItemSecondaryAction.d.ts": "4fd980415963365d1b88bca5012054aaf84ccda2f2c46af0e56220754eaf5769",
+          "ListSubheader/ListSubheader.js": "6e580efd6839072f3d1574fcd1c3d64d9742e1c8972a3e352287644e0f7e30ca",
+          "ListSubheader/ListSubheader.d.ts": "60f18383bd4a5f6d9135931c75b5338a6975359f9b9896cf439d809023292a0e",
+          "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7"
+        }
+      },
+      "adaptations": [
+        "Private density/alignment/gutter context adapts pinned ListContext; private action measurement/space extends native composition."
+      ]
     }
   ]
 }

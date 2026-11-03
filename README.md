@@ -32,7 +32,7 @@ pnpm check
 pnpm catalog
 ```
 
-The catalog uses Expo SDK 58. Rendering ButtonBase requires a native development build because Expo Go does not include the library's interaction host. See [installation](docs/installation.md) and [native host](docs/native-host.md). Press `i` or `a` from Expo's terminal interface to launch the corresponding simulator. `pnpm --filter native-catalog ios` and `pnpm --filter native-catalog android` create development builds when native build prerequisites are installed.
+The catalog uses Expo SDK 58. Rendering ButtonBase or ListItemButton requires a native development build because Expo Go does not include the library's interaction host. See [installation](docs/installation.md) and [native host](docs/native-host.md). Press `i` or `a` from Expo's terminal interface to launch the corresponding simulator. `pnpm --filter native-catalog ios` and `pnpm --filter native-catalog android` create development builds when native build prerequisites are installed.
 
 Do not run `npm install @altroo/mui-native` yet. For testing a separate application before publication, use the local tarball instructions in [installation](docs/installation.md).
 
@@ -99,6 +99,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Native Grow and automatic height timing](docs/grow.md)
 - [Native anchored Popover](docs/popover.md)
 - [Native ButtonBase activation and focus](docs/button-base.md)
+- [Native List composition, slots and scrolling](docs/lists.md)
 - [Native interaction host and custom roots](docs/native-host.md)
 - [Text rendering and inheritance in native containers](docs/text-containers.md)
 - [Spacing, breakpoints and responsive styles](docs/layout-system.md)

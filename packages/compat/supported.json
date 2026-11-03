@@ -52,7 +52,15 @@
       "transitions/types",
       "Grow",
       "Popover",
-      "ButtonBase"
+      "ButtonBase",
+      "List",
+      "ListItemIcon",
+      "ListItemAvatar",
+      "ListSubheader",
+      "ListItem",
+      "ListItemSecondaryAction",
+      "ListItemButton",
+      "ListItemText"
     ]
   },
   "@mui/system": {
