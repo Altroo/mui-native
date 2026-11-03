@@ -1,4 +1,11 @@
-import React, { forwardRef, useImperativeHandle, useRef, useState, useContext } from 'react';
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+  useContext,
+  useLayoutEffect,
+} from 'react';
 import {
   Pressable,
   StyleSheet,
@@ -31,6 +38,8 @@ import {
 } from './nativeButtonEvents';
 import { NativePressable } from '@altroo/mui-native-host';
 import { NativeCompositeKeys } from './nativeCompositeKeys';
+import { useNativeButtonAutoFocus } from './useNativeButtonAutoFocus';
+import { useMenuEvent } from './useMenuEvent';
 import { nativeButtonModality } from './nativeButtonModality';
 export type { ButtonBaseKeyEvent, ButtonBaseActivationEvent } from './nativeButtonEvents';
 export interface ButtonBaseActions {
@@ -47,6 +56,7 @@ export interface ButtonBaseRootProps extends PressableProps {
 }
 export interface ButtonBaseOwnProps {
   disabled?: boolean;
+  autoFocus?: boolean;
   ref?: React.Ref<ViewInstance>;
   action?: React.Ref<ButtonBaseActions>;
   children?: React.ReactNode | ((state: ButtonBaseState) => React.ReactNode);
@@ -89,6 +99,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   const compositeKeys = useContext(NativeCompositeKeys);
   const {
     action,
+    autoFocus = false,
     children,
     component,
     LinkComponent,
@@ -117,6 +128,14 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   } = props;
   const node = useRef<ViewInstance | null>(null);
   const ref = useForkRef(node, forwarded);
+  useNativeButtonAutoFocus(autoFocus, node, disabled);
+  const mounted = useRef(true);
+  useLayoutEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
   const [focused, setFocused] = useState(false);
   const focusVisible = focused && !disabled && !suppressFocusVisible;
   if ((disabled || suppressFocusVisible) && focused) setFocused(false);
@@ -162,8 +181,8 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     }),
     [],
   );
-  const activate = (event: ButtonBaseActivationEvent) => {
-    if (disabled) {
+  const activate = useMenuEvent((event: ButtonBaseActivationEvent) => {
+    if (!mounted.current || disabled || node.current?.isConnected === false) {
       event.preventDefault?.();
       return;
     }
@@ -177,7 +196,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
         diagnostic('button-link', 'The native platform could not open this ButtonBase link.');
       }
     }
-  };
+  });
   const stateFor = (state: PressableStateCallbackType): ButtonBaseState => ({
     ...state,
     focusVisible,
@@ -227,6 +246,38 @@ export const ButtonBase: React.ForwardRefExoticComponent<
       'button-route',
       'ButtonBase to requires an application-owned native link component.',
     );
+  const handleKeyDown = useMenuEvent((event) => {
+    if (!mounted.current) return;
+    nativeButtonModality.keyboard();
+    const key = buttonKeyEvent(event);
+    if (disabled) {
+      if (focusableWhenDisabled && key.key !== 'Tab' && !compositeKeys?.includes(key.key))
+        key.preventDefault();
+      return;
+    }
+    onKeyDown?.(key);
+    if (key.target !== key.currentTarget || key.isComposing || key.isCanceled) return;
+    if (key.key === ' ') key.preventDefault();
+    else if (key.key === 'Enter') {
+      key.preventDefault();
+      activate(buttonActivationEvent(key));
+    }
+  });
+  const handleKeyUp = useMenuEvent((event) => {
+    if (!mounted.current) return;
+    nativeButtonModality.keyboard();
+    if (disabled) return;
+    const key = buttonKeyEvent(event);
+    onKeyUp?.(key);
+    if (
+      key.target === key.currentTarget &&
+      !key.isComposing &&
+      !key.isCanceled &&
+      key.key === ' ' &&
+      !isButtonEventPrevented(key)
+    )
+      activate(buttonActivationEvent(key));
+  });
   return (
     <Root
       {...host}
@@ -272,36 +323,8 @@ export const ButtonBase: React.ForwardRefExoticComponent<
         setFocused(false);
         onBlur?.(event);
       }}
-      onKeyDown={(event) => {
-        nativeButtonModality.keyboard();
-        const key = buttonKeyEvent(event);
-        if (disabled) {
-          if (focusableWhenDisabled && key.key !== 'Tab' && !compositeKeys?.includes(key.key))
-            key.preventDefault();
-          return;
-        }
-        onKeyDown?.(key);
-        if (key.target !== key.currentTarget || key.isComposing || key.isCanceled) return;
-        if (key.key === ' ') key.preventDefault();
-        else if (key.key === 'Enter') {
-          key.preventDefault();
-          activate(buttonActivationEvent(key));
-        }
-      }}
-      onKeyUp={(event) => {
-        nativeButtonModality.keyboard();
-        if (disabled) return;
-        const key = buttonKeyEvent(event);
-        onKeyUp?.(key);
-        if (
-          key.target === key.currentTarget &&
-          !key.isComposing &&
-          !key.isCanceled &&
-          key.key === ' ' &&
-          !isButtonEventPrevented(key)
-        )
-          activate(buttonActivationEvent(key));
-      }}
+      onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
       style={(state) => viewStyle(effectiveStyle(state))}
     >
       {(state) => (

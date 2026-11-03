@@ -53,7 +53,11 @@ const danger: string = theme.status.danger;
 const layout: NativeGridLayout = 'auto';
 const content = (
   <ThemeProvider theme={theme}>
-    <Button loading={null} loadingPosition="start" onClick={(event) => event.nativeEvent.pageX}>
+    <Button
+      loading={null}
+      loadingPosition="start"
+      onClick={(event) => ('pageX' in event.nativeEvent ? event.nativeEvent.pageX : 0)}
+    >
       Save
     </Button>
     <DeepButton

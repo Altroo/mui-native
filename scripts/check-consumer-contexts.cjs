@@ -80,6 +80,7 @@ try {
     'FormHelperText',
     'Typography',
     'Button',
+    'IconButton',
     'InputBase',
     'Input',
     'FilledInput',
@@ -111,6 +112,17 @@ try {
     requireConsumer('@altroo/mui-native/Menu/menuClasses').default,
     material.menuClasses,
   );
+  for (const [component, classes, helper] of [
+    ['Button', 'buttonClasses', 'getButtonUtilityClass'],
+    ['IconButton', 'iconButtonClasses', 'getIconButtonUtilityClass'],
+  ]) {
+    const entry = requireConsumer('@altroo/mui-native/' + component);
+    const deep = requireConsumer('@altroo/mui-native/' + component + '/' + classes);
+    assert.equal(entry[classes], material[classes]);
+    assert.equal(entry[helper], material[helper]);
+    assert.equal(deep.default, material[classes]);
+    assert.equal(deep[helper], material[helper]);
+  }
   for (const name of ['selectClasses', 'getSelectUtilityClasses'])
     assert.equal(requireConsumer('@altroo/mui-native/Select')[name], material[name]);
   assert.equal(

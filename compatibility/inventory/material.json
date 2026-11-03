@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "d640477676cac06258221108fa5817a05844886ce6679d54de8ba500f27627db",
+  "nativeSourceSha256": "cc854ad4453d792af528e60bffd28ed5fcd73dec0addf5139e143bb8f66926ff",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -10807,7 +10807,7 @@
           "line": 61
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10826,7 +10826,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10845,7 +10845,7 @@
           "line": 59
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11092,7 +11092,7 @@
           "line": 11
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11130,7 +11130,7 @@
           "line": 9
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11149,7 +11149,7 @@
           "line": 10
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11168,7 +11168,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17058,7 +17058,7 @@
           "line": 60
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17590,7 +17590,7 @@
           "line": 38
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -19490,7 +19490,7 @@
           "line": 39
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -19509,7 +19509,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -19528,7 +19528,7 @@
           "line": 37
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -19547,7 +19547,7 @@
           "line": 10
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -19566,7 +19566,7 @@
           "line": 88
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -19585,7 +19585,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -19604,7 +19604,7 @@
           "line": 9
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35262,7 +35262,7 @@
           "module": "@altroo/mui-native:src/buttonBase.tsx",
           "name": "ButtonBaseRootProps",
           "kind": "type",
-          "line": 43
+          "line": 52
         }
       ]
     },
@@ -35273,7 +35273,7 @@
           "module": "@altroo/mui-native:src/buttonBase.tsx",
           "name": "ButtonBaseState",
           "kind": "type",
-          "line": 39
+          "line": 48
         }
       ]
     },
@@ -35707,6 +35707,17 @@
       ]
     },
     {
+      "name": "NativeButtonComponent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/buttonTypes.ts",
+          "name": "NativeButtonComponent",
+          "kind": "type",
+          "line": 70
+        }
+      ]
+    },
+    {
       "name": "NativeFocusTarget",
       "origins": [
         {
@@ -35714,6 +35725,17 @@
           "name": "NativeFocusTarget",
           "kind": "type",
           "line": 1
+        }
+      ]
+    },
+    {
+      "name": "NativeIconButtonComponent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/buttonTypes.ts",
+          "name": "NativeIconButtonComponent",
+          "kind": "type",
+          "line": 77
         }
       ]
     },
@@ -49581,7 +49603,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonPropsVariantOverrides",
+          "file": "src/buttonTypes.ts",
+          "line": 6,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonPropsColorOverrides",
@@ -49591,7 +49620,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonPropsColorOverrides",
+          "file": "src/buttonTypes.ts",
+          "line": 7,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonPropsSizeOverrides",
@@ -49601,7 +49637,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonPropsSizeOverrides",
+          "file": "src/buttonTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonOwnProps",
@@ -49619,7 +49662,7 @@
           "line": 15,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -49632,7 +49675,7 @@
           "line": 19,
           "kind": "property",
           "type": "Partial<ButtonClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -49801,7 +49844,7 @@
           "line": 87,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -49832,9 +49875,15 @@
       "inheritanceResolved": false,
       "nativeCandidates": [
         {
+          "name": "ButtonOwnProps",
+          "file": "src/buttonTypes.ts",
+          "line": 30,
+          "package": "@altroo/mui-native"
+        },
+        {
           "name": "ButtonProps",
-          "file": "src/buttons.tsx",
-          "line": 24,
+          "file": "src/buttonTypes.ts",
+          "line": 62,
           "package": "@altroo/mui-native"
         }
       ]
@@ -49943,8 +49992,8 @@
       "nativeCandidates": [
         {
           "name": "ButtonProps",
-          "file": "src/buttons.tsx",
-          "line": 24,
+          "file": "src/buttonTypes.ts",
+          "line": 62,
           "package": "@altroo/mui-native"
         }
       ]
@@ -49957,7 +50006,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonPropsVariantOverrides",
+          "file": "src/buttonTypes.ts",
+          "line": 6,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonPropsColorOverrides",
@@ -49967,7 +50023,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonPropsColorOverrides",
+          "file": "src/buttonTypes.ts",
+          "line": 7,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonPropsSizeOverrides",
@@ -49977,7 +50040,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonPropsSizeOverrides",
+          "file": "src/buttonTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonOwnProps",
@@ -49995,7 +50065,7 @@
           "line": 15,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -50008,7 +50078,7 @@
           "line": 19,
           "kind": "property",
           "type": "Partial<ButtonClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -50177,7 +50247,7 @@
           "line": 87,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -50208,9 +50278,15 @@
       "inheritanceResolved": false,
       "nativeCandidates": [
         {
+          "name": "ButtonOwnProps",
+          "file": "src/buttonTypes.ts",
+          "line": 30,
+          "package": "@altroo/mui-native"
+        },
+        {
           "name": "ButtonProps",
-          "file": "src/buttons.tsx",
-          "line": 24,
+          "file": "src/buttonTypes.ts",
+          "line": 62,
           "package": "@altroo/mui-native"
         }
       ]
@@ -50319,8 +50395,8 @@
       "nativeCandidates": [
         {
           "name": "ButtonProps",
-          "file": "src/buttons.tsx",
-          "line": 24,
+          "file": "src/buttonTypes.ts",
+          "line": 62,
           "package": "@altroo/mui-native"
         }
       ]
@@ -50698,7 +50774,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonClasses",
+          "file": "src/buttonClasses.ts",
+          "line": 71,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonClassKey",
@@ -50710,7 +50793,14 @@
         "ButtonClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonClassKey",
+          "file": "src/buttonClasses.ts",
+          "line": 70,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonClasses",
@@ -51085,7 +51175,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonClasses",
+          "file": "src/buttonClasses.ts",
+          "line": 71,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonClassKey",
@@ -51097,7 +51194,14 @@
         "ButtonClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonClassKey",
+          "file": "src/buttonClasses.ts",
+          "line": 70,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonBaseOwnProps",
@@ -51347,13 +51451,13 @@
         {
           "name": "ButtonBaseOwnProps",
           "file": "src/buttonBase.tsx",
-          "line": 48,
+          "line": 57,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 72,
+          "line": 82,
           "package": "@altroo/mui-native"
         }
       ]
@@ -51491,7 +51595,7 @@
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 72,
+          "line": 82,
           "package": "@altroo/mui-native"
         }
       ]
@@ -51522,7 +51626,7 @@
         {
           "name": "ButtonBaseActions",
           "file": "src/buttonBase.tsx",
-          "line": 36,
+          "line": 45,
           "package": "@altroo/mui-native"
         }
       ]
@@ -51775,13 +51879,13 @@
         {
           "name": "ButtonBaseOwnProps",
           "file": "src/buttonBase.tsx",
-          "line": 48,
+          "line": 57,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 72,
+          "line": 82,
           "package": "@altroo/mui-native"
         }
       ]
@@ -51919,7 +52023,7 @@
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 72,
+          "line": 82,
           "package": "@altroo/mui-native"
         }
       ]
@@ -51950,7 +52054,7 @@
         {
           "name": "ButtonBaseActions",
           "file": "src/buttonBase.tsx",
-          "line": 36,
+          "line": 45,
           "package": "@altroo/mui-native"
         }
       ]
@@ -73099,7 +73203,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonPropsColorOverrides",
+          "file": "src/buttonTypes.ts",
+          "line": 9,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonPropsSizeOverrides",
@@ -73109,7 +73220,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonPropsSizeOverrides",
+          "file": "src/buttonTypes.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonOwnProps",
@@ -73140,7 +73258,7 @@
           "line": 18,
           "kind": "property",
           "type": "Partial<IconButtonClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73153,7 +73271,7 @@
           "line": 25,
           "kind": "property",
           "type": "OverridableStringUnion<'inherit' | 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning', IconButtonPropsColorOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73192,7 +73310,7 @@
           "line": 43,
           "kind": "property",
           "type": "'start' | 'end' | false | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73205,7 +73323,7 @@
           "line": 49,
           "kind": "property",
           "type": "boolean | null | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73218,7 +73336,7 @@
           "line": 56,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73231,7 +73349,7 @@
           "line": 62,
           "kind": "property",
           "type": "OverridableStringUnion<'small' | 'medium' | 'large', IconButtonPropsSizeOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73259,7 +73377,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonOwnProps",
+          "file": "src/buttonTypes.ts",
+          "line": 46,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "IconButtonProps",
+          "file": "src/buttonTypes.ts",
+          "line": 66,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonTypeMap",
@@ -73305,7 +73436,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonProps",
+          "file": "src/buttonTypes.ts",
+          "line": 66,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonPropsColorOverrides",
@@ -73315,7 +73453,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonPropsColorOverrides",
+          "file": "src/buttonTypes.ts",
+          "line": 9,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonPropsSizeOverrides",
@@ -73325,7 +73470,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonPropsSizeOverrides",
+          "file": "src/buttonTypes.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonOwnProps",
@@ -73356,7 +73508,7 @@
           "line": 18,
           "kind": "property",
           "type": "Partial<IconButtonClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73369,7 +73521,7 @@
           "line": 25,
           "kind": "property",
           "type": "OverridableStringUnion<'inherit' | 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning', IconButtonPropsColorOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73408,7 +73560,7 @@
           "line": 43,
           "kind": "property",
           "type": "'start' | 'end' | false | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73421,7 +73573,7 @@
           "line": 49,
           "kind": "property",
           "type": "boolean | null | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73434,7 +73586,7 @@
           "line": 56,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73447,7 +73599,7 @@
           "line": 62,
           "kind": "property",
           "type": "OverridableStringUnion<'small' | 'medium' | 'large', IconButtonPropsSizeOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -73475,7 +73627,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonOwnProps",
+          "file": "src/buttonTypes.ts",
+          "line": 46,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "IconButtonProps",
+          "file": "src/buttonTypes.ts",
+          "line": 66,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonTypeMap",
@@ -73521,7 +73686,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonProps",
+          "file": "src/buttonTypes.ts",
+          "line": 66,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonClasses",
@@ -73753,7 +73925,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonClasses",
+          "file": "src/buttonClasses.ts",
+          "line": 73,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonClassKey",
@@ -73765,7 +73944,14 @@
         "IconButtonClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonClassKey",
+          "file": "src/buttonClasses.ts",
+          "line": 72,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonClasses",
@@ -73997,7 +74183,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonClasses",
+          "file": "src/buttonClasses.ts",
+          "line": 73,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "IconButtonClassKey",
@@ -74009,7 +74202,14 @@
         "IconButtonClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "IconButtonClassKey",
+          "file": "src/buttonClasses.ts",
+          "line": 72,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ImageListPropsVariantOverrides",
@@ -177956,7 +178156,7 @@
     {
       "name": "ButtonBaseActions",
       "file": "src/buttonBase.tsx",
-      "line": 36,
+      "line": 45,
       "kind": "type",
       "members": [
         {
@@ -177966,7 +178166,7 @@
           "computed": false,
           "memberKind": "TSMethodSignature",
           "declaration": "focusVisible(): void;",
-          "line": 37,
+          "line": 46,
           "kind": "property",
           "type": "focusVisible(): void;"
         }
@@ -177978,7 +178178,7 @@
     {
       "name": "ButtonBaseState",
       "file": "src/buttonBase.tsx",
-      "line": 39,
+      "line": 48,
       "kind": "type",
       "members": [
         {
@@ -177988,7 +178188,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusVisible: boolean;",
-          "line": 40,
+          "line": 49,
           "kind": "property",
           "type": "boolean"
         },
@@ -177999,7 +178199,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 41,
+          "line": 50,
           "kind": "property",
           "type": "boolean"
         }
@@ -178013,7 +178213,7 @@
     {
       "name": "ButtonBaseRootProps",
       "file": "src/buttonBase.tsx",
-      "line": 43,
+      "line": 52,
       "kind": "type",
       "members": [
         {
@@ -178023,7 +178223,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>;",
-          "line": 44,
+          "line": 53,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         },
@@ -178034,7 +178234,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "href?: string;",
-          "line": 45,
+          "line": 54,
           "kind": "property",
           "type": "string"
         },
@@ -178045,7 +178245,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "to?: unknown;",
-          "line": 46,
+          "line": 55,
           "kind": "property",
           "type": "unknown"
         }
@@ -178061,7 +178261,7 @@
     {
       "name": "ButtonBaseOwnProps",
       "file": "src/buttonBase.tsx",
-      "line": 48,
+      "line": 57,
       "kind": "type",
       "members": [
         {
@@ -178071,7 +178271,18 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean;",
-          "line": 49,
+          "line": 58,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "autoFocus",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "autoFocus?: boolean;",
+          "line": 59,
           "kind": "property",
           "type": "boolean"
         },
@@ -178082,7 +178293,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>;",
-          "line": 50,
+          "line": 60,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         },
@@ -178093,7 +178304,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "action?: React.Ref<ButtonBaseActions>;",
-          "line": 51,
+          "line": 61,
           "kind": "property",
           "type": "React.Ref<ButtonBaseActions>"
         },
@@ -178104,7 +178315,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode | ((state: ButtonBaseState) => React.ReactNode);",
-          "line": 52,
+          "line": 62,
           "kind": "property",
           "type": "React.ReactNode | ((state: ButtonBaseState) => React.ReactNode)"
         },
@@ -178115,7 +178326,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 53,
+          "line": 63,
           "kind": "property",
           "type": "SxProps"
         },
@@ -178126,7 +178337,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle> | ((state: ButtonBaseState) => StyleProp<NativeStyle>);",
-          "line": 54,
+          "line": 64,
           "kind": "property",
           "type": "StyleProp<NativeStyle> | ((state: ButtonBaseState) => StyleProp<NativeStyle>)"
         },
@@ -178137,7 +178348,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<ButtonBaseRootProps>;",
-          "line": 55,
+          "line": 65,
           "kind": "property",
           "type": "React.ComponentType<ButtonBaseRootProps>"
         },
@@ -178148,7 +178359,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "LinkComponent?: React.ComponentType<ButtonBaseRootProps>;",
-          "line": 56,
+          "line": 66,
           "kind": "property",
           "type": "React.ComponentType<ButtonBaseRootProps>"
         },
@@ -178159,7 +178370,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "href?: string;",
-          "line": 57,
+          "line": 67,
           "kind": "property",
           "type": "string"
         },
@@ -178170,7 +178381,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "to?: unknown;",
-          "line": 58,
+          "line": 68,
           "kind": "property",
           "type": "unknown"
         },
@@ -178181,7 +178392,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClick?: (event: ButtonBaseActivationEvent) => void;",
-          "line": 59,
+          "line": 69,
           "kind": "event",
           "type": "(event: ButtonBaseActivationEvent) => void"
         },
@@ -178192,7 +178403,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onPress?: (event: ButtonBaseActivationEvent) => void;",
-          "line": 60,
+          "line": 70,
           "kind": "event",
           "type": "(event: ButtonBaseActivationEvent) => void"
         },
@@ -178203,7 +178414,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onKeyDown?: (event: ButtonBaseKeyEvent) => void;",
-          "line": 61,
+          "line": 71,
           "kind": "event",
           "type": "(event: ButtonBaseKeyEvent) => void"
         },
@@ -178214,7 +178425,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onKeyUp?: (event: ButtonBaseKeyEvent) => void;",
-          "line": 62,
+          "line": 72,
           "kind": "event",
           "type": "(event: ButtonBaseKeyEvent) => void"
         },
@@ -178225,7 +178436,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onFocusVisible?: PressableProps['onFocus'];",
-          "line": 63,
+          "line": 73,
           "kind": "event",
           "type": "PressableProps['onFocus']"
         },
@@ -178236,7 +178447,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableRipple?: boolean;",
-          "line": 64,
+          "line": 74,
           "kind": "property",
           "type": "boolean"
         },
@@ -178247,7 +178458,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableTouchRipple?: boolean;",
-          "line": 65,
+          "line": 75,
           "kind": "property",
           "type": "boolean"
         },
@@ -178258,7 +178469,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusRipple?: boolean;",
-          "line": 66,
+          "line": 76,
           "kind": "property",
           "type": "boolean"
         },
@@ -178269,7 +178480,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusableWhenDisabled?: boolean;",
-          "line": 68,
+          "line": 78,
           "kind": "property",
           "type": "boolean"
         },
@@ -178280,7 +178491,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "suppressFocusVisible?: boolean;",
-          "line": 70,
+          "line": 80,
           "kind": "property",
           "type": "boolean"
         }
@@ -178306,7 +178517,7 @@
     {
       "name": "ButtonBaseProps",
       "file": "src/buttonBase.tsx",
-      "line": 72,
+      "line": 82,
       "kind": "type",
       "members": [],
       "references": [
@@ -178318,9 +178529,122 @@
       "package": "@altroo/mui-native"
     },
     {
-      "name": "ButtonProps",
-      "file": "src/buttons.tsx",
-      "line": 24,
+      "name": "ButtonClassKey",
+      "file": "src/buttonClasses.ts",
+      "line": 70,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonClasses",
+      "file": "src/buttonClasses.ts",
+      "line": 71,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ButtonClassKey",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "IconButtonClassKey",
+      "file": "src/buttonClasses.ts",
+      "line": 72,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "IconButtonClasses",
+      "file": "src/buttonClasses.ts",
+      "line": 73,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "IconButtonClassKey",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonPropsVariantOverrides",
+      "file": "src/buttonTypes.ts",
+      "line": 6,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonPropsColorOverrides",
+      "file": "src/buttonTypes.ts",
+      "line": 7,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonPropsSizeOverrides",
+      "file": "src/buttonTypes.ts",
+      "line": 8,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "IconButtonPropsColorOverrides",
+      "file": "src/buttonTypes.ts",
+      "line": 9,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "IconButtonPropsSizeOverrides",
+      "file": "src/buttonTypes.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "OverrideUnion",
+      "file": "src/buttonTypes.ts",
+      "line": 11,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Base",
+        "Extract",
+        "K",
+        "Omit",
+        "Overrides",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Shared",
+      "file": "src/buttonTypes.ts",
+      "line": 23,
       "kind": "type",
       "members": [
         {
@@ -178330,53 +178654,79 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 25,
+          "line": 24,
           "kind": "property",
           "type": "React.ReactNode"
         },
         {
-          "name": "sx",
+          "name": "id",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "sx?: SxProps;",
+          "declaration": "id?: string;",
+          "line": 25,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string;",
           "line": 26,
           "kind": "property",
-          "type": "SxProps"
+          "type": "string"
         },
         {
-          "name": "style",
+          "name": "focusVisibleClassName",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "style?: PressableProps['style'];",
+          "declaration": "focusVisibleClassName?: string;",
           "line": 27,
           "kind": "property",
-          "type": "PressableProps['style']"
+          "type": "string"
         },
         {
-          "name": "onClick",
+          "name": "disableFocusRipple",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "onClick?: (event: GestureResponderEvent) => void;",
+          "declaration": "disableFocusRipple?: boolean;",
           "line": 28,
-          "kind": "event",
-          "type": "(event: GestureResponderEvent) => void"
-        },
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "ButtonBaseProps",
+        "Omit",
+        "React.ReactNode"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonOwnProps",
+      "file": "src/buttonTypes.ts",
+      "line": 30,
+      "kind": "type",
+      "members": [
         {
-          "name": "onPress",
+          "name": "classes",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "onPress?: (event: GestureResponderEvent) => void;",
-          "line": 29,
-          "kind": "event",
-          "type": "(event: GestureResponderEvent) => void"
+          "declaration": "classes?: Partial<ButtonClasses>;",
+          "line": 31,
+          "kind": "property",
+          "type": "Partial<ButtonClasses>"
         },
         {
           "name": "variant",
@@ -178384,10 +178734,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "variant?: 'text' | 'outlined' | 'contained';",
-          "line": 30,
+          "declaration": "variant?: OverrideUnion<'text' | 'outlined' | 'contained', ButtonPropsVariantOverrides>;",
+          "line": 32,
           "kind": "property",
-          "type": "'text' | 'outlined' | 'contained'"
+          "type": "OverrideUnion<'text' | 'outlined' | 'contained', ButtonPropsVariantOverrides>"
         },
         {
           "name": "color",
@@ -178395,10 +178745,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "color?: 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | 'inherit';",
-          "line": 31,
+          "declaration": "color?: OverrideUnion<\n    'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | 'inherit',\n    ButtonPropsColorOverrides\n  >;",
+          "line": 33,
           "kind": "property",
-          "type": "'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | 'inherit'"
+          "type": "OverrideUnion<\n    'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning' | 'inherit',\n    ButtonPropsColorOverrides\n  >"
         },
         {
           "name": "size",
@@ -178406,10 +178756,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "size?: 'small' | 'medium' | 'large';",
-          "line": 32,
+          "declaration": "size?: OverrideUnion<'small' | 'medium' | 'large', ButtonPropsSizeOverrides>;",
+          "line": 37,
           "kind": "property",
-          "type": "'small' | 'medium' | 'large'"
+          "type": "OverrideUnion<'small' | 'medium' | 'large', ButtonPropsSizeOverrides>"
         },
         {
           "name": "fullWidth",
@@ -178418,7 +178768,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullWidth?: boolean;",
-          "line": 33,
+          "line": 38,
           "kind": "property",
           "type": "boolean"
         },
@@ -178429,7 +178779,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "startIcon?: React.ReactNode;",
-          "line": 34,
+          "line": 39,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -178440,7 +178790,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "endIcon?: React.ReactNode;",
-          "line": 35,
+          "line": 40,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -178451,7 +178801,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "loading?: boolean | null;",
-          "line": 36,
+          "line": 41,
           "kind": "property",
           "type": "boolean | null"
         },
@@ -178462,7 +178812,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "loadingIndicator?: React.ReactNode;",
-          "line": 37,
+          "line": 42,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -178473,7 +178823,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "loadingPosition?: 'start' | 'end' | 'center';",
-          "line": 38,
+          "line": 43,
           "kind": "property",
           "type": "'start' | 'end' | 'center'"
         },
@@ -178484,28 +178834,266 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableElevation?: boolean;",
-          "line": 39,
+          "line": 44,
           "kind": "property",
           "type": "boolean"
-        },
+        }
+      ],
+      "references": [
+        "ButtonClasses",
+        "ButtonPropsColorOverrides",
+        "ButtonPropsSizeOverrides",
+        "ButtonPropsVariantOverrides",
+        "OverrideUnion",
+        "Partial",
+        "React.ReactNode",
+        "Shared"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "IconButtonOwnProps",
+      "file": "src/buttonTypes.ts",
+      "line": 46,
+      "kind": "type",
+      "members": [
         {
-          "name": "aria-label",
+          "name": "classes",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "'aria-label'?: string;",
-          "line": 40,
+          "declaration": "classes?: Partial<IconButtonClasses>;",
+          "line": 47,
+          "kind": "property",
+          "type": "Partial<IconButtonClasses>"
+        },
+        {
+          "name": "color",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "color?: OverrideUnion<\n    'default' | 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning',\n    IconButtonPropsColorOverrides\n  >;",
+          "line": 48,
+          "kind": "property",
+          "type": "OverrideUnion<\n    'default' | 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning',\n    IconButtonPropsColorOverrides\n  >"
+        },
+        {
+          "name": "size",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "size?: OverrideUnion<'small' | 'medium' | 'large', IconButtonPropsSizeOverrides>;",
+          "line": 52,
+          "kind": "property",
+          "type": "OverrideUnion<'small' | 'medium' | 'large', IconButtonPropsSizeOverrides>"
+        },
+        {
+          "name": "edge",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "edge?: 'start' | 'end' | false;",
+          "line": 53,
+          "kind": "property",
+          "type": "'start' | 'end' | false"
+        },
+        {
+          "name": "loading",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "loading?: boolean | null;",
+          "line": 54,
+          "kind": "property",
+          "type": "boolean | null"
+        },
+        {
+          "name": "loadingIndicator",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "loadingIndicator?: React.ReactNode;",
+          "line": 55,
+          "kind": "property",
+          "type": "React.ReactNode"
+        }
+      ],
+      "references": [
+        "IconButtonClasses",
+        "IconButtonPropsColorOverrides",
+        "IconButtonPropsSizeOverrides",
+        "OverrideUnion",
+        "Partial",
+        "React.ReactNode",
+        "Shared"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeProps",
+      "file": "src/buttonTypes.ts",
+      "line": 57,
+      "kind": "type",
+      "members": [
+        {
+          "name": "ref",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ref?: React.Ref<ViewInstance>;",
+          "line": 60,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        }
+      ],
+      "references": [
+        "Additional",
+        "Omit",
+        "Own",
+        "React.ComponentPropsWithoutRef",
+        "React.ComponentType",
+        "React.Ref",
+        "Root",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonProps",
+      "file": "src/buttonTypes.ts",
+      "line": 62,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AdditionalProps",
+        "ButtonOwnProps",
+        "NativeProps",
+        "React.ComponentType",
+        "RootComponent"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "IconButtonProps",
+      "file": "src/buttonTypes.ts",
+      "line": 66,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AdditionalProps",
+        "IconButtonOwnProps",
+        "NativeProps",
+        "React.ComponentType",
+        "RootComponent"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeButtonComponent",
+      "file": "src/buttonTypes.ts",
+      "line": 70,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<Root extends React.ComponentType<any>>(\n    props: ButtonProps<Root> & { component: Root },\n  ): React.ReactNode;",
+          "line": 71,
+          "kind": "signature",
+          "type": "<Root extends React.ComponentType<any>>(\n    props: ButtonProps<Root> & { component: Root },\n  ): React.ReactNode;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: ButtonProps): React.ReactNode;",
+          "line": 74,
+          "kind": "signature",
+          "type": "(props: ButtonProps): React.ReactNode;"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string;",
+          "line": 75,
           "kind": "property",
           "type": "string"
         }
       ],
       "references": [
-        "GestureResponderEvent",
-        "Omit",
-        "PressableProps",
+        "ButtonProps",
+        "React.ComponentType",
         "React.ReactNode",
-        "SxProps"
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeIconButtonComponent",
+      "file": "src/buttonTypes.ts",
+      "line": 77,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<Root extends React.ComponentType<any>>(\n    props: IconButtonProps<Root> & { component: Root },\n  ): React.ReactNode;",
+          "line": 78,
+          "kind": "signature",
+          "type": "<Root extends React.ComponentType<any>>(\n    props: IconButtonProps<Root> & { component: Root },\n  ): React.ReactNode;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: IconButtonProps): React.ReactNode;",
+          "line": 81,
+          "kind": "signature",
+          "type": "(props: IconButtonProps): React.ReactNode;"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string;",
+          "line": 82,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "IconButtonProps",
+        "React.ComponentType",
+        "React.ReactNode",
+        "Root"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"

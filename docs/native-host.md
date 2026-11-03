@@ -60,3 +60,5 @@ The private focused-host key payload includes common navigation/activation names
 For compile-only catalog checks, generate ignored native projects with `pnpm exec expo prebuild --no-install --platform all` from `apps/native-catalog`, then use the generated Gradle project and CocoaPods workspace. The recorded Android check assembles a debug arm64 APK; the recorded iOS checks compile the library and generic simulator app. These commands do not constitute installation or interaction evidence. See [validation](validation.md) for the actual results and remaining gates.
 
 See [native selection](native-select.md) for NativeSelect and Select/TextField platform-picker composition, string events and native handle routing. Native-host 0.0.2-dev.0 requires rebuilding the application.
+
+Button and IconButton now require this host through shared ButtonBase composition; see [native buttons](button.md). This increment adds no native schema/backend changes.

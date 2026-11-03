@@ -369,6 +369,16 @@
       "types": "./dist/NativeSelect/nativeSelectClasses/index.d.ts",
       "react-native": "./src/NativeSelect/nativeSelectClasses/index.ts",
       "default": "./dist/NativeSelect/nativeSelectClasses/index.js"
+    },
+    "./Button/buttonClasses": {
+      "types": "./dist/Button/buttonClasses/index.d.ts",
+      "react-native": "./src/Button/buttonClasses/index.ts",
+      "default": "./dist/Button/buttonClasses/index.js"
+    },
+    "./IconButton/iconButtonClasses": {
+      "types": "./dist/IconButton/iconButtonClasses/index.d.ts",
+      "react-native": "./src/IconButton/iconButtonClasses/index.ts",
+      "default": "./dist/IconButton/iconButtonClasses/index.js"
     }
   },
   "dependencies": {

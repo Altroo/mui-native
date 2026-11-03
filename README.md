@@ -108,7 +108,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Platform-native picker host](docs/native-picker.md)
 - [Text rendering and inheritance in native containers](docs/text-containers.md)
 - [Spacing, breakpoints and responsive styles](docs/layout-system.md)
-- [Native Button loading](docs/button.md)
+- [Native Button and IconButton](docs/button.md)
 - [Native form controls and calendar behavior](docs/native-controls.md)
 - [Adaptive grid cards and table mode](docs/adaptive-grid.md)
 - [Performance measurement gates](docs/performance.md)

@@ -1,0 +1,862 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Button/Button.js": "ff23554ae2eac98863f24c29ec04ab07c7903bc489ffbaf81a31f5979149a515",
+      "Button/Button.d.ts": "1780c9b2bc8fdafecdfe2cf42b3ef12f3416d9c8f65d81d5eaf8c39288428049",
+      "Button/buttonClasses.js": "3a4ba5991f75d6cacabca4efe724099b37561ba7febf8f4cdc1103eb1a6381e1",
+      "Button/buttonClasses.d.ts": "18b76923871e7cdaffb336846d0db6658f307c4cd66ca4d49d8cc0f2af6c8d52",
+      "IconButton/IconButton.js": "04348e16d7c497625b119d7e8bb056fee65d404704b5d6600691418dad2ababc",
+      "IconButton/IconButton.d.ts": "843c0a76abaef274128b61eae8c21f04202905ab2f53b7f03486ea81aa1c0110",
+      "IconButton/iconButtonClasses.js": "40fcfc8884251fa734572bba34e3876f974684a412405dbafdfe54e0a0ccf629",
+      "IconButton/iconButtonClasses.d.ts": "b6e92e897f1bd0dab01bb0f64bd70956f574c7752f7bbdc7f107460a074b707d",
+      "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+      "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+      "ButtonGroup/ButtonGroupContext.js": "09a91cd768cb020a77f54eb9bed92a0c921c3b40d854501c091ed3a6fefc8f10"
+    }
+  },
+  "scope": "Actual original MUI in react-test-renderer with modeled host refs. Wrapper props, loading structure and helpers; not CSS or native-device evidence.",
+  "fixtures": [
+    {
+      "input": { "name": "Button defaults", "component": "Button" },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": null,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "Button loading true",
+        "component": "Button",
+        "props": { "loading": true }
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": true,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": true,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 1,
+        "loadingIndicators": 1
+      }
+    },
+    {
+      "input": {
+        "name": "Button loading false",
+        "component": "Button",
+        "props": { "loading": false }
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": false,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 1,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "Button loading null",
+        "component": "Button",
+        "props": { "loading": null }
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": null,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "Button disabled",
+        "component": "Button",
+        "props": { "disabled": true }
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "medium",
+          "disabled": true,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": null,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": true,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "Button disable focus ripple",
+        "component": "Button",
+        "props": { "disableFocusRipple": true }
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": true,
+          "fullWidth": false,
+          "loading": null,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": false,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "Button small",
+        "component": "Button",
+        "props": { "size": "small" }
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "small",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": null,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "Button large",
+        "component": "Button",
+        "props": { "size": "large" }
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "large",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": null,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "Button native link",
+        "component": "Button",
+        "props": { "href": "https://example.com" }
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": null,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": "https://example.com",
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "Button explicit undefined restores defaults",
+        "component": "Button",
+        "defaults": { "size": "large", "color": "secondary", "loading": true },
+        "props": { "$undefined": ["size", "loading"] }
+      },
+      "output": {
+        "owner": {
+          "color": "secondary",
+          "variant": "text",
+          "size": "large",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": true,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": true,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 1,
+        "loadingIndicators": 1
+      }
+    },
+    {
+      "input": { "name": "IconButton defaults", "component": "IconButton" },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": false,
+          "size": "medium",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": null
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton loading true",
+        "component": "IconButton",
+        "props": { "loading": true }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": false,
+          "size": "medium",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": true
+        },
+        "base": {
+          "disabled": true,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 1,
+        "loadingIndicators": 1
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton loading false",
+        "component": "IconButton",
+        "props": { "loading": false }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": false,
+          "size": "medium",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": false
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 1,
+        "loadingIndicators": 1
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton loading null",
+        "component": "IconButton",
+        "props": { "loading": null }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": false,
+          "size": "medium",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": null
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton disabled",
+        "component": "IconButton",
+        "props": { "disabled": true }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": false,
+          "size": "medium",
+          "disabled": true,
+          "disableFocusRipple": false,
+          "loading": null
+        },
+        "base": {
+          "disabled": true,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton disable focus ripple",
+        "component": "IconButton",
+        "props": { "disableFocusRipple": true }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": false,
+          "size": "medium",
+          "disabled": false,
+          "disableFocusRipple": true,
+          "loading": null
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": false,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton small",
+        "component": "IconButton",
+        "props": { "size": "small" }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": false,
+          "size": "small",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": null
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton large",
+        "component": "IconButton",
+        "props": { "size": "large" }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": false,
+          "size": "large",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": null
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton native link",
+        "component": "IconButton",
+        "props": { "href": "https://example.com" }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": false,
+          "size": "medium",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": null
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": "https://example.com",
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton explicit undefined restores defaults",
+        "component": "IconButton",
+        "defaults": { "size": "large", "color": "secondary", "loading": true },
+        "props": { "$undefined": ["size", "loading"] }
+      },
+      "output": {
+        "owner": {
+          "color": "secondary",
+          "edge": false,
+          "size": "large",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": true
+        },
+        "base": {
+          "disabled": true,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 1,
+        "loadingIndicators": 1
+      }
+    },
+    {
+      "input": {
+        "name": "Button loading start",
+        "component": "Button",
+        "props": { "loading": true, "loadingPosition": "start" },
+        "icons": true
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": true,
+          "loadingPosition": "start"
+        },
+        "base": {
+          "disabled": true,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 1,
+        "loadingIndicators": 1
+      }
+    },
+    {
+      "input": {
+        "name": "Button loading end",
+        "component": "Button",
+        "props": { "loading": true, "loadingPosition": "end" },
+        "icons": true
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": true,
+          "loadingPosition": "end"
+        },
+        "base": {
+          "disabled": true,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 1,
+        "loadingIndicators": 1
+      }
+    },
+    {
+      "input": {
+        "name": "Button loading center",
+        "component": "Button",
+        "props": { "loading": true, "loadingPosition": "center" },
+        "icons": true
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "text",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": true,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": true,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 1,
+        "loadingIndicators": 1
+      }
+    },
+    {
+      "input": {
+        "name": "Button outlined full width",
+        "component": "Button",
+        "props": {
+          "variant": "outlined",
+          "fullWidth": true,
+          "disableElevation": true
+        }
+      },
+      "output": {
+        "owner": {
+          "color": "primary",
+          "variant": "outlined",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": true,
+          "disableFocusRipple": false,
+          "fullWidth": true,
+          "loading": null,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton edge start",
+        "component": "IconButton",
+        "props": { "edge": "start" }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": "start",
+          "size": "medium",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": null
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton edge end small",
+        "component": "IconButton",
+        "props": { "edge": "end", "size": "small" }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": "end",
+          "size": "small",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": null
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "IconButton does not inherit Button defaults",
+        "component": "IconButton",
+        "buttonDefaults": {
+          "color": "error",
+          "variant": "contained",
+          "size": "large",
+          "disabled": true
+        }
+      },
+      "output": {
+        "owner": {
+          "color": "default",
+          "edge": false,
+          "size": "medium",
+          "disabled": false,
+          "disableFocusRipple": false,
+          "loading": null
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    },
+    {
+      "input": {
+        "name": "Button custom palette and variant",
+        "component": "Button",
+        "props": { "color": "brand", "variant": "soft" },
+        "custom": true
+      },
+      "output": {
+        "owner": {
+          "color": "brand",
+          "variant": "soft",
+          "size": "medium",
+          "disabled": false,
+          "disableElevation": false,
+          "disableFocusRipple": false,
+          "fullWidth": false,
+          "loading": null,
+          "loadingPosition": "center"
+        },
+        "base": {
+          "disabled": false,
+          "focusRipple": true,
+          "href": null,
+          "id": "choice"
+        },
+        "loadingWrappers": 0,
+        "loadingIndicators": 0
+      }
+    }
+  ],
+  "helpers": {
+    "Button": {
+      "classes": {
+        "root": "MuiButton-root",
+        "text": "MuiButton-text",
+        "outlined": "MuiButton-outlined",
+        "contained": "MuiButton-contained",
+        "disableElevation": "MuiButton-disableElevation",
+        "focusVisible": "Mui-focusVisible",
+        "disabled": "Mui-disabled",
+        "colorInherit": "MuiButton-colorInherit",
+        "colorPrimary": "MuiButton-colorPrimary",
+        "colorSecondary": "MuiButton-colorSecondary",
+        "colorSuccess": "MuiButton-colorSuccess",
+        "colorError": "MuiButton-colorError",
+        "colorInfo": "MuiButton-colorInfo",
+        "colorWarning": "MuiButton-colorWarning",
+        "sizeMedium": "MuiButton-sizeMedium",
+        "sizeSmall": "MuiButton-sizeSmall",
+        "sizeLarge": "MuiButton-sizeLarge",
+        "fullWidth": "MuiButton-fullWidth",
+        "startIcon": "MuiButton-startIcon",
+        "endIcon": "MuiButton-endIcon",
+        "icon": "MuiButton-icon",
+        "loading": "MuiButton-loading",
+        "loadingWrapper": "MuiButton-loadingWrapper",
+        "loadingIconPlaceholder": "MuiButton-loadingIconPlaceholder",
+        "loadingIndicator": "MuiButton-loadingIndicator",
+        "loadingPositionCenter": "MuiButton-loadingPositionCenter",
+        "loadingPositionStart": "MuiButton-loadingPositionStart",
+        "loadingPositionEnd": "MuiButton-loadingPositionEnd"
+      },
+      "states": {
+        "active": "Mui-active",
+        "checked": "Mui-checked",
+        "completed": "Mui-completed",
+        "disabled": "Mui-disabled",
+        "error": "Mui-error",
+        "expanded": "Mui-expanded",
+        "focused": "Mui-focused",
+        "focusVisible": "Mui-focusVisible",
+        "open": "Mui-open",
+        "readOnly": "Mui-readOnly",
+        "required": "Mui-required",
+        "selected": "Mui-selected",
+        "custom": "MuiButton-custom"
+      }
+    },
+    "IconButton": {
+      "classes": {
+        "root": "MuiIconButton-root",
+        "disabled": "Mui-disabled",
+        "colorInherit": "MuiIconButton-colorInherit",
+        "colorPrimary": "MuiIconButton-colorPrimary",
+        "colorSecondary": "MuiIconButton-colorSecondary",
+        "colorError": "MuiIconButton-colorError",
+        "colorInfo": "MuiIconButton-colorInfo",
+        "colorSuccess": "MuiIconButton-colorSuccess",
+        "colorWarning": "MuiIconButton-colorWarning",
+        "edgeStart": "MuiIconButton-edgeStart",
+        "edgeEnd": "MuiIconButton-edgeEnd",
+        "sizeSmall": "MuiIconButton-sizeSmall",
+        "sizeMedium": "MuiIconButton-sizeMedium",
+        "sizeLarge": "MuiIconButton-sizeLarge",
+        "loading": "MuiIconButton-loading",
+        "loadingIndicator": "MuiIconButton-loadingIndicator",
+        "loadingWrapper": "MuiIconButton-loadingWrapper"
+      },
+      "states": {
+        "active": "Mui-active",
+        "checked": "Mui-checked",
+        "completed": "Mui-completed",
+        "disabled": "Mui-disabled",
+        "error": "Mui-error",
+        "expanded": "Mui-expanded",
+        "focused": "Mui-focused",
+        "focusVisible": "Mui-focusVisible",
+        "open": "Mui-open",
+        "readOnly": "Mui-readOnly",
+        "required": "Mui-required",
+        "selected": "Mui-selected",
+        "custom": "MuiIconButton-custom"
+      }
+    }
+  }
+}

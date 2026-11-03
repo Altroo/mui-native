@@ -50,7 +50,7 @@ Expand `createTheme`, palette derivation, typography, spacing, breakpoints, defa
 
 Palette derivation and color helpers have pinned upstream reference fixtures and installed-consumer augmentation checks. See [native theming](docs/theming.md); broader styling contracts remain open.
 
-Button loading positions, custom indicators and disabled/busy state have scoped component and installed-consumer checks. See [native Button loading](docs/button.md). Full Button and native accessibility verification remain open.
+Button and IconButton now compose the shared native ButtonBase host with distinct defaults, loading/content, keyboard/ref/action contracts, native custom roots and original class helpers. See [native buttons](docs/button.md) and [issue #33](https://github.com/Altroo/mui-native/issues/33). Complete inherited/polymorphic contracts, ButtonGroup and physical accessibility/performance verification remain open.
 
 Spacing, breakpoint helpers, native width rules, responsive Stack spacing and Dialog widths have scoped upstream fixtures and component checks. See [layout boundaries](docs/layout-system.md). Device resize, RTL and full styling parity remain open.
 

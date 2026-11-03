@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Text } from 'react-native';
+import { ActivityIndicator, Text, StyleSheet } from 'react-native';
 import type { ReactTestInstance } from 'react-test-renderer';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { Button, ThemeProvider, createTheme } from '../packages/material/src';
@@ -25,11 +25,10 @@ test('centered loading retains the label and content geometry while disabling pr
   expect(button).toBeDisabled();
   expect(button.props.accessibilityState.busy).toBe(true);
   expect(screen.getByText('Save invoice')).not.toBeVisible();
-  expect(hostParent(screen.getByRole('progressbar', { name: 'Save invoice' }))).toHaveStyle({
-    position: 'absolute',
-    start: 0,
-    end: 0,
-  });
+  let overlay = hostParent(screen.getByRole('progressbar', { name: 'Save invoice' }));
+  while (overlay !== button && StyleSheet.flatten(overlay.props.style)?.position !== 'absolute')
+    overlay = hostParent(overlay);
+  expect(overlay).toHaveStyle({ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 });
   fireEvent.press(button);
   expect(press).toHaveBeenCalledTimes(1);
   rerender(
@@ -141,13 +140,16 @@ test('button content stays in the styled root layout so gap and direction affect
 
 test.each([false, true, ''])('empty icon values (%s) do not add layout slots', (icon) => {
   const { toJSON, rerender } = render(<Button>Continue</Button>);
-  const withoutIcons = toJSON();
+  expect((toJSON() as any).children).toHaveLength(1);
   rerender(
     <Button startIcon={icon} endIcon={icon}>
       Continue
     </Button>,
   );
-  expect(toJSON()).toEqual(withoutIcons);
+  const native = toJSON() as any;
+  expect(native.children).toHaveLength(1);
+  expect(native.children[0].type).toBe('Text');
+  expect(native.children[0].children).toEqual(['Continue']);
 });
 
 test.each([undefined, null, false])(

@@ -70,7 +70,9 @@
       "Select/SelectInput",
       "NativeSelect",
       "NativeSelect/NativeSelectInput",
-      "NativeSelect/nativeSelectClasses"
+      "NativeSelect/nativeSelectClasses",
+      "Button/buttonClasses",
+      "IconButton/iconButtonClasses"
     ]
   },
   "@mui/system": {

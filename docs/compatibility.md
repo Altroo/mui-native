@@ -35,7 +35,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 - Object, function, and array `sx`; palette paths; spacing; fractional sizing; `px`/`rem`; responsive values; selected `&.Mui-state` selectors; root overrides and variants.
 - Spacing arrays/functions/strings and multi-value helpers, breakpoint methods and custom keys, native width media rules, responsive Stack spacing and Dialog widths. See [layout system](layout-system.md) for supported units, ordering and limitations.
 - Palette shade/contrast derivation, light/dark defaults, augmentColor, color helpers and Palette/PaletteOptions augmentation. See [native theming](theming.md) for tested inputs and limitations.
-- Button loading positions, custom indicators, disabled presses and native busy state. See [native Button loading](button.md); screen-reader behavior remains unverified.
+- Button and IconButton on native ButtonBase, with distinct defaults, loading positions/content, native refs/actions/keys, native custom roots, augmentation and original class helpers. See [native buttons](button.md); physical interaction/accessibility/performance and full inherited APIs remain unverified.
 - Controlled/uncontrolled form state, value/name change adapters, disabled buttons, native handler precedence, checkbox/radio selection.
 - Native modal backdrop and Android back-request close reasons; snackbar timeout cleanup. Full overlay/focus/transition/device contracts remain open.
 - Optional native grid cards, automatic switching at 600 dp of container width, explicit table mode and application-composed card content. See [native grid layouts](adaptive-grid.md).

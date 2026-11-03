@@ -1764,6 +1764,136 @@
       "adaptations": [
         "NativeSelect and native Select/TextField use native framework picker rows, DOM-shaped string/option reconciliation, native value/ref/event adapters and actual presentation acknowledgement. Option elements are parsed configuration only; browser forms and physical device parity are not implemented."
       ]
+    },
+    {
+      "localFile": "packages/material/src/buttons.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Button/Button.js": "ff23554ae2eac98863f24c29ec04ab07c7903bc489ffbaf81a31f5979149a515",
+          "Button/Button.d.ts": "1780c9b2bc8fdafecdfe2cf42b3ef12f3416d9c8f65d81d5eaf8c39288428049",
+          "Button/buttonClasses.js": "3a4ba5991f75d6cacabca4efe724099b37561ba7febf8f4cdc1103eb1a6381e1",
+          "Button/buttonClasses.d.ts": "18b76923871e7cdaffb336846d0db6658f307c4cd66ca4d49d8cc0f2af6c8d52",
+          "IconButton/IconButton.js": "04348e16d7c497625b119d7e8bb056fee65d404704b5d6600691418dad2ababc",
+          "IconButton/IconButton.d.ts": "843c0a76abaef274128b61eae8c21f04202905ab2f53b7f03486ea81aa1c0110",
+          "IconButton/iconButtonClasses.js": "40fcfc8884251fa734572bba34e3876f974684a412405dbafdfe54e0a0ccf629",
+          "IconButton/iconButtonClasses.d.ts": "b6e92e897f1bd0dab01bb0f64bd70956f574c7752f7bbdc7f107460a074b707d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "ButtonGroup/ButtonGroupContext.js": "09a91cd768cb020a77f54eb9bed92a0c921c3b40d854501c091ed3a6fefc8f10"
+        }
+      },
+      "adaptations": [
+        "Button and IconButton wrapper/default/loading/owner/helper contracts follow 28 source-verified original runtime cases. Native ButtonBase handles activation/focus/links; native views/text, minimum touch targets, ActivityIndicator and scoped styles replace DOM/CSS. Native custom-root refs/events and augmentation are checked in fresh consumer archives. LoadingWrapper is a plain identifier, not a named styled resolver. Physical interaction and complete inherited/DOM contracts remain unverified."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/buttonTypes.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Button/Button.js": "ff23554ae2eac98863f24c29ec04ab07c7903bc489ffbaf81a31f5979149a515",
+          "Button/Button.d.ts": "1780c9b2bc8fdafecdfe2cf42b3ef12f3416d9c8f65d81d5eaf8c39288428049",
+          "Button/buttonClasses.js": "3a4ba5991f75d6cacabca4efe724099b37561ba7febf8f4cdc1103eb1a6381e1",
+          "Button/buttonClasses.d.ts": "18b76923871e7cdaffb336846d0db6658f307c4cd66ca4d49d8cc0f2af6c8d52",
+          "IconButton/IconButton.js": "04348e16d7c497625b119d7e8bb056fee65d404704b5d6600691418dad2ababc",
+          "IconButton/IconButton.d.ts": "843c0a76abaef274128b61eae8c21f04202905ab2f53b7f03486ea81aa1c0110",
+          "IconButton/iconButtonClasses.js": "40fcfc8884251fa734572bba34e3876f974684a412405dbafdfe54e0a0ccf629",
+          "IconButton/iconButtonClasses.d.ts": "b6e92e897f1bd0dab01bb0f64bd70956f574c7752f7bbdc7f107460a074b707d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "ButtonGroup/ButtonGroupContext.js": "09a91cd768cb020a77f54eb9bed92a0c921c3b40d854501c091ed3a6fefc8f10"
+        }
+      },
+      "adaptations": [
+        "Button and IconButton wrapper/default/loading/owner/helper contracts follow 28 source-verified original runtime cases. Native ButtonBase handles activation/focus/links; native views/text, minimum touch targets, ActivityIndicator and scoped styles replace DOM/CSS. Native custom-root refs/events and augmentation are checked in fresh consumer archives. LoadingWrapper is a plain identifier, not a named styled resolver. Physical interaction and complete inherited/DOM contracts remain unverified."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/buttonClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Button/Button.js": "ff23554ae2eac98863f24c29ec04ab07c7903bc489ffbaf81a31f5979149a515",
+          "Button/Button.d.ts": "1780c9b2bc8fdafecdfe2cf42b3ef12f3416d9c8f65d81d5eaf8c39288428049",
+          "Button/buttonClasses.js": "3a4ba5991f75d6cacabca4efe724099b37561ba7febf8f4cdc1103eb1a6381e1",
+          "Button/buttonClasses.d.ts": "18b76923871e7cdaffb336846d0db6658f307c4cd66ca4d49d8cc0f2af6c8d52",
+          "IconButton/IconButton.js": "04348e16d7c497625b119d7e8bb056fee65d404704b5d6600691418dad2ababc",
+          "IconButton/IconButton.d.ts": "843c0a76abaef274128b61eae8c21f04202905ab2f53b7f03486ea81aa1c0110",
+          "IconButton/iconButtonClasses.js": "40fcfc8884251fa734572bba34e3876f974684a412405dbafdfe54e0a0ccf629",
+          "IconButton/iconButtonClasses.d.ts": "b6e92e897f1bd0dab01bb0f64bd70956f574c7752f7bbdc7f107460a074b707d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "ButtonGroup/ButtonGroupContext.js": "09a91cd768cb020a77f54eb9bed92a0c921c3b40d854501c091ed3a6fefc8f10"
+        }
+      },
+      "adaptations": [
+        "Button and IconButton wrapper/default/loading/owner/helper contracts follow 28 source-verified original runtime cases. Native ButtonBase handles activation/focus/links; native views/text, minimum touch targets, ActivityIndicator and scoped styles replace DOM/CSS. Native custom-root refs/events and augmentation are checked in fresh consumer archives. LoadingWrapper is a plain identifier, not a named styled resolver. Physical interaction and complete inherited/DOM contracts remain unverified."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/buttonBase.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Button/Button.js": "ff23554ae2eac98863f24c29ec04ab07c7903bc489ffbaf81a31f5979149a515",
+          "Button/Button.d.ts": "1780c9b2bc8fdafecdfe2cf42b3ef12f3416d9c8f65d81d5eaf8c39288428049",
+          "Button/buttonClasses.js": "3a4ba5991f75d6cacabca4efe724099b37561ba7febf8f4cdc1103eb1a6381e1",
+          "Button/buttonClasses.d.ts": "18b76923871e7cdaffb336846d0db6658f307c4cd66ca4d49d8cc0f2af6c8d52",
+          "IconButton/IconButton.js": "04348e16d7c497625b119d7e8bb056fee65d404704b5d6600691418dad2ababc",
+          "IconButton/IconButton.d.ts": "843c0a76abaef274128b61eae8c21f04202905ab2f53b7f03486ea81aa1c0110",
+          "IconButton/iconButtonClasses.js": "40fcfc8884251fa734572bba34e3876f974684a412405dbafdfe54e0a0ccf629",
+          "IconButton/iconButtonClasses.d.ts": "b6e92e897f1bd0dab01bb0f64bd70956f574c7752f7bbdc7f107460a074b707d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "ButtonGroup/ButtonGroupContext.js": "09a91cd768cb020a77f54eb9bed92a0c921c3b40d854501c091ed3a6fefc8f10"
+        }
+      },
+      "adaptations": [
+        "Button and IconButton wrapper/default/loading/owner/helper contracts follow 28 source-verified original runtime cases. Native ButtonBase handles activation/focus/links; native views/text, minimum touch targets, ActivityIndicator and scoped styles replace DOM/CSS. Native custom-root refs/events and augmentation are checked in fresh consumer archives. LoadingWrapper is a plain identifier, not a named styled resolver. Physical interaction and complete inherited/DOM contracts remain unverified."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/useNativeButtonAutoFocus.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Button/Button.js": "ff23554ae2eac98863f24c29ec04ab07c7903bc489ffbaf81a31f5979149a515",
+          "Button/Button.d.ts": "1780c9b2bc8fdafecdfe2cf42b3ef12f3416d9c8f65d81d5eaf8c39288428049",
+          "Button/buttonClasses.js": "3a4ba5991f75d6cacabca4efe724099b37561ba7febf8f4cdc1103eb1a6381e1",
+          "Button/buttonClasses.d.ts": "18b76923871e7cdaffb336846d0db6658f307c4cd66ca4d49d8cc0f2af6c8d52",
+          "IconButton/IconButton.js": "04348e16d7c497625b119d7e8bb056fee65d404704b5d6600691418dad2ababc",
+          "IconButton/IconButton.d.ts": "843c0a76abaef274128b61eae8c21f04202905ab2f53b7f03486ea81aa1c0110",
+          "IconButton/iconButtonClasses.js": "40fcfc8884251fa734572bba34e3876f974684a412405dbafdfe54e0a0ccf629",
+          "IconButton/iconButtonClasses.d.ts": "b6e92e897f1bd0dab01bb0f64bd70956f574c7752f7bbdc7f107460a074b707d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "ButtonGroup/ButtonGroupContext.js": "09a91cd768cb020a77f54eb9bed92a0c921c3b40d854501c091ed3a6fefc8f10"
+        }
+      },
+      "adaptations": [
+        "Button and IconButton wrapper/default/loading/owner/helper contracts follow 28 source-verified original runtime cases. Native ButtonBase handles activation/focus/links; native views/text, minimum touch targets, ActivityIndicator and scoped styles replace DOM/CSS. Native custom-root refs/events and augmentation are checked in fresh consumer archives. LoadingWrapper is a plain identifier, not a named styled resolver. Physical interaction and complete inherited/DOM contracts remain unverified."
+      ]
     }
   ]
 }
