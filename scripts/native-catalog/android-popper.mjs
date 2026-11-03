@@ -8,6 +8,7 @@ import { parseArgs } from 'node:util';
 import { createHash } from 'node:crypto';
 import { prepareKeyboardSource } from './android-keyboard-source.mjs';
 import { prepareAutocompleteSource } from './android-autocomplete-source.mjs';
+import { prepareInputIntegritySource } from './android-input-integrity-source.mjs';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -55,6 +56,7 @@ export async function prepare(project) {
   }
   await prepareKeyboardSource(project);
   await prepareAutocompleteSource(project);
+  await prepareInputIntegritySource(project);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, source);
   await writeFile(gradlePath, gradle);

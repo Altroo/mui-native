@@ -102,8 +102,9 @@ public final class AutocompleteScenario {
           await(() -> ui(() -> editor().getText().length() == 0 && editor().hasFocus()), "Clear must settle before the next typing burst");
           selection("clear: null");
         }
-        // Native-only observation distinguishes a missing key, selection-based
-        // replacement and programmatic text updates without rerendering JS.
+        // Observe delegated native edit ranges without rerendering JS. Pinned
+        // ReactEditText suppresses JS-origin watcher callbacks, so this trace
+        // alone cannot exclude programmatic overwrites; see InputIntegrityScenario.
         JSONArray edits = new JSONArray();
         JSONObject trial = new JSONObject().put("index", burst).put("changes", edits);
         bursts.put(trial);
