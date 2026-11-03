@@ -467,3 +467,181 @@ test.each(['disabled', 'readOnly'] as const)(
     expect(m.result.current.value).toBe(options[0]);
   },
 );
+
+test.each([false, true])(
+  'batched text and Enter commit the latest uncontrolled draft (multiple=%s)',
+  (multiple) => {
+    const change = jest.fn(),
+      m = model({ freeSolo: true, multiple, onChange: change });
+    const input = event();
+    Object.assign(input.nativeEvent, { text: 'New city', target: 1, eventCount: 1 });
+    const enter = event('Enter', m.input);
+    act(() => {
+      m.result.current.getInputProps().onChange?.(input as unknown as TextInputChangeEvent);
+      m.result.current.getRootProps().onKeyDown?.(enter);
+    });
+    expect(change.mock.calls[0]?.slice(1)).toEqual([
+      multiple ? ['New city'] : 'New city',
+      'createOption',
+      { option: 'New city' },
+    ]);
+    expect(m.result.current.inputValue).toBe(multiple ? '' : 'New city');
+    m.key('Enter');
+    expect(change).toHaveBeenCalledTimes(1);
+  },
+);
+
+test('an authored input value remains authoritative within a native event group', () => {
+  const change = jest.fn(),
+    m = model({ freeSolo: true, inputValue: 'Locked', onChange: change });
+  const source = event();
+  Object.assign(source.nativeEvent, { text: 'Unaccepted draft' });
+  act(() => {
+    m.result.current.getInputProps().onChange?.(source as unknown as TextInputChangeEvent);
+    m.result.current.getRootProps().onKeyDown?.(event('Enter', m.input));
+  });
+  expect(change.mock.calls[0][1]).toBe('Locked');
+  expect(m.result.current.inputValue).toBe('Locked');
+});
+test('software submit uses complete native text and respects a deleted draft', () => {
+  const change = jest.fn(),
+    m = model({ freeSolo: true, onChange: change });
+  m.type('New cit');
+  const source = event();
+  Object.assign(source.nativeEvent, { text: 'New city' });
+  act(() => m.result.current.getInputProps().onSubmitEditing?.(source as never));
+  expect(change.mock.calls[0][1]).toBe('New city');
+  change.mockClear();
+  Object.assign(source.nativeEvent, { text: '' });
+  act(() => m.result.current.getInputProps().onSubmitEditing?.(source as never));
+  expect(change).not.toHaveBeenCalled();
+});
+
+test('batched typing then deletion cannot create a stale free-solo draft', () => {
+  const change = jest.fn(),
+    m = model({ freeSolo: true, onChange: change });
+  act(() => {
+    for (const text of ['A', '']) {
+      const source = event();
+      Object.assign(source.nativeEvent, { text });
+      m.result.current.getInputProps().onChange?.(source as unknown as TextInputChangeEvent);
+    }
+    m.result.current.getRootProps().onKeyDown?.(event('Enter', m.input));
+  });
+  expect(change).not.toHaveBeenCalled();
+  expect(m.result.current.inputValue).toBe('');
+});
+test.each([false, true])(
+  'two batched free-solo commits preserve selected-value authority (controlled=%s)',
+  (controlled) => {
+    const change = jest.fn(),
+      m = model({
+        freeSolo: true,
+        multiple: true,
+        ...(controlled ? { value: [] } : {}),
+        onChange: change,
+      });
+    act(() => {
+      for (const text of ['A', 'B']) {
+        const source = event();
+        Object.assign(source.nativeEvent, { text });
+        m.result.current.getInputProps().onChange?.(source as unknown as TextInputChangeEvent);
+        m.result.current.getRootProps().onKeyDown?.(event('Enter', m.input));
+      }
+    });
+    expect(change.mock.calls.map((call) => call[1])).toEqual(
+      controlled ? [['A'], ['B']] : [['A'], ['A', 'B']],
+    );
+    expect(m.result.current.value).toEqual(controlled ? [] : ['A', 'B']);
+    expect(m.result.current.inputValue).toBe('');
+  },
+);
+
+test('raw free-solo creation never resolves a null selection as an option', () => {
+  const getOptionLabel = jest.fn((option: string | { label: string }) =>
+    typeof option === 'string' ? option : option.label,
+  );
+  const change = jest.fn(),
+    m = model({ options: [{ label: 'Rabat' }], freeSolo: true, getOptionLabel, onChange: change });
+  m.type('New city');
+  m.key('Enter');
+  expect(change.mock.calls[0][1]).toBe('New city');
+  expect(getOptionLabel.mock.calls.every(([option]) => option !== null)).toBe(true);
+});
+test('batched local close retires option handlers before the next React commit', () => {
+  const change = jest.fn(),
+    close = jest.fn(),
+    m = model({ defaultValue: null, onChange: change, onClose: close });
+  act(() => m.result.current.getInputProps().onPressIn?.(event() as never));
+  m.mountList();
+  const row = m.result.current.getOptionProps({ option: options[0], index: 0 });
+  act(() => {
+    m.result.current.getRootProps().onKeyDown?.(event('Escape', m.input));
+    row.onClick?.(event() as never);
+    m.result.current.getRootProps().onKeyDown?.(event('Escape', m.input));
+  });
+  expect(change).not.toHaveBeenCalled();
+  expect(close).toHaveBeenCalledTimes(1);
+});
+
+test.each([false, true])(
+  'batched indicator toggles preserve open authority (controlled=%s)',
+  (controlled) => {
+    const open = jest.fn(),
+      close = jest.fn(),
+      m = model({ ...(controlled ? { open: false } : {}), onOpen: open, onClose: close });
+    act(() => {
+      m.result.current.getPopupIndicatorProps().onClick?.(event() as never);
+      m.result.current.getPopupIndicatorProps().onClick?.(event() as never);
+    });
+    expect(open).toHaveBeenCalledTimes(controlled ? 2 : 1);
+    expect(close).toHaveBeenCalledTimes(controlled ? 0 : 1);
+    expect(m.result.current.popupOpen).toBe(false);
+  },
+);
+test('batched generated mapped selections retain every accepted option label', () => {
+  const generated = [
+    { id: 1, label: 'Generated A' },
+    { id: 2, label: 'Generated B' },
+  ];
+  const m = model({
+    options: [],
+    open: true,
+    multiple: true,
+    disableCloseOnSelect: true,
+    getOptionValue: (option: { id: number }) => option.id,
+    getOptionLabel: (option: { label: string }) => option.label,
+    filterOptions: () => generated,
+  });
+  m.mountList();
+  const rows = generated.map((option, index) => m.result.current.getOptionProps({ option, index }));
+  act(() => rows.forEach((row) => row.onClick?.(event() as never)));
+  expect(m.result.current.value).toEqual([1, 2]);
+  expect(m.result.current.getOptionFromValue(1)).toEqual({ option: generated[0] });
+  expect(m.result.current.getOptionFromValue(2)).toEqual({ option: generated[1] });
+});
+
+test('batched presses of a nonempty input observe the current local popup state', () => {
+  const open = jest.fn(),
+    close = jest.fn(),
+    m = model({ onOpen: open, onClose: close });
+  m.type('Option');
+  m.key('Escape');
+  open.mockClear();
+  close.mockClear();
+  act(() => {
+    m.result.current.getInputProps().onPressIn?.(event() as never);
+    m.result.current.getInputProps().onPressIn?.(event() as never);
+  });
+  expect(open).toHaveBeenCalledTimes(1);
+  expect(close).not.toHaveBeenCalled();
+  expect(m.result.current.popupOpen).toBe(true);
+  open.mockClear();
+  act(() => {
+    m.result.current.getRootProps().onKeyDown?.(event('Escape', m.input));
+    m.result.current.getInputProps().onPressIn?.(event() as never);
+  });
+  expect(close).toHaveBeenCalledTimes(1);
+  expect(open).toHaveBeenCalledTimes(1);
+  expect(m.result.current.popupOpen).toBe(true);
+});

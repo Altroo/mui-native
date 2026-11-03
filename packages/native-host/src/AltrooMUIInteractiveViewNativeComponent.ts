@@ -51,11 +51,11 @@ export interface NativeProps extends ViewProps {
 }
 type NativeType = HostComponent<NativeProps>;
 interface NativeCommands {
-  focus: (viewRef: React.ElementRef<NativeType>) => void;
-  blur: (viewRef: React.ElementRef<NativeType>) => void;
-  setPressed: (viewRef: React.ElementRef<NativeType>, pressed: boolean) => void;
+  focus: (viewRef: React.ComponentRef<NativeType>) => void;
+  blur: (viewRef: React.ComponentRef<NativeType>) => void;
+  setPressed: (viewRef: React.ComponentRef<NativeType>, pressed: boolean) => void;
   setHotspot: (
-    viewRef: React.ElementRef<NativeType>,
+    viewRef: React.ComponentRef<NativeType>,
     x: CodegenTypes.Double,
     y: CodegenTypes.Double,
   ) => void;

@@ -189,17 +189,44 @@ export function useAutocompleteValues<Option>({
       generated.current = mapper ? generated.current.filter(isOptionSelected) : [];
   });
   const rememberSelectedOption = useCallback(
-    (option: Option, identifier: unknown) => {
+    (option: Option, identifier: unknown, nextSelection?: readonly unknown[]) => {
       if (process.env.NODE_ENV !== 'production' && mapper) validate(identifier, freeSolo, reported);
       if (!mapper || resolveFromOptions(identifier) !== null) return;
+      // Several accepted selections can precede one React commit. Retain
+      // generated labels against that projected selection, not an older render.
+      const projectedSet =
+        nextSelection === undefined || equality
+          ? null
+          : new Set(
+              freeSolo
+                ? nextSelection.filter((selected) => typeof selected !== 'string')
+                : nextSelection,
+            );
+      const retained = (previous: Option) =>
+        nextSelection === undefined
+          ? isOptionSelected(previous)
+          : projectedSet
+            ? projectedSet.has(getOptionValue(previous))
+            : nextSelection.some(
+                (selected) => selected != null && isOptionEqualToValue(previous, selected),
+              );
       generated.current = [
         ...generated.current.filter(
-          (previous) => isOptionSelected(previous) && !isOptionEqualToValue(previous, identifier),
+          (previous) => retained(previous) && !isOptionEqualToValue(previous, identifier),
         ),
         option,
       ];
     },
-    [mapper, freeSolo, reported, resolveFromOptions, isOptionSelected, isOptionEqualToValue],
+    [
+      mapper,
+      freeSolo,
+      reported,
+      resolveFromOptions,
+      isOptionSelected,
+      isOptionEqualToValue,
+      equality,
+      getOptionValue,
+    ],
   );
   return {
     getOptionValue,

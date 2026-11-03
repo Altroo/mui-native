@@ -151,7 +151,16 @@ export function useNativeAutocomplete(
   } = props;
   const generatedId = useId(),
     id = props.id ?? 'mui-native-autocomplete-' + generatedId.replace(/:/g, '');
-  const [value, setValue] = useControlled<any>(authoredValue, defaultValue);
+  const [value, setRenderedValue] = useControlled<any>(authoredValue, defaultValue);
+  const valueControlled = useRef(authoredValue !== undefined).current;
+  const selectedDraft = useRef(value);
+  const currentValue = () => (valueControlled ? value : selectedDraft.current);
+  const setValue = (next: any) => {
+    // Consecutive native actions may share a render, so a later selection must
+    // build on the previous accepted local value. Controlled requests stay owned.
+    if (!valueControlled) selectedDraft.current = next;
+    setRenderedValue(next);
+  };
   const values = useAutocompleteValues<any>({
     options,
     getOptionValue,
@@ -182,8 +191,25 @@ export function useNativeAutocomplete(
     const resolved = values.getOptionFromValue(defaultValue ?? authoredValue);
     return resolved === null ? '' : getOptionLabel(resolved.option);
   });
-  const [inputValue, setInputValue] = useControlled(authoredInput, initialInput);
-  const [open, setOpen] = useControlled(authoredOpen, false);
+  const [inputValue, setRenderedInput] = useControlled(authoredInput, initialInput);
+  const inputControlled = useRef(authoredInput !== undefined).current;
+  const inputDraft = useRef(inputValue);
+  const currentInput = () => (inputControlled ? inputValue : inputDraft.current);
+  const setInputValue = (next: string) => {
+    // RN can deliver text changes and Enter in one event group, before a React
+    // commit. Keep the uncontrolled draft current for dependent input actions.
+    // All internal resets use this boundary too, including multiple clearing.
+    if (!inputControlled) inputDraft.current = next;
+    setRenderedInput(next);
+  };
+  const [open, setRenderedOpen] = useControlled(authoredOpen, false);
+  const openControlled = useRef(authoredOpen !== undefined).current;
+  const openDraft = useRef(open);
+  const currentOpen = () => (openControlled ? open : openDraft.current);
+  const setOpen = (next: boolean) => {
+    if (!openControlled) openDraft.current = next;
+    setRenderedOpen(next);
+  };
   const [focused, setFocused] = useState(false),
     [focusedItem, setFocusedItem] = useState(-1);
   const [anchorEl, setAnchor] = useState<ViewInstance | null>(null);
@@ -227,6 +253,7 @@ export function useNativeAutocomplete(
     return !top || Boolean(target && target.isConnected !== false && top.contains(target));
   });
   const popupOpen = Boolean(open && !readOnly);
+  const currentPopupOpen = () => Boolean(currentOpen() && !readOnly);
   const selectedOption = !multiple && value != null ? values.getOptionFromValue(value) : null;
   const hasSelectedOption = selectedOption !== null;
   const inputIsSelection =
@@ -265,13 +292,13 @@ export function useNativeAutocomplete(
 
   const resetInput = useMenuEvent(
     (event: Event, next: any, reason: AutocompleteInputChangeReason) => {
-      const selected = multiple ? value.length < next.length : next !== null;
+      const selected = multiple ? currentValue().length < next.length : next !== null;
       const clearReset = reason === 'reset' && freeSolo && !multiple && next === null;
       if (!selected && !clearOnBlur && !clearReset) return;
       const text = labelForValue(next);
       edited.current = false;
       setInlineCompletion((current) => (current?.text === text ? current : null));
-      if (inputValue === text) return;
+      if (currentInput() === text) return;
       setInputValue(text);
       // Preserve null programmatic events and the runtime createOption reset
       // reason for multiple free-solo selections; native types expose both.
@@ -306,14 +333,14 @@ export function useNativeAutocomplete(
   ]);
 
   const openPopup = useMenuEvent((event: Event) => {
-    if (open || disabled || !interactionReady()) return;
+    if (currentOpen() || disabled || !interactionReady()) return;
     setOpen(true);
     setInputPristine(true);
     touched.current = false;
     onOpen?.(event);
   });
   const closePopup = useMenuEvent((event: Event, reason: AutocompleteCloseReason) => {
-    if (!open) return;
+    if (!currentOpen()) return;
     setOpen(false);
     touchScrolled.current = false;
     highlightReason.current = null;
@@ -323,7 +350,8 @@ export function useNativeAutocomplete(
   });
   const changeValue = useMenuEvent(
     (event: Event, next: any, reason: AutocompleteChangeReason, details?: { option: any }) => {
-      if (multiple ? sameArray(value, next) : value === next) return;
+      const previous = currentValue();
+      if (multiple ? sameArray(previous, next) : previous === next) return;
       onChange?.(event, next, reason, details);
       setValue(next);
     },
@@ -343,7 +371,8 @@ export function useNativeAutocomplete(
       const identifier = origin === 'options' ? values.getOptionValue(option) : option;
       let next = identifier;
       if (multiple) {
-        next = Array.isArray(value) ? value.slice() : [];
+        const previous = currentValue();
+        next = Array.isArray(previous) ? previous.slice() : [];
         const index =
           getOptionValue !== undefined && origin === 'freeSolo'
             ? next.indexOf(identifier)
@@ -355,7 +384,11 @@ export function useNativeAutocomplete(
         }
       }
       if (origin === 'options' && reason !== 'removeOption')
-        values.rememberSelectedOption(option, identifier);
+        values.rememberSelectedOption(
+          option,
+          identifier,
+          multiple ? next : next == null ? [] : [next],
+        );
       resetInput(event, next, reason);
       changeValue(event, next, reason, { option });
       const key = event as Partial<NativeAutocompleteKeyboardEvent> | null;
@@ -406,7 +439,7 @@ export function useNativeAutocomplete(
       reason: HighlightReason = null,
       preserveScroll = false,
     ) => {
-      if (!popupOpen) return;
+      if (!currentPopupOpen()) return;
       if (reason === 'keyboard') {
         touchScrolled.current = false;
         touched.current = false;
@@ -572,33 +605,53 @@ export function useNativeAutocomplete(
       index += direction === 'next' ? 1 : -1;
     focusItem(index < 0 || index >= value.length ? -1 : index);
   };
-  const commitInput = useMenuEvent((event: Event, preventDefault: () => void) => {
-    if (disabled || readOnly) return;
-    const incidental = popupOpen && highlighted.current !== -1 && highlightReason.current === null;
-    if (
-      highlighted.current !== -1 &&
-      popupOpen &&
-      (!freeSolo || inputPristine || !incidental) &&
-      !touchScrolled.current
-    ) {
-      preventDefault();
-      const option = filteredOptions[highlighted.current];
-      if (!getOptionDisabled?.(option)) {
-        select(event, option);
-        if (autoComplete) {
-          const text = getOptionLabel(option);
-          setInlineCompletion({ text, start: text.length, end: text.length });
+  const commitInput = useMenuEvent(
+    (event: Event, preventDefault: () => void, nativeText?: unknown) => {
+      if (disabled || readOnly) return;
+      // Software submit already carries the native text. Hardware commands use
+      // the latest synchronously received draft; authored input state wins.
+      const draft =
+        freeSolo && !inputControlled && typeof nativeText === 'string'
+          ? nativeText
+          : currentInput();
+      const popupOpen = currentPopupOpen();
+      const freshDraft = draft !== inputValue;
+      const selectedValue = currentValue();
+      const selectionNow =
+        multiple || selectedValue == null ? null : values.getOptionFromValue(selectedValue);
+      const draftIsSelection =
+        selectionNow !== null && draft === getOptionLabel(selectionNow.option);
+      const incidental =
+        popupOpen && highlighted.current !== -1 && highlightReason.current === null;
+      if (
+        !freshDraft &&
+        highlighted.current !== -1 &&
+        popupOpen &&
+        (!freeSolo || inputPristine || !incidental) &&
+        !touchScrolled.current
+      ) {
+        preventDefault();
+        const option = filteredOptions[highlighted.current];
+        if (!getOptionDisabled?.(option)) {
+          select(event, option);
+          if (autoComplete) {
+            const text = getOptionLabel(option);
+            setInlineCompletion({ text, start: text.length, end: text.length });
+          }
         }
+      } else if (freeSolo && draft !== '' && !draftIsSelection) {
+        if (multiple || (!inputPristine && incidental && !touchScrolled.current)) preventDefault();
+        select(event, draft, 'createOption', 'freeSolo');
+      } else if (popupOpen && touchScrolled.current) {
+        preventDefault();
+        closePopup(event, 'escape');
       }
-    } else if (freeSolo && inputValue !== '' && !inputIsSelection) {
-      if (multiple || (!inputPristine && incidental && !touchScrolled.current)) preventDefault();
-      select(event, inputValue, 'createOption', 'freeSolo');
-    } else if (popupOpen && touchScrolled.current) {
-      preventDefault();
-      closePopup(event, 'escape');
-    }
-  });
+    },
+  );
   const keyboard = useMenuEvent((event: NativeAutocompleteKeyboardEvent) => {
+    const value = currentValue(),
+      inputValue = currentInput(),
+      popupOpen = currentPopupOpen();
     if (
       !interactionReady() ||
       event.defaultMuiPrevented ||
@@ -693,6 +746,9 @@ export function useNativeAutocomplete(
     }
   });
   const blur = useMenuEvent((event: Event) => {
+    const value = currentValue(),
+      inputValue = currentInput(),
+      popupOpen = currentPopupOpen();
     if (!interactionReady()) {
       setFocused(false);
       setFocusedItem(-1);
@@ -728,7 +784,7 @@ export function useNativeAutocomplete(
   const inputChange = (event: TextInputChangeEvent) => {
     if (!interactionReady()) return;
     const next = event.nativeEvent.text,
-      changed = inputValue !== next;
+      changed = currentInput() !== next;
     if (changed) {
       edited.current = true;
       setInputValue(next);
@@ -744,6 +800,7 @@ export function useNativeAutocomplete(
   const deletionEvents = useRef(new WeakSet<object>());
   const deleteItem = useMenuEvent(
     (index: number, event: NativeAutocompleteEvent, itemDisabled: boolean) => {
+      const value = currentValue();
       if (
         !interactionReady() ||
         disabled ||
@@ -777,7 +834,7 @@ export function useNativeAutocomplete(
       // async collection replacement. Only the current committed row may act.
       if (
         !interactionReady() ||
-        !popupOpen ||
+        !currentPopupOpen() ||
         disabled ||
         readOnly ||
         filteredOptions[index] !== option
@@ -812,14 +869,14 @@ export function useNativeAutocomplete(
   });
   const toggleFromIndicator = useMenuEvent((event: NativeAutocompleteEvent) => {
     if (!interactionReady() || disabled || readOnly) return;
-    if (open) closePopup(event, 'toggleInput');
+    if (currentOpen()) closePopup(event, 'toggleInput');
     else openPopup(event);
     collection.input?.focus();
   });
   const leaveListbox = useMenuEvent((event: NativeAutocompleteEvent) => {
     if (
       interactionReady() &&
-      popupOpen &&
+      currentPopupOpen() &&
       resetHighlightOnMouseLeave &&
       highlightReason.current === 'mouse' &&
       !touched.current
@@ -1011,15 +1068,20 @@ export function useNativeAutocomplete(
         ? { start: inlineCompletion.start, end: inlineCompletion.end }
         : undefined,
       onPressIn: (event: NativeAutocompleteEvent) => {
-        if (interactionReady() && !disabled && (inputValue === '' || !open)) {
-          if (open) closePopup(event, 'toggleInput');
+        if (interactionReady() && !disabled && (currentInput() === '' || !currentOpen())) {
+          if (currentOpen()) closePopup(event, 'toggleInput');
           else openPopup(event);
         }
       },
       submitBehavior: 'submit' as const,
       onSubmitEditing: (event: NativeAutocompleteEvent) => {
         // Software submission remains an input action with its actual event.
-        if (interactionReady()) commitInput(event, () => event?.preventDefault());
+        if (interactionReady())
+          commitInput(
+            event,
+            () => event?.preventDefault(),
+            (event?.nativeEvent as { text?: unknown } | undefined)?.text,
+          );
       },
     }),
     getInputLabelProps: () => ({ id: id + '-label', htmlFor: id }),
