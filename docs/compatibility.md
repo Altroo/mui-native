@@ -6,6 +6,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
+- A low-level [platform-native picker host](native-picker.md) with UIKit/Android implementations, modeled events, a JVM lifecycle policy check and compile/link evidence. Material NativeSelect/Select native/TextField native integration and physical device gates remain unfinished.
+
 - Native Select and TextField select with raw single/multiple values, Menu composition, keyboard/typeahead, value/name events, native refs and Select owner-state slots. See [Select](select.md); NativeSelect/platform-picker mode and physical device gates remain open.
 
 - Anchored native Menu with five slots, source-shaped close/focus policy, native presentation gates, observed trigger restoration and nested keyboard ownership. Declared descendant Tab/Escape retains actual control targets and callbacks; UIKit command metadata is limited. See [native Menu](menu.md) and [native host](native-host.md); broader foreign-input keyboard contracts and physical overlay gates remain open.

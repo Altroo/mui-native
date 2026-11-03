@@ -52,6 +52,13 @@ for (const file of [
   'AltrooMuiNativeHost.podspec',
   'src/AltrooMUIInteractiveViewNativeComponent.ts',
   'src/nativeKeyboard.ts',
+  'src/AltrooMUINativePickerNativeComponent.ts',
+  'src/nativePicker.tsx',
+  'android/src/main/java/com/altroo/muinativehost/AltrooMUINativePicker.kt',
+  'android/src/main/java/com/altroo/muinativehost/AltrooMUINativePickerManager.kt',
+  'android/src/main/java/com/altroo/muinativehost/PickerPresentationState.kt',
+  'ios/AltrooMUINativePickerComponentView.h',
+  'ios/AltrooMUINativePickerComponentView.mm',
   'android/build.gradle',
   'android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveViewDelegate.java',
   'ios/AltrooMUIInteractiveViewComponentView.mm',
@@ -72,6 +79,11 @@ if (
   'AltrooMUIInteractiveViewComponentView'
 )
   throw new Error('Missing native host Fabric registration');
+if (
+  hostManifest.codegenConfig.ios.componentProvider.AltrooMUINativePicker !==
+  'AltrooMUINativePickerComponentView'
+)
+  throw new Error('Missing native picker Fabric registration');
 console.log('Installed native host retains autolinking, codegen and platform sources.');
 await cp('fixtures/native-consumer', consumer, { recursive: true });
 await writeFile(

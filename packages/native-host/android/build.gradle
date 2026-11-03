@@ -10,3 +10,11 @@ android {
 repositories { google(); mavenCentral() }
 dependencies { implementation "com.facebook.react:react-android" }
 react { libraryName = "AltrooMuiNativeHostSpec"; codegenJavaPackageName = "com.altroo.muinativehost" }
+
+// Compile and execute the pure lifecycle policy without an Android device/JUnit dependency.
+tasks.register("verifyPickerPolicy", JavaExec) {
+  group = "verification"
+  dependsOn("compileDebugUnitTestKotlin", "compileDebugUnitTestJavaWithJavac")
+  classpath = files(providers.provider { tasks.named("testDebugUnitTest").get().classpath })
+  mainClass.set("com.altroo.muinativehost.PickerPresentationStateTestKt")
+}

@@ -1,7 +1,7 @@
 {
   "name": "@altroo/mui-native-host",
   "version": "0.0.1-dev.0",
-  "description": "Native interaction host for independent MUI compatibility",
+  "description": "Native interaction and platform picker hosts for independent MUI compatibility",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -47,7 +47,8 @@
     },
     "ios": {
       "componentProvider": {
-        "AltrooMUIInteractiveView": "AltrooMUIInteractiveViewComponentView"
+        "AltrooMUIInteractiveView": "AltrooMUIInteractiveViewComponentView",
+        "AltrooMUINativePicker": "AltrooMUINativePickerComponentView"
       }
     }
   },

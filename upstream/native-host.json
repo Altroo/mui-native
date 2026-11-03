@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "name": "react-native",
   "version": "0.88.1",
-  "description": "Native host integrates public Fabric, View and Pressability contracts. API adapters and Java/Kotlin bridge handling follow installed MIT-licensed React Native source. This is not a runtime compatibility or device-validation claim. Standard descendant focus observers preserve native TextInput focus bubbling separately from private host events. Weak observed native focus supports overlay restoration, and the native Modal lifecycle determines presentation readiness; no optimistic requested-focus or global flag changes. Declared Tab/Escape from foreign native descendants dispatch at the actual React target through public Fabric event APIs. Android hardware events and UIKit command invocations retain distinct metadata and composition guards; native window request-close remains a separate route.",
+  "description": "Native host integrates public Fabric, View and Pressability contracts. API adapters and Java/Kotlin bridge handling follow installed MIT-licensed React Native source. This is not a runtime compatibility or device-validation claim. Standard descendant focus observers preserve native TextInput focus bubbling separately from private host events. Weak observed native focus supports overlay restoration, and the native Modal lifecycle determines presentation readiness; no optimistic requested-focus or global flag changes. Declared Tab/Escape from foreign native descendants dispatch at the actual React target through public Fabric event APIs. Android hardware events and UIKit command invocations retain distinct metadata and composition guards; native window request-close remains a separate route. The separately authored native picker anchor uses public Fabric direct events and native UIKit/Android framework selection surfaces. Its session/revision protocol, row state and lifecycle policy are original code; native compile/link and modeled events do not establish physical picker behavior.",
   "licenseFile": "upstream/licenses/react-native-0.88.1.txt",
   "licenseSha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
   "sourceFiles": {
@@ -41,6 +41,24 @@
     "packages/native-host/src/AltrooMUIInteractiveViewNativeComponent.ts",
     "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveView.kt",
     "packages/native-host/ios/AltrooMUIInteractiveViewComponentView.mm",
-    "packages/material/src/menu.tsx"
+    "packages/material/src/menu.tsx",
+    "packages/native-host/src/nativePicker.tsx",
+    "packages/native-host/src/AltrooMUINativePickerNativeComponent.ts",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUINativePicker.kt",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUINativePickerManager.kt",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/PickerPresentationState.kt",
+    "packages/native-host/ios/AltrooMUINativePickerComponentView.mm"
+  ],
+  "frameworkReferences": [
+    {
+      "platform": "iOS",
+      "url": "https://developer.apple.com/documentation/uikit/handling-row-selection-in-a-table-view",
+      "usage": "UITableView selection, checkmark accessories, adaptive native presentation and dynamic system text."
+    },
+    {
+      "platform": "Android",
+      "url": "https://developer.android.com/reference/android/app/AlertDialog.Builder",
+      "usage": "Framework AlertDialog, native choice rows and dismissal callbacks."
+    }
   ]
 }

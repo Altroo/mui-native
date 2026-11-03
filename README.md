@@ -43,6 +43,7 @@ Do not run `npm install @altroo/mui-native` yet. For testing a separate applicat
 | `@altroo/mui-native`                | Layout, typography, buttons, inputs, Select/TextField select, lists, menu items/lists, checkbox/radio/switch, dialog, popover, menu, alert, progress, snackbar |
 | `@altroo/mui-native-system`         | Theme provider, tokens, responsive `sx`, supported state selectors, component defaults/overrides/variants, `styled`                                            |
 | `@altroo/mui-native-icons`          | Four original geometric icons; the full upstream icon inventory is tracked                                                                                     |
+| `@altroo/mui-native-host`           | Fabric keyboard/focus primitives and a platform picker anchor; native rebuild required                                                                         |
 | `@altroo/mui-native-compat`         | Opt-in Metro import resolver and native TypeScript configuration generator                                                                                     |
 | `@altroo/mui-native-x-data-grid`    | Recycled rows, fixed columns, single sorting/filtering, pagination, selection, basic server modes                                                              |
 | `@altroo/mui-native-x-tree-view`    | Rich tree expansion, single/multiple selection, custom item accessors                                                                                          |
@@ -104,6 +105,7 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 - [Native anchored Menu and overlay focus](docs/menu.md)
 - [Native Select and TextField selection](docs/select.md)
 - [Native interaction host and custom roots](docs/native-host.md)
+- [Platform-native picker host](docs/native-picker.md)
 - [Text rendering and inheritance in native containers](docs/text-containers.md)
 - [Spacing, breakpoints and responsive styles](docs/layout-system.md)
 - [Native Button loading](docs/button.md)
