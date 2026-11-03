@@ -39,10 +39,16 @@ public final class PopperInstrumentation extends Instrumentation {
   private File directory;
   private String relativeDirectory;
   private String accessibilityQuery = "not queried";
+  private boolean keyboardScenario;
 
-  @Override public void onCreate(Bundle arguments) { super.onCreate(arguments); start(); }
+  @Override public void onCreate(Bundle arguments) {
+    super.onCreate(arguments);
+    keyboardScenario = "keyboard".equals(arguments.getString("scenario"));
+    start();
+  }
 
   @Override public void onStart() {
+    if (keyboardScenario) { KeyboardScenario.run(this); return; }
     JSONObject report = new JSONObject();
     Bundle result = new Bundle();
     boolean passed = false;

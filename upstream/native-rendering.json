@@ -58,7 +58,8 @@
     "packages/native-host/ios/AltrooPortalObservation.mm",
     "packages/native-host/android/src/main/java/com/altroo/muinativehost/PortalObservationEvent.kt",
     "packages/native-host/ios/AltrooPortalPlanarTransform.h",
-    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIPortalHostManager.kt"
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIPortalHostManager.kt",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/DescendantKeyWindow.kt"
   ],
   "adaptations": [
     "Native root child mounting and React Native touch/pointer dispatch follow the verified MIT reference. The new implementation attaches within an existing native window/container, does not create a modal or request focus, preserves React context, and reports actual native affine container bounds.",
@@ -70,6 +71,7 @@
     "Positioning payloads map native anchor, popup, clipping and explicit boundary geometry directly into the actual padding-box containing frame before AABB conversion. Arrow layout/parent metrics and actual RN left/right swapping are included. UIKit reads pinned protected layout metrics through a prefixed category; Android composes public View matrices without enabling flags.",
     "Observation-only hosts support inline Popper without attaching a native Portal root or requesting focus. Empty native/window clipping remains empty before inverse affine conversion. Native host 0.0.5 requires an application rebuild.",
     "UIKit observations accept invertible planar XY transforms with an independent finite Z scale, including RN uniform scale. Perspective, tilted planes, nonfinite and singular transforms remain unavailable geometry.",
-    "Android logical Portal children are managed through RN IViewGroupManager rather than phantom ViewGroup child getters. Framework accessibility/structure traversal sees the true physical tree; manager getters always read the live overlay list, including Fabric direct reparenting."
+    "Android logical Portal children are managed through RN IViewGroupManager rather than phantom ViewGroup child getters. Framework accessibility/structure traversal sees the true physical tree; manager getters always read the live overlay list, including Fabric direct reparenting.",
+    "Android editable-key release ownership resolves the pinned ReactModalHostView public Dialog getter to its real Window. A temporary callback delegates unrelated events and preserves RN's established Escape-up request-close route; unknown application windows remain untouched."
   ]
 }

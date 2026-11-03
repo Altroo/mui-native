@@ -5,6 +5,7 @@
     "customConditions": ["react-native"],
     "paths": {
       "@altroo/mui-native-system": ["../../packages/system/src/index.ts"],
+      "@altroo/mui-native-host": ["../../packages/native-host/src/index.tsx"],
       "@altroo/mui-native": ["../../packages/material/src/index.ts"],
       "@altroo/mui-native/*": ["../../packages/material/src/*/index.ts"],
       "@altroo/mui-native-icons": ["../../packages/icons/src/index.ts"],

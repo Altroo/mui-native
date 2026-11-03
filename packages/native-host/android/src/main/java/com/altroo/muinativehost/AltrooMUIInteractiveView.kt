@@ -1,3 +1,4 @@
+/* Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 package com.altroo.muinativehost
 
 import android.content.res.ColorStateList
@@ -13,12 +14,32 @@ import android.widget.EditText
 import com.facebook.react.uimanager.common.UIManagerType
 import com.facebook.react.uimanager.IllegalViewOperationException
 import android.view.View
+import android.view.ViewTreeObserver
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.WritableMap
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.UIManagerHelper
 import com.facebook.react.uimanager.events.Event
 import com.facebook.react.views.view.ReactViewGroup
+import java.lang.ref.WeakReference
+
+internal fun interactiveKeyName(event: KeyEvent): String = when (event.keyCode) {
+  KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> "Enter"
+  KeyEvent.KEYCODE_SPACE -> " "
+  KeyEvent.KEYCODE_TAB -> "Tab"
+  KeyEvent.KEYCODE_ESCAPE -> "Escape"
+  KeyEvent.KEYCODE_DPAD_UP -> "ArrowUp"
+  KeyEvent.KEYCODE_DPAD_DOWN -> "ArrowDown"
+  KeyEvent.KEYCODE_DPAD_LEFT -> "ArrowLeft"
+  KeyEvent.KEYCODE_DPAD_RIGHT -> "ArrowRight"
+  KeyEvent.KEYCODE_PAGE_UP -> "PageUp"
+  KeyEvent.KEYCODE_PAGE_DOWN -> "PageDown"
+  KeyEvent.KEYCODE_MOVE_HOME -> "Home"
+  KeyEvent.KEYCODE_MOVE_END -> "End"
+  KeyEvent.KEYCODE_DEL -> "Backspace"
+  KeyEvent.KEYCODE_FORWARD_DEL -> "Delete"
+  else -> { val character = event.getUnicodeChar(event.metaState and (KeyEvent.META_CTRL_MASK or KeyEvent.META_META_MASK or KeyEvent.META_ALT_MASK).inv()); if(character > 0) String(Character.toChars(character)) else "Unidentified" }
+}
 
 internal class HostEvent(surface: Int, tag: Int, private val name: String, private val data: WritableMap, private val discrete: Boolean = false) : Event<HostEvent>(surface, tag) {
   override fun getEventName() = name
@@ -31,6 +52,11 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
   var nativeTabIndex = 0
   var managedKeys: Set<String> = emptySet()
   var managedDescendantKeys: Set<String> = emptySet()
+    set(value) {
+      if (field != value) descendantDeclarationRevision++
+      field = value
+      syncDescendantFocusObserver()
+    }
   var allowKeyboardFocus = true
   var rippleEnabled = false
   var rippleColor: Int? = null
@@ -39,24 +65,34 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
   private var focusOnAttach = false
   var rippleBorderless = false
   private var ripple: RippleDrawable? = null
+  private var descendantDeclarationRevision = 0L
+  private var descendantFocusRevision = 0L
+  private var descendantFocusObserver: ViewTreeObserver? = null
+  private val descendantFocusListener = ViewTreeObserver.OnGlobalFocusChangeListener { old, next ->
+    if (old !== next) descendantFocusRevision++
+  }
+  private data class DescendantTarget(val source: WeakReference<View>, val target: WeakReference<View>,
+    val tag: Int, val declarationRevision: Long, val focusRevision: Long)
+  private val descendantSequences = DescendantKeyPolicy<DescendantTarget>()
+  private fun physicalKey(event: KeyEvent) = DescendantPhysicalKey(event.deviceId, event.keyCode, event.downTime)
+  internal fun ownsDescendantSequence(event: KeyEvent) = descendantSequences.contains(physicalKey(event))
+  internal fun retireDescendantSequence(event: KeyEvent) {
+    descendantSequences.dispatch(physicalKey(event), false, false, true, null) { false }
+    syncDescendantFocusObserver()
+  }
+  private fun syncDescendantFocusObserver() {
+    val needed = isAttachedToWindow && (managedDescendantKeys.isNotEmpty() || descendantSequences.hasHeldKeys)
+    if (needed && descendantFocusObserver == null) {
+      viewTreeObserver.addOnGlobalFocusChangeListener(descendantFocusListener)
+      descendantFocusObserver = viewTreeObserver
+    } else if (!needed) {
+      descendantFocusObserver?.takeIf { it.isAlive }?.removeOnGlobalFocusChangeListener(descendantFocusListener)
+      descendantFocusObserver = null
+    }
+  }
   private fun emit(name: String, data: WritableMap) {
     val context = context as ThemedReactContext
     UIManagerHelper.getEventDispatcher(context)?.dispatchEvent(HostEvent(UIManagerHelper.getSurfaceId(context), id, name, data))
-  }
-  private fun keyName(event: KeyEvent): String = when (event.keyCode) {
-    KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> "Enter"
-    KeyEvent.KEYCODE_SPACE -> " "
-    KeyEvent.KEYCODE_TAB -> "Tab"
-    KeyEvent.KEYCODE_ESCAPE -> "Escape"
-    KeyEvent.KEYCODE_DPAD_UP -> "ArrowUp"
-    KeyEvent.KEYCODE_DPAD_DOWN -> "ArrowDown"
-    KeyEvent.KEYCODE_DPAD_LEFT -> "ArrowLeft"
-    KeyEvent.KEYCODE_DPAD_RIGHT -> "ArrowRight"
-    KeyEvent.KEYCODE_MOVE_HOME -> "Home"
-    KeyEvent.KEYCODE_MOVE_END -> "End"
-    KeyEvent.KEYCODE_DEL -> "Backspace"
-    KeyEvent.KEYCODE_FORWARD_DEL -> "Delete"
-    else -> { val character = event.getUnicodeChar(event.metaState and (KeyEvent.META_CTRL_MASK or KeyEvent.META_META_MASK or KeyEvent.META_ALT_MASK).inv()); if(character > 0) String(Character.toChars(character)) else "Unidentified" }
   }
   private fun codeName(event: KeyEvent, key: String): String = when {
     event.keyCode in KeyEvent.KEYCODE_A..KeyEvent.KEYCODE_Z -> "Key" + ('A'.code + event.keyCode - KeyEvent.KEYCODE_A).toChar()
@@ -87,35 +123,51 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
     }
     return null
   }
-  internal fun dispatchDescendantKey(event: KeyEvent, focused: View): Boolean {
-    val key = keyName(event)
-    if (descendantOwner(focused, key) !== this || event.flags and KeyEvent.FLAG_SOFT_KEYBOARD != 0) return false
-    val editor = focused.onCheckIsTextEditor()
-    if (editor && focused !is EditText) return false // Unknown composition API is application-owned.
-    if (focused is EditText && (BaseInputConnection.getComposingSpanStart(focused.editableText) >= 0 || BaseInputConnection.getComposingSpanEnd(focused.editableText) >= 0)) return false
-    val target = reactTarget(focused) ?: return false
+  internal fun dispatchDescendantKey(event: KeyEvent, focused: View?): Boolean {
+    val key = interactiveKeyName(event)
+    val editor = focused?.onCheckIsTextEditor() == true
+    val composing = focused is EditText &&
+      (BaseInputConnection.getComposingSpanStart(focused.editableText) >= 0 || BaseInputConnection.getComposingSpanEnd(focused.editableText) >= 0)
+    // Inspect only known editor composition APIs. A claimed sequence is still
+    // consumed after a close/composition change, but cannot notify another target.
+    val eligible = focused != null && descendantOwner(focused, key) === this &&
+      event.flags and KeyEvent.FLAG_SOFT_KEYBOARD == 0 && !composing && (!editor || focused is EditText)
+    val target = if (eligible) reactTarget(focused!!) else null
     val reactContext = context as ThemedReactContext
-    val dispatcher = UIManagerHelper.getEventDispatcher(reactContext) ?: return false
-    val surface = UIManagerHelper.getSurfaceId(target)
-    if (surface < 0) return false
+    val dispatcher = UIManagerHelper.getEventDispatcher(reactContext)
+    val surface = target?.let { UIManagerHelper.getSurfaceId(it) } ?: -1
+    var candidate = if (target != null && dispatcher != null && surface >= 0)
+      DescendantTarget(WeakReference(focused!!), WeakReference(target), target.id,
+        descendantDeclarationRevision, descendantFocusRevision) else null
+    if (candidate != null && event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0 &&
+        !event.isCanceled && !ownsDescendantSequence(event) && !DescendantKeyWindows.claim(this, event)) candidate = null
+    val decision = descendantSequences.dispatch(physicalKey(event), event.action == KeyEvent.ACTION_DOWN,
+      event.repeatCount > 0, event.isCanceled, candidate) { previous ->
+        candidate != null && previous.source.get() === focused && previous.target.get() === target && previous.tag == target!!.id &&
+          previous.declarationRevision == descendantDeclarationRevision && previous.focusRevision == descendantFocusRevision
+      }
+    syncDescendantFocusObserver()
+    DescendantKeyWindows.released(this, event)
+    if (!decision.consumed) return false
+    if (decision.target == null) return true
     val data = Arguments.createMap().apply {
       putString("key", key); putString("code", codeName(event,key))
       putBoolean("altKey",event.isAltPressed); putBoolean("ctrlKey",event.isCtrlPressed)
       putBoolean("metaKey",event.isMetaPressed); putBoolean("shiftKey",event.isShiftPressed)
       putBoolean("repeat",event.repeatCount > 0); putBoolean("isComposing",false); putBoolean("isCanceled",event.isCanceled)
-      putString("muiKeySource","hardware"); putBoolean("isEditable",editor); putInt("target",target.id)
+      putString("muiKeySource","hardware"); putBoolean("isEditable",editor); putInt("target",target!!.id)
     }
-    dispatcher.dispatchEvent(HostEvent(surface,target.id,if(event.action == KeyEvent.ACTION_DOWN) "topKeyDown" else "topKeyUp",data,true))
-    return !event.isCanceled
+    dispatcher!!.dispatchEvent(HostEvent(surface,target!!.id,if(event.action == KeyEvent.ACTION_DOWN) "topKeyDown" else "topKeyUp",data,true))
+    return true
   }
   override fun dispatchKeyEvent(event: KeyEvent): Boolean {
     if(event.action !in listOf(KeyEvent.ACTION_DOWN,KeyEvent.ACTION_UP)) return super.dispatchKeyEvent(event)
-    val focused = findFocus() ?: return super.dispatchKeyEvent(event)
-    if (focused !== this) {
+    val focused = findFocus()
+    if (focused !== this || ownsDescendantSequence(event)) {
       if (dispatchDescendantKey(event,focused)) return true
       return super.dispatchKeyEvent(event)
     }
-    val key = keyName(event)
+    val key = interactiveKeyName(event)
     val data = Arguments.createMap().apply {
       putString("key",key); putString("code",codeName(event,key)); putBoolean("altKey",event.isAltPressed)
       putBoolean("ctrlKey",event.isCtrlPressed); putBoolean("metaKey",event.isMetaPressed); putBoolean("shiftKey",event.isShiftPressed)
@@ -145,8 +197,13 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
     isFocusable = true; isFocusableInTouchMode = true; requestFocus()
   }
   fun clearManagedFocus() { focusOnAttach = false; clearFocus() }
-  override fun onAttachedToWindow() { super.onAttachedToWindow(); if(focusOnAttach) requestManagedFocus() }
-  override fun onDetachedFromWindow() { isPressed=false; ripple?.jumpToCurrentState(); super.onDetachedFromWindow() }
+  override fun onAttachedToWindow() { super.onAttachedToWindow(); syncDescendantFocusObserver(); if(focusOnAttach) requestManagedFocus() }
+  override fun onDetachedFromWindow() {
+    descendantSequences.clear()
+    descendantFocusObserver?.takeIf { it.isAlive }?.removeOnGlobalFocusChangeListener(descendantFocusListener)
+    descendantFocusObserver = null
+    isPressed=false; ripple?.jumpToCurrentState(); super.onDetachedFromWindow()
+  }
   fun updateRipple() {
     ripple?.callback = null
     val color = rippleColor ?: TypedValue().let { attribute ->

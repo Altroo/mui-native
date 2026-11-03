@@ -63,6 +63,7 @@ xcodebuild test \
   -scheme PopperCatalogUITests \
   -destination "id=$MUI_QA_IOS" \
   -parallel-testing-enabled NO \
+  -collect-test-diagnostics never \
   -derivedDataPath .cache/popper-ios-tests \
   -resultBundlePath .cache/popper-ios-results-NEW.xcresult
 ```
@@ -74,3 +75,31 @@ xcrun simctl launch "$MUI_QA_IOS" dev.altroo.muinative.catalog
 ```
 
 Retain the `.xcresult` bundle and export screenshots with `xcrun xcresulttool export attachments --path RESULT.xcresult --output-path EMPTY_DIRECTORY`. Record source revision, selected device/OS, build mode, scenario results and known limitations alongside the Android evidence. Passing simulator checks does not certify physical-device, screen-reader, keyboard/IME, RTL/font-scaling or calibrated release-performance gates.
+
+## Editable keyboard commands
+
+The catalog's Keyboard scene isolates the reusable native transport from Autocomplete. It contains an input with an outer command owner, optional inner owner, window Portal and native Dialog, plus an input outside that boundary. Its receipt panel reports actual native target identity and callback phases. Enter removes the outer declaration during key-down, making release/focus races observable.
+
+Android uses the same test APK and runner as Popper, with an explicit scenario. Prepare the generated project, build/install both APKs as above, and select the existing device:
+
+```sh
+node scripts/native-catalog/android-keyboard.mjs prepare apps/native-catalog/android
+adb -s "$MUI_QA_DEVICE" shell am instrument -w -e scenario keyboard \
+  dev.altroo.muinative.catalog.test/dev.altroo.muinative.catalog.test.PopperInstrumentation \
+  > keyboard-native.txt
+node scripts/native-catalog/android-keyboard.mjs summarize keyboard-native.txt
+```
+
+This direct instrumentation command starts the catalog but does not perform the Popper host runner's restoration. Afterward, reopen only that catalog activity, preserving the emulator and Metro:
+
+```sh
+adb -s "$MUI_QA_DEVICE" shell am start -n dev.altroo.muinative.catalog/.MainActivity
+```
+
+The strict summary requires all 22 milestones and four screenshot names; `adb` exit zero alone is insufficient. The native run retains the JSON report and images in its reported application-cache directory. It checks navigation, ordinary editing, complete held-key ownership, release after focus moves outside, canceled release, a programmatically installed native composing span, closest-owner routing, Portal and actual React Native Dialog-window behavior. Window callback identity must be installed while held and restored after release. An unrelated edit while a key is held must still work. The outside editor's native key listener detects a leaked Enter-up. Dialog Escape must preserve React Native's native request-close route. These injected `Instrumentation.sendKeySync` checks do not represent a physical keyboard or a real composing IME.
+
+The host's `verifyDescendantKeyPolicy` Gradle task runs 26 device-free assertions against the same sequence policy used by the native adapter. It supplements installed interactions; it does not replace them.
+
+For iOS, include [KeyboardCatalogUITests.swift](../tests/native/ios/KeyboardCatalogUITests.swift) in the existing UI test target described above. The inline, nested/Portal and Dialog tests use public XCTest key synthesis. Text deletion uses XCTest's text API because its single-key Delete command does not edit the plain React Native positive control on the recorded iOS 27.0 runtime. The extended navigation and Dialog Enter tests first require Delete/Return to work in that plain control. A failed driver prerequisite produces an explicit XCTest skip with an attachment, never a passing compatibility result. If the prerequisite succeeds, all extended assertions are mandatory. Inspect passed, failed and skipped counts separately in the result bundle; physical keyboards and real IMEs remain required gates.
+
+Original Material UI 9.5.0 navigation expectations are recorded separately in the [browser fixture](../tests/fixtures/mui-autocomplete-keyboard-browser-9.5.0.json). Build its integrity-checked probe with `node scripts/reference/autocomplete-keyboard.mjs --check` and serve the generated `.cache/autocomplete-keyboard-reference` directory on loopback. `window.verifyReference()` checks 26 original-browser observations, including default prevention, selection/highlight, disabled options and the upstream IME-229 guard. That reference does not certify native transport or full Autocomplete.

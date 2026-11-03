@@ -21,7 +21,7 @@ export interface InteractiveViewProps extends ViewProps {
   onKeyDownCapture?: (event: NativeHostKeyEvent) => void;
   onKeyUpCapture?: (event: NativeHostKeyEvent) => void;
   managedKeys?: readonly string[];
-  /** Predeclared native commands from foreign descendants; editing keys stay native. */
+  /** Declare only commands owned by this composite; undeclared editing stays native. */
   managedDescendantKeys?: readonly NativeDescendantKey[];
   rippleColor?: ColorValue;
   rippleEnabled?: boolean;
