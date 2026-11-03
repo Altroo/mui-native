@@ -64,17 +64,33 @@ export function PopperExamples() {
           <Stack spacing={1}>
             <FormControlLabel
               label="Render inline"
-              control={<Switch checked={inline} onChange={(_, value) => setInline(value)} />}
+              control={
+                <Switch
+                  testID="popper-inline-toggle"
+                  checked={inline}
+                  onChange={(_, value) => setInline(value)}
+                />
+              }
             />
             <FormControlLabel
               label="Transform the frame"
               control={
-                <Switch checked={transformed} onChange={(_, value) => setTransformed(value)} />
+                <Switch
+                  testID="popper-transform-toggle"
+                  checked={transformed}
+                  onChange={(_, value) => setTransformed(value)}
+                />
               }
             />
             <FormControlLabel
               label="Keep inside the frame"
-              control={<Switch checked={bounded} onChange={(_, value) => setBounded(value)} />}
+              control={
+                <Switch
+                  testID="popper-boundary-toggle"
+                  checked={bounded}
+                  onChange={(_, value) => setBounded(value)}
+                />
+              }
             />
             <Button
               variant="outlined"

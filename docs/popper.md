@@ -1,6 +1,6 @@
 # Native Popper
 
-`Popper` is a reusable, nonmodal anchored surface. Import it from `@mui/material`, `@mui/material/Popper`, or the corresponding `@altroo/mui-native` paths. Web resolution continues to use original MUI. Native rendering requires native-host **0.0.5-dev.0** and an application rebuild; Expo Go cannot load this host.
+`Popper` is a reusable, nonmodal anchored surface. Import it from `@mui/material`, `@mui/material/Popper`, or the corresponding `@altroo/mui-native` paths. Web resolution continues to use original MUI. Native rendering requires native-host **0.0.5-dev.1** and an application rebuild; Expo Go cannot load this host.
 
 ```tsx
 import { useState } from 'react';

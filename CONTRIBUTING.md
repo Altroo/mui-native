@@ -2,7 +2,7 @@
 
 Read ROADMAP.md, docs/compatibility.md and the pinned upstream contract first. Use one focused change with a concrete native behavior, its supported props and an honest compatibility classification. Work from a focused feature or fix branch, link the relevant issue, and keep commits scoped. Open a pull request with the resulting behavior, compatibility limits and validation evidence. Resolve review findings and pass the required checks before merging.
 
-Use Node from .nvmrc, pnpm from package.json, then `pnpm install --frozen-lockfile`, `pnpm check` and `pnpm format:check`. Native behavior changes also need catalog scenarios and actual device/simulator evidence appropriate to the change. Unit tests cannot establish accessibility or performance parity.
+Use Node from .nvmrc, pnpm from package.json, then `pnpm install --frozen-lockfile`, `pnpm check` and `pnpm format:check`. Native behavior changes also need catalog scenarios and actual device/simulator evidence appropriate to the change. Unit tests cannot establish accessibility or performance parity. The [native catalog testing guide](docs/native-catalog-testing.md) provides reproducible Android interaction checks and explains the evidence they establish.
 
 `pnpm lint` runs ESLint with zero warnings allowed for JavaScript, MJS and CJS, then the current TypeScript compiler for TS/TSX. TypeScript checks unused imports, locals, private declarations and parameters across library code, tests and the catalog. Installed-consumer fixtures also enable unused-code checks. `pnpm check` starts with this gate, and CI runs the same command before package-consumer checks. Generated output, dependencies and immutable upstream snapshots are excluded from source linting.
 

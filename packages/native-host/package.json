@@ -1,6 +1,6 @@
 {
   "name": "@altroo/mui-native-host",
-  "version": "0.0.5-dev.0",
+  "version": "0.0.5-dev.1",
   "description": "Native interaction, portal and picker hosts for independent MUI compatibility",
   "license": "MIT",
   "repository": {
