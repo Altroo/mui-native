@@ -71,6 +71,7 @@ function InputTrial({ mode, generation }: { mode: Mode; generation: number }) {
           {...(mode === 'autocomplete' ? { inputValue: displayed } : {})}
           onInputChange={(_, next, reason) => record(next, reason)}
           fullWidth
+          slotProps={{ popper: { testID: 'typing-popup' } }}
           renderInput={(params) => (
             <TextField
               {...params}

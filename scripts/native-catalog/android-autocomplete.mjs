@@ -35,6 +35,7 @@ export const autocompleteStages = [
   'fullscreen-dialog-child-escape',
   'fullscreen-dialog-selection',
   'fullscreen-dialog-default-escape',
+  'software-requests',
 ];
 export const autocompletePictures = [
   'filtered.png',
@@ -101,6 +102,45 @@ export function summarizeAutocomplete(output) {
     release.chipUps !== 0
   )
     throw Error('Missing native focus-transfer release ownership evidence');
+  const software = report.softwareRequests;
+  const methods = [
+    'surrounding',
+    'codepoints',
+    'key-unflagged',
+    'key-soft',
+    'key-system',
+    'nested-batch',
+    'commit',
+    'composing',
+    ...(report.device.sdk >= 33 ? ['commit-modern', 'composing-modern', 'region-modern'] : []),
+    ...(report.device.sdk >= 34 ? ['replace-modern'] : []),
+    'retired',
+    'queued-retired',
+    'covered-window',
+  ];
+  if (
+    !Array.isArray(software) ||
+    software.length !== methods.length ||
+    !software.every(
+      (row, index) =>
+        row.method === methods[index] &&
+        row.status === 'passed' &&
+        (!row.method.endsWith('-modern') ||
+          (row.downs === 0 &&
+            typeof row.result === 'boolean' &&
+            row.nativeText === (row.method === 'region-modern' ? 'x' : ''))) &&
+        (row.method !== 'retired' ||
+          (row.ordinaryTextEdited === true && row.downs === 0 && row.keyPresses === 1)) &&
+        (row.method !== 'nested-batch' ||
+          (row.requests === 2 && [0, 1].includes(row.committedValues))) &&
+        (index >= 5 ||
+          (row.downs === 1 &&
+            typeof row.result === 'boolean' &&
+            Number.isInteger(row.keyPresses) &&
+            row.keyPresses === (row.method === 'codepoints' ? 0 : 1))),
+    )
+  )
+    throw Error('Missing software editing request evidence');
   const bursts = report.freeSoloBursts;
   if (
     !Array.isArray(bursts) ||

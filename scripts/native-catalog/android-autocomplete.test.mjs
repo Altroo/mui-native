@@ -14,6 +14,34 @@ const report = () => ({
   stages: [...autocompleteStages],
   screenshots: [...autocompletePictures],
   tagEntryRelease: { focusChangedBeforeUp: true, callbackRestored: true, editorUps: 0, chipUps: 0 },
+  softwareRequests: [
+    'surrounding',
+    'codepoints',
+    'key-unflagged',
+    'key-soft',
+    'key-system',
+    'nested-batch',
+    'commit',
+    'composing',
+    'commit-modern',
+    'composing-modern',
+    'region-modern',
+    'replace-modern',
+    'retired',
+    'queued-retired',
+    'covered-window',
+  ].map((method) => ({
+    method,
+    status: 'passed',
+    downs: 1,
+    keyPresses: method === 'codepoints' ? 0 : 1,
+    result: true,
+    ...(method.endsWith('-modern')
+      ? { downs: 0, nativeText: method === 'region-modern' ? 'x' : '' }
+      : {}),
+    ...(method === 'nested-batch' ? { requests: 2, committedValues: 1 } : {}),
+    ...(method === 'retired' ? { ordinaryTextEdited: true, downs: 0, keyPresses: 1 } : {}),
+  })),
   freeSoloBursts: Array.from({ length: 8 }, (_, index) => ({
     index,
     status: 'passed',
@@ -124,7 +152,10 @@ test('the earlier 17-stage APK cannot satisfy Dialog Escape release coverage', (
   const previous = report();
   previous.stages = previous.stages.filter(
     (stage) =>
-      !stage.includes('escape') && !stage.startsWith('tag-') && !stage.startsWith('editor-'),
+      !stage.includes('escape') &&
+      !stage.startsWith('tag-') &&
+      !stage.startsWith('editor-') &&
+      stage !== 'software-requests',
   );
   previous.screenshots = previous.screenshots.filter(
     (name) => !name.includes('escape') && !name.startsWith('tag-') && name !== 'editor-empty.png',
@@ -137,7 +168,8 @@ test('the earlier 17-stage APK cannot satisfy Dialog Escape release coverage', (
 test('the earlier 21-stage APK cannot satisfy native tag/caret coverage', () => {
   const previous = report();
   previous.stages = previous.stages.filter(
-    (stage) => !stage.startsWith('tag-') && !stage.startsWith('editor-'),
+    (stage) =>
+      !stage.startsWith('tag-') && !stage.startsWith('editor-') && stage !== 'software-requests',
   );
   previous.screenshots = previous.screenshots.filter(
     (name) => !name.startsWith('tag-') && name !== 'editor-empty.png',
@@ -151,7 +183,9 @@ test('the earlier 25-stage APK cannot certify native editor Backspace or held ta
   const previous = report();
   previous.stages = previous.stages.filter(
     (stage) =>
-      !['tag-delete-held', 'tag-delete-release'].includes(stage) && !stage.startsWith('editor-'),
+      !['tag-delete-held', 'tag-delete-release', 'software-requests'].includes(stage) &&
+      !stage.startsWith('editor-') &&
+      stage !== 'software-requests',
   );
   assert.equal(previous.stages.length, 25);
   assert.throws(() => summarizeAutocomplete(raw(previous)));
@@ -170,4 +204,41 @@ test('native focus transfer requires a retired lease and no release to either st
     value.tagEntryRelease = release;
     assert.throws(() => summarizeAutocomplete(raw(value)), /release ownership/);
   }
+});
+
+test('software editing checks reject an older report or duplicate deletion callbacks', () => {
+  const missing = report();
+  delete missing.softwareRequests;
+  assert.throws(() => summarizeAutocomplete(raw(missing)), /software editing/);
+  for (const field of ['downs', 'keyPresses']) {
+    const duplicate = report();
+    duplicate.softwareRequests[2][field] = 2;
+    assert.throws(() => summarizeAutocomplete(raw(duplicate)), /software editing/);
+  }
+});
+
+test('modern native overload evidence follows platform availability and rejects synthetic deletion', () => {
+  const older = report();
+  older.device.sdk = 32;
+  older.softwareRequests = older.softwareRequests.filter((row) => !row.method.endsWith('-modern'));
+  assert.equal(summarizeAutocomplete(raw(older)).status, 'passed');
+  for (const patch of [{ downs: 1 }, { nativeText: 'wrong' }, { result: null }]) {
+    const value = report();
+    Object.assign(
+      value.softwareRequests.find((row) => row.method === 'commit-modern'),
+      patch,
+    );
+    assert.throws(() => summarizeAutocomplete(raw(value)), /software editing/);
+  }
+  const missing = report();
+  missing.softwareRequests = missing.softwareRequests.filter(
+    (row) => row.method !== 'replace-modern',
+  );
+  assert.throws(() => summarizeAutocomplete(raw(missing)), /software editing/);
+});
+
+test('code-point deletion retains its exact stock zero-keyPress contract', () => {
+  const value = report();
+  value.softwareRequests.find((row) => row.method === 'codepoints').keyPresses = 1;
+  assert.throws(() => summarizeAutocomplete(raw(value)), /software editing/);
 });
