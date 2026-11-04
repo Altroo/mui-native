@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "f3db149a6bbadb632462eaa0e07f3b218bdf1e942ce69375a54c8e3f73ab2f8a",
+  "nativeSourceSha256": "a7500c324e8a06d9402c64614dea7f7db856a13d4f43a306fdb2f89b7a9d978f",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -5815,7 +5815,7 @@
           "file": "SvgIcon/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/SwipeableDrawer",
@@ -13752,7 +13752,7 @@
           "line": 2
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -18654,7 +18654,7 @@
           "line": 24
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -29788,7 +29788,7 @@
           "line": 83
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -29807,7 +29807,7 @@
           "line": 25
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -29826,7 +29826,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -29845,7 +29845,7 @@
           "line": 23
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -29864,7 +29864,7 @@
           "line": 9
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -29883,7 +29883,7 @@
           "line": 86
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -29902,7 +29902,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -29921,7 +29921,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -29940,7 +29940,7 @@
           "line": 68
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35372,7 +35372,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 362
+          "line": 376
         }
       ]
     },
@@ -36433,6 +36433,28 @@
       ]
     },
     {
+      "name": "NativeSvgIconComponent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/svgIconTypes.ts",
+          "name": "NativeSvgIconComponent",
+          "kind": "type",
+          "line": 106
+        }
+      ]
+    },
+    {
+      "name": "NativeSvgIconStyle",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/svgIconTypes.ts",
+          "name": "NativeSvgIconStyle",
+          "kind": "type",
+          "line": 25
+        }
+      ]
+    },
+    {
       "name": "NativeSwitchChangeEvent",
       "origins": [
         {
@@ -36824,7 +36846,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "resolveSx",
           "kind": "value",
-          "line": 355
+          "line": 369
         }
       ]
     },
@@ -36979,6 +37001,28 @@
           "name": "StyleContext",
           "kind": "type",
           "line": 13
+        }
+      ]
+    },
+    {
+      "name": "SvgIconHandle",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/svgIconTypes.ts",
+          "name": "SvgIconHandle",
+          "kind": "type",
+          "line": 24
+        }
+      ]
+    },
+    {
+      "name": "SvgIconOwnerState",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/svgIconTypes.ts",
+          "name": "SvgIconOwnerState",
+          "kind": "type",
+          "line": 112
         }
       ]
     },
@@ -120915,7 +120959,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconPropsSizeOverrides",
+          "file": "src/svgIconTypes.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconPropsColorOverrides",
@@ -120925,7 +120976,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconPropsColorOverrides",
+          "file": "src/svgIconTypes.ts",
+          "line": 11,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconOwnProps",
@@ -120943,7 +121001,7 @@
           "line": 13,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -120956,7 +121014,7 @@
           "line": 17,
           "kind": "property",
           "type": "Partial<SvgIconClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -120969,7 +121027,7 @@
           "line": 25,
           "kind": "property",
           "type": "OverridableStringUnion<'inherit' | 'action' | 'disabled' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning', SvgIconPropsColorOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -120982,7 +121040,7 @@
           "line": 30,
           "kind": "property",
           "type": "OverridableStringUnion<'inherit' | 'large' | 'medium' | 'small', SvgIconPropsSizeOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -120995,7 +121053,7 @@
           "line": 34,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121008,7 +121066,7 @@
           "line": 42,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121021,7 +121079,7 @@
           "line": 48,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121034,7 +121092,7 @@
           "line": 52,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121047,7 +121105,7 @@
           "line": 57,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121060,7 +121118,7 @@
           "line": 66,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -121075,7 +121133,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconOwnProps",
+          "file": "src/svgIconTypes.ts",
+          "line": 44,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "SvgIconProps",
+          "file": "src/svgIconTypes.ts",
+          "line": 86,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconTypeMap",
@@ -121093,7 +121164,7 @@
           "line": 69,
           "kind": "property",
           "type": "AdditionalProps & SvgIconOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121106,7 +121177,7 @@
           "line": 70,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -121117,7 +121188,14 @@
         "SvgIconOwnProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconTypeMap",
+          "file": "src/svgIconTypes.ts",
+          "line": 79,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconProps",
@@ -121147,7 +121225,14 @@
         "SvgIconTypeMap"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconProps",
+          "file": "src/svgIconTypes.ts",
+          "line": 86,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconPropsSizeOverrides",
@@ -121157,7 +121242,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconPropsSizeOverrides",
+          "file": "src/svgIconTypes.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconPropsColorOverrides",
@@ -121167,7 +121259,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconPropsColorOverrides",
+          "file": "src/svgIconTypes.ts",
+          "line": 11,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconOwnProps",
@@ -121185,7 +121284,7 @@
           "line": 13,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121198,7 +121297,7 @@
           "line": 17,
           "kind": "property",
           "type": "Partial<SvgIconClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121211,7 +121310,7 @@
           "line": 25,
           "kind": "property",
           "type": "OverridableStringUnion<'inherit' | 'action' | 'disabled' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning', SvgIconPropsColorOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121224,7 +121323,7 @@
           "line": 30,
           "kind": "property",
           "type": "OverridableStringUnion<'inherit' | 'large' | 'medium' | 'small', SvgIconPropsSizeOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121237,7 +121336,7 @@
           "line": 34,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121250,7 +121349,7 @@
           "line": 42,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121263,7 +121362,7 @@
           "line": 48,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121276,7 +121375,7 @@
           "line": 52,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121289,7 +121388,7 @@
           "line": 57,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121302,7 +121401,7 @@
           "line": 66,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -121317,7 +121416,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconOwnProps",
+          "file": "src/svgIconTypes.ts",
+          "line": 44,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "SvgIconProps",
+          "file": "src/svgIconTypes.ts",
+          "line": 86,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconTypeMap",
@@ -121335,7 +121447,7 @@
           "line": 69,
           "kind": "property",
           "type": "AdditionalProps & SvgIconOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -121348,7 +121460,7 @@
           "line": 70,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -121359,7 +121471,14 @@
         "SvgIconOwnProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconTypeMap",
+          "file": "src/svgIconTypes.ts",
+          "line": 79,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconProps",
@@ -121389,7 +121508,14 @@
         "SvgIconTypeMap"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconProps",
+          "file": "src/svgIconTypes.ts",
+          "line": 86,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconClasses",
@@ -121530,7 +121656,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconClasses",
+          "file": "src/svgIconClasses.ts",
+          "line": 17,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconClassKey",
@@ -121542,7 +121675,14 @@
         "SvgIconClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconClassKey",
+          "file": "src/svgIconClasses.ts",
+          "line": 16,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconClasses",
@@ -121683,7 +121823,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconClasses",
+          "file": "src/svgIconClasses.ts",
+          "line": 17,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SvgIconClassKey",
@@ -121695,7 +121842,14 @@
         "SvgIconClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "SvgIconClassKey",
+          "file": "src/svgIconClasses.ts",
+          "line": 16,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "SwipeableDrawerSwipeAreaSlotPropsOverrides",
@@ -148519,7 +148673,7 @@
         {
           "name": "Components",
           "file": "src/theme.ts",
-          "line": 151,
+          "line": 165,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -154678,7 +154832,7 @@
         {
           "name": "Components",
           "file": "src/theme.ts",
-          "line": 151,
+          "line": 165,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -158140,7 +158294,7 @@
         {
           "name": "ThemeOptions",
           "file": "src/theme.ts",
-          "line": 166,
+          "line": 182,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -158214,7 +158368,7 @@
         {
           "name": "ThemeOptions",
           "file": "src/theme.ts",
-          "line": 166,
+          "line": 182,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -164039,7 +164193,7 @@
         {
           "name": "ThemeOptions",
           "file": "src/theme.ts",
-          "line": 166,
+          "line": 182,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -164340,7 +164494,7 @@
         {
           "name": "Theme",
           "file": "src/theme.ts",
-          "line": 155,
+          "line": 169,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -164579,7 +164733,7 @@
         {
           "name": "ThemeOptions",
           "file": "src/theme.ts",
-          "line": 166,
+          "line": 182,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -164880,7 +165034,7 @@
         {
           "name": "Theme",
           "file": "src/theme.ts",
-          "line": 155,
+          "line": 169,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -202691,6 +202845,509 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "SvgIconClassKey",
+      "file": "src/svgIconClasses.ts",
+      "line": 16,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SvgIconClasses",
+      "file": "src/svgIconClasses.ts",
+      "line": 17,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Record",
+        "SvgIconClassKey"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SvgIconPropsSizeOverrides",
+      "file": "src/svgIconTypes.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SvgIconPropsColorOverrides",
+      "file": "src/svgIconTypes.ts",
+      "line": 11,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "OverrideUnion",
+      "file": "src/svgIconTypes.ts",
+      "line": 12,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Base",
+        "Extract",
+        "K",
+        "Omit",
+        "Overrides",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SvgIconHandle",
+      "file": "src/svgIconTypes.ts",
+      "line": 24,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Svg"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeSvgIconStyle",
+      "file": "src/svgIconTypes.ts",
+      "line": 25,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativeStyle",
+        "Pick",
+        "SvgProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SvgIconOwnProps",
+      "file": "src/svgIconTypes.ts",
+      "line": 44,
+      "kind": "type",
+      "members": [
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 45,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<SvgIconClasses>;",
+          "line": 46,
+          "kind": "property",
+          "type": "Partial<SvgIconClasses>"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string;",
+          "line": 47,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "color",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "color?: OverrideUnion<\n    | 'inherit'\n    | 'action'\n    | 'disabled'\n    | 'primary'\n    | 'secondary'\n    | 'error'\n    | 'info'\n    | 'success'\n    | 'warning',\n    SvgIconPropsColorOverrides\n  >;",
+          "line": 48,
+          "kind": "property",
+          "type": "OverrideUnion<\n    | 'inherit'\n    | 'action'\n    | 'disabled'\n    | 'primary'\n    | 'secondary'\n    | 'error'\n    | 'info'\n    | 'success'\n    | 'warning',\n    SvgIconPropsColorOverrides\n  >"
+        },
+        {
+          "name": "fontSize",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "fontSize?: OverrideUnion<'inherit' | 'small' | 'medium' | 'large', SvgIconPropsSizeOverrides>;",
+          "line": 60,
+          "kind": "property",
+          "type": "OverrideUnion<'inherit' | 'small' | 'medium' | 'large', SvgIconPropsSizeOverrides>"
+        },
+        {
+          "name": "htmlColor",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "htmlColor?: SvgProps['color'];",
+          "line": 61,
+          "kind": "property",
+          "type": "SvgProps['color']"
+        },
+        {
+          "name": "inheritViewBox",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "inheritViewBox?: boolean;",
+          "line": 62,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "titleAccess",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "titleAccess?: string;",
+          "line": 63,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "onClick",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onClick?: SvgProps['onPress'];",
+          "line": 65,
+          "kind": "event",
+          "type": "SvgProps['onPress']"
+        },
+        {
+          "name": "viewBox",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "viewBox?: string;",
+          "line": 66,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "shapeRendering",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "shapeRendering?: string;",
+          "line": 68,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps;",
+          "line": 69,
+          "kind": "property",
+          "type": "SxProps"
+        },
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: StyleProp<NativeSvgIconStyle>;",
+          "line": 70,
+          "kind": "property",
+          "type": "StyleProp<NativeSvgIconStyle>"
+        },
+        {
+          "name": "data-testid",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "'data-testid'?: string;",
+          "line": 71,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "NativeSvgIconStyle",
+        "OverrideUnion",
+        "Partial",
+        "React.ReactNode",
+        "StyleProp",
+        "SvgIconClasses",
+        "SvgIconPropsColorOverrides",
+        "SvgIconPropsSizeOverrides",
+        "SvgProps",
+        "SxProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeRoot",
+      "file": "src/svgIconTypes.ts",
+      "line": 73,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RootProps",
+      "file": "src/svgIconTypes.ts",
+      "line": 74,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativeRoot",
+        "React.ComponentPropsWithoutRef",
+        "React.ComponentType",
+        "Root",
+        "SvgProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SvgIconTypeMap",
+      "file": "src/svgIconTypes.ts",
+      "line": 79,
+      "kind": "type",
+      "members": [
+        {
+          "name": "props",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "props: AdditionalProps & SvgIconOwnProps;",
+          "line": 83,
+          "kind": "property",
+          "type": "AdditionalProps & SvgIconOwnProps"
+        },
+        {
+          "name": "defaultComponent",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultComponent: RootComponent;",
+          "line": 84,
+          "kind": "property",
+          "type": "RootComponent"
+        }
+      ],
+      "references": [
+        "AdditionalProps",
+        "NativeRoot",
+        "RootComponent",
+        "SvgIconOwnProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SvgIconProps",
+      "file": "src/svgIconTypes.ts",
+      "line": 86,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AdditionalProps",
+        "Extract",
+        "NativeRoot",
+        "Omit",
+        "Pick",
+        "React.ComponentPropsWithRef",
+        "React.ComponentType",
+        "React.RefAttributes",
+        "RootComponent",
+        "RootProps",
+        "SvgIconHandle",
+        "SvgIconOwnProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeSvgIconComponent",
+      "file": "src/svgIconTypes.ts",
+      "line": 106,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<Root extends NativeRoot>(props: SvgIconProps<Root> & { component: Root }): React.ReactNode;",
+          "line": 107,
+          "kind": "signature",
+          "type": "<Root extends NativeRoot>(props: SvgIconProps<Root> & { component: Root }): React.ReactNode;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: SvgIconProps): React.ReactNode;",
+          "line": 108,
+          "kind": "signature",
+          "type": "(props: SvgIconProps): React.ReactNode;"
+        },
+        {
+          "name": "muiName",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "muiName: string;",
+          "line": 109,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string;",
+          "line": 110,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "NativeRoot",
+        "React.ReactNode",
+        "Root",
+        "SvgIconProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SvgIconOwnerState",
+      "file": "src/svgIconTypes.ts",
+      "line": 112,
+      "kind": "type",
+      "members": [
+        {
+          "name": "color",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "color: NonNullable<SvgIconOwnProps['color']>;",
+          "line": 113,
+          "kind": "property",
+          "type": "NonNullable<SvgIconOwnProps['color']>"
+        },
+        {
+          "name": "fontSize",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "fontSize: NonNullable<SvgIconOwnProps['fontSize']>;",
+          "line": 114,
+          "kind": "property",
+          "type": "NonNullable<SvgIconOwnProps['fontSize']>"
+        },
+        {
+          "name": "instanceFontSize",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "instanceFontSize: SvgIconOwnProps['fontSize'];",
+          "line": 115,
+          "kind": "property",
+          "type": "SvgIconOwnProps['fontSize']"
+        },
+        {
+          "name": "component",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component: React.ComponentType<any> | 'svg';",
+          "line": 116,
+          "kind": "property",
+          "type": "React.ComponentType<any> | 'svg'"
+        },
+        {
+          "name": "inheritViewBox",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "inheritViewBox: boolean;",
+          "line": 117,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "viewBox",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "viewBox: string;",
+          "line": 118,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "hasSvgAsChild",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "hasSvgAsChild: boolean;",
+          "line": 119,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "NonNullable",
+        "React.ComponentType",
+        "SvgIconOwnProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "SwitchClasses",
       "file": "src/switchClasses.ts",
       "line": 1,
@@ -206605,13 +207262,35 @@
           "type": "boolean"
         },
         {
+          "name": "svg",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "svg?: boolean;",
+          "line": 22,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "rootProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "rootProps?: Record<string, unknown>;",
+          "line": 24,
+          "kind": "property",
+          "type": "Record<string, unknown>"
+        },
+        {
           "name": "logicalInsets",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };",
-          "line": 21,
+          "line": 25,
           "kind": "property",
           "type": "{ parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' }"
         },
@@ -206622,7 +207301,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection: 'ltr' | 'rtl';",
-          "line": 21,
+          "line": 25,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -206633,7 +207312,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | 'inherit'",
-          "line": 21,
+          "line": 25,
           "kind": "property",
           "type": "'ltr' | 'rtl' | 'inherit'"
         },
@@ -206644,13 +207323,14 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode?: 'sx' | 'css';",
-          "line": 22,
+          "line": 26,
           "kind": "property",
           "type": "'sx' | 'css'"
         }
       ],
       "references": [
         "NativeTextContext",
+        "Record",
         "SxProps"
       ],
       "inheritanceResolved": false,
@@ -207890,10 +208570,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "styleOverrides?: Record<\n    string,\n    SxObject | ((args: { theme: Theme; ownerState: Record<string, unknown> }) => SxProps)\n  >;",
+          "declaration": "styleOverrides?: Record<\n    string,\n    | SxObject\n    | ((\n        args: { theme: Theme; ownerState: Record<string, unknown> } & Record<string, unknown>,\n      ) => SxProps)\n  >;",
           "line": 142,
           "kind": "property",
-          "type": "Record<\n    string,\n    SxObject | ((args: { theme: Theme; ownerState: Record<string, unknown> }) => SxProps)\n  >"
+          "type": "Record<\n    string,\n    | SxObject\n    | ((\n        args: { theme: Theme; ownerState: Record<string, unknown> } & Record<string, unknown>,\n      ) => SxProps)\n  >"
         },
         {
           "name": "variants",
@@ -207901,14 +208581,16 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "variants?: Array<{\n    props: Record<string, unknown> | ((props: Record<string, unknown>) => boolean);\n    style: SxProps;\n  }>;",
-          "line": 146,
+          "declaration": "variants?: Array<{\n    props:\n      | Record<string, unknown>\n      | ((\n          props: Record<string, unknown> & { theme: Theme; ownerState: Record<string, unknown> },\n        ) => boolean);\n    style:\n      | Exclude<SxProps, Function>\n      | ((\n          args: Theme & { theme: Theme; ownerState: Record<string, unknown> } & Record<\n              string,\n              unknown\n            >,\n        ) => SxProps);\n  }>;",
+          "line": 149,
           "kind": "property",
-          "type": "Array<{\n    props: Record<string, unknown> | ((props: Record<string, unknown>) => boolean);\n    style: SxProps;\n  }>"
+          "type": "Array<{\n    props:\n      | Record<string, unknown>\n      | ((\n          props: Record<string, unknown> & { theme: Theme; ownerState: Record<string, unknown> },\n        ) => boolean);\n    style:\n      | Exclude<SxProps, Function>\n      | ((\n          args: Theme & { theme: Theme; ownerState: Record<string, unknown> } & Record<\n              string,\n              unknown\n            >,\n        ) => SxProps);\n  }>"
         }
       ],
       "references": [
         "Array",
+        "Exclude",
+        "Function",
         "Record",
         "SxObject",
         "SxProps",
@@ -207920,7 +208602,7 @@
     {
       "name": "Components",
       "file": "src/theme.ts",
-      "line": 151,
+      "line": 165,
       "kind": "type",
       "members": [
         {
@@ -207930,7 +208612,7 @@
           "computed": false,
           "memberKind": "TSIndexSignature",
           "declaration": "[name: string]: ComponentConfig | boolean | undefined;",
-          "line": 152,
+          "line": 166,
           "kind": "signature",
           "type": "[name: string]: ComponentConfig | boolean | undefined;"
         },
@@ -207941,7 +208623,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mergeClassNameAndStyle?: boolean;",
-          "line": 153,
+          "line": 167,
           "kind": "property",
           "type": "boolean"
         }
@@ -207955,7 +208637,7 @@
     {
       "name": "Theme",
       "file": "src/theme.ts",
-      "line": 155,
+      "line": 169,
       "kind": "type",
       "members": [
         {
@@ -207965,7 +208647,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "palette: Palette;",
-          "line": 156,
+          "line": 170,
           "kind": "property",
           "type": "Palette"
         },
@@ -207976,7 +208658,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "spacing: Spacing;",
-          "line": 157,
+          "line": 171,
           "kind": "property",
           "type": "Spacing"
         },
@@ -207987,7 +208669,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "shape: { borderRadius: number };",
-          "line": 158,
+          "line": 172,
           "kind": "property",
           "type": "{ borderRadius: number }"
         },
@@ -207998,7 +208680,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "borderRadius: number",
-          "line": 158,
+          "line": 172,
           "kind": "property",
           "type": "number"
         },
@@ -208009,7 +208691,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction: 'ltr' | 'rtl';",
-          "line": 159,
+          "line": 173,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -208020,9 +208702,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "typography: TypographyVariants;",
-          "line": 160,
+          "line": 174,
           "kind": "property",
           "type": "TypographyVariants"
+        },
+        {
+          "name": "cssRootFontSize",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "cssRootFontSize?: number;",
+          "line": 176,
+          "kind": "property",
+          "type": "number"
         },
         {
           "name": "breakpoints",
@@ -208031,7 +208724,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "breakpoints: Breakpoints;",
-          "line": 161,
+          "line": 177,
           "kind": "property",
           "type": "Breakpoints"
         },
@@ -208042,7 +208735,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "components: Components;",
-          "line": 162,
+          "line": 178,
           "kind": "property",
           "type": "Components"
         },
@@ -208053,7 +208746,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transitions: Transitions;",
-          "line": 163,
+          "line": 179,
           "kind": "property",
           "type": "Transitions"
         },
@@ -208064,7 +208757,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "motion: Motion;",
-          "line": 164,
+          "line": 180,
           "kind": "property",
           "type": "Motion"
         }
@@ -208084,7 +208777,7 @@
     {
       "name": "ThemeOptions",
       "file": "src/theme.ts",
-      "line": 166,
+      "line": 182,
       "kind": "type",
       "members": [
         {
@@ -208094,7 +208787,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "palette?: PaletteOptions;",
-          "line": 167,
+          "line": 183,
           "kind": "property",
           "type": "PaletteOptions"
         },
@@ -208105,7 +208798,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "spacing?: SpacingOptions;",
-          "line": 168,
+          "line": 184,
           "kind": "property",
           "type": "SpacingOptions"
         },
@@ -208116,7 +208809,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "shape?: Partial<Theme['shape']>;",
-          "line": 169,
+          "line": 185,
           "kind": "property",
           "type": "Partial<Theme['shape']>"
         },
@@ -208127,7 +208820,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: Theme['direction'];",
-          "line": 170,
+          "line": 186,
           "kind": "property",
           "type": "Theme['direction']"
         },
@@ -208138,9 +208831,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "typography?: TypographyOptions;",
-          "line": 171,
+          "line": 187,
           "kind": "property",
           "type": "TypographyOptions"
+        },
+        {
+          "name": "cssRootFontSize",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "cssRootFontSize?: number;",
+          "line": 188,
+          "kind": "property",
+          "type": "number"
         },
         {
           "name": "breakpoints",
@@ -208149,7 +208853,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "breakpoints?: BreakpointsOptions;",
-          "line": 172,
+          "line": 189,
           "kind": "property",
           "type": "BreakpointsOptions"
         },
@@ -208160,7 +208864,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "components?: Theme['components'];",
-          "line": 173,
+          "line": 190,
           "kind": "property",
           "type": "Theme['components']"
         },
@@ -208171,7 +208875,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transitions?: TransitionsOptions;",
-          "line": 174,
+          "line": 191,
           "kind": "property",
           "type": "TransitionsOptions"
         },
@@ -208182,7 +208886,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "motion?: MotionOptions;",
-          "line": 175,
+          "line": 192,
           "kind": "property",
           "type": "MotionOptions"
         }

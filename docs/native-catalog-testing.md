@@ -193,3 +193,21 @@ node scripts/native-catalog/android-collapse.mjs summarize collapse-native.txt
 The summary requires all 13 ordered milestones, four named screenshots and seven native dimension samples. Closed/intermediate roots must clip; entered roots must restore visible overflow and natural dimensions. Both horizontal endpoints require their lifecycle receipts. The active exit is sampled before a separate native reversing touch, and the retired exit must not increment its completion count. Content must grow while expanded and retain its edit through closing. A zero `adb` exit code alone cannot pass. Retrieve the report's validated app-cache screenshots as described above, retain failures and reopen the catalog after instrumentation.
 
 Add [CollapseCatalogUITests.swift](../tests/native/ios/CollapseCatalogUITests.swift) to the shared iOS UI test target. Run `-only-testing:PopperCatalogUITests/CollapseCatalogUITests` with the existing workspace/device command above. Its two cases check actual native frames, retained growth, hidden accessibility descendants, active interruption, horizontal lifecycle receipts and reduced motion. Keep a fresh result bundle and review the exported attachments. These development-build/emulator checks do not establish physical-device, screen-reader, complete font/RTL or calibrated release-performance compatibility.
+
+## Svg icons and factories
+
+Use the same installed development catalog, generated Android test project and explicit device selection described above. Prepare once more to copy [SvgIconScenario.java](../tests/native/android/SvgIconScenario.java) with its ownership guard, then rebuild/install the test APK. Do not start another device or restart Metro for this scenario.
+
+```sh
+node scripts/native-catalog/android-popper.mjs prepare --project /path/to/generated/android
+# Rebuild/install the test APK using the commands above.
+node scripts/native-catalog/android-popper.mjs run \
+  --serial emulator-5554 --scenario svg-icon \
+  --output .cache/native-svg-icon/android-run-1
+```
+
+The collector requires an empty output directory and preserves raw instrumentation, validated JSON and native screenshots. It rejects ambiguous/failed/partial reports, unsafe artifact paths, absent geometry, wrong rendered colors and unchanged font-ink bounds. Failure cleanup stops only the target catalog package, confirms instrumentation ended and restores the catalog. Interruption handling uses the same bounded shared runner as Popper and Accordion.
+
+The scenario checks small/medium/large dimensions, symbolic currentColor inside a group, palette changes in real rendered pixels, one original onClick touch, actual 48 dp SVG ref measurement/PNG export and larger text ink inside equal viewports. Native Canvas raster bounds supplement screenshots; these debug checks do not measure release performance.
+
+Add [SvgIconCatalogUITests.swift](../tests/native/ios/SvgIconCatalogUITests.swift) to the existing shared iOS UI test target. Run the iOS workspace/device command above with `-only-testing:PopperCatalogUITests/SvgIconCatalogUITests`. Its case checks SVG accessibility names, real frames, touch/palette receipts and PNG export, then retains the two font samples for visual review. Export attachments from a fresh result bundle. iOS glyphs are visually reviewed here; the Android font-raster assertion is separate. Physical screen-reader/keyboard/font/RTL matrices, browser fill animations and calibrated performance remain open.

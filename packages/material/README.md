@@ -30,6 +30,8 @@ export function Example() {
 }
 ```
 
+Source development after `0.0.7-prealpha.0` adds native SvgIcon and requires `react-native-svg` as a direct application dependency. See [the SVG guide](https://github.com/Altroo/mui-native/blob/main/docs/svg-icon.md). The published preview does not include that implementation yet.
+
 ## Current scope
 
 Native implementations of selected Material components. APIs and behavior are partial; this is not a drop-in replacement for Material UI.
