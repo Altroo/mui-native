@@ -277,6 +277,10 @@ export const Popover: React.ForwardRefExoticComponent<
     paperSlot = resolveSlotProps(slotProps.paper, ownerState) ?? {},
     transitionSlot = resolveSlotProps(slotProps.transition, ownerState) ?? {},
     backdropSlot = resolveSlotProps(slotProps.backdrop, ownerState) ?? {};
+  // React reconciliation keys belong on JSX, outside the forwarded slot props.
+  const { key: transitionKey, ...transitionProps } = transitionSlot as GrowProps & {
+    key?: React.Key;
+  };
   const Root = slots.root ?? PopoverRoot,
     PaperSlot = slots.paper ?? PopoverPaper,
     Transition = slots.transition ?? Grow;
@@ -298,7 +302,7 @@ export const Popover: React.ForwardRefExoticComponent<
       (rootSlot as any).key,
       PaperSlot,
       Transition,
-      (transitionSlot as any).key,
+      transitionKey,
       paperSlot.component,
       (paperSlot as any).key,
     ],
@@ -385,9 +389,10 @@ export const Popover: React.ForwardRefExoticComponent<
             }}
           >
             <Renderer
+              key={transitionKey}
               appear
               in={open}
-              {...transitionSlot}
+              {...transitionProps}
               onLayout={(event) => {
                 if (Object.hasOwn(transitionSlot, 'onLayout')) transitionSlot.onLayout?.(event);
                 else paperLayout?.(event);

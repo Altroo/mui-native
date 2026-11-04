@@ -23,6 +23,8 @@ const diagnostics: string[] = [];
 const styleWarnings: string[] = [];
 let restore: () => void;
 beforeEach(() => {
+  // Label animation completion is clock-driven; keep it inside the test lifetime.
+  jest.useFakeTimers();
   diagnostics.length = 0;
   styleWarnings.length = 0;
   restore = configureDiagnostics(({ code, message }) => {
@@ -34,6 +36,8 @@ beforeEach(() => {
 });
 afterEach(() => {
   cleanup();
+  jest.clearAllTimers();
+  jest.useRealTimers();
   restore();
   jest.restoreAllMocks();
 });

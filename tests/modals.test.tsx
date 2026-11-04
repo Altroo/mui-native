@@ -10,7 +10,7 @@ import {
   type ViewInstance,
 } from 'react-native';
 import { render, screen, fireEvent, act, cleanup } from '@testing-library/react-native';
-import { Modal, Backdrop, Dialog, ThemeProvider, createTheme } from '../packages/material/src';
+import { Modal, Backdrop, Dialog, ThemeProvider, createTheme } from '@altroo/mui-native';
 import { Commands } from '../packages/native-host/src/AltrooMUIInteractiveViewNativeComponent';
 import { nativeModalManager as manager } from '../packages/material/src/nativeModalManager';
 afterEach(() => {
@@ -389,12 +389,14 @@ test('reopening an earlier inline sibling brings its root above the surviving la
 });
 
 test('default Dialog container forwards a native handle, allows backdrop hit testing and cannot crash onShow', () => {
+  const focus = jest.spyOn(Commands, 'focus').mockImplementation(() => {});
   const { KeyboardAvoidingView } = require('react-native');
   render(<Dialog open>Content</Dialog>);
   expect(screen.UNSAFE_getByType(KeyboardAvoidingView).props.pointerEvents).toBe('box-none');
   expect(() =>
     fireEvent(screen.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} }),
   ).not.toThrow();
+  expect(focus).toHaveBeenCalledTimes(1);
 });
 test('transition callbacks invoked in child layout effects observe their committed cycle', () => {
   const trace: string[] = [];
@@ -454,10 +456,12 @@ test('close A exit cannot finish close B after a reopen', () => {
 });
 
 test('default Dialog onShow focuses safely with its actual keyboard-container instance', () => {
+  const focus = jest.spyOn(Commands, 'focus').mockImplementation(() => {});
   render(<Dialog open>Content</Dialog>);
   expect(() =>
     fireEvent(screen.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} }),
   ).not.toThrow();
+  expect(focus).toHaveBeenCalledTimes(1);
 });
 
 test('Dialog preserves container refs while default autofocus uses the explicit native root', () => {

@@ -138,7 +138,7 @@
       "packages/material/src/nativeTransitionTiming.ts": "ac045c975c32f9cb601f4353c7c84d6840d823464f78052bf3b7714d5b10ced5",
       "packages/material/src/OutlinedInput/index.ts": "def45dc15be298ea7eb34c3573df021ad1b653d5d8e1933d958beb3edae46375",
       "packages/material/src/Paper/index.ts": "95edb968b52ae295269647bee727f393f757d825c26f0c536d48d6b034992962",
-      "packages/material/src/popover.tsx": "13829bab949cdcdf2691484dce23234178d8db2f650abd77b4f4815f1bb0dcb2",
+      "packages/material/src/popover.tsx": "6806d30dbc35e608830ae6379b8f5b4dbad824908452bdaf008b6a68bc2e36db",
       "packages/material/src/Popover/index.ts": "11a166f368795378f9e7267de7a160267170dfdd7568cd85c9384dc03da8b850",
       "packages/material/src/popoverGeometry.ts": "ebe5f9208a99d2c359cac1725722fcd76239297c91e40ef46186aba979329d70",
       "packages/material/src/popoverMeasurement.ts": "b51339a07e5df46f53005a36ba0f88bb59d16e6e05f05f1e38b9c4eae04df0c9",
@@ -331,7 +331,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "5dc2151f5dd403bdfda0defe67af7ccc48757265d15b1888e80bde82e0ba3a43",
+      "nativeSourceSha256": "5b497e588d3501860740ba6d6d2a8e82dd1a4e856fd25cb91cbfeb6d25ebadec",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -343,7 +343,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "9166e31d25ce2602a67e1693f874095afe8a74486b569653a66dcc03f89c7286"
+      "sha256": "395bb3fbb432b6f15eb38145dd62e7aff4ff7585a25a8ea7f9200eb936dbe8dd"
     },
     {
       "package": "@mui/system",
