@@ -228,7 +228,7 @@ test('icons and X charts consume the Material scope without a browser dependency
       <LineChart series={[{ data: [1, 2] }]} />
     </material.ThemeProvider>,
   );
-  expect(screen.getByTestId('icon').props.fill).toBe('#abcdef');
+  expect(screen.getByTestId('icon', { includeHiddenElements: true }).props.color).toBe('#abcdef');
   const { Line } = require('react-native-svg');
   expect(UNSAFE_getByType(Line).props.stroke).toBe('#123456');
 });

@@ -165,3 +165,5 @@ export * from './useAutocompleteTypes';
 export * from './collapse';
 
 export * from './accordion';
+
+export * from './svgIcon';

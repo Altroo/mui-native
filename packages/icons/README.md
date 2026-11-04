@@ -16,7 +16,7 @@ Charts/icons also need `react-native-svg` as a direct app dependency. In the mat
 
 ## Current scope
 
-Four original geometric icons: Add, Check, Close and Remove. The full upstream icon set is not implemented.
+Four original geometric icons: Add, Check, Close and Remove. Source development after `0.0.7-prealpha.0` shares Material SvgIcon styling, refs and its React-node factory while retaining the early path-string extension. See [the SVG guide](https://github.com/Altroo/mui-native/blob/main/docs/svg-icon.md). The full upstream icon set is not implemented.
 
 See the [component status](https://github.com/Altroo/mui-native#status), [compatibility contract](https://github.com/Altroo/mui-native/blob/main/docs/compatibility.md) and [package guide](https://github.com/Altroo/mui-native/blob/main/docs/coverage.md). Scoped emulator tests and type checks do not certify full physical-device, accessibility or release-performance behavior.
 

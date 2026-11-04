@@ -32,7 +32,7 @@ pnpm check
 pnpm pack:all
 ```
 
-Install the generated system, material and native-host archives together in the consumer. Add the compatibility archive if retaining original imports, and only the X/icon archives you need. X archives depend on the material and system packages, so pass all local archives together to the package manager. Install React 19.3.0 / React Native 0.88.1 peers. Charts/icons also require `react-native-svg` 15.16.0; use `npx expo install react-native-svg` in a matched Expo app. The grid archive carries FlashList, and the date archive carries Day.js.
+Install the generated system, material and native-host archives together in the consumer. Add the compatibility archive if retaining original imports, and only the X/icon archives you need. X archives depend on the material and system packages, so pass all local archives together to the package manager. Install React 19.3.0 / React Native 0.88.1 peers. Source development after `0.0.7-prealpha.0` also requires `react-native-svg` 15.16.0 for Material SvgIcon; the published preview requires it for charts/icons. Install it directly in the consumer; use `npx expo install react-native-svg` in a matched Expo app. The grid archive carries FlashList, and the date archive carries Day.js.
 
 ```sh
 npm install /absolute/path/artifacts/packages/altroo-mui-native-system-0.0.7-prealpha.0.tgz \

@@ -18,7 +18,7 @@ those MIT-licensed references. Autocomplete filtering, value mapping, state tran
 component/slot composition and public contracts also adapt those MIT-licensed
 references; native scrolling and indicator geometry are independently authored. Collapse
 lifecycle, slot routing, utility identifiers and measured-size timing also adapt
-those MIT-licensed references; native layout measurement and animation are independently authored. Accordion expansion, summary callback ordering, slots and utility identifiers also adapt those MIT-licensed references; native views and event transport are independently authored. Upstream public declaration
+those MIT-licensed references; native layout measurement and animation are independently authored. Accordion expansion, summary callback ordering, slots and utility identifiers also adapt those MIT-licensed references; native views and event transport are independently authored. SvgIcon presentation/theme priority, factory composition and utility vocabulary also adapt these MIT-licensed references; native SVG translation and root-font configuration are independently authored. Upstream public declaration
 snapshots and license texts are retained under upstream/. Derived declaration
 inventories are retained under compatibility/inventory/. Their applicable MIT
 notices are preserved in upstream/licenses/. No Pro or Premium source, assets,

@@ -25,7 +25,7 @@ export function nativeTextStyleContext(
 ) {
   return {
     parentTextStyle:
-      parent?.style ?? (theme ? { fontSize: theme.typography.htmlFontSize } : undefined),
+      parent?.style ?? (theme ? { fontSize: theme.cssRootFontSize ?? 16 } : undefined),
     parentLineHeight: parent?.lineHeight,
     nativeStyle: StyleSheet.flatten(style) ?? undefined,
     nativeTextMetrics: nativeStyleTextMetrics(style),
@@ -62,7 +62,7 @@ function resolveScope(
       ? (normalizeTextStyle(
           {
             fontFamily: theme.typography.fontFamily,
-            fontSize: theme.typography.htmlFontSize,
+            fontSize: theme.cssRootFontSize ?? 16,
             color: theme.palette.text.primary,
           },
           theme,

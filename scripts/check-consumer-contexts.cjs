@@ -4,8 +4,14 @@ const path = require('node:path');
 const Module = require('node:module');
 const requireConsumer = createRequire(path.resolve(process.argv[2], 'package.json'));
 const load = Module._load;
+// This Node-only identity probe has no Fabric runtime. Native SVG rendering is
+// checked by the maintained renderer and actual catalog scenarios separately.
+const svg = { __esModule: true, default: function Svg() {}, Path: function Path() {} };
+svg.Svg = svg.default;
+requireConsumer.resolve('react-native-svg/package.json');
 // Only module/export identity is checked here. Native rendering is tested separately.
 Module._load = function (request, parent, main) {
+  if (request === 'react-native-svg') return svg;
   if (request === 'react-native')
     return { Platform: { OS: 'ios' }, StyleSheet: { flatten: (value) => value } };
   return load.call(this, request, parent, main);
@@ -38,6 +44,17 @@ try {
       'Installed root/deep imports must share the same context-owning implementation.',
     );
   }
+  const icons = requireConsumer('@altroo/mui-native-icons');
+  assert.equal(icons.SvgIcon, material.SvgIcon);
+  for (const entry of ['SvgIcon', 'SvgIcon/createSvgIcon', 'utils/createSvgIcon'])
+    assert.equal(
+      requireConsumer('@altroo/mui-native/' + entry).createSvgIcon,
+      material.createSvgIcon,
+    );
+  assert.equal(
+    requireConsumer('@altroo/mui-native/SvgIcon/svgIconClasses').default,
+    material.svgIconClasses,
+  );
   const materialStyles = requireConsumer('@altroo/mui-native/styles');
   for (const name of ['ThemeProvider', 'useTheme', 'useThemeProps', 'styled']) {
     assert.equal(materialStyles[name], material[name]);
@@ -55,6 +72,7 @@ try {
   assert.notEqual(material.ThemeProvider, root.ThemeProvider);
   assert.notEqual(material.useTheme, root.useTheme);
   for (const name of [
+    'SvgIcon',
     'Portal',
     'Popper',
     'Fade',

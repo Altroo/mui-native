@@ -147,7 +147,7 @@ export const Dialog: React.ForwardRefExoticComponent<
     unit === 'px'
       ? 1
       : unit === 'rem'
-        ? theme.typography.htmlFontSize
+        ? (theme.cssRootFontSize ?? 16)
         : unit === 'em'
           ? (resolveSx(theme.typography.body1, theme, { mode: 'css' }).fontSize ?? 16)
           : undefined;

@@ -141,11 +141,25 @@ export interface ComponentConfig {
   defaultProps?: Record<string, unknown>;
   styleOverrides?: Record<
     string,
-    SxObject | ((args: { theme: Theme; ownerState: Record<string, unknown> }) => SxProps)
+    | SxObject
+    | ((
+        args: { theme: Theme; ownerState: Record<string, unknown> } & Record<string, unknown>,
+      ) => SxProps)
   >;
   variants?: Array<{
-    props: Record<string, unknown> | ((props: Record<string, unknown>) => boolean);
-    style: SxProps;
+    props:
+      | Record<string, unknown>
+      | ((
+          props: Record<string, unknown> & { theme: Theme; ownerState: Record<string, unknown> },
+        ) => boolean);
+    style:
+      | Exclude<SxProps, Function>
+      | ((
+          args: Theme & { theme: Theme; ownerState: Record<string, unknown> } & Record<
+              string,
+              unknown
+            >,
+        ) => SxProps);
   }>;
 }
 export interface Components {
@@ -158,6 +172,8 @@ export interface Theme {
   shape: { borderRadius: number };
   direction: 'ltr' | 'rtl';
   typography: TypographyVariants;
+  /** Native CSS root length basis, independent of MUI's pxToRem calibration hint. */
+  cssRootFontSize?: number;
   breakpoints: Breakpoints;
   components: Components;
   transitions: Transitions;
@@ -169,6 +185,7 @@ export interface ThemeOptions {
   shape?: Partial<Theme['shape']>;
   direction?: Theme['direction'];
   typography?: TypographyOptions;
+  cssRootFontSize?: number;
   breakpoints?: BreakpointsOptions;
   components?: Theme['components'];
   transitions?: TransitionsOptions;
@@ -303,6 +320,7 @@ export function createTheme(options: ThemeOptions = {}, ...overrides: ThemeOptio
     shape: { borderRadius: 4 },
     direction: 'ltr',
     typography: createTypography(palette, options.typography),
+    cssRootFontSize: 16,
     breakpoints: createBreakpoints(options.breakpoints),
     components: {},
     transitions: createTransitions(options.transitions),
@@ -318,6 +336,13 @@ export function createTheme(options: ThemeOptions = {}, ...overrides: ThemeOptio
     ...rest
   } = options;
   const result = overrides.reduce<Theme>((theme, next) => merge(theme, next), merge(base, rest));
+  if (result.cssRootFontSize === undefined) result.cssRootFontSize = 16;
+  if (
+    typeof result.cssRootFontSize !== 'number' ||
+    !Number.isFinite(result.cssRootFontSize) ||
+    result.cssRootFontSize <= 0
+  )
+    throw Error('cssRootFontSize must be a finite positive number.');
   delete (result.transitions as unknown as Record<string, unknown>).reducedMotion;
   return result;
 }

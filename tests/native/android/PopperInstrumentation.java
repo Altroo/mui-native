@@ -44,6 +44,7 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean inputIntegrityScenario;
   private boolean collapseScenario;
   private boolean accordionScenario;
+  private boolean svgIconScenario;
 
   @Override public void onCreate(Bundle arguments) {
     super.onCreate(arguments);
@@ -52,6 +53,7 @@ public final class PopperInstrumentation extends Instrumentation {
     inputIntegrityScenario = "input-integrity".equals(arguments.getString("scenario"));
     collapseScenario = "collapse".equals(arguments.getString("scenario"));
     accordionScenario = "accordion".equals(arguments.getString("scenario"));
+    svgIconScenario = "svg-icon".equals(arguments.getString("scenario"));
     start();
   }
 
@@ -61,6 +63,7 @@ public final class PopperInstrumentation extends Instrumentation {
     if (inputIntegrityScenario) { InputIntegrityScenario.run(this); return; }
     if (collapseScenario) { CollapseScenario.run(this); return; }
     if (accordionScenario) { AccordionScenario.run(this); return; }
+    if (svgIconScenario) { SvgIconScenario.run(this); return; }
     JSONObject report = new JSONObject();
     Bundle result = new Bundle();
     boolean passed = false;

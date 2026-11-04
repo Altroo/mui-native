@@ -11,6 +11,8 @@ import { prepareAutocompleteSource } from './android-autocomplete-source.mjs';
 import { prepareInputIntegritySource } from './android-input-integrity-source.mjs';
 import { prepareCollapseSource } from './android-collapse-source.mjs';
 import { prepareAccordionSource } from './android-accordion-source.mjs';
+import { prepareSvgIconSource } from './android-svg-icon-source.mjs';
+import { inspectSvgIconReport, summarizeSvgIcon } from './android-svg-icon-report.mjs';
 import { inspectAccordionReport, summarizeAccordion } from './android-accordion-report.mjs';
 import { setTimeout as delay } from 'node:timers/promises';
 
@@ -62,6 +64,7 @@ export async function prepare(project) {
   await prepareInputIntegritySource(project);
   await prepareCollapseSource(project);
   await prepareAccordionSource(project);
+  await prepareSvgIconSource(project);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, source);
   await writeFile(gradlePath, gradle);
@@ -184,14 +187,15 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion'}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon'}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
   { adb, serial, output, signal, scenario = 'popper' },
   execute = executeFile,
 ) {
-  if (!['popper', 'accordion'].includes(scenario)) throw Error('Unknown catalog scenario');
+  if (!['popper', 'accordion', 'svg-icon'].includes(scenario))
+    throw Error('Unknown catalog scenario');
   if (typeof serial !== 'string' || !serial.trim())
     throw Error('Choose one explicit --serial; devices are never selected automatically');
   signal?.throwIfAborted();
@@ -219,7 +223,7 @@ export async function run(
             'instrument',
             '-w',
             '-r',
-            ...(scenario === 'accordion' ? ['-e', 'scenario', 'accordion'] : []),
+            ...(scenario === 'popper' ? [] : ['-e', 'scenario', scenario]),
             component,
           ],
           true,
@@ -234,7 +238,12 @@ export async function run(
       );
     }
     await writeFile(join(output, 'instrumentation.txt'), text);
-    report = scenario === 'accordion' ? inspectAccordionReport(text) : inspectReport(text);
+    report =
+      scenario === 'accordion'
+        ? inspectAccordionReport(text)
+        : scenario === 'svg-icon'
+          ? inspectSvgIconReport(text)
+          : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -242,7 +251,7 @@ export async function run(
         'run-as',
         catalogPackage,
         'cat',
-        (scenario === 'accordion' ? report.artifactDirectory : 'cache/' + report.directory) +
+        (scenario === 'popper' ? 'cache/' + report.directory : report.artifactDirectory) +
           '/' +
           file,
       ]);
@@ -250,6 +259,7 @@ export async function run(
     }
     signal?.throwIfAborted();
     if (scenario === 'accordion') summarizeAccordion(text);
+    else if (scenario === 'svg-icon') summarizeSvgIcon(text);
     else assertCompleted(text, report);
   } catch (error) {
     failure =
@@ -316,6 +326,7 @@ if (import.meta.url === pathToFileURL(resolve(process.argv[1] ?? '')).href) {
       serial: { type: 'string' },
       output: { type: 'string' },
       adb: { type: 'string' },
+      scenario: { type: 'string' },
     },
   });
   if (positionals.length !== 1 || !['prepare', 'run'].includes(positionals[0]))
@@ -346,7 +357,13 @@ if (import.meta.url === pathToFileURL(resolve(process.argv[1] ?? '')).href) {
         JSON.stringify(
           {
             output,
-            report: await run({ adb, serial: values.serial, output, signal: controller.signal }),
+            report: await run({
+              adb,
+              serial: values.serial,
+              output,
+              signal: controller.signal,
+              scenario: values.scenario,
+            }),
           },
           null,
           2,

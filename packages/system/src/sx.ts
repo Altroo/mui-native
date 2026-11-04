@@ -18,6 +18,10 @@ export type StyleContext = NativeTextContext & {
   slot?: string;
   rootSlot?: string;
   skipVariants?: boolean;
+  /** SVG-backed components bind paint declarations as SVG props, never View styles. */
+  svg?: boolean;
+  /** Final root props may match a source variant independently of owner state. */
+  rootProps?: Record<string, unknown>;
   logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };
   mode?: 'sx' | 'css';
 };
@@ -40,6 +44,11 @@ const aliases: Record<string, string[]> = {
 };
 const allowed = new Set(
   'alignContent alignItems alignSelf aspectRatio backfaceVisibility backgroundColor borderBottomColor borderBottomLeftRadius borderBottomRightRadius borderBottomWidth borderColor borderLeftColor borderLeftWidth borderRadius borderRightColor borderRightWidth borderStyle borderTopColor borderTopLeftRadius borderTopRightRadius borderTopWidth borderWidth bottom color columnGap direction display elevation flex flexBasis flexDirection flexGrow flexShrink flexWrap fontFamily fontSize fontStyle fontWeight gap height justifyContent left letterSpacing lineHeight margin marginTop marginRight marginBottom marginLeft marginStart marginEnd maxHeight maxWidth minHeight minWidth opacity overflow padding paddingTop paddingRight paddingBottom paddingLeft paddingStart paddingEnd position right rowGap shadowColor shadowOffset shadowOpacity shadowRadius start end textAlign textDecorationColor textDecorationLine textDecorationStyle textTransform top transform width zIndex'.split(
+    ' ',
+  ),
+);
+const svgProperties = new Set(
+  'fill fillOpacity fillRule stroke strokeOpacity strokeWidth strokeDasharray strokeDashoffset strokeLinecap strokeLinejoin strokeMiterlimit clipRule clipPath mask vectorEffect'.split(
     ' ',
   ),
 );
@@ -71,14 +80,14 @@ function length(value: unknown, theme: Theme): unknown {
   const literal = value.match(literalLength);
   if (literal)
     return (
-      Number(literal[1]) * (literal[2]?.toLowerCase() === 'rem' ? theme.typography.htmlFontSize : 1)
+      Number(literal[1]) * (literal[2]?.toLowerCase() === 'rem' ? (theme.cssRootFontSize ?? 16) : 1)
     );
   const multiplied = value.match(multipliedLength);
   if (multiplied) {
     const result = Number(multiplied[1]) * Number(multiplied[2]);
     return multiplied[3] === '%'
       ? `${result}%`
-      : result * (multiplied[3].toLowerCase() === 'rem' ? theme.typography.htmlFontSize : 1);
+      : result * (multiplied[3].toLowerCase() === 'rem' ? (theme.cssRootFontSize ?? 16) : 1);
   }
   if (/\b(calc|var)\(|\d(em|vh|vw|pt)\b/.test(value)) {
     diagnostic('css-unit', `Unsupported native length: ${value}`);
@@ -173,7 +182,7 @@ function resolveRules(
       return;
     }
     for (const nativeKey of aliases[key] ?? [key]) {
-      if (!allowed.has(nativeKey)) {
+      if (!allowed.has(nativeKey) && !(context.svg && svgProperties.has(nativeKey))) {
         diagnostic('style', `Unsupported native style ${key}`);
         continue;
       }
@@ -350,7 +359,12 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
       result[key] = value;
     }
   }
-  return normalizeTextStyle(result, theme, context) as NativeStyle;
+  const normalized = normalizeTextStyle(result, theme, context);
+  // SVG presentation attributes sit below CSS. Preserve an explicit reset so
+  // the SVG boundary can inherit color instead of resurrecting an attribute.
+  if (context.svg && ['inherit', 'unset', 'currentColor'].includes(String(result.color)))
+    normalized.color = result.color;
+  return normalized as NativeStyle;
 }
 export function resolveSx(
   input: SxProps | undefined,
@@ -371,19 +385,35 @@ export function componentStyle(
   const bases = [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].flatMap((key) => {
     const override = config?.styleOverrides?.[key];
     const style =
-      typeof override === 'function' ? override({ theme, ownerState: props }) : override;
+      typeof override === 'function'
+        ? override({ ...context.rootProps, theme, ownerState: props })
+        : override;
     return resolveRules(style, theme, { ...context, mode: 'css' });
   });
+  // Source callbacks receive merged props, ownerState and theme. Keep theme
+  // fields available directly for the existing native style callback extension.
+  let mergedVariantState:
+    | (Theme & { theme: Theme; ownerState: Record<string, unknown> } & Record<string, unknown>)
+    | undefined;
+  const variantState = () =>
+    (mergedVariantState ??= { ...theme, ...context.rootProps, ...props, theme, ownerState: props });
   const variants = (context.skipVariants ? [] : (config?.variants ?? [])).filter((v) =>
     typeof v.props === 'function'
-      ? v.props(props)
-      : Object.entries(v.props).every(([k, value]) => props[k] === value),
+      ? v.props(variantState())
+      : Object.entries(v.props).every(
+          ([k, value]) => props[k] === value || context.rootProps?.[k] === value,
+        ),
   );
   return finishRules(
     [
       ...resolveRules(context.baseStyle, theme, { ...context, mode: 'css' }),
       ...bases,
-      ...variants.flatMap((v) => resolveRules(v.style, theme, { ...context, mode: 'css' })),
+      ...variants.flatMap((v) =>
+        resolveRules(typeof v.style === 'function' ? v.style(variantState()) : v.style, theme, {
+          ...context,
+          mode: 'css',
+        }),
+      ),
       ...resolveRules(sx, theme, context),
     ],
     theme,

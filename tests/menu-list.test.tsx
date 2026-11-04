@@ -170,7 +170,8 @@ test('native menu labels and icons inherit menu density and color', () => {
   expect(tree.UNSAFE_getByType(Svg).props).toMatchObject({
     width: 20,
     height: 20,
-    fill: theme.palette.action.active,
+    fill: 'currentColor',
+    color: theme.palette.action.active,
   });
 });
 test('menu icons outside dense rows keep explicit sizes and inherited text colors', () => {
@@ -182,7 +183,8 @@ test('menu icons outside dense rows keep explicit sizes and inherited text color
   expect(tree.UNSAFE_getByType(Svg).props).toMatchObject({
     width: 30,
     height: 30,
-    fill: '#123456',
+    fill: 'currentColor',
+    color: '#123456',
   });
 });
 test('registry stale detach tokens cannot remove a replacement node', () => {

@@ -2819,6 +2819,122 @@
         "Summary IDs and aria-controls link the native region through nativeID and aria-labelledby. Full platform screen-reader behavior requires device validation.",
         "Native theme slots/styles replace CSS. Browser sibling pseudo-elements, automatic first/last sibling rounding and animated margin/icon CSS require separate native policies."
       ]
+    },
+    {
+      "localFile": "packages/material/src/svgIcon.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d",
+          "SvgIcon/SvgIcon.d.ts": "7263d25edc36d45908af60cedfa14b898f558e17a7e967b2e1fed0082431461b",
+          "SvgIcon/index.js": "96f549eb520abbb09c3bd10c731b961b2fc916219b7a27377807816e27d1aac4",
+          "SvgIcon/index.d.ts": "b023d07cbfdf4342f4370189d5f7f5db672bff7009720f9da092cc461d23d505",
+          "SvgIcon/createSvgIcon.js": "7280a1b5c33ca074a7ddda4154d28ee1e14862ea6d69135ef046b9f52db9eb47",
+          "SvgIcon/createSvgIcon.d.ts": "ad924bf0db4a5bcd179f74dc9106c190232006e08ca507f5ef577482f226a71a",
+          "SvgIcon/svgIconClasses.js": "947fb6864a0a0fc2775dd135596dc5eb2d0bee62c40b58da33bf8a81aca484b4",
+          "SvgIcon/svgIconClasses.d.ts": "c98069496e78eba403f51c1a7d582ae0e0f338e2d63b6417e561c9f56cbe88c6",
+          "utils/createSvgIcon.js": "279f9b67b8a0c5c2fce6995c3e08078f5a3269857368038faf83b8c3cfd7c0a7",
+          "utils/createSvgIcon.d.ts": "a3dd9e91dd062aba0b61704b580a3e76856199e89cfbe6c82c4b4edc5aa53504"
+        }
+      },
+      "adaptations": [
+        "Native SVG rendering, paint/layout priority, typed native/polymorphic refs and native accessibility replace DOM/CSS mechanisms. No compatibility promotion."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/svgIconTypes.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d",
+          "SvgIcon/SvgIcon.d.ts": "7263d25edc36d45908af60cedfa14b898f558e17a7e967b2e1fed0082431461b",
+          "SvgIcon/index.js": "96f549eb520abbb09c3bd10c731b961b2fc916219b7a27377807816e27d1aac4",
+          "SvgIcon/index.d.ts": "b023d07cbfdf4342f4370189d5f7f5db672bff7009720f9da092cc461d23d505",
+          "SvgIcon/createSvgIcon.js": "7280a1b5c33ca074a7ddda4154d28ee1e14862ea6d69135ef046b9f52db9eb47",
+          "SvgIcon/createSvgIcon.d.ts": "ad924bf0db4a5bcd179f74dc9106c190232006e08ca507f5ef577482f226a71a",
+          "SvgIcon/svgIconClasses.js": "947fb6864a0a0fc2775dd135596dc5eb2d0bee62c40b58da33bf8a81aca484b4",
+          "SvgIcon/svgIconClasses.d.ts": "c98069496e78eba403f51c1a7d582ae0e0f338e2d63b6417e561c9f56cbe88c6",
+          "utils/createSvgIcon.js": "279f9b67b8a0c5c2fce6995c3e08078f5a3269857368038faf83b8c3cfd7c0a7",
+          "utils/createSvgIcon.d.ts": "a3dd9e91dd062aba0b61704b580a3e76856199e89cfbe6c82c4b4edc5aa53504"
+        }
+      },
+      "adaptations": [
+        "Native SVG rendering, paint/layout priority, typed native/polymorphic refs and native accessibility replace DOM/CSS mechanisms. No compatibility promotion."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/svgIconClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d",
+          "SvgIcon/SvgIcon.d.ts": "7263d25edc36d45908af60cedfa14b898f558e17a7e967b2e1fed0082431461b",
+          "SvgIcon/index.js": "96f549eb520abbb09c3bd10c731b961b2fc916219b7a27377807816e27d1aac4",
+          "SvgIcon/index.d.ts": "b023d07cbfdf4342f4370189d5f7f5db672bff7009720f9da092cc461d23d505",
+          "SvgIcon/createSvgIcon.js": "7280a1b5c33ca074a7ddda4154d28ee1e14862ea6d69135ef046b9f52db9eb47",
+          "SvgIcon/createSvgIcon.d.ts": "ad924bf0db4a5bcd179f74dc9106c190232006e08ca507f5ef577482f226a71a",
+          "SvgIcon/svgIconClasses.js": "947fb6864a0a0fc2775dd135596dc5eb2d0bee62c40b58da33bf8a81aca484b4",
+          "SvgIcon/svgIconClasses.d.ts": "c98069496e78eba403f51c1a7d582ae0e0f338e2d63b6417e561c9f56cbe88c6",
+          "utils/createSvgIcon.js": "279f9b67b8a0c5c2fce6995c3e08078f5a3269857368038faf83b8c3cfd7c0a7",
+          "utils/createSvgIcon.d.ts": "a3dd9e91dd062aba0b61704b580a3e76856199e89cfbe6c82c4b4edc5aa53504"
+        }
+      },
+      "adaptations": [
+        "Native SVG rendering, paint/layout priority, typed native/polymorphic refs and native accessibility replace DOM/CSS mechanisms. No compatibility promotion."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/createSvgIcon.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d",
+          "SvgIcon/SvgIcon.d.ts": "7263d25edc36d45908af60cedfa14b898f558e17a7e967b2e1fed0082431461b",
+          "SvgIcon/index.js": "96f549eb520abbb09c3bd10c731b961b2fc916219b7a27377807816e27d1aac4",
+          "SvgIcon/index.d.ts": "b023d07cbfdf4342f4370189d5f7f5db672bff7009720f9da092cc461d23d505",
+          "SvgIcon/createSvgIcon.js": "7280a1b5c33ca074a7ddda4154d28ee1e14862ea6d69135ef046b9f52db9eb47",
+          "SvgIcon/createSvgIcon.d.ts": "ad924bf0db4a5bcd179f74dc9106c190232006e08ca507f5ef577482f226a71a",
+          "SvgIcon/svgIconClasses.js": "947fb6864a0a0fc2775dd135596dc5eb2d0bee62c40b58da33bf8a81aca484b4",
+          "SvgIcon/svgIconClasses.d.ts": "c98069496e78eba403f51c1a7d582ae0e0f338e2d63b6417e561c9f56cbe88c6",
+          "utils/createSvgIcon.js": "279f9b67b8a0c5c2fce6995c3e08078f5a3269857368038faf83b8c3cfd7c0a7",
+          "utils/createSvgIcon.d.ts": "a3dd9e91dd062aba0b61704b580a3e76856199e89cfbe6c82c4b4edc5aa53504"
+        }
+      },
+      "adaptations": [
+        "Native SVG rendering, paint/layout priority, typed native/polymorphic refs and native accessibility replace DOM/CSS mechanisms. No compatibility promotion."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/sx.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+        }
+      },
+      "adaptations": [
+        "Native SVG root/owner-state variant matching and merged source callback arguments replace the styled DOM evaluation boundary. Existing native theme-field callback access is retained."
+      ]
     }
   ]
 }

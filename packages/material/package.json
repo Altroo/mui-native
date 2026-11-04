@@ -512,6 +512,26 @@
       "types": "./dist/AccordionActions/accordionActionsClasses/index.d.ts",
       "react-native": "./src/AccordionActions/accordionActionsClasses/index.ts",
       "default": "./dist/AccordionActions/accordionActionsClasses/index.js"
+    },
+    "./SvgIcon": {
+      "types": "./dist/SvgIcon/index.d.ts",
+      "react-native": "./src/SvgIcon/index.ts",
+      "default": "./dist/SvgIcon/index.js"
+    },
+    "./SvgIcon/svgIconClasses": {
+      "types": "./dist/SvgIcon/svgIconClasses/index.d.ts",
+      "react-native": "./src/SvgIcon/svgIconClasses/index.ts",
+      "default": "./dist/SvgIcon/svgIconClasses/index.js"
+    },
+    "./SvgIcon/createSvgIcon": {
+      "types": "./dist/SvgIcon/createSvgIcon/index.d.ts",
+      "react-native": "./src/SvgIcon/createSvgIcon/index.ts",
+      "default": "./dist/SvgIcon/createSvgIcon/index.js"
+    },
+    "./utils/createSvgIcon": {
+      "types": "./dist/utils/createSvgIcon/index.d.ts",
+      "react-native": "./src/utils/createSvgIcon/index.ts",
+      "default": "./dist/utils/createSvgIcon/index.js"
     }
   },
   "dependencies": {
@@ -520,7 +540,8 @@
   },
   "peerDependencies": {
     "react": ">=19.3.0 <20",
-    "react-native": ">=0.88.1 <0.89"
+    "react-native": ">=0.88.1 <0.89",
+    "react-native-svg": ">=15.16.0 <16"
   },
   "publishConfig": {
     "access": "public",
