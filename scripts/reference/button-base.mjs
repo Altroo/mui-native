@@ -91,7 +91,6 @@ const cases = [
 function run(input) {
   const trace = [],
     snapshots = [],
-    events = [],
     action = React.createRef();
   let rootProps,
     renderer,
@@ -189,7 +188,6 @@ function run(input) {
         }
         if (actionInput.kind === 'action') action.current.focusVisible();
       });
-      events.push(e.defaultPrevented);
       snapshots.push({
         trace: [...trace],
         eventPrevented: e.defaultPrevented,

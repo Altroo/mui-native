@@ -19,11 +19,11 @@ I started MUI Native to address that gap: preserve familiar MUI component APIs a
 
 ## Status
 
-Updated: **3 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
+Updated: **4 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
 
 For component/module rows: **0%** = not implemented, **25%** = prototype/subset, **50%** = an implemented subset with source-backed contract and installed-consumer coverage, **75%** = that coverage plus scoped iOS and Android interaction evidence, **100%** = the agreed full contract and release gates are complete. Foundation rows describe their explicitly bounded work. No component family is certified as fully compatible.
 
-The expandable tables list **135 Material component/helper modules** and **84 modules across the four stable X Community families**, plus System, styling and icons. Native subsets currently exist for **58 of the Material entries** and **9 of the stable X entries**. These are top-level public modules from the pinned inventory, not a count of every nested component, prop or export. The [full declaration inventory](docs/coverage.md) tracks the deeper contracts. Pro/Premium behavior remains excluded, including paid-only behavior behind shared Community helpers.
+The expandable tables list **135 Material component/helper modules** and **84 modules across the four stable X Community families**, plus System, styling and icons. Native subsets currently exist for **59 of the Material entries** and **9 of the stable X entries**. These are top-level public modules from the pinned inventory, not a count of every nested component, prop or export. The [full declaration inventory](docs/coverage.md) tracks the deeper contracts. Pro/Premium behavior remains excluded, including paid-only behavior behind shared Community helpers.
 
 ### Foundations and release gates
 
@@ -77,7 +77,7 @@ Expand a family to see individual entries. Percentages link to the implementatio
 | 🔧    | **Chip**                    |                              [50%](docs/chip.md) | Native display, activation, deletion and slots have contract/consumer coverage; Removable values are exercised through Autocomplete; independent Chip native gates remain.                   |
 | 🔧    | **CircularProgress**        | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                                             |
 | 🗺️    | **ClickAwayListener**       |          [0%](ROADMAP.md#4-complete-material-ui) | A native outside-touch/ownership contract is not implemented.                                                                                                                                |
-| 🗺️    | **Collapse**                |          [0%](ROADMAP.md#4-complete-material-ui) | Native transition, ref and lifecycle contracts are not implemented.                                                                                                                          |
+| 🔧    | **Collapse**                |                          [75%](docs/collapse.md) | Native height/width transitions, retained content, lifecycle, slots and installed-consumer contracts; scoped iOS/Android checks. Physical/accessibility/performance matrices remain.         |
 | 🗺️    | **Container**               |          [0%](ROADMAP.md#4-complete-material-ui) | Native container/grid breakpoint and layout APIs are not implemented.                                                                                                                        |
 | 🗺️    | **CssBaseline**             |          [0%](ROADMAP.md#4-complete-material-ui) | DOM/CSS-specific API: native policy or migration behavior is unresolved; browser CSS parity is not implied.                                                                                  |
 | 🔧    | **DefaultPropsProvider**    |                     [50%](docs/default-props.md) | Native defaults/context and slot composition have contract and consumer checks; full upstream semantics remain.                                                                              |
@@ -464,6 +464,7 @@ This project uses AI-assisted tools to accelerate development, review, and docum
 - [Native Modal, Backdrop and Dialog coordination](docs/modals.md)
 - [Native Fade, transition timing and reduced motion](docs/transitions.md)
 - [Native Grow and automatic height timing](docs/grow.md)
+- [Native Collapse and retained layout transitions](docs/collapse.md)
 - [Native anchored Popover](docs/popover.md)
 - [Native ButtonBase activation and focus](docs/button-base.md)
 - [Native List composition, slots and scrolling](docs/lists.md)

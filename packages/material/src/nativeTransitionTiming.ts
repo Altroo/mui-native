@@ -89,7 +89,7 @@ export interface NativeOpacityTiming {
 export function nativePropertyTiming(
   declaration: string,
   fallback: NativeOpacityTiming,
-  property: 'opacity' | 'transform',
+  property: 'opacity' | 'transform' | 'height' | 'width',
 ): NativeOpacityTiming {
   if (declaration.trim() === 'none') return { duration: 0, delay: 0, easing: 'linear' };
   const clauses = declaration.split(/,(?![^()]*\))/);
@@ -99,7 +99,7 @@ export function nativePropertyTiming(
   const match = clause
     ?.trim()
     .match(
-      /^(?:opacity|transform|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
+      /^(?:opacity|transform|height|width|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
     );
   if (!match) {
     diagnostic('transition-create', `Unsupported native ${property} transition: ${declaration}`);

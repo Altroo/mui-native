@@ -21,6 +21,7 @@ import { InvoiceGrid } from './InvoiceGrid';
 import { PopperExamples } from './PopperExamples';
 import { KeyboardExamples } from './KeyboardExamples';
 import { InputExamples } from './InputExamples';
+import { CollapseExamples } from './CollapseExamples';
 import { AutocompleteExamples } from './AutocompleteExamples';
 import { createCatalogTheme } from './catalogTheme';
 import { RichTreeView } from '@mui/x-tree-view';
@@ -81,6 +82,7 @@ export default function App() {
                   'Autocomplete',
                   'Keyboard',
                   'Inputs',
+                  'Transitions',
                 ].map((name) => (
                   <Pressable
                     key={name}
@@ -113,6 +115,7 @@ export default function App() {
             {section === 'Autocomplete' ? <AutocompleteExamples /> : null}
             {section === 'Keyboard' ? <KeyboardExamples /> : null}
             {section === 'Inputs' ? <InputExamples /> : null}
+            {section === 'Transitions' ? <CollapseExamples /> : null}
             {section === 'Form' ? (
               <ScrollView
                 keyboardShouldPersistTaps="handled"

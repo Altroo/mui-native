@@ -19,6 +19,10 @@ interface Props extends TransitionActions {
   getAutoTimeout?: () => number | null | undefined;
   nodeRef: React.RefObject<ViewInstance | null>;
   reduceMotion: boolean;
+  // Opt-in async layout ownership. Existing opacity/transform callers retain their path.
+  layoutIdentity?: unknown;
+  layoutCurrent?: () => boolean;
+  onResume?: (entering: boolean) => void;
   addEndListener?: (node: ViewInstance, done: () => void) => void;
   onEnter?: (appearing: boolean) => void;
   onEntering?: (appearing: boolean) => void;
@@ -26,9 +30,14 @@ interface Props extends TransitionActions {
   onExit?: () => void;
   onExiting?: () => void;
   onExited?: () => void;
-  children: (status: Exclude<TransitionStatus, 'unmounted'>, phase: number) => React.ReactNode;
+  children: (
+    status: Exclude<TransitionStatus, 'unmounted'>,
+    phase: number,
+    paused?: boolean,
+    terminalCurrent?: () => boolean,
+  ) => React.ReactNode;
 }
-type NativeStatus = TransitionStatus | 'waiting';
+type NativeStatus = TransitionStatus | 'waiting' | 'waiting-enter' | 'waiting-exit';
 export default function NativeTransition(props: Props) {
   const ready = useContext(NativeTransitionReadiness);
   const committedReady = useRef(ready);
@@ -61,16 +70,32 @@ export default function NativeTransition(props: Props) {
     lastFired = useRef(status),
     phase = useRef(0);
   const pending = useRef<{ cancel(): void; finish(): void } | undefined>(undefined);
+  const completion = useRef<{ state: 'entered' | 'exited'; identity: unknown } | undefined>(
+    undefined,
+  );
+  // A listener may finish before React commits an owner change in the same batch.
+  // Keep its terminal render provisional until that committed owner is checked.
+  const retiredCompletion =
+    props.layoutIdentity !== undefined &&
+    (status === 'entered' || status === 'exited') &&
+    completion.current?.state === status &&
+    lastFired.current !== status &&
+    (completion.current.identity !== props.layoutIdentity || !ready);
   const cancel = useCallback(() => {
     pending.current?.cancel();
     pending.current = undefined;
   }, []);
   const schedule = useCallback((next: 'entered' | 'exited', state: 'entering' | 'exiting') => {
     let timer: ReturnType<typeof setTimeout> | undefined;
+    let ownershipCheck: ReturnType<typeof setTimeout> | undefined;
+    let checkedAfterCommit = false;
     let active = true;
+    const identity = current.current.layoutIdentity;
     const clear = () => {
       if (timer !== undefined) clearTimeout(timer);
       timer = undefined;
+      if (ownershipCheck !== undefined) clearTimeout(ownershipCheck);
+      ownershipCheck = undefined;
     };
     const work = {
       cancel: () => {
@@ -79,6 +104,24 @@ export default function NativeTransition(props: Props) {
       },
       finish: () => {
         if (!active || !mounted.current) return;
+        if (
+          identity !== current.current.layoutIdentity ||
+          (identity !== undefined && !committedReady.current)
+        ) {
+          work.cancel();
+          if (pending.current === work) pending.current = undefined;
+          return;
+        }
+        if (identity !== undefined && current.current.layoutCurrent?.() === false) {
+          // A ref cleanup may detach then reattach the same node in one commit.
+          // Preserve its deadline and recheck once after attachment has settled.
+          // A genuine owner change is retired by the layout effect below.
+          if (!checkedAfterCommit) {
+            checkedAfterCommit = true;
+            ownershipCheck = setTimeout(work.finish, 0);
+          }
+          return;
+        }
         if ((next === 'entered') !== Boolean(current.current.in)) {
           work.cancel();
           if (pending.current === work) pending.current = undefined;
@@ -87,6 +130,7 @@ export default function NativeTransition(props: Props) {
         active = false;
         clear();
         if (pending.current === work) pending.current = undefined;
+        completion.current = { state: next, identity };
         statusRef.current = next;
         setStatus(next);
       },
@@ -110,6 +154,7 @@ export default function NativeTransition(props: Props) {
   const update = useCallback(
     (entering: boolean, mounting = false) => {
       cancel();
+      completion.current = undefined;
       phase.current++;
       const p = current.current;
       if (entering) {
@@ -146,9 +191,49 @@ export default function NativeTransition(props: Props) {
       cancel();
     };
   }, [cancel, update]);
+  const previousLayout = useRef(props.layoutIdentity);
+  useLayoutEffect(() => {
+    const changed = previousLayout.current !== props.layoutIdentity;
+    previousLayout.current = props.layoutIdentity;
+    if (props.layoutIdentity === undefined) return;
+    const state = statusRef.current;
+    const retiredTerminal =
+      (state === 'entered' || state === 'exited') &&
+      completion.current?.state === state &&
+      lastFired.current !== state &&
+      (completion.current.identity !== props.layoutIdentity ||
+        !ready ||
+        current.current.layoutCurrent?.() === false);
+    if (((state === 'entering' || state === 'exiting') && (changed || !ready)) || retiredTerminal) {
+      // Retire the old deadline/listener before waiting for a replacement's
+      // geometry. The mounted content and animated progress remain intact.
+      cancel();
+      completion.current = undefined;
+      phase.current++;
+      const waiting =
+        state === 'entering' || state === 'entered' ? 'waiting-enter' : 'waiting-exit';
+      statusRef.current = waiting;
+      setStatus(waiting);
+    }
+  }, [props.layoutIdentity, ready, status, cancel]);
   useLayoutEffect(() => {
     if (!mounted.current) return;
     const state = statusRef.current;
+    if (props.layoutIdentity !== undefined && state !== status) return;
+    if (state === 'waiting-enter' || state === 'waiting-exit') {
+      const entering = state === 'waiting-enter';
+      if (entering !== Boolean(inProp)) {
+        update(Boolean(inProp));
+        return;
+      }
+      if (!ready) return;
+      current.current.onResume?.(entering);
+      phase.current++;
+      const resumed = entering ? 'entering' : 'exiting';
+      statusRef.current = resumed;
+      setStatus(resumed);
+      return;
+    }
     if (inProp) {
       if (state !== 'entering' && state !== 'entered') {
         if (!ready) {
@@ -170,12 +255,20 @@ export default function NativeTransition(props: Props) {
       statusRef.current = 'unmounted';
       setStatus('unmounted');
     }
-  }, [inProp, status, unmountOnExit, update, ready]);
+  }, [inProp, status, unmountOnExit, update, ready, props.layoutIdentity]);
   useLayoutEffect(() => {
+    if (status === 'waiting-enter' || status === 'waiting-exit') return;
     if (status === 'unmounted' || lastFired.current === 'unmounted') {
       lastFired.current = status;
       return;
     }
+    if (statusRef.current === 'waiting-enter' || statusRef.current === 'waiting-exit') return;
+    if (
+      props.layoutIdentity !== undefined &&
+      (status === 'entering' || status === 'exiting') &&
+      (!ready || statusRef.current !== status)
+    )
+      return;
     const changed = lastFired.current !== status;
     if (changed) lastFired.current = status;
     const p = current.current;
@@ -187,19 +280,42 @@ export default function NativeTransition(props: Props) {
       if (!pending.current && statusRef.current === status) schedule('exited', 'exiting');
     } else if (status === 'entered' && changed) p.onEntered?.(appearing.current);
     else if (status === 'exited' && changed) p.onExited?.();
-  }, [status, schedule]);
+  }, [status, schedule, props.layoutIdentity, ready]);
   // Native preference changes stop active motion promptly. A canceled generation
   // cannot complete a reopened transition through either timer or listener.
   const previousReduction = useRef(props.reduceMotion);
   useLayoutEffect(() => {
     const newlyReduced = !previousReduction.current && props.reduceMotion;
     previousReduction.current = props.reduceMotion;
-    if (newlyReduced && (status === 'entering' || status === 'exiting')) {
+    if (
+      newlyReduced &&
+      (status === 'entering' || status === 'exiting') &&
+      statusRef.current === status &&
+      (props.layoutIdentity === undefined || ready)
+    ) {
       cancel();
       schedule(status === 'entering' ? 'entered' : 'exited', status);
     }
-  }, [props.reduceMotion, status, cancel, schedule]);
+  }, [props.reduceMotion, status, cancel, schedule, props.layoutIdentity, ready]);
   return status === 'unmounted'
     ? null
-    : props.children(status === 'waiting' ? 'exited' : status, phase.current);
+    : props.children(
+        status === 'waiting-enter' || (retiredCompletion && status === 'entered')
+          ? 'entering'
+          : status === 'waiting-exit' || (retiredCompletion && status === 'exited')
+            ? 'exiting'
+            : status === 'waiting'
+              ? 'exited'
+              : status,
+        phase.current,
+        status === 'waiting-enter' || status === 'waiting-exit' || retiredCompletion,
+        props.layoutIdentity !== undefined &&
+          completion.current?.state === status &&
+          lastFired.current !== status
+          ? () =>
+              completion.current?.identity === current.current.layoutIdentity &&
+              committedReady.current &&
+              current.current.layoutCurrent?.() !== false
+          : undefined,
+      );
 }

@@ -161,3 +161,5 @@ export * from './autocompleteTypes';
 export type { AutocompleteClasses, AutocompleteClassKey } from './autocompleteClasses';
 export { useAutocomplete, createFilterOptions } from './useAutocomplete';
 export * from './useAutocompleteTypes';
+
+export * from './collapse';

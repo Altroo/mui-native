@@ -88,7 +88,8 @@
       "Popper/popperClasses",
       "Autocomplete",
       "Autocomplete/autocompleteClasses",
-      "useAutocomplete"
+      "useAutocomplete",
+      "Collapse"
     ]
   },
   "@mui/system": {

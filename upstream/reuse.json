@@ -2661,6 +2661,56 @@
       "adaptations": [
         "Source-shaped public overloads for mapped/raw selections and grouped option-facing results. Native node/event getters replace DOM contracts."
       ]
+    },
+    {
+      "localFile": "packages/material/src/collapse.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Collapse/Collapse.js": "e0750d50217121d074b78c12fc95f6d401c8c3bce485164dbfc5904ac8a06b01",
+          "Collapse/Collapse.d.ts": "3f38dc5f08427bfe5686a91744482c658e3ac125338376ccad1e5319b96b3269",
+          "Collapse/collapseClasses.js": "ccc1bf02b9b651d9f546024845878d790c36ef7ab9a8bd8814e7e8bb0eaba8b6",
+          "Collapse/collapseClasses.d.ts": "057a6bc4d8d4ebc4817ad261915f898cf589b62194058913ed9eb4c25f14544f",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+        }
+      },
+      "adaptations": [
+        "Native View wrappers replace DOM elements; an absolute measured wrapper preserves natural dimensions while clipped and returns to normal flow when entered. There is one retained content tree.",
+        "Reuse the existing transition lifecycle, reduced-motion preference and public native refs. Layout animation uses Animated dimensions with a JavaScript driver.",
+        "Resolve defaults, named slot styles, sx, refs and utility identifiers through the native theme system. DOM elements, CSS selectors and HTMLElement mutation require native equivalents."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/collapseClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Collapse/Collapse.js": "e0750d50217121d074b78c12fc95f6d401c8c3bce485164dbfc5904ac8a06b01",
+          "Collapse/Collapse.d.ts": "3f38dc5f08427bfe5686a91744482c658e3ac125338376ccad1e5319b96b3269",
+          "Collapse/collapseClasses.js": "ccc1bf02b9b651d9f546024845878d790c36ef7ab9a8bd8814e7e8bb0eaba8b6",
+          "Collapse/collapseClasses.d.ts": "057a6bc4d8d4ebc4817ad261915f898cf589b62194058913ed9eb4c25f14544f",
+          "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+          "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+          "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+        }
+      },
+      "adaptations": [
+        "Native View wrappers replace DOM elements; an absolute measured wrapper preserves natural dimensions while clipped and returns to normal flow when entered. There is one retained content tree.",
+        "Reuse the existing transition lifecycle, reduced-motion preference and public native refs. Layout animation uses Animated dimensions with a JavaScript driver.",
+        "Resolve defaults, named slot styles, sx, refs and utility identifiers through the native theme system. DOM elements, CSS selectors and HTMLElement mutation require native equivalents."
+      ]
     }
   ]
 }

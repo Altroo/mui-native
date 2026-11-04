@@ -175,3 +175,21 @@ The validator requires all 32 ordered cold scenes, distinct React tags, native/w
 React Native suppresses JS-origin `TextWatcher` callbacks. This scenario therefore also installs a final `InputFilter` that returns `null`, preserving text and prior filters. It records replacement proposals separately, proves visibility with authored replace/clear controls and removes only its observer in `finally`. Filters observe proposals, while the native text checks establish their resulting values; neither trace alone certifies every transient value. Truncated or missing observations cannot pass. This synthetic-key comparison does not establish physical-keyboard or IME correctness, and passing runs do not explain the intermittent omission in [issue #58](https://github.com/Altroo/mui-native/issues/58).
 
 `tests/native/ios/InputCatalogUITests.swift` provides a separate touch/software-keyboard smoke test for all four controls and fresh remounts. Include it in the existing XCTest UI-test target alongside the other catalog sources. Android key injection and iOS `typeText` are distinct evidence.
+
+## Collapse layout transitions
+
+The **Transitions** scene exercises one retained native subtree in vertical and horizontal modes, an editable note count, automatic timing and reduced motion. **Slow preview** deliberately uses a five-second numeric timeout so native automation can prove an active intermediate size before reversing it. It leaves the automatic-timing example available and does not change the library default.
+
+Prepare the existing Android project, rebuild/install its test APK, then run on one explicitly selected device:
+
+```sh
+node scripts/native-catalog/android-collapse.mjs prepare apps/native-catalog/android
+adb -s "$MUI_QA_DEVICE" shell am instrument -w -e scenario collapse \
+  dev.altroo.muinative.catalog.test/dev.altroo.muinative.catalog.test.PopperInstrumentation \
+  > collapse-native.txt
+node scripts/native-catalog/android-collapse.mjs summarize collapse-native.txt
+```
+
+The summary requires all 13 ordered milestones, four named screenshots and seven native dimension samples. Closed/intermediate roots must clip; entered roots must restore visible overflow and natural dimensions. Both horizontal endpoints require their lifecycle receipts. The active exit is sampled before a separate native reversing touch, and the retired exit must not increment its completion count. Content must grow while expanded and retain its edit through closing. A zero `adb` exit code alone cannot pass. Retrieve the report's validated app-cache screenshots as described above, retain failures and reopen the catalog after instrumentation.
+
+Add [CollapseCatalogUITests.swift](../tests/native/ios/CollapseCatalogUITests.swift) to the shared iOS UI test target. Run `-only-testing:PopperCatalogUITests/CollapseCatalogUITests` with the existing workspace/device command above. Its two cases check actual native frames, retained growth, hidden accessibility descendants, active interruption, horizontal lifecycle receipts and reduced motion. Keep a fresh result bundle and review the exported attachments. These development-build/emulator checks do not establish physical-device, screen-reader, complete font/RTL or calibrated release-performance compatibility.

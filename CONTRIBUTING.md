@@ -8,7 +8,11 @@ Use Node from .nvmrc, pnpm from package.json, then `pnpm install --frozen-lockfi
 
 Consumer fixtures resolve native declaration output in this checkout. Run `pnpm build` before editing them, then `pnpm typecheck:consumer` to check every fixture locally, including expected rejection cases. `pnpm check` runs this gate after building. `pnpm test:consumer` separately installs fresh archives and replaces the workspace mappings with installed-package mappings; both checks are required.
 
-Review WebStorm inspections on changed source files before delivery. The project supplies `eslint.config.mjs`; TypeScript checks use the project's compiler. Keep exported library APIs even when examples do not consume them. A leading underscore is reserved for intentionally unused callback parameters whose signatures must be retained.
+Before delivery, run WebStorm's **Code > Inspect Code** with a local **Own Code** scope and the **Project Default** profile. Include maintained source, tests, scripts and consumer fixtures. Explicitly exclude dependencies, generated `dist`/build/codegen output, caches, temporary consumer/browser artifacts, generated reference fixtures, declaration inventories and vendored upstream snapshots. Include test sources. Keep the local scope configuration outside Git.
+
+Export the inspection results as XML outside the checkout. Review findings by file, line and rule, fix actionable errors and warnings, then rerun the same scope/profile and retain the final report. File-by-file diagnostics alone do not establish full-project inspection coverage. Record why an intentional type-test case, public library export or platform/reference constraint is expected; preserve its validation. Do not disable inspections solely to reduce the count.
+
+The project supplies `eslint.config.mjs`; TypeScript checks use the project's compiler. Compiler-only consumer fixtures are documented in [their guide](fixtures/native-consumer/README.md). A leading underscore is reserved for intentionally unused callback parameters whose signatures must be retained.
 
 Preserve MIT notices for reused source and register source commit/path/hash in the provenance manifest. Do not copy commercial code or implement paid-only parity. New dependencies need license review. Keep upstream reference updates separate from claims of native support.
 
