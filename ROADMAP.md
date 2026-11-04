@@ -70,6 +70,8 @@ The separate [Android Popper release benchmark](docs/performance-popper.md) now 
 
 Native [Collapse](docs/collapse.md) now supplies the retained height/width transition foundation for later Accordion, Stepper and tree integration. It includes measured timing, lifecycle/slot/import contracts and scoped iOS/Android checks. Physical-device, screen-reader, font/RTL and calibrated-performance matrices remain open; this does not complete those dependent components.
 
+Native [Accordion](docs/accordion.md) now composes Summary, Details and Actions with controlled/uncontrolled expansion, source-defined callback/slot priority, native refs, keyboard activation and retained Collapse content. Original-runtime comparisons, installed-consumer checks and scoped iOS/Android interactions cover this subset. It is development work after `0.0.7-prealpha.0`; grouping/animation policies, full inherited/polymorphic contracts, physical accessibility/font/RTL and calibrated performance remain open.
+
 ## Early public pre-alpha channel
 
 Early preview packages may be published under the `prealpha` dist-tag for consumer feedback before family certification. They must contain real implementations, clear compatibility/native-build limits, MIT/upstream notices and aligned dependency versions. Require local checks, clean archive-consumer installation, package-content inspection, a publish dry run and independent review. Keep verified/released upstream-support state unchanged. This channel does not complete the verified-alpha checklist.
