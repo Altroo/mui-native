@@ -2,9 +2,10 @@ import React from 'react';
 import { TextInput, Platform, Modal as NativeModal } from 'react-native';
 import { cleanup, act, fireEvent } from '@testing-library/react-native';
 import { configureDiagnostics } from '../packages/material/src';
-import { getNativeFocusedView } from '../packages/native-host/src';
+import { getNativeFocusedView } from '@altroo/mui-native-host';
 import { clearNativeFocus } from '../packages/native-host/src/nativeFocus';
 import { NativeMenuOverlayModel } from './helpers/nativeMenuOverlayModel';
+import { buttonKeyEvent } from '../packages/material/src/nativeButtonEvents';
 let restore: () => void;
 beforeEach(() => {
   jest.useFakeTimers();
@@ -43,6 +44,7 @@ async function fixture(source: 'hardware' | 'command', onInput?: (event: any) =>
         code: source === 'command' ? 'Unidentified' : key,
         muiKeySource: source,
         isEditable: true,
+        ...(key === 'Escape' && source === 'hardware' ? { muiKeySequence: '1:111:10' } : {}),
         ...extra,
       });
     if (source === 'command') delete event.nativeEvent.repeat;
@@ -168,4 +170,144 @@ test('hardware key-up reaches the child and ancestor without a second Tab close'
   await send('Tab', {}, true);
   expect(trace).toEqual(['input:Tab', 'close:tabKeyDown:true', 'list:true', 'inputUp', 'listUp']);
   expect(close).toHaveBeenCalledTimes(1);
+});
+
+test('Android window descendant Escape closes once on its owned release', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  const { model, close, send } = await fixture('hardware');
+  model.menuProps = { ...model.menuProps, disablePortal: false };
+  await model.update();
+  fireEvent(model.tree!.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} });
+  await act(async () => {});
+  await send('Escape');
+  expect(close).not.toHaveBeenCalled();
+  const release = await send('Escape', {}, true);
+  expect(close).toHaveBeenCalledTimes(1);
+  expect(close.mock.calls[0][0]).toBe(release);
+  expect(close.mock.calls[0][1]).toBe('escapeKeyDown');
+  await send('Escape', {}, true);
+  expect(close).toHaveBeenCalledTimes(1);
+});
+
+test('a child consuming Android Escape-down cannot dismiss its parent on key-up', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  const { model, close, send } = await fixture('hardware', (event) => event.stopPropagation());
+  model.menuProps = { ...model.menuProps, disablePortal: false };
+  await model.update();
+  fireEvent(model.tree!.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} });
+  await act(async () => {});
+  await send('Escape');
+  await send('Escape', {}, true);
+  expect(close).not.toHaveBeenCalled();
+});
+
+test('a new consumed Escape-down retires an earlier unreleased parent request', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  let consume = false;
+  const { model, close, send } = await fixture('hardware', (event) => {
+    if (consume) event.stopPropagation();
+  });
+  model.menuProps = { ...model.menuProps, disablePortal: false };
+  await model.update();
+  fireEvent(model.tree!.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} });
+  await act(async () => {});
+  await send('Escape');
+  consume = true;
+  await send('Escape');
+  await send('Escape', {}, true);
+  expect(close).not.toHaveBeenCalled();
+});
+
+test.each([{ isCanceled: true }, { isComposing: true }])(
+  'a canceled/composing Android release retires the request without closing: %o',
+  async (metadata) => {
+    jest.replaceProperty(Platform, 'OS', 'android');
+    const { model, close, send } = await fixture('hardware');
+    model.menuProps = { ...model.menuProps, disablePortal: false };
+    await model.update();
+    fireEvent(model.tree!.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} });
+    await act(async () => {});
+    await send('Escape');
+    await send('Escape', metadata, true);
+    await send('Escape', {}, true);
+    expect(close).not.toHaveBeenCalled();
+  },
+);
+
+test('a consumed repeat cannot acquire the parent after its first down was consumed', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  const { model, close, send } = await fixture('hardware', (event) => {
+    if (!event.nativeEvent.repeat) event.stopPropagation();
+  });
+  model.menuProps = { ...model.menuProps, disablePortal: false };
+  await model.update();
+  fireEvent(model.tree!.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} });
+  await act(async () => {});
+  await send('Escape');
+  await send('Escape', { repeat: true });
+  await send('Escape', {}, true);
+  expect(close).not.toHaveBeenCalled();
+});
+
+test('Escape ownership is independent across simultaneous native devices', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  const { model, close, send } = await fixture('hardware', (event) => {
+    if (event.nativeEvent.muiKeySequence === '2:111:20') event.stopPropagation();
+  });
+  model.menuProps = { ...model.menuProps, disablePortal: false };
+  await model.update();
+  fireEvent(model.tree!.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} });
+  await act(async () => {});
+  await send('Escape');
+  await send('Escape', { muiKeySequence: '2:111:20' });
+  await send('Escape', { muiKeySequence: '2:111:20' }, true);
+  expect(close).not.toHaveBeenCalled();
+  await send('Escape', {}, true);
+  expect(close).toHaveBeenCalledTimes(1);
+});
+
+test('a stopped key-up retires its request before a later orphan release', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  const { model, close, send } = await fixture('hardware');
+  model.menuProps = { ...model.menuProps, disablePortal: false };
+  model.extra = React.cloneElement(model.extra as React.ReactElement<any>, {
+    onKeyUp: (event: any) => event.stopPropagation(),
+  });
+  await model.update();
+  fireEvent(model.tree!.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} });
+  await act(async () => {});
+  await send('Escape');
+  await send('Escape', {}, true);
+  model.extra = React.cloneElement(model.extra as React.ReactElement<any>, { onKeyUp: undefined });
+  await model.update();
+  await send('Escape', {}, true);
+  expect(close).not.toHaveBeenCalled();
+});
+
+test('older host events without a pairing token retain the independent platform close route', async () => {
+  jest.replaceProperty(Platform, 'OS', 'android');
+  const { model, close, send } = await fixture('hardware');
+  model.menuProps = { ...model.menuProps, disablePortal: false };
+  await model.update();
+  fireEvent(model.tree!.UNSAFE_getByType(NativeModal), 'show', { nativeEvent: {} });
+  await act(async () => {});
+  await send('Escape', { muiKeySequence: undefined });
+  await send('Escape', { muiKeySequence: undefined }, true);
+  expect(close).not.toHaveBeenCalled();
+  fireEvent(model.tree!.UNSAFE_getByType(NativeModal), 'requestClose');
+  expect(close).toHaveBeenCalledTimes(1);
+  expect(close.mock.calls[0][0]).toBeNull();
+});
+
+test('adapted keyboard events project the native sequence token without copying its event', () => {
+  const source = {
+    nativeEvent: { key: 'Escape', muiKeySource: 'hardware', muiKeySequence: '1:111:10' },
+  };
+  const adapted = buttonKeyEvent(source as any);
+  expect(adapted.nativeEvent).toBe(source.nativeEvent);
+  expect(adapted.muiKeySequence).toBe('1:111:10');
+  source.nativeEvent.muiKeySequence = '1:111:20';
+  expect(adapted.muiKeySequence).toBe('1:111:20');
+  delete (source.nativeEvent as { muiKeySequence?: string }).muiKeySequence;
+  expect(adapted.muiKeySequence).toBeUndefined();
 });

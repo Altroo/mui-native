@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "237f40803e33d0da3d482e20d5e0d3df3dc30026b38f9728060199143650d15a",
+  "nativeSourceSha256": "05029841477f8cadb1f1d67225d729c16aceb7c05d4da54661ac011e49cec833",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -35218,7 +35218,7 @@
           "module": "@altroo/mui-native:src/modal.tsx",
           "name": "BackdropRootProps",
           "kind": "type",
-          "line": 55
+          "line": 67
         }
       ]
     },
@@ -35713,7 +35713,7 @@
           "module": "@altroo/mui-native:src/modal.tsx",
           "name": "ModalCloseEvent",
           "kind": "type",
-          "line": 52
+          "line": 64
         }
       ]
     },
@@ -35724,7 +35724,7 @@
           "module": "@altroo/mui-native:src/modal.tsx",
           "name": "ModalRootProps",
           "kind": "type",
-          "line": 208
+          "line": 220
         }
       ]
     },
@@ -45996,7 +45996,7 @@
         {
           "name": "BackdropSlots",
           "file": "src/modal.tsx",
-          "line": 63,
+          "line": 75,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46013,7 +46013,7 @@
         {
           "name": "BackdropComponentsPropsOverrides",
           "file": "src/modal.tsx",
-          "line": 53,
+          "line": 65,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46030,7 +46030,7 @@
         {
           "name": "BackdropTransitionSlotPropsOverrides",
           "file": "src/modal.tsx",
-          "line": 54,
+          "line": 66,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46156,7 +46156,7 @@
         {
           "name": "BackdropProps",
           "file": "src/modal.tsx",
-          "line": 67,
+          "line": 79,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46219,7 +46219,7 @@
         {
           "name": "BackdropRootProps",
           "file": "src/modal.tsx",
-          "line": 55,
+          "line": 67,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46256,7 +46256,7 @@
         {
           "name": "BackdropProps",
           "file": "src/modal.tsx",
-          "line": 67,
+          "line": 79,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46275,7 +46275,7 @@
         {
           "name": "BackdropOwnerState",
           "file": "src/modal.tsx",
-          "line": 87,
+          "line": 99,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46321,7 +46321,7 @@
         {
           "name": "BackdropSlots",
           "file": "src/modal.tsx",
-          "line": 63,
+          "line": 75,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46338,7 +46338,7 @@
         {
           "name": "BackdropComponentsPropsOverrides",
           "file": "src/modal.tsx",
-          "line": 53,
+          "line": 65,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46355,7 +46355,7 @@
         {
           "name": "BackdropTransitionSlotPropsOverrides",
           "file": "src/modal.tsx",
-          "line": 54,
+          "line": 66,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46481,7 +46481,7 @@
         {
           "name": "BackdropProps",
           "file": "src/modal.tsx",
-          "line": 67,
+          "line": 79,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46544,7 +46544,7 @@
         {
           "name": "BackdropRootProps",
           "file": "src/modal.tsx",
-          "line": 55,
+          "line": 67,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46581,7 +46581,7 @@
         {
           "name": "BackdropProps",
           "file": "src/modal.tsx",
-          "line": 67,
+          "line": 79,
           "package": "@altroo/mui-native"
         }
       ]
@@ -46600,7 +46600,7 @@
         {
           "name": "BackdropOwnerState",
           "file": "src/modal.tsx",
-          "line": 87,
+          "line": 99,
           "package": "@altroo/mui-native"
         }
       ]
@@ -89745,7 +89745,7 @@
         {
           "name": "ModalComponentsPropsOverrides",
           "file": "src/modal.tsx",
-          "line": 207,
+          "line": 219,
           "package": "@altroo/mui-native"
         }
       ]
@@ -89778,7 +89778,7 @@
         {
           "name": "ModalOwnerState",
           "file": "src/modal.tsx",
-          "line": 213,
+          "line": 225,
           "package": "@altroo/mui-native"
         }
       ]
@@ -89824,7 +89824,7 @@
         {
           "name": "ModalSlots",
           "file": "src/modal.tsx",
-          "line": 217,
+          "line": 229,
           "package": "@altroo/mui-native"
         }
       ]
@@ -90126,13 +90126,13 @@
         {
           "name": "ModalProps",
           "file": "src/modal.tsx",
-          "line": 223,
+          "line": 235,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ModalOwnProps",
           "file": "src/modal.tsx",
-          "line": 241,
+          "line": 253,
           "package": "@altroo/mui-native"
         }
       ]
@@ -90194,7 +90194,7 @@
         {
           "name": "ModalRootProps",
           "file": "src/modal.tsx",
-          "line": 208,
+          "line": 220,
           "package": "@altroo/mui-native"
         }
       ]
@@ -90231,7 +90231,7 @@
         {
           "name": "ModalProps",
           "file": "src/modal.tsx",
-          "line": 223,
+          "line": 235,
           "package": "@altroo/mui-native"
         }
       ]
@@ -90248,7 +90248,7 @@
         {
           "name": "ModalComponentsPropsOverrides",
           "file": "src/modal.tsx",
-          "line": 207,
+          "line": 219,
           "package": "@altroo/mui-native"
         }
       ]
@@ -90281,7 +90281,7 @@
         {
           "name": "ModalOwnerState",
           "file": "src/modal.tsx",
-          "line": 213,
+          "line": 225,
           "package": "@altroo/mui-native"
         }
       ]
@@ -90327,7 +90327,7 @@
         {
           "name": "ModalSlots",
           "file": "src/modal.tsx",
-          "line": 217,
+          "line": 229,
           "package": "@altroo/mui-native"
         }
       ]
@@ -90629,13 +90629,13 @@
         {
           "name": "ModalProps",
           "file": "src/modal.tsx",
-          "line": 223,
+          "line": 235,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ModalOwnProps",
           "file": "src/modal.tsx",
-          "line": 241,
+          "line": 253,
           "package": "@altroo/mui-native"
         }
       ]
@@ -90697,7 +90697,7 @@
         {
           "name": "ModalRootProps",
           "file": "src/modal.tsx",
-          "line": 208,
+          "line": 220,
           "package": "@altroo/mui-native"
         }
       ]
@@ -90734,7 +90734,7 @@
         {
           "name": "ModalProps",
           "file": "src/modal.tsx",
-          "line": 223,
+          "line": 235,
           "package": "@altroo/mui-native"
         }
       ]
@@ -192070,7 +192070,7 @@
     {
       "name": "NativeKeyEvent",
       "file": "src/modal.tsx",
-      "line": 51,
+      "line": 52,
       "kind": "type",
       "members": [],
       "references": [
@@ -192084,7 +192084,7 @@
     {
       "name": "ModalCloseEvent",
       "file": "src/modal.tsx",
-      "line": 52,
+      "line": 64,
       "kind": "type",
       "members": [],
       "references": [
@@ -192097,7 +192097,7 @@
     {
       "name": "BackdropComponentsPropsOverrides",
       "file": "src/modal.tsx",
-      "line": 53,
+      "line": 65,
       "kind": "type",
       "members": [],
       "references": [],
@@ -192107,7 +192107,7 @@
     {
       "name": "BackdropTransitionSlotPropsOverrides",
       "file": "src/modal.tsx",
-      "line": 54,
+      "line": 66,
       "kind": "type",
       "members": [],
       "references": [],
@@ -192117,7 +192117,7 @@
     {
       "name": "BackdropRootProps",
       "file": "src/modal.tsx",
-      "line": 55,
+      "line": 67,
       "kind": "type",
       "members": [
         {
@@ -192127,7 +192127,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>;",
-          "line": 58,
+          "line": 70,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         },
@@ -192138,7 +192138,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 59,
+          "line": 71,
           "kind": "property",
           "type": "SxProps"
         },
@@ -192149,7 +192149,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClick?: (event: GestureResponderEvent) => void;",
-          "line": 60,
+          "line": 72,
           "kind": "event",
           "type": "(event: GestureResponderEvent) => void"
         },
@@ -192160,7 +192160,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: BackdropOwnerState;",
-          "line": 61,
+          "line": 73,
           "kind": "property",
           "type": "BackdropOwnerState"
         }
@@ -192181,7 +192181,7 @@
     {
       "name": "BackdropSlots",
       "file": "src/modal.tsx",
-      "line": 63,
+      "line": 75,
       "kind": "type",
       "members": [
         {
@@ -192191,7 +192191,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: React.ComponentType<BackdropRootProps>;",
-          "line": 64,
+          "line": 76,
           "kind": "slot",
           "type": "React.ComponentType<BackdropRootProps>"
         },
@@ -192202,7 +192202,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transition?: React.ComponentType<FadeProps>;",
-          "line": 65,
+          "line": 77,
           "kind": "slot",
           "type": "React.ComponentType<FadeProps>"
         }
@@ -192218,7 +192218,7 @@
     {
       "name": "BackdropProps",
       "file": "src/modal.tsx",
-      "line": 67,
+      "line": 79,
       "kind": "type",
       "members": [
         {
@@ -192228,7 +192228,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "open: boolean;",
-          "line": 70,
+          "line": 82,
           "kind": "property",
           "type": "boolean"
         },
@@ -192239,7 +192239,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "invisible?: boolean;",
-          "line": 71,
+          "line": 83,
           "kind": "property",
           "type": "boolean"
         },
@@ -192250,7 +192250,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 72,
+          "line": 84,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -192261,7 +192261,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 73,
+          "line": 85,
           "kind": "property",
           "type": "SxProps"
         },
@@ -192272,7 +192272,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: TransitionStyle;",
-          "line": 74,
+          "line": 86,
           "kind": "property",
           "type": "TransitionStyle"
         },
@@ -192283,7 +192283,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClick?: (event: GestureResponderEvent) => void;",
-          "line": 75,
+          "line": 87,
           "kind": "event",
           "type": "(event: GestureResponderEvent) => void"
         },
@@ -192294,7 +192294,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<BackdropRootProps>;",
-          "line": 76,
+          "line": 88,
           "kind": "property",
           "type": "React.ComponentType<BackdropRootProps>"
         },
@@ -192305,7 +192305,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transitionDuration?: TransitionProps['timeout'];",
-          "line": 77,
+          "line": 89,
           "kind": "property",
           "type": "TransitionProps['timeout']"
         },
@@ -192316,7 +192316,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: BackdropSlots;",
-          "line": 78,
+          "line": 90,
           "kind": "slot",
           "type": "BackdropSlots"
         },
@@ -192327,7 +192327,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: {\n    root?: SlotProps<BackdropRootProps, BackdropOwnerState>;\n    transition?: SlotProps<\n      Partial<FadeProps> & BackdropTransitionSlotPropsOverrides,\n      BackdropOwnerState\n    >;\n  };",
-          "line": 79,
+          "line": 91,
           "kind": "slot",
           "type": "{\n    root?: SlotProps<BackdropRootProps, BackdropOwnerState>;\n    transition?: SlotProps<\n      Partial<FadeProps> & BackdropTransitionSlotPropsOverrides,\n      BackdropOwnerState\n    >;\n  }"
         },
@@ -192338,7 +192338,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: SlotProps<BackdropRootProps, BackdropOwnerState>;",
-          "line": 80,
+          "line": 92,
           "kind": "slot",
           "type": "SlotProps<BackdropRootProps, BackdropOwnerState>"
         },
@@ -192349,7 +192349,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transition?: SlotProps<\n      Partial<FadeProps> & BackdropTransitionSlotPropsOverrides,\n      BackdropOwnerState\n    >;",
-          "line": 81,
+          "line": 93,
           "kind": "slot",
           "type": "SlotProps<\n      Partial<FadeProps> & BackdropTransitionSlotPropsOverrides,\n      BackdropOwnerState\n    >"
         }
@@ -192377,7 +192377,7 @@
     {
       "name": "BackdropOwnerState",
       "file": "src/modal.tsx",
-      "line": 87,
+      "line": 99,
       "kind": "type",
       "members": [
         {
@@ -192387,7 +192387,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "invisible: boolean;",
-          "line": 88,
+          "line": 100,
           "kind": "property",
           "type": "boolean"
         }
@@ -192401,7 +192401,7 @@
     {
       "name": "SurfaceProps",
       "file": "src/modal.tsx",
-      "line": 90,
+      "line": 102,
       "kind": "type",
       "members": [
         {
@@ -192411,7 +192411,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "surface: React.ComponentType<BackdropRootProps>;",
-          "line": 91,
+          "line": 103,
           "kind": "property",
           "type": "React.ComponentType<BackdropRootProps>"
         },
@@ -192422,7 +192422,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeBaseStyle: ViewProps['style'];",
-          "line": 92,
+          "line": 104,
           "kind": "property",
           "type": "ViewProps['style']"
         }
@@ -192438,7 +192438,7 @@
     {
       "name": "NativeModalControlProps",
       "file": "src/modal.tsx",
-      "line": 187,
+      "line": 199,
       "kind": "type",
       "members": [
         {
@@ -192448,7 +192448,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "open: boolean;",
-          "line": 188,
+          "line": 200,
           "kind": "property",
           "type": "boolean"
         },
@@ -192459,7 +192459,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClose?: (event: ModalCloseEvent, reason: 'backdropClick' | 'escapeKeyDown') => void;",
-          "line": 189,
+          "line": 201,
           "kind": "event",
           "type": "(event: ModalCloseEvent, reason: 'backdropClick' | 'escapeKeyDown') => void"
         },
@@ -192470,7 +192470,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableEscapeKeyDown?: boolean;",
-          "line": 191,
+          "line": 203,
           "kind": "property",
           "type": "boolean"
         },
@@ -192481,7 +192481,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableAutoFocus?: boolean;",
-          "line": 192,
+          "line": 204,
           "kind": "property",
           "type": "boolean"
         },
@@ -192492,7 +192492,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableEnforceFocus?: boolean;",
-          "line": 193,
+          "line": 205,
           "kind": "property",
           "type": "boolean"
         },
@@ -192503,7 +192503,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableRestoreFocus?: boolean;",
-          "line": 194,
+          "line": 206,
           "kind": "property",
           "type": "boolean"
         },
@@ -192514,7 +192514,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disablePortal?: boolean;",
-          "line": 195,
+          "line": 207,
           "kind": "property",
           "type": "boolean"
         },
@@ -192525,7 +192525,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "hideBackdrop?: boolean;",
-          "line": 196,
+          "line": 208,
           "kind": "property",
           "type": "boolean"
         },
@@ -192536,7 +192536,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "keepMounted?: boolean;",
-          "line": 197,
+          "line": 209,
           "kind": "property",
           "type": "boolean"
         },
@@ -192547,7 +192547,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "initialFocusRef?: React.RefObject<NativeFocusTarget | null>;",
-          "line": 198,
+          "line": 210,
           "kind": "property",
           "type": "React.RefObject<NativeFocusTarget | null>"
         },
@@ -192558,7 +192558,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "returnFocusRef?: React.RefObject<NativeFocusTarget | null>;",
-          "line": 199,
+          "line": 211,
           "kind": "property",
           "type": "React.RefObject<NativeFocusTarget | null>"
         },
@@ -192569,7 +192569,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeModalProps?: Omit<\n    NativeWindowProps,\n    'children' | 'visible' | 'onRequestClose' | 'onShow' | 'onDismiss'\n  >;",
-          "line": 200,
+          "line": 212,
           "kind": "property",
           "type": "Omit<\n    NativeWindowProps,\n    'children' | 'visible' | 'onRequestClose' | 'onShow' | 'onDismiss'\n  >"
         },
@@ -192580,7 +192580,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onShow?: NativeWindowProps['onShow'];",
-          "line": 204,
+          "line": 216,
           "kind": "event",
           "type": "NativeWindowProps['onShow']"
         },
@@ -192591,7 +192591,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onDismiss?: NativeWindowProps['onDismiss'];",
-          "line": 205,
+          "line": 217,
           "kind": "event",
           "type": "NativeWindowProps['onDismiss']"
         }
@@ -192609,7 +192609,7 @@
     {
       "name": "ModalComponentsPropsOverrides",
       "file": "src/modal.tsx",
-      "line": 207,
+      "line": 219,
       "kind": "type",
       "members": [],
       "references": [],
@@ -192619,7 +192619,7 @@
     {
       "name": "ModalRootProps",
       "file": "src/modal.tsx",
-      "line": 208,
+      "line": 220,
       "kind": "type",
       "members": [
         {
@@ -192629,7 +192629,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: ModalOwnerState;",
-          "line": 209,
+          "line": 221,
           "kind": "property",
           "type": "ModalOwnerState"
         },
@@ -192640,7 +192640,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 210,
+          "line": 222,
           "kind": "property",
           "type": "SxProps"
         },
@@ -192651,7 +192651,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>;",
-          "line": 211,
+          "line": 223,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         }
@@ -192670,7 +192670,7 @@
     {
       "name": "ModalOwnerState",
       "file": "src/modal.tsx",
-      "line": 213,
+      "line": 225,
       "kind": "type",
       "members": [
         {
@@ -192680,7 +192680,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "exited: boolean;",
-          "line": 214,
+          "line": 226,
           "kind": "property",
           "type": "boolean"
         },
@@ -192691,7 +192691,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "closeAfterTransition?: boolean;",
-          "line": 215,
+          "line": 227,
           "kind": "property",
           "type": "boolean"
         }
@@ -192705,7 +192705,7 @@
     {
       "name": "ModalSlots",
       "file": "src/modal.tsx",
-      "line": 217,
+      "line": 229,
       "kind": "type",
       "members": [
         {
@@ -192715,7 +192715,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: React.ComponentType<ModalRootProps>;",
-          "line": 218,
+          "line": 230,
           "kind": "slot",
           "type": "React.ComponentType<ModalRootProps>"
         },
@@ -192726,7 +192726,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "backdrop?: React.ComponentType<\n    BackdropProps & React.RefAttributes<ViewInstance> & { ownerState?: ModalOwnerState }\n  >;",
-          "line": 219,
+          "line": 231,
           "kind": "slot",
           "type": "React.ComponentType<\n    BackdropProps & React.RefAttributes<ViewInstance> & { ownerState?: ModalOwnerState }\n  >"
         }
@@ -192745,7 +192745,7 @@
     {
       "name": "ModalProps",
       "file": "src/modal.tsx",
-      "line": 223,
+      "line": 235,
       "kind": "type",
       "members": [
         {
@@ -192755,7 +192755,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: React.ReactElement<any>;",
-          "line": 226,
+          "line": 238,
           "kind": "property",
           "type": "React.ReactElement<any>"
         },
@@ -192766,7 +192766,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 227,
+          "line": 239,
           "kind": "property",
           "type": "SxProps"
         },
@@ -192777,7 +192777,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "closeAfterTransition?: boolean;",
-          "line": 228,
+          "line": 240,
           "kind": "property",
           "type": "boolean"
         },
@@ -192788,7 +192788,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onTransitionEnter?: () => void;",
-          "line": 229,
+          "line": 241,
           "kind": "event",
           "type": "() => void"
         },
@@ -192799,7 +192799,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onTransitionExited?: () => void;",
-          "line": 230,
+          "line": 242,
           "kind": "event",
           "type": "() => void"
         },
@@ -192810,7 +192810,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<ModalRootProps>;",
-          "line": 231,
+          "line": 243,
           "kind": "property",
           "type": "React.ComponentType<ModalRootProps>"
         },
@@ -192821,7 +192821,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: ModalSlots;",
-          "line": 232,
+          "line": 244,
           "kind": "slot",
           "type": "ModalSlots"
         },
@@ -192832,7 +192832,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: {\n    root?: SlotProps<ModalRootProps, ModalOwnerState>;\n    backdrop?: SlotProps<\n      Partial<BackdropProps> & React.RefAttributes<ViewInstance> & ModalComponentsPropsOverrides,\n      ModalOwnerState\n    >;\n  };",
-          "line": 233,
+          "line": 245,
           "kind": "slot",
           "type": "{\n    root?: SlotProps<ModalRootProps, ModalOwnerState>;\n    backdrop?: SlotProps<\n      Partial<BackdropProps> & React.RefAttributes<ViewInstance> & ModalComponentsPropsOverrides,\n      ModalOwnerState\n    >;\n  }"
         },
@@ -192843,7 +192843,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: SlotProps<ModalRootProps, ModalOwnerState>;",
-          "line": 234,
+          "line": 246,
           "kind": "slot",
           "type": "SlotProps<ModalRootProps, ModalOwnerState>"
         },
@@ -192854,7 +192854,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "backdrop?: SlotProps<\n      Partial<BackdropProps> & React.RefAttributes<ViewInstance> & ModalComponentsPropsOverrides,\n      ModalOwnerState\n    >;",
-          "line": 235,
+          "line": 247,
           "kind": "slot",
           "type": "SlotProps<\n      Partial<BackdropProps> & React.RefAttributes<ViewInstance> & ModalComponentsPropsOverrides,\n      ModalOwnerState\n    >"
         }
@@ -192882,7 +192882,7 @@
     {
       "name": "ModalOwnProps",
       "file": "src/modal.tsx",
-      "line": 241,
+      "line": 253,
       "kind": "type",
       "members": [],
       "references": [

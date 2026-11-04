@@ -29,6 +29,7 @@ type DescendantKeyData = Readonly<{
   isComposing?: boolean;
   isCanceled?: boolean;
   muiKeySource?: string;
+  muiKeySequence?: string;
   isEditable?: boolean;
 }>;
 type FocusData = Readonly<{ target: CodegenTypes.Int32 }>;

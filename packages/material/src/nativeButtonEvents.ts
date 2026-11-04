@@ -17,6 +17,7 @@ const keyFields = [
   'isComposing',
   'isCanceled',
   'muiKeySource',
+  'muiKeySequence',
   'isEditable',
 ] as const;
 /** Keep native provenance and event methods while supplying familiar keyboard fields. */
