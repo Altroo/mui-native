@@ -5,6 +5,7 @@ export type NativeDescendantKey =
   | 'Escape'
   | 'ArrowUp'
   | 'ArrowDown'
+  | 'ArrowLeft'
   | 'PageUp'
   | 'PageDown'
   | 'Home'

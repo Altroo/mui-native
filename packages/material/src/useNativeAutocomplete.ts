@@ -30,6 +30,7 @@ import { NativeModalParentContext } from './nativeModalContext';
 import { nativeModalManager as modalManager } from './nativeModalManager';
 import { useMenuEvent } from './useMenuEvent';
 import { buttonKeyEvent } from './nativeButtonEvents';
+import { nativeButtonModality } from './nativeButtonModality';
 import { createFilterOptions, useAutocompleteValues } from './autocompleteValues';
 import { NativeAutocompleteNodes } from './autocompleteNativeNodes';
 import type {
@@ -211,7 +212,14 @@ export function useNativeAutocomplete(
     setRenderedOpen(next);
   };
   const [focused, setFocused] = useState(false),
-    [focusedItem, setFocusedItem] = useState(-1);
+    [focusedItem, setRenderedFocusedItem] = useState(-1);
+  const focusedItemDraft = useRef(-1);
+  const setFocusedItem = useCallback((next: number) => {
+    // Native focus commands can share a React batch. The next key must build
+    // on the preceding accepted focus request, rather than its older render.
+    focusedItemDraft.current = next;
+    setRenderedFocusedItem(next);
+  }, []);
   const [anchorEl, setAnchor] = useState<ViewInstance | null>(null);
   const [inputPristine, setInputPristine] = useState(true);
   const defaultHighlight = autoHighlight ? 0 : -1;
@@ -592,15 +600,23 @@ export function useNativeAutocomplete(
     setFocusedItem(index);
     if (interactionReady()) collection.focusItem(index);
   };
-  const navigateItem = (direction: Direction) => {
+  const navigateItem = (event: Event, direction: Direction) => {
     if (!multiple) return;
-    let index =
-      focusedItem === -1
-        ? direction === 'previous' && inputValue === ''
-          ? value.length - 1
-          : -1
-        : focusedItem + (direction === 'next' ? 1 : -1);
-    if (index >= value.length) index = -1;
+    const value = currentValue(),
+      input = currentInput();
+    if (input === '') closePopup(event, 'toggleInput');
+    let index = focusedItemDraft.current;
+    if (index === -1 && direction === 'previous') {
+      index = value.length - 1;
+      if (freeSolo && input !== '') {
+        setInputValue('');
+        onInputChange?.(event, '', 'reset');
+      }
+    } else {
+      index += direction === 'next' ? 1 : -1;
+      if (index < 0) index = 0;
+      if (index === value.length) index = -1;
+    }
     while (index >= 0 && index < value.length && !collection.isItemAvailable(index))
       index += direction === 'next' ? 1 : -1;
     focusItem(index < 0 || index >= value.length ? -1 : index);
@@ -651,7 +667,8 @@ export function useNativeAutocomplete(
   const keyboard = useMenuEvent((event: NativeAutocompleteKeyboardEvent) => {
     const value = currentValue(),
       inputValue = currentInput(),
-      popupOpen = currentPopupOpen();
+      popupOpen = currentPopupOpen(),
+      focusedItem = focusedItemDraft.current;
     if (
       !interactionReady() ||
       event.defaultMuiPrevented ||
@@ -666,7 +683,7 @@ export function useNativeAutocomplete(
     // Leave native Chip deletion on its focused host until matching key-up.
     // Moving focus during key-down would orphan that release in a new editor.
     if (itemDeletion) return;
-    if (focusedItem !== -1 && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
+    if (focusedItemDraft.current !== -1 && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
       focusItem(-1);
     switch (event.key) {
       case 'Home':
@@ -696,19 +713,31 @@ export function useNativeAutocomplete(
         openPopup(event);
         break;
       }
-      case 'ArrowLeft':
-        if (selection.current.start !== 0 || selection.current.end !== 0) break;
+      case 'ArrowLeft': {
+        // Native descendant Left is claimed only at a collapsed caret start.
+        // Its atomic editor check wins over an older JS selection receipt.
+        const fromItem = collection.itemIndex(event.target as unknown as ViewInstance) !== -1;
+        const nativeBoundary =
+          event.isEditable &&
+          (event.muiKeySource === 'hardware' || event.muiKeySource === 'command');
+        if (
+          !fromItem &&
+          !nativeBoundary &&
+          (selection.current.start !== 0 || selection.current.end !== 0)
+        )
+          break;
         if (!multiple && renderValue && value != null) {
           if (freeSolo && inputValue !== '') {
             setInputValue('');
             onInputChange?.(event, '', 'reset');
           }
           focusItem(0);
-        } else navigateItem('previous');
+        } else navigateItem(event, 'previous');
         break;
+      }
       case 'ArrowRight':
         if (!multiple && renderValue) focusItem(-1);
-        else navigateItem('next');
+        else navigateItem(event, 'next');
         break;
       case 'Enter':
         commitInput(event, () => event.preventDefault());
@@ -965,6 +994,10 @@ export function useNativeAutocomplete(
   const declared: NativeDescendantKey[] = disabled
     ? []
     : ['ArrowDown', 'ArrowUp', 'PageUp', 'PageDown'];
+  // Left has a native caret/range guard. Right and deletion stay native in
+  // the editor; selected items retain their own existing command handlers.
+  if (!disabled && (multiple ? value.length > 0 : renderValue && value != null))
+    declared.push('ArrowLeft');
   if (!disabled && popupOpen && handleHomeEndKeys) declared.push('Home', 'End');
   if (
     !disabled &&
@@ -1017,6 +1050,15 @@ export function useNativeAutocomplete(
       onKeyDown: (source: NativeHostKeyEvent) => {
         if (!interactionReady()) return;
         const event = buttonKeyEvent(source) as NativeAutocompleteKeyboardEvent;
+        // Descendant editor events bypass ButtonBase's key handler. Establish
+        // keyboard modality before a caller or this hook requests item focus.
+        if (
+          !event.isComposing &&
+          !event.isCanceled &&
+          typeof event.key === 'string' &&
+          event.key !== ''
+        )
+          nativeButtonModality.keyboard();
         other.onKeyDown?.(event);
         keyboard(event);
       },
@@ -1040,7 +1082,7 @@ export function useNativeAutocomplete(
         if (!interactionReady()) return;
         blurRevision.current++;
         setFocused(true);
-        if (focusedItem !== -1) focusItem(-1);
+        if (focusedItemDraft.current !== -1) focusItem(-1);
         if (backgrounded.current) {
           backgrounded.current = false;
           return;

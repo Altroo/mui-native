@@ -126,7 +126,9 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
       (BaseInputConnection.getComposingSpanStart(focused.editableText) >= 0 || BaseInputConnection.getComposingSpanEnd(focused.editableText) >= 0)
     // Inspect only known editor composition APIs. A claimed sequence is still
     // consumed after a close/composition change, but cannot notify another target.
-    val eligible = focused != null && descendantOwner(focused, key) === this &&
+    val caretEligible = descendantCaretEligible(key, (focused as? EditText)?.selectionStart,
+      (focused as? EditText)?.selectionEnd)
+    val eligible = focused != null && caretEligible && descendantOwner(focused, key) === this &&
       event.flags and KeyEvent.FLAG_SOFT_KEYBOARD == 0 && !composing && (!editor || focused is EditText)
     val target = if (eligible) reactTarget(focused!!) else null
     val reactContext = context as ThemedReactContext

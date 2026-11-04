@@ -190,7 +190,7 @@
       "packages/material/src/useAutocompleteTypes.ts": "9275b363b200c98f053bf6ff006917b5685ca0c4e6b2f5d4692a3c7a3234f3f5",
       "packages/material/src/useMenuEvent.ts": "c7e7661c9d8a4ff7d71d122ebbec261b3d3237c94fd71b06708feebf97351361",
       "packages/material/src/useMenuRegistration.ts": "ab47e4375e458d68e2a7c9f457b72dab0c4ac27d015c190ed880298d219a5537",
-      "packages/material/src/useNativeAutocomplete.ts": "69b13d329e61f339fe51cd1866370a4419009c5129f1e01825833c90389d4ee8",
+      "packages/material/src/useNativeAutocomplete.ts": "a78283946e9da8e64ed93e5addb160830370e5dc676d11611e897206b1fa7c28",
       "packages/material/src/useNativeButtonAutoFocus.ts": "6f95f7e1f1a9f771fef2c2ea2c1e0a0c681fe9ff230c3039c63ccb9d5bcb13f7",
       "packages/material/src/useNativePickerLayer.ts": "7c82d3d1660d4d1c1e0783b5aa384dc9adfcb3e7d51f05576856432db64fa310",
       "packages/material/src/useNativePopper.tsx": "e15ea4f4b42e5cddfda35e0189e2e4ec36c99d6bc4165344286d89b364edf909",
@@ -206,7 +206,7 @@
       "packages/native-host/src/index.tsx": "3b0b81eec5e6bc327b72168927d9232dc6e1cbae0173327037a4c706fa043c4a",
       "packages/native-host/src/interactiveView.tsx": "ae071be128fc82101d55d14a0e29e41814ef6b20102fee59cc565c8f8385353f",
       "packages/native-host/src/nativeFocus.ts": "b592f2969d30bf119842488c770ed378c02dd521b9e35d79af58543ddff8e04d",
-      "packages/native-host/src/nativeKeyboard.ts": "af6a1e077983aae4e79cfa32d5faac5db796bbc2476622e9a68350f5cfa1ffd6",
+      "packages/native-host/src/nativeKeyboard.ts": "df963dbdea0d373d5d7230be508b5477f4bc3cd96a8fa466431139eacab06692",
       "packages/native-host/src/nativePicker.tsx": "7768cdec1da067a9ef0bc01baa6b532675bd28ab3a60dadb3be98ca128300f38",
       "packages/native-host/src/nativePortal.tsx": "00babbc5f0e459c9cebddcc32395b6ef729cf68dc28f11e814b9382c91d6cb33",
       "packages/native-host/src/NativePressable.tsx": "905439269727226948af75667e2b8496ba282ff4e66fe9cc355995429b59f562",
@@ -326,7 +326,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "05029841477f8cadb1f1d67225d729c16aceb7c05d4da54661ac011e49cec833",
+      "nativeSourceSha256": "1c6e86b30f458b28a83f86ef4b281659973a5ab432f7352cd882a082e3d10639",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -338,7 +338,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "ecd7f27e5236dee1f8b7df12572278bbaeae59c23c650a2ab324db66893fd846"
+      "sha256": "4c6b4794d3b534d3ec713e368eac0cba2accd71c33bacbfe85db27da35a0d8cb"
     },
     {
       "package": "@mui/system",

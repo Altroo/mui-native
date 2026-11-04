@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "05029841477f8cadb1f1d67225d729c16aceb7c05d4da54661ac011e49cec833",
+  "nativeSourceSha256": "1c6e86b30f458b28a83f86ef4b281659973a5ab432f7352cd882a082e3d10639",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -141355,7 +141355,7 @@
         {
           "name": "Direction",
           "file": "src/useNativeAutocomplete.ts",
-          "line": 62,
+          "line": 63,
           "package": "@altroo/mui-native"
         }
       ]
@@ -141580,7 +141580,7 @@
         {
           "name": "Direction",
           "file": "src/useNativeAutocomplete.ts",
-          "line": 62,
+          "line": 63,
           "package": "@altroo/mui-native"
         }
       ]
@@ -202932,7 +202932,7 @@
     {
       "name": "NativeAutocompleteConfiguration",
       "file": "src/useNativeAutocomplete.ts",
-      "line": 53,
+      "line": 54,
       "kind": "type",
       "members": [
         {
@@ -202942,7 +202942,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "renderValue?: unknown",
-          "line": 59,
+          "line": 60,
           "kind": "property",
           "type": "unknown"
         }
@@ -202956,7 +202956,7 @@
     {
       "name": "Event",
       "file": "src/useNativeAutocomplete.ts",
-      "line": 60,
+      "line": 61,
       "kind": "type",
       "members": [],
       "references": [
@@ -202968,7 +202968,7 @@
     {
       "name": "HighlightReason",
       "file": "src/useNativeAutocomplete.ts",
-      "line": 61,
+      "line": 62,
       "kind": "type",
       "members": [],
       "references": [
@@ -202980,7 +202980,7 @@
     {
       "name": "Direction",
       "file": "src/useNativeAutocomplete.ts",
-      "line": 62,
+      "line": 63,
       "kind": "type",
       "members": [],
       "references": [],
@@ -202990,7 +202990,7 @@
     {
       "name": "SelectionReason",
       "file": "src/useNativeAutocomplete.ts",
-      "line": 63,
+      "line": 64,
       "kind": "type",
       "members": [],
       "references": [],
@@ -203000,7 +203000,7 @@
     {
       "name": "HighlightChange",
       "file": "src/useNativeAutocomplete.ts",
-      "line": 64,
+      "line": 65,
       "kind": "type",
       "members": [
         {
@@ -203010,7 +203010,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "index: number;",
-          "line": 65,
+          "line": 66,
           "kind": "property",
           "type": "number"
         },
@@ -203021,7 +203021,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "event?: Event;",
-          "line": 66,
+          "line": 67,
           "kind": "property",
           "type": "Event"
         },
@@ -203032,7 +203032,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "reason?: HighlightReason;",
-          "line": 67,
+          "line": 68,
           "kind": "property",
           "type": "HighlightReason"
         },
@@ -203043,7 +203043,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "preserveScroll?: boolean;",
-          "line": 68,
+          "line": 69,
           "kind": "property",
           "type": "boolean"
         },
@@ -203054,7 +203054,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "notify?: boolean;",
-          "line": 69,
+          "line": 70,
           "kind": "property",
           "type": "boolean"
         }
@@ -203069,7 +203069,7 @@
     {
       "name": "NativeAutocompleteResult",
       "file": "src/useNativeAutocomplete.ts",
-      "line": 85,
+      "line": 86,
       "kind": "type",
       "members": [
         {
@@ -203079,7 +203079,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "getItemProps: (args?: {\n    index?: number;\n    disabled?: boolean;\n  }) => NativeAutocompleteItemBindings & { key?: number };",
-          "line": 90,
+          "line": 91,
           "kind": "property",
           "type": "(args?: {\n    index?: number;\n    disabled?: boolean;\n  }) => NativeAutocompleteItemBindings & { key?: number }"
         },
@@ -203090,7 +203090,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "native: {\n    highlightedIndex: number;\n    highlightReason: HighlightReason;\n    inputFocused: boolean;\n    filteredOptions: any[];\n    collection: NativeAutocompleteNodes;\n    focusInputArea: () => void;\n    keyboard: (event: NativeAutocompleteKeyboardEvent) => void;\n    syncHighlight: () => void;\n  };",
-          "line": 94,
+          "line": 95,
           "kind": "property",
           "type": "{\n    highlightedIndex: number;\n    highlightReason: HighlightReason;\n    inputFocused: boolean;\n    filteredOptions: any[];\n    collection: NativeAutocompleteNodes;\n    focusInputArea: () => void;\n    keyboard: (event: NativeAutocompleteKeyboardEvent) => void;\n    syncHighlight: () => void;\n  }"
         },
@@ -203101,7 +203101,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "highlightedIndex: number;",
-          "line": 95,
+          "line": 96,
           "kind": "property",
           "type": "number"
         },
@@ -203112,7 +203112,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "highlightReason: HighlightReason;",
-          "line": 96,
+          "line": 97,
           "kind": "property",
           "type": "HighlightReason"
         },
@@ -203123,7 +203123,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inputFocused: boolean;",
-          "line": 97,
+          "line": 98,
           "kind": "property",
           "type": "boolean"
         },
@@ -203134,7 +203134,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "filteredOptions: any[];",
-          "line": 98,
+          "line": 99,
           "kind": "property",
           "type": "any[]"
         },
@@ -203145,7 +203145,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "collection: NativeAutocompleteNodes;",
-          "line": 99,
+          "line": 100,
           "kind": "property",
           "type": "NativeAutocompleteNodes"
         },
@@ -203156,7 +203156,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusInputArea: () => void;",
-          "line": 100,
+          "line": 101,
           "kind": "property",
           "type": "() => void"
         },
@@ -203167,7 +203167,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "keyboard: (event: NativeAutocompleteKeyboardEvent) => void;",
-          "line": 101,
+          "line": 102,
           "kind": "property",
           "type": "(event: NativeAutocompleteKeyboardEvent) => void"
         },
@@ -203178,7 +203178,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "syncHighlight: () => void;",
-          "line": 102,
+          "line": 103,
           "kind": "property",
           "type": "() => void"
         }
