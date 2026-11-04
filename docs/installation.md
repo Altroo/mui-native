@@ -14,7 +14,13 @@ Optional packages use the same tag:
 - `@altroo/mui-native-x-data-grid@prealpha`: install `@shopify/flash-list@2.3.2` directly for native autolinking, then rebuild.
 - `@altroo/mui-native-x-tree-view@prealpha` and `@altroo/mui-native-x-date-pickers@prealpha`: reuse the Material/system/host foundation; the date package carries Day.js.
 
-Pinned preview version: `0.0.6-prealpha.0` for all nine packages. Explicit native imports work after installation; original `@mui/...` imports also need the Metro and TypeScript configuration below.
+Pinned preview version: `0.0.7-prealpha.0` for all nine packages. Explicit native imports work after installation; original `@mui/...` imports also need the Metro and TypeScript configuration below.
+
+## Upgrade from 0.0.6-prealpha.0
+
+Install the matching `0.0.7-prealpha.0` versions of every `@altroo/mui-native*` package used by the application, including the direct native-host dependency. This preview adds the managed native text editor used by Material inputs and Autocomplete. **Rebuild the iOS/Android application** after upgrading; a JavaScript reload cannot add its Fabric component. Expo Go cannot run these hosts.
+
+The native editor adapter requires **React Native 0.88.1** in both JavaScript and the application binary. Its peer/source guards intentionally reject unreviewed ABIs. Keep React 19.3.0 and the matched Expo SDK 58 baseline, then perform the usual native dependency installation/build. Do not bypass a missing-descriptor or peer-source mismatch error; follow its generated-cache/rebuild guidance in [the native-host guide](native-host.md#native-text-editor).
 
 ## Build local archives instead
 
@@ -29,10 +35,10 @@ pnpm pack:all
 Install the generated system, material and native-host archives together in the consumer. Add the compatibility archive if retaining original imports, and only the X/icon archives you need. X archives depend on the material and system packages, so pass all local archives together to the package manager. Install React 19.3.0 / React Native 0.88.1 peers. Charts/icons also require `react-native-svg` 15.16.0; use `npx expo install react-native-svg` in a matched Expo app. The grid archive carries FlashList, and the date archive carries Day.js.
 
 ```sh
-npm install /absolute/path/artifacts/packages/altroo-mui-native-system-0.0.6-prealpha.0.tgz \
-  /absolute/path/artifacts/packages/altroo-mui-native-0.0.6-prealpha.0.tgz \
-  /absolute/path/artifacts/packages/altroo-mui-native-host-0.0.6-prealpha.0.tgz \
-  /absolute/path/artifacts/packages/altroo-mui-native-compat-0.0.6-prealpha.0.tgz
+npm install /absolute/path/artifacts/packages/altroo-mui-native-system-0.0.7-prealpha.0.tgz \
+  /absolute/path/artifacts/packages/altroo-mui-native-0.0.7-prealpha.0.tgz \
+  /absolute/path/artifacts/packages/altroo-mui-native-host-0.0.7-prealpha.0.tgz \
+  /absolute/path/artifacts/packages/altroo-mui-native-compat-0.0.7-prealpha.0.tgz
 ```
 
 Keep `@altroo/mui-native-host` as a direct native application dependency for autolinking. Rebuild the native application after installing it or updating native host source/schema. The descendant Tab/Escape bridge also needs that rebuild; a JavaScript reload is insufficient. Expo Go does not contain the Fabric interaction host required by interactive rows and Modal/Dialog/Popover/Menu. Use an Expo development build (`npx expo run:ios` or `npx expo run:android`) or the application's existing bare React Native native build. Existing controls have not all been migrated to the host. See [native host setup and custom roots](native-host.md).

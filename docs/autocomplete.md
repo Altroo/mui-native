@@ -2,7 +2,7 @@
 
 Autocomplete composes a native text editor, searchable suggestions, selected-value Chips and a measured Popper. It adapts the MIT-licensed Material UI 9.5.0 contracts, including mapped values and the current `renderValue` and slot APIs.
 
-**Source implementation.** The published `0.0.6-prealpha.0` packages predate Autocomplete. These examples require building the current source; a later package release will be a separate step. Interactive components require the native interaction host in a development or production build. Expo Go does not contain it.
+**Pre-alpha implementation.** Autocomplete and its headless hook are included starting with `0.0.7-prealpha.0`. Use matching Material/native-host packages and rebuild the native application when upgrading from `0.0.6-prealpha.0`. Interactive components require a development or production build containing the native host and managed editor. Expo Go does not contain them.
 
 ## Basic use
 

@@ -1,6 +1,6 @@
 # Native Collapse
 
-`Collapse` changes the height or width of one retained native subtree. Root and `@mui/material/Collapse` imports resolve through the native compatibility layer; web applications retain original MUI. This source increment follows the published pre-alpha and requires a source/archive installation.
+`Collapse` changes the height or width of one retained native subtree. Root and `@mui/material/Collapse` imports resolve through the native compatibility layer; web applications retain original MUI. It is included starting with `0.0.7-prealpha.0`; use matching package versions and the native build described in [installation](installation.md).
 
 ```tsx
 import { Button, Collapse, Typography } from '@mui/material';

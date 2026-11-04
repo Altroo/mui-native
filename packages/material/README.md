@@ -36,7 +36,7 @@ Native implementations of selected Material components. APIs and behavior are pa
 
 See the [component status](https://github.com/Altroo/mui-native#status), [compatibility contract](https://github.com/Altroo/mui-native/blob/main/docs/compatibility.md) and [package guide](https://github.com/Altroo/mui-native/blob/main/docs/compatibility.md). Scoped emulator tests and type checks do not certify full physical-device, accessibility or release-performance behavior.
 
-Autocomplete and its headless hook are implemented in the current source. Published `0.0.6-prealpha.0` packages predate this addition. See the [Autocomplete guide](https://github.com/Altroo/mui-native/blob/main/docs/autocomplete.md) for source-build usage, mapped/multiple values, renderers, slots and remaining native gates.
+Starting with `0.0.7-prealpha.0`, this preview includes Autocomplete, its headless hook and native Collapse. See the [Autocomplete guide](https://github.com/Altroo/mui-native/blob/main/docs/autocomplete.md) and [Collapse guide](https://github.com/Altroo/mui-native/blob/main/docs/collapse.md) for usage, mapped/multiple values, transitions, slots and remaining native gates. Upgrade the matching native-host package and rebuild the application; the earlier preview binary does not include the managed native editor.
 
 ## License
 
