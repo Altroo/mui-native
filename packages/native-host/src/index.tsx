@@ -25,3 +25,6 @@ export type {
   NativePortalObservation,
   NativePortalPosition,
 } from './nativePortal';
+
+export { NativeTextInput } from './nativeTextInput';
+export type { NativeTextInputProps } from './nativeTextInput';

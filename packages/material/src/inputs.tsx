@@ -1,3 +1,4 @@
+import { NativeTextInput as TextInput } from '@altroo/mui-native-host';
 import { useTheme, useSx, useComponentStyle } from './themeProvider';
 import React, {
   forwardRef,
@@ -11,7 +12,6 @@ import React, {
 import {
   View,
   Text,
-  TextInput,
   StyleSheet,
   I18nManager,
   type ViewProps,
@@ -179,6 +179,8 @@ const NotchedOutline = forwardRef<ViewInstance, NotchedOutlineProps>(function No
     notched && label != null && label !== '' && labelWidth > 0
       ? Math.min(labelWidth + 8, Math.max(0, width - 28))
       : 0;
+  // A horizontal outline segment uses border width as its vertical thickness.
+  const horizontalThickness = border.borderWidth;
   return (
     <View
       {...props}
@@ -224,7 +226,7 @@ const NotchedOutline = forwardRef<ViewInstance, NotchedOutlineProps>(function No
               top: 0,
               start: 0,
               width: 14,
-              height: border.borderWidth,
+              height: horizontalThickness,
               backgroundColor: border.borderColor,
             }}
           />
@@ -234,7 +236,7 @@ const NotchedOutline = forwardRef<ViewInstance, NotchedOutlineProps>(function No
               top: 0,
               start: 14 + gap,
               end: 0,
-              height: border.borderWidth,
+              height: horizontalThickness,
               backgroundColor: border.borderColor,
             }}
           />

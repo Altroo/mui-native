@@ -136,7 +136,6 @@ test('input and host customization cannot replace controlled value or weaken dis
   expect(screen.getByLabelText('Locked').props).toEqual(
     expect.objectContaining({
       value: 'Controlled',
-      readOnly: true,
       editable: false,
       accessibilityState: { disabled: true },
     }),

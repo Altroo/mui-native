@@ -683,6 +683,9 @@ export function useNativeAutocomplete(
     // Leave native Chip deletion on its focused host until matching key-up.
     // Moving focus during key-down would orphan that release in a new editor.
     if (itemDeletion) return;
+    // Custom adornments/listboxes can contain their own editors. Their native
+    // delete requests remain observable to callers but cannot edit our value.
+    if (event.isEditable && event.target !== collection.input) return;
     if (focusedItemDraft.current !== -1 && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
       focusItem(-1);
     switch (event.key) {
@@ -763,7 +766,9 @@ export function useNativeAutocomplete(
         const nativeEmpty =
           event.key === 'Backspace' &&
           event.isEditable &&
-          (event.muiKeySource === 'hardware' || event.muiKeySource === 'command');
+          (event.muiKeySource === 'hardware' ||
+            event.muiKeySource === 'command' ||
+            event.muiKeySource === 'input');
         if (readOnly || (inputValue !== '' && !nativeEmpty)) break;
         // A native Chip owns deletion through key-up. Its registered root must
         // not also be removed by this ancestor's key-down handler.

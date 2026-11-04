@@ -87,6 +87,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+Native text input adapter
+-------------------------
+
+The text-input adapter also adapts React Native 0.88.1 text/ref synchronization,
+platform component descriptors and the UIKit component view. The Meta MIT notice
+above applies. Source fingerprints and adaptations are recorded in
+upstream/native-text-input.json and packages/native-host/native-input-baseline.json.
+
 Native positioning algorithms
 -----------------------------
 

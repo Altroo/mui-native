@@ -14,7 +14,7 @@ The matched development baseline is React 19.3 / React Native 0.88.1 (Expo SDK 5
 
 ## Current scope
 
-Native iOS/Android interaction, in-window portals and platform picker hosts. Requires a rebuilt native application.
+Native iOS/Android interaction, in-window portals and platform picker hosts. Source after the published preview also adds the guarded native text editor on the exact reviewed React Native 0.88.1 baseline. Requires a rebuilt native application.
 
 See the [component status](https://github.com/Altroo/mui-native#status), [compatibility contract](https://github.com/Altroo/mui-native/blob/main/docs/compatibility.md) and [package guide](https://github.com/Altroo/mui-native/blob/main/docs/native-host.md). Scoped emulator tests and type checks do not certify full physical-device, accessibility or release-performance behavior.
 

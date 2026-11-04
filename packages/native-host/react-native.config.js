@@ -1,3 +1,5 @@
+// This native editor reuses a reviewed React Native ABI; validate before autolinking.
+require('./scripts/verify-native-input.cjs').verifyNativeInput();
 module.exports = {
   dependency: {
     platforms: {
@@ -5,6 +7,7 @@ module.exports = {
         sourceDir: './android',
         cmakeListsPath: '../android/CMakeLists.txt',
         componentDescriptors: [
+          'AltrooMUITextInputComponentDescriptor',
           'AltrooMUIInteractiveViewComponentDescriptor',
           'AltrooMUINativePickerComponentDescriptor',
           'AltrooPortalHostComponentDescriptor',
