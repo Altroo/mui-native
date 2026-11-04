@@ -11,6 +11,10 @@ export const autocompleteStages = [
   'clear',
   'keyboard-highlight',
   'keyboard-select',
+  'tag-start-focus',
+  'tag-cycle',
+  'tag-editor-middle',
+  'tag-selected-range',
   'multiple-remove',
   'multiple-select',
   'grouped-options',
@@ -29,6 +33,7 @@ export const autocompleteStages = [
 ];
 export const autocompletePictures = [
   'filtered.png',
+  'tag-focus.png',
   'multiple.png',
   'grouped.png',
   'dialog-escape.png',

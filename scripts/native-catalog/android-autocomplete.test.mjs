@@ -121,9 +121,22 @@ test('all eight ordered complete native typing bursts are required, including re
 
 test('the earlier 17-stage APK cannot satisfy Dialog Escape release coverage', () => {
   const previous = report();
-  previous.stages = previous.stages.filter((stage) => !stage.includes('escape'));
-  previous.screenshots = previous.screenshots.filter((name) => !name.includes('escape'));
+  previous.stages = previous.stages.filter(
+    (stage) => !stage.includes('escape') && !stage.startsWith('tag-'),
+  );
+  previous.screenshots = previous.screenshots.filter(
+    (name) => !name.includes('escape') && !name.startsWith('tag-'),
+  );
   assert.equal(previous.stages.length, 17);
   assert.equal(previous.screenshots.length, 5);
+  assert.throws(() => summarizeAutocomplete(raw(previous)));
+});
+
+test('the earlier 21-stage APK cannot satisfy native tag/caret coverage', () => {
+  const previous = report();
+  previous.stages = previous.stages.filter((stage) => !stage.startsWith('tag-'));
+  previous.screenshots = previous.screenshots.filter((name) => !name.startsWith('tag-'));
+  assert.equal(previous.stages.length, 21);
+  assert.equal(previous.screenshots.length, 7);
   assert.throws(() => summarizeAutocomplete(raw(previous)));
 });
