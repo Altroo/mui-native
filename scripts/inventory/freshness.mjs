@@ -35,7 +35,9 @@ export function baselineProjection(state, configs = scope) {
 
 // The mutable release detector state is deliberately excluded. Only reviewed baselines count.
 export async function collectInputs(root = process.cwd(), configs = scope) {
-  const state = JSON.parse(await readFile(inside(root, 'upstream/state.json'), 'utf8'));
+  const state = JSON.parse(
+    await readFile(inside(root, 'upstream/state.json'), { encoding: 'utf8' }),
+  );
   const baselines = baselineProjection(state, configs);
   const paths = new Set([
     'package.json',
@@ -64,10 +66,10 @@ export async function collectInputs(root = process.cwd(), configs = scope) {
     const directory = `packages/${entry.name}`;
     const manifestFile = `${directory}/package.json`;
     paths.add(manifestFile);
-    const manifest = JSON.parse(await readFile(inside(root, manifestFile), 'utf8'));
+    const manifest = JSON.parse(await readFile(inside(root, manifestFile), { encoding: 'utf8' }));
     if (manifest.exports?.['.']?.['react-native'])
       for (const file of await filesBelow(root, `${directory}/src`, (name) =>
-        /\.[cm]?tsx?$/.test(name),
+        /\.[cm]?(?:tsx?|js)$/.test(name),
       ))
         paths.add(file);
   }
@@ -88,13 +90,15 @@ function sameList(actual, expected) {
   return JSON.stringify(ordered(actual)) === JSON.stringify(ordered(expected));
 }
 export async function verifyInventory(root = process.cwd(), configs = scope) {
-  const manifest = JSON.parse(await readFile(inside(root, manifestPath), 'utf8'));
+  const manifest = JSON.parse(await readFile(inside(root, manifestPath), { encoding: 'utf8' }));
   const inputs = await collectInputs(root, configs);
   if (JSON.stringify(inputs) !== JSON.stringify(manifest.inputs))
     throw new Error('Coverage inputs changed. Run pnpm coverage:generate.');
   if (manifest.status !== 'declaration-inventory-not-parity')
     throw new Error('Invalid inventory verification status.');
-  const state = JSON.parse(await readFile(inside(root, 'upstream/state.json'), 'utf8'));
+  const state = JSON.parse(
+    await readFile(inside(root, 'upstream/state.json'), { encoding: 'utf8' }),
+  );
   const projection = baselineProjection(state, configs);
   const references = projection.filter((item) => item.role === 'reference-dependency');
   if (
@@ -144,7 +148,7 @@ export async function verifyInventory(root = process.cwd(), configs = scope) {
     const content = await readFile(inside(root, entry.inventory));
     if (sha256(content) !== entry.sha256)
       throw new Error(`Inventory report changed: ${entry.inventory}`);
-    const report = JSON.parse(content);
+    const report = JSON.parse(new TextDecoder().decode(/** @type {Uint8Array} */ (content)));
     if (
       report.package !== entry.package ||
       report.support !== 'unverified' ||
@@ -176,12 +180,12 @@ export async function writeOutputs(outputs, { root = process.cwd(), check = fals
     if (!sameList(existing, expected))
       throw new Error('Inventory report set contains missing or obsolete reports.');
     for (const [file, content] of outputs)
-      if ((await readFile(inside(root, file), 'utf8').catch(() => null)) !== content)
+      if ((await readFile(inside(root, file), { encoding: 'utf8' }).catch(() => null)) !== content)
         throw new Error(`Coverage inventory is stale: ${file}. Run pnpm coverage:generate.`);
     return;
   }
   if (obsolete.length) {
-    const previous = JSON.parse(await readFile(inside(root, manifestPath), 'utf8'));
+    const previous = JSON.parse(await readFile(inside(root, manifestPath), { encoding: 'utf8' }));
     const known = new Set(
       previous.packages
         .map((item) => item.inventory)

@@ -51,6 +51,23 @@ for (const directory of await readdir('packages')) {
 const nativeHost = `${consumer}/node_modules/@altroo/mui-native-host`;
 for (const file of [
   'react-native.config.js',
+  'native-input-baseline.json',
+  'scripts/verify-native-input.cjs',
+  'src/nativeTextInput.tsx',
+  'src/nativeTextInputRuntime.js',
+  'src/nativeTextInputNativeComponent.js',
+  'src/AltrooMUITextInputNativeComponent.ts',
+  'dist/nativeTextInputRuntime.js',
+  'dist/nativeTextInputNativeComponent.js',
+  'common/cpp/AltrooNativeTextInputDescriptor.h',
+  'android/src/main/java/com/altroo/muinativehost/AltrooMUITextInput.kt',
+  'android/src/main/java/com/altroo/muinativehost/AltrooMUITextInputManager.kt',
+  'android/src/main/java/com/altroo/muinativehost/AltrooTextInputState.java',
+  'android/src/main/java/com/altroo/muinativehost/NativeTextInputMetadata.kt',
+  'ios/AltrooMUITextInputComponentView.h',
+  'ios/AltrooMUITextInputComponentView.mm',
+  'ios/AltrooMUIManagedTextInput.h',
+  'ios/AltrooMUIManagedTextInput.mm',
   'src/AltrooMUIPortalHostNativeComponent.ts',
   'src/AltrooMUIPortalCanvasNativeComponent.ts',
   'src/nativePortal.tsx',
@@ -117,6 +134,15 @@ for (const name of ['AltrooMUIPortalHost', 'AltrooMUIPortalCanvas']) {
   if (hostManifest.codegenConfig.ios.componentProvider[name] !== name + 'ComponentView')
     throw new Error('Missing Portal Fabric registration: ' + name);
 }
+if (
+  hostManifest.codegenConfig.ios.componentProvider.AltrooMUITextInput !==
+  'AltrooMUITextInputComponentView'
+)
+  throw new Error('Missing native editor Fabric registration');
+execFileSync(process.execPath, [resolve(nativeHost, 'scripts/verify-native-input.cjs')], {
+  cwd: consumer,
+  stdio: 'inherit',
+});
 console.log('Installed native host retains autolinking, codegen and platform sources.');
 await cp('fixtures/native-consumer', consumer, { recursive: true });
 await writeFile(

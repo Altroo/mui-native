@@ -1,5 +1,6 @@
 module.exports = {
   preset: '@react-native/jest-preset',
+  setupFilesAfterEnv: ['<rootDir>/tests/setup/native-editor.ts'],
   testMatch: ['<rootDir>/tests/**/*.test.ts?(x)'],
   // Unpacked consumer archives must not become duplicate Haste packages.
   modulePathIgnorePatterns: ['<rootDir>/.cache/'],

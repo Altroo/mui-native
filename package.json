@@ -9,7 +9,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "typecheck": "tsc --noEmit && tsc --noEmit -p apps/native-catalog/tsconfig.json && tsc --noEmit -p apps/native-benchmark/tsconfig.json",
-    "test": "jest --runInBand && node --test scripts/lint-workflow.test.mjs scripts/theme-imports.test.mjs scripts/native-catalog/*.test.mjs scripts/performance/*.test.mjs scripts/packages-archives.test.mjs scripts/native-rendering.test.mjs scripts/native-positioning.test.mjs scripts/inventory/*.test.mjs scripts/upstream/*.test.mjs packages/compat/*.test.cjs",
+    "test": "jest --runInBand && node --test scripts/lint-workflow.test.mjs scripts/theme-imports.test.mjs scripts/native-catalog/*.test.mjs scripts/performance/*.test.mjs scripts/packages-archives.test.mjs scripts/native-rendering.test.mjs scripts/native-text-input.test.mjs scripts/native-positioning.test.mjs scripts/inventory/*.test.mjs scripts/upstream/*.test.mjs packages/compat/*.test.cjs",
     "check": "pnpm lint && pnpm test && pnpm coverage:verify && pnpm build && pnpm typecheck:consumer && pnpm native-host:codegen",
     "upstream:check": "node scripts/upstream/detect.mjs",
     "upstream:baseline": "node scripts/upstream/baseline.mjs",

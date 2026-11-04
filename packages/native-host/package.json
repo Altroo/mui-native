@@ -25,7 +25,9 @@
     "LICENSE",
     "NOTICE",
     "common",
-    "README.md"
+    "README.md",
+    "scripts/verify-native-input.cjs",
+    "native-input-baseline.json"
   ],
   "exports": {
     ".": {
@@ -38,7 +40,7 @@
   "dependencies": {},
   "peerDependencies": {
     "react": ">=19.3.0 <20",
-    "react-native": ">=0.88.1 <0.89"
+    "react-native": "0.88.1"
   },
   "codegenConfig": {
     "name": "AltrooMuiNativeHostSpec",
@@ -52,7 +54,8 @@
         "AltrooMUIInteractiveView": "AltrooMUIInteractiveViewComponentView",
         "AltrooMUINativePicker": "AltrooMUINativePickerComponentView",
         "AltrooMUIPortalHost": "AltrooMUIPortalHostComponentView",
-        "AltrooMUIPortalCanvas": "AltrooMUIPortalCanvasComponentView"
+        "AltrooMUIPortalCanvas": "AltrooMUIPortalCanvasComponentView",
+        "AltrooMUITextInput": "AltrooMUITextInputComponentView"
       }
     }
   },

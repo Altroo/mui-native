@@ -4,6 +4,7 @@
 package dev.altroo.muinative.catalog.test;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Instrumentation;
 import android.app.UiAutomation;
 import android.content.Intent;
@@ -23,6 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.BaseInputConnection;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputConnection;
 import com.altroo.muinativehost.AltrooMUIInteractiveView;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.EditText;
@@ -62,6 +65,9 @@ public final class AutocompleteScenario {
         .put("device", new JSONObject().put("model", Build.MODEL).put("sdk", Build.VERSION.SDK_INT).put("os", Build.VERSION.RELEASE))
         .put("artifactDirectory", "cache/" + artifacts.getName());
       automation = driver.getUiAutomation(UiAutomation.FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES);
+      android.accessibilityservice.AccessibilityServiceInfo service = automation.getServiceInfo();
+      service.flags |= android.accessibilityservice.AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
+      automation.setServiceInfo(service);
       Intent launch = driver.getTargetContext().getPackageManager().getLaunchIntentForPackage(PACKAGE);
       require(launch != null, "Catalog launch activity unavailable");
       launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -147,7 +153,7 @@ public final class AutocompleteScenario {
       key(KeyEvent.KEYCODE_DEL);
       require(ui(() -> find("autocomplete-events-4-Backspace") != null && activity.getWindow().getCallback() == beforeFinalTag), "An unowned Backspace must not remove another value or retain a window lease");
       stage("editor-backspace-unowned"); capture("editor-empty.png");
-      tap("autocomplete-toggle");
+      if (ui(() -> find("autocomplete-popup") == null)) tap("autocomplete-toggle");
       await(() -> ui(() -> find("autocomplete-option-1") != null), "Restore original membership for touch-deletion checks");
       tap("autocomplete-option-1"); selection("selectOption: 1");
       await(() -> ui(() -> find("autocomplete-option-2") != null), "Restore the second original selected value");
@@ -160,9 +166,11 @@ public final class AutocompleteScenario {
       await(() -> ui(() -> find("autocomplete-chip-Marrakesh") != null && fullyVisible(view("autocomplete-chip-Marrakesh")) && find("autocomplete-option-3") == null && find("autocomplete-option-1") != null), "Multiple Chip/filtered rows did not settle after selection"); stage("multiple-select");
       capture("multiple.png");
       key(KeyEvent.KEYCODE_ESCAPE);
+      await(() -> ui(() -> find("autocomplete-popup") == null), "Dismiss multiple suggestions before switching modes");
       tap("autocomplete-mode-Grouped"); tap("autocomplete-toggle");
       await(() -> ui(() -> find("autocomplete-option-6") != null), "Grouped options missing");
       capture("grouped.png"); stage("grouped-options"); key(KeyEvent.KEYCODE_ESCAPE);
+      await(() -> ui(() -> find("autocomplete-popup") == null), "Dismiss grouped suggestions before switching modes");
       tap("autocomplete-mode-Free solo");
       await(() -> ui(() -> "Search or enter a city".contentEquals(editor().getHint())), "Free-solo editor must replace the previous mode");
       tap("autocomplete-editor");
@@ -226,7 +234,15 @@ public final class AutocompleteScenario {
       key(KeyEvent.KEYCODE_ESCAPE);
       // Key injection can finish before the React/Portal close is committed.
       await(() -> ui(() -> find("autocomplete-popup") == null), "Dismiss state suggestions before touching the disabled control");
+      // These switches sit below the editor. A real docked IME can cover their
+      // native view coordinates; dismiss it with Back before touching them.
+      if (Build.VERSION.SDK_INT >= 30 && ui(() -> editor().getRootWindowInsets() != null && editor().getRootWindowInsets().isVisible(android.view.WindowInsets.Type.ime()))) {
+        key(KeyEvent.KEYCODE_BACK);
+        await(() -> ui(() -> editor().getRootWindowInsets() != null && !editor().getRootWindowInsets().isVisible(android.view.WindowInsets.Type.ime())), "Dismiss the docked keyboard before touching state controls");
+      }
+      await(() -> automation.getWindows().stream().noneMatch(window -> window.getType() == android.view.accessibility.AccessibilityWindowInfo.TYPE_INPUT_METHOD), "The keyboard window must finish dismissing before a native state-control touch");
       tap("autocomplete-disabled");
+      await(() -> ui(() -> view("autocomplete-disabled").createAccessibilityNodeInfo().isChecked()), "The actual Disabled switch must receive the touch");
       // Pinned React Native maps editable=false to View.enabled, retaining its key listener.
       await(() -> ui(() -> !editor().isEnabled() && !view("autocomplete-toggle").createAccessibilityNodeInfo().isEnabled()), "Disabled control remained editable/enabled"); stage("disabled-control");
       tap("autocomplete-disabled");
@@ -254,6 +270,11 @@ public final class AutocompleteScenario {
       await(() -> ui(() -> find("autocomplete-option-2") != null), "Full-screen Dialog suggestions missing");
       tap("autocomplete-option-2"); selection("selectOption: 2"); stage("fullscreen-dialog-selection"); capture("fullscreen-dialog.png");
       defaultEscape(fullScreenWindow, "fullscreen-dialog-default-escape");
+      // Adversarial native controls replace the live IME connection and open
+      // a platform window. Keep their scoped lifecycle assertions after the
+      // ordinary UI workflows, which must begin with normal application state.
+      report.put("softwareRequests", softwareBackspaceRequests(report));
+      stage("software-requests");
       passed = true;
     } catch (Throwable error) {
       try { report.put("error", error.toString()); capture("failure.png"); } catch (Throwable ignored) { /* Keep the original assertion. */ }
@@ -263,6 +284,163 @@ public final class AutocompleteScenario {
       driver.finish(passed ? Activity.RESULT_OK : Activity.RESULT_CANCELED, result);
     }
   }
+  /** Exercise the real InputConnection, separately from physical-key/touch evidence. */
+  private JSONArray softwareBackspaceRequests(JSONObject report) throws Exception {
+    JSONArray evidence = new JSONArray();
+    report.put("softwareRequests", evidence);
+    for (String method : new String[]{"surrounding", "codepoints", "key-unflagged", "key-soft", "key-system"}) {
+      resetSoftwareValues();
+      InputConnection connection = ui(() -> { ((com.facebook.react.views.textinput.ReactEditText)editor()).setOnKeyPress(true); return editor().onCreateInputConnection(new EditorInfo()); });
+      require(connection != null, "Managed editor must create its stock input connection");
+      int tag = ui(() -> editor().getId());
+      EventDispatcher dispatcher = ui(() -> UIManagerHelper.getEventDispatcher((ReactContext)editor().getContext()));
+      AtomicInteger down = new AtomicInteger(), presses = new AtomicInteger();
+      EventDispatcherListener listener = event -> {
+        if (event.getViewTag() != tag) return;
+        if (event.getEventName().equals("topKeyDown")) down.incrementAndGet();
+        if (event.getEventName().equals("topKeyPress")) presses.incrementAndGet();
+      };
+      ui(() -> { dispatcher.addListener(listener); return null; });
+      try {
+        boolean result = ui(() -> {
+          if (method.equals("surrounding")) return connection.deleteSurroundingText(1, 0);
+          if (method.equals("codepoints")) return connection.deleteSurroundingTextInCodePoints(1, 0);
+          long time = SystemClock.uptimeMillis();
+          int flags = method.equals("key-system") ? KeyEvent.FLAG_FROM_SYSTEM : method.equals("key-soft") ? KeyEvent.FLAG_SOFT_KEYBOARD : 0;
+          boolean value = connection.sendKeyEvent(new KeyEvent(time, time, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0, flags));
+          connection.sendKeyEvent(new KeyEvent(time, time, KeyEvent.ACTION_UP, KeyEvent.KEYCODE_DEL, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0, flags));
+          return value;
+        });
+        await(() -> ui(() -> find("autocomplete-chip-Rabat") != null && find("autocomplete-chip-Casablanca") == null && editor().hasFocus()), "InputConnection " + method + " must remove exactly one tag and retain focus");
+        require(down.get() == 1, "InputConnection " + method + " must have exactly one composite owner");
+        require(presses.get() == (method.equals("codepoints") ? 0 : 1), "Retain the exact stock onKeyPress count for " + method + ": " + presses.get());
+        evidence.put(new JSONObject().put("method", method).put("result", result).put("downs", down.get()).put("keyPresses", presses.get()).put("status", "passed"));
+      } finally { ui(() -> { dispatcher.removeListener(listener); return null; }); }
+    }
+    resetSoftwareValues();
+    InputConnection batch = ui(() -> editor().onCreateInputConnection(new EditorInfo()));
+    int batchTag = ui(() -> editor().getId());
+    EventDispatcher batchDispatcher = ui(() -> UIManagerHelper.getEventDispatcher((ReactContext)editor().getContext()));
+    AtomicInteger batchDowns = new AtomicInteger();
+    EventDispatcherListener batchListener = event -> { if (event.getViewTag() == batchTag && event.getEventName().equals("topKeyDown")) batchDowns.incrementAndGet(); };
+    ui(() -> { batchDispatcher.addListener(batchListener); return null; });
+    try {
+      JSONArray results = ui(() -> new JSONArray().put(batch.beginBatchEdit()).put(batch.beginBatchEdit()).put(batch.deleteSurroundingText(1, 0)).put(batch.deleteSurroundingText(1, 0)).put(batch.endBatchEdit()).put(batch.endBatchEdit()));
+      driver.waitForIdleSync();
+      report.put("batchObservation", ui(() -> new JSONObject().put("results", results).put("downs", batchDowns.get()).put("text", editor().getText().toString()).put("focused", editor().hasFocus()).put("windowFocused", editor().hasWindowFocus()).put("enabled", editor().isEnabled()).put("start", editor().getSelectionStart()).put("end", editor().getSelectionEnd()).put("rabat", find("autocomplete-chip-Rabat") != null).put("casablanca", find("autocomplete-chip-Casablanca") != null).put("selection", text("autocomplete-selection"))));
+    } finally { ui(() -> { batchDispatcher.removeListener(batchListener); return null; }); }
+    // This catalog owns value in React. Each request uses the currently authored
+    // value; a parent commit between receipts may change the next request's value.
+    await(() -> ui(() -> find("autocomplete-chip-Casablanca") == null && find("autocomplete-events-2-Backspace") != null && editor().hasFocus()), "Nested batch must preserve two requests and controlled value authority");
+    require(batchDowns.get() == 2, "Neither explicit nested-batch request may be coalesced");
+    evidence.put(new JSONObject().put("method", "nested-batch").put("requests", 2).put("committedValues", ui(() -> find("autocomplete-chip-Rabat") == null ? 0 : 1)).put("status", "passed"));
+    // Empty replacements and composing cleanup may report RN Backspace after
+    // changing text. They are not explicit deletion requests and must not edit values.
+    for (String method : new String[]{"commit", "composing"}) {
+      resetSoftwareValues(); driver.sendStringSync("x");
+      await(() -> ui(() -> editor().getText().toString().equals("x")), "Draft must precede empty replacement");
+      InputConnection connection = ui(() -> editor().onCreateInputConnection(new EditorInfo()));
+      ui(() -> { editor().setSelection(0, 1); if (method.equals("commit")) connection.commitText("", 1); else connection.setComposingText("", 1); return null; });
+      await(() -> ui(() -> editor().length() == 0), "Empty replacement must preserve ordinary native editing");
+      require(ui(() -> find("autocomplete-chip-Rabat") != null && find("autocomplete-chip-Casablanca") != null), "Empty replacement must preserve selected values");
+      evidence.put(new JSONObject().put("method", method).put("status", "passed"));
+    }
+    // Modern overloads have independent platform entry points. An empty
+    // replacement or composing-region update must never become tag deletion.
+    if (Build.VERSION.SDK_INT >= 33) {
+      String[] methods = Build.VERSION.SDK_INT >= 34
+          ? new String[]{"commit-modern", "composing-modern", "region-modern", "replace-modern"}
+          : new String[]{"commit-modern", "composing-modern", "region-modern"};
+      for (String method : methods) {
+        resetSoftwareValues(); driver.sendStringSync("x");
+        await(() -> ui(() -> editor().getText().toString().equals("x")), "Modern control needs an ordinary draft");
+        InputConnection connection = ui(() -> editor().onCreateInputConnection(new EditorInfo()));
+        int tag = ui(() -> editor().getId());
+        EventDispatcher dispatcher = ui(() -> UIManagerHelper.getEventDispatcher((ReactContext)editor().getContext()));
+        AtomicInteger downs = new AtomicInteger();
+        EventDispatcherListener listener = event -> { if (event.getViewTag() == tag && event.getEventName().equals("topKeyDown")) downs.incrementAndGet(); };
+        ui(() -> { dispatcher.addListener(listener); return null; });
+        try {
+          boolean result = ui(() -> {
+            editor().setSelection(0, 1);
+            if (method.equals("commit-modern")) return connection.commitText("", 1, null);
+            if (method.equals("composing-modern")) return connection.setComposingText("", 1, null);
+            if (method.equals("replace-modern")) return connection.replaceText(0, 1, "", 1, null);
+            boolean value = connection.setComposingRegion(0, 1, null);
+            require(BaseInputConnection.getComposingSpanStart(editor().getText()) == 0 && BaseInputConnection.getComposingSpanEnd(editor().getText()) == 1, "Modern region must install its native composing bounds before cleanup");
+            connection.finishComposingText();
+            return value;
+          });
+          String expected = method.equals("region-modern") ? "x" : "";
+          await(() -> ui(() -> editor().getText().toString().equals(expected)), "Modern overload must retain its ordinary edit: " + method);
+          require(ui(() -> find("autocomplete-chip-Rabat") != null && find("autocomplete-chip-Casablanca") != null), "Modern metadata/replacement must preserve both values");
+          require(downs.get() == 0, "Modern metadata/replacement cannot synthesize a deletion request");
+          evidence.put(new JSONObject().put("method", method).put("result", result).put("downs", downs.get()).put("nativeText", expected).put("status", "passed"));
+        } finally { ui(() -> { dispatcher.removeListener(listener); return null; }); }
+      }
+    }
+    resetSoftwareValues(); driver.sendStringSync("x");
+    await(() -> ui(() -> editor().getText().toString().equals("x")), "Retirement control needs real editable text");
+    InputConnection retired = ui(() -> { ((com.facebook.react.views.textinput.ReactEditText)editor()).setOnKeyPress(true); return editor().onCreateInputConnection(new EditorInfo()); });
+    int retiredTag = ui(() -> editor().getId());
+    EventDispatcher retiredDispatcher = ui(() -> UIManagerHelper.getEventDispatcher((ReactContext)editor().getContext()));
+    AtomicInteger retiredDowns = new AtomicInteger(), retiredPresses = new AtomicInteger();
+    EventDispatcherListener retiredListener = event -> {
+      if (event.getViewTag() != retiredTag) return;
+      if (event.getEventName().equals("topKeyDown")) retiredDowns.incrementAndGet();
+      if (event.getEventName().equals("topKeyPress")) retiredPresses.incrementAndGet();
+    };
+    ui(() -> { retiredDispatcher.addListener(retiredListener); editor().onCreateInputConnection(new EditorInfo()); return null; });
+    try {
+      boolean result = ui(() -> retired.deleteSurroundingText(1, 0));
+      report.put("retiredObservation", ui(() -> new JSONObject().put("result", result).put("text", editor().getText().toString()).put("downs", retiredDowns.get()).put("keyPresses", retiredPresses.get())));
+      require(result, "Retirement must preserve the original connection's successful ordinary editing result");
+      await(() -> ui(() -> editor().length() == 0), "A still-live retired connection must retain its stock text editing");
+      require(ui(() -> find("autocomplete-chip-Rabat") != null && find("autocomplete-chip-Casablanca") != null), "Retired ordinary editing cannot claim selected values");
+      require(retiredDowns.get() == 0 && retiredPresses.get() == 1, "Retired editing preserves the requested stock callback without a composite event");
+      evidence.put(new JSONObject().put("method", "retired").put("ordinaryTextEdited", true).put("keyPresses", retiredPresses.get()).put("downs", retiredDowns.get()).put("status", "passed"));
+    } finally { ui(() -> { retiredDispatcher.removeListener(retiredListener); return null; }); }
+    InputConnection queued = ui(() -> editor().onCreateInputConnection(new EditorInfo()));
+    int queuedTag = ui(() -> editor().getId());
+    EventDispatcher queuedDispatcher = ui(() -> UIManagerHelper.getEventDispatcher((ReactContext)editor().getContext()));
+    AtomicInteger queuedDowns = new AtomicInteger();
+    EventDispatcherListener queuedListener = event -> { if (event.getViewTag() == queuedTag && event.getEventName().equals("topKeyDown")) queuedDowns.incrementAndGet(); };
+    ui(() -> { queuedDispatcher.addListener(queuedListener); return null; });
+    try {
+      ui(() -> { long time = SystemClock.uptimeMillis(); queued.sendKeyEvent(new KeyEvent(time, time, KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL, 0)); editor().onCreateInputConnection(new EditorInfo()); return null; });
+      driver.waitForIdleSync();
+      require(queuedDowns.get() == 0, "A queued DEL cannot claim an editor after its connection is replaced");
+      require(ui(() -> find("autocomplete-chip-Rabat") != null && find("autocomplete-chip-Casablanca") != null), "Queued retired editing preserves both values");
+      evidence.put(new JSONObject().put("method", "queued-retired").put("status", "passed"));
+    } finally { ui(() -> { queuedDispatcher.removeListener(queuedListener); return null; }); }
+    InputConnection covered = ui(() -> editor().onCreateInputConnection(new EditorInfo()));
+    Dialog overlay = ui(() -> { Dialog dialog = new Dialog(activity); TextView body = new TextView(activity); body.setText("Native input focus guard"); dialog.setContentView(body); dialog.show(); return dialog; });
+    try {
+      await(() -> ui(() -> !editor().hasWindowFocus()), "The native dialog must take window focus");
+      ui(() -> { covered.deleteSurroundingText(1, 0); return null; });
+      require(ui(() -> find("autocomplete-chip-Rabat") != null && find("autocomplete-chip-Casablanca") != null), "Covered editor cannot delete values through an old connection");
+      evidence.put(new JSONObject().put("method", "covered-window").put("status", "passed"));
+    } finally { ui(() -> { overlay.dismiss(); return null; }); }
+    await(() -> ui(() -> editor().hasWindowFocus()), "Dismissed native dialog must restore window focus before the next interaction");
+    // Restore the caller's empty Multiple scene for its following touch checks.
+    resetSoftwareValues();
+    if (ui(() -> find("autocomplete-popup") != null)) tap("autocomplete-toggle");
+    key(KeyEvent.KEYCODE_DEL);
+    await(() -> ui(() -> find("autocomplete-chip-Casablanca") == null && find("autocomplete-chip-Rabat") != null), "Parent must commit the first removal before the next cleanup action");
+    key(KeyEvent.KEYCODE_DEL);
+    await(() -> ui(() -> find("autocomplete-chip-Rabat") == null && find("autocomplete-chip-Casablanca") == null), "Restore empty values after API checks");
+    return evidence;
+  }
+  private void resetSoftwareValues() throws Exception {
+    // The open popup can cover mode controls; close it by its actual touch
+    // control. Hardware Escape has separate scenarios and window prerequisites.
+    if (ui(() -> find("autocomplete-popup") != null)) tap("autocomplete-toggle");
+    await(() -> ui(() -> find("autocomplete-popup") == null), "Close suggestions before replacing the API test scene");
+    tap("autocomplete-mode-Single"); tap("autocomplete-mode-Multiple"); tap("autocomplete-editor");
+    await(() -> ui(() -> find("autocomplete-chip-Rabat") != null && find("autocomplete-chip-Casablanca") != null && editor().hasFocus()), "Fresh Multiple values and focused editor required");
+    require(ui(() -> editor().getClass().getName().equals("com.altroo.muinativehost.AltrooMUITextInput")), "API checks require the real managed native editor");
+  }
+
   /** Hold Left until native focus has moved; the release must not reach the new Chip. */
   private JSONObject enterLastTagWithHeldLeft() throws Exception {
     Window window = activity.getWindow();

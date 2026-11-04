@@ -770,7 +770,7 @@ describe('selected-item caret navigation', () => {
 });
 
 describe('native empty-editor Backspace', () => {
-  test.each(['hardware', 'command'] as const)(
+  test.each(['hardware', 'command', 'input'] as const)(
     'uses the native empty boundary despite an older draft (%s)',
     (source) => {
       const change = jest.fn();
@@ -833,4 +833,52 @@ describe('native empty-editor Backspace', () => {
     expect(change).toHaveBeenCalledTimes(2);
     expect(m.result.current.getRootProps().managedDescendantKeys).not.toContain('Backspace');
   });
+});
+
+test.each(['hardware', 'command', 'input'] as const)(
+  'a foreign editable descendant cannot delete the Autocomplete value (%s)',
+  (source) => {
+    const change = jest.fn(),
+      caller = jest.fn();
+    const m = model({ multiple: true, defaultValue: options.slice(0, 2), onChange: change });
+    const receipt = event('Backspace', nativeNode());
+    Object.assign(receipt.nativeEvent, { muiKeySource: source, isEditable: true });
+    act(() => m.result.current.getRootProps({ onKeyDown: caller }).onKeyDown?.(receipt));
+    expect(caller).toHaveBeenCalledTimes(1);
+    expect(caller.mock.calls[0][0].nativeEvent).toBe(receipt.nativeEvent);
+    expect(caller.mock.calls[0][0].target).toBe(receipt.target);
+    expect(change).not.toHaveBeenCalled();
+    expect(m.result.current.value).toEqual(options.slice(0, 2));
+  },
+);
+
+test('batched native input requests each remove one value from the preceding draft', () => {
+  const change = jest.fn();
+  const m = model({ multiple: true, defaultValue: options.slice(0, 2), onChange: change });
+  act(() => {
+    const key = m.result.current.getRootProps().onKeyDown!;
+    for (let index = 0; index < 2; index++) {
+      const request = event('Backspace', m.input);
+      Object.assign(request.nativeEvent, { muiKeySource: 'input', isEditable: true });
+      key(request);
+    }
+  });
+  expect(m.result.current.value).toEqual([]);
+  expect(change).toHaveBeenCalledTimes(2);
+  expect(change.mock.calls.map((call) => call[1])).toEqual([[options[0]], []]);
+});
+
+test('batched native input requests preserve authored controlled values until a parent update', () => {
+  const change = jest.fn();
+  const m = model({ multiple: true, value: options.slice(0, 2), onChange: change });
+  act(() => {
+    const key = m.result.current.getRootProps().onKeyDown!;
+    for (let index = 0; index < 2; index++) {
+      const request = event('Backspace', m.input);
+      Object.assign(request.nativeEvent, { muiKeySource: 'input', isEditable: true });
+      key(request);
+    }
+  });
+  expect(m.result.current.value).toEqual(options.slice(0, 2));
+  expect(change.mock.calls.map((call) => call[1])).toEqual([[options[0]], [options[0]]]);
 });

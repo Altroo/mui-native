@@ -48,11 +48,17 @@ internal class HostEvent(surface: Int, tag: Int, private val name: String, priva
   // RN RawEvent::Category::Discrete. The category constants are Kotlin-internal.
   override fun getEventCategory(): Int = if (discrete) 3 else super.getEventCategory()
 }
+/** A weak, revocable native boundary shared by delivery and text-state acknowledgement. */
+internal class NativeInputBackspaceRequest(private val current: () -> Boolean, private val acknowledgement: () -> Boolean, private val deliver: () -> Unit) {
+  fun canAcknowledge() = acknowledgement()
+  operator fun invoke() { if (current()) deliver() }
+}
 class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(context) {
   var nativeTabIndex = 0
   var managedKeys: Set<String> = emptySet()
   var managedDescendantKeys: Set<String> = emptySet()
     set(value) {
+      if (("Backspace" in field) != ("Backspace" in value)) inputBackspaceDeclarationRevision++
       if (field != value) descendantDeclarationRevision++
       field = value
       syncDescendantFocusObserver()
@@ -66,6 +72,9 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
   var rippleBorderless = false
   private var ripple: RippleDrawable? = null
   private var descendantDeclarationRevision = 0L
+  // A value acknowledgement emits no key. Unrelated Enter/navigation changes
+  // do not revoke it; removing/reintroducing Backspace always does.
+  private var inputBackspaceDeclarationRevision = 0L
   private var descendantFocusRevision = 0L
   private var descendantFocusObserver: ViewTreeObserver? = null
   private val descendantFocusListener = ViewTreeObserver.OnGlobalFocusChangeListener { old, next ->
@@ -157,6 +166,42 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
     }
     dispatcher!!.dispatchEvent(HostEvent(surface,target!!.id,if(event.action == KeyEvent.ACTION_DOWN) "topKeyDown" else "topKeyUp",data,true))
     return true
+  }
+  /** Capture the native boundary before an input-method default can change it. */
+  internal fun inputBackspaceRequest(source: EditText, event: KeyEvent?): NativeInputBackspaceRequest? {
+    fun eligible(host: AltrooMUIInteractiveView, input: EditText) =
+      host.isAttachedToWindow && input.isAttachedToWindow && input.hasFocus() && input.hasWindowFocus() && input.isEnabled &&
+        host.descendantOwner(input, "Backspace") === host &&
+        descendantCaretEligible("Backspace", input.selectionStart, input.selectionEnd, input.length()) &&
+        BaseInputConnection.getComposingSpanStart(input.editableText) < 0 && BaseInputConnection.getComposingSpanEnd(input.editableText) < 0
+    if (!eligible(this, source)) return null
+    val target = reactTarget(source) ?: return null
+    val window = source.windowToken ?: return null
+    val ownerRef = WeakReference(this); val sourceRef = WeakReference(source); val targetRef = WeakReference(target); val windowRef = WeakReference(window)
+    val tag = target.id; val declaration = descendantDeclarationRevision; val inputDeclaration = inputBackspaceDeclarationRevision; val focus = descendantFocusRevision
+    val current = current@{ acknowledgement: Boolean ->
+      val host = ownerRef.get() ?: return@current false
+      val input = sourceRef.get() ?: return@current false
+      val actualTarget = targetRef.get() ?: return@current false
+      val actualWindow = windowRef.get() ?: return@current false
+      eligible(host, input) && (if (acknowledgement) host.inputBackspaceDeclarationRevision == inputDeclaration else host.descendantDeclarationRevision == declaration) && host.descendantFocusRevision == focus &&
+        input.windowToken === actualWindow && actualTarget.id == tag && host.reactTarget(input) === actualTarget
+    }
+    return NativeInputBackspaceRequest({ current(false) }, { current(true) }) deliver@{
+      val host = ownerRef.get() ?: return@deliver
+      val actualTarget = targetRef.get() ?: return@deliver
+      val dispatcher = UIManagerHelper.getEventDispatcher(host.context as ThemedReactContext) ?: return@deliver
+      val surface = UIManagerHelper.getSurfaceId(actualTarget); if (surface < 0) return@deliver
+      val data = Arguments.createMap().apply {
+        putString("key", "Backspace"); putString("code", if (event == null) "Unidentified" else "Backspace")
+        putBoolean("altKey", event?.isAltPressed ?: false); putBoolean("ctrlKey", event?.isCtrlPressed ?: false)
+        putBoolean("metaKey", event?.isMetaPressed ?: false); putBoolean("shiftKey", event?.isShiftPressed ?: false)
+        if (event != null) putBoolean("repeat", event.repeatCount > 0)
+        putBoolean("isComposing", false); putBoolean("isCanceled", false)
+        putString("muiKeySource", "input"); putBoolean("isEditable", true); putInt("target", tag)
+      }
+      dispatcher.dispatchEvent(HostEvent(surface, tag, "topKeyDown", data, true))
+    }
   }
   override fun dispatchKeyEventPreIme(event: KeyEvent): Boolean {
     if (event.action !in listOf(KeyEvent.ACTION_DOWN, KeyEvent.ACTION_UP)) return super.dispatchKeyEventPreIme(event)

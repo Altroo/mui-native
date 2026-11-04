@@ -153,6 +153,37 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
   for (NSString *name in _managedDescendantKeys) if ([self descendantTargetForKey:name responder:nil]) return YES;
   return NO;
 }
+- (nullable dispatch_block_t)prepareInputBackspaceFromView:(UIView *)source {
+  if (!source.window.isKeyWindow) return nil;
+  UIView *actual = nil;
+  UIView<RCTTouchableComponentViewProtocol> *target = [self descendantTargetForKey:@"Backspace" responder:&actual];
+  if (!target || actual != source) return nil;
+  __weak AltrooMUIInteractiveViewComponentView *weakOwner = self;
+  __weak UIView *weakSource = source;
+  __weak UIView<RCTTouchableComponentViewProtocol> *weakTarget = target;
+  __weak UIWindow *weakWindow = source.window;
+  NSSet<NSString *> *declaration = _managedDescendantKeys;
+  NSInteger tag = target.tag;
+  return [^{
+    AltrooMUIInteractiveViewComponentView *owner = weakOwner;
+    UIView *input = weakSource;
+    UIView<RCTTouchableComponentViewProtocol> *capturedTarget = weakTarget;
+    UIWindow *window = weakWindow;
+    if (!owner || !input || !capturedTarget || !window.isKeyWindow || input.window != window ||
+        owner->_managedDescendantKeys != declaration || capturedTarget.tag != tag) return;
+    UIView *responder = nil;
+    if ([owner descendantTargetForKey:@"Backspace" responder:&responder] != capturedTarget || responder != input) return;
+    const auto emitter = [capturedTarget touchEventEmitterAtPoint:CGPointZero];
+    if (!emitter) return;
+    // Public deleteBackward carries neither a hardware scan code nor key-up.
+    auto payload = folly::dynamic::object
+      ("key", "Backspace")("code", "Unidentified")
+      ("altKey", false)("ctrlKey", false)("metaKey", false)("shiftKey", false)
+      ("isComposing", false)("isCanceled", false)("muiKeySource", "input")
+      ("isEditable", true)("target", (int)tag);
+    emitter->dispatchEvent("keyDown", std::move(payload), RawEvent::Category::Discrete);
+  } copy];
+}
 - (void)altroo_handleDescendantLeftKeyCommand:(UIKeyCommand *)command {
   [self altroo_handleDescendantKeyCommand:command];
 }

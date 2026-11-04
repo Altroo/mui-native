@@ -46,6 +46,7 @@ async function fixture(t) {
       exports: { '.': { 'react-native': './src/index.ts' } },
     }),
     'packages/system/src/index.ts': 'export const Native = true;',
+    'packages/system/src/runtime.js': 'export const runtime = true;',
     'scripts/inventory/generate.mjs': '// fixture',
     'scripts/upstream/config.mjs': '// scope',
     'upstream/api/system.json': '[]',
@@ -97,6 +98,7 @@ test('native source, package exports, mappings, generators, snapshots and tool l
   const { root, files } = await fixture(t);
   for (const file of [
     'packages/system/src/index.ts',
+    'packages/system/src/runtime.js',
     'packages/system/package.json',
     'packages/compat/supported.json',
     'scripts/inventory/generate.mjs',
@@ -144,7 +146,12 @@ test('a matching hash cannot turn syntactic matches into verified compatibility'
 test('full regeneration removes reports recorded by the prior manifest when they leave scope', async (t) => {
   const { root, manifest, outputs } = await fixture(t);
   const orphan = 'compatibility/inventory/removed.json';
-  manifest.packages.push({ package: '@mui/removed', inventory: orphan });
+  manifest.packages.push({
+    package: '@mui/removed',
+    inventory: orphan,
+    verifiedParity: 0,
+    sha256: sha256('{}'),
+  });
   await put(root, manifestPath, json(manifest));
   await put(root, orphan, '{}');
   await assert.rejects(writeOutputs(outputs, { root, check: true }), /obsolete reports/);

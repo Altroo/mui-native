@@ -43,3 +43,33 @@ tasks.register("verifyDescendantKeyPolicy", JavaExec) {
   classpath = files(providers.provider { tasks.named("testDebugUnitTest").get().classpath })
   mainClass.set("com.altroo.muinativehost.DescendantKeyPolicyTestKt")
 }
+
+// Recheck the exact peer sources even when autolinking metadata was cached.
+tasks.register("verifyNativeInputPeer", Exec) {
+  group = "verification"
+  workingDir(projectDir.parentFile)
+  doFirst {
+    // RN's shared extension is populated by the application, including an
+    // explicitly configured native root. A library-local default can differ.
+    def nativePeer = rootProject.extensions.getByName("privateReact")
+    // RN settings cache workspace dependency configuration separately from source.
+    def autolinkingCache = rootProject.layout.buildDirectory.file("generated/autolinking/autolinking.json")
+    commandLine(nativePeer.nodeExecutableAndArgs.get() + ["scripts/verify-native-input.cjs", "--native-root", nativePeer.reactNativeDir.get().asFile.absolutePath, "--android-autolinking", autolinkingCache.get().asFile.absolutePath])
+  }
+}
+tasks.named("preBuild").configure { dependsOn("verifyNativeInputPeer") }
+
+// Pure structural metadata guards for the optional native text acknowledgement.
+tasks.register("verifyNativeTextInputMetadata", JavaExec) {
+  group = "verification"
+  dependsOn("compileDebugUnitTestKotlin", "compileDebugUnitTestJavaWithJavac")
+  classpath = files(providers.provider { tasks.named("testDebugUnitTest").get().classpath })
+  mainClass.set("com.altroo.muinativehost.NativeTextInputMetadataTestKt")
+}
+
+tasks.register("verifyNativeTextInputCounter", JavaExec) {
+  group = "verification"
+  dependsOn("compileDebugUnitTestKotlin", "compileDebugUnitTestJavaWithJavac")
+  classpath = files(providers.provider { tasks.named("testDebugUnitTest").get().classpath })
+  mainClass.set("com.altroo.muinativehost.NativeTextInputStateTest")
+}

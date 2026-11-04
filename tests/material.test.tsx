@@ -13,7 +13,10 @@ import {
   Snackbar,
   ThemeProvider,
   createTheme,
-} from '../packages/material/src';
+} from '@altroo/mui-native';
+import { Commands } from '../packages/native-host/src/AltrooMUIInteractiveViewNativeComponent';
+
+afterEach(() => jest.restoreAllMocks());
 test('one press invokes the native alias once and loading prevents presses', () => {
   const click = jest.fn();
   const press = jest.fn();
@@ -152,6 +155,7 @@ test('slotted text callbacks fire once without breaking uncontrolled input', () 
 });
 
 test('label taps toggle an uncontrolled checkbox once and respect disabled state', () => {
+  const focus = jest.spyOn(Commands, 'focus').mockImplementation(() => {});
   const change = jest.fn();
   const { rerender } = render(
     <FormControlLabel label="Accept" control={<Checkbox onChange={change} />} />,
@@ -165,17 +169,21 @@ test('label taps toggle an uncontrolled checkbox once and respect disabled state
   rerender(<FormControlLabel disabled label="Accept" control={<Checkbox onChange={change} />} />);
   fireEvent.press(screen.getByText('Accept'), { nativeEvent: {} });
   expect(change).toHaveBeenCalledTimes(2);
+  expect(focus).toHaveBeenCalledTimes(1);
 });
 
 test('switch labels toggle the control state', () => {
+  const focus = jest.spyOn(Commands, 'focus').mockImplementation(() => {});
   const change = jest.fn();
   render(<FormControlLabel label="Mode" control={<Switch onChange={change} />} />);
   fireEvent.press(screen.getByText('Mode'), { nativeEvent: {} });
   expect(screen.getByRole('switch')).toBeChecked();
   expect(change).toHaveBeenCalledTimes(1);
+  expect(focus).toHaveBeenCalledTimes(1);
 });
 
 test('radio labels use group state and do not reselect the same value', () => {
+  const focus = jest.spyOn(Commands, 'focus').mockImplementation(() => {});
   const radioChange = jest.fn();
   render(
     <RadioGroup defaultValue="one" onChange={radioChange}>
@@ -188,6 +196,7 @@ test('radio labels use group state and do not reselect the same value', () => {
   expect(screen.getByRole('radio', { name: 'One' })).not.toBeChecked();
   fireEvent.press(screen.getByText('Two'), { nativeEvent: {} });
   expect(radioChange).toHaveBeenCalledTimes(1);
+  expect(focus).toHaveBeenCalledTimes(2);
 });
 
 test('dialog fullScreen ignores the default maxWidth and back requests respect the guard', () => {

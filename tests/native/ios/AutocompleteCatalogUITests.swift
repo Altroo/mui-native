@@ -107,6 +107,44 @@ final class AutocompleteCatalogUITests: XCTestCase {
     XCTAssertEqual(node("autocomplete-focused-control").label, "editor")
     capture("autocomplete-tag-caret-controls")
   }
+  func testSoftwareKeyboardBackspace() throws {
+    defer { openCatalog() }
+    // Touch the visible system Delete key; text API deletion is a separate gate.
+    tap("autocomplete-mode-Multiple")
+    tap("autocomplete-editor")
+    let editor = node("autocomplete-editor"), keyboard = app.keyboards.firstMatch
+    XCTAssertTrue(keyboard.waitForExistence(timeout: 10), "An actual software keyboard is required")
+    let hierarchy = XCTAttachment(string: keyboard.debugDescription)
+    hierarchy.name = "software-keyboard-hierarchy"; hierarchy.lifetime = .keepAlways; add(hierarchy)
+    let deleteKey = keyboard.keys.matching(NSPredicate(format: "identifier == %@ OR label == %@", "delete", "delete")).firstMatch
+    XCTAssertTrue(deleteKey.exists && deleteKey.isHittable, "Locate the actual software deletion key from retained hierarchy")
+    func record(_ label: String) throws {
+      let state: [String: Any] = ["label": label, "text": editor.value as? String ?? "",
+        "rabat": self.node("autocomplete-chip-Rabat").exists,
+        "casablanca": self.node("autocomplete-chip-Casablanca").exists,
+        "selection": self.node("autocomplete-selection").label,
+        "focus": self.node("autocomplete-focused-control").label]
+      let data = try JSONSerialization.data(withJSONObject: state, options: [.sortedKeys])
+      let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+      attachment.name = label; attachment.lifetime = .keepAlways; add(attachment)
+    }
+    editor.typeText("x")
+    waitFor("Native text must be present before actual keyboard deletion") { editor.value as? String == "x" }
+    try record("software-delete-before")
+    deleteKey.tap()
+    waitFor("The actual keyboard must delete the final draft character") { editor.value as? String == "" }
+    XCTAssertTrue(node("autocomplete-chip-Rabat").exists && node("autocomplete-chip-Casablanca").exists,
+      "Deleting the final character must retain both selected values")
+    try record("software-delete-draft")
+    capture("software-delete-draft")
+    deleteKey.tap()
+    waitFor("Empty software Delete removes exactly the last value and retains editor focus") {
+      self.node("autocomplete-chip-Rabat").exists && !self.node("autocomplete-chip-Casablanca").exists &&
+        self.node("autocomplete-focused-control").label == "editor"
+    }
+    try record("software-delete-empty")
+    capture("software-delete-empty")
+  }
   func testEmptyEditorHardwareBackspace() throws {
     try requireCommandDriver("Backspace", key: .delete, usage: .keyboardDeleteOrBackspace)
     tap("autocomplete-mode-Multiple")

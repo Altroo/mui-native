@@ -11,13 +11,13 @@ async function runtimeSources(directory) {
   )) {
     const file = path.join(directory, entry.name);
     if (entry.isDirectory()) files.push(...(await runtimeSources(file)));
-    else if (/\.tsx?$/.test(file) && !file.endsWith('.d.ts')) files.push(file);
+    else if (/\.(tsx?|js)$/.test(file) && !file.endsWith('.d.ts')) files.push(file);
   }
   return files;
 }
 for (const directory of await readdir('packages')) {
   const folder = `packages/${directory}`;
-  const pkg = JSON.parse(await readFile(`${folder}/package.json`, 'utf8'));
+  const pkg = JSON.parse(await readFile(`${folder}/package.json`, { encoding: 'utf8' }));
   if (!pkg.exports?.['.']?.['react-native']) continue;
   await rm(`${folder}/dist`, { recursive: true, force: true });
   await mkdir(`${folder}/dist`, { recursive: true });

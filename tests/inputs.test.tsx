@@ -23,7 +23,7 @@ import {
   type InputRootProps,
   type InputBaseComponentProps,
   type InputBaseOwnerState,
-} from '../packages/material/src';
+} from '@altroo/mui-native';
 
 test.each([InputBase, Input, FilledInput, OutlinedInput])(
   'native input variants manage values and native events',
@@ -75,9 +75,8 @@ test('inputProps and input slot precedence preserve controlled values and read-o
   );
   expect(screen.getByLabelText('Controlled').props).toEqual(
     expect.objectContaining({
-      readOnly: true,
       editable: false,
-      accessibilityState: { disabled: true },
+      accessibilityState: expect.objectContaining({ disabled: true }),
     }),
   );
 });

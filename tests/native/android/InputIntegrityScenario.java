@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.InputDevice;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,10 @@ public final class InputIntegrityScenario {
       int generation=ui(()->new JSONObject(((TextView)view("typing-receipt")).getText().toString()).getInt("generation"));
       int previousTag=ui(()->view("typing-editor").getId());
       for(int round=0;round<8;round++) for(String mode:new String[]{"native","field","autocomplete","uncontrolled"}) {
+        // Close the previous editor's suggestions before touching a mode beneath
+        // its Portal. A covered touch can otherwise select an option instead.
+        driver.sendKeyDownUpSync(KeyEvent.KEYCODE_ESCAPE);
+        await(() -> ui(() -> find("typing-popup") == null), "Previous suggestions must close before the next cold-scene touch");
         tap("typing-mode-"+mode);
         final int previousGeneration=generation;
         await(()->ui(()->{JSONObject receipt=new JSONObject(((TextView)view("typing-receipt")).getText().toString());
