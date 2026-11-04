@@ -73,6 +73,30 @@ test('reuse metadata rejects unsafe paths, commercial packages and conflicting h
   );
 });
 
+test('reuse metadata rejects hashes that only coerce to valid hexadecimal strings', () => {
+  for (const sha256 of [['a'.repeat(64)], 12, null, {}, 'short', 'A'.repeat(64)]) {
+    assert.throws(
+      () =>
+        reusedFiles(
+          {
+            schemaVersion: 1,
+            entries: [
+              {
+                ...entry,
+                reference: {
+                  ...entry.reference,
+                  sourceFiles: { 'styles/createPalette.js': sha256 },
+                },
+              },
+            ],
+          },
+          '@mui/material',
+        ),
+      /Invalid reused source path or hash/,
+    );
+  }
+});
+
 test('artifact inspector hashes requested implementation files without extracting them', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'mui-reuse-'));
   try {

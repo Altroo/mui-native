@@ -14,6 +14,7 @@ export function reusedFiles(reuse, name) {
         path.startsWith('/') ||
         path.includes('\\') ||
         path.split('/').some((part) => part === '..' || part === '.') ||
+        typeof sha256 !== 'string' ||
         !/^[a-f0-9]{64}$/.test(sha256)
       )
         throw new Error('Invalid reused source path or hash');

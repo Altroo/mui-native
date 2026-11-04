@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
   useSyncExternalStore,
+  type RefObject,
 } from 'react';
 import type { ViewInstance, NativeSyntheticEvent } from 'react-native';
 import type {
@@ -18,7 +19,7 @@ import { NativeMenuFocusReadiness } from './menuContext';
 import { useMenuEvent } from './useMenuEvent';
 let sequence = 0;
 export function useNativePickerLayer(
-  trigger: React.RefObject<ViewInstance | null>,
+  trigger: RefObject<ViewInstance | null>,
   disabled: boolean,
   readOnly: boolean,
   finished: (restoring: boolean) => void,
