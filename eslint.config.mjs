@@ -37,7 +37,10 @@ export default defineConfig([
     },
   },
   {
-    files: ['scripts/reference/check-controls-keyboard.mjs'],
+    files: [
+      'scripts/reference/check-controls-keyboard.mjs',
+      'scripts/reference/svg-icon-browser.mjs',
+    ],
     languageOptions: { globals: globals.browser },
   },
 ]);

@@ -9,7 +9,7 @@ import {
   styled,
   type TypographyVariantsOptions,
 } from '../packages/system/src';
-import { Typography, Button, ThemeProvider, TextField } from '../packages/material/src';
+import { Typography, Button, ThemeProvider, TextField, Box } from '../packages/material/src';
 import reference from './fixtures/mui-typography-9.5.0.json';
 
 const serializable = (value: unknown) => JSON.parse(JSON.stringify(value));
@@ -548,4 +548,52 @@ test('nested styled wrappers retain relative metrics without a literal native ov
   expect(
     StyleSheet.flatten(screen.getByTestId('nested-relative').props.style).letterSpacing,
   ).toBeCloseTo(9.6);
+});
+
+test('MUI htmlFontSize calibrates conversion without changing the native CSS root', () => {
+  const theme = createTheme({ typography: { htmlFontSize: 20 } });
+  expect(theme.typography.pxToRem(20)).toBe('1rem');
+  expect(
+    resolveSx({ fontSize: '1rem', width: '2rem', margin: 'calc(2 * 1rem)' }, theme),
+  ).toMatchObject({ fontSize: 16, width: 32, margin: 32 });
+  expect(resolveSx(theme.typography.body1, theme).fontSize).toBeCloseTo(12.8);
+  const configured = createTheme({ cssRootFontSize: 20, typography: { htmlFontSize: 20 } });
+  expect(resolveSx({ fontSize: '1rem', width: '2rem' }, configured)).toMatchObject({
+    fontSize: 20,
+    width: 40,
+  });
+  expect(resolveSx(configured.typography.body1, configured).fontSize).toBe(16);
+});
+test.each([0, -1, NaN, Infinity])(
+  'invalid native CSS root %s fails at theme construction',
+  (cssRootFontSize) => {
+    expect(() => createTheme({ cssRootFontSize })).toThrow(/finite positive/);
+  },
+);
+test('native root configuration remains separate from scoped text inheritance', () => {
+  const theme = createTheme({ cssRootFontSize: 20, typography: { htmlFontSize: 20 } });
+  render(
+    <ThemeProvider theme={theme}>
+      <Box>
+        <Typography variant="inherit" testID="root-size">
+          Root
+        </Typography>
+      </Box>
+      <Typography sx={{ fontSize: 30 }}>
+        <Typography
+          variant="inherit"
+          sx={{ fontSize: '50%', marginBottom: '1rem' }}
+          testID="child-size"
+        >
+          Child
+        </Typography>
+      </Typography>
+    </ThemeProvider>,
+  );
+  expect(screen.getByTestId('root-size')).toHaveStyle({ fontSize: 20 });
+  expect(screen.getByTestId('child-size')).toHaveStyle({ fontSize: 15, marginBottom: 20 });
+});
+
+test('an explicitly absent CSS root option uses the native default', () => {
+  expect(createTheme({ cssRootFontSize: undefined }).cssRootFontSize).toBe(16);
 });

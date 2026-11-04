@@ -1,51 +1,21 @@
-import React, { useContext } from 'react';
-import { NativeIconStyleContext, useNativeTextContext } from '@altroo/mui-native-system';
-import Svg, { Path, type SvgProps } from 'react-native-svg';
-import { useTheme } from '@altroo/mui-native/styles';
-export interface SvgIconProps extends Omit<SvgProps, 'color'> {
-  color?: 'inherit' | 'primary' | 'secondary' | 'error' | 'action' | 'disabled';
-  fontSize?: 'inherit' | 'small' | 'medium' | 'large';
-  titleAccess?: string;
-}
-export function createSvgIcon(path: string, displayName: string) {
-  function Icon({ color = 'inherit', fontSize = 'medium', titleAccess, ...props }: SvgIconProps) {
-    const theme = useTheme(),
-      inherited = useNativeTextContext(),
-      iconStyle = useContext(NativeIconStyleContext);
-    const fill =
-      color === 'inherit'
-        ? (inherited?.style.color ?? theme.palette.text.primary)
-        : color === 'action'
-          ? theme.palette.text.secondary
-          : color === 'disabled'
-            ? theme.palette.text.disabled
-            : theme.palette[color].main;
-    const size =
-      iconStyle?.fontSize ??
-      (fontSize === 'inherit' && typeof inherited?.style.fontSize === 'number'
-        ? inherited.style.fontSize
-        : fontSize === 'small'
-          ? 20
-          : fontSize === 'large'
-            ? 35
-            : 24);
-    return React.createElement(
-      Svg,
-      {
-        width: size,
-        height: size,
-        viewBox: '0 0 24 24',
-        fill,
-        accessible: !!titleAccess,
-        accessibilityLabel: titleAccess,
-        accessibilityRole: 'image',
-        ...props,
-      },
-      React.createElement(Path, { d: path }),
-    );
-  }
-  Icon.displayName = displayName;
-  return Icon;
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import React from 'react';
+import { Path } from 'react-native-svg';
+import { createSvgIcon as createMaterialSvgIcon } from '@altroo/mui-native';
+export { SvgIcon } from '@altroo/mui-native';
+export type {
+  SvgIconProps,
+  SvgIconHandle,
+  SvgIconOwnProps,
+  SvgIconPropsSizeOverrides,
+  SvgIconPropsColorOverrides,
+} from '@altroo/mui-native';
+/** Retain the early path-string extension while sharing the Material factory. */
+export function createSvgIcon(path: React.ReactNode, displayName: string) {
+  return createMaterialSvgIcon(
+    typeof path === 'string' ? React.createElement(Path, { d: path }) : path,
+    displayName,
+  );
 }
 // Original simple geometric paths. No upstream icon artwork has been copied.
 export const Close = createSvgIcon(

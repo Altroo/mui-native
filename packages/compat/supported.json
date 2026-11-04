@@ -97,7 +97,11 @@
       "AccordionDetails",
       "AccordionDetails/accordionDetailsClasses",
       "AccordionActions",
-      "AccordionActions/accordionActionsClasses"
+      "AccordionActions/accordionActionsClasses",
+      "SvgIcon",
+      "SvgIcon/svgIconClasses",
+      "SvgIcon/createSvgIcon",
+      "utils/createSvgIcon"
     ]
   },
   "@mui/system": {

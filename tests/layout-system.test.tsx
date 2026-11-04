@@ -323,7 +323,7 @@ test('Dialog respects sx radius, clamps minimum width to small custom caps and c
       />
     </ThemeProvider>,
   );
-  expect(screen.getByTestId('dialog')).toHaveStyle({ maxWidth: Math.min(available, 800) });
+  expect(screen.getByTestId('dialog')).toHaveStyle({ maxWidth: Math.min(available, 640) });
 });
 
 test('CSS typography variants normalize consistently through sx and CSS mode', () => {

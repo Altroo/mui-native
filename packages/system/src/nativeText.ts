@@ -124,6 +124,7 @@ function fontFamily(value: unknown): string | undefined {
   return family;
 }
 
+// htmlFontSize calibrates pxToRem but does not set a document's root font.
 // Public theme/sx values use CSS units. Only the final native boundary produces dp values.
 // Native `style` retains RN units; its font size participates in relative CSS computations.
 export function normalizeTextStyle(
@@ -134,8 +135,8 @@ export function normalizeTextStyle(
   input = { ...input, ...context.nativeTextMetrics };
   const output = { ...input };
   const rem =
-    Number.isFinite(theme.typography.htmlFontSize) && theme.typography.htmlFontSize > 0
-      ? theme.typography.htmlFontSize
+    Number.isFinite(theme.cssRootFontSize ?? 16) && (theme.cssRootFontSize ?? 16) > 0
+      ? (theme.cssRootFontSize ?? 16)
       : 16;
   const parentSize = context.parentTextStyle?.fontSize ?? rem;
   const ownSize = size(input.fontSize, parentSize, rem);

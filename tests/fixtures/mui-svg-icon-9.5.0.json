@@ -1,0 +1,1853 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d",
+      "SvgIcon/SvgIcon.d.ts": "7263d25edc36d45908af60cedfa14b898f558e17a7e967b2e1fed0082431461b",
+      "SvgIcon/index.js": "96f549eb520abbb09c3bd10c731b961b2fc916219b7a27377807816e27d1aac4",
+      "SvgIcon/index.d.ts": "b023d07cbfdf4342f4370189d5f7f5db672bff7009720f9da092cc461d23d505",
+      "SvgIcon/createSvgIcon.js": "7280a1b5c33ca074a7ddda4154d28ee1e14862ea6d69135ef046b9f52db9eb47",
+      "SvgIcon/createSvgIcon.d.ts": "ad924bf0db4a5bcd179f74dc9106c190232006e08ca507f5ef577482f226a71a",
+      "SvgIcon/svgIconClasses.js": "947fb6864a0a0fc2775dd135596dc5eb2d0bee62c40b58da33bf8a81aca484b4",
+      "SvgIcon/svgIconClasses.d.ts": "c98069496e78eba403f51c1a7d582ae0e0f338e2d63b6417e561c9f56cbe88c6",
+      "utils/createSvgIcon.js": "279f9b67b8a0c5c2fce6995c3e08078f5a3269857368038faf83b8c3cfd7c0a7",
+      "utils/createSvgIcon.d.ts": "a3dd9e91dd062aba0b61704b580a3e76856199e89cfbe6c82c4b4edc5aa53504"
+    }
+  },
+  "styleReference": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+    }
+  },
+  "browserProbe": {
+    "source": "scripts/reference/svg-icon-browser.mjs",
+    "sha256": "a3519a9a634153c1181ab07395319ff961930cc039d6b6c1dbe01ded5960e41a"
+  },
+  "classes": {
+    "classes": {
+      "root": "MuiSvgIcon-root",
+      "colorPrimary": "MuiSvgIcon-colorPrimary",
+      "colorSecondary": "MuiSvgIcon-colorSecondary",
+      "colorAction": "MuiSvgIcon-colorAction",
+      "colorError": "MuiSvgIcon-colorError",
+      "colorDisabled": "MuiSvgIcon-colorDisabled",
+      "fontSizeInherit": "MuiSvgIcon-fontSizeInherit",
+      "fontSizeSmall": "MuiSvgIcon-fontSizeSmall",
+      "fontSizeMedium": "MuiSvgIcon-fontSizeMedium",
+      "fontSizeLarge": "MuiSvgIcon-fontSizeLarge"
+    },
+    "disabled": "Mui-disabled",
+    "info": "MuiSvgIcon-colorInfo"
+  },
+  "factory": { "muiName": null, "renderMuiName": "SvgIcon", "renderDisplayName": "ProbeIcon" },
+  "fixtures": [
+    {
+      "input": { "name": "defaults", "props": {} },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "size inherit", "props": { "fontSize": "inherit" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "28px",
+        "height": "28px",
+        "fontSize": "28px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeInherit"]
+    },
+    {
+      "input": { "name": "size small", "props": { "fontSize": "small" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "20px",
+        "height": "20px",
+        "fontSize": "20px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeSmall"]
+    },
+    {
+      "input": { "name": "size medium", "props": { "fontSize": "medium" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "size large", "props": { "fontSize": "large" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "35px",
+        "height": "35px",
+        "fontSize": "35px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeLarge"]
+    },
+    {
+      "input": { "name": "color inherit", "props": { "color": "inherit" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "color primary", "props": { "color": "primary" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(25, 118, 210)",
+        "fill": "rgb(25, 118, 210)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "color secondary", "props": { "color": "secondary" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(156, 39, 176)",
+        "fill": "rgb(156, 39, 176)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorSecondary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "color error", "props": { "color": "error" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(211, 47, 47)",
+        "fill": "rgb(211, 47, 47)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorError", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "color warning", "props": { "color": "warning" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(237, 108, 2)",
+        "fill": "rgb(237, 108, 2)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorWarning", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "color info", "props": { "color": "info" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(2, 136, 209)",
+        "fill": "rgb(2, 136, 209)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorInfo", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "color success", "props": { "color": "success" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(46, 125, 50)",
+        "fill": "rgb(46, 125, 50)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorSuccess", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "color action", "props": { "color": "action" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "fill": "rgba(0, 0, 0, 0.54)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorAction", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "color disabled", "props": { "color": "disabled" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgba(0, 0, 0, 0.26)",
+        "fill": "rgba(0, 0, 0, 0.26)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorDisabled", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "html presentation color", "props": { "htmlColor": "#135790" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "#135790",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(19, 87, 144)",
+        "fill": "rgb(19, 87, 144)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "CSS palette beats html color",
+        "props": { "color": "primary", "htmlColor": "#135790" }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "#135790",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(25, 118, 210)",
+        "fill": "rgb(25, 118, 210)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": { "name": "titled", "props": { "titleAccess": "Delivery status" } },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": "img",
+        "aria-hidden": null,
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": ["Delivery status"],
+      "shapes": ["path", "title"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "explicit accessibility",
+        "props": { "titleAccess": "Status", "aria-hidden": true, "role": "presentation" }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": "presentation",
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": ["Status"],
+      "shapes": ["path", "title"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "presentation dimensions",
+        "props": { "width": 72, "height": 48, "fill": "none" }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": "none",
+        "width": "72",
+        "height": "48",
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "style dimensions and presentation",
+        "props": {
+          "style": {
+            "width": 40,
+            "height": 32,
+            "fontSize": 18,
+            "color": "#246810",
+            "fill": "none",
+            "stroke": "currentColor"
+          }
+        }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "40px",
+        "height": "32px",
+        "fontSize": "18px",
+        "color": "rgb(36, 104, 16)",
+        "fill": "none",
+        "stroke": "rgb(36, 104, 16)",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "sx dimensions and paint",
+        "props": {
+          "sx": {
+            "fontSize": 30,
+            "color": "error.main",
+            "fill": "none",
+            "stroke": "currentColor",
+            "strokeWidth": 2,
+            "width": "2em",
+            "height": "1em"
+          }
+        }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "60px",
+        "height": "30px",
+        "fontSize": "30px",
+        "color": "rgb(211, 47, 47)",
+        "fill": "none",
+        "stroke": "rgb(211, 47, 47)",
+        "strokeWidth": "2px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "svg child properties win",
+        "props": {
+          "viewBox": "0 0 24 24",
+          "color": "primary",
+          "htmlColor": "#246810",
+          "id": "parent",
+          "fill": "#123456"
+        },
+        "child": {
+          "viewBox": "0 0 40 20",
+          "width": 60,
+          "height": 30,
+          "color": "#abcdef",
+          "fill": "none",
+          "id": "child"
+        }
+      },
+      "attributes": {
+        "viewBox": "0 0 40 20",
+        "color": "#abcdef",
+        "fill": "none",
+        "width": "60",
+        "height": "30",
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": "child",
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(25, 118, 210)",
+        "fill": "none",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "svg child custom viewbox inheritance",
+        "props": { "inheritViewBox": true, "viewBox": "0 0 24 24" },
+        "child": { "viewBox": "0 0 40 20", "fill": "none" }
+      },
+      "attributes": {
+        "viewBox": "0 0 40 20",
+        "color": null,
+        "fill": "none",
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "none",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "custom root viewbox",
+        "props": { "viewBox": "0 0 30 15" },
+        "customRoot": true
+      },
+      "attributes": {
+        "viewBox": "0 0 30 15",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "custom root inherited viewbox",
+        "props": { "inheritViewBox": true, "viewBox": "0 0 30 15" },
+        "customRoot": true
+      },
+      "attributes": {
+        "viewBox": "0 0 48 12",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "theme defaults",
+        "props": {},
+        "theme": {
+          "components": {
+            "MuiSvgIcon": {
+              "defaultProps": { "color": "success", "fontSize": "large", "titleAccess": "Themed" }
+            }
+          }
+        }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": "img",
+        "aria-hidden": null,
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "35px",
+        "height": "35px",
+        "fontSize": "35px",
+        "color": "rgb(46, 125, 50)",
+        "fill": "rgb(46, 125, 50)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": ["Themed"],
+      "shapes": ["path", "title"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorSuccess", "MuiSvgIcon-fontSizeLarge"]
+    },
+    {
+      "input": {
+        "name": "named overrides and variant",
+        "props": { "color": "primary", "fontSize": "small" },
+        "theme": {
+          "components": {
+            "MuiSvgIcon": {
+              "styleOverrides": {
+                "root": { "opacity": 0.8 },
+                "colorPrimary": { "color": "#123abc" },
+                "fontSizeSmall": { "fontSize": 19 }
+              },
+              "variants": [{ "props": { "color": "primary" }, "style": { "width": 33 } }]
+            }
+          }
+        }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "33px",
+        "height": "19px",
+        "fontSize": "19px",
+        "color": "rgb(18, 58, 188)",
+        "fill": "rgb(18, 58, 188)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "0.8"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeSmall"]
+    },
+    {
+      "input": { "name": "factory default", "props": {}, "factory": true },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": "ProbeIcon"
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "factory user test id",
+        "props": { "data-testid": "authored" },
+        "factory": true
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": "authored"
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "factory replaces authored children",
+        "props": {},
+        "factory": true,
+        "authoredChildren": true
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": "ProbeIcon"
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "custom palette color",
+        "props": { "color": "brand" },
+        "theme": { "palette": { "brand": { "main": "#893456" } } }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(137, 52, 86)",
+        "fill": "rgb(137, 52, 86)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorBrand", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "changed typography scale",
+        "props": { "fontSize": "small" },
+        "theme": { "typography": { "fontSize": 20, "htmlFontSize": 20 } }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "22.8516px",
+        "height": "22.8516px",
+        "fontSize": "22.8571px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeSmall"]
+    },
+    {
+      "input": {
+        "name": "configured document root font",
+        "props": { "fontSize": "small" },
+        "rootFontSize": 20,
+        "theme": { "cssRootFontSize": 20, "typography": { "fontSize": 20, "htmlFontSize": 20 } }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "28.5703px",
+        "height": "28.5703px",
+        "fontSize": "28.5714px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeSmall"]
+    },
+    {
+      "input": {
+        "name": "sx color inherit outranks html color",
+        "props": { "color": "primary", "htmlColor": "#123456", "sx": { "color": "inherit" } }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "#123456",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "sx color unset outranks html color",
+        "props": { "color": "primary", "htmlColor": "#123456", "sx": { "color": "unset" } }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "#123456",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "sx currentColor means inherited self color",
+        "props": { "color": "primary", "htmlColor": "#123456", "sx": { "color": "currentColor" } }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "#123456",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "inline color inherit",
+        "props": { "color": "primary", "htmlColor": "#123456", "style": { "color": "inherit" } }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "#123456",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "wrapped SVG currentColor attribute",
+        "props": {},
+        "child": { "color": "currentColor" }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "currentColor",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "nested Material color inheritance",
+        "props": { "color": "primary" },
+        "nested": true
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(25, 118, 210)",
+        "fill": "rgb(25, 118, 210)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["svg"],
+      "refTag": "svg",
+      "nestedColors": ["rgb(25, 118, 210)"],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "nested presentation color inheritance",
+        "props": { "htmlColor": "#123456" },
+        "nested": true
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "#123456",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(18, 52, 86)",
+        "fill": "rgb(18, 52, 86)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["svg"],
+      "refTag": "svg",
+      "nestedColors": ["rgb(18, 52, 86)"],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "child large joins owner small variant",
+        "props": { "fontSize": "small" },
+        "child": { "fontSize": "large" }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "35px",
+        "height": "35px",
+        "fontSize": "35px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeSmall"]
+    },
+    {
+      "input": {
+        "name": "owner large outranks child small variant",
+        "props": { "fontSize": "large" },
+        "child": { "fontSize": "small" }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "35px",
+        "height": "35px",
+        "fontSize": "35px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeLarge"]
+    },
+    {
+      "input": {
+        "name": "child secondary joins owner primary variant",
+        "props": { "color": "primary" },
+        "child": { "color": "secondary" }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "secondary",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(156, 39, 176)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "owner secondary outranks child primary variant",
+        "props": { "color": "secondary" },
+        "child": { "color": "primary" }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "primary",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(156, 39, 176)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorSecondary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "child disabled joins owner primary variant",
+        "props": { "color": "primary" },
+        "child": { "color": "disabled" }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "disabled",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgba(0, 0, 0, 0.26)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "named owner override follows joined size variants",
+        "props": { "fontSize": "small" },
+        "child": { "fontSize": "large" },
+        "theme": {
+          "components": {
+            "MuiSvgIcon": { "styleOverrides": { "fontSizeSmall": { "fontSize": 19 } } }
+          }
+        }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "19px",
+        "height": "19px",
+        "fontSize": "19px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeSmall"]
+    },
+    {
+      "input": {
+        "name": "default root identity matches theme variant",
+        "props": {},
+        "theme": {
+          "components": {
+            "MuiSvgIcon": {
+              "variants": [
+                { "props": { "component": "svg" }, "style": { "fontSize": 27, "opacity": 0.7 } }
+              ]
+            }
+          }
+        }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "27px",
+        "height": "27px",
+        "fontSize": "27px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "0.7"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "child props match a theme object variant",
+        "props": { "color": "primary" },
+        "child": { "color": "secondary" },
+        "theme": {
+          "components": {
+            "MuiSvgIcon": {
+              "variants": [{ "props": { "color": "secondary" }, "style": { "fontSize": 29 } }]
+            }
+          }
+        }
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "secondary",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "29px",
+        "height": "29px",
+        "fontSize": "29px",
+        "color": "rgb(156, 39, 176)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "default component reaches named style callback",
+        "props": {},
+        "callbackCase": "component"
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "0.4"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "named callback sees root attributes and owner state",
+        "props": { "color": "primary" },
+        "child": { "color": "secondary" },
+        "callbackCase": "root-props"
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "secondary",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "17px",
+        "height": "17px",
+        "fontSize": "17px",
+        "color": "rgb(156, 39, 176)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "function variant sees merged owner state",
+        "props": { "color": "primary" },
+        "child": { "color": "secondary" },
+        "callbackCase": "predicate"
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "secondary",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "22px",
+        "height": "22px",
+        "fontSize": "22px",
+        "color": "rgb(156, 39, 176)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "0.6"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "function style sees source theme and owner state",
+        "props": { "color": "primary" },
+        "child": { "color": "secondary" },
+        "callbackCase": "style"
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": "secondary",
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "26px",
+        "height": "26px",
+        "fontSize": "26px",
+        "color": "rgb(46, 125, 50)",
+        "fill": "rgb(0, 0, 0)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "1"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-colorPrimary", "MuiSvgIcon-fontSizeMedium"]
+    },
+    {
+      "input": {
+        "name": "generated root fields reach style callbacks",
+        "props": {},
+        "callbackCase": "generated-root"
+      },
+      "attributes": {
+        "viewBox": "0 0 24 24",
+        "color": null,
+        "fill": null,
+        "width": null,
+        "height": null,
+        "role": null,
+        "aria-hidden": "true",
+        "focusable": "false",
+        "id": null,
+        "data-testid": null
+      },
+      "computed": {
+        "width": "24px",
+        "height": "24px",
+        "fontSize": "24px",
+        "color": "rgb(101, 67, 33)",
+        "fill": "rgb(101, 67, 33)",
+        "stroke": "none",
+        "strokeWidth": "1px",
+        "opacity": "0.35"
+      },
+      "titles": [],
+      "shapes": ["path"],
+      "refTag": "svg",
+      "nestedColors": [],
+      "utilityTokens": ["MuiSvgIcon-root", "MuiSvgIcon-fontSizeMedium"]
+    }
+  ]
+}
