@@ -15,6 +15,11 @@ export const autocompleteStages = [
   'tag-cycle',
   'tag-editor-middle',
   'tag-selected-range',
+  'tag-delete-held',
+  'tag-delete-release',
+  'editor-backspace',
+  'editor-final-backspace',
+  'editor-backspace-unowned',
   'multiple-remove',
   'multiple-select',
   'grouped-options',
@@ -34,6 +39,7 @@ export const autocompleteStages = [
 export const autocompletePictures = [
   'filtered.png',
   'tag-focus.png',
+  'editor-empty.png',
   'multiple.png',
   'grouped.png',
   'dialog-escape.png',
@@ -87,6 +93,14 @@ export function summarizeAutocomplete(output) {
     )
   )
     throw Error('Invalid native touch coordinates');
+  const release = report.tagEntryRelease;
+  if (
+    release?.focusChangedBeforeUp !== true ||
+    release.callbackRestored !== true ||
+    release.editorUps !== 0 ||
+    release.chipUps !== 0
+  )
+    throw Error('Missing native focus-transfer release ownership evidence');
   const bursts = report.freeSoloBursts;
   if (
     !Array.isArray(bursts) ||

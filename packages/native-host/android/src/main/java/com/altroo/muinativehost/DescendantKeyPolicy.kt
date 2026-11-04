@@ -5,12 +5,15 @@
 package com.altroo.muinativehost
 
 internal val descendantNavigationKeys = setOf(
-  "Tab", "Escape", "ArrowUp", "ArrowDown", "ArrowLeft", "PageUp", "PageDown", "Home", "End", "Enter",
+  "Tab", "Escape", "ArrowUp", "ArrowDown", "ArrowLeft", "Backspace", "PageUp", "PageDown", "Home", "End", "Enter",
 )
 
-/** Only a known collapsed caret at the start may leave a native editor. */
-internal fun descendantCaretEligible(key: String, start: Int?, end: Int?) =
-  key != "ArrowLeft" || (start == 0 && end == 0)
+/** Boundary commands must inspect the actual known editor, before native defaults. */
+internal fun descendantCaretEligible(key: String, start: Int?, end: Int?, length: Int? = null) = when (key) {
+  "ArrowLeft" -> start == 0 && end == 0
+  "Backspace" -> length == 0 && start == 0 && end == 0
+  else -> true
+}
 
 internal data class DescendantPhysicalKey(val device: Int, val code: Int, val downTime: Long)
 /** Stable for one physical press, distinct across devices and replacement downs. */

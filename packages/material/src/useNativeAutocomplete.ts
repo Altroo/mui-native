@@ -758,7 +758,13 @@ export function useNativeAutocomplete(
         break;
       case 'Backspace':
       case 'Delete': {
-        if (readOnly || inputValue !== '') break;
+        // A bridged Backspace was claimed only by an actually empty native
+        // editor. Its atomic check wins over a delayed JS text observation.
+        const nativeEmpty =
+          event.key === 'Backspace' &&
+          event.isEditable &&
+          (event.muiKeySource === 'hardware' || event.muiKeySource === 'command');
+        if (readOnly || (inputValue !== '' && !nativeEmpty)) break;
         // A native Chip owns deletion through key-up. Its registered root must
         // not also be removed by this ancestor's key-down handler.
         const target = event.target as unknown as ViewInstance;
@@ -994,10 +1000,12 @@ export function useNativeAutocomplete(
   const declared: NativeDescendantKey[] = disabled
     ? []
     : ['ArrowDown', 'ArrowUp', 'PageUp', 'PageDown'];
-  // Left has a native caret/range guard. Right and deletion stay native in
-  // the editor; selected items retain their own existing command handlers.
+  // Boundary commands inspect the native editor atomically. Nonempty text
+  // deletion and Right retain their normal native editing behavior.
   if (!disabled && (multiple ? value.length > 0 : renderValue && value != null))
     declared.push('ArrowLeft');
+  if (!disabled && !readOnly && (multiple ? value.length > 0 : renderValue && value != null))
+    declared.push('Backspace');
   if (!disabled && popupOpen && handleHomeEndKeys) declared.push('Home', 'End');
   if (
     !disabled &&

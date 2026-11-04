@@ -99,7 +99,31 @@ final class AutocompleteCatalogUITests: XCTestCase {
     editor.typeText("q")
     waitFor("Left on a selected range must collapse it natively before insertion") { (editor.value as? String) == "qaxb" }
     XCTAssertEqual(node("autocomplete-focused-control").label, "editor")
+    // Text API deletion is an editing check, not proof of a hardware command.
+    editor.typeText(XCUIKeyboardKey.delete.rawValue)
+    waitFor("Native text deletion must remove only the inserted character") { (editor.value as? String) == "axb" }
+    XCTAssertTrue(node("autocomplete-chip-Rabat").exists)
+    XCTAssertTrue(node("autocomplete-chip-Casablanca").exists)
+    XCTAssertEqual(node("autocomplete-focused-control").label, "editor")
     capture("autocomplete-tag-caret-controls")
+  }
+  func testEmptyEditorHardwareBackspace() throws {
+    try requireCommandDriver("Backspace", key: .delete, usage: .keyboardDeleteOrBackspace)
+    tap("autocomplete-mode-Multiple")
+    tap("autocomplete-editor")
+    let editor = node("autocomplete-editor")
+    editor.typeKey(.delete, modifierFlags: [])
+    selection("removeOption: 1")
+    waitFor("Backspace must remove exactly the final tag and retain editing focus") {
+      self.node("autocomplete-events-1-Backspace").exists && self.node("autocomplete-chip-Rabat").exists &&
+        !self.node("autocomplete-chip-Casablanca").exists && self.node("autocomplete-focused-control").label == "editor"
+    }
+    editor.typeKey(.delete, modifierFlags: [])
+    waitFor("A second Backspace must remove exactly the remaining tag") {
+      self.node("autocomplete-events-2-Backspace").exists && !self.node("autocomplete-chip-Rabat").exists &&
+        self.node("autocomplete-focused-control").label == "editor"
+    }
+    capture("autocomplete-empty-editor-backspace")
   }
   func testVirtualHighlightRetainsNativeEditing() {
     tap("autocomplete-editor")
@@ -201,6 +225,9 @@ final class AutocompleteCatalogUITests: XCTestCase {
   }
   /** A missing key in an independent UIKit scene cannot certify this composite. */
   private func requireEscapeDriver() throws {
+    try requireCommandDriver("Escape", key: .escape, usage: .keyboardEscape)
+  }
+  private func requireCommandDriver(_ name: String, key: XCUIKeyboardKey, usage: UIKeyboardHIDUsage) throws {
     defer { openCatalog() }
     app.launchArguments = ["--mui-native-key-control"]
     app.launch()
@@ -218,26 +245,25 @@ final class AutocompleteCatalogUITests: XCTestCase {
     control.typeKey(.downArrow, modifierFlags: [])
     let down = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in values()?.counts["ArrowDown"] == 1 }, object: nil)
     XCTAssertEqual(XCTWaiter.wait(for: [down], timeout: 3), .completed, "The independent UIKit control must first receive ArrowDown")
-    control.typeKey(.escape, modifierFlags: [])
-    let escape = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in (values()?.counts["Escape"] ?? 0) > 0 }, object: nil)
-    let delivered = XCTWaiter.wait(for: [escape], timeout: 3)
+    control.typeKey(key, modifierFlags: [])
+    let command = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in (values()?.counts[name] ?? 0) > 0 }, object: nil)
+    let delivered = XCTWaiter.wait(for: [command], timeout: 3)
     if delivered != .completed, let current = values(), current.counts["ArrowDown"] == 1,
-      current.counts["Escape"] == 0 {
+      current.counts[name] == 0 {
       // A raw HID receipt proves delivery even if UIKit command routing failed.
       // Such a failure must not be classified as unavailable driver input.
-      let escapeUsage = UIKeyboardHIDUsage.keyboardEscape.rawValue
-      let rawEscape = current.presses.contains { $0 == "down:\(escapeUsage)" || $0 == "up:\(escapeUsage)" }
-      XCTAssertFalse(rawEscape, "UIKit received raw Escape but did not invoke its registered command")
-      if rawEscape { return }
+      let rawCommand = current.presses.contains { $0 == "down:\(usage.rawValue)" || $0 == "up:\(usage.rawValue)" }
+      XCTAssertFalse(rawCommand, "UIKit received raw \(name) but did not invoke its registered command")
+      if rawCommand { return }
       let values = XCTAttachment(string: receipt.label)
-      values.name = "driver-plain-uikit-escape-unavailable"
+      values.name = "driver-plain-uikit-\(name.lowercased())-unavailable"
       values.lifetime = .keepAlways
       add(values)
-      capture("driver-plain-uikit-escape-unavailable")
-      throw XCTSkip("Plain UIKit received ArrowDown but no Escape with this driver. iOS Escape interaction remains unverified; physical keyboard coverage is open in issue55.")
+      capture("driver-plain-uikit-\(name.lowercased())-unavailable")
+      throw XCTSkip("Plain UIKit received ArrowDown but no \(name) with this driver. iOS \(name) interaction remains unverified; physical keyboard coverage is open in issue55.")
     }
     XCTAssertEqual(delivered, .completed)
-    XCTAssertEqual(values()?.counts["Escape"], 1, "A single driver action must not create duplicate native commands")
+    XCTAssertEqual(values()?.counts[name], 1, "A single driver action must not create duplicate native commands")
   }
   private func exerciseDialogEscape(fullScreen: Bool) {
     tap("autocomplete-mode-Dialog")
