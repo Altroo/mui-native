@@ -36,6 +36,13 @@
   },
   "private": false,
   "description": "Experimental native Tree View compatibility for MUI X Community.",
+  "keywords": [
+    "mui-native",
+    "react-native",
+    "material-ui",
+    "mui",
+    "tree-view"
+  ],
   "author": "Altroo",
   "homepage": "https://github.com/Altroo/mui-native#readme",
   "bugs": {

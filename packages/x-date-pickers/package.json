@@ -57,6 +57,13 @@
   },
   "private": false,
   "description": "Experimental native date picker compatibility for MUI X Community.",
+  "keywords": [
+    "mui-native",
+    "react-native",
+    "material-ui",
+    "mui",
+    "date-picker"
+  ],
   "author": "Altroo",
   "homepage": "https://github.com/Altroo/mui-native#readme",
   "bugs": {
