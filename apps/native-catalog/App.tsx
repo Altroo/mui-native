@@ -23,6 +23,7 @@ import { KeyboardExamples } from './KeyboardExamples';
 import { InputExamples } from './InputExamples';
 import { CollapseExamples } from './CollapseExamples';
 import { AccordionExamples } from './AccordionExamples';
+import { SvgIconExamples } from './SvgIconExamples';
 import { AutocompleteExamples } from './AutocompleteExamples';
 import { createCatalogTheme } from './catalogTheme';
 import { RichTreeView } from '@mui/x-tree-view';
@@ -85,6 +86,7 @@ export default function App() {
                   'Inputs',
                   'Transitions',
                   'Accordion',
+                  'Icons',
                 ].map((name) => (
                   <Pressable
                     key={name}
@@ -119,6 +121,7 @@ export default function App() {
             {section === 'Inputs' ? <InputExamples /> : null}
             {section === 'Transitions' ? <CollapseExamples /> : null}
             {section === 'Accordion' ? <AccordionExamples /> : null}
+            {section === 'Icons' ? <SvgIconExamples /> : null}
             {section === 'Form' ? (
               <ScrollView
                 keyboardShouldPersistTaps="handled"
