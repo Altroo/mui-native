@@ -261,6 +261,7 @@ test(
       const executable = join(folder, 'fake-adb.mjs');
       const calls = join(folder, 'calls.jsonl'),
         started = join(folder, 'started');
+      await mkdir(dirname(executable), { recursive: true });
       await writeFile(
         executable,
         '#!/usr/bin/env node\n' +
@@ -359,87 +360,93 @@ test('a passed report requires every transform, scrolling, child-tap and reopen 
   }
 });
 
-test(
-  'repeated CLI interrupts leave cleanup active until scoped restoration finishes',
-  { skip: process.platform === 'win32' },
-  async () => {
-    const folder = await mkdtemp(join(tmpdir(), 'mui-android-cli-'));
-    let child, closed;
-    try {
-      const executable = join(folder, 'fake-adb.mjs'),
-        calls = join(folder, 'calls.jsonl');
-      const started = join(folder, 'started'),
-        stopping = join(folder, 'stopping');
-      await writeFile(
-        executable,
-        '#!/usr/bin/env node\n' +
-          `
+for (const scenario of [
+  { script: 'android-popper.mjs', first: 'SIGINT', second: 'SIGINT' },
+  { script: 'android-accordion.mjs', first: 'SIGINT', second: 'SIGTERM' },
+  { script: 'android-accordion.mjs', first: 'SIGTERM', second: 'SIGINT' },
+])
+  test(
+    `${scenario.script} ${scenario.first}/${scenario.second} preserves scoped cleanup`,
+    { skip: process.platform === 'win32' },
+    async () => {
+      const folder = await mkdtemp(join(tmpdir(), 'mui-android-cli-'));
+      let child, closed;
+      try {
+        const executable = join(folder, 'platform-tools', 'adb'),
+          calls = join(folder, 'calls.jsonl');
+        const started = join(folder, 'started'),
+          stopping = join(folder, 'stopping');
+        await mkdir(dirname(executable), { recursive: true });
+        await writeFile(
+          executable,
+          '#!/usr/bin/env node\n' +
+            `
 import {appendFileSync,writeFileSync} from 'node:fs';
 const args=process.argv.slice(2);appendFileSync(${JSON.stringify(calls)},JSON.stringify(args)+'\\n');
 if(args.includes('get-state')) console.log('device');
-else if(args.includes('instrument')) {writeFileSync(${JSON.stringify(started)},'yes');console.log('native started');setInterval(()=>{},1000);}
+else if(args.includes('instrument')) {writeFileSync(${JSON.stringify(started)},'yes');console.log('native started');setTimeout(()=>process.exit(1),3000);}
 else if(args.includes('force-stop')) {writeFileSync(${JSON.stringify(stopping)},'yes');setTimeout(()=>console.log('stopped'),300);}
 else console.log('NAME');
 `,
-      );
-      await chmod(executable, 0o755);
-      child = spawn(
-        process.execPath,
-        [
-          fileURLToPath(new URL('./android-popper.mjs', import.meta.url)),
-          'run',
-          '--adb',
-          executable,
-          '--serial',
-          'chosen',
-          '--output',
-          join(folder, 'result'),
-        ],
-        { stdio: 'ignore' },
-      );
-      closed = new Promise((resolve, reject) => {
-        child.once('close', (code, signal) => resolve({ code, signal }));
-        child.once('error', reject);
-      });
-      const waitFile = async (path) => {
-        const deadline = Date.now() + 10000;
-        for (;;) {
-          try {
-            await access(path);
-            return;
-          } catch (error) {
-            if (error.code !== 'ENOENT' || Date.now() > deadline) throw error;
+        );
+        await chmod(executable, 0o755);
+        child = spawn(
+          process.execPath,
+          [
+            fileURLToPath(new URL('./' + scenario.script, import.meta.url)),
+            'run',
+            ...(scenario.script === 'android-popper.mjs'
+              ? ['--adb', executable, '--serial', 'chosen', '--output', join(folder, 'result')]
+              : ['chosen', join(folder, 'result')]),
+          ],
+          { stdio: 'ignore', env: { ...process.env, ANDROID_HOME: folder } },
+        );
+        closed = new Promise((resolve, reject) => {
+          child.once('close', (code, signal) => resolve({ code, signal }));
+          child.once('error', reject);
+        });
+        const waitFile = async (path) => {
+          const deadline = Date.now() + 10000;
+          for (;;) {
+            try {
+              await access(path);
+              return;
+            } catch (error) {
+              if (error.code !== 'ENOENT' || Date.now() > deadline) throw error;
+            }
+            await new Promise((resolve) => setTimeout(resolve, 10));
           }
-          await new Promise((resolve) => setTimeout(resolve, 10));
+        };
+        await waitFile(started);
+        child.kill(scenario.first);
+        await waitFile(stopping);
+        child.kill(scenario.second);
+        const ending = await closed;
+        const commands = (await readFile(calls, { encoding: 'utf8' }))
+          .trim()
+          .split('\n')
+          .map((line) => JSON.parse(line));
+        assert(
+          commands.some((args) => args.includes('ps')),
+          'Second interrupt interrupted termination confirmation',
+        );
+        assert(
+          commands.at(-1).includes('start'),
+          'Second interrupt interrupted catalog restoration',
+        );
+        assert.equal(ending.code, 1);
+        assert.equal(ending.signal, null);
+      } finally {
+        if (child && child.exitCode === null && child.signalCode === null) {
+          child.kill('SIGTERM');
+          await Promise.race([closed, new Promise((resolve) => setTimeout(resolve, 1500))]);
+          if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
+          await closed;
         }
-      };
-      await waitFile(started);
-      child.kill('SIGINT');
-      await waitFile(stopping);
-      child.kill('SIGINT');
-      const ending = await closed;
-      const commands = (await readFile(calls, { encoding: 'utf8' }))
-        .trim()
-        .split('\n')
-        .map((line) => JSON.parse(line));
-      assert(
-        commands.some((args) => args.includes('ps')),
-        'Second interrupt interrupted termination confirmation',
-      );
-      assert(commands.at(-1).includes('start'), 'Second interrupt interrupted catalog restoration');
-      assert.equal(ending.code, 1);
-      assert.equal(ending.signal, null);
-    } finally {
-      if (child && child.exitCode === null && child.signalCode === null) {
-        child.kill('SIGTERM');
-        await Promise.race([closed, new Promise((resolve) => setTimeout(resolve, 1500))]);
-        if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
-        await closed;
+        await rm(folder, { recursive: true, force: true });
       }
-      await rm(folder, { recursive: true, force: true });
-    }
-  },
-);
+    },
+  );
 
 test('empty stderr does not discard command error identity or captured stdout', async () => {
   const output = await mkdtemp(join(tmpdir(), 'mui-android-empty-stderr-'));

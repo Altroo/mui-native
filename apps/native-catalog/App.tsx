@@ -22,6 +22,7 @@ import { PopperExamples } from './PopperExamples';
 import { KeyboardExamples } from './KeyboardExamples';
 import { InputExamples } from './InputExamples';
 import { CollapseExamples } from './CollapseExamples';
+import { AccordionExamples } from './AccordionExamples';
 import { AutocompleteExamples } from './AutocompleteExamples';
 import { createCatalogTheme } from './catalogTheme';
 import { RichTreeView } from '@mui/x-tree-view';
@@ -83,6 +84,7 @@ export default function App() {
                   'Keyboard',
                   'Inputs',
                   'Transitions',
+                  'Accordion',
                 ].map((name) => (
                   <Pressable
                     key={name}
@@ -116,6 +118,7 @@ export default function App() {
             {section === 'Keyboard' ? <KeyboardExamples /> : null}
             {section === 'Inputs' ? <InputExamples /> : null}
             {section === 'Transitions' ? <CollapseExamples /> : null}
+            {section === 'Accordion' ? <AccordionExamples /> : null}
             {section === 'Form' ? (
               <ScrollView
                 keyboardShouldPersistTaps="handled"
