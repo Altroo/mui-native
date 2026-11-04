@@ -10,6 +10,8 @@ import { prepareKeyboardSource } from './android-keyboard-source.mjs';
 import { prepareAutocompleteSource } from './android-autocomplete-source.mjs';
 import { prepareInputIntegritySource } from './android-input-integrity-source.mjs';
 import { prepareCollapseSource } from './android-collapse-source.mjs';
+import { prepareAccordionSource } from './android-accordion-source.mjs';
+import { inspectAccordionReport, summarizeAccordion } from './android-accordion-report.mjs';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -59,6 +61,7 @@ export async function prepare(project) {
   await prepareAutocompleteSource(project);
   await prepareInputIntegritySource(project);
   await prepareCollapseSource(project);
+  await prepareAccordionSource(project);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, source);
   await writeFile(gradlePath, gradle);
@@ -181,10 +184,14 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion'}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
-export async function run({ adb, serial, output, signal }, execute = executeFile) {
+export async function run(
+  { adb, serial, output, signal, scenario = 'popper' },
+  execute = executeFile,
+) {
+  if (!['popper', 'accordion'].includes(scenario)) throw Error('Unknown catalog scenario');
   if (typeof serial !== 'string' || !serial.trim())
     throw Error('Choose one explicit --serial; devices are never selected automatically');
   signal?.throwIfAborted();
@@ -204,7 +211,20 @@ export async function run({ adb, serial, output, signal }, execute = executeFile
   let report, failure, text;
   try {
     try {
-      text = String(await call(['shell', 'am', 'instrument', '-w', '-r', component], true));
+      text = String(
+        await call(
+          [
+            'shell',
+            'am',
+            'instrument',
+            '-w',
+            '-r',
+            ...(scenario === 'accordion' ? ['-e', 'scenario', 'accordion'] : []),
+            component,
+          ],
+          true,
+        ),
+      );
     } catch (error) {
       failure = error;
       text = String(error.stdout ?? '');
@@ -214,7 +234,7 @@ export async function run({ adb, serial, output, signal }, execute = executeFile
       );
     }
     await writeFile(join(output, 'instrumentation.txt'), text);
-    report = inspectReport(text);
+    report = scenario === 'accordion' ? inspectAccordionReport(text) : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -222,12 +242,15 @@ export async function run({ adb, serial, output, signal }, execute = executeFile
         'run-as',
         catalogPackage,
         'cat',
-        'cache/' + report.directory + '/' + file,
+        (scenario === 'accordion' ? report.artifactDirectory : 'cache/' + report.directory) +
+          '/' +
+          file,
       ]);
       await writeFile(join(output, file), bytes);
     }
     signal?.throwIfAborted();
-    assertCompleted(text, report);
+    if (scenario === 'accordion') summarizeAccordion(text);
+    else assertCompleted(text, report);
   } catch (error) {
     failure =
       failure && failure !== error

@@ -472,6 +472,46 @@
       "types": "./dist/Collapse/index.d.ts",
       "react-native": "./src/Collapse/index.ts",
       "default": "./dist/Collapse/index.js"
+    },
+    "./Accordion": {
+      "types": "./dist/Accordion/index.d.ts",
+      "react-native": "./src/Accordion/index.ts",
+      "default": "./dist/Accordion/index.js"
+    },
+    "./Accordion/accordionClasses": {
+      "types": "./dist/Accordion/accordionClasses/index.d.ts",
+      "react-native": "./src/Accordion/accordionClasses/index.ts",
+      "default": "./dist/Accordion/accordionClasses/index.js"
+    },
+    "./AccordionSummary": {
+      "types": "./dist/AccordionSummary/index.d.ts",
+      "react-native": "./src/AccordionSummary/index.ts",
+      "default": "./dist/AccordionSummary/index.js"
+    },
+    "./AccordionSummary/accordionSummaryClasses": {
+      "types": "./dist/AccordionSummary/accordionSummaryClasses/index.d.ts",
+      "react-native": "./src/AccordionSummary/accordionSummaryClasses/index.ts",
+      "default": "./dist/AccordionSummary/accordionSummaryClasses/index.js"
+    },
+    "./AccordionDetails": {
+      "types": "./dist/AccordionDetails/index.d.ts",
+      "react-native": "./src/AccordionDetails/index.ts",
+      "default": "./dist/AccordionDetails/index.js"
+    },
+    "./AccordionDetails/accordionDetailsClasses": {
+      "types": "./dist/AccordionDetails/accordionDetailsClasses/index.d.ts",
+      "react-native": "./src/AccordionDetails/accordionDetailsClasses/index.ts",
+      "default": "./dist/AccordionDetails/accordionDetailsClasses/index.js"
+    },
+    "./AccordionActions": {
+      "types": "./dist/AccordionActions/index.d.ts",
+      "react-native": "./src/AccordionActions/index.ts",
+      "default": "./dist/AccordionActions/index.js"
+    },
+    "./AccordionActions/accordionActionsClasses": {
+      "types": "./dist/AccordionActions/accordionActionsClasses/index.d.ts",
+      "react-native": "./src/AccordionActions/accordionActionsClasses/index.ts",
+      "default": "./dist/AccordionActions/accordionActionsClasses/index.js"
     }
   },
   "dependencies": {

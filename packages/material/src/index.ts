@@ -163,3 +163,5 @@ export { useAutocomplete, createFilterOptions } from './useAutocomplete';
 export * from './useAutocompleteTypes';
 
 export * from './collapse';
+
+export * from './accordion';

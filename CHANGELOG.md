@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Add the native Accordion family, original root/deep imports and class helpers, source-defined expansion/slot/callback priority, native refs and shared ButtonBase/Collapse composition. Scoped device checks do not complete physical accessibility, inherited APIs or performance gates.
+- Add direct npm discovery links and relevant package keywords. Keyword metadata takes effect in the next planned publication.
+
 ## 0.0.7-prealpha.0
 
 All nine scoped packages remain aligned on the `prealpha` channel. This update adds real native implementations and corrections; full MUI/MUI X compatibility and verified alpha gates remain incomplete.

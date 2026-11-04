@@ -43,6 +43,7 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean autocompleteScenario;
   private boolean inputIntegrityScenario;
   private boolean collapseScenario;
+  private boolean accordionScenario;
 
   @Override public void onCreate(Bundle arguments) {
     super.onCreate(arguments);
@@ -50,6 +51,7 @@ public final class PopperInstrumentation extends Instrumentation {
     autocompleteScenario = "autocomplete".equals(arguments.getString("scenario"));
     inputIntegrityScenario = "input-integrity".equals(arguments.getString("scenario"));
     collapseScenario = "collapse".equals(arguments.getString("scenario"));
+    accordionScenario = "accordion".equals(arguments.getString("scenario"));
     start();
   }
 
@@ -58,6 +60,7 @@ public final class PopperInstrumentation extends Instrumentation {
     if (autocompleteScenario) { AutocompleteScenario.run(this); return; }
     if (inputIntegrityScenario) { InputIntegrityScenario.run(this); return; }
     if (collapseScenario) { CollapseScenario.run(this); return; }
+    if (accordionScenario) { AccordionScenario.run(this); return; }
     JSONObject report = new JSONObject();
     Bundle result = new Bundle();
     boolean passed = false;

@@ -8,14 +8,25 @@
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
       "package.json": "fa80b50c11ab727f366329b98293c5d4d2d26a649f2a031c16e0ff6677fddd48",
       "packages/compat/package.json": "59904f1e9920728c84cb290e1ce34d0e6e4f7c7832b65b0eb8ff70c01df2c4de",
-      "packages/compat/supported.json": "ffc9c9f18b9374f60a055a31810bf94048c9a5dfffaf813572583ed3be4c3e76",
+      "packages/compat/supported.json": "a3cdb9b7eb6a893830852322a457a8aa2f49009dace2cb47b56e697476075db8",
       "packages/icons/package.json": "1cec3817ffe76fac0091053808225eaabce3f4a3e8d982155818620df7fe34d1",
       "packages/icons/src/Add/index.ts": "98626742b0c19873110d9795934647ddc6fb5f6be09a5d60189115afdd9c8b01",
       "packages/icons/src/Check/index.ts": "fab7a03732117fa85b0210f6cc3551eb29d0aa46a374c7bd7bced61ac85d76cb",
       "packages/icons/src/Close/index.ts": "f2a34cbc09d0a0ec63821425960975c5363c19d61476cb13bcb610a1a39b1a66",
       "packages/icons/src/index.ts": "18700eaefc45ea7df48bc0efbab15b67346db8b5c8c27cb0fd789dd3cb44d320",
       "packages/icons/src/Remove/index.ts": "611c0fd1f80c46a7fc1c83a13a041b91e0066701fcab042c4cc87839151dab00",
-      "packages/material/package.json": "195249540ad638364f7e338b9eb33080489b8c352f62770f993359fb586644fa",
+      "packages/material/package.json": "6f1d4bb97f342ec4d6d68b0159ac0b78b3c3dae03f70c01d3d6b5e09335251ec",
+      "packages/material/src/accordion.tsx": "89b68df70f0b3bbfb3473e48dbb19c82ac20cbf5f9e9d245549b82942ef240f7",
+      "packages/material/src/Accordion/accordionClasses/index.ts": "7bd64e00bf10c8bb5b05ecba5fa2b85e18eb8eab54de23cd011038d951a9ed4c",
+      "packages/material/src/Accordion/index.ts": "9639db89ce8b969ce9d85cef78ac49d12dad8cdba505a74ba477e621cf102fac",
+      "packages/material/src/AccordionActions/accordionActionsClasses/index.ts": "5be3181aa79737e2f61160eb2334e3dae5855d1bf258a98707dcbacf52e22dec",
+      "packages/material/src/AccordionActions/index.ts": "a26078abc86b28f6dcb07dad35c2315a6705967e74a465581fb0221a60b862c3",
+      "packages/material/src/accordionClasses.ts": "52fad6b6e0c6236e20df7aad14e98d54ab9780d697acef162dee5258a0fa3ac3",
+      "packages/material/src/AccordionDetails/accordionDetailsClasses/index.ts": "6bfce352f6decf4238bb1b8da9385aa09bc6ddcfbf3a5785fdc886b7cd949102",
+      "packages/material/src/AccordionDetails/index.ts": "5b3c386a23eaae03678ac3ee4d2bf0b2e6b0cf8e8e8a6eca3f87a61323a3c141",
+      "packages/material/src/AccordionSummary/accordionSummaryClasses/index.ts": "a1ee4f1833e324b76e3a0e29b18cb8a24bb891db3a592c2910155b7d250bbc82",
+      "packages/material/src/AccordionSummary/index.ts": "a1e78905c2777f68e7c03205e7280086c1a93cba0567c7977b105a8d954840a9",
+      "packages/material/src/accordionTypes.ts": "b46549299fa02c60613828643531f478f04affe01bb23030a0608399e388cc62",
       "packages/material/src/Alert/index.ts": "8c0a7b0a9ca5279bfd70b8db2e05b7d7e7f2a468c119ca83b3dc14fc6b8ca9df",
       "packages/material/src/autocomplete.tsx": "b933967255f0a20375f86968006ef87ffce3de9a84befc2d46401d0890613309",
       "packages/material/src/Autocomplete/autocompleteClasses/index.ts": "67ed9e7c5e018685d2bc70f0b0a61d731d9b174c236839d5afc7f27573773bd7",
@@ -77,7 +88,7 @@
       "packages/material/src/Grow/index.ts": "7e747efc5a2eed3c1a6762294ea9600bce4aeb7bce21521ddfee59ae34b5d8a8",
       "packages/material/src/IconButton/iconButtonClasses/index.ts": "bfa2f781c240af1c02802c3b286511dceaf96c3a7d882d52c1a8e5e74c467c5f",
       "packages/material/src/IconButton/index.ts": "7cc501394f4693c7531333c28a281ce3364d147ae012e435e4e7c54d640a801a",
-      "packages/material/src/index.ts": "4d4a077d473ed6bbbd6df553f921384ba9c74d5b70c35d9aba98e692dbbb007b",
+      "packages/material/src/index.ts": "194fb96795c661d11d180533c16b56189c1f0e575223a8d0dfaf523cf85b3086",
       "packages/material/src/Input/index.ts": "9c6687959c875f6a480ba0bc5620a5d74c5259ce607526ca64a0a4db2442b50c",
       "packages/material/src/InputAdornment/index.ts": "8ee899763437210b3027f092a116ffd21c58f26e142d931f23199ad9837a5bbb",
       "packages/material/src/InputBase/index.ts": "b0034ca1d11f85b615c3518f0c23a2d99c8442a2f194c4ca42cc73e310cb6fbc",
@@ -312,7 +323,7 @@
   },
   "documentation": {
     "path": "docs/coverage.md",
-    "sha256": "8f4e7652c3b979ffec9220eb1acd185027df10f4d8543b97694c6a9ecccbdad4"
+    "sha256": "763563a83a86c5d7383417ec1195f37d38e3ce8c1ea1c2015a164054c162ae2e"
   },
   "referenceDependencies": [
     {
@@ -334,11 +345,11 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "a4ebcb5b5a8f1de3bff3a3dd426b92c188735a739bee359b69b194b9e8f62a40",
+      "nativeSourceSha256": "f3db149a6bbadb632462eaa0e07f3b218bdf1e942ce69375a54c8e3f73ab2f8a",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
-      "locallyDeclaredRootNames": 389,
+      "locallyDeclaredRootNames": 428,
       "directMembers": 4046,
       "eventDeclarations": 112,
       "slotDeclarations": 219,
@@ -346,7 +357,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "35a494c5b2c66c5c3e25bb716cff99e17963565ae86c4128449955c4040c58b1"
+      "sha256": "f7d6d80fda9ed7c421acfb987c6d2dc2a2f6436cc26159d0bcdd058e48028f24"
     },
     {
       "package": "@mui/system",
