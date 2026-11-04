@@ -68,6 +68,8 @@ Native Popper now composes the positioning engine with measured native frames, w
 
 The separate [Android Popper release benchmark](docs/performance-popper.md) now checks production build identity, actual input/scroll behavior, frame deadlines, collector loss and report completeness. One emulator pilot completed; a repeat failed its native swipe assertion. Reproducible comparisons, iOS collection and physical calibration remain open. This tooling does not complete family performance certification.
 
+Native [Collapse](docs/collapse.md) now supplies the retained height/width transition foundation for later Accordion, Stepper and tree integration. It includes measured timing, lifecycle/slot/import contracts and scoped iOS/Android checks. Physical-device, screen-reader, font/RTL and calibrated-performance matrices remain open; this does not complete those dependent components.
+
 ## Early public pre-alpha channel
 
 Early preview packages may be published under the `prealpha` dist-tag for consumer feedback before family certification. They must contain real implementations, clear compatibility/native-build limits, MIT/upstream notices and aligned dependency versions. Require local checks, clean archive-consumer installation, package-content inspection, a publish dry run and independent review. Keep verified/released upstream-support state unchanged. This channel does not complete the verified-alpha checklist.

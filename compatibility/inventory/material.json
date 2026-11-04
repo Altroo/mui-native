@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "5b497e588d3501860740ba6d6d2a8e82dd1a4e856fd25cb91cbfeb6d25ebadec",
+  "nativeSourceSha256": "a4ebcb5b5a8f1de3bff3a3dd426b92c188735a739bee359b69b194b9e8f62a40",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -3175,7 +3175,7 @@
           "file": "Collapse/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/colors",
@@ -13011,7 +13011,7 @@
           "line": 114
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -13030,7 +13030,7 @@
           "line": 17
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -13049,7 +13049,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -13068,7 +13068,7 @@
           "line": 15
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -13087,7 +13087,7 @@
           "line": 94
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -13106,7 +13106,7 @@
           "line": 33
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -13125,7 +13125,7 @@
           "line": 25
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -13144,7 +13144,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -13163,7 +13163,7 @@
           "line": 28
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -13182,7 +13182,7 @@
           "line": 27
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -13201,7 +13201,7 @@
           "line": 26
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17248,7 +17248,7 @@
           "line": 16
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -36022,6 +36022,17 @@
           "name": "NativeChipRootProps",
           "kind": "type",
           "line": 24
+        }
+      ]
+    },
+    {
+      "name": "NativeCollapseSlotProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/collapse.tsx",
+          "name": "NativeCollapseSlotProps",
+          "kind": "type",
+          "line": 53
         }
       ]
     },
@@ -62021,7 +62032,7 @@
           "line": 13,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62034,7 +62045,7 @@
           "line": 18,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62047,7 +62058,7 @@
           "line": 23,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -62055,7 +62066,14 @@
         "React.ElementType"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseSlots",
+          "file": "src/collapse.tsx",
+          "line": 63,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseRootSlotPropsOverrides",
@@ -62065,7 +62083,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseRootSlotPropsOverrides",
+          "file": "src/collapse.tsx",
+          "line": 50,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseWrapperSlotPropsOverrides",
@@ -62075,7 +62100,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseWrapperSlotPropsOverrides",
+          "file": "src/collapse.tsx",
+          "line": 51,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseWrapperInnerSlotPropsOverrides",
@@ -62085,7 +62117,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseWrapperInnerSlotPropsOverrides",
+          "file": "src/collapse.tsx",
+          "line": 52,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseSlotsAndSlotProps",
@@ -62103,7 +62142,14 @@
         "SlotProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseSlotsAndSlotProps",
+          "file": "src/collapse.tsx",
+          "line": 68,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseProps",
@@ -62134,7 +62180,7 @@
           "line": 46,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62147,7 +62193,7 @@
           "line": 47,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62160,7 +62206,7 @@
           "line": 51,
           "kind": "property",
           "type": "Partial<CollapseClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62173,7 +62219,7 @@
           "line": 56,
           "kind": "property",
           "type": "string | number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62186,7 +62232,7 @@
           "line": 61,
           "kind": "property",
           "type": "React.ElementType<TransitionProps> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62238,7 +62284,7 @@
           "line": 80,
           "kind": "property",
           "type": "'horizontal' | 'vertical' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62251,7 +62297,7 @@
           "line": 88,
           "kind": "property",
           "type": "TransitionProps['timeout'] | 'auto' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62264,7 +62310,7 @@
           "line": 92,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -62280,7 +62326,14 @@
         "TransitionProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseProps",
+          "file": "src/collapse.tsx",
+          "line": 82,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseOwnerState",
@@ -62298,7 +62351,7 @@
           "line": 95,
           "kind": "property",
           "type": "TransitionStatus",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -62307,7 +62360,14 @@
         "TransitionStatus"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseOwnerState",
+          "file": "src/collapse.tsx",
+          "line": 96,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseSlots",
@@ -62325,7 +62385,7 @@
           "line": 13,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62338,7 +62398,7 @@
           "line": 18,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62351,7 +62411,7 @@
           "line": 23,
           "kind": "slot",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -62359,7 +62419,14 @@
         "React.ElementType"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseSlots",
+          "file": "src/collapse.tsx",
+          "line": 63,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseRootSlotPropsOverrides",
@@ -62369,7 +62436,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseRootSlotPropsOverrides",
+          "file": "src/collapse.tsx",
+          "line": 50,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseWrapperSlotPropsOverrides",
@@ -62379,7 +62453,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseWrapperSlotPropsOverrides",
+          "file": "src/collapse.tsx",
+          "line": 51,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseWrapperInnerSlotPropsOverrides",
@@ -62389,7 +62470,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseWrapperInnerSlotPropsOverrides",
+          "file": "src/collapse.tsx",
+          "line": 52,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseSlotsAndSlotProps",
@@ -62407,7 +62495,14 @@
         "SlotProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseSlotsAndSlotProps",
+          "file": "src/collapse.tsx",
+          "line": 68,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseProps",
@@ -62438,7 +62533,7 @@
           "line": 46,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62451,7 +62546,7 @@
           "line": 47,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62464,7 +62559,7 @@
           "line": 51,
           "kind": "property",
           "type": "Partial<CollapseClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62477,7 +62572,7 @@
           "line": 56,
           "kind": "property",
           "type": "string | number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62490,7 +62585,7 @@
           "line": 61,
           "kind": "property",
           "type": "React.ElementType<TransitionProps> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62542,7 +62637,7 @@
           "line": 80,
           "kind": "property",
           "type": "'horizontal' | 'vertical' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62555,7 +62650,7 @@
           "line": 88,
           "kind": "property",
           "type": "TransitionProps['timeout'] | 'auto' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62568,7 +62663,7 @@
           "line": 92,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -62584,7 +62679,14 @@
         "TransitionProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseProps",
+          "file": "src/collapse.tsx",
+          "line": 82,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseOwnerState",
@@ -62602,7 +62704,7 @@
           "line": 95,
           "kind": "property",
           "type": "TransitionStatus",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -62611,7 +62713,14 @@
         "TransitionStatus"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseOwnerState",
+          "file": "src/collapse.tsx",
+          "line": 96,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseClasses",
@@ -62700,7 +62809,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseClasses",
+          "file": "src/collapseClasses.ts",
+          "line": 11,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseClassKey",
@@ -62712,7 +62828,14 @@
         "CollapseClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseClassKey",
+          "file": "src/collapseClasses.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseClasses",
@@ -62801,7 +62924,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseClasses",
+          "file": "src/collapseClasses.ts",
+          "line": 11,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CollapseClassKey",
@@ -62813,7 +62943,14 @@
         "CollapseClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CollapseClassKey",
+          "file": "src/collapseClasses.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ContainerOwnProps",
@@ -185334,6 +185471,687 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "CollapseRootSlotPropsOverrides",
+      "file": "src/collapse.tsx",
+      "line": 50,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CollapseWrapperSlotPropsOverrides",
+      "file": "src/collapse.tsx",
+      "line": 51,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CollapseWrapperInnerSlotPropsOverrides",
+      "file": "src/collapse.tsx",
+      "line": 52,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeCollapseSlotProps",
+      "file": "src/collapse.tsx",
+      "line": 53,
+      "kind": "type",
+      "members": [
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: StyleProp<NativeStyle>;",
+          "line": 56,
+          "kind": "slot",
+          "type": "StyleProp<NativeStyle>"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps;",
+          "line": 57,
+          "kind": "slot",
+          "type": "SxProps"
+        },
+        {
+          "name": "ownerState",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ownerState?: CollapseOwnerState;",
+          "line": 58,
+          "kind": "slot",
+          "type": "CollapseOwnerState"
+        },
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: React.ComponentType<any>;",
+          "line": 59,
+          "kind": "slot",
+          "type": "React.ComponentType<any>"
+        },
+        {
+          "name": "as",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "as?: React.ComponentType<any>;",
+          "line": 60,
+          "kind": "slot",
+          "type": "React.ComponentType<any>"
+        },
+        {
+          "name": "id",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "id?: string;",
+          "line": 61,
+          "kind": "slot",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "CollapseOwnerState",
+        "NativeStyle",
+        "Omit",
+        "React.ComponentType",
+        "React.RefAttributes",
+        "StyleProp",
+        "SxProps",
+        "ViewInstance",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CollapseSlots",
+      "file": "src/collapse.tsx",
+      "line": 63,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: React.ComponentType<NativeCollapseSlotProps>;",
+          "line": 64,
+          "kind": "slot",
+          "type": "React.ComponentType<NativeCollapseSlotProps>"
+        },
+        {
+          "name": "wrapper",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "wrapper?: React.ComponentType<NativeCollapseSlotProps>;",
+          "line": 65,
+          "kind": "slot",
+          "type": "React.ComponentType<NativeCollapseSlotProps>"
+        },
+        {
+          "name": "wrapperInner",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "wrapperInner?: React.ComponentType<NativeCollapseSlotProps>;",
+          "line": 66,
+          "kind": "slot",
+          "type": "React.ComponentType<NativeCollapseSlotProps>"
+        }
+      ],
+      "references": [
+        "NativeCollapseSlotProps",
+        "React.ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CollapseSlotsAndSlotProps",
+      "file": "src/collapse.tsx",
+      "line": 68,
+      "kind": "type",
+      "members": [
+        {
+          "name": "slots",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slots?: CollapseSlots;",
+          "line": 69,
+          "kind": "slot",
+          "type": "CollapseSlots"
+        },
+        {
+          "name": "slotProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "slotProps?: {\n    root?: SlotProps<NativeCollapseSlotProps & CollapseRootSlotPropsOverrides, CollapseOwnerState>;\n    wrapper?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperSlotPropsOverrides,\n      CollapseOwnerState\n    >;\n    wrapperInner?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperInnerSlotPropsOverrides,\n      CollapseOwnerState\n    >;\n  };",
+          "line": 70,
+          "kind": "slot",
+          "type": "{\n    root?: SlotProps<NativeCollapseSlotProps & CollapseRootSlotPropsOverrides, CollapseOwnerState>;\n    wrapper?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperSlotPropsOverrides,\n      CollapseOwnerState\n    >;\n    wrapperInner?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperInnerSlotPropsOverrides,\n      CollapseOwnerState\n    >;\n  }"
+        },
+        {
+          "name": "slotProps.root",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root?: SlotProps<NativeCollapseSlotProps & CollapseRootSlotPropsOverrides, CollapseOwnerState>;",
+          "line": 71,
+          "kind": "slot",
+          "type": "SlotProps<NativeCollapseSlotProps & CollapseRootSlotPropsOverrides, CollapseOwnerState>"
+        },
+        {
+          "name": "slotProps.wrapper",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "wrapper?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperSlotPropsOverrides,\n      CollapseOwnerState\n    >;",
+          "line": 72,
+          "kind": "slot",
+          "type": "SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperSlotPropsOverrides,\n      CollapseOwnerState\n    >"
+        },
+        {
+          "name": "slotProps.wrapperInner",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "wrapperInner?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperInnerSlotPropsOverrides,\n      CollapseOwnerState\n    >;",
+          "line": 76,
+          "kind": "slot",
+          "type": "SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperInnerSlotPropsOverrides,\n      CollapseOwnerState\n    >"
+        }
+      ],
+      "references": [
+        "CollapseOwnerState",
+        "CollapseRootSlotPropsOverrides",
+        "CollapseSlots",
+        "CollapseWrapperInnerSlotPropsOverrides",
+        "CollapseWrapperSlotPropsOverrides",
+        "NativeCollapseSlotProps",
+        "SlotProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CollapseProps",
+      "file": "src/collapse.tsx",
+      "line": 82,
+      "kind": "type",
+      "members": [
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 85,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "collapsedSize",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "collapsedSize?: string | number;",
+          "line": 86,
+          "kind": "property",
+          "type": "string | number"
+        },
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: React.ComponentType<any>;",
+          "line": 87,
+          "kind": "property",
+          "type": "React.ComponentType<any>"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<CollapseClasses>;",
+          "line": 88,
+          "kind": "property",
+          "type": "Partial<CollapseClasses>"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string;",
+          "line": 89,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "id?: string;",
+          "line": 90,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "orientation",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "orientation?: 'horizontal' | 'vertical';",
+          "line": 91,
+          "kind": "property",
+          "type": "'horizontal' | 'vertical'"
+        },
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: StyleProp<NativeStyle>;",
+          "line": 92,
+          "kind": "property",
+          "type": "StyleProp<NativeStyle>"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps;",
+          "line": 93,
+          "kind": "property",
+          "type": "SxProps"
+        },
+        {
+          "name": "timeout",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "timeout?: TransitionProps['timeout'] | 'auto';",
+          "line": 94,
+          "kind": "property",
+          "type": "TransitionProps['timeout'] | 'auto'"
+        }
+      ],
+      "references": [
+        "CollapseClasses",
+        "CollapseSlotsAndSlotProps",
+        "NativeStyle",
+        "Omit",
+        "Partial",
+        "React.ComponentType",
+        "React.ReactNode",
+        "StyleProp",
+        "SxProps",
+        "TransitionProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CollapseOwnerState",
+      "file": "src/collapse.tsx",
+      "line": 96,
+      "kind": "type",
+      "members": [
+        {
+          "name": "state",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "state: TransitionStatus;",
+          "line": 97,
+          "kind": "property",
+          "type": "TransitionStatus"
+        }
+      ],
+      "references": [
+        "CollapseProps",
+        "TransitionStatus"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Geometry",
+      "file": "src/collapse.tsx",
+      "line": 99,
+      "kind": "type",
+      "members": [
+        {
+          "name": "width",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "width: number;",
+          "line": 99,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "height",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "height: number",
+          "line": 99,
+          "kind": "property",
+          "type": "number"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SurfaceProps",
+      "file": "src/collapse.tsx",
+      "line": 182,
+      "kind": "type",
+      "members": [
+        {
+          "name": "props",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "props: CollapseProps;",
+          "line": 183,
+          "kind": "property",
+          "type": "CollapseProps"
+        },
+        {
+          "name": "status",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "status: Exclude<TransitionStatus, 'unmounted'>;",
+          "line": 184,
+          "kind": "property",
+          "type": "Exclude<TransitionStatus, 'unmounted'>"
+        },
+        {
+          "name": "phase",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "phase: number;",
+          "line": 185,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "identity",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "identity: symbol;",
+          "line": 186,
+          "kind": "property",
+          "type": "symbol"
+        },
+        {
+          "name": "ready",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ready: boolean;",
+          "line": 187,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "paused",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "paused: boolean;",
+          "line": 188,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "geometry",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "geometry: Geometry;",
+          "line": 189,
+          "kind": "property",
+          "type": "Geometry"
+        },
+        {
+          "name": "timing",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "timing: NativeOpacityTiming;",
+          "line": 190,
+          "kind": "property",
+          "type": "NativeOpacityTiming"
+        },
+        {
+          "name": "resolved",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "resolved: {\n    root: NativeCollapseSlotProps;\n    wrapper: NativeCollapseSlotProps;\n    inner: NativeCollapseSlotProps;\n  };",
+          "line": 191,
+          "kind": "property",
+          "type": "{\n    root: NativeCollapseSlotProps;\n    wrapper: NativeCollapseSlotProps;\n    inner: NativeCollapseSlotProps;\n  }"
+        },
+        {
+          "name": "resolved.root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: NativeCollapseSlotProps;",
+          "line": 192,
+          "kind": "property",
+          "type": "NativeCollapseSlotProps"
+        },
+        {
+          "name": "resolved.wrapper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "wrapper: NativeCollapseSlotProps;",
+          "line": 193,
+          "kind": "property",
+          "type": "NativeCollapseSlotProps"
+        },
+        {
+          "name": "resolved.inner",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "inner: NativeCollapseSlotProps;",
+          "line": 194,
+          "kind": "property",
+          "type": "NativeCollapseSlotProps"
+        },
+        {
+          "name": "reduce",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "reduce: boolean;",
+          "line": 196,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "rootRef",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "rootRef: React.Ref<ViewInstance>;",
+          "line": 197,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        },
+        {
+          "name": "wrapperRef",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "wrapperRef: React.RefObject<ViewInstance | null>;",
+          "line": 198,
+          "kind": "property",
+          "type": "React.RefObject<ViewInstance | null>"
+        },
+        {
+          "name": "captureWrapper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "captureWrapper: React.Ref<ViewInstance>;",
+          "line": 199,
+          "kind": "property",
+          "type": "React.Ref<ViewInstance>"
+        },
+        {
+          "name": "terminalCurrent",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "terminalCurrent?: () => boolean;",
+          "line": 200,
+          "kind": "property",
+          "type": "() => boolean"
+        },
+        {
+          "name": "measure",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "measure: (value: Geometry, identity: symbol) => void;",
+          "line": 201,
+          "kind": "property",
+          "type": "(value: Geometry, identity: symbol) => void"
+        },
+        {
+          "name": "resolveCollapsed",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "resolveCollapsed: (value: string | number, axis: 'width' | 'height') => number;",
+          "line": 202,
+          "kind": "property",
+          "type": "(value: string | number, axis: 'width' | 'height') => number"
+        }
+      ],
+      "references": [
+        "CollapseProps",
+        "Exclude",
+        "Geometry",
+        "NativeCollapseSlotProps",
+        "NativeOpacityTiming",
+        "React.Ref",
+        "React.RefObject",
+        "TransitionStatus",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CollapseClassKey",
+      "file": "src/collapseClasses.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CollapseClasses",
+      "file": "src/collapseClasses.ts",
+      "line": 11,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "CollapseClassKey",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "CheckboxClassKey",
       "file": "src/controlClasses.ts",
       "line": 54,
@@ -196122,13 +196940,46 @@
           "type": "boolean"
         },
         {
+          "name": "layoutIdentity",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "layoutIdentity?: unknown;",
+          "line": 23,
+          "kind": "property",
+          "type": "unknown"
+        },
+        {
+          "name": "layoutCurrent",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "layoutCurrent?: () => boolean;",
+          "line": 24,
+          "kind": "property",
+          "type": "() => boolean"
+        },
+        {
+          "name": "onResume",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "onResume?: (entering: boolean) => void;",
+          "line": 25,
+          "kind": "event",
+          "type": "(entering: boolean) => void"
+        },
+        {
           "name": "addEndListener",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "addEndListener?: (node: ViewInstance, done: () => void) => void;",
-          "line": 22,
+          "line": 26,
           "kind": "property",
           "type": "(node: ViewInstance, done: () => void) => void"
         },
@@ -196139,7 +196990,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEnter?: (appearing: boolean) => void;",
-          "line": 23,
+          "line": 27,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -196150,7 +197001,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEntering?: (appearing: boolean) => void;",
-          "line": 24,
+          "line": 28,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -196161,7 +197012,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEntered?: (appearing: boolean) => void;",
-          "line": 25,
+          "line": 29,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -196172,7 +197023,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExit?: () => void;",
-          "line": 26,
+          "line": 30,
           "kind": "event",
           "type": "() => void"
         },
@@ -196183,7 +197034,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExiting?: () => void;",
-          "line": 27,
+          "line": 31,
           "kind": "event",
           "type": "() => void"
         },
@@ -196194,7 +197045,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExited?: () => void;",
-          "line": 28,
+          "line": 32,
           "kind": "event",
           "type": "() => void"
         },
@@ -196204,10 +197055,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "children: (status: Exclude<TransitionStatus, 'unmounted'>, phase: number) => React.ReactNode;",
-          "line": 29,
+          "declaration": "children: (\n    status: Exclude<TransitionStatus, 'unmounted'>,\n    phase: number,\n    paused?: boolean,\n    terminalCurrent?: () => boolean,\n  ) => React.ReactNode;",
+          "line": 33,
           "kind": "property",
-          "type": "(status: Exclude<TransitionStatus, 'unmounted'>, phase: number) => React.ReactNode"
+          "type": "(\n    status: Exclude<TransitionStatus, 'unmounted'>,\n    phase: number,\n    paused?: boolean,\n    terminalCurrent?: () => boolean,\n  ) => React.ReactNode"
         }
       ],
       "references": [
@@ -196225,7 +197076,7 @@
     {
       "name": "NativeStatus",
       "file": "src/NativeTransition.tsx",
-      "line": 31,
+      "line": 40,
       "kind": "type",
       "members": [],
       "references": [
