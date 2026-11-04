@@ -187,7 +187,7 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion'}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon'}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
