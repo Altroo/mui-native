@@ -2,6 +2,13 @@
   "name": "@altroo/mui-native",
   "version": "0.0.7-prealpha.0",
   "description": "Experimental React Native compatibility for Material UI.",
+  "keywords": [
+    "mui-native",
+    "react-native",
+    "material-ui",
+    "mui",
+    "ui-components"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

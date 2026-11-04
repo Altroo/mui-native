@@ -2,6 +2,13 @@
   "name": "@altroo/mui-native-icons",
   "version": "0.0.7-prealpha.0",
   "description": "Experimental native SVG icons for MUI Native.",
+  "keywords": [
+    "mui-native",
+    "react-native",
+    "material-ui",
+    "mui",
+    "icons"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

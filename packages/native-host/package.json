@@ -2,6 +2,13 @@
   "name": "@altroo/mui-native-host",
   "version": "0.0.7-prealpha.0",
   "description": "Fabric interaction, portal and platform picker hosts for MUI Native.",
+  "keywords": [
+    "mui-native",
+    "react-native",
+    "material-ui",
+    "mui",
+    "native-components"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -3,7 +3,9 @@
 [![Validate](https://github.com/Altroo/mui-native/actions/workflows/ci.yml/badge.svg)](https://github.com/Altroo/mui-native/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Independent React Native compatibility for Material UI and MUI X Community, maintained in **one monorepo** by Altroo.
+MUI Native (`@altroo/mui-native`) is an independent React Native compatibility library for Material UI and MUI X Community, maintained in **one monorepo** by Altroo.
+
+[View on npm](https://www.npmjs.com/package/@altroo/mui-native) · [Installation guide](docs/installation.md) · [Preview releases](https://github.com/Altroo/mui-native/releases) · [Compatibility](docs/compatibility.md)
 
 **Status: public pre-alpha. Preview packages use the `prealpha` dist-tag. This is a partial implementation, not a drop-in replacement for MUI.** The native package versions and upstream compatibility versions are separate.
 

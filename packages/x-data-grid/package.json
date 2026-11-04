@@ -37,6 +37,13 @@
   },
   "private": false,
   "description": "Experimental adaptive native Data Grid compatibility for MUI X Community.",
+  "keywords": [
+    "mui-native",
+    "react-native",
+    "material-ui",
+    "mui",
+    "data-grid"
+  ],
   "author": "Altroo",
   "homepage": "https://github.com/Altroo/mui-native#readme",
   "bugs": {
