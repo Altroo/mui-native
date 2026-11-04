@@ -76,6 +76,33 @@ xcrun simctl launch "$MUI_QA_IOS" dev.altroo.muinative.catalog
 
 Retain the `.xcresult` bundle and export screenshots with `xcrun xcresulttool export attachments --path RESULT.xcresult --output-path EMPTY_DIRECTORY`. Record source revision, selected device/OS, build mode, scenario results and known limitations alongside the Android evidence. Passing simulator checks does not certify physical-device, screen-reader, keyboard/IME, RTL/font-scaling or calibrated release-performance gates.
 
+### Independent iOS Escape driver control
+
+Add [NativeKeyboardDriverControl.swift](../tests/native/ios/NativeKeyboardDriverControl.swift) to the catalog **application** target. It provides a debug-only UIKit scene with no React/MUI view tree. The UI test target still includes the separate XCTest files. In the generated SDK58 `SceneDelegate.swift`, import UIKit and route the control before Expo's normal scene setup:
+
+```swift
+import UIKit
+internal import Expo
+
+@objc(SceneDelegate)
+class SceneDelegate: ExpoAppSceneDelegate {
+  override func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
+    options connectionOptions: UIScene.ConnectionOptions) {
+    if let control = NativeKeyboardDriverControl.window(for: scene) {
+      window = control
+      (UIApplication.shared.delegate as? AppDelegate)?.window = control
+      control.makeKeyAndVisible()
+      return
+    }
+    super.scene(scene, willConnectTo: session, options: connectionOptions)
+  }
+}
+```
+
+Preserve existing application scene customizations when adding that conditional. The control is selected only by an explicit test launch argument in Debug builds. Normal catalog launches and Release builds use the ordinary scene. It adds no library dependency and is not part of the npm packages.
+
+The two Autocomplete Escape cases first require ArrowDown and Escape to reach this same native control exactly once. Missing setup, invalid receipts, an unavailable ArrowDown, raw Escape without its command callback, or duplicate Escape delivery fail. Only a valid ArrowDown receipt with neither an Escape command nor a raw Escape press produces an explicit skip with native values and a screenshot; the React catalog is restored afterward. Once the driver passes, the full Dialog assertions are mandatory. A skip is an unverified interaction, never passing compatibility evidence. Keep the underlying physical-keyboard gate open in [issue #55](https://github.com/Altroo/mui-native/issues/55).
+
 ## Editable keyboard commands
 
 The catalog's Keyboard scene isolates the reusable native transport from Autocomplete. It contains an input with an outer command owner, optional inner owner, window Portal and native Dialog, plus an input outside that boundary. Its receipt panel reports actual native target identity and callback phases. Enter removes the outer declaration during key-down, making release/focus races observable.
@@ -96,9 +123,9 @@ This direct instrumentation command starts the catalog but does not perform the 
 adb -s "$MUI_QA_DEVICE" shell am start -n dev.altroo.muinative.catalog/.MainActivity
 ```
 
-The strict summary requires all 22 milestones and four screenshot names; `adb` exit zero alone is insufficient. The native run retains the JSON report and images in its reported application-cache directory. It checks navigation, ordinary editing, complete held-key ownership, release after focus moves outside, canceled release, a programmatically installed native composing span, closest-owner routing, Portal and actual React Native Dialog-window behavior. Window callback identity must be installed while held and restored after release. An unrelated edit while a key is held must still work. The outside editor's native key listener detects a leaked Enter-up. Dialog Escape must preserve React Native's native request-close route. These injected `Instrumentation.sendKeySync` checks do not represent a physical keyboard or a real composing IME.
+The strict summary requires all 22 milestones and four screenshot names; `adb` exit zero alone is insufficient. The native run retains the JSON report and images in its reported application-cache directory. It checks navigation, ordinary editing, complete held-key ownership, release after focus moves outside, canceled release, a programmatically installed native composing span, closest-owner routing, Portal and actual React Native Dialog-window behavior. Window callback identity must be installed while held and restored after release. An unrelated edit while a key is held must still work. The outside editor's native key listener detects a leaked Enter-up. An unhandled descendant Escape must close the Dialog once after its paired release; independent native request-close remains available. These injected `Instrumentation.sendKeySync` checks do not represent a physical keyboard or a real composing IME.
 
-The host's `verifyDescendantKeyPolicy` Gradle task runs 26 device-free assertions against the same sequence policy used by the native adapter. It supplements installed interactions; it does not replace them.
+The host's `verifyDescendantKeyPolicy` Gradle task runs 29 device-free assertions against the same sequence policy used by the native adapter. It supplements installed interactions; it does not replace them.
 
 For iOS, include [KeyboardCatalogUITests.swift](../tests/native/ios/KeyboardCatalogUITests.swift) in the existing UI test target described above. The inline, nested/Portal and Dialog tests use public XCTest key synthesis. Text deletion uses XCTest's text API because its single-key Delete command does not edit the plain React Native positive control on the recorded iOS 27.0 runtime. The extended navigation and Dialog Enter tests first require Delete/Return to work in that plain control. A failed driver prerequisite produces an explicit XCTest skip with an attachment, never a passing compatibility result. If the prerequisite succeeds, all extended assertions are mandatory. Inspect passed, failed and skipped counts separately in the result bundle; physical keyboards and real IMEs remain required gates.
 
@@ -119,9 +146,9 @@ adb -s "$MUI_QA_DEVICE" shell am instrument -w -r -e scenario autocomplete \
 node scripts/native-catalog/android-autocomplete.mjs summarize autocomplete-native.txt
 ```
 
-The summary requires the complete ordered 17-stage scenario, five named screenshots, valid native touch coordinates and a successful native report. The free-solo stage repeats eight synthetic typing/submission bursts and retains native edit-range/selection traces. Selected Chips must be fully visible. Screenshots wait for a fresh hardware frame from the current editor window to be submitted; this is a capture boundary, not a measurement of physical presentation latency. Preserve failed transcripts and screenshots too. The report's `artifactDirectory` identifies the catalog-owned cache folder; copy each reported image with `adb -s "$MUI_QA_DEVICE" exec-out run-as dev.altroo.muinative.catalog cat ARTIFACT_DIRECTORY/IMAGE.png`. Reopen the catalog after instrumentation. If a command is interrupted, first stop only its target package and confirm instrumentation has ended before restoring interactive controls.
+The summary requires the complete ordered 21-stage scenario, seven named screenshots, valid native touch coordinates and a successful native report. Ordinary and full-screen Dialog checks require child Escape to close suggestions while retaining native editor focus, the same window token and the original callback, followed by an unhandled Escape that closes the parent. The free-solo stage repeats eight synthetic typing/submission bursts and retains native edit-range/selection traces. Selected Chips must be fully visible. Screenshots wait for a fresh hardware frame from the current editor window to be submitted; this is a capture boundary, not a measurement of physical presentation latency. Preserve failed transcripts and screenshots too. The report's `artifactDirectory` identifies the catalog-owned cache folder; copy each reported image with `adb -s "$MUI_QA_DEVICE" exec-out run-as dev.altroo.muinative.catalog cat ARTIFACT_DIRECTORY/IMAGE.png`. Reopen the catalog after instrumentation. If a command is interrupted, first stop only its target package and confirm instrumentation has ended before restoring interactive controls.
 
-Add [AutocompleteCatalogUITests.swift](../tests/native/ios/AutocompleteCatalogUITests.swift) to the existing shared iOS UI test target alongside the Popper and keyboard sources. Use the iOS command above with `-only-testing:PopperCatalogUITests/AutocompleteCatalogUITests` to run its nine cases. Keep a new result bundle for every run and export its attachments for visual review. The software-submission case requires the simulator's software keyboard. Do not substitute a programmatic selection callback for the native Done key.
+Add [AutocompleteCatalogUITests.swift](../tests/native/ios/AutocompleteCatalogUITests.swift) to the existing shared iOS UI test target alongside the Popper and keyboard sources. Use the iOS command above with `-only-testing:PopperCatalogUITests/AutocompleteCatalogUITests` to run its eleven cases. Keep a new result bundle for every run and export its attachments for visual review. The software-submission case requires the simulator's software keyboard. Do not substitute a programmatic selection callback for the native Done key.
 
 Native checks verify scoped interactions and geometry. They do not certify physical keyboards, tag navigation/deletion from the editor, composing IMEs, screen readers, large virtualized lists or calibrated release performance. See [Autocomplete](autocomplete.md) for the public contracts and remaining gates.
 

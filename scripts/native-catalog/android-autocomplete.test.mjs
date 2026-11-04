@@ -118,3 +118,12 @@ test('all eight ordered complete native typing bursts are required, including re
   });
   assert.equal(summarizeAutocomplete(raw(legacyComplete)).freeSoloBursts.length, 8);
 });
+
+test('the earlier 17-stage APK cannot satisfy Dialog Escape release coverage', () => {
+  const previous = report();
+  previous.stages = previous.stages.filter((stage) => !stage.includes('escape'));
+  previous.screenshots = previous.screenshots.filter((name) => !name.includes('escape'));
+  assert.equal(previous.stages.length, 17);
+  assert.equal(previous.screenshots.length, 5);
+  assert.throws(() => summarizeAutocomplete(raw(previous)));
+});

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.IBinder;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.Editable;
@@ -20,6 +21,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
@@ -161,18 +163,22 @@ public final class AutocompleteScenario {
       await(() -> ui(() -> editor().isEnabled()), "Read-only state did not restore");
       tap("autocomplete-loading"); tap("autocomplete-toggle");
       await(() -> ui(() -> containsText(activity.getWindow().getDecorView(), "Loading")), "Loading status missing"); stage("loading"); key(KeyEvent.KEYCODE_ESCAPE);
-      tap("autocomplete-mode-Dialog"); tap("autocomplete-dialog-open"); tap("autocomplete-editor"); driver.sendStringSync("Casa");
+      tap("autocomplete-mode-Dialog"); tap("autocomplete-dialog-open"); tap("autocomplete-editor");
+      Window dialogWindow = childEscape("dialog", "dialog-escape.png");
+      tap("autocomplete-toggle"); driver.sendStringSync("Casa");
       await(() -> ui(() -> find("autocomplete-option-2") != null), "Dialog suggestions missing");
       tap("autocomplete-option-2"); selection("selectOption: 2"); stage("dialog-selection"); capture("dialog.png");
-      tap("autocomplete-dialog-done");
-      await(() -> ui(() -> find("autocomplete-editor") == null), "Previous native Dialog did not close");
+      defaultEscape(dialogWindow, "dialog-default-escape");
       tap("autocomplete-dialog-fullscreen");
       await(() -> ui(() -> view("autocomplete-dialog-fullscreen").createAccessibilityNodeInfo().isChecked()), "Full-screen switch did not become checked");
       tap("autocomplete-dialog-open");
       await(() -> ui(() -> find("autocomplete-dialog-paper") != null && Math.abs(view("autocomplete-dialog-paper").getWidth() - activity.getWindow().getDecorView().getWidth()) < 3), "Full-screen Dialog did not fill the native window width");
-      tap("autocomplete-editor"); driver.sendStringSync("Casa");
+      tap("autocomplete-editor");
+      Window fullScreenWindow = childEscape("fullscreen-dialog", "fullscreen-dialog-escape.png");
+      tap("autocomplete-toggle"); driver.sendStringSync("Casa");
       await(() -> ui(() -> find("autocomplete-option-2") != null), "Full-screen Dialog suggestions missing");
       tap("autocomplete-option-2"); selection("selectOption: 2"); stage("fullscreen-dialog-selection"); capture("fullscreen-dialog.png");
+      defaultEscape(fullScreenWindow, "fullscreen-dialog-default-escape");
       passed = true;
     } catch (Throwable error) {
       try { report.put("error", error.toString()); capture("failure.png"); } catch (Throwable ignored) { /* Keep the original assertion. */ }
@@ -181,6 +187,38 @@ public final class AutocompleteScenario {
       catch (Exception error) { result.putString("Error", error.toString()); passed = false; }
       driver.finish(passed ? Activity.RESULT_OK : Activity.RESULT_CANCELED, result);
     }
+  }
+  /** Child Escape must retain the actual Dialog and restore its release callback. */
+  private Window childEscape(String prefix, String picture) throws Exception {
+    await(() -> ui(() -> find("autocomplete-option-1") != null && editor().hasFocus()), "Child suggestions and focus must be ready before Escape");
+    Window window = ui(() -> dialogWindow(activity.getWindow().getDecorView(), editor().getWindowToken()));
+    require(window != null && window != activity.getWindow(), "Exercise an actual separate Dialog window");
+    Window.Callback original = ui(window::getCallback);
+    key(KeyEvent.KEYCODE_ESCAPE);
+    await(() -> ui(() -> find("autocomplete-popup") == null), "Child Escape did not close suggestions");
+    // A retained fading View is not evidence that its Dialog remained open.
+    SystemClock.sleep(700);
+    require(ui(() -> find("autocomplete-dialog-paper") != null && editor().hasFocus() && editor().getWindowToken().equals(window.getDecorView().getWindowToken())), "Child Escape closed its parent Dialog or moved native focus");
+    require(ui(() -> window.getCallback() == original), "Child Escape did not restore the native callback");
+    stage(prefix + "-child-escape"); capture(picture);
+    return window;
+  }
+  private void defaultEscape(Window window, String name) throws Exception {
+    Window.Callback original = ui(window::getCallback);
+    key(KeyEvent.KEYCODE_ESCAPE);
+    await(() -> ui(() -> find("autocomplete-dialog-paper") == null && find("autocomplete-editor") == null), "A later unhandled Escape must close the Dialog");
+    require(ui(() -> window.getCallback() == original), "Default Escape did not restore the native callback");
+    stage(name);
+  }
+  private Window dialogWindow(View root, IBinder token) {
+    if (root instanceof ReactModalHostView) {
+      android.app.Dialog dialog = ((ReactModalHostView)root).getDialog();
+      if (dialog != null && dialog.getWindow() != null && token.equals(dialog.getWindow().getDecorView().getWindowToken())) return dialog.getWindow();
+    }
+    if (root instanceof ViewGroup) for (int i = 0; i < ((ViewGroup)root).getChildCount(); i++) {
+      Window found = dialogWindow(((ViewGroup)root).getChildAt(i), token); if (found != null) return found;
+    }
+    return null;
   }
   private void stage(String name) { stages.put(name); }
   private EditText editor() { return (EditText)view("autocomplete-editor"); }
@@ -250,6 +288,7 @@ public final class AutocompleteScenario {
       await(() -> ui(() -> find(visibleOption) != null && fullyVisible(view(visibleOption))), "Screenshot suggestions must be positioned and visible");
     // Native hierarchy changes can precede the submitted frame. Wait for the
     // current editor window to commit a fresh frame before copying its pixels.
+    if (!name.equals("failure.png")) {
     CountDownLatch committed = new CountDownLatch(1);
     ui(() -> {
       View root = editor().getRootView();
@@ -259,6 +298,7 @@ public final class AutocompleteScenario {
       return null;
     });
     require(committed.await(5, TimeUnit.SECONDS), "Screenshot frame was not committed");
+    }
     AccessibilityNodeInfo root = automation.getRootInActiveWindow(); require(root != null && PACKAGE.contentEquals(root.getPackageName()), "Catalog must own screenshot window");
     Bitmap bitmap = automation.takeScreenshot(); require(bitmap != null, "Native screenshot missing");
     try (FileOutputStream stream = new FileOutputStream(new File(artifacts, name))) { require(bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream), "Screenshot encoding failed"); }
