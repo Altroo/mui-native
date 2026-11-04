@@ -50,9 +50,22 @@ const modes = [
 type Mode = (typeof modes)[number];
 const label = (option: City | string) => (typeof option === 'string' ? option : option.city);
 const identifier = (option: City) => option.id;
+// Diagnostics record delivered native focus events; they never request focus.
+const FocusReceipt = React.createContext<(value: string) => void>(() => {});
 const CatalogChip = React.forwardRef<ViewInstance, ChipProps & { ownerState?: unknown }>(
-  function CatalogChip({ ownerState, ...props }, ref) {
-    return <Chip {...props} ref={ref} testID={'autocomplete-chip-' + String(props.label)} />;
+  function CatalogChip({ ownerState, onFocus, ...props }, ref) {
+    const reportFocus = React.useContext(FocusReceipt);
+    return (
+      <Chip
+        {...props}
+        ref={ref}
+        testID={'autocomplete-chip-' + String(props.label)}
+        onFocus={(event) => {
+          onFocus?.(event);
+          reportFocus('chip:' + String(props.label));
+        }}
+      />
+    );
   },
 );
 function CityField({ mode }: { mode: Mode }) {
@@ -61,6 +74,8 @@ function CityField({ mode }: { mode: Mode }) {
   const [selected, setSelected] = useState<number[]>([1, 2]);
   const [lastAction, setLastAction] = useState('No selection yet');
   const [highlighted, setHighlighted] = useState('None');
+  const [focusedControl, setFocusedControl] = useState('None');
+  const [selectionReceipt, setSelectionReceipt] = useState('None');
   const [disabled, setDisabled] = useState(false),
     [readOnly, setReadOnly] = useState(false),
     [loading, setLoading] = useState(false);
@@ -87,6 +102,15 @@ function CityField({ mode }: { mode: Mode }) {
           ...params.slotProps.htmlInput,
           testID: 'autocomplete-editor',
           returnKeyType: 'done',
+          onFocus: (event) => {
+            params.slotProps.htmlInput.onFocus?.(event);
+            setFocusedControl('editor');
+          },
+          onSelectionChange: (event) => {
+            params.slotProps.htmlInput.onSelectionChange?.(event);
+            const { start, end } = event.nativeEvent.selection;
+            setSelectionReceipt(start + ':' + end);
+          },
         },
       }}
     />
@@ -148,41 +172,43 @@ function CityField({ mode }: { mode: Mode }) {
   };
   return (
     <View testID={'autocomplete-scene-' + mode} style={{ gap: 20 }}>
-      {mode === 'Multiple' ? (
-        <Autocomplete
-          {...shared}
-          multiple
-          filterSelectedOptions
-          disableCloseOnSelect
-          value={selected}
-          onChange={(_, next, reason) => {
-            setSelected(next);
-            setLastAction(reason + ': ' + next.join(', '));
-          }}
-          limitTags={2}
-        />
-      ) : mode === 'Free solo' ? (
-        <Autocomplete
-          {...shared}
-          freeSolo
-          value={value}
-          onChange={(_, next, reason) => {
-            setValue(next);
-            setLastAction(reason + ': ' + String(next));
-          }}
-        />
-      ) : (
-        <Autocomplete
-          {...shared}
-          value={typeof value === 'number' ? value : null}
-          groupBy={mode === 'Grouped' ? (option) => option.country : undefined}
-          getOptionDisabled={mode === 'States' ? (option) => option.id === 3 : undefined}
-          onChange={(_, next, reason) => {
-            setValue(next);
-            setLastAction(reason + ': ' + String(next));
-          }}
-        />
-      )}
+      <FocusReceipt.Provider value={setFocusedControl}>
+        {mode === 'Multiple' ? (
+          <Autocomplete
+            {...shared}
+            multiple
+            filterSelectedOptions
+            disableCloseOnSelect
+            value={selected}
+            onChange={(_, next, reason) => {
+              setSelected(next);
+              setLastAction(reason + ': ' + next.join(', '));
+            }}
+            limitTags={2}
+          />
+        ) : mode === 'Free solo' ? (
+          <Autocomplete
+            {...shared}
+            freeSolo
+            value={value}
+            onChange={(_, next, reason) => {
+              setValue(next);
+              setLastAction(reason + ': ' + String(next));
+            }}
+          />
+        ) : (
+          <Autocomplete
+            {...shared}
+            value={typeof value === 'number' ? value : null}
+            groupBy={mode === 'Grouped' ? (option) => option.country : undefined}
+            getOptionDisabled={mode === 'States' ? (option) => option.id === 3 : undefined}
+            onChange={(_, next, reason) => {
+              setValue(next);
+              setLastAction(reason + ': ' + String(next));
+            }}
+          />
+        )}
+      </FocusReceipt.Provider>
       <View
         style={{
           borderLeftWidth: 2,
@@ -199,6 +225,12 @@ function CityField({ mode }: { mode: Mode }) {
         </Typography>
         <Typography testID="autocomplete-highlight" variant="caption" color="text.secondary">
           {highlighted}
+        </Typography>
+        <Typography testID="autocomplete-focused-control" variant="caption" color="text.secondary">
+          {focusedControl}
+        </Typography>
+        <Typography testID="autocomplete-native-selection" variant="caption" color="text.secondary">
+          {selectionReceipt}
         </Typography>
       </View>
       {mode === 'States' ? (

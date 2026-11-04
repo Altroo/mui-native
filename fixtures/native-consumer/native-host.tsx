@@ -54,8 +54,10 @@ const command: NativeDescendantKey = 'Tab';
 void command;
 // @ts-expect-error Ordinary character editing is not a declared navigation command.
 export const editingKey = <InteractiveView managedDescendantKeys={['a']} />;
-// @ts-expect-error Caret/tag-boundary navigation needs a separate native policy.
+// Left leaves only a known editor's collapsed caret start.
 export const caretKey = <InteractiveView managedDescendantKeys={['ArrowLeft']} />;
+// @ts-expect-error Right keeps its native editor caret behavior.
+export const rightCaretKey = <InteractiveView managedDescendantKeys={['ArrowRight']} />;
 
 // The low-level geometry channel remains separate from the public Portal layout callback.
 export const observedPortal = (

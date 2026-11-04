@@ -82,6 +82,33 @@ public final class AutocompleteScenario {
       key(KeyEvent.KEYCODE_ENTER); selection("selectOption: 2"); stage("keyboard-select");
       tap("autocomplete-mode-Multiple");
       await(() -> ui(() -> text("autocomplete-selection").equals("No selection yet")), "Multiple mode did not reset");
+      tap("autocomplete-editor");
+      key(KeyEvent.KEYCODE_DPAD_LEFT);
+      await(() -> ui(() -> view("autocomplete-chip-Casablanca").hasFocus() && find("autocomplete-popup") == null), "Caret-start Left must focus the last tag and close suggestions");
+      stage("tag-start-focus"); capture("tag-focus.png");
+      key(KeyEvent.KEYCODE_DPAD_LEFT);
+      await(() -> ui(() -> view("autocomplete-chip-Rabat").hasFocus()), "Left must focus the preceding tag");
+      key(KeyEvent.KEYCODE_DPAD_LEFT);
+      require(ui(() -> view("autocomplete-chip-Rabat").hasFocus()), "Left at the first tag must remain there");
+      key(KeyEvent.KEYCODE_DPAD_RIGHT);
+      await(() -> ui(() -> view("autocomplete-chip-Casablanca").hasFocus()), "Right must focus the next tag");
+      key(KeyEvent.KEYCODE_DPAD_RIGHT);
+      await(() -> ui(() -> editor().hasFocus()), "Right after the final tag must restore the editor");
+      stage("tag-cycle");
+      driver.sendStringSync("ab");
+      await(() -> ui(() -> editor().getText().toString().equals("ab") && editor().getSelectionStart() == 2), "Native draft must be ready before caret controls");
+      key(KeyEvent.KEYCODE_DPAD_LEFT);
+      await(() -> ui(() -> editor().hasFocus() && editor().getSelectionStart() == 1 && editor().getSelectionEnd() == 1), "Left inside text must retain native caret movement");
+      stage("tag-editor-middle");
+      ui(() -> { editor().setSelection(0, 1); return null; });
+      key(KeyEvent.KEYCODE_DPAD_LEFT);
+      await(() -> ui(() -> editor().hasFocus() && editor().getSelectionStart() == 0 && editor().getSelectionEnd() == 0), "Left on a selected range must collapse it natively");
+      stage("tag-selected-range");
+      ui(() -> { editor().setSelection(0, editor().length()); return null; });
+      key(KeyEvent.KEYCODE_DEL);
+      await(() -> ui(() -> editor().getText().length() == 0 && editor().hasFocus()), "Native deletion must clear only the draft before existing selection checks");
+      if (ui(() -> find("autocomplete-popup") != null)) key(KeyEvent.KEYCODE_ESCAPE);
+      await(() -> ui(() -> find("autocomplete-popup") == null), "Close the draft's suggestions before the existing selection scenario");
       tap("autocomplete-chip-Rabat-delete"); selection("removeOption: 2"); stage("multiple-remove");
       tap("autocomplete-toggle"); await(() -> ui(() -> find("autocomplete-option-1") != null && find("autocomplete-option-2") == null), "Selected options were not excluded");
       tap("autocomplete-option-3"); selection("selectOption: 2, 3");
@@ -152,6 +179,8 @@ public final class AutocompleteScenario {
       await(() -> ui(() -> find("autocomplete-option-3") != null), "State options unavailable");
       require(ui(() -> !view("autocomplete-option-3").isEnabled()), "Disabled option remains enabled"); stage("disabled-option");
       key(KeyEvent.KEYCODE_ESCAPE);
+      // Key injection can finish before the React/Portal close is committed.
+      await(() -> ui(() -> find("autocomplete-popup") == null), "Dismiss state suggestions before touching the disabled control");
       tap("autocomplete-disabled");
       // Pinned React Native maps editable=false to View.enabled, retaining its key listener.
       await(() -> ui(() -> !editor().isEnabled() && !view("autocomplete-toggle").createAccessibilityNodeInfo().isEnabled()), "Disabled control remained editable/enabled"); stage("disabled-control");
@@ -163,6 +192,7 @@ public final class AutocompleteScenario {
       await(() -> ui(() -> editor().isEnabled()), "Read-only state did not restore");
       tap("autocomplete-loading"); tap("autocomplete-toggle");
       await(() -> ui(() -> containsText(activity.getWindow().getDecorView(), "Loading")), "Loading status missing"); stage("loading"); key(KeyEvent.KEYCODE_ESCAPE);
+      await(() -> ui(() -> find("autocomplete-popup") == null), "Dismiss loading suggestions before switching scenes");
       tap("autocomplete-mode-Dialog"); tap("autocomplete-dialog-open"); tap("autocomplete-editor");
       Window dialogWindow = childEscape("dialog", "dialog-escape.png");
       tap("autocomplete-toggle"); driver.sendStringSync("Casa");

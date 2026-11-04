@@ -67,6 +67,40 @@ final class AutocompleteCatalogUITests: XCTestCase {
     tap("autocomplete-clear")
     selection("clear: null")
   }
+  func testTagNavigationAndNativeCaretControls() {
+    tap("autocomplete-mode-Multiple")
+    tap("autocomplete-editor")
+    let editor = node("autocomplete-editor")
+    waitFor("The native editor must initially own keyboard focus") { self.node("autocomplete-focused-control").label == "editor" }
+    editor.typeKey(.leftArrow, modifierFlags: [])
+    waitFor("Caret-start Left must focus the last selected item") { self.node("autocomplete-focused-control").label == "chip:Casablanca" }
+    waitFor("Tag entry must close suggestions") { !self.node("autocomplete-popup").exists }
+    capture("autocomplete-tag-focus")
+    app.typeKey(.leftArrow, modifierFlags: [])
+    waitFor("Left must focus the preceding tag") { self.node("autocomplete-focused-control").label == "chip:Rabat" }
+    app.typeKey(.leftArrow, modifierFlags: [])
+    XCTAssertEqual(node("autocomplete-focused-control").label, "chip:Rabat", "Left at the first tag must remain there")
+    app.typeKey(.rightArrow, modifierFlags: [])
+    waitFor("Right must focus the next tag") { self.node("autocomplete-focused-control").label == "chip:Casablanca" }
+    app.typeKey(.rightArrow, modifierFlags: [])
+    waitFor("Right after the last tag must restore editor focus") { self.node("autocomplete-focused-control").label == "editor" }
+    editor.typeText("ab")
+    editor.typeKey(.leftArrow, modifierFlags: [])
+    editor.typeText("x")
+    waitFor("Middle-caret Left must keep native editing") { (editor.value as? String) == "axb" }
+    // A native word-selection gesture must produce a nonempty range before
+    // testing collapse. An unselected caret cannot satisfy this prerequisite.
+    editor.doubleTap()
+    waitFor("The actual native selection must cover the draft") { self.node("autocomplete-native-selection").label == "0:3" }
+    editor.typeKey(.leftArrow, modifierFlags: [])
+    waitFor("Left must collapse the selected range without entering a tag") {
+      self.node("autocomplete-native-selection").label == "0:0" && self.node("autocomplete-focused-control").label == "editor"
+    }
+    editor.typeText("q")
+    waitFor("Left on a selected range must collapse it natively before insertion") { (editor.value as? String) == "qaxb" }
+    XCTAssertEqual(node("autocomplete-focused-control").label, "editor")
+    capture("autocomplete-tag-caret-controls")
+  }
   func testVirtualHighlightRetainsNativeEditing() {
     tap("autocomplete-editor")
     XCTAssertTrue(node("autocomplete-option-1").waitForExistence(timeout: 10), "Tapping an empty editor opens suggestions")

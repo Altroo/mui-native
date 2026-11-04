@@ -15,6 +15,7 @@ import {
   type PopperProps,
 } from '@altroo/mui-native';
 import { Commands } from '../packages/native-host/src/AltrooMUIInteractiveViewNativeComponent';
+import { nativeButtonModality } from '../packages/material/src/nativeButtonModality';
 let input: AutocompleteRenderInputParams;
 let popup: PopperProps;
 let inputNode: TextInputInstance | null;
@@ -77,8 +78,11 @@ function Field({ params }: { params: AutocompleteRenderInputParams }) {
     />
   );
 }
-type Props = AutocompleteProps<string, boolean, boolean, boolean>;
-function field(props: Partial<Props> = {}) {
+function field<
+  Multiple extends boolean | undefined = false,
+  DisableClearable extends boolean | undefined = false,
+  FreeSolo extends boolean | undefined = false,
+>(props: Partial<AutocompleteProps<string, Multiple, DisableClearable, FreeSolo>> = {}) {
   return (
     <Autocomplete
       options={['Rabat', 'Casablanca', 'Marrakesh']}
@@ -405,10 +409,81 @@ test('custom value rendering retains explicit per-item disabled metadata', () =>
     field({
       multiple: true,
       defaultValue: ['Rabat'],
-      renderValue: (_values, getItemProps) => (
-        <Chip {...getItemProps({ index: 0, disabled: true })} label="Locked city" />
-      ),
+      renderValue: (_values, getItemProps) => {
+        const { key, ...item } = getItemProps({ index: 0, disabled: true });
+        return <Chip key={key} {...item} label="Locked city" />;
+      },
     }),
   );
   expect(screen.UNSAFE_getByType(Chip).props.disabled).toBe(true);
 });
+
+test('editor keyboard navigation reveals focus on a selected Chip after pointer input', () => {
+  const visible = jest.fn(),
+    chip = React.createRef<ViewInstance>();
+  render(
+    field({
+      multiple: true,
+      defaultValue: ['Rabat', 'Casablanca'],
+      slotProps: { chip: { ref: chip, onFocusVisible: visible } },
+    }),
+  );
+  nativeButtonModality.pointer();
+  fireEvent(screen.getByTestId('autocomplete'), 'keyDown', {
+    target: inputNode,
+    currentTarget: inputNode,
+    nativeEvent: {
+      key: 'ArrowLeft',
+      code: 'ArrowLeft',
+      muiKeySource: 'hardware',
+      isEditable: true,
+      isComposing: false,
+      isCanceled: false,
+    },
+    preventDefault: jest.fn(),
+    stopPropagation: jest.fn(),
+  });
+  expect(Commands.focus).toHaveBeenCalled();
+  fireEvent(screen.getByRole('button', { name: 'Casablanca' }), 'MUIFocus', {
+    target: chip.current,
+    currentTarget: chip.current,
+    nativeEvent: {},
+  });
+  expect(visible).toHaveBeenCalledTimes(1);
+});
+
+test.each([{ isComposing: true }, { isCanceled: true }])(
+  'an invalid key cannot establish keyboard focus visibility: %o',
+  (metadata) => {
+    const visible = jest.fn(),
+      chip = React.createRef<ViewInstance>();
+    render(
+      field({
+        multiple: true,
+        defaultValue: ['Rabat'],
+        slotProps: { chip: { ref: chip, onFocusVisible: visible } },
+      }),
+    );
+    nativeButtonModality.pointer();
+    fireEvent(screen.getByTestId('autocomplete'), 'keyDown', {
+      target: inputNode,
+      currentTarget: inputNode,
+      nativeEvent: {
+        key: 'ArrowLeft',
+        code: 'ArrowLeft',
+        muiKeySource: 'hardware',
+        isEditable: true,
+        ...metadata,
+      },
+      preventDefault: jest.fn(),
+      stopPropagation: jest.fn(),
+    });
+    expect(Commands.focus).not.toHaveBeenCalled();
+    fireEvent(screen.getByRole('button', { name: 'Rabat' }), 'MUIFocus', {
+      target: chip.current,
+      currentTarget: chip.current,
+      nativeEvent: {},
+    });
+    expect(visible).not.toHaveBeenCalled();
+  },
+);

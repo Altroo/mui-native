@@ -645,3 +645,126 @@ test('batched presses of a nonempty input observe the current local popup state'
   expect(open).toHaveBeenCalledTimes(1);
   expect(m.result.current.popupOpen).toBe(true);
 });
+
+describe('selected-item caret navigation', () => {
+  function tags(props: Partial<NativeAutocompleteConfiguration> = {}) {
+    const close = jest.fn();
+    const m = model({
+      multiple: true,
+      defaultValue: options.slice(0, 3),
+      open: true,
+      onClose: close,
+      ...props,
+    });
+    const items = [nativeNode(), nativeNode(), nativeNode()];
+    act(() =>
+      items.forEach((node, index) => {
+        const ref = m.result.current.getItemProps({ index }).ref;
+        if (typeof ref === 'function') ref(node);
+      }),
+    );
+    return { ...m, items, close };
+  }
+  test('Left enters the last item, closes suggestions and clamps at the first item', () => {
+    const m = tags();
+    m.key('ArrowLeft');
+    expect(m.result.current.focusedItem).toBe(2);
+    expect(m.items[2].focus).toHaveBeenCalledTimes(1);
+    expect(m.close.mock.calls[0][1]).toBe('toggleInput');
+    for (const index of [1, 0, 0]) {
+      m.key('ArrowLeft');
+      expect(m.result.current.focusedItem).toBe(index);
+    }
+    for (const index of [1, 2, -1]) {
+      m.key('ArrowRight');
+      expect(m.result.current.focusedItem).toBe(index);
+    }
+    expect(m.input.focus).toHaveBeenCalled();
+  });
+  test('a free-solo draft at caret start resets before entering the last selected item', () => {
+    const inputChange = jest.fn(),
+      m = tags({ freeSolo: true, onInputChange: inputChange });
+    m.type('Draft');
+    m.key('ArrowLeft');
+    expect(m.result.current.focusedItem).toBe(2);
+    expect(m.result.current.inputValue).toBe('');
+    expect(inputChange.mock.calls.at(-1)?.slice(1)).toEqual(['', 'reset']);
+  });
+  test.each([
+    { start: 2, end: 2 },
+    { start: 0, end: 2 },
+  ])('unbridged Left respects the observed selection %o', (selection) => {
+    const m = tags();
+    act(() =>
+      m.result.current.getInputProps().onSelectionChange?.({ nativeEvent: { selection } } as never),
+    );
+    m.key('ArrowLeft');
+    expect(m.result.current.focusedItem).toBe(-1);
+    expect(m.items.every((item) => !(item.focus as jest.Mock).mock.calls.length)).toBe(true);
+  });
+  test('a native boundary receipt supersedes an older JS selection observation', () => {
+    const m = tags();
+    act(() =>
+      m.result.current
+        .getInputProps()
+        .onSelectionChange?.({ nativeEvent: { selection: { start: 2, end: 2 } } } as never),
+    );
+    const source = event('ArrowLeft', m.input);
+    Object.assign(source.nativeEvent, { muiKeySource: 'hardware', isEditable: true });
+    act(() => m.result.current.getRootProps().onKeyDown?.(source));
+    expect(m.result.current.focusedItem).toBe(2);
+  });
+  test('rapid native keys in one React batch use the preceding focus request', () => {
+    const m = tags();
+    act(() => {
+      const key = m.result.current.getRootProps().onKeyDown!;
+      key(event('ArrowLeft', m.input));
+      key(event('ArrowLeft', m.items[2]));
+      key(event('ArrowLeft', m.items[1]));
+    });
+    expect(m.result.current.focusedItem).toBe(0);
+    expect(m.items.map((item) => (item.focus as jest.Mock).mock.calls.length)).toEqual([1, 1, 1]);
+  });
+  test('an input-focus receipt in a key batch retires the preceding tag focus request', () => {
+    const m = tags();
+    act(() => {
+      const key = m.result.current.getRootProps().onKeyDown!;
+      key(event('ArrowLeft', m.input));
+      m.result.current.getInputProps().onFocus?.(event() as never);
+      key(event('ArrowLeft', m.input));
+    });
+    expect(m.result.current.focusedItem).toBe(2);
+    expect(m.items[2].focus).toHaveBeenCalledTimes(2);
+    expect(m.items[1].focus).not.toHaveBeenCalled();
+  });
+  test.each(['ArrowDown', 'Enter'])(
+    'a batched Left then %s restores editor focus before the next action',
+    (name) => {
+      const m = tags();
+      m.mountList();
+      act(() => {
+        const key = m.result.current.getRootProps().onKeyDown!;
+        key(event('ArrowLeft', m.input));
+        key(event(name, m.items[2]));
+      });
+      expect(m.items[2].focus).toHaveBeenCalledTimes(1);
+      expect(m.input.focus).toHaveBeenCalledTimes(1);
+      expect(m.result.current.focusedItem).toBe(-1);
+    },
+  );
+  test('only available selected items participate and empty selections declare no editor Left', () => {
+    const m = tags();
+    act(() => {
+      const ref = m.result.current.getItemProps({ index: 1, disabled: true }).ref;
+      if (typeof ref === 'function') ref(m.items[1]);
+    });
+    m.key('ArrowLeft');
+    m.key('ArrowLeft');
+    expect(m.result.current.focusedItem).toBe(0);
+    m.key('ArrowRight');
+    expect(m.result.current.focusedItem).toBe(2);
+    expect(m.result.current.getRootProps().managedDescendantKeys).toContain('ArrowLeft');
+    const empty = model({ multiple: true, defaultValue: [] });
+    expect(empty.result.current.getRootProps().managedDescendantKeys).not.toContain('ArrowLeft');
+  });
+});

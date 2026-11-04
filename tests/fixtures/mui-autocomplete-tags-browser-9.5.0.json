@@ -1,0 +1,197 @@
+{
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Autocomplete/Autocomplete.js": "c7e78eb149762dd84962f442dd943a1e7130fda6aecefd1bb9bf188261df8a73",
+      "useAutocomplete/useAutocomplete.js": "1cf29b7bd806eae5c71908721747eceb28dbd40cfe4b5514a66f1ea529361510"
+    }
+  },
+  "renderer": {
+    "name": "react-dom",
+    "version": "19.3.0",
+    "integrity": "sha512-JDk8dgif51OjFoDE70+OT9ICyYr+69HlmihNwp1+Nsfbna3t5sIiCa9ZJktDmQ4/1b/rn26hIAR2uYXDMr5r0Q==",
+    "sourceFiles": {
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "cjs/react-dom-client.development.js": "c10b5e5ad37ca22c88b58bf4ada9a3b655ab79934c0b5cc6bad26f42c774584f"
+    }
+  },
+  "scope": "Original multiple-value tag focus, caret/range guards, free-solo reset, popup closure and unavailable-item navigation under DOM key dispatch. Native transport and physical keyboards are separate.",
+  "observations": [
+    {
+      "scenario": "empty traversal",
+      "key": "ArrowLeft",
+      "item": 2,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": [
+        ["close", "toggleInput"],
+        ["close", "blur"]
+      ]
+    },
+    {
+      "scenario": "empty traversal",
+      "key": "ArrowLeft",
+      "item": 1,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "empty traversal",
+      "key": "ArrowLeft",
+      "item": 0,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "empty traversal",
+      "key": "ArrowLeft",
+      "item": 0,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "empty traversal",
+      "key": "ArrowRight",
+      "item": 1,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "empty traversal",
+      "key": "ArrowRight",
+      "item": 2,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "empty traversal",
+      "key": "ArrowRight",
+      "item": -1,
+      "inputFocused": true,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "caret inside text",
+      "key": "ArrowLeft",
+      "item": -1,
+      "inputFocused": true,
+      "inputValue": "Draft",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "selected range",
+      "key": "ArrowLeft",
+      "item": -1,
+      "inputFocused": true,
+      "inputValue": "Draft",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "free solo draft at start",
+      "key": "ArrowLeft",
+      "item": 2,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": [
+        ["input", "", "reset"],
+        ["close", "blur"]
+      ]
+    },
+    {
+      "scenario": "ordinary draft at start",
+      "key": "ArrowLeft",
+      "item": 2,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": [
+        ["input", "", "blur"],
+        ["close", "blur"]
+      ]
+    },
+    {
+      "scenario": "unavailable tag",
+      "key": "ArrowLeft",
+      "item": 2,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": [
+        ["close", "toggleInput"],
+        ["close", "blur"]
+      ]
+    },
+    {
+      "scenario": "unavailable tag",
+      "key": "ArrowLeft",
+      "item": 0,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "unavailable tag",
+      "key": "ArrowLeft",
+      "item": 0,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "unavailable tag",
+      "key": "ArrowRight",
+      "item": 2,
+      "inputFocused": false,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    },
+    {
+      "scenario": "unavailable tag",
+      "key": "ArrowRight",
+      "item": -1,
+      "inputFocused": true,
+      "inputValue": "",
+      "expanded": "false",
+      "prevented": false,
+      "calls": []
+    }
+  ]
+}

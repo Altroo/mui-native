@@ -15,13 +15,13 @@ static UIView *AltrooFirstResponder(UIView *root) {
   for (UIView *child in root.subviews) { UIView *found = AltrooFirstResponder(child); if (found) return found; }
   return nil;
 }
-/** Keep a finite command set. Ordinary text/caret/deletion keys stay native. */
+/** Keep a finite command set. Ordinary text/deletion and non-boundary caret movement stay native. */
 static NSDictionary<NSString *, NSString *> *AltrooDescendantInputs(void) {
   static NSDictionary<NSString *, NSString *> *inputs;
   static dispatch_once_t once;
   dispatch_once(&once, ^{
     inputs = @{@"Tab": @"\t", @"Escape": UIKeyInputEscape, @"Enter": @"\r",
-      @"ArrowUp": UIKeyInputUpArrow, @"ArrowDown": UIKeyInputDownArrow,
+      @"ArrowUp": UIKeyInputUpArrow, @"ArrowDown": UIKeyInputDownArrow, @"ArrowLeft": UIKeyInputLeftArrow,
       @"PageUp": UIKeyInputPageUp, @"PageDown": UIKeyInputPageDown,
       @"Home": UIKeyInputHome, @"End": UIKeyInputEnd};
   });
@@ -79,7 +79,10 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
         if (combination & 4) flags |= UIKeyModifierAlternate;
         if (combination & 8) flags |= UIKeyModifierCommand;
         if (combination & 16) flags |= UIKeyModifierAlphaShift;
-        UIKeyCommand *command = [UIKeyCommand keyCommandWithInput:input modifierFlags:flags action:@selector(altroo_handleDescendantKeyCommand:)];
+        // UIKit may validate with a nil sender. Give the caret-boundary key
+        // its own action so another eligible command cannot enable Left.
+        SEL action = [name isEqualToString:@"ArrowLeft"] ? @selector(altroo_handleDescendantLeftKeyCommand:) : @selector(altroo_handleDescendantKeyCommand:);
+        UIKeyCommand *command = [UIKeyCommand keyCommandWithInput:input modifierFlags:flags action:action];
         command.wantsPriorityOverSystemBehavior = YES;
         command.allowsAutomaticLocalization = NO; command.allowsAutomaticMirroring = NO;
         [commands addObject:command];
@@ -105,6 +108,14 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
   BOOL editor = [source conformsToProtocol:@protocol(UIKeyInput)];
   if (editor && ![source conformsToProtocol:@protocol(UITextInput)]) return nil;
   if ([source conformsToProtocol:@protocol(UITextInput)] && ((id<UITextInput>)source).markedTextRange) return nil;
+  // Decide against the actual editor before UIKit consumes its caret default.
+  // A JS selection receipt may lag behind the native selection.
+  if ([name isEqualToString:@"ArrowLeft"]) {
+    if (![source conformsToProtocol:@protocol(UITextInput)]) return nil;
+    id<UITextInput> input = (id<UITextInput>)source;
+    UITextRange *range = input.selectedTextRange;
+    if (!range || !range.isEmpty || [input offsetFromPosition:input.beginningOfDocument toPosition:range.start] != 0) return nil;
+  }
   BOOL owned = NO;
   NSHashTable<UIView *> *seen = [NSHashTable weakObjectsHashTable];
   for (UIView *view = AltrooLogicalParent(source); view && ![seen containsObject:view]; view = AltrooLogicalParent(view)) {
@@ -128,10 +139,14 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
   return nil;
 }
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+  if (action == @selector(altroo_handleDescendantLeftKeyCommand:)) return [self descendantTargetForKey:@"ArrowLeft" responder:nil] != nil;
   if (action != @selector(altroo_handleDescendantKeyCommand:)) return [super canPerformAction:action withSender:sender];
   if ([sender isKindOfClass:UIKeyCommand.class]) return [self descendantTargetForKey:AltrooDescendantKey(sender) responder:nil] != nil;
   for (NSString *name in _managedDescendantKeys) if ([self descendantTargetForKey:name responder:nil]) return YES;
   return NO;
+}
+- (void)altroo_handleDescendantLeftKeyCommand:(UIKeyCommand *)command {
+  [self altroo_handleDescendantKeyCommand:command];
 }
 - (void)altroo_handleDescendantKeyCommand:(UIKeyCommand *)command {
   NSString *name = AltrooDescendantKey(command);
