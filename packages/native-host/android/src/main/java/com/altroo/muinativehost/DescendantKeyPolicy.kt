@@ -9,6 +9,8 @@ internal val descendantNavigationKeys = setOf(
 )
 
 internal data class DescendantPhysicalKey(val device: Int, val code: Int, val downTime: Long)
+/** Stable for one physical press, distinct across devices and replacement downs. */
+internal fun DescendantPhysicalKey.sequenceToken() = "$device:$code:$downTime"
 internal data class DescendantKeyDecision<T>(val consumed: Boolean, val target: T? = null)
 
 /**

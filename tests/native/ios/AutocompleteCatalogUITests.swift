@@ -2,6 +2,7 @@
  * SPDX-License-Identifier: MIT
  */
 import XCTest
+import UIKit
 
 /** Real native touch/text/command checks; physical keyboards and screen readers are separate. */
 final class AutocompleteCatalogUITests: XCTestCase {
@@ -11,6 +12,10 @@ final class AutocompleteCatalogUITests: XCTestCase {
   }
   override func setUpWithError() throws {
     continueAfterFailure = false
+    openCatalog()
+  }
+  private func openCatalog() {
+    app.launchArguments = []
     app.launch()
     XCTAssertTrue(node("catalog-tabs").waitForExistence(timeout: 20))
     let tab = node("catalog-tab-Autocomplete")
@@ -152,4 +157,73 @@ final class AutocompleteCatalogUITests: XCTestCase {
     selection("selectOption: 2")
     capture("autocomplete-dialog")
   }
+  func testDialogEscapeRetainsParentBeforeDefaultClose() throws {
+    try requireEscapeDriver()
+    exerciseDialogEscape(fullScreen: false)
+  }
+  func testFullScreenDialogEscapeRetainsParentBeforeDefaultClose() throws {
+    try requireEscapeDriver()
+    exerciseDialogEscape(fullScreen: true)
+  }
+  /** A missing key in an independent UIKit scene cannot certify this composite. */
+  private func requireEscapeDriver() throws {
+    defer { openCatalog() }
+    app.launchArguments = ["--mui-native-key-control"]
+    app.launch()
+    let control = app.textFields["native-key-editor"]
+    XCTAssertTrue(control.waitForExistence(timeout: 15), "Include NativeKeyboardDriverControl.swift in the app target and route its debug scene as described in the native catalog guide")
+    let receipt = app.staticTexts["native-key-receipt"]
+    func values() -> (counts: [String: Int], presses: [String])? {
+      guard receipt.exists, let data = receipt.label.data(using: .utf8),
+        let value = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+        let counts = value["counts"] as? [String: Int],
+        let presses = value["presses"] as? [String] else { return nil }
+      return (counts, presses)
+    }
+    control.tap()
+    control.typeKey(.downArrow, modifierFlags: [])
+    let down = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in values()?.counts["ArrowDown"] == 1 }, object: nil)
+    XCTAssertEqual(XCTWaiter.wait(for: [down], timeout: 3), .completed, "The independent UIKit control must first receive ArrowDown")
+    control.typeKey(.escape, modifierFlags: [])
+    let escape = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in (values()?.counts["Escape"] ?? 0) > 0 }, object: nil)
+    let delivered = XCTWaiter.wait(for: [escape], timeout: 3)
+    if delivered != .completed, let current = values(), current.counts["ArrowDown"] == 1,
+      current.counts["Escape"] == 0 {
+      // A raw HID receipt proves delivery even if UIKit command routing failed.
+      // Such a failure must not be classified as unavailable driver input.
+      let escapeUsage = UIKeyboardHIDUsage.keyboardEscape.rawValue
+      let rawEscape = current.presses.contains { $0 == "down:\(escapeUsage)" || $0 == "up:\(escapeUsage)" }
+      XCTAssertFalse(rawEscape, "UIKit received raw Escape but did not invoke its registered command")
+      if rawEscape { return }
+      let values = XCTAttachment(string: receipt.label)
+      values.name = "driver-plain-uikit-escape-unavailable"
+      values.lifetime = .keepAlways
+      add(values)
+      capture("driver-plain-uikit-escape-unavailable")
+      throw XCTSkip("Plain UIKit received ArrowDown but no Escape with this driver. iOS Escape interaction remains unverified; physical keyboard coverage is open in issue55.")
+    }
+    XCTAssertEqual(delivered, .completed)
+    XCTAssertEqual(values()?.counts["Escape"], 1, "A single driver action must not create duplicate native commands")
+  }
+  private func exerciseDialogEscape(fullScreen: Bool) {
+    tap("autocomplete-mode-Dialog")
+    if fullScreen { tap("autocomplete-dialog-fullscreen") }
+    tap("autocomplete-dialog-open")
+    let paper = node("autocomplete-dialog-paper")
+    XCTAssertTrue(paper.waitForExistence(timeout: 10))
+    if fullScreen { XCTAssertEqual(paper.frame.width, app.frame.width, accuracy: 2) }
+    tap("autocomplete-editor")
+    XCTAssertTrue(node("autocomplete-option-1").waitForExistence(timeout: 10))
+    node("autocomplete-editor").typeKey(.escape, modifierFlags: [])
+    waitFor("Child Escape must close suggestions") { !self.node("autocomplete-popup").exists }
+    let parentClosed = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in !paper.exists }, object: nil)
+    parentClosed.isInverted = true
+    XCTAssertEqual(XCTWaiter.wait(for: [parentClosed], timeout: 0.75), .completed, "A child Escape must retain the parent beyond its closing transition")
+    XCTAssertTrue(paper.isHittable)
+    capture(fullScreen ? "autocomplete-fullscreen-escape-retained" : "autocomplete-dialog-escape-retained")
+    node("autocomplete-editor").typeKey(.escape, modifierFlags: [])
+    waitFor("A later unhandled Escape must close the Dialog") { !self.node("autocomplete-dialog-paper").exists && !self.node("autocomplete-editor").exists }
+    XCTAssertTrue(node("autocomplete-dialog-open").isHittable)
+  }
+
 }

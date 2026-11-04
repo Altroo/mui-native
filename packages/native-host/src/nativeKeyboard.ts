@@ -13,6 +13,8 @@ export type NativeDescendantKey =
 export interface NativeKeyMetadata {
   /** Hardware event on Android, or a UIKit keyboard-command invocation. */
   muiKeySource?: 'hardware' | 'command';
+  /** Android press token used only for matching native down/up generations. */
+  muiKeySequence?: string;
   isEditable?: boolean;
   isCanceled?: boolean;
 }

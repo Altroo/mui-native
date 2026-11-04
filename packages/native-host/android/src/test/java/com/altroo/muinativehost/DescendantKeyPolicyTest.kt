@@ -14,6 +14,9 @@ fun main() {
     canceled: Boolean = false, target: String? = "input-A", valid: Boolean = true) =
     policy.dispatch(key, down, repeat, canceled, target) { valid && it == target }
 
+  expect(event(device=-1,code=111).sequenceToken() == "-1:111:10")
+  expect(event(device=2,code=111).sequenceToken() != event(code=111).sequenceToken())
+  expect(event(time=11,code=111).sequenceToken() != event(code=111).sequenceToken())
   expect(dispatch().target == "input-A")
   expect(policy.contains(event()))
   expect(dispatch(repeat=true).target == "input-A")

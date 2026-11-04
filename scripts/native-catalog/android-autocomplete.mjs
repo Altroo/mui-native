@@ -20,14 +20,20 @@ export const autocompleteStages = [
   'disabled-control',
   'readonly-control',
   'loading',
+  'dialog-child-escape',
   'dialog-selection',
+  'dialog-default-escape',
+  'fullscreen-dialog-child-escape',
   'fullscreen-dialog-selection',
+  'fullscreen-dialog-default-escape',
 ];
 export const autocompletePictures = [
   'filtered.png',
   'multiple.png',
   'grouped.png',
+  'dialog-escape.png',
   'dialog.png',
+  'fullscreen-dialog-escape.png',
   'fullscreen-dialog.png',
 ];
 /** Prepare only the existing generated test project; never open or replace a device. */

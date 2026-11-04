@@ -34,8 +34,7 @@ internal object DescendantKeyWindows {
     var capture = captures[token]?.get()
     if (capture == null || window.callback !== capture.callback) {
       val previous = window.callback ?: return false
-      val activityWindow = (owner.context as? ThemedReactContext)?.currentActivity?.window
-      capture = Capture(window, token, previous, preserveDialogEscape = window !== activityWindow)
+      capture = Capture(window, token, previous)
       captures[token] = WeakReference(capture)
       window.callback = capture.callback
     }
@@ -71,8 +70,7 @@ internal object DescendantKeyWindows {
     return null
   }
 
-  private class Capture(window: Window, private val token: IBinder, private val previous: Window.Callback,
-    private val preserveDialogEscape: Boolean) {
+  private class Capture(window: Window, private val token: IBinder, private val previous: Window.Callback) {
     private val windowReference = WeakReference(window)
     private val keys = DescendantKeyPolicy<WeakReference<AltrooMUIInteractiveView>>()
     val callback: Window.Callback = object : Window.Callback by previous {
@@ -83,17 +81,16 @@ internal object DescendantKeyWindows {
         val decision = keys.dispatch(key, event.action == KeyEvent.ACTION_DOWN, event.repeatCount > 0,
           event.isCanceled, null) { it.get()?.isAttachedToWindow == true }
         if (decision.consumed) {
-          val nativeEscapeUp = preserveDialogEscape && event.action == KeyEvent.ACTION_UP && event.keyCode == KeyEvent.KEYCODE_ESCAPE
           // Even cancellation must retire the View's local ledger. A detached
           // owner is a tombstone: swallow the release without targeting B.
           if (owner?.isAttachedToWindow == true) {
-            if (nativeEscapeUp) owner.retireDescendantSequence(event)
-            else owner.dispatchDescendantKey(event, windowReference.get()?.decorView?.findFocus())
+            owner.dispatchDescendantKey(event, windowReference.get()?.decorView?.findFocus())
           }
           uninstallIfIdle()
-          // RN Dialog owns Escape-up request-close before View dispatch. Keep
-          // that established route; the JS window overlay defers closing to it.
-          return if (nativeEscapeUp) previous.dispatchKeyEvent(event) else true
+          // The claimed release must not bypass child JS propagation through
+          // RN Dialog's request-close listener. Modal pairs bridged down/up;
+          // ordinary Back and unclaimed native keys still use the old callback.
+          return true
         }
         uninstallIfIdle()
         return previous.dispatchKeyEvent(event)

@@ -36,6 +36,7 @@ import {
   InteractiveView,
   getNativeFocusedView,
   type InteractiveViewProps,
+  type NativeKeyMetadata,
 } from '@altroo/mui-native-host';
 import { NativeOverlayReadiness } from './nativeOverlayReadiness';
 import { useTheme, useComponentStyle, useSx } from './themeProvider';
@@ -49,6 +50,17 @@ import {
 } from './nativeModalManager';
 export type { NativeFocusTarget } from './nativeModalManager';
 type NativeKeyEvent = Parameters<NonNullable<ViewProps['onKeyDown']>>[0];
+/** Pair only bridge-owned Android window events; older hosts keep request-close. */
+function descendantWindowEscape(event: NativeKeyEvent, nativeWindow: boolean) {
+  if (Platform.OS !== 'android' || !nativeWindow || event.nativeEvent.key !== 'Escape') return;
+  const { muiKeySource, muiKeySequence } = event.nativeEvent as NativeKeyMetadata;
+  if (muiKeySource !== 'hardware' && muiKeySource !== 'command') return;
+  // Native owns the token format. Separate the physical-key slot from its
+  // press generation, so a later down retires an unreported release from that key.
+  const match = typeof muiKeySequence === 'string' && /^(-?\d+:\d+):\d+$/.exec(muiKeySequence);
+  if (match) return { slot: match[1], sequence: muiKeySequence };
+}
+
 export type ModalCloseEvent = GestureResponderEvent | NativeKeyEvent | null;
 export interface BackdropComponentsPropsOverrides {}
 export interface BackdropTransitionSlotPropsOverrides {}
@@ -293,6 +305,8 @@ export const Modal: React.ForwardRefExoticComponent<
     focused = useRef(false),
     pendingInlineFocus = useRef(false);
   const restore = useRef<(() => void) | undefined>(undefined);
+  const pendingDescendantEscapes = useRef(new Map<string, string>());
+  const releasedDescendantEscapes = useRef(new WeakSet<object>());
   const hasTransition = Object.hasOwn(children.props, 'in');
   const [exited, setExited] = useState(!open);
   const [windowShown, setWindowShown] = useState(open);
@@ -362,6 +376,7 @@ export const Modal: React.ForwardRefExoticComponent<
     committed.current = props;
     currentPresentation.current = presentationReady;
     active.current = open;
+    if (!open) pendingDescendantEscapes.current.clear();
     committedCycle.current = transitionCycle;
     layer.open = open;
     layer.restore = !disableRestoreFocus;
@@ -588,6 +603,22 @@ export const Modal: React.ForwardRefExoticComponent<
                 rootRest.onAccessibilityEscape?.();
                 manager.requestFrom(layer, null);
               }}
+              onKeyDownCapture={(event) => {
+                const pair = descendantWindowEscape(event, nativeWindowHost);
+                if (pair && !event.nativeEvent.repeat)
+                  pendingDescendantEscapes.current.delete(pair.slot);
+                rootRest.onKeyDownCapture?.(event);
+              }}
+              onKeyUpCapture={(event) => {
+                const pair = descendantWindowEscape(event, nativeWindowHost);
+                if (pair && pendingDescendantEscapes.current.get(pair.slot) === pair.sequence) {
+                  pendingDescendantEscapes.current.delete(pair.slot);
+                  // Capture retires the hold even if a child stops key-up.
+                  // The weak event marker cannot retain an abandoned release.
+                  releasedDescendantEscapes.current.add(event.nativeEvent);
+                }
+                rootRest.onKeyUpCapture?.(event);
+              }}
               onKeyDown={(event) => {
                 rootRest.onKeyDown?.(event);
                 if (
@@ -595,9 +626,32 @@ export const Modal: React.ForwardRefExoticComponent<
                   !event.nativeEvent.isComposing &&
                   !(event.nativeEvent as { isCanceled?: boolean }).isCanceled &&
                   active.current &&
-                  // Android Dialog owns Escape key-up and reports onRequestClose.
-                  // Defer window-hosted layers to that route to avoid two requests.
-                  !(Platform.OS === 'android' && nativeWindowHost) &&
+                  manager.isTop(layer)
+                ) {
+                  if (Platform.OS === 'android' && nativeWindowHost) {
+                    const pair = descendantWindowEscape(event, nativeWindowHost);
+                    // A bridged down must reach this layer before its matching
+                    // release may close it. Child stopPropagation stays effective.
+                    if (pair) {
+                      if (!event.nativeEvent.repeat)
+                        pendingDescendantEscapes.current.set(pair.slot, pair.sequence);
+                      event.stopPropagation();
+                    }
+                    return;
+                  }
+                  event.stopPropagation();
+                  manager.requestFrom(layer, event);
+                }
+              }}
+              onKeyUp={(event) => {
+                rootRest.onKeyUp?.(event);
+                const owned = releasedDescendantEscapes.current.delete(event.nativeEvent);
+                if (
+                  owned &&
+                  descendantWindowEscape(event, nativeWindowHost) &&
+                  !event.nativeEvent.isComposing &&
+                  !(event.nativeEvent as NativeKeyMetadata).isCanceled &&
+                  active.current &&
                   manager.isTop(layer)
                 ) {
                   event.stopPropagation();
@@ -609,6 +663,7 @@ export const Modal: React.ForwardRefExoticComponent<
                 observeFocus(event);
               }}
               onBlurCapture={(event) => {
+                pendingDescendantEscapes.current.clear();
                 rootRest.onBlurCapture?.(event);
                 enforceFocus();
               }}

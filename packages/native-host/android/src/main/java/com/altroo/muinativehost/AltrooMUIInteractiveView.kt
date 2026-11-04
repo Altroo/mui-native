@@ -76,10 +76,6 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
   private val descendantSequences = DescendantKeyPolicy<DescendantTarget>()
   private fun physicalKey(event: KeyEvent) = DescendantPhysicalKey(event.deviceId, event.keyCode, event.downTime)
   internal fun ownsDescendantSequence(event: KeyEvent) = descendantSequences.contains(physicalKey(event))
-  internal fun retireDescendantSequence(event: KeyEvent) {
-    descendantSequences.dispatch(physicalKey(event), false, false, true, null) { false }
-    syncDescendantFocusObserver()
-  }
   private fun syncDescendantFocusObserver() {
     val needed = isAttachedToWindow && (managedDescendantKeys.isNotEmpty() || descendantSequences.hasHeldKeys)
     if (needed && descendantFocusObserver == null) {
@@ -155,7 +151,7 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
       putBoolean("altKey",event.isAltPressed); putBoolean("ctrlKey",event.isCtrlPressed)
       putBoolean("metaKey",event.isMetaPressed); putBoolean("shiftKey",event.isShiftPressed)
       putBoolean("repeat",event.repeatCount > 0); putBoolean("isComposing",false); putBoolean("isCanceled",event.isCanceled)
-      putString("muiKeySource","hardware"); putBoolean("isEditable",editor); putInt("target",target!!.id)
+      putString("muiKeySource","hardware"); putString("muiKeySequence",physicalKey(event).sequenceToken()); putBoolean("isEditable",editor); putInt("target",target!!.id)
     }
     dispatcher!!.dispatchEvent(HostEvent(surface,target!!.id,if(event.action == KeyEvent.ACTION_DOWN) "topKeyDown" else "topKeyUp",data,true))
     return true
