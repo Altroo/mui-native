@@ -1,6 +1,14 @@
 # Validation record
 
-Status: public pre-alpha prototype. The records below describe scoped checks and unresolved gates. Historical hosted runs preceded the public repository; current runs are available in [Actions](https://github.com/Altroo/mui-native/actions/workflows/ci.yml).
+Status: public pre-alpha. The records below describe scoped checks and unresolved gates at the time of each entry. Historical package-availability statements remain unchanged; use the [installation guide](installation.md) for the current preview. Historical hosted runs preceded the public repository; current runs are available in [Actions](https://github.com/Altroo/mui-native/actions/workflows/ci.yml).
+
+## 2026-11-04 pre-alpha 0.0.7 preparation
+
+All nine scoped packages align at `0.0.7-prealpha.0`. The release branch changes version metadata, regenerated inventory and release/upgrade documentation; library runtime source and reviewed upstream-support state are unchanged from [the completed Collapse merge](https://github.com/Altroo/mui-native/pull/65). The candidate includes the intervening Autocomplete, managed-editor, descendant-key/dismissal and Collapse work. Native applications upgrading from the first preview must rebuild with the matching host and exact React Native 0.88.1 adapter baseline.
+
+Isolated local preparation passes 1,874 Jest tests across 59 suites and 115 Node checks, zero-warning ESLint, strict project/catalog/benchmark/consumer types, eight runtime builds with 116 entries, both-platform code generation, inventory generation/freshness and formatting. All nine fresh package archives install in a clean consumer with 29 TSX fixtures, root/deep identity, native source/autolinking/codegen retention and MIT distribution notices. Registry publication and tag creation require separate verification; these local results do not claim that a candidate is already published.
+
+The underlying runtime retains the scoped native evidence recorded below, including both-platform Collapse and managed-editor checks. The version alignment adds no new device-matrix or performance result. Physical keyboards, composing IMEs, screen readers, full font/RTL cases, large-list behavior, calibrated performance and verified-alpha gates remain open. Package preparation does not promote an upstream baseline or complete an unresolved issue.
 
 ## 2026-11-03 native Autocomplete source integration
 
