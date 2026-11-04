@@ -89,7 +89,15 @@
       "Autocomplete",
       "Autocomplete/autocompleteClasses",
       "useAutocomplete",
-      "Collapse"
+      "Collapse",
+      "Accordion",
+      "Accordion/accordionClasses",
+      "AccordionSummary",
+      "AccordionSummary/accordionSummaryClasses",
+      "AccordionDetails",
+      "AccordionDetails/accordionDetailsClasses",
+      "AccordionActions",
+      "AccordionActions/accordionActionsClasses"
     ]
   },
   "@mui/system": {

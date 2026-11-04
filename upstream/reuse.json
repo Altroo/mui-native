@@ -2711,6 +2711,114 @@
         "Reuse the existing transition lifecycle, reduced-motion preference and public native refs. Layout animation uses Animated dimensions with a JavaScript driver.",
         "Resolve defaults, named slot styles, sx, refs and utility identifiers through the native theme system. DOM elements, CSS selectors and HTMLElement mutation require native equivalents."
       ]
+    },
+    {
+      "localFile": "packages/material/src/accordion.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Accordion/Accordion.js": "3da6eb8f19e614bac7428c77920abb8b5a92c70b85aa0452bc2e549ead99cf79",
+          "Accordion/Accordion.d.ts": "95ae93fbf86e3c7a210b2d5fe0b3043cf3115f9161e3a6e181b94ec33ec44123",
+          "Accordion/accordionClasses.js": "8215739726b1a5a4b13b73b28a4b763c11843f709fce8ed2b0c3dcecc46e556b",
+          "Accordion/accordionClasses.d.ts": "de9ff289e55588add27a015cc023023660d6b8a21da1a64baa237d0f448b2e96",
+          "AccordionSummary/AccordionSummary.js": "f8a37365096fbdceffafbbf420426ba6153bc48b93c042914c6fc50173452c6c",
+          "AccordionSummary/AccordionSummary.d.ts": "b75d4a8478015a615a8a881412d239fa4c3c6f57aa694bc09f1830c3d6f60d5b",
+          "AccordionSummary/accordionSummaryClasses.js": "7c1da22b44a33fde64bc89e8ca2d2031b0ada0d6b453b6fb7fb711b42d4552c3",
+          "AccordionSummary/accordionSummaryClasses.d.ts": "839c109ad3f8eabe8630cc6ba3dfccb2d4308c511824e5c6ad50f39528ae796a",
+          "AccordionDetails/AccordionDetails.js": "96a7a5ae34ceadb8a11a1de78144e7002462d6e94dea9d7da7d74245cac82960",
+          "AccordionDetails/AccordionDetails.d.ts": "f69b380742957c3cb43b061ab3293ac7ba9d2af1771eba33ef2f814de2353140",
+          "AccordionDetails/accordionDetailsClasses.js": "9a1aba2925d27a4b122067340b7ebbfa77140694ffe85f6fae3864b156d0f245",
+          "AccordionDetails/accordionDetailsClasses.d.ts": "725e63c5518a0ca69dc44c12dc4cde29218e4bfd8088368ec67836f394cfc7a4",
+          "AccordionActions/AccordionActions.js": "ffe26c439d6a2d631d723ffefe1882429beb2b12e3e264f40030760b8405bee7",
+          "AccordionActions/AccordionActions.d.ts": "cad130d0060930b3e5108137b6860fb1eec34406d2710233512256e0b857a252",
+          "AccordionActions/accordionActionsClasses.js": "edc2cba24fe7754f6f2ee3cc30fced65410f7de5a12512deb61eb01941211a44",
+          "AccordionActions/accordionActionsClasses.d.ts": "75624353ffcf91bb2b7911b44075d19a7b9283670f2a78938c17e82e50d1c0f3",
+          "Accordion/AccordionContext.js": "da8c43dfb688469312656d3700cc5d62fb32940b78de289580704053c2987c43",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+          "utils/useControlled.js": "cc3676101c1b63699e87cc63da468631d76e2b0ebaa53943d52260a815c9fbee"
+        }
+      },
+      "adaptations": [
+        "Paper/View wrappers replace DOM roots, headings and regions. ButtonBase supplies native touch/keyboard activation and Collapse retains one measured body subtree.",
+        "Summary IDs and aria-controls link the native region through nativeID and aria-labelledby. Full platform screen-reader behavior requires device validation.",
+        "Native theme slots/styles replace CSS. Browser sibling pseudo-elements, automatic first/last sibling rounding and animated margin/icon CSS require separate native policies."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/accordionClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Accordion/Accordion.js": "3da6eb8f19e614bac7428c77920abb8b5a92c70b85aa0452bc2e549ead99cf79",
+          "Accordion/Accordion.d.ts": "95ae93fbf86e3c7a210b2d5fe0b3043cf3115f9161e3a6e181b94ec33ec44123",
+          "Accordion/accordionClasses.js": "8215739726b1a5a4b13b73b28a4b763c11843f709fce8ed2b0c3dcecc46e556b",
+          "Accordion/accordionClasses.d.ts": "de9ff289e55588add27a015cc023023660d6b8a21da1a64baa237d0f448b2e96",
+          "AccordionSummary/AccordionSummary.js": "f8a37365096fbdceffafbbf420426ba6153bc48b93c042914c6fc50173452c6c",
+          "AccordionSummary/AccordionSummary.d.ts": "b75d4a8478015a615a8a881412d239fa4c3c6f57aa694bc09f1830c3d6f60d5b",
+          "AccordionSummary/accordionSummaryClasses.js": "7c1da22b44a33fde64bc89e8ca2d2031b0ada0d6b453b6fb7fb711b42d4552c3",
+          "AccordionSummary/accordionSummaryClasses.d.ts": "839c109ad3f8eabe8630cc6ba3dfccb2d4308c511824e5c6ad50f39528ae796a",
+          "AccordionDetails/AccordionDetails.js": "96a7a5ae34ceadb8a11a1de78144e7002462d6e94dea9d7da7d74245cac82960",
+          "AccordionDetails/AccordionDetails.d.ts": "f69b380742957c3cb43b061ab3293ac7ba9d2af1771eba33ef2f814de2353140",
+          "AccordionDetails/accordionDetailsClasses.js": "9a1aba2925d27a4b122067340b7ebbfa77140694ffe85f6fae3864b156d0f245",
+          "AccordionDetails/accordionDetailsClasses.d.ts": "725e63c5518a0ca69dc44c12dc4cde29218e4bfd8088368ec67836f394cfc7a4",
+          "AccordionActions/AccordionActions.js": "ffe26c439d6a2d631d723ffefe1882429beb2b12e3e264f40030760b8405bee7",
+          "AccordionActions/AccordionActions.d.ts": "cad130d0060930b3e5108137b6860fb1eec34406d2710233512256e0b857a252",
+          "AccordionActions/accordionActionsClasses.js": "edc2cba24fe7754f6f2ee3cc30fced65410f7de5a12512deb61eb01941211a44",
+          "AccordionActions/accordionActionsClasses.d.ts": "75624353ffcf91bb2b7911b44075d19a7b9283670f2a78938c17e82e50d1c0f3",
+          "Accordion/AccordionContext.js": "da8c43dfb688469312656d3700cc5d62fb32940b78de289580704053c2987c43",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+          "utils/useControlled.js": "cc3676101c1b63699e87cc63da468631d76e2b0ebaa53943d52260a815c9fbee"
+        }
+      },
+      "adaptations": [
+        "Paper/View wrappers replace DOM roots, headings and regions. ButtonBase supplies native touch/keyboard activation and Collapse retains one measured body subtree.",
+        "Summary IDs and aria-controls link the native region through nativeID and aria-labelledby. Full platform screen-reader behavior requires device validation.",
+        "Native theme slots/styles replace CSS. Browser sibling pseudo-elements, automatic first/last sibling rounding and animated margin/icon CSS require separate native policies."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/accordionTypes.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Accordion/Accordion.js": "3da6eb8f19e614bac7428c77920abb8b5a92c70b85aa0452bc2e549ead99cf79",
+          "Accordion/Accordion.d.ts": "95ae93fbf86e3c7a210b2d5fe0b3043cf3115f9161e3a6e181b94ec33ec44123",
+          "Accordion/accordionClasses.js": "8215739726b1a5a4b13b73b28a4b763c11843f709fce8ed2b0c3dcecc46e556b",
+          "Accordion/accordionClasses.d.ts": "de9ff289e55588add27a015cc023023660d6b8a21da1a64baa237d0f448b2e96",
+          "AccordionSummary/AccordionSummary.js": "f8a37365096fbdceffafbbf420426ba6153bc48b93c042914c6fc50173452c6c",
+          "AccordionSummary/AccordionSummary.d.ts": "b75d4a8478015a615a8a881412d239fa4c3c6f57aa694bc09f1830c3d6f60d5b",
+          "AccordionSummary/accordionSummaryClasses.js": "7c1da22b44a33fde64bc89e8ca2d2031b0ada0d6b453b6fb7fb711b42d4552c3",
+          "AccordionSummary/accordionSummaryClasses.d.ts": "839c109ad3f8eabe8630cc6ba3dfccb2d4308c511824e5c6ad50f39528ae796a",
+          "AccordionDetails/AccordionDetails.js": "96a7a5ae34ceadb8a11a1de78144e7002462d6e94dea9d7da7d74245cac82960",
+          "AccordionDetails/AccordionDetails.d.ts": "f69b380742957c3cb43b061ab3293ac7ba9d2af1771eba33ef2f814de2353140",
+          "AccordionDetails/accordionDetailsClasses.js": "9a1aba2925d27a4b122067340b7ebbfa77140694ffe85f6fae3864b156d0f245",
+          "AccordionDetails/accordionDetailsClasses.d.ts": "725e63c5518a0ca69dc44c12dc4cde29218e4bfd8088368ec67836f394cfc7a4",
+          "AccordionActions/AccordionActions.js": "ffe26c439d6a2d631d723ffefe1882429beb2b12e3e264f40030760b8405bee7",
+          "AccordionActions/AccordionActions.d.ts": "cad130d0060930b3e5108137b6860fb1eec34406d2710233512256e0b857a252",
+          "AccordionActions/accordionActionsClasses.js": "edc2cba24fe7754f6f2ee3cc30fced65410f7de5a12512deb61eb01941211a44",
+          "AccordionActions/accordionActionsClasses.d.ts": "75624353ffcf91bb2b7911b44075d19a7b9283670f2a78938c17e82e50d1c0f3",
+          "Accordion/AccordionContext.js": "da8c43dfb688469312656d3700cc5d62fb32940b78de289580704053c2987c43",
+          "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
+          "utils/useControlled.js": "cc3676101c1b63699e87cc63da468631d76e2b0ebaa53943d52260a815c9fbee"
+        }
+      },
+      "adaptations": [
+        "Paper/View wrappers replace DOM roots, headings and regions. ButtonBase supplies native touch/keyboard activation and Collapse retains one measured body subtree.",
+        "Summary IDs and aria-controls link the native region through nativeID and aria-labelledby. Full platform screen-reader behavior requires device validation.",
+        "Native theme slots/styles replace CSS. Browser sibling pseudo-elements, automatic first/last sibling rounding and animated margin/icon CSS require separate native policies."
+      ]
     }
   ]
 }
