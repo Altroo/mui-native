@@ -460,6 +460,11 @@
       "types": "./dist/useAutocomplete/index.d.ts",
       "react-native": "./src/useAutocomplete/index.ts",
       "default": "./dist/useAutocomplete/index.js"
+    },
+    "./Collapse": {
+      "types": "./dist/Collapse/index.d.ts",
+      "react-native": "./src/Collapse/index.ts",
+      "default": "./dist/Collapse/index.js"
     }
   },
   "dependencies": {

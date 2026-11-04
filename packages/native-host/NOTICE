@@ -16,7 +16,9 @@ also adapt those MIT-licensed references; native glyph geometry is independently
 Popper wrapper, slots, refs, RTL and transition/instance composition also adapt
 those MIT-licensed references. Autocomplete filtering, value mapping, state transitions,
 component/slot composition and public contracts also adapt those MIT-licensed
-references; native scrolling and indicator geometry are independently authored. Upstream public declaration
+references; native scrolling and indicator geometry are independently authored. Collapse
+lifecycle, slot routing, utility identifiers and measured-size timing also adapt
+those MIT-licensed references; native layout measurement and animation are independently authored. Upstream public declaration
 snapshots and license texts are retained under upstream/. Derived declaration
 inventories are retained under compatibility/inventory/. Their applicable MIT
 notices are preserved in upstream/licenses/. No Pro or Premium source, assets,

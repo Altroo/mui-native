@@ -1,0 +1,970 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Collapse/Collapse.js": "e0750d50217121d074b78c12fc95f6d401c8c3bce485164dbfc5904ac8a06b01",
+      "Collapse/Collapse.d.ts": "3f38dc5f08427bfe5686a91744482c658e3ac125338376ccad1e5319b96b3269",
+      "Collapse/collapseClasses.js": "ccc1bf02b9b651d9f546024845878d790c36ef7ab9a8bd8814e7e8bb0eaba8b6",
+      "Collapse/collapseClasses.d.ts": "057a6bc4d8d4ebc4817ad261915f898cf589b62194058913ed9eb4c25f14544f",
+      "internal/Transition.js": "fe41fac545e304b2c3bdb11f1a94169a6341bb07961e2309e566f0772be00d46",
+      "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+      "transitions/useReducedMotion.js": "42df7550b2f23181c5ceddb7d430918bac71f135e4842d280ba6af01c5aad5b7",
+      "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246"
+    }
+  },
+  "muiSupportAuto": true,
+  "classes": {
+    "root": "MuiCollapse-root",
+    "horizontal": "MuiCollapse-horizontal",
+    "vertical": "MuiCollapse-vertical",
+    "entered": "MuiCollapse-entered",
+    "hidden": "MuiCollapse-hidden",
+    "wrapper": "MuiCollapse-wrapper",
+    "wrapperInner": "MuiCollapse-wrapperInner"
+  },
+  "globalDisabled": "Mui-disabled",
+  "slotComposition": {
+    "root": "article",
+    "wrapper": "aside",
+    "inner": "section",
+    "id": "top-id",
+    "title": "Top",
+    "clicks": ["top"]
+  },
+  "fixtures": [
+    {
+      "name": "default vertical",
+      "initial": false,
+      "props": {},
+      "actions": [
+        { "open": true },
+        { "tick": 299 },
+        { "tick": 1 },
+        { "open": false },
+        { "tick": 300 }
+      ],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "300ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "300ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "300ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "300ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "300ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "default initially expanded does not appear",
+      "initial": true,
+      "props": {},
+      "actions": [{ "open": false }, { "tick": 300 }],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["exit", "exiting"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "300ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["exit", "exiting", "exited"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "300ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null, null]
+        }
+      ]
+    },
+    {
+      "name": "explicit appear",
+      "initial": true,
+      "props": { "appear": true, "timeout": { "appear": 5, "enter": 20, "exit": 30 } },
+      "actions": [{ "tick": 5 }, { "open": false }, { "tick": 30 }],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:true", "entering:true"],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "20ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "20ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "30ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:true", "entering:true", "entered:true", "exit", "exiting", "exited"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "30ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null, null]
+        }
+      ]
+    },
+    {
+      "name": "horizontal natural size",
+      "initial": false,
+      "props": { "orientation": "horizontal", "timeout": 20 },
+      "actions": [{ "open": true }, { "tick": 20 }, { "open": false }, { "tick": 20 }],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal", "MuiCollapse-hidden"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [],
+          "style": { "width": "120px", "transitionDuration": "20ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [],
+          "style": { "width": "auto", "transitionDuration": "20ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "autoSizes": [],
+          "style": { "width": "0px", "transitionDuration": "20ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "autoSizes": [],
+          "style": { "width": "0px", "transitionDuration": "20ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal", "MuiCollapse-hidden"],
+          "slotOwners": [null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "nonzero collapsed numeric size",
+      "initial": false,
+      "props": { "collapsedSize": 12, "timeout": 10 },
+      "actions": [{ "open": true }, { "tick": 10 }, { "open": false }, { "tick": 10 }],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "10ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "10ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "autoSizes": [],
+          "style": { "height": "12px", "transitionDuration": "10ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "autoSizes": [],
+          "style": { "height": "12px", "transitionDuration": "10ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "zero string is not the hidden class",
+      "initial": false,
+      "props": { "collapsedSize": "0", "timeout": 1 },
+      "actions": [{ "open": true }, { "tick": 1 }, { "open": false }, { "tick": 1 }],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "1ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "1ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "autoSizes": [],
+          "style": { "height": "0", "transitionDuration": "1ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "autoSizes": [],
+          "style": { "height": "0", "transitionDuration": "1ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "vertical auto uses measured height",
+      "initial": false,
+      "props": { "timeout": "auto" },
+      "actions": [
+        { "open": true },
+        { "tick": 1000 },
+        { "height": 72 },
+        { "open": false },
+        { "tick": 1000 }
+      ],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [36],
+          "style": { "height": "36px", "transitionDuration": "192ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [36],
+          "style": { "height": "auto", "transitionDuration": "192ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [36],
+          "style": { "height": "auto", "transitionDuration": "192ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "autoSizes": [36, 72],
+          "style": { "height": "0px", "transitionDuration": "222ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "autoSizes": [36, 72],
+          "style": { "height": "0px", "transitionDuration": "222ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "horizontal auto uses measured width",
+      "initial": false,
+      "props": { "timeout": "auto", "orientation": "horizontal" },
+      "actions": [
+        { "open": true },
+        { "tick": 1000 },
+        { "width": 200 },
+        { "open": false },
+        { "tick": 1000 }
+      ],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal", "MuiCollapse-hidden"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [120],
+          "style": { "width": "120px", "transitionDuration": "249ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [120],
+          "style": { "width": "auto", "transitionDuration": "249ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [120],
+          "style": { "width": "auto", "transitionDuration": "249ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "autoSizes": [120, 200],
+          "style": { "width": "0px", "transitionDuration": "281ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "autoSizes": [120, 200],
+          "style": { "width": "0px", "transitionDuration": "281ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal", "MuiCollapse-hidden"],
+          "slotOwners": [null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "style duration easing overrides phase timing",
+      "initial": false,
+      "props": {
+        "timeout": 40,
+        "easing": { "enter": "ease-in", "exit": "ease-out" },
+        "style": {
+          "transitionDuration": "120ms",
+          "transitionTimingFunction": "linear",
+          "transitionDelay": "7ms"
+        }
+      },
+      "actions": [{ "open": true }, { "tick": 40 }, { "open": false }, { "tick": 40 }],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [],
+          "style": {
+            "height": "36px",
+            "transitionDuration": "120ms",
+            "transitionTimingFunction": "linear"
+          },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [],
+          "style": {
+            "height": "auto",
+            "transitionDuration": "120ms",
+            "transitionTimingFunction": "linear"
+          },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "autoSizes": [],
+          "style": {
+            "height": "0px",
+            "transitionDuration": "120ms",
+            "transitionTimingFunction": "linear"
+          },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "autoSizes": [],
+          "style": {
+            "height": "0px",
+            "transitionDuration": "120ms",
+            "transitionTimingFunction": "linear"
+          },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "interrupted listener generation",
+      "initial": false,
+      "listener": true,
+      "props": { "timeout": 50 },
+      "actions": [
+        { "open": true },
+        { "open": false },
+        { "open": true },
+        { "done": 0 },
+        { "done": 1 },
+        { "done": 2 },
+        { "tick": 100 }
+      ],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "50ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "exit", "exiting"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "50ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": [
+            "enter:false",
+            "entering:false",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false"
+          ],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "50ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": [
+            "enter:false",
+            "entering:false",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false"
+          ],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "50ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": [
+            "enter:false",
+            "entering:false",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false"
+          ],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "50ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": [
+            "enter:false",
+            "entering:false",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false",
+            "entered:false"
+          ],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "50ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": [
+            "enter:false",
+            "entering:false",
+            "exit",
+            "exiting",
+            "enter:false",
+            "entering:false",
+            "entered:false"
+          ],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "50ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "mount and unmount",
+      "initial": false,
+      "props": { "mountOnEnter": true, "unmountOnExit": true, "timeout": 10 },
+      "actions": [
+        { "open": true },
+        { "tick": 10 },
+        { "open": false },
+        { "tick": 10 },
+        { "open": true },
+        { "tick": 10 }
+      ],
+      "snapshots": [
+        {
+          "mounted": false,
+          "state": "unmounted",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": [],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "10ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "10ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "10ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": false,
+          "state": "unmounted",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "10ms" },
+          "classes": [],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": [
+            "enter:false",
+            "entering:false",
+            "entered:false",
+            "exit",
+            "exiting",
+            "exited",
+            "enter:false",
+            "entering:false"
+          ],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "10ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": [
+            "enter:false",
+            "entering:false",
+            "entered:false",
+            "exit",
+            "exiting",
+            "exited",
+            "enter:false",
+            "entering:false",
+            "entered:false"
+          ],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "10ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "disabled phases retain appear",
+      "initial": true,
+      "props": { "appear": true, "enter": false, "exit": false, "timeout": 5 },
+      "actions": [{ "tick": 5 }, { "open": false }, { "open": true }],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:true", "entering:true"],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "5ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:true", "entering:true", "entered:true"],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "5ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:true", "entering:true", "entered:true", "exited"],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "5ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:true", "entering:true", "entered:true", "exited", "entered:false"],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "5ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "reduced motion clears auto deadline",
+      "initial": false,
+      "reduced": true,
+      "props": { "timeout": "auto" },
+      "actions": [{ "open": true }, { "tick": 0 }, { "open": false }, { "tick": 0 }],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [],
+          "style": { "height": "36px", "transitionDuration": "0ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [],
+          "style": { "height": "auto", "transitionDuration": "0ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "0ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "autoSizes": [],
+          "style": { "height": "0px", "transitionDuration": "0ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null, null, null]
+        }
+      ]
+    },
+    {
+      "name": "motion opt out retains auto duration",
+      "initial": false,
+      "reduced": true,
+      "props": { "timeout": "auto", "disablePrefersReducedMotion": true },
+      "actions": [{ "open": true }, { "tick": 1000 }],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-hidden"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [36],
+          "style": { "height": "36px", "transitionDuration": "192ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [36],
+          "style": { "height": "auto", "transitionDuration": "192ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-vertical", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        }
+      ]
+    },
+    {
+      "name": "theme defaults apply",
+      "initial": false,
+      "defaults": { "timeout": 9, "orientation": "horizontal", "collapsedSize": 4 },
+      "props": {},
+      "actions": [{ "open": true }, { "tick": 9 }, { "open": false }, { "tick": 9 }],
+      "snapshots": [
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": [],
+          "autoSizes": [],
+          "style": {},
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal"],
+          "slotOwners": [null]
+        },
+        {
+          "mounted": true,
+          "state": "entering",
+          "trace": ["enter:false", "entering:false"],
+          "autoSizes": [],
+          "style": { "width": "120px", "transitionDuration": "9ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "entered",
+          "trace": ["enter:false", "entering:false", "entered:false"],
+          "autoSizes": [],
+          "style": { "width": "auto", "transitionDuration": "9ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal", "MuiCollapse-entered"],
+          "slotOwners": [null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exiting",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting"],
+          "autoSizes": [],
+          "style": { "width": "4px", "transitionDuration": "9ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal"],
+          "slotOwners": [null, null, null]
+        },
+        {
+          "mounted": true,
+          "state": "exited",
+          "trace": ["enter:false", "entering:false", "entered:false", "exit", "exiting", "exited"],
+          "autoSizes": [],
+          "style": { "width": "4px", "transitionDuration": "9ms" },
+          "classes": ["MuiCollapse-root", "MuiCollapse-horizontal"],
+          "slotOwners": [null, null, null]
+        }
+      ]
+    }
+  ]
+}
