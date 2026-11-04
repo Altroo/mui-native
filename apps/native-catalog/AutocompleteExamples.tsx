@@ -73,6 +73,12 @@ function CityField({ mode }: { mode: Mode }) {
   const [value, setValue] = useState<number | string | null>(mode === 'States' ? 1 : null);
   const [selected, setSelected] = useState<number[]>([1, 2]);
   const [lastAction, setLastAction] = useState('No selection yet');
+  const [changeCount, setChangeCount] = useState(0);
+  const [lastDeletionKey, setLastDeletionKey] = useState('none');
+  const recordAction = (action: string) => {
+    setLastAction(action);
+    setChangeCount((count) => count + 1);
+  };
   const [highlighted, setHighlighted] = useState('None');
   const [focusedControl, setFocusedControl] = useState('None');
   const [selectionReceipt, setSelectionReceipt] = useState('None');
@@ -133,6 +139,9 @@ function CityField({ mode }: { mode: Mode }) {
       listbox: { testID: 'autocomplete-listbox' },
       popper: { testID: 'autocomplete-popup' },
     },
+    onKeyDown: (event: { key: string }) => {
+      if (event.key === 'Backspace' || event.key === 'Delete') setLastDeletionKey(event.key);
+    },
     onHighlightChange: (_: unknown, option: City | null, reason: string) =>
       setHighlighted(option ? option.city + ' (' + reason + ')' : 'None'),
     renderOption: (props: NativeAutocompleteOptionProps, option: City) => {
@@ -182,7 +191,7 @@ function CityField({ mode }: { mode: Mode }) {
             value={selected}
             onChange={(_, next, reason) => {
               setSelected(next);
-              setLastAction(reason + ': ' + next.join(', '));
+              recordAction(reason + ': ' + next.join(', '));
             }}
             limitTags={2}
           />
@@ -193,7 +202,7 @@ function CityField({ mode }: { mode: Mode }) {
             value={value}
             onChange={(_, next, reason) => {
               setValue(next);
-              setLastAction(reason + ': ' + String(next));
+              recordAction(reason + ': ' + String(next));
             }}
           />
         ) : (
@@ -204,7 +213,7 @@ function CityField({ mode }: { mode: Mode }) {
             getOptionDisabled={mode === 'States' ? (option) => option.id === 3 : undefined}
             onChange={(_, next, reason) => {
               setValue(next);
-              setLastAction(reason + ': ' + String(next));
+              recordAction(reason + ': ' + String(next));
             }}
           />
         )}
@@ -226,9 +235,15 @@ function CityField({ mode }: { mode: Mode }) {
         <Typography testID="autocomplete-highlight" variant="caption" color="text.secondary">
           {highlighted}
         </Typography>
-        <Typography testID="autocomplete-focused-control" variant="caption" color="text.secondary">
-          {focusedControl}
-        </Typography>
+        <View testID={'autocomplete-events-' + changeCount + '-' + lastDeletionKey}>
+          <Typography
+            testID="autocomplete-focused-control"
+            variant="caption"
+            color="text.secondary"
+          >
+            {focusedControl}
+          </Typography>
+        </View>
         <Typography testID="autocomplete-native-selection" variant="caption" color="text.secondary">
           {selectionReceipt}
         </Typography>

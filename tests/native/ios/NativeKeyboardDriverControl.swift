@@ -23,9 +23,13 @@ enum NativeKeyboardDriverControl {
 private final class NativeKeyControlField: UITextField {
   var commandReceipt: ((String) -> Void)?
   var pressReceipt: ((String) -> Void)?
+  static let inputs: [String: String] = [
+    "ArrowDown": UIKeyCommand.inputDownArrow, "Escape": UIKeyCommand.inputEscape,
+    "Backspace": UIKeyCommand.inputDelete,
+  ]
   override var keyCommands: [UIKeyCommand]? {
     var commands = super.keyCommands ?? []
-    for input in [UIKeyCommand.inputDownArrow, UIKeyCommand.inputEscape] {
+    for input in Self.inputs.values {
       for combination in 0..<32 {
         var flags: UIKeyModifierFlags = []
         if combination & 1 != 0 { flags.insert(.shift) }
@@ -46,7 +50,7 @@ private final class NativeKeyControlField: UITextField {
     action == #selector(recordCommand(_:)) || super.canPerformAction(action, withSender: sender)
   }
   @objc private func recordCommand(_ command: UIKeyCommand) {
-    commandReceipt?(command.input == UIKeyCommand.inputEscape ? "Escape" : "ArrowDown")
+    for (name, input) in Self.inputs where command.input == input { commandReceipt?(name) }
   }
   override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
     for press in presses { if let key = press.key { pressReceipt?("down:\(key.keyCode.rawValue)") } }
@@ -60,7 +64,7 @@ private final class NativeKeyControlField: UITextField {
 private final class NativeKeyControlController: UIViewController {
   let field = NativeKeyControlField()
   let receipt = UILabel()
-  var counts: [String: Int] = ["ArrowDown": 0, "Escape": 0]
+  var counts = Dictionary(uniqueKeysWithValues: NativeKeyControlField.inputs.keys.map { ($0, 0) })
   var presses: [String] = []
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -73,6 +77,8 @@ private final class NativeKeyControlController: UIViewController {
     field.borderStyle = .roundedRect
     field.autocorrectionType = .no
     field.autocapitalizationType = .none
+    // Text API deletion can bypass physical press/command callbacks.
+    field.addTarget(self, action: #selector(recordTextEdit), for: .editingChanged)
     receipt.accessibilityIdentifier = "native-key-receipt"
     receipt.isAccessibilityElement = true
     receipt.numberOfLines = 0
@@ -99,8 +105,11 @@ private final class NativeKeyControlController: UIViewController {
     }
     updateReceipt()
   }
+  @objc private func recordTextEdit() { updateReceipt() }
   private func updateReceipt() {
-    let value: [String: Any] = ["counts": counts, "presses": presses, "escapeInput": UIKeyCommand.inputEscape]
+    let value: [String: Any] = ["counts": counts, "presses": presses,
+      "inputs": NativeKeyControlField.inputs.mapValues { $0.unicodeScalars.map(\.value) },
+      "escapeInput": UIKeyCommand.inputEscape, "text": field.text ?? ""]
     let data = try! JSONSerialization.data(withJSONObject: value, options: [.sortedKeys])
     receipt.text = String(data: data, encoding: .utf8)
   }

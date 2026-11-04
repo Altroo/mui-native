@@ -22,11 +22,18 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.BaseInputConnection;
+import com.altroo.muinativehost.AltrooMUIInteractiveView;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import com.facebook.react.views.modal.ReactModalHostView;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.uimanager.UIManagerHelper;
+import com.facebook.react.uimanager.events.EventDispatcher;
+import com.facebook.react.uimanager.events.EventDispatcherListener;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.File;
@@ -43,7 +50,7 @@ public final class AutocompleteScenario {
   private UiAutomation automation;
   private int testId;
   private File artifacts;
-  private final JSONArray stages = new JSONArray(), screenshots = new JSONArray(), touches = new JSONArray();
+  private final JSONArray stages = new JSONArray(), screenshots = new JSONArray(), touches = new JSONArray(), keyContexts = new JSONArray();
   private AutocompleteScenario(Instrumentation driver) { this.driver = driver; }
   public static void run(Instrumentation driver) { new AutocompleteScenario(driver).run(); }
   private void run() {
@@ -83,8 +90,7 @@ public final class AutocompleteScenario {
       tap("autocomplete-mode-Multiple");
       await(() -> ui(() -> text("autocomplete-selection").equals("No selection yet")), "Multiple mode did not reset");
       tap("autocomplete-editor");
-      key(KeyEvent.KEYCODE_DPAD_LEFT);
-      await(() -> ui(() -> view("autocomplete-chip-Casablanca").hasFocus() && find("autocomplete-popup") == null), "Caret-start Left must focus the last tag and close suggestions");
+      report.put("tagEntryRelease", enterLastTagWithHeldLeft());
       stage("tag-start-focus"); capture("tag-focus.png");
       key(KeyEvent.KEYCODE_DPAD_LEFT);
       await(() -> ui(() -> view("autocomplete-chip-Rabat").hasFocus()), "Left must focus the preceding tag");
@@ -107,8 +113,47 @@ public final class AutocompleteScenario {
       ui(() -> { editor().setSelection(0, editor().length()); return null; });
       key(KeyEvent.KEYCODE_DEL);
       await(() -> ui(() -> editor().getText().length() == 0 && editor().hasFocus()), "Native deletion must clear only the draft before existing selection checks");
+      require(ui(() -> find("autocomplete-chip-Rabat") != null && find("autocomplete-chip-Casablanca") != null), "Deleting nonempty native text must retain both selected values");
       if (ui(() -> find("autocomplete-popup") != null)) key(KeyEvent.KEYCODE_ESCAPE);
       await(() -> ui(() -> find("autocomplete-popup") == null), "Close the draft's suggestions before the existing selection scenario");
+      key(KeyEvent.KEYCODE_DPAD_LEFT);
+      await(() -> ui(() -> view("autocomplete-chip-Casablanca").hasFocus()), "Focus the last selected tag before release deletion");
+      key(KeyEvent.KEYCODE_DPAD_LEFT);
+      await(() -> ui(() -> view("autocomplete-chip-Rabat").hasFocus()), "Focus the first tag for owned Delete");
+      long deleteTime = SystemClock.uptimeMillis();
+      keyPart(KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.ACTION_DOWN, deleteTime, 0);
+      await(() -> ui(() -> find("autocomplete-events-0-Delete") != null), "The actual Delete-down callback must settle before checking the held tag");
+      require(ui(() -> view("autocomplete-chip-Rabat").hasFocus() && find("autocomplete-chip-Casablanca") != null), "Delete-down must retain both values and native tag focus");
+      stage("tag-delete-held");
+      keyPart(KeyEvent.KEYCODE_FORWARD_DEL, KeyEvent.ACTION_UP, deleteTime, 0);
+      selection("removeOption: 2");
+      await(() -> ui(() -> find("autocomplete-events-1-Delete") != null && editor().hasFocus() && find("autocomplete-chip-Rabat") == null), "Delete release must remove exactly one tag and restore editor focus");
+      stage("tag-delete-release");
+      tap("autocomplete-toggle");
+      await(() -> ui(() -> find("autocomplete-option-1") != null), "Restore the removed tag through its actual option");
+      tap("autocomplete-option-1"); selection("selectOption: 2, 1");
+      key(KeyEvent.KEYCODE_ESCAPE);
+      await(() -> ui(() -> find("autocomplete-popup") == null), "Close suggestions before empty-editor Backspace");
+      key(KeyEvent.KEYCODE_DEL);
+      selection("removeOption: 2");
+      await(() -> ui(() -> find("autocomplete-events-3-Backspace") != null && editor().hasFocus() && find("autocomplete-chip-Rabat") == null), "Empty-editor Backspace must remove one final tag without losing focus");
+      stage("editor-backspace");
+      Window.Callback beforeFinalTag = ui(() -> activity.getWindow().getCallback());
+      key(KeyEvent.KEYCODE_DEL);
+      await(() -> ui(() -> find("autocomplete-events-4-Backspace") != null && find("autocomplete-chip-Casablanca") == null &&
+        editor().hasFocus() && !hasDescendantKey("Backspace")), "The final selected value must remove Backspace ownership");
+      require(ui(() -> activity.getWindow().getCallback() == beforeFinalTag), "Final-tag Backspace must retire its window lease");
+      stage("editor-final-backspace");
+      key(KeyEvent.KEYCODE_DEL);
+      require(ui(() -> find("autocomplete-events-4-Backspace") != null && activity.getWindow().getCallback() == beforeFinalTag), "An unowned Backspace must not remove another value or retain a window lease");
+      stage("editor-backspace-unowned"); capture("editor-empty.png");
+      tap("autocomplete-toggle");
+      await(() -> ui(() -> find("autocomplete-option-1") != null), "Restore original membership for touch-deletion checks");
+      tap("autocomplete-option-1"); selection("selectOption: 1");
+      await(() -> ui(() -> find("autocomplete-option-2") != null), "Restore the second original selected value");
+      tap("autocomplete-option-2"); selection("selectOption: 1, 2");
+      key(KeyEvent.KEYCODE_ESCAPE);
+      await(() -> ui(() -> find("autocomplete-popup") == null), "Close restored suggestions before touch deletion");
       tap("autocomplete-chip-Rabat-delete"); selection("removeOption: 2"); stage("multiple-remove");
       tap("autocomplete-toggle"); await(() -> ui(() -> find("autocomplete-option-1") != null && find("autocomplete-option-2") == null), "Selected options were not excluded");
       tap("autocomplete-option-3"); selection("selectOption: 2, 3");
@@ -213,10 +258,36 @@ public final class AutocompleteScenario {
     } catch (Throwable error) {
       try { report.put("error", error.toString()); capture("failure.png"); } catch (Throwable ignored) { /* Keep the original assertion. */ }
     } finally {
-      try { report.put("status", passed ? "passed" : "failed").put("stages", stages).put("screenshots", screenshots).put("touches", touches); result.putString("autocompleteReport", report.toString()); }
+      try { report.put("keyContexts", keyContexts).put("status", passed ? "passed" : "failed").put("stages", stages).put("screenshots", screenshots).put("touches", touches); result.putString("autocompleteReport", report.toString()); }
       catch (Exception error) { result.putString("Error", error.toString()); passed = false; }
       driver.finish(passed ? Activity.RESULT_OK : Activity.RESULT_CANCELED, result);
     }
+  }
+  /** Hold Left until native focus has moved; the release must not reach the new Chip. */
+  private JSONObject enterLastTagWithHeldLeft() throws Exception {
+    Window window = activity.getWindow();
+    Window.Callback original = ui(window::getCallback);
+    int editorTag = ui(() -> editor().getId()), chipTag = ui(() -> view("autocomplete-chip-Casablanca").getId());
+    AtomicInteger editorUps = new AtomicInteger(), chipUps = new AtomicInteger();
+    EventDispatcher dispatcher = ui(() -> UIManagerHelper.getEventDispatcher((ReactContext)editor().getContext()));
+    require(dispatcher != null, "Native event dispatcher unavailable");
+    EventDispatcherListener listener = event -> {
+      if (!event.getEventName().equals("topKeyUp") && !event.getEventName().equals("topMUIKeyUp")) return;
+      if (event.getViewTag() == editorTag) editorUps.incrementAndGet();
+      if (event.getViewTag() == chipTag) chipUps.incrementAndGet();
+    };
+    dispatcher.addListener(listener);
+    try {
+      long time = SystemClock.uptimeMillis();
+      keyPart(KeyEvent.KEYCODE_DPAD_LEFT, KeyEvent.ACTION_DOWN, time, 0);
+      await(() -> ui(() -> view("autocomplete-chip-Casablanca").hasFocus() && find("autocomplete-popup") == null), "Caret-start Left must focus the last tag and close suggestions before release");
+      require(ui(() -> window.getCallback() != original), "Held Left must retain its native window lease after moving focus");
+      keyPart(KeyEvent.KEYCODE_DPAD_LEFT, KeyEvent.ACTION_UP, time, 0);
+      await(() -> ui(() -> window.getCallback() == original), "Left release must retire the original native window lease");
+      require(editorUps.get() == 0 && chipUps.get() == 0, "A release after native focus departure must notify neither old editor nor new Chip");
+      return new JSONObject().put("focusChangedBeforeUp", true).put("callbackRestored", true)
+        .put("editorUps", editorUps.get()).put("chipUps", chipUps.get());
+    } finally { dispatcher.removeListener(listener); }
   }
   /** Child Escape must retain the actual Dialog and restore its release callback. */
   private Window childEscape(String prefix, String picture) throws Exception {
@@ -280,9 +351,33 @@ public final class AutocompleteScenario {
       if (view.getAlpha() <= 0) return false;
     return true;
   }
+  private boolean hasDescendantKey(String key) {
+    for (View view = editor(); view != null; view = view.getParent() instanceof View ? (View)view.getParent() : null)
+      if (view instanceof AltrooMUIInteractiveView && ((AltrooMUIInteractiveView)view).getManagedDescendantKeys().contains(key)) return true;
+    return false;
+  }
+  private void keyPart(int code, int action, long downTime, int repeat) {
+    if (code == KeyEvent.KEYCODE_DPAD_LEFT && action == KeyEvent.ACTION_DOWN) {
+      require(keyContexts.length() < 128, "Preserve complete bounded key context");
+      keyContexts.put(ui(() -> {
+        EditText input = editor(); JSONObject value = new JSONObject();
+        value.put("text", input.getText().toString()).put("start", input.getSelectionStart()).put("end", input.getSelectionEnd())
+          .put("composingStart", BaseInputConnection.getComposingSpanStart(input.getText()))
+          .put("composingEnd", BaseInputConnection.getComposingSpanEnd(input.getText())).put("editorFocused", input.hasFocus());
+        View focus = input.getRootView().findFocus(); value.put("focused", focus == null ? "none" : String.valueOf(focus.getTag(testId)));
+        JSONArray owners = new JSONArray(); View parent = input;
+        while (parent != null) {
+          if (parent instanceof AltrooMUIInteractiveView) owners.put(((AltrooMUIInteractiveView)parent).getManagedDescendantKeys().toString());
+          parent = parent.getParent() instanceof View ? (View)parent.getParent() : null;
+        }
+        value.put("owners", owners); return value;
+      }));
+    }
+    driver.sendKeySync(new KeyEvent(downTime, SystemClock.uptimeMillis(), action, code, repeat, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0, 0, InputDevice.SOURCE_KEYBOARD));
+  }
   private void key(int code) {
     long time = SystemClock.uptimeMillis();
-    for (int action : new int[] {KeyEvent.ACTION_DOWN, KeyEvent.ACTION_UP}) driver.sendKeySync(new KeyEvent(time, SystemClock.uptimeMillis(), action, code, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0, 0, InputDevice.SOURCE_KEYBOARD));
+    for (int action : new int[] {KeyEvent.ACTION_DOWN, KeyEvent.ACTION_UP}) keyPart(code, action, time, 0);
   }
   private void tap(String id) throws Exception {
     await(() -> ui(() -> find(id) != null && view(id).getWidth() > 0 && opaque(view(id))), "Target did not lay out visibly: " + id);

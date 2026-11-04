@@ -13,6 +13,7 @@ const report = () => ({
   artifactDirectory: 'cache/mui-autocomplete-1',
   stages: [...autocompleteStages],
   screenshots: [...autocompletePictures],
+  tagEntryRelease: { focusChangedBeforeUp: true, callbackRestored: true, editorUps: 0, chipUps: 0 },
   freeSoloBursts: Array.from({ length: 8 }, (_, index) => ({
     index,
     status: 'passed',
@@ -122,10 +123,11 @@ test('all eight ordered complete native typing bursts are required, including re
 test('the earlier 17-stage APK cannot satisfy Dialog Escape release coverage', () => {
   const previous = report();
   previous.stages = previous.stages.filter(
-    (stage) => !stage.includes('escape') && !stage.startsWith('tag-'),
+    (stage) =>
+      !stage.includes('escape') && !stage.startsWith('tag-') && !stage.startsWith('editor-'),
   );
   previous.screenshots = previous.screenshots.filter(
-    (name) => !name.includes('escape') && !name.startsWith('tag-'),
+    (name) => !name.includes('escape') && !name.startsWith('tag-') && name !== 'editor-empty.png',
   );
   assert.equal(previous.stages.length, 17);
   assert.equal(previous.screenshots.length, 5);
@@ -134,9 +136,38 @@ test('the earlier 17-stage APK cannot satisfy Dialog Escape release coverage', (
 
 test('the earlier 21-stage APK cannot satisfy native tag/caret coverage', () => {
   const previous = report();
-  previous.stages = previous.stages.filter((stage) => !stage.startsWith('tag-'));
-  previous.screenshots = previous.screenshots.filter((name) => !name.startsWith('tag-'));
+  previous.stages = previous.stages.filter(
+    (stage) => !stage.startsWith('tag-') && !stage.startsWith('editor-'),
+  );
+  previous.screenshots = previous.screenshots.filter(
+    (name) => !name.startsWith('tag-') && name !== 'editor-empty.png',
+  );
   assert.equal(previous.stages.length, 21);
   assert.equal(previous.screenshots.length, 7);
   assert.throws(() => summarizeAutocomplete(raw(previous)));
+});
+
+test('the earlier 25-stage APK cannot certify native editor Backspace or held tag Delete', () => {
+  const previous = report();
+  previous.stages = previous.stages.filter(
+    (stage) =>
+      !['tag-delete-held', 'tag-delete-release'].includes(stage) && !stage.startsWith('editor-'),
+  );
+  assert.equal(previous.stages.length, 25);
+  assert.throws(() => summarizeAutocomplete(raw(previous)));
+});
+
+test('native focus transfer requires a retired lease and no release to either stale target', () => {
+  for (const release of [
+    undefined,
+    {},
+    { focusChangedBeforeUp: false, callbackRestored: true, editorUps: 0, chipUps: 0 },
+    { focusChangedBeforeUp: true, callbackRestored: false, editorUps: 0, chipUps: 0 },
+    { focusChangedBeforeUp: true, callbackRestored: true, editorUps: 1, chipUps: 0 },
+    { focusChangedBeforeUp: true, callbackRestored: true, editorUps: 0, chipUps: 1 },
+  ]) {
+    const value = report();
+    value.tagEntryRelease = release;
+    assert.throws(() => summarizeAutocomplete(raw(value)), /release ownership/);
+  }
 });
