@@ -23,7 +23,7 @@ static NSDictionary<NSString *, NSString *> *AltrooDescendantInputs(void) {
     inputs = @{@"Tab": @"\t", @"Escape": UIKeyInputEscape, @"Enter": @"\r",
       @"ArrowUp": UIKeyInputUpArrow, @"ArrowDown": UIKeyInputDownArrow, @"ArrowLeft": UIKeyInputLeftArrow,
       @"PageUp": UIKeyInputPageUp, @"PageDown": UIKeyInputPageDown,
-      @"Home": UIKeyInputHome, @"End": UIKeyInputEnd};
+      @"Home": UIKeyInputHome, @"End": UIKeyInputEnd, @"Backspace": UIKeyInputDelete};
   });
   return inputs;
 }
@@ -79,9 +79,10 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
         if (combination & 4) flags |= UIKeyModifierAlternate;
         if (combination & 8) flags |= UIKeyModifierCommand;
         if (combination & 16) flags |= UIKeyModifierAlphaShift;
-        // UIKit may validate with a nil sender. Give the caret-boundary key
-        // its own action so another eligible command cannot enable Left.
-        SEL action = [name isEqualToString:@"ArrowLeft"] ? @selector(altroo_handleDescendantLeftKeyCommand:) : @selector(altroo_handleDescendantKeyCommand:);
+        // UIKit may validate with a nil sender. Each editor boundary needs
+        // its own action so another eligible command cannot enable it.
+        SEL action = [name isEqualToString:@"ArrowLeft"] ? @selector(altroo_handleDescendantLeftKeyCommand:) :
+          [name isEqualToString:@"Backspace"] ? @selector(altroo_handleDescendantBackspaceKeyCommand:) : @selector(altroo_handleDescendantKeyCommand:);
         UIKeyCommand *command = [UIKeyCommand keyCommandWithInput:input modifierFlags:flags action:action];
         command.wantsPriorityOverSystemBehavior = YES;
         command.allowsAutomaticLocalization = NO; command.allowsAutomaticMirroring = NO;
@@ -116,6 +117,12 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
     UITextRange *range = input.selectedTextRange;
     if (!range || !range.isEmpty || [input offsetFromPosition:input.beginningOfDocument toPosition:range.start] != 0) return nil;
   }
+  if ([name isEqualToString:@"Backspace"]) {
+    if (![source conformsToProtocol:@protocol(UITextInput)]) return nil;
+    id<UITextInput> input = (id<UITextInput>)source;
+    UITextRange *range = input.selectedTextRange;
+    if (input.hasText || !range || !range.isEmpty || [input offsetFromPosition:input.beginningOfDocument toPosition:range.start] != 0) return nil;
+  }
   BOOL owned = NO;
   NSHashTable<UIView *> *seen = [NSHashTable weakObjectsHashTable];
   for (UIView *view = AltrooLogicalParent(source); view && ![seen containsObject:view]; view = AltrooLogicalParent(view)) {
@@ -140,12 +147,16 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
 }
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
   if (action == @selector(altroo_handleDescendantLeftKeyCommand:)) return [self descendantTargetForKey:@"ArrowLeft" responder:nil] != nil;
+  if (action == @selector(altroo_handleDescendantBackspaceKeyCommand:)) return [self descendantTargetForKey:@"Backspace" responder:nil] != nil;
   if (action != @selector(altroo_handleDescendantKeyCommand:)) return [super canPerformAction:action withSender:sender];
   if ([sender isKindOfClass:UIKeyCommand.class]) return [self descendantTargetForKey:AltrooDescendantKey(sender) responder:nil] != nil;
   for (NSString *name in _managedDescendantKeys) if ([self descendantTargetForKey:name responder:nil]) return YES;
   return NO;
 }
 - (void)altroo_handleDescendantLeftKeyCommand:(UIKeyCommand *)command {
+  [self altroo_handleDescendantKeyCommand:command];
+}
+- (void)altroo_handleDescendantBackspaceKeyCommand:(UIKeyCommand *)command {
   [self altroo_handleDescendantKeyCommand:command];
 }
 - (void)altroo_handleDescendantKeyCommand:(UIKeyCommand *)command {

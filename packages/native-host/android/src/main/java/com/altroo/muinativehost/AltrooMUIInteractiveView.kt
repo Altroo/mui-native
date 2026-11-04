@@ -127,7 +127,7 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
     // Inspect only known editor composition APIs. A claimed sequence is still
     // consumed after a close/composition change, but cannot notify another target.
     val caretEligible = descendantCaretEligible(key, (focused as? EditText)?.selectionStart,
-      (focused as? EditText)?.selectionEnd)
+      (focused as? EditText)?.selectionEnd, (focused as? EditText)?.length())
     val eligible = focused != null && caretEligible && descendantOwner(focused, key) === this &&
       event.flags and KeyEvent.FLAG_SOFT_KEYBOARD == 0 && !composing && (!editor || focused is EditText)
     val target = if (eligible) reactTarget(focused!!) else null
@@ -157,6 +157,18 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
     }
     dispatcher!!.dispatchEvent(HostEvent(surface,target!!.id,if(event.action == KeyEvent.ACTION_DOWN) "topKeyDown" else "topKeyUp",data,true))
     return true
+  }
+  override fun dispatchKeyEventPreIme(event: KeyEvent): Boolean {
+    if (event.action !in listOf(KeyEvent.ACTION_DOWN, KeyEvent.ACTION_UP)) return super.dispatchKeyEventPreIme(event)
+    // A recently blurred editor can leave its IME connection active briefly.
+    // Offer held sequences to their original owner before any newly focused
+    // host can see the release. Undeclared editor defaults still reach the IME.
+    if (DescendantKeyWindows.dispatchHeld(this, event)) return true
+    val focused = findFocus()
+    if (focused === this) {
+      if (event.flags and KeyEvent.FLAG_SOFT_KEYBOARD == 0 && isManaged(interactiveKeyName(event))) return dispatchKeyEvent(event)
+    } else if (dispatchDescendantKey(event, focused)) return true
+    return super.dispatchKeyEventPreIme(event)
   }
   override fun dispatchKeyEvent(event: KeyEvent): Boolean {
     if(event.action !in listOf(KeyEvent.ACTION_DOWN,KeyEvent.ACTION_UP)) return super.dispatchKeyEvent(event)

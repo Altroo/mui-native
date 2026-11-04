@@ -41,6 +41,10 @@ internal object DescendantKeyWindows {
     return capture.claim(owner, event)
   }
 
+  /** Keep a claimed release with its original owner even before IME dispatch. */
+  fun dispatchHeld(view: View, event: KeyEvent): Boolean =
+    view.windowToken?.let { captures[it]?.get()?.dispatchHeld(event) } ?: false
+
   fun released(owner: AltrooMUIInteractiveView, event: KeyEvent) {
     if (event.action != KeyEvent.ACTION_UP) return
     val token = owner.windowToken ?: return
@@ -74,27 +78,24 @@ internal object DescendantKeyWindows {
     private val windowReference = WeakReference(window)
     private val keys = DescendantKeyPolicy<WeakReference<AltrooMUIInteractiveView>>()
     val callback: Window.Callback = object : Window.Callback by previous {
-      override fun dispatchKeyEvent(event: KeyEvent): Boolean {
-        if (event.action != KeyEvent.ACTION_DOWN && event.action != KeyEvent.ACTION_UP) return previous.dispatchKeyEvent(event)
-        val key = physical(event)
-        val owner = keys.targetFor(key)?.get()
-        val decision = keys.dispatch(key, event.action == KeyEvent.ACTION_DOWN, event.repeatCount > 0,
-          event.isCanceled, null) { it.get()?.isAttachedToWindow == true }
-        if (decision.consumed) {
-          // Even cancellation must retire the View's local ledger. A detached
-          // owner is a tombstone: swallow the release without targeting B.
-          if (owner?.isAttachedToWindow == true) {
-            owner.dispatchDescendantKey(event, windowReference.get()?.decorView?.findFocus())
-          }
-          uninstallIfIdle()
-          // The claimed release must not bypass child JS propagation through
-          // RN Dialog's request-close listener. Modal pairs bridged down/up;
-          // ordinary Back and unclaimed native keys still use the old callback.
-          return true
-        }
-        uninstallIfIdle()
-        return previous.dispatchKeyEvent(event)
+      override fun dispatchKeyEvent(event: KeyEvent): Boolean =
+        dispatchHeld(event) || previous.dispatchKeyEvent(event)
+    }
+    fun dispatchHeld(event: KeyEvent): Boolean {
+      if (event.action != KeyEvent.ACTION_DOWN && event.action != KeyEvent.ACTION_UP) return false
+      val key = physical(event)
+      val owner = keys.targetFor(key)?.get()
+      val decision = keys.dispatch(key, event.action == KeyEvent.ACTION_DOWN, event.repeatCount > 0,
+        event.isCanceled, null) { it.get()?.isAttachedToWindow == true }
+      if (decision.consumed && owner?.isAttachedToWindow == true) {
+        // Even cancellation retires the View's local ledger. Detached owners
+        // remain tombstones: a claimed release never targets a new host B.
+        owner.dispatchDescendantKey(event, windowReference.get()?.decorView?.findFocus())
       }
+      uninstallIfIdle()
+      // Claimed releases must not bypass child JS propagation through RN
+      // Dialog's request-close listener. Unclaimed keys use the old callback.
+      return decision.consumed
     }
     fun claim(owner: AltrooMUIInteractiveView, event: KeyEvent): Boolean =
       keys.dispatch(physical(event), true, false, false, WeakReference(owner)) { it.get() === owner }.consumed

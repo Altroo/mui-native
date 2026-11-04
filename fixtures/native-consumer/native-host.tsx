@@ -73,3 +73,6 @@ export const observedPortal = (
     }}
   />
 );
+
+/** Native guards allow Backspace ownership only for an actually empty editor. */
+export const emptyEditorKey = <InteractiveView managedDescendantKeys={['Backspace']} />;

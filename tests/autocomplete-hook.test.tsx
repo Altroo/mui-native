@@ -768,3 +768,69 @@ describe('selected-item caret navigation', () => {
     expect(empty.result.current.getRootProps().managedDescendantKeys).not.toContain('ArrowLeft');
   });
 });
+
+describe('native empty-editor Backspace', () => {
+  test.each(['hardware', 'command'] as const)(
+    'uses the native empty boundary despite an older draft (%s)',
+    (source) => {
+      const change = jest.fn();
+      const m = model({
+        multiple: true,
+        defaultValue: options.slice(0, 2),
+        inputValue: 'older draft',
+        onChange: change,
+      });
+      expect(m.result.current.getRootProps().managedDescendantKeys).toContain('Backspace');
+      const receipt = event('Backspace', m.input);
+      Object.assign(receipt.nativeEvent, { muiKeySource: source, isEditable: true });
+      act(() => m.result.current.getRootProps().onKeyDown?.(receipt));
+      expect(m.result.current.value).toEqual([options[0]]);
+      expect(change).toHaveBeenCalledTimes(1);
+      expect(change.mock.calls[0].slice(1)).toEqual([
+        [options[0]],
+        'removeOption',
+        { option: options[1] },
+      ]);
+    },
+  );
+  test.each([
+    { muiKeySource: undefined, isEditable: true },
+    { muiKeySource: 'hardware', isEditable: false },
+    { muiKeySource: 'hardware', isEditable: true, isComposing: true },
+    { muiKeySource: 'hardware', isEditable: true, isCanceled: true },
+  ])('ordinary or invalid receipts retain the nonempty draft and values (%o)', (metadata) => {
+    const change = jest.fn();
+    const m = model({
+      multiple: true,
+      defaultValue: options.slice(0, 2),
+      inputValue: 'draft',
+      onChange: change,
+    });
+    const receipt = event('Backspace', m.input);
+    Object.assign(receipt.nativeEvent, metadata);
+    act(() => m.result.current.getRootProps().onKeyDown?.(receipt));
+    expect(change).not.toHaveBeenCalled();
+    expect(m.result.current.value).toEqual(options.slice(0, 2));
+  });
+  test.each([{ disabled: true }, { readOnly: true }, { defaultValue: [] }])(
+    'does not declare deletion without an editable selection (%o)',
+    (props) => {
+      const m = model({ multiple: true, defaultValue: options.slice(0, 2), ...props });
+      expect(m.result.current.getRootProps().managedDescendantKeys).not.toContain('Backspace');
+    },
+  );
+  test('successive native downs use the updated value and stop after the final item', () => {
+    const change = jest.fn();
+    const m = model({ multiple: true, defaultValue: options.slice(0, 2), onChange: change });
+    act(() => {
+      for (let index = 0; index < 3; index++) {
+        const receipt = event('Backspace', m.input);
+        Object.assign(receipt.nativeEvent, { muiKeySource: 'hardware', isEditable: true });
+        m.result.current.getRootProps().onKeyDown?.(receipt);
+      }
+    });
+    expect(m.result.current.value).toEqual([]);
+    expect(change).toHaveBeenCalledTimes(2);
+    expect(m.result.current.getRootProps().managedDescendantKeys).not.toContain('Backspace');
+  });
+});
