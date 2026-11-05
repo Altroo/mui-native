@@ -1,0 +1,59 @@
+# Native FormGroup
+
+FormGroup is the existing one-root grouping wrapper from pinned MIT Material UI 9.5.0. A native View replaces its browser div. It provides wrapping column/row layout; checked state, selection, activation and radio keyboard navigation belong to the child controls and RadioGroup.
+
+```tsx
+import { FormControl, FormGroup, Typography } from '@mui/material';
+import { formGroupClasses } from '@mui/material/FormGroup';
+
+<FormControl error>
+  <FormGroup row sx={{ [`&.${formGroupClasses.error}`]: { borderWidth: 1 } }}>
+    <Typography variant="inherit">Grouped content</Typography>
+  </FormGroup>
+</FormControl>;
+```
+
+## Finite public contract
+
+| Surface                    | Native behavior and disposition                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| children/row               | Children, fragments and keyed elements are retained. row defaults to false, selects row versus column, and keeps flexWrap wrap. Native minWidth 0 remains additive. Caller-owned native child layout replaces browser inline formatting.                                                                                                                                                                                                                                      |
+| inherited error            | Error comes from FormControl when the own value is undefined. Without a provider it remains undefined, rather than becoming false. An own false overrides inherited true for this wrapper. FormGroup does not replace the parent FormControl context for its descendants.                                                                                                                                                                                                     |
+| error/component extensions | Native FormGroupProps retains an explicit error prop and native component replacement. Original JavaScript also reads an own error value, but its published FormGroupProps does not declare that prop. Native component replacement accepts a native ref, ViewProps and optional composed className metadata; browser string roots/HTML refs are not accepted.                                                                                                                |
+| classes/className          | Original root/row/error identifiers compose with supplied classes in source order, followed by the separate className join. Inactive classes do not activate state. Nested class-map getters retain the source truthiness-then-append reads. Supported self selectors use these identifiers. Stock Views receive no CSS-only props; custom roots receive composed metadata. External CSS stylesheets are not rendered.                                                        |
+| defaults and styles        | MuiFormGroup defaults, root then row overrides, embedded/component variants, sx and native inline style use shared System resolution. State selector specificity is retained. Wrapping styled self selectors resolve with the final row/error classes. Caller border, gap, flex and margin/padding shorthands replace computed longhands; arrays inside native style retain native edge precedence. Inherited direction and CSS text metric provenance survive normalization. |
+| callback arguments         | Resolved row/error live in ownerState. Consumed row is absent from top-level root props, while composed className and forwarded id/attributes remain available to theme callbacks. The retained original root-argument case covers that distinction.                                                                                                                                                                                                                          |
+| native attributes/events   | FormGroupProps inherits the actual RN 0.88.1 ViewProps surface, with native StyleProp replacing CSSProperties. Native IDs, accessibility/ARIA aliases, platform view options, layout, pointer/touch/responder, focus/key and accessibility callbacks retain their native signatures and original event objects. No group onChange, press action, browser submit or error announcement is invented. Platform dispatch remains a native gate.                                   |
+| refs and roots             | The public ViewInstance is the actual owned root, including native measurement APIs. Object/callback refs and React 19 cleanup are preserved. A replacement root must forward the native ref, computed style, children and native attributes, and consume class metadata when needed. Arbitrary child refs/state are not intercepted.                                                                                                                                         |
+| text                       | One React-only native text scope publishes inherited color/font metrics on the existing root. Literal runs get native Text hosts; direct Text/View and Typography retain their supported native types and metrics. Unitless CSS lineHeight remains relative for smaller descendants; native style lineHeight remains an absolute native length. No JavaScript multiplication substitutes for OS accessibility scaling.                                                        |
+| declarations               | FormGroupProps, FormGroupClasses and FormGroupClassKey remain available through canonical entries. Classes is augmentable, while augmentation does not invent runtime states. Emitted strict consumers check the complete native host key surface, canonical augmentation, native refs/events, the original JSX.Element call result, and explicit undefined for row/classes/sx/className/error/component.                                                                     |
+| slots/polymorphism         | The pinned component has no slots/slotProps or TypeMap API. None is fabricated. The existing native component extension is the explicit root replacement contract.                                                                                                                                                                                                                                                                                                            |
+
+DOM nodes, HTML-only attributes, document selection/clipboard/drag events and browser form submission are outside the native View contract. Full arbitrary CSS, browser inline formatting and opaque custom components returning bare Text without a shared text boundary remain shared native adaptation limits. Use Typography variant="inherit", authored native Text styles or a shared text scope inside such custom components. See [text boundaries](text-containers.md) and [layout system](layout-system.md).
+
+## Imports and provenance
+
+Canonical imports are `@mui/material` and `@mui/material/FormGroup`, routed on native to `@altroo/mui-native` and its FormGroup entry. Root/canonical component entries expose FormGroup, formGroupClasses, getFormGroupUtilityClass and public types. Web keeps the original package.
+
+The existing native-only `FormGroup/formGroupClasses` alias remains available through the native package/resolver. Pinned browser 9.5.0 ships that internal file but does not publish it as a package-export subpath. Use canonical named imports for shared web/native code; no new import route is introduced here.
+
+The retained original fixture has **13 actual original cases and 20 utility observations**, not 13 native/device tests. It records source/license integrity, row/error/default/class behavior, class getter timing, and root callback arguments. [upstream/form-group.json](../upstream/form-group.json) points to those exact references and the fixture digest; package MIT notices remain in force. The shared files also implement other controls, whose completion status is not changed by this FormGroup increment.
+
+```sh
+node scripts/reference/form-group-contract.mjs --check
+node scripts/reference/check-form-group-consumer.mjs
+node_modules/.bin/jest --runInBand tests/form-group-contract.test.tsx tests/form-group-catalog.test.tsx
+node_modules/.bin/tsc --noEmit -p apps/native-catalog/tsconfig.json
+```
+
+The original check requires the existing [isolated reference setup](theming.md). The emitted consumer checks native declarations and canonical augmentation; fresh packed installation belongs to the primary integration checks. The source and focused tests do not establish native geometry or performance.
+
+## Catalog and open native gates
+
+FormGroupContractExample is a standalone scene; catalog navigation owns its scroll container and route. Five normal-sized controls change row, parent error, theme, local RTL and authored 16/20 text units. Four permanent groups compare inherited error, own false, a custom native root and a wrapped styled root. Keyed child counters must retain state through every change. Their inline margin/padding zero resets deliberately override themed per-edge values.
+
+Root test IDs are form-group-contract-inherited, form-group-contract-own-false, form-group-contract-custom and form-group-contract-styled. Toggle IDs end in row/error/theme/rtl/text; child counter IDs use form-group-contract-child-KEY. The receipt ID is form-group-contract-receipt. Its visible text stays short; accessibilityLabel contains schemaVersion, row, parentError, rtl, themed, fontSize, the actual RN fontScale, ref attach/cleanup counts, and local/window rectangles per root. Stable onLayout callbacks and native measureInWindow supply receipts; stale callbacks cannot replace newer rectangles. Repeated equal receipts do not trigger an update loop.
+
+**All native evidence remains open:** iOS/Android row wrapping and error/style changes; same-root measurements and child state retention; custom-root parity; actual touch/focus/key/accessibility dispatch; accessibility tree ownership; LTR/RTL and actual OS baseline/enlarged text profiles; font shaping and line geometry. Changing the scene's authored font size does not test OS text scaling.
+
+**Optimized-build performance remains open:** representative mount/update workloads, receipt stability and the absence of unintended remount/layout loops need measured local release-build evidence. Physical VoiceOver/TalkBack usability, representative physical-device performance, keyboard and relevant IME behavior remain external evidence. Shared styled/root-prop software regressions are separate from these native gates and still require the primary's full integration validation. This guide makes no component-wide 100%, package parity or publication claim.

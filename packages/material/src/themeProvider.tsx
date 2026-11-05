@@ -1,10 +1,14 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { useMemo } from 'react';
+import type { StyleProp } from 'react-native';
 import {
   ThemeProvider as SystemThemeProvider,
   useTheme as useSystemTheme,
   useThemeProps as useSystemThemeProps,
   useSx as useSystemSx,
   useComponentStyle as useSystemComponentStyle,
+  useComponentRootStyle as useSystemComponentRootStyle,
+  type NativeStyle,
   styled as systemStyled,
   type Theme,
   type Components,
@@ -68,6 +72,16 @@ export function useComponentStyle(
   context: StyleContext = {},
 ) {
   return useSystemComponentStyle(name, props, sx, context, THEME_ID);
+}
+/** Resolve library-created styled layers after the native root knows its state classes. */
+export function useComponentRootStyle(
+  name: string,
+  props: object,
+  sx: SxProps | undefined,
+  style: StyleProp<NativeStyle>,
+  context: StyleContext = {},
+) {
+  return useSystemComponentRootStyle(name, props, sx, style, context, THEME_ID);
 }
 export function styled<P extends object>(
   Component: React.ComponentType<P>,

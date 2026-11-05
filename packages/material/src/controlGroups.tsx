@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// FormGroup state/classes adapt MIT Material UI 9.5.0; see NOTICE and upstream/reuse.json.
 import React, {
   forwardRef,
   useContext,
@@ -12,35 +14,50 @@ import {
   type SxProps,
   type NativeStyle,
   diagnostic,
+  joinClassNames,
+  NativeTextScope,
+  useNativeTextRootRef,
+  useNativeTextContext,
+  nativeTextStyleContext,
+  nativeStyleTextMetrics,
+  applyNativeTextMetrics,
 } from '@altroo/mui-native-system';
-import { useTheme, useComponentStyle } from './themeProvider';
+import { useTheme, useComponentStyle, useComponentRootStyle } from './themeProvider';
 import { FormContext, useControlled } from './formState';
+import { mergeNativeRootStyle } from './nativeControlStyles';
 import { useMenuEvent } from './useMenuEvent';
 import { NativeRadioRegistry } from './nativeRadioRegistry';
 import { RadioContext } from './radioContext';
 import type { NativeCheckedChangeEvent } from './checkedTypes';
-import type { FormGroupClasses, RadioGroupClasses } from './controlClasses';
+import {
+  getFormGroupUtilityClass,
+  type FormGroupClasses,
+  type RadioGroupClasses,
+} from './controlClasses';
 export { useRadioGroup } from './radioContext';
 export type { RadioGroupState } from './radioContext';
 export interface FormGroupProps extends Omit<ViewProps, 'style'> {
   children?: React.ReactNode;
-  row?: boolean;
-  error?: boolean;
-  sx?: SxProps;
+  row?: boolean | undefined;
+  error?: boolean | undefined;
+  sx?: SxProps | undefined;
   style?: StyleProp<NativeStyle>;
-  classes?: Partial<FormGroupClasses>;
-  className?: string;
-  component?: React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>;
+  classes?: Partial<FormGroupClasses> | undefined;
+  className?: string | undefined;
+  component?:
+    | React.ComponentType<
+        ViewProps & { className?: string | undefined } & React.RefAttributes<ViewInstance>
+      >
+    | undefined;
 }
-export const FormGroup: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<FormGroupProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, FormGroupProps>(function FormGroup(inProps, ref) {
+export const FormGroup = forwardRef<ViewInstance, FormGroupProps>(function FormGroup(inProps, ref) {
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const props = useDefaultProps({ props: inProps, name: 'MuiFormGroup' }),
     form = useContext(FormContext);
   const {
     children,
     row = false,
-    error = form?.error ?? false,
+    error = form?.error,
     sx,
     style,
     component: Root = View,
@@ -48,19 +65,70 @@ export const FormGroup: React.ForwardRefExoticComponent<
     className,
     ...native
   } = props;
-  if (classes || className)
-    diagnostic('group-classes', 'Native group classes identify slots; use native styles or sx.');
-  const resolved = useComponentStyle('MuiFormGroup', { ...props, row, error }, sx, {
-    states: error ? ['error'] : [],
-    overrideKeys: row ? ['row'] : [],
-    baseStyle: { flexDirection: row ? 'row' : 'column', flexWrap: 'wrap', minWidth: 0 },
-  });
-  return (
-    <Root {...native} ref={ref} style={[resolved, style]}>
-      {children}
-    </Root>
+  const theme = useTheme(),
+    parent = useNativeTextContext();
+  const slots: ('root' | 'row' | 'error')[] = [
+    'root',
+    ...(row ? ['row' as const] : []),
+    ...(error ? ['error' as const] : []),
+  ];
+  const rootClass = joinClassNames(
+    slots
+      .map((slot) => {
+        const generated = getFormGroupUtilityClass(slot);
+        // Preserve composeClasses' observable lookup order for class accessors.
+        return classes?.[slot] ? `${generated} ${classes[slot]}` : generated;
+      })
+      .join(' '),
+    className,
   );
-});
+  // The styled root gets composed classes and forwarded props; row belongs only
+  // to ownerState because the original wrapper consumes that prop itself.
+  const rootProps = { ...props, className: rootClass };
+  delete rootProps.row;
+  // Class identifiers participate in native selectors without inventing a CSS host.
+  const { computed: resolved, authored } = useComponentRootStyle(
+    'MuiFormGroup',
+    { ...props, row, error },
+    sx,
+    style,
+    {
+      ...nativeTextStyleContext(parent, style, theme),
+      classes: rootClass.split(/\s+/),
+      rootProps,
+      states: error ? ['error'] : [],
+      overrideKeys: row ? ['row'] : [],
+      baseStyle: { flexDirection: row ? 'row' : 'column', flexWrap: 'wrap', minWidth: 0 },
+    },
+  );
+  // Expand each inline inset layer before Yoga applies edge-specific precedence.
+  const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, resolved, authored);
+  // Native inset normalization must retain CSS ratios for smaller text descendants.
+  const mergedStyle =
+    applyNativeTextMetrics(merged, resolved, nativeStyleTextMetrics([resolved, authored])) ??
+    merged;
+  // Publish text inheritance on the existing root, preserving refs and row geometry.
+  return (
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={mergedStyle} content={children}>
+      {(nativeStyle, content) => (
+        <Root
+          {...native}
+          {...(Root === View ? {} : { className: rootClass })}
+          ref={scopeRef}
+          style={nativeStyle}
+        >
+          {content}
+        </Root>
+      )}
+    </NativeTextScope>
+  );
+}) as React.ForwardRefExoticComponent<
+  React.PropsWithoutRef<FormGroupProps> & React.RefAttributes<ViewInstance>
+> & {
+  // The wrapper always returns its scope element, matching the original call
+  // signature while retaining native forwardRef metadata and ref inference.
+  (props: FormGroupProps & React.RefAttributes<ViewInstance>): React.JSX.Element;
+};
 export interface RadioGroupActions {
   focus(): void;
 }

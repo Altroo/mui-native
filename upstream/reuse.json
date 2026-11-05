@@ -2033,7 +2033,8 @@
         }
       },
       "adaptations": [
-        "Checkbox/Radio checked/value/event/slot contracts and label/group precedence follow verified original MUI 9.5.0 source and actual Chromium reference cases. Native ButtonBase, input target handles, scoped registration, Space/arrow navigation and View/Text boundaries replace DOM controls. Native readOnly keeps the authored model instead of browser DOM drift. Full browser forms/global named groups and physical native behavior remain unverified."
+        "Checkbox/Radio checked/value/event/slot contracts and label/group precedence follow verified original MUI 9.5.0 source and actual Chromium reference cases. Native ButtonBase, input target handles, scoped registration, Space/arrow navigation and View/Text boundaries replace DOM controls. Native readOnly keeps the authored model instead of browser DOM drift. Full browser forms/global named groups and physical native behavior remain unverified.",
+        "FormGroup-only utility/class interface closure preserves canonical class helpers and augmentable class declarations; 13 original observations and 20 utility identifiers are retained in upstream/form-group.json. Other controls in this file are not promoted."
       ]
     },
     {
@@ -2107,7 +2108,8 @@
         }
       },
       "adaptations": [
-        "Checkbox/Radio checked/value/event/slot contracts and label/group precedence follow verified original MUI 9.5.0 source and actual Chromium reference cases. Native ButtonBase, input target handles, scoped registration, Space/arrow navigation and View/Text boundaries replace DOM controls. Native readOnly keeps the authored model instead of browser DOM drift. Full browser forms/global named groups and physical native behavior remain unverified."
+        "Checkbox/Radio checked/value/event/slot contracts and label/group precedence follow verified original MUI 9.5.0 source and actual Chromium reference cases. Native ButtonBase, input target handles, scoped registration, Space/arrow navigation and View/Text boundaries replace DOM controls. Native readOnly keeps the authored model instead of browser DOM drift. Full browser forms/global named groups and physical native behavior remain unverified.",
+        "FormGroup-only closure retains undefined/inherited/own error states, original class getter order, native root props/ref lifecycle, scoped text and per-layer inline insets; shared styled/root-argument composition is recorded in upstream/form-group.json. Native/device/performance evidence remains separate."
       ]
     },
     {

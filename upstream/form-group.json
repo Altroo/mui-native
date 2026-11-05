@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "description": "Existing FormGroup wrapper closure reference; native scene/model coverage is separate from device evidence.",
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "FormGroup/FormGroup.js": "d5340a89a30a2b3a87545327bceb13a81eddb66fd9fbc7c3950e50dbbb5dfffa",
+        "FormGroup/FormGroup.d.ts": "eb203bc5bcac0edfc18f2079033038917a42d99775d78566f9844810845aa49d",
+        "FormGroup/index.js": "6cc27f3d82abedda0fb059ebbb2f0bfe3deec0d3e772b34d53c1f297b9d15814",
+        "FormGroup/index.d.ts": "f5df5c1a71732a42fdf23542b344d7069a4e0a68adbec151982b93571442b068",
+        "FormGroup/formGroupClasses.js": "910f689d4d467dc5bb760e6797b7ff913ebcc97d6fb83a077f4cd1bb2c31369a",
+        "FormGroup/formGroupClasses.d.ts": "8dfeb90bd8f28f690c724ee3c00d2d32ad633884e159fcfb5ce4e82ee5589c5c",
+        "FormControl/useFormControl.js": "6f63288fbc245047600e0c185edf65e2c541150b0cdefcab9963b7f2357f31d5",
+        "FormControl/useFormControl.d.ts": "53bef0ebde0017b7858661edf8400ecdd9bdd0fe26cb11d226846c8184ebabab"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574"
+      }
+    }
+  ],
+  "fixture": {
+    "path": "tests/fixtures/mui-form-group-contract-9.5.0.json",
+    "sha256": "1c856a81e7ad3957044fb7770e6049128556876782e6607df709c723e3d61833",
+    "originalCases": 13,
+    "utilityIdentifiers": 20,
+    "renderer": "Original React DOM static markup and actual theme owner/root callbacks; no native or browser geometry evidence."
+  },
+  "localFiles": [
+    "packages/material/src/controlGroups.tsx",
+    "packages/material/src/controlClasses.ts"
+  ],
+  "adaptations": [
+    "Native ViewProps/events/ViewInstance refs and native custom roots replace browser div/HTML APIs; no group activation or form submission is fabricated.",
+    "Absent/inherited/own error state, row/defaults and class composition retain source behavior, including nested class getter lookup order and canonical class augmentation.",
+    "Shared System resolves supported styled/root selectors and callback props at the owning root; native inline inset normalization preserves native arrays, inherited direction and text metric provenance.",
+    "One owned text scope preserves supported native child identity/refs and text inheritance; arbitrary browser CSS and opaque bare-Text internals are not implemented."
+  ],
+  "remainingEvidence": {
+    "localNative": [
+      "iOS/Android geometry, wrap/error/style changes, real event dispatch and root measurements",
+      "LTR/RTL and actual OS font profiles with retained child state and root refs",
+      "Accessibility tree ownership and optimized-build mount/update/receipt workloads"
+    ],
+    "external": [
+      "Physical VoiceOver/TalkBack usability and representative physical-device performance",
+      "Physical keyboard and relevant IME behavior"
+    ]
+  }
+}
