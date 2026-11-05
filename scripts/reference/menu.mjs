@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { readFile, writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { loadReference } from './load.mjs';
@@ -64,7 +65,7 @@ const cases = [
   { name: 'ordinary list key remains external', key: 'ArrowDown' },
   { name: 'root close slot precedence', rootClose: true },
 ];
-function run(input) {
+async function run(input) {
   const trace = [],
     nodes = {
       root: { nodeType: 1, ownerDocument: document, style: {} },
@@ -131,7 +132,7 @@ function run(input) {
       slotProps[key] = (state) => ({ ...props, 'data-owner': owner(state) });
     }
   try {
-    act(() => {
+    await act(() => {
       renderer = create(
         React.createElement(
           RtlProvider,
@@ -184,7 +185,7 @@ function run(input) {
         paper: paper['data-owner'],
         list: list['data-owner'],
       };
-    act(() => transition.onEntering(nodes.paper, true));
+    await act(() => transition.onEntering(nodes.paper, true));
     if (input.key) {
       let prevented = input.prevented ?? false;
       const event = {
@@ -197,15 +198,16 @@ function run(input) {
           prevented = true;
         },
       };
-      act(() => list.onKeyDown(event));
+      await act(() => list.onKeyDown(event));
     }
-    if (input.rootClose) act(() => root.onClose({}, 'backdropClick'));
+    if (input.rootClose) await act(() => root.onClose({}, 'backdropClick'));
     return { input, snapshot, trace };
   } finally {
-    act(() => renderer?.unmount());
+    await act(() => renderer?.unmount());
   }
 }
-const fixtures = cases.map(run);
+const fixtures = [];
+for (const input of cases) fixtures.push(await run(input));
 const html = renderToStaticMarkup(React.createElement(original.MenuPaper, null, 'Standalone'));
 const helpers = {
   classes: classes.default,

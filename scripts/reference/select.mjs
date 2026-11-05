@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { readFile, writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { loadReference } from './load.mjs';
@@ -193,7 +194,7 @@ const cases = [
     paperWidth: 317,
   },
 ];
-function run(input) {
+async function run(input) {
   const objects = { one: { id: 1 } },
     decode = (value) =>
       Array.isArray(value)
@@ -247,7 +248,7 @@ function run(input) {
     contains: (other) => other === display,
   };
   const optionNodes = new Map();
-  function event(key, target = display, extra = {}) {
+  function event(key = undefined, target = display, extra = {}) {
     const nativeEvent = new NativeEvent(key ? 'keydown' : 'click', { key, ...extra });
     return {
       type: key ? 'keydown' : 'click',
@@ -336,7 +337,7 @@ function run(input) {
     };
   };
   try {
-    act(() => {
+    await act(() => {
       renderer = create(
         React.createElement(
           SelectInput,
@@ -428,7 +429,7 @@ function run(input) {
     });
     states.push(snapshot());
     for (const action of input.actions ?? []) {
-      act(() => {
+      await act(() => {
         if (action.wait !== undefined) {
           clock += action.wait;
           for (const [id, timer] of [...timers])
@@ -454,12 +455,16 @@ function run(input) {
     }
     return { input, states, trace };
   } finally {
-    if (renderer) act(() => renderer.unmount());
-    globalThis.setTimeout = oldSet;
-    globalThis.clearTimeout = oldClear;
+    try {
+      if (renderer) await act(() => renderer.unmount());
+    } finally {
+      globalThis.setTimeout = oldSet;
+      globalThis.clearTimeout = oldClear;
+    }
   }
 }
-const fixtures = cases.map(run);
+const fixtures = [];
+for (const input of cases) fixtures.push(await run(input));
 const wrappers = [];
 for (const input of [
   { name: 'custom input props win', value: 'b', inputValue: 'a', wrapperValue: 'b' },
@@ -474,7 +479,7 @@ for (const input of [
   const custom = React.createElement(Probe, {
     inputProps: input.inputValue ? { value: input.inputValue } : undefined,
   });
-  act(() => {
+  await act(() => {
     renderer = create(
       React.createElement(Select, {
         value: input.value,
@@ -488,7 +493,7 @@ for (const input of [
     input,
     output: { inputValue: actual.inputProps.value ?? null, notched: actual.notched ?? null },
   });
-  act(() => renderer.unmount());
+  await act(() => renderer.unmount());
 }
 const result = {
   material: material.reference,
