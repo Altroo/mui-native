@@ -193,7 +193,7 @@ Expand a family to see individual entries. Percentages link to the implementatio
 </details>
 
 <details>
-<summary>System and styling: 9 top-level modules plus core styling work</summary>
+<summary>System and styling: 9 component/provider entries plus core helpers</summary>
 
 | State | Part                                       |                                                    Progress | What it means                                                                                                                                   |
 | ----- | ------------------------------------------ | ----------------------------------------------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------- |
