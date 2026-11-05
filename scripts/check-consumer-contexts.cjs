@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 const assert = require('node:assert/strict');
 const { createRequire } = require('node:module');
 const path = require('node:path');
@@ -24,6 +25,16 @@ try {
   const defaults = requireConsumer('@altroo/mui-native-system/DefaultPropsProvider');
   const hooks = requireConsumer('@altroo/mui-native-system/useThemeProps');
   const material = requireConsumer('@altroo/mui-native');
+  for (const [name, classes, utility] of [
+    ['FormGroup', 'formGroupClasses', 'getFormGroupUtilityClass'],
+    ['ListItemAvatar', 'listItemAvatarClasses', 'getListItemAvatarUtilityClass'],
+  ]) {
+    const entry = requireConsumer('@altroo/mui-native/' + name);
+    assert.equal(entry.default, material[name]);
+    assert.equal(entry[name], material[name]);
+    assert.equal(entry[classes], material[classes]);
+    assert.equal(entry[utility], material[utility]);
+  }
   const groupModule = requireConsumer('@altroo/mui-native/ButtonGroup');
   assert.equal(groupModule.default, material.ButtonGroup);
   assert.equal(groupModule.ButtonGroupContext, material.ButtonGroupContext);

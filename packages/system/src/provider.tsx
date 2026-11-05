@@ -16,6 +16,7 @@ import {
   type SxObject,
   type StyleContext,
   type NativeStyle,
+  type NativeRootStyleResult,
 } from './sx';
 export const systemDefaultTheme = createTheme();
 const EMPTY_THEME = {};
@@ -101,7 +102,7 @@ export function useComponentRootStyle(
   style: StyleProp<NativeStyle>,
   context: StyleContext = {},
   themeId?: string,
-) {
+): NativeRootStyleResult {
   const theme = scopedTheme(useTheme(), themeId);
   const { width } = useWindowDimensions();
   return componentRootStyle(theme, name, props as Record<string, unknown>, sx, style, {

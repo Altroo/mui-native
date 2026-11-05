@@ -9,6 +9,7 @@ import {
   useComponentStyle as useSystemComponentStyle,
   useComponentRootStyle as useSystemComponentRootStyle,
   type NativeStyle,
+  type NativeRootStyleResult,
   styled as systemStyled,
   type Theme,
   type Components,
@@ -80,7 +81,7 @@ export function useComponentRootStyle(
   sx: SxProps | undefined,
   style: StyleProp<NativeStyle>,
   context: StyleContext = {},
-) {
+): NativeRootStyleResult {
   return useSystemComponentRootStyle(name, props, sx, style, context, THEME_ID);
 }
 export function styled<P extends object>(
