@@ -45,11 +45,13 @@ System and Material useThemeProps read their respective theme selection, indepen
 
 ## Hooks and imports
 
-The native resolver supports @mui/system/ThemeProvider, useTheme, useThemeWithoutDefault and RtlProvider. Material style imports include styles, styles/ThemeProvider, styles/useTheme, styles/useThemeProps, styles/identifier and styles/styled. Existing root imports remain available. Root/deep entries share the same implementations and context. Generic provider props and generic theme hooks work in installed consumers; Material ThemeProvider exposes no System themeId prop. System useTheme also exports its systemDefaultTheme singleton. Material useThemeProps preserves the three generic parameters and ThemeWithProps/ThemedProps helpers, including props inferred from component defaults.
+The native resolver supports @mui/system/ThemeProvider, useTheme, useThemeWithoutDefault and RtlProvider. Material style imports include styles, styles/ThemeProvider, styles/useTheme, styles/useThemeProps, styles/identifier and styles/styled. Existing root imports remain available. Theme-provider and theme-hook root/deep entries share their implementations and context. Generic provider props and generic theme hooks work in installed consumers; Material ThemeProvider exposes no System themeId prop. System useTheme also exports its systemDefaultTheme singleton. Material useThemeProps preserves the three generic parameters and ThemeWithProps/ThemedProps helpers, including props inferred from component defaults.
 
 useThemeWithoutDefault returns null outside a nonempty provider, or a supplied fallback. An empty System theme resolves through the hook fallback. The native default theme remains Material-shaped; this increment does not complete a separate System createTheme/default-token contract.
 
 The [complete renderless RTL context contract](rtl-provider.md) is tracked separately from the broader provider family. RtlProvider and useRtl preserve the reference context defaults: the hook is false without a provider, an omitted provider value means true, and explicit false wins. ThemeProvider supplies the selected theme's direction. This context does not change the device's global layout direction. Physical RTL, font scaling, screen-reader order and device geometry still require native validation.
+
+The [default-prop provider contract](default-props-provider.md) separately documents Material/System forwarding identities, required values, generic defaults and native merge adaptations.
 
 ## Evidence and remaining work
 

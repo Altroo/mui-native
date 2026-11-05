@@ -51,7 +51,7 @@ try {
     [defaults.useDefaultProps, root.useDefaultProps],
     [hooks.default, root.useThemeProps],
     [hooks.getThemeProps, root.getThemeProps],
-    [materialDefaults.default, root.DefaultPropsProvider],
+    [material.DefaultPropsProvider, root.DefaultPropsProvider],
     [material.useDefaultProps, root.useDefaultProps],
   ]) {
     assert.equal(typeof actual, 'function');
@@ -61,6 +61,16 @@ try {
       'Installed root/deep imports must share the same context-owning implementation.',
     );
   }
+  // Material's public deep entry forwards to the shared System context through
+  // distinct source-compatible functions; additive root aliases remain System's.
+  assert.notEqual(materialDefaults.default, defaults.default);
+  assert.notEqual(materialDefaults.useDefaultProps, defaults.useDefaultProps);
+  const providerValue = Object.freeze({ Probe: Object.freeze({ value: 'default' }) });
+  const providerChildren = Object.freeze(['one', 'two']);
+  const forwarded = materialDefaults.default({ value: providerValue, children: providerChildren });
+  assert.equal(forwarded.type, defaults.default);
+  assert.equal(forwarded.props.value, providerValue);
+  assert.equal(forwarded.props.children, providerChildren);
   const icons = requireConsumer('@altroo/mui-native-icons');
   assert.equal(icons.SvgIcon, material.SvgIcon);
   const glyphNames = Object.keys(icons).filter((name) => /^[A-Z]/.test(name) && name !== 'SvgIcon');

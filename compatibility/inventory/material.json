@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "473b49beda6ea0e40df9ff479ab6553b6c828e22abb0a1695b73827d4d661579",
+  "nativeSourceSha256": "865e50d652f7e36ee5f0c8bc5d46d521098d450aaa709b46cf6ecccfa732193c",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -35526,7 +35526,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "DefaultPropsMap",
           "kind": "type",
-          "line": 5
+          "line": 7
         }
       ]
     },
@@ -35537,7 +35537,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "DefaultPropsProvider",
           "kind": "value",
-          "line": 97
+          "line": 131
         }
       ]
     },
@@ -35614,7 +35614,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "getThemeProps",
           "kind": "value",
-          "line": 85
+          "line": 102
         }
       ]
     },
@@ -35680,7 +35680,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "joinClassNames",
           "kind": "value",
-          "line": 17
+          "line": 20
         }
       ]
     },
@@ -35823,7 +35823,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "mergeNativeStyles",
           "kind": "value",
-          "line": 30
+          "line": 31
         }
       ]
     },
@@ -36978,7 +36978,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "resolveSlotProps",
           "kind": "value",
-          "line": 115
+          "line": 148
         }
       ]
     },
@@ -37407,7 +37407,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "useDefaultProps",
           "kind": "value",
-          "line": 103
+          "line": 137
         }
       ]
     },
@@ -171066,7 +171066,14 @@
         "Partial"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ComponentsProps",
+          "file": "src/styles/props.ts",
+          "line": 95,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ComponentsPropsList",
@@ -172744,7 +172751,14 @@
         "UseMediaQueryOptions"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ComponentsPropsList",
+          "file": "src/styles/props.ts",
+          "line": 92,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ComponentsProps",
@@ -172758,7 +172772,14 @@
         "Partial"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ComponentsProps",
+          "file": "src/styles/props.ts",
+          "line": 95,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ComponentsPropsList",
@@ -174436,7 +174457,14 @@
         "UseMediaQueryOptions"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ComponentsPropsList",
+          "file": "src/styles/props.ts",
+          "line": 92,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ResponsiveFontSizesOptions",
@@ -180768,7 +180796,7 @@
         {
           "name": "SlotProps",
           "file": "src/defaultProps.tsx",
-          "line": 114,
+          "line": 147,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -180876,7 +180904,7 @@
         {
           "name": "SlotProps",
           "file": "src/defaultProps.tsx",
-          "line": 114,
+          "line": 147,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -189713,6 +189741,117 @@
       "members": [],
       "references": [
         "ButtonBaseActivationEvent"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeConfiguration",
+      "file": "src/DefaultPropsProvider/DefaultPropsProvider.tsx",
+      "line": 9,
+      "kind": "type",
+      "members": [
+        {
+          "name": "defaultProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultProps?: Partial<Props> | undefined;",
+          "line": 12,
+          "kind": "property",
+          "type": "Partial<Props> | undefined"
+        },
+        {
+          "name": "styleOverrides",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "styleOverrides?: unknown;",
+          "line": 13,
+          "kind": "property",
+          "type": "unknown"
+        },
+        {
+          "name": "variants",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variants?: unknown;",
+          "line": 14,
+          "kind": "property",
+          "type": "unknown"
+        }
+      ],
+      "references": [
+        "Partial",
+        "Props"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DefaultPropsProviderValue",
+      "file": "src/DefaultPropsProvider/DefaultPropsProvider.tsx",
+      "line": 16,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ComponentsPropsList",
+        "Name",
+        "NativeConfiguration",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DefaultPropsProviderProps",
+      "file": "src/DefaultPropsProvider/DefaultPropsProvider.tsx",
+      "line": 19,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "DefaultPropsProviderValue",
+        "React.PropsWithChildren"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DefaultPropsProviderComponent",
+      "file": "src/DefaultPropsProvider/DefaultPropsProvider.tsx",
+      "line": 22,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: DefaultPropsProviderProps): React.JSX.Element;",
+          "line": 23,
+          "kind": "signature",
+          "type": "(props: DefaultPropsProviderProps): React.JSX.Element;"
+        },
+        {
+          "name": "propTypes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "propTypes?: any;",
+          "line": 25,
+          "kind": "property",
+          "type": "any"
+        }
+      ],
+      "references": [
+        "DefaultPropsProviderProps",
+        "React.JSX.Element"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -204115,6 +204254,189 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "MaterialExports",
+      "file": "src/styles/props.ts",
+      "line": 13,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ComponentName",
+      "file": "src/styles/props.ts",
+      "line": 15,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ExistingComponentProps",
+      "file": "src/styles/props.ts",
+      "line": 76,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ComponentName",
+        "ComponentProps",
+        "MaterialExports",
+        "Name"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "GenericComponentProps",
+      "file": "src/styles/props.ts",
+      "line": 81,
+      "kind": "type",
+      "members": [
+        {
+          "name": "MuiAutocomplete",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiAutocomplete: AutocompleteProps<any, any, any, any, any, any>;",
+          "line": 82,
+          "kind": "property",
+          "type": "AutocompleteProps<any, any, any, any, any, any>"
+        },
+        {
+          "name": "MuiButton",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiButton: ButtonProps;",
+          "line": 83,
+          "kind": "property",
+          "type": "ButtonProps"
+        },
+        {
+          "name": "MuiIconButton",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiIconButton: IconButtonProps;",
+          "line": 84,
+          "kind": "property",
+          "type": "IconButtonProps"
+        },
+        {
+          "name": "MuiButtonGroup",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiButtonGroup: ButtonGroupProps;",
+          "line": 85,
+          "kind": "property",
+          "type": "ButtonGroupProps"
+        },
+        {
+          "name": "MuiChip",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiChip: ChipProps;",
+          "line": 86,
+          "kind": "property",
+          "type": "ChipProps"
+        },
+        {
+          "name": "MuiSvgIcon",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiSvgIcon: SvgIconProps;",
+          "line": 87,
+          "kind": "property",
+          "type": "SvgIconProps"
+        },
+        {
+          "name": "MuiSelect",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiSelect: SelectProps;",
+          "line": 88,
+          "kind": "property",
+          "type": "SelectProps"
+        },
+        {
+          "name": "MuiTextField",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiTextField: TextFieldProps;",
+          "line": 89,
+          "kind": "property",
+          "type": "TextFieldProps"
+        },
+        {
+          "name": "MuiPopper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiPopper: PopperProps;",
+          "line": 90,
+          "kind": "property",
+          "type": "PopperProps"
+        }
+      ],
+      "references": [
+        "AutocompleteProps",
+        "ButtonGroupProps",
+        "ButtonProps",
+        "ChipProps",
+        "IconButtonProps",
+        "PopperProps",
+        "SelectProps",
+        "SvgIconProps",
+        "TextFieldProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ComponentsPropsList",
+      "file": "src/styles/props.ts",
+      "line": 92,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ExistingComponentProps",
+        "GenericComponentProps",
+        "Omit"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ComponentsProps",
+      "file": "src/styles/props.ts",
+      "line": 95,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ComponentsPropsList",
+        "Name",
+        "Partial"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "SvgIconClassKey",
       "file": "src/svgIconClasses.ts",
       "line": 16,
@@ -208159,7 +208481,7 @@
     {
       "name": "DefaultPropsMap",
       "file": "src/defaultProps.tsx",
-      "line": 5,
+      "line": 7,
       "kind": "type",
       "members": [
         {
@@ -208168,10 +208490,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "mergeClassNameAndStyle?: boolean",
-          "line": 5,
+          "declaration": "mergeClassNameAndStyle?: boolean | undefined;",
+          "line": 8,
           "kind": "property",
-          "type": "boolean"
+          "type": "boolean | undefined"
         }
       ],
       "references": [
@@ -208183,7 +208505,7 @@
     {
       "name": "SlotProps",
       "file": "src/defaultProps.tsx",
-      "line": 114,
+      "line": 147,
       "kind": "type",
       "members": [],
       "references": [
