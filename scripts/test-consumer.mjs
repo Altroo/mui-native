@@ -196,6 +196,7 @@ await writeFile(
         'button-group-exact-optional.tsx',
         'rtl-provider-exact-optional.tsx',
         'default-props-contract.tsx',
+        'native-root-style-contract.tsx',
       ],
     },
     null,
@@ -231,8 +232,13 @@ execFileSync(
 console.log('Installed strict spacing/breakpoint helper contracts passed independently.');
 // Each wrapper gets an isolated strict consumer so class augmentation cannot
 // accidentally satisfy another fixture through a shared compiler invocation.
-for (const contract of ['form-group-contract', 'list-item-avatar', 'list-item-icon']) {
-  await cp(`fixtures/${contract}-consumer/consumer.tsx`, `${consumer}/${contract}.tsx`);
+for (const [contract, fixture] of [
+  ['form-group-contract', 'consumer.tsx'],
+  ['list-item-avatar', 'consumer.tsx'],
+  ['list-item-icon', 'consumer.tsx'],
+  ['accordion-details', 'native.tsx'],
+]) {
+  await cp(`fixtures/${contract}-consumer/${fixture}`, `${consumer}/${contract}.tsx`);
   const config = `tsconfig.${contract}.native.json`;
   await writeFile(
     `${consumer}/${config}`,
@@ -252,7 +258,7 @@ for (const contract of ['form-group-contract', 'list-item-avatar', 'list-item-ic
   });
 }
 console.log(
-  'Installed strict FormGroup, ListItemAvatar and ListItemIcon contracts passed independently.',
+  'Installed strict FormGroup, Avatar, Icon and AccordionDetails contracts passed independently.',
 );
 execFileSync(process.execPath, ['scripts/check-consumer-default-props.cjs', consumer], {
   stdio: 'inherit',

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "description": "Finite existing AccordionDetails source contract; SSR observations are separate from renderer/device gates.",
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+        "index.js": "3ef26e6ff602e27a6a3a8bd34a95cc3f9b1f903ab5ba90aa7bb3cf41217deafd",
+        "index.d.ts": "88f12707de0dd1b6a15db521a6b7d1308b3a88aef114b0bc2964ece74d007d5e",
+        "index.d.mts": "5b05f0c0198a9f0dea406ca740f74fe8df8766c3b9a80ad512d55b9add46de10",
+        "AccordionDetails/AccordionDetails.js": "96a7a5ae34ceadb8a11a1de78144e7002462d6e94dea9d7da7d74245cac82960",
+        "AccordionDetails/AccordionDetails.d.ts": "f69b380742957c3cb43b061ab3293ac7ba9d2af1771eba33ef2f814de2353140",
+        "AccordionDetails/AccordionDetails.d.mts": "7ce31f7816c59a6572b8a0e3a72d8ca3a02072116a2a4021479d7a2a8b0d1df7",
+        "AccordionDetails/index.js": "e6862e9f18f3d365e99a60873d9bb88260bbd789b806161c56d73b3d5bdd985d",
+        "AccordionDetails/index.d.ts": "a6c16d7e6060828143259e5ce1ad0228e3a34e2ff2cf35d2300adc78b6fcb130",
+        "AccordionDetails/index.d.mts": "ea2827c1bf000bfc8779641d26604d5b003603b259140cdec960bdb74af4af6e",
+        "AccordionDetails/accordionDetailsClasses.js": "9a1aba2925d27a4b122067340b7ebbfa77140694ffe85f6fae3864b156d0f245",
+        "AccordionDetails/accordionDetailsClasses.d.ts": "725e63c5518a0ca69dc44c12dc4cde29218e4bfd8088368ec67836f394cfc7a4",
+        "AccordionDetails/accordionDetailsClasses.d.mts": "725e63c5518a0ca69dc44c12dc4cde29218e4bfd8088368ec67836f394cfc7a4",
+        "internal/index.d.ts": "dab4f30b9d72cb7596989c6cee8787309e45945f236d984db885ad611e59a259",
+        "internal/index.d.mts": "f4183ce238df75e707ae636b09690a3cf283b7f33f30b12335f53f3be6d4f233",
+        "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+        "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa",
+        "styles/slotShouldForwardProp.js": "94273fe410b5da39daf022f286c2d746538878d094694eab5307d0eb6bd3501c",
+        "utils/memoTheme.js": "ba795253c43a4fd740281e725b4fe0b77a25bf0c1a26e3f12b5f89a790a8a497",
+        "zero-styled/index.js": "50f7cf89a8e3794b42b932af95d6720f21597bd4b9a296bcb92f87eab5789eb6",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+        "resolveProps/resolveProps.js": "f1ca742842ec733f23b40eda4bcbfff608300144f46cf928e1e0f8ab604c36c4"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+        "createStyled/createStyled.d.ts": "c959b5a46b59b4d5761505fd62f97b38b6b06421d68a6949ac27bff0daa0825c",
+        "createStyled/createStyled.d.mts": "8803339e35c364b41644464262abe60d5c5e5ac245f16fee733763f7cf2f160e",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "6234e618376c90c75eadd92dc0af9e078a946cf57d6adb15b473163932fbc739",
+        "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf"
+      }
+    }
+  ],
+  "fixture": {
+    "path": "tests/fixtures/mui-accordion-details-9.5.0.json",
+    "sha256": "ff699ab407756035b84d5e2ca8abe9175b91c42f86afced955535ca1f3b795a6",
+    "originalCases": 14,
+    "styledDefaultCases": 12,
+    "utilityIdentifiers": 19,
+    "customRootSpyCases": 1,
+    "renderer": "Actual pinned React DOM SSR, theme callbacks and forwarded-root spy. No DOM mount/ref attachment, browser computed geometry or native device certification."
+  },
+  "localFiles": [
+    "packages/material/src/accordion.tsx",
+    "packages/material/src/accordionTypes.ts",
+    "packages/material/src/accordionClasses.ts"
+  ],
+  "sharedNativeFiles": [
+    "packages/system/src/nativeStyledMetadata.ts",
+    "packages/system/src/provider.tsx",
+    "packages/system/src/sx.ts",
+    "packages/material/src/nativeControlStyles.ts"
+  ],
+  "adaptations": [
+    "Native View/native component replace DOM div/HTML refs; source as-based spy establishes metadata filtering, not a new native as prop.",
+    "Only Details runtime/class/type changes; Accordion, Summary, Actions and generic Frame are preserved.",
+    "Generated Emotion hash classes are excluded from public class observations; original MUI and authored classes select supported root styles.",
+    "Native arrays and registered styles retain RN precedence; shared inline cleanup and text metric provenance remain bounded native adapters.",
+    "Development propTypes, RSC/web metadata, arbitrary browser CSS and physical renderer/assistive/performance gates remain outside source-only validation."
+  ]
+}

@@ -1,9 +1,9 @@
 /* Public contracts adapt MIT-licensed Material UI 9.5.0.
  * Copyright (c) MUI contributors. See NOTICE and upstream/accordion.json.
- * Native contracts: Copyright (c) 2026 Altroo and contributors. */
+ * Native contracts: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 import type React from 'react';
-import type { ViewInstance } from 'react-native';
-import type { SlotProps } from '@altroo/mui-native-system';
+import type { ViewInstance, ViewProps } from 'react-native';
+import type { SxProps, SlotProps } from '@altroo/mui-native-system';
 import type { PaperProps, BoxProps } from './layout';
 import type { CollapseProps } from './collapse';
 import type { ButtonBaseProps, ButtonBaseActivationEvent } from './buttonBase';
@@ -126,9 +126,15 @@ export interface AccordionSummaryOwnerState
   disabled: boolean;
   disableGutters?: boolean;
 }
-export interface AccordionDetailsProps extends BoxProps {
-  classes?: Partial<AccordionDetailsClasses>;
-  className?: string;
+export interface AccordionDetailsProps extends Omit<BoxProps, 'sx' | 'component'> {
+  classes?: Partial<AccordionDetailsClasses> | undefined;
+  className?: string | undefined;
+  sx?: SxProps | undefined;
+  component?:
+    | React.ComponentType<
+        ViewProps & { className?: string | undefined } & React.RefAttributes<ViewInstance>
+      >
+    | undefined;
 }
 export interface AccordionActionsProps extends BoxProps {
   classes?: Partial<AccordionActionsClasses>;

@@ -29,6 +29,7 @@ try {
     ['FormGroup', 'formGroupClasses', 'getFormGroupUtilityClass'],
     ['ListItemAvatar', 'listItemAvatarClasses', 'getListItemAvatarUtilityClass'],
     ['ListItemIcon', 'listItemIconClasses', 'getListItemIconUtilityClass'],
+    ['AccordionDetails', 'accordionDetailsClasses', 'getAccordionDetailsUtilityClass'],
   ]) {
     const entry = requireConsumer('@altroo/mui-native/' + name);
     assert.equal(entry.default, material[name]);
