@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { readFile, writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { loadReference } from './load.mjs';
@@ -91,7 +92,7 @@ const inputs = [
   },
   { name: 'zero sized paper', size: { width: 0, height: 0 } },
 ];
-function run(input) {
+async function run(input) {
   const size = input.size ?? { width: 120, height: 80 };
   const anchorRect = input.anchor ?? { top: 200, left: 100, width: 40, height: 20 };
   const anchor = { nodeType: 1, ownerDocument: document, getBoundingClientRect: () => anchorRect };
@@ -124,7 +125,7 @@ function run(input) {
   const action = React.createRef();
   const { name, size: _size, anchor: _anchor, missingAnchor, ...props } = input;
   try {
-    act(() => {
+    await act(() => {
       renderer = create(
         React.createElement(
           Popover,
@@ -162,10 +163,11 @@ function run(input) {
       },
     };
   } finally {
-    if (renderer) act(() => renderer.unmount());
+    if (renderer) await act(() => renderer.unmount());
   }
 }
-const fixtures = inputs.map(run);
+const fixtures = [];
+for (const input of inputs) fixtures.push(await run(input));
 const offsets = [0, 1, 37.5].map((length) => ({
   length,
   vertical: ['top', 'center', 'bottom', -2.25].map((value) => [

@@ -142,7 +142,7 @@ const inputs = [
     actions: [{ open: true }, { tick: 9 }, { open: false }, { tick: 9 }],
   },
 ];
-function observe(input) {
+async function observe(input) {
   const savedSet = globalThis.setTimeout,
     savedClear = globalThis.clearTimeout;
   let now = 0,
@@ -245,7 +245,7 @@ function observe(input) {
     });
   };
   try {
-    act(() => {
+    await act(() => {
       renderer = create(element(), {
         createNodeMock: (element) => (element.props['data-collapse-wrapper'] ? wrapper : node),
       });
@@ -256,9 +256,9 @@ function observe(input) {
       if ('width' in action) width = action.width;
       if ('open' in action) {
         open = action.open;
-        act(() => renderer.update(element()));
+        await act(() => renderer.update(element()));
       }
-      if ('done' in action) act(() => done[action.done]());
+      if ('done' in action) await act(() => done[action.done]());
       if ('tick' in action) {
         const end = now + action.tick;
         let turns = 0;
@@ -270,7 +270,7 @@ function observe(input) {
           if (++turns > 1000) throw new Error('Reference timer loop');
           now = entry[1].at;
           timers.delete(entry[0]);
-          act(() => entry[1].callback());
+          await act(() => entry[1].callback());
         }
         now = end;
       }
@@ -278,20 +278,23 @@ function observe(input) {
     }
     return { ...input, snapshots };
   } finally {
-    if (renderer) act(() => renderer.unmount());
-    globalThis.setTimeout = savedSet;
-    globalThis.clearTimeout = savedClear;
+    try {
+      if (renderer) await act(() => renderer.unmount());
+    } finally {
+      globalThis.setTimeout = savedSet;
+      globalThis.clearTimeout = savedClear;
+    }
   }
 }
 // Observe generic prop precedence and component/as routing in the original slots.
-function observeSlotComposition() {
+async function observeSlotComposition() {
   let renderer;
   const clicks = [];
   const Slot = React.forwardRef(function Slot({ as: Tag = 'div', ownerState, ...props }, ref) {
     return React.createElement(Tag, { ...props, ref });
   });
   try {
-    act(() => {
+    await act(() => {
       renderer = create(
         React.createElement(
           ThemeProvider,
@@ -323,7 +326,7 @@ function observeSlotComposition() {
       );
     });
     const root = renderer.root.findByType('article');
-    act(() => root.props.onClick());
+    await act(() => root.props.onClick());
     return {
       root: root.type,
       wrapper: renderer.root.findByType('aside').type,
@@ -333,16 +336,19 @@ function observeSlotComposition() {
       clicks,
     };
   } finally {
-    if (renderer) act(() => renderer.unmount());
+    if (renderer) await act(() => renderer.unmount());
   }
 }
+const slotComposition = await observeSlotComposition();
+const fixtures = [];
+for (const input of inputs) fixtures.push(await observe(input));
 const result = {
   reference,
   muiSupportAuto: Collapse.muiSupportAuto,
   classes,
   globalDisabled: getCollapseUtilityClass('disabled'),
-  slotComposition: observeSlotComposition(),
-  fixtures: inputs.map(observe),
+  slotComposition,
+  fixtures,
 };
 const filename = 'tests/fixtures/mui-collapse-9.5.0.json';
 const output = await format(JSON.stringify(result), {

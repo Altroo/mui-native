@@ -1,6 +1,9 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import assert from 'node:assert/strict';
-import { readFile, access } from 'node:fs/promises';
+import { readFile, access, mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { dirname, join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { buildIconEsm } from './build.mjs';
 import { compileFunction } from 'node:vm';
 import test from 'node:test';
 import { build } from 'esbuild';
@@ -8,7 +11,7 @@ import { loadCatalog, generateIcons, parseIcon, artworkHash, sha256 } from './ge
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { resolveMuiImport, createNativeTsconfig } = require('../../packages/compat/index.cjs');
-const record = JSON.parse(await readFile('upstream/material-icons.json', 'utf8'));
+const record = JSON.parse(await readFile('upstream/material-icons.json', { encoding: 'utf8' }));
 const names = Object.keys(record.artworkHashes);
 async function optionalCatalog(probe = access, load = loadCatalog) {
   try {
@@ -74,7 +77,7 @@ function generated(source) {
 test('all 10,750 generated SVG trees match original captured hashes and available original modules', async () => {
   assert.equal(names.length, 10750);
   for (const name of names) {
-    const source = await readFile(`packages/icons/src/${name}/index.ts`, 'utf8');
+    const source = await readFile(`packages/icons/src/${name}/index.ts`, { encoding: 'utf8' });
     const actual = generated(source);
     assert.equal(artworkHash(actual), record.artworkHashes[name], name);
     if (catalog) assert.deepEqual(actual, original(name), name);
@@ -101,7 +104,7 @@ test('every original public glyph and factory deep import maps exactly on native
 });
 test('deep modules depend on the factory without importing any barrel or another glyph', async () => {
   for (const name of names) {
-    const source = await readFile(`packages/icons/src/${name}/index.ts`, 'utf8');
+    const source = await readFile(`packages/icons/src/${name}/index.ts`, { encoding: 'utf8' });
     assert.deepEqual(
       [...source.matchAll(/^import .*from '(.*)';$/gm)].map((match) => match[1]),
       ['react', '../utils/createSvgIcon'],
@@ -162,7 +165,7 @@ test('ESM root named import tree-shakes all unused glyphs; unshaken root initial
   assert(bundle.outputFiles[0].text.length < 5000);
   // Metro need not perform ESM dead-code elimination. Its source root barrel
   // still exposes 10,750 live re-exports; use direct imports for bounded startup.
-  const source = await readFile('packages/icons/src/index.ts', 'utf8');
+  const source = await readFile('packages/icons/src/index.ts', { encoding: 'utf8' });
   assert.equal([...source.matchAll(/^export \{ default as /gm)].length, 10750);
 });
 
@@ -205,4 +208,51 @@ test('only an absent archive skips reference loading; missing tracked inputs pro
     }),
     (error) => error === denied,
   );
+});
+
+test('emitted ESM imports preserve file and directory precedence and reject missing modules', async () => {
+  await mkdir('.cache', { recursive: true });
+  const directory = await mkdtemp(resolve('.cache/icons-esm-fixture-'), { encoding: 'utf8' });
+  try {
+    /** @type {Record<string, string>} */
+    const files = {
+      'entry.ts': `export {value as file} from './file';
+        export {value as view} from './view';
+        export {value as folder} from './folder';
+        export {value as folderView} from './folder-view';`,
+      'file.ts': 'export const value = "ts";',
+      'file/index.ts': 'export const value = "shadowed-directory";',
+      'view.tsx': 'export const value = "tsx";',
+      'view/index.ts': 'export const value = "shadowed-view-directory";',
+      'folder/index.ts': 'export const value = "index-ts";',
+      'folder-view/index.tsx': 'export const value = "index-tsx";',
+    };
+    /** @type {string[]} */
+    const sources = [];
+    for (const [name, source] of Object.entries(files)) {
+      const file = join(directory, 'src', name);
+      await mkdir(dirname(file), { recursive: true });
+      await writeFile(file, source);
+      sources.push(file);
+    }
+    await buildIconEsm(directory, sources);
+    const result = await import(pathToFileURL(join(directory, 'dist/esm/entry.mjs')).href);
+    assert.deepEqual(
+      { ...result },
+      {
+        file: 'ts',
+        view: 'tsx',
+        folder: 'index-ts',
+        folderView: 'index-tsx',
+      },
+    );
+    const missing = join(directory, 'src/missing.ts');
+    await writeFile(missing, "export {value} from './not-found';");
+    await assert.rejects(
+      buildIconEsm(directory, [missing]),
+      /Unresolved icon ESM dependency: \.\/not-found/,
+    );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
 });

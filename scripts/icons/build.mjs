@@ -5,6 +5,7 @@ import { readdir, mkdir, writeFile, cp, rm } from 'node:fs/promises';
 import { resolve, dirname, relative, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+/** @returns {Promise<string[]>} */
 export async function iconSources(directory = resolve(root, 'packages/icons/src')) {
   const files = [];
   for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) =>
@@ -16,7 +17,11 @@ export async function iconSources(directory = resolve(root, 'packages/icons/src'
   }
   return files;
 }
-/** Preserve independent ESM modules and explicit Node-compatible relative imports. */
+/**
+ * Preserve independent ESM modules and explicit Node-compatible relative imports.
+ * @param {string} [folder]
+ * @param {string[]} [sources]
+ */
 export async function buildIconEsm(folder = resolve(root, 'packages/icons'), sources) {
   const sourceRoot = resolve(folder, 'src'),
     destination = resolve(folder, 'dist/esm');
@@ -39,9 +44,14 @@ export async function buildIconEsm(folder = resolve(root, 'packages/icons'), sou
       /(from\s+["'])(\.[^"']+)(["'])/g,
       (_match, before, specifier, after) => {
         const target = resolve(sourceDirectory, specifier);
-        const source = ['.ts', '.tsx', '/index.ts', '/index.tsx']
-          .map((suffix) => target + suffix)
-          .find((file) => known.has(file));
+        let source = '';
+        for (const suffix of ['.ts', '.tsx', '/index.ts', '/index.tsx']) {
+          const candidate = target + suffix;
+          if (known.has(candidate)) {
+            source = candidate;
+            break;
+          }
+        }
         if (!source) throw Error('Unresolved icon ESM dependency: ' + specifier);
         const emitted = resolve(
           destination,

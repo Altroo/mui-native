@@ -13,9 +13,9 @@ const require = createRequire(import.meta.url);
 const { createNativeTsconfig } = require('../../packages/compat/index.cjs');
 const output = resolve(root, '.cache/icons-consumer');
 const pkg = resolve(root, 'packages/icons');
-const manifest = JSON.parse(await readFile(join(pkg, 'package.json'), 'utf8'));
+const manifest = JSON.parse(await readFile(join(pkg, 'package.json'), { encoding: 'utf8' }));
 const provenance = JSON.parse(
-  await readFile(resolve(root, 'upstream/material-icons.json'), 'utf8'),
+  await readFile(resolve(root, 'upstream/material-icons.json'), { encoding: 'utf8' }),
 );
 const names = Object.keys(provenance.artworkHashes);
 for (const name of [...names, 'index', 'utils/createSvgIcon']) {
@@ -33,7 +33,7 @@ assert.equal(manifest.exports['./*'].import, './dist/esm/*/index.mjs');
 await rm(output, { recursive: true, force: true });
 await mkdir(join(output, 'node_modules/@altroo'), { recursive: true });
 await symlink(pkg, join(output, 'node_modules/@altroo/mui-native-icons'), 'dir');
-const base = JSON.parse(await readFile(resolve(root, 'tsconfig.json'), 'utf8'));
+const base = JSON.parse(await readFile(resolve(root, 'tsconfig.json'), { encoding: 'utf8' }));
 const originalPaths = createNativeTsconfig({ nodeModulesPath: join(output, 'node_modules') })
   .compilerOptions.paths;
 const paths = Object.fromEntries(
@@ -92,7 +92,7 @@ function load(file) {
   if (cache.has(file)) return cache.get(file).exports;
   const module = { exports: {} };
   cache.set(file, module);
-  compileFunction(readFileSync(file, 'utf8'), ['module', 'exports', 'require'])(
+  compileFunction(readFileSync(file, { encoding: 'utf8' }), ['module', 'exports', 'require'])(
     module,
     module.exports,
     (specifier) => {
