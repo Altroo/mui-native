@@ -1,0 +1,1430 @@
+{
+  "reference": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "createTheme/createSpacing.js": "324a4f7b1648eb675eb01fb997b64b78e807fbd5e4149ac2c951e6336df12739",
+      "createTheme/createSpacing.d.ts": "e6f78343e2dfcaf9bcc08c969cc2913557579ebef2196f624e03e5df6f835bdf",
+      "spacing/spacing.js": "cc62e1613e70b006c5ca55f57939b95a4340033c624c2c0e6e46bf64628d9434",
+      "createBreakpoints/createBreakpoints.js": "412f158e7a6cc3806a39e67b3cc7e62a9b47768cec52b728f9312ba9af5aa79f",
+      "createBreakpoints/createBreakpoints.d.ts": "f4c58c6bbd49ed165050fccaffb627c5944080c05371198778fe84f46157db92",
+      "createBreakpoints/index.js": "fdd4243fc793cf444fe1f788f243b93f8b932bff6eda3bfd9ad48e75af80ec48",
+      "createBreakpoints/index.d.ts": "704c2ae137a0122621dedff764fd40db723705f71a25171fe5a2cdfa45aa9130"
+    }
+  },
+  "spacing": [
+    {
+      "name": "default",
+      "args": [],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "8px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "explicit undefined scale",
+      "input": { "undefined": true },
+      "args": [1],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "8px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "8/",
+      "input": 8,
+      "args": [],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "8px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "8/0",
+      "input": 8,
+      "args": [0],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "8/1",
+      "input": 8,
+      "args": [1],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "8px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "8/-2",
+      "input": 8,
+      "args": [-2],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "-16px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "8/0.5",
+      "input": 8,
+      "args": [0.5],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "4px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "8/-0.5",
+      "input": 8,
+      "args": [-0.5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "-4px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "8/auto,1",
+      "input": 8,
+      "args": ["auto", 1],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "auto 8px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "8/",
+      "input": 8,
+      "args": [{ "undefined": true }],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "NaNpx"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "8/",
+      "input": 8,
+      "args": [null],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 1
+    },
+    {
+      "name": "8/1,2,3,4,5",
+      "input": 8,
+      "args": [1, 2, 3, 4, 5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "8px 16px 24px 32px 40px"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "0/",
+      "input": 0,
+      "args": [],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "0/0",
+      "input": 0,
+      "args": [0],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "0/1",
+      "input": 0,
+      "args": [1],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "0/-2",
+      "input": 0,
+      "args": [-2],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "0/0.5",
+      "input": 0,
+      "args": [0.5],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "0/-0.5",
+      "input": 0,
+      "args": [-0.5],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "0/auto,1",
+      "input": 0,
+      "args": ["auto", 1],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "auto 0px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "0/",
+      "input": 0,
+      "args": [{ "undefined": true }],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "NaNpx"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "0/",
+      "input": 0,
+      "args": [null],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 1
+    },
+    {
+      "name": "0/1,2,3,4,5",
+      "input": 0,
+      "args": [1, 2, 3, 4, 5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "0px 0px 0px 0px 0px"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "2.5/",
+      "input": 2.5,
+      "args": [],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "2.5px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "2.5/0",
+      "input": 2.5,
+      "args": [0],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "2.5/1",
+      "input": 2.5,
+      "args": [1],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "2.5px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "2.5/-2",
+      "input": 2.5,
+      "args": [-2],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "-5px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "2.5/0.5",
+      "input": 2.5,
+      "args": [0.5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "1.25px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "2.5/-0.5",
+      "input": 2.5,
+      "args": [-0.5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "-1.25px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "2.5/auto,1",
+      "input": 2.5,
+      "args": ["auto", 1],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "auto 2.5px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "2.5/",
+      "input": 2.5,
+      "args": [{ "undefined": true }],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "NaNpx"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "2.5/",
+      "input": 2.5,
+      "args": [null],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 1
+    },
+    {
+      "name": "2.5/1,2,3,4,5",
+      "input": 2.5,
+      "args": [1, 2, 3, 4, 5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "2.5px 5px 7.5px 10px 12.5px"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "\"0.5rem\"/",
+      "input": "0.5rem",
+      "args": [],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(1 * 0.5rem)"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"0.5rem\"/0",
+      "input": "0.5rem",
+      "args": [0],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(0 * 0.5rem)"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"0.5rem\"/1",
+      "input": "0.5rem",
+      "args": [1],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(1 * 0.5rem)"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"0.5rem\"/-2",
+      "input": "0.5rem",
+      "args": [-2],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(-2 * 0.5rem)"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"0.5rem\"/0.5",
+      "input": "0.5rem",
+      "args": [0.5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(0.5 * 0.5rem)"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"0.5rem\"/-0.5",
+      "input": "0.5rem",
+      "args": [-0.5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(-0.5 * 0.5rem)"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"0.5rem\"/auto,1",
+      "input": "0.5rem",
+      "args": ["auto", 1],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "auto calc(1 * 0.5rem)"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"0.5rem\"/",
+      "input": "0.5rem",
+      "args": [{ "undefined": true }],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(undefined * 0.5rem)"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "\"0.5rem\"/",
+      "input": "0.5rem",
+      "args": [null],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(null * 0.5rem)"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "\"0.5rem\"/1,2,3,4,5",
+      "input": "0.5rem",
+      "args": [1, 2, 3, 4, 5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(1 * 0.5rem) calc(2 * 0.5rem) calc(3 * 0.5rem) calc(4 * 0.5rem) calc(5 * 0.5rem)"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "\"var(--space)\"/",
+      "input": "var(--space)",
+      "args": [],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "var(--space)"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"var(--space)\"/0",
+      "input": "var(--space)",
+      "args": [0],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"var(--space)\"/1",
+      "input": "var(--space)",
+      "args": [1],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "var(--space)"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"var(--space)\"/-2",
+      "input": "var(--space)",
+      "args": [-2],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(-2 * var(--space))"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"var(--space)\"/0.5",
+      "input": "var(--space)",
+      "args": [0.5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(0.5 * var(--space))"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"var(--space)\"/-0.5",
+      "input": "var(--space)",
+      "args": [-0.5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(-0.5 * var(--space))"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"var(--space)\"/auto,1",
+      "input": "var(--space)",
+      "args": ["auto", 1],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "auto var(--space)"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "\"var(--space)\"/",
+      "input": "var(--space)",
+      "args": [{ "undefined": true }],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(undefined * var(--space))"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "\"var(--space)\"/",
+      "input": "var(--space)",
+      "args": [null],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(null * var(--space))"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "\"var(--space)\"/1,2,3,4,5",
+      "input": "var(--space)",
+      "args": [1, 2, 3, 4, 5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "var(--space) calc(2 * var(--space)) calc(3 * var(--space)) calc(4 * var(--space)) calc(5 * var(--space))"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "[0,4,\"var(--space)\",\"1rem\"]/",
+      "input": [0, 4, "var(--space)", "1rem"],
+      "args": [],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "4px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "[0,4,\"var(--space)\",\"1rem\"]/0",
+      "input": [0, 4, "var(--space)", "1rem"],
+      "args": [0],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "[0,4,\"var(--space)\",\"1rem\"]/1",
+      "input": [0, 4, "var(--space)", "1rem"],
+      "args": [1],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "4px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "[0,4,\"var(--space)\",\"1rem\"]/-2",
+      "input": [0, 4, "var(--space)", "1rem"],
+      "args": [-2],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "calc(-1 * var(--space))"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "[0,4,\"var(--space)\",\"1rem\"]/0.5",
+      "input": [0, 4, "var(--space)", "1rem"],
+      "args": [0.5],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "" },
+      "diagnostics": 1
+    },
+    {
+      "name": "[0,4,\"var(--space)\",\"1rem\"]/-0.5",
+      "input": [0, 4, "var(--space)", "1rem"],
+      "args": [-0.5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "-undefined"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "[0,4,\"var(--space)\",\"1rem\"]/auto,1",
+      "input": [0, 4, "var(--space)", "1rem"],
+      "args": ["auto", 1],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "auto 4px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "[0,4,\"var(--space)\",\"1rem\"]/",
+      "input": [0, 4, "var(--space)", "1rem"],
+      "args": [{ "undefined": true }],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "-undefined"
+      },
+      "diagnostics": 1
+    },
+    {
+      "name": "[0,4,\"var(--space)\",\"1rem\"]/",
+      "input": [0, 4, "var(--space)", "1rem"],
+      "args": [null],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "0px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "[0,4,\"var(--space)\",\"1rem\"]/1,2,3,4,5",
+      "input": [0, 4, "var(--space)", "1rem"],
+      "args": [1, 2, 3, 4, 5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "4px var(--space) 1rem  "
+      },
+      "diagnostics": 3
+    },
+    {
+      "name": "function receives strings",
+      "kind": "function",
+      "args": [2, "auto", -0.5],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "6px fn:auto -1.5px"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "number-only function rejects strings",
+      "kind": "number-only",
+      "args": ["auto"],
+      "error": { "name": "TypeError", "stage": "call" },
+      "diagnostics": 0
+    },
+    {
+      "name": "explicit transform replaces numeric scale",
+      "input": 8,
+      "transform": "custom",
+      "args": [1, "auto"],
+      "observation": {
+        "helperType": "function",
+        "sameInput": false,
+        "mui": true,
+        "output": "custom:1 custom:auto"
+      },
+      "diagnostics": 0
+    },
+    {
+      "name": "explicit undefined transform uses default",
+      "input": 4,
+      "transform": "undefined",
+      "args": [2],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": "8px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "undefined transform outputs retain separators",
+      "input": 8,
+      "transform": "empty",
+      "args": [1, 2],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": " " },
+      "diagnostics": 0
+    },
+    {
+      "name": "marked function identity",
+      "kind": "marked-function",
+      "args": [2],
+      "observation": { "helperType": "function", "sameInput": true, "mui": true, "output": "2px" },
+      "diagnostics": 0
+    },
+    {
+      "name": "marked array identity",
+      "kind": "marked-array",
+      "args": [],
+      "observation": { "helperType": "object", "sameInput": true, "mui": true },
+      "diagnostics": 0
+    },
+    {
+      "name": "null scale errors at creation",
+      "input": null,
+      "args": [1],
+      "error": { "name": "TypeError", "stage": "create" },
+      "diagnostics": 0
+    },
+    {
+      "name": "invalid boolean scale",
+      "input": true,
+      "args": ["auto", 1],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": " " },
+      "diagnostics": 1
+    },
+    {
+      "name": "invalid array-like object scale",
+      "input": { "0": "4px", "length": 1 },
+      "args": [0, "auto"],
+      "observation": { "helperType": "function", "sameInput": false, "mui": true, "output": " " },
+      "diagnostics": 1
+    }
+  ],
+  "breakpoints": [
+    {
+      "name": "defaults",
+      "input": {},
+      "observation": {
+        "keys": ["xs", "sm", "md", "lg", "xl"],
+        "values": { "xs": 0, "sm": 600, "md": 900, "lg": 1200, "xl": 1536 },
+        "unit": "px",
+        "mediaKeys": [
+          "@media (min-width:0px)",
+          "@media (min-width:600px)",
+          "@media (min-width:900px)",
+          "@media (min-width:1200px)",
+          "@media (min-width:1536px)"
+        ]
+      },
+      "calls": [
+        { "method": "up", "args": ["xs"], "output": "@media (min-width:0px)" },
+        { "method": "up", "args": ["sm"], "output": "@media (min-width:600px)" },
+        { "method": "up", "args": ["md"], "output": "@media (min-width:900px)" },
+        { "method": "up", "args": ["lg"], "output": "@media (min-width:1200px)" },
+        { "method": "up", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        { "method": "up", "args": [640], "output": "@media (min-width:640px)" },
+        { "method": "up", "args": ["10"], "output": "@media (min-width:10px)" },
+        { "method": "down", "args": ["xs"], "output": "@media (max-width:-0.05px)" },
+        { "method": "down", "args": ["sm"], "output": "@media (max-width:599.95px)" },
+        { "method": "down", "args": ["md"], "output": "@media (max-width:899.95px)" },
+        { "method": "down", "args": ["lg"], "output": "@media (max-width:1199.95px)" },
+        { "method": "down", "args": ["xl"], "output": "@media (max-width:1535.95px)" },
+        { "method": "down", "args": [640], "output": "@media (max-width:639.95px)" },
+        { "method": "down", "args": ["10"], "output": "@media (max-width:9.95px)" },
+        {
+          "method": "only",
+          "args": ["xs"],
+          "output": "@media (min-width:0px) and (max-width:599.95px)"
+        },
+        {
+          "method": "only",
+          "args": ["sm"],
+          "output": "@media (min-width:600px) and (max-width:899.95px)"
+        },
+        {
+          "method": "only",
+          "args": ["md"],
+          "output": "@media (min-width:900px) and (max-width:1199.95px)"
+        },
+        {
+          "method": "only",
+          "args": ["lg"],
+          "output": "@media (min-width:1200px) and (max-width:1535.95px)"
+        },
+        { "method": "only", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        {
+          "method": "only",
+          "args": [640],
+          "output": "@media (min-width:640px) and (max-width:-0.05px)"
+        },
+        {
+          "method": "only",
+          "args": ["10"],
+          "output": "@media (min-width:10px) and (max-width:-0.05px)"
+        },
+        { "method": "not", "args": ["xs"], "output": "@media (min-width:600px)" },
+        {
+          "method": "not",
+          "args": ["sm"],
+          "output": "@media not all and (min-width:600px) and (max-width:899.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["md"],
+          "output": "@media not all and (min-width:900px) and (max-width:1199.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["lg"],
+          "output": "@media not all and (min-width:1200px) and (max-width:1535.95px)"
+        },
+        { "method": "not", "args": ["xl"], "output": "@media (max-width:1535.95px)" },
+        {
+          "method": "not",
+          "args": [640],
+          "output": "@media not all and (min-width:640px) and (max-width:-0.05px)"
+        },
+        {
+          "method": "not",
+          "args": ["10"],
+          "output": "@media not all and (min-width:10px) and (max-width:-0.05px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", 640],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", "640"],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": [0, 640],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["phone", "tablet"],
+          "output": "@media (min-width:phonepx) and (max-width:NaNpx)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", { "undefined": true }],
+          "output": "@media (min-width:0px) and (max-width:NaNpx)"
+        }
+      ]
+    },
+    {
+      "name": "undefined defaults",
+      "input": {
+        "values": { "undefined": true },
+        "unit": { "undefined": true },
+        "step": { "undefined": true }
+      },
+      "observation": {
+        "keys": ["xs", "sm", "md", "lg", "xl"],
+        "values": { "xs": 0, "sm": 600, "md": 900, "lg": 1200, "xl": 1536 },
+        "unit": "px",
+        "mediaKeys": [
+          "@media (min-width:0px)",
+          "@media (min-width:600px)",
+          "@media (min-width:900px)",
+          "@media (min-width:1200px)",
+          "@media (min-width:1536px)"
+        ]
+      },
+      "calls": [
+        { "method": "up", "args": ["xs"], "output": "@media (min-width:0px)" },
+        { "method": "up", "args": ["sm"], "output": "@media (min-width:600px)" },
+        { "method": "up", "args": ["md"], "output": "@media (min-width:900px)" },
+        { "method": "up", "args": ["lg"], "output": "@media (min-width:1200px)" },
+        { "method": "up", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        { "method": "up", "args": [640], "output": "@media (min-width:640px)" },
+        { "method": "up", "args": ["10"], "output": "@media (min-width:10px)" },
+        { "method": "down", "args": ["xs"], "output": "@media (max-width:-0.05px)" },
+        { "method": "down", "args": ["sm"], "output": "@media (max-width:599.95px)" },
+        { "method": "down", "args": ["md"], "output": "@media (max-width:899.95px)" },
+        { "method": "down", "args": ["lg"], "output": "@media (max-width:1199.95px)" },
+        { "method": "down", "args": ["xl"], "output": "@media (max-width:1535.95px)" },
+        { "method": "down", "args": [640], "output": "@media (max-width:639.95px)" },
+        { "method": "down", "args": ["10"], "output": "@media (max-width:9.95px)" },
+        {
+          "method": "only",
+          "args": ["xs"],
+          "output": "@media (min-width:0px) and (max-width:599.95px)"
+        },
+        {
+          "method": "only",
+          "args": ["sm"],
+          "output": "@media (min-width:600px) and (max-width:899.95px)"
+        },
+        {
+          "method": "only",
+          "args": ["md"],
+          "output": "@media (min-width:900px) and (max-width:1199.95px)"
+        },
+        {
+          "method": "only",
+          "args": ["lg"],
+          "output": "@media (min-width:1200px) and (max-width:1535.95px)"
+        },
+        { "method": "only", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        {
+          "method": "only",
+          "args": [640],
+          "output": "@media (min-width:640px) and (max-width:-0.05px)"
+        },
+        {
+          "method": "only",
+          "args": ["10"],
+          "output": "@media (min-width:10px) and (max-width:-0.05px)"
+        },
+        { "method": "not", "args": ["xs"], "output": "@media (min-width:600px)" },
+        {
+          "method": "not",
+          "args": ["sm"],
+          "output": "@media not all and (min-width:600px) and (max-width:899.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["md"],
+          "output": "@media not all and (min-width:900px) and (max-width:1199.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["lg"],
+          "output": "@media not all and (min-width:1200px) and (max-width:1535.95px)"
+        },
+        { "method": "not", "args": ["xl"], "output": "@media (max-width:1535.95px)" },
+        {
+          "method": "not",
+          "args": [640],
+          "output": "@media not all and (min-width:640px) and (max-width:-0.05px)"
+        },
+        {
+          "method": "not",
+          "args": ["10"],
+          "output": "@media not all and (min-width:10px) and (max-width:-0.05px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", 640],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", "640"],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": [0, 640],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["phone", "tablet"],
+          "output": "@media (min-width:phonepx) and (max-width:NaNpx)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", { "undefined": true }],
+          "output": "@media (min-width:0px) and (max-width:NaNpx)"
+        }
+      ]
+    },
+    {
+      "name": "numeric named keys",
+      "input": { "values": { "640": 1000, "xs": 0, "sm": 600 } },
+      "observation": {
+        "keys": ["640", "xs", "sm"],
+        "values": { "640": 1000, "xs": 0, "sm": 600 },
+        "unit": "px",
+        "mediaKeys": [
+          "@media (min-width:1000px)",
+          "@media (min-width:0px)",
+          "@media (min-width:600px)"
+        ]
+      },
+      "calls": [
+        { "method": "up", "args": ["640"], "output": "@media (min-width:1000px)" },
+        { "method": "up", "args": ["xs"], "output": "@media (min-width:0px)" },
+        { "method": "up", "args": ["sm"], "output": "@media (min-width:600px)" },
+        { "method": "up", "args": [640], "output": "@media (min-width:1000px)" },
+        { "method": "up", "args": ["10"], "output": "@media (min-width:10px)" },
+        { "method": "down", "args": ["640"], "output": "@media (max-width:999.95px)" },
+        { "method": "down", "args": ["xs"], "output": "@media (max-width:-0.05px)" },
+        { "method": "down", "args": ["sm"], "output": "@media (max-width:599.95px)" },
+        { "method": "down", "args": [640], "output": "@media (max-width:999.95px)" },
+        { "method": "down", "args": ["10"], "output": "@media (max-width:9.95px)" },
+        {
+          "method": "only",
+          "args": ["640"],
+          "output": "@media (min-width:1000px) and (max-width:-0.05px)"
+        },
+        {
+          "method": "only",
+          "args": ["xs"],
+          "output": "@media (min-width:0px) and (max-width:599.95px)"
+        },
+        { "method": "only", "args": ["sm"], "output": "@media (min-width:600px)" },
+        {
+          "method": "only",
+          "args": [640],
+          "output": "@media (min-width:1000px) and (max-width:999.95px)"
+        },
+        {
+          "method": "only",
+          "args": ["10"],
+          "output": "@media (min-width:10px) and (max-width:999.95px)"
+        },
+        { "method": "not", "args": ["640"], "output": "@media (min-width:0px)" },
+        {
+          "method": "not",
+          "args": ["xs"],
+          "output": "@media not all and (min-width:0px) and (max-width:599.95px)"
+        },
+        { "method": "not", "args": ["sm"], "output": "@media (max-width:599.95px)" },
+        {
+          "method": "not",
+          "args": [640],
+          "output": "@media not all and (min-width:1000px) and (max-width:999.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["10"],
+          "output": "@media not all and (min-width:10px) and (max-width:999.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", 640],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", "640"],
+          "output": "@media (min-width:0px) and (max-width:999.95px)"
+        },
+        {
+          "method": "between",
+          "args": [0, 640],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["phone", "tablet"],
+          "output": "@media (min-width:phonepx) and (max-width:NaNpx)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", { "undefined": true }],
+          "output": "@media (min-width:0px) and (max-width:NaNpx)"
+        }
+      ]
+    },
+    {
+      "name": "custom sorted and tied values",
+      "input": {
+        "values": { "desktop": 75, "tablet": 40, "phone": 0, "equal": 40 },
+        "unit": "em",
+        "step": 10
+      },
+      "observation": {
+        "keys": ["phone", "tablet", "equal", "desktop"],
+        "values": { "phone": 0, "tablet": 40, "equal": 40, "desktop": 75 },
+        "unit": "em",
+        "mediaKeys": [
+          "@media (min-width:0em)",
+          "@media (min-width:40em)",
+          "@media (min-width:40em)",
+          "@media (min-width:75em)"
+        ]
+      },
+      "calls": [
+        { "method": "up", "args": ["phone"], "output": "@media (min-width:0em)" },
+        { "method": "up", "args": ["tablet"], "output": "@media (min-width:40em)" },
+        { "method": "up", "args": ["equal"], "output": "@media (min-width:40em)" },
+        { "method": "up", "args": ["desktop"], "output": "@media (min-width:75em)" },
+        { "method": "up", "args": [640], "output": "@media (min-width:640em)" },
+        { "method": "up", "args": ["10"], "output": "@media (min-width:10em)" },
+        { "method": "down", "args": ["phone"], "output": "@media (max-width:-0.1em)" },
+        { "method": "down", "args": ["tablet"], "output": "@media (max-width:39.9em)" },
+        { "method": "down", "args": ["equal"], "output": "@media (max-width:39.9em)" },
+        { "method": "down", "args": ["desktop"], "output": "@media (max-width:74.9em)" },
+        { "method": "down", "args": [640], "output": "@media (max-width:639.9em)" },
+        { "method": "down", "args": ["10"], "output": "@media (max-width:9.9em)" },
+        {
+          "method": "only",
+          "args": ["phone"],
+          "output": "@media (min-width:0em) and (max-width:39.9em)"
+        },
+        {
+          "method": "only",
+          "args": ["tablet"],
+          "output": "@media (min-width:40em) and (max-width:39.9em)"
+        },
+        {
+          "method": "only",
+          "args": ["equal"],
+          "output": "@media (min-width:40em) and (max-width:74.9em)"
+        },
+        { "method": "only", "args": ["desktop"], "output": "@media (min-width:75em)" },
+        {
+          "method": "only",
+          "args": [640],
+          "output": "@media (min-width:640em) and (max-width:-0.1em)"
+        },
+        {
+          "method": "only",
+          "args": ["10"],
+          "output": "@media (min-width:10em) and (max-width:-0.1em)"
+        },
+        { "method": "not", "args": ["phone"], "output": "@media (min-width:40em)" },
+        {
+          "method": "not",
+          "args": ["tablet"],
+          "output": "@media not all and (min-width:40em) and (max-width:39.9em)"
+        },
+        {
+          "method": "not",
+          "args": ["equal"],
+          "output": "@media not all and (min-width:40em) and (max-width:74.9em)"
+        },
+        { "method": "not", "args": ["desktop"], "output": "@media (max-width:74.9em)" },
+        {
+          "method": "not",
+          "args": [640],
+          "output": "@media not all and (min-width:640em) and (max-width:-0.1em)"
+        },
+        {
+          "method": "not",
+          "args": ["10"],
+          "output": "@media not all and (min-width:10em) and (max-width:-0.1em)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", 640],
+          "output": "@media (min-width:xsem) and (max-width:639.9em)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", "640"],
+          "output": "@media (min-width:xsem) and (max-width:639.9em)"
+        },
+        {
+          "method": "between",
+          "args": [0, 640],
+          "output": "@media (min-width:0em) and (max-width:639.9em)"
+        },
+        {
+          "method": "between",
+          "args": ["phone", "tablet"],
+          "output": "@media (min-width:0em) and (max-width:39.9em)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", { "undefined": true }],
+          "output": "@media (min-width:xsem) and (max-width:NaNem)"
+        }
+      ]
+    },
+    {
+      "name": "zero step",
+      "input": { "step": 0 },
+      "observation": {
+        "keys": ["xs", "sm", "md", "lg", "xl"],
+        "values": { "xs": 0, "sm": 600, "md": 900, "lg": 1200, "xl": 1536 },
+        "unit": "px",
+        "mediaKeys": [
+          "@media (min-width:0px)",
+          "@media (min-width:600px)",
+          "@media (min-width:900px)",
+          "@media (min-width:1200px)",
+          "@media (min-width:1536px)"
+        ]
+      },
+      "calls": [
+        { "method": "up", "args": ["xs"], "output": "@media (min-width:0px)" },
+        { "method": "up", "args": ["sm"], "output": "@media (min-width:600px)" },
+        { "method": "up", "args": ["md"], "output": "@media (min-width:900px)" },
+        { "method": "up", "args": ["lg"], "output": "@media (min-width:1200px)" },
+        { "method": "up", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        { "method": "up", "args": [640], "output": "@media (min-width:640px)" },
+        { "method": "up", "args": ["10"], "output": "@media (min-width:10px)" },
+        { "method": "down", "args": ["xs"], "output": "@media (max-width:0px)" },
+        { "method": "down", "args": ["sm"], "output": "@media (max-width:600px)" },
+        { "method": "down", "args": ["md"], "output": "@media (max-width:900px)" },
+        { "method": "down", "args": ["lg"], "output": "@media (max-width:1200px)" },
+        { "method": "down", "args": ["xl"], "output": "@media (max-width:1536px)" },
+        { "method": "down", "args": [640], "output": "@media (max-width:640px)" },
+        { "method": "down", "args": ["10"], "output": "@media (max-width:10px)" },
+        {
+          "method": "only",
+          "args": ["xs"],
+          "output": "@media (min-width:0px) and (max-width:600px)"
+        },
+        {
+          "method": "only",
+          "args": ["sm"],
+          "output": "@media (min-width:600px) and (max-width:900px)"
+        },
+        {
+          "method": "only",
+          "args": ["md"],
+          "output": "@media (min-width:900px) and (max-width:1200px)"
+        },
+        {
+          "method": "only",
+          "args": ["lg"],
+          "output": "@media (min-width:1200px) and (max-width:1536px)"
+        },
+        { "method": "only", "args": ["xl"], "output": "@media (min-width:1536px)" },
+        {
+          "method": "only",
+          "args": [640],
+          "output": "@media (min-width:640px) and (max-width:0px)"
+        },
+        {
+          "method": "only",
+          "args": ["10"],
+          "output": "@media (min-width:10px) and (max-width:0px)"
+        },
+        { "method": "not", "args": ["xs"], "output": "@media (min-width:600px)" },
+        {
+          "method": "not",
+          "args": ["sm"],
+          "output": "@media not all and (min-width:600px) and (max-width:900px)"
+        },
+        {
+          "method": "not",
+          "args": ["md"],
+          "output": "@media not all and (min-width:900px) and (max-width:1200px)"
+        },
+        {
+          "method": "not",
+          "args": ["lg"],
+          "output": "@media not all and (min-width:1200px) and (max-width:1536px)"
+        },
+        { "method": "not", "args": ["xl"], "output": "@media (max-width:1536px)" },
+        {
+          "method": "not",
+          "args": [640],
+          "output": "@media not all and (min-width:640px) and (max-width:0px)"
+        },
+        {
+          "method": "not",
+          "args": ["10"],
+          "output": "@media not all and (min-width:10px) and (max-width:0px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", 640],
+          "output": "@media (min-width:0px) and (max-width:640px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", "640"],
+          "output": "@media (min-width:0px) and (max-width:640px)"
+        },
+        {
+          "method": "between",
+          "args": [0, 640],
+          "output": "@media (min-width:0px) and (max-width:640px)"
+        },
+        {
+          "method": "between",
+          "args": ["phone", "tablet"],
+          "output": "@media (min-width:phonepx) and (max-width:NaNpx)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", { "undefined": true }],
+          "output": "@media (min-width:0px) and (max-width:NaNpx)"
+        }
+      ]
+    },
+    {
+      "name": "explicit undefined methods",
+      "input": { "up": { "undefined": true }, "only": { "undefined": true } },
+      "observation": {
+        "keys": ["xs", "sm", "md", "lg", "xl"],
+        "values": { "xs": 0, "sm": 600, "md": 900, "lg": 1200, "xl": 1536 },
+        "unit": "px",
+        "mediaKeys": [
+          "@media (min-width:0px)",
+          "@media (min-width:600px)",
+          "@media (min-width:900px)",
+          "@media (min-width:1200px)",
+          "@media (min-width:1536px)"
+        ]
+      },
+      "calls": [
+        { "method": "up", "args": ["xs"], "error": "TypeError" },
+        { "method": "up", "args": ["sm"], "error": "TypeError" },
+        { "method": "up", "args": ["md"], "error": "TypeError" },
+        { "method": "up", "args": ["lg"], "error": "TypeError" },
+        { "method": "up", "args": ["xl"], "error": "TypeError" },
+        { "method": "up", "args": [640], "error": "TypeError" },
+        { "method": "up", "args": ["10"], "error": "TypeError" },
+        { "method": "down", "args": ["xs"], "output": "@media (max-width:-0.05px)" },
+        { "method": "down", "args": ["sm"], "output": "@media (max-width:599.95px)" },
+        { "method": "down", "args": ["md"], "output": "@media (max-width:899.95px)" },
+        { "method": "down", "args": ["lg"], "output": "@media (max-width:1199.95px)" },
+        { "method": "down", "args": ["xl"], "output": "@media (max-width:1535.95px)" },
+        { "method": "down", "args": [640], "output": "@media (max-width:639.95px)" },
+        { "method": "down", "args": ["10"], "output": "@media (max-width:9.95px)" },
+        { "method": "only", "args": ["xs"], "error": "TypeError" },
+        { "method": "only", "args": ["sm"], "error": "TypeError" },
+        { "method": "only", "args": ["md"], "error": "TypeError" },
+        { "method": "only", "args": ["lg"], "error": "TypeError" },
+        { "method": "only", "args": ["xl"], "error": "TypeError" },
+        { "method": "only", "args": [640], "error": "TypeError" },
+        { "method": "only", "args": ["10"], "error": "TypeError" },
+        { "method": "not", "args": ["xs"], "output": "@media (min-width:600px)" },
+        {
+          "method": "not",
+          "args": ["sm"],
+          "output": "@media not all and (min-width:600px) and (max-width:899.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["md"],
+          "output": "@media not all and (min-width:900px) and (max-width:1199.95px)"
+        },
+        {
+          "method": "not",
+          "args": ["lg"],
+          "output": "@media not all and (min-width:1200px) and (max-width:1535.95px)"
+        },
+        { "method": "not", "args": ["xl"], "output": "@media (max-width:1535.95px)" },
+        {
+          "method": "not",
+          "args": [640],
+          "output": "@media not all and (min-width:640px) and (max-width:-0.05px)"
+        },
+        {
+          "method": "not",
+          "args": ["10"],
+          "output": "@media not all and (min-width:10px) and (max-width:-0.05px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", 640],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", "640"],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": [0, 640],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["phone", "tablet"],
+          "output": "@media (min-width:phonepx) and (max-width:NaNpx)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", { "undefined": true }],
+          "output": "@media (min-width:0px) and (max-width:NaNpx)"
+        }
+      ]
+    },
+    {
+      "name": "empty values",
+      "input": { "values": {} },
+      "observation": { "keys": [], "values": {}, "unit": "px", "mediaKeys": [] },
+      "calls": [
+        { "method": "up", "args": [640], "output": "@media (min-width:640px)" },
+        { "method": "up", "args": ["10"], "output": "@media (min-width:10px)" },
+        { "method": "down", "args": [640], "output": "@media (max-width:639.95px)" },
+        { "method": "down", "args": ["10"], "output": "@media (max-width:9.95px)" },
+        { "method": "only", "args": [640], "output": "@media (min-width:640px)" },
+        { "method": "only", "args": ["10"], "output": "@media (min-width:10px)" },
+        { "method": "not", "args": [640], "output": "@media (max-width:NaNpx)" },
+        { "method": "not", "args": ["10"], "output": "@media (max-width:NaNpx)" },
+        {
+          "method": "between",
+          "args": ["xs", 640],
+          "output": "@media (min-width:xspx) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", "640"],
+          "output": "@media (min-width:xspx) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": [0, 640],
+          "output": "@media (min-width:0px) and (max-width:639.95px)"
+        },
+        {
+          "method": "between",
+          "args": ["phone", "tablet"],
+          "output": "@media (min-width:phonepx) and (max-width:NaNpx)"
+        },
+        {
+          "method": "between",
+          "args": ["xs", { "undefined": true }],
+          "output": "@media (min-width:xspx) and (max-width:NaNpx)"
+        }
+      ]
+    },
+    { "name": "null options", "input": null, "error": "TypeError" }
+  ],
+  "evaluationOrder": {
+    "output": "@media (min-width:0px) and (max-width:799.95px)",
+    "trace": ["xs", "xs", "sm", "sm"]
+  },
+  "constructionKeys": {
+    "keys": ["xs", "sm", "md", "lg", "xl"],
+    "values": { "xs": 0, "sm": 600, "md": 900, "lg": 1200, "xl": 1536 },
+    "mediaKeys": [
+      "@media (min-width:0px)",
+      "@media (min-width:600px)",
+      "@media (min-width:900px)",
+      "@media (min-width:1200px)",
+      "@media (min-width:1536px)"
+    ],
+    "inputKeys": ["xs", "md", "lg", "xl"]
+  }
+}

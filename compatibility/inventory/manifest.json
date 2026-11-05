@@ -8,7 +8,7 @@
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
       "package.json": "9557648174b69c30e5d601830099e99537b5b94c39cf0962bdd0ac788c60d03b",
       "packages/compat/package.json": "59904f1e9920728c84cb290e1ce34d0e6e4f7c7832b65b0eb8ff70c01df2c4de",
-      "packages/compat/supported.json": "2ff1b88922acc4c0c8bb11db8098d7bb5195a58a2af3d74a75a864e75049f86c",
+      "packages/compat/supported.json": "389104ed87e108fc577cae5ac28046117cc6fa3320b6bc4f136568ae18c749ff",
       "packages/icons/package.json": "b2066761b6f8b5ea49d9e75aeb75fab01bddda969cb6959ba57c6cf0d09011d8",
       "packages/icons/src/Abc/index.ts": "0d44a0a6067e199f396979729c7b5e2f16e4c248643355cef946b1ad84f2fc95",
       "packages/icons/src/AbcOutlined/index.ts": "1ee1fe409d533715a78b1443ac481f31b90720a1a70ccef157c46869ce1242b4",
@@ -10999,10 +10999,11 @@
       "packages/native-host/src/nativeTextInputNativeComponent.js": "16eaeadbf40263bcc4f5c8d6e8ee3a5cd71ae965445f368d6e7d3308b2d84ecb",
       "packages/native-host/src/nativeTextInputRuntime.js": "a8cfff64c382bd5ea9d207940f900f5ed52b64a522bfe86e032ccfde89d0bedc",
       "packages/native-host/src/portalCoordinates.ts": "0edd3a982f2224348c3a48467e512a3ccbeafb1cd6c8d47f05369832b6c8bc91",
-      "packages/system/package.json": "c9d1b58876119bb9c5da789ab26d8f55c38a1cacedbfc8f538921594a8cbf5c5",
-      "packages/system/src/breakpoints.ts": "68c485014abc6d0bf96e65109ebf3d50f2bafc091563bd222228e63c8f17e2d4",
+      "packages/system/package.json": "fcf6adc402e084871d521d044ef3e859e0a0f83f630e0f847556b2b92d9b6442",
+      "packages/system/src/breakpoints.ts": "dcceed14d355a71a553870af351a851cd86150786d22db34decf9fd1510b1249",
       "packages/system/src/colorManipulator.ts": "0f243e7a46b477b32259ac2fa0bc125f4000db3cceda7f676b4849f30e6878da",
       "packages/system/src/colorManipulator/index.ts": "5fc87f7afbb3c813229caab43552ecd956fba934512e8c903f8455d75d4ca095",
+      "packages/system/src/createBreakpoints/index.ts": "23cdd15738e35db094120dfc7038e8f44f67d16a070473d6a4e33beb803a5482",
       "packages/system/src/defaultProps.tsx": "754220402dbaee837440f6fa2328d467c5bebcf8c6fff769863125664660be11",
       "packages/system/src/DefaultPropsProvider/index.ts": "dcb6eeb7bdba137047f0388751aead3e17e67f5c559949ec23e58955b56acd3f",
       "packages/system/src/diagnostics.ts": "af837654ed858a549ddea518e7190afae5f8cdfc3ca119c55038db175dc84f1c",
@@ -11015,7 +11016,7 @@
       "packages/system/src/provider.tsx": "f331c0dd7dea320f064b3555f52dbfc1f5b9678bb15af9d9d5f987c62098d5c4",
       "packages/system/src/RtlProvider/index.tsx": "b69eb42a9148e815c75cb9c53d7d233ac80c2bef973cde0bd1d4f690fa8cbc62",
       "packages/system/src/shadows.ts": "db4074e8a7f3a9a323589a12d12a5e8b072337aad3ee5cb7e29367486c749120",
-      "packages/system/src/spacing.ts": "95cb1c41dcd2c19ac970f6adad5fe4307f9f0f3db0ea8b8cd7334cad9dec964b",
+      "packages/system/src/spacing.ts": "e4751abd448354e69a065d9115834b7a2de9e7bf183c99b63785e623fd611b31",
       "packages/system/src/sx.ts": "5710a9003572ae6046ecf1ed39d57dd4cff5b6c48e6dd1614660becc2e610222",
       "packages/system/src/textScope.tsx": "7e87a64432252fdf32d6a83d25764905e9ba63bc63dead2409eca8d3ab1c7401",
       "packages/system/src/theme.ts": "7e7a28837876301ed2eafb7858b672a1e4148396e8dd2a8d8b9ecc42c33c1893",
@@ -11129,7 +11130,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "c0af874f534cc8022440ce9f47d7250bee6306690b298f0490d1087ba4ae94ca"
+      "sha256": "4e3ac209d3a9524916e511e755b39a82cce1a7161ead6a5d1e0dab86eecba1f7"
     },
     {
       "package": "@mui/system",
@@ -11139,7 +11140,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "11ab1f8cf96912b11c42b1640effeb2cd94dcac6bdcd7d9701119a0808d61d8d",
+      "nativeSourceSha256": "91607fc9c88fcb70336bab5c0cdb004812c0521ca32e66be0124a2d8fc7fd26c",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -11151,7 +11152,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "9e6464adb0ac7af31a713f377aae9199a2209d87dcbdc73220014056107324f4"
+      "sha256": "0e35d251c28665fe2819196cb6373f1a1d63a86197246d356a04e0a81ab4c385"
     },
     {
       "package": "@mui/icons-material",

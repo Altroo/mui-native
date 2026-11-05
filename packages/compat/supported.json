@@ -111,13 +111,14 @@
   "@mui/system": {
     "target": "@altroo/mui-native-system",
     "subpaths": [
-      "colorManipulator",
       "DefaultPropsProvider",
-      "useThemeProps",
+      "RtlProvider",
       "ThemeProvider",
+      "colorManipulator",
+      "createBreakpoints",
       "useTheme",
-      "useThemeWithoutDefault",
-      "RtlProvider"
+      "useThemeProps",
+      "useThemeWithoutDefault"
     ]
   },
   "@mui/icons-material": {

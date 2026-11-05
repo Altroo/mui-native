@@ -58,16 +58,17 @@
       "reference": {
         "name": "@mui/system",
         "version": "9.5.0",
-        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
         "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
         "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
         "sourceFiles": {
           "createTheme/createSpacing.js": "324a4f7b1648eb675eb01fb997b64b78e807fbd5e4149ac2c951e6336df12739",
+          "createTheme/createSpacing.d.ts": "e6f78343e2dfcaf9bcc08c969cc2913557579ebef2196f624e03e5df6f835bdf",
           "spacing/spacing.js": "cc62e1613e70b006c5ca55f57939b95a4340033c624c2c0e6e46bf64628d9434"
         }
       },
       "adaptations": [
-        "Typed standalone spacing transformation; native diagnostics identify unsupported array indices."
+        "Typed standalone spacing transformations retain source identity, coercion and error timing; native structured diagnostics remain available in all builds."
       ]
     },
     {
@@ -75,14 +76,18 @@
       "reference": {
         "name": "@mui/system",
         "version": "9.5.0",
-        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
         "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
         "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
         "sourceFiles": {
-          "createBreakpoints/createBreakpoints.js": "412f158e7a6cc3806a39e67b3cc7e62a9b47768cec52b728f9312ba9af5aa79f"
+          "createBreakpoints/createBreakpoints.js": "412f158e7a6cc3806a39e67b3cc7e62a9b47768cec52b728f9312ba9af5aa79f",
+          "createBreakpoints/createBreakpoints.d.ts": "f4c58c6bbd49ed165050fccaffb627c5944080c05371198778fe84f46157db92"
         }
       },
-      "adaptations": ["Typed standalone breakpoint helpers and augmentation interfaces."]
+      "adaptations": [
+        "Typed standalone query helpers and augmentation preserve source key snapshots and getter evaluation order.",
+        "The existing native no-argument convenience retains default breakpoint options."
+      ]
     },
     {
       "localFile": "packages/system/src/sx.ts",
@@ -3156,6 +3161,23 @@
       },
       "adaptations": [
         "Component defaults describe the 60 existing native component props, preserving public generic defaults and augmentation; missing components have no invented stubs."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/createBreakpoints/index.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "createBreakpoints/index.js": "fdd4243fc793cf444fe1f788f243b93f8b932bff6eda3bfd9ad48e75af80ec48",
+          "createBreakpoints/index.d.ts": "704c2ae137a0122621dedff764fd40db723705f71a25171fe5a2cdfa45aa9130"
+        }
+      },
+      "adaptations": [
+        "The original published named unstable_createBreakpoints entry forwards to the same native helper without adding a default export."
       ]
     }
   ]
