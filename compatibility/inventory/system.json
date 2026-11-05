@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "11ab1f8cf96912b11c42b1640effeb2cd94dcac6bdcd7d9701119a0808d61d8d",
+  "nativeSourceSha256": "91607fc9c88fcb70336bab5c0cdb004812c0521ca32e66be0124a2d8fc7fd26c",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -873,7 +873,7 @@
           "file": "createBreakpoints/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/system/createStyled",
@@ -7609,7 +7609,7 @@
           "module": "@altroo/mui-native-system:src/spacing.ts",
           "name": "SpacingArgument",
           "kind": "type",
-          "line": 4
+          "line": 5
         }
       ]
     },
@@ -11595,7 +11595,7 @@
         {
           "name": "BreakpointOverrides",
           "file": "src/breakpoints.ts",
-          "line": 3,
+          "line": 4,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -11615,7 +11615,7 @@
         {
           "name": "Breakpoint",
           "file": "src/breakpoints.ts",
-          "line": 9,
+          "line": 10,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -11752,7 +11752,7 @@
         {
           "name": "Breakpoints",
           "file": "src/breakpoints.ts",
-          "line": 15,
+          "line": 16,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -11799,7 +11799,7 @@
         {
           "name": "BreakpointsOptions",
           "file": "src/breakpoints.ts",
-          "line": 26,
+          "line": 27,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -11816,7 +11816,7 @@
         {
           "name": "BreakpointOverrides",
           "file": "src/breakpoints.ts",
-          "line": 3,
+          "line": 4,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -11836,7 +11836,7 @@
         {
           "name": "Breakpoint",
           "file": "src/breakpoints.ts",
-          "line": 9,
+          "line": 10,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -11973,7 +11973,7 @@
         {
           "name": "Breakpoints",
           "file": "src/breakpoints.ts",
-          "line": 15,
+          "line": 16,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -12020,7 +12020,7 @@
         {
           "name": "BreakpointsOptions",
           "file": "src/breakpoints.ts",
-          "line": 26,
+          "line": 27,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -12394,7 +12394,7 @@
         {
           "name": "SpacingOptions",
           "file": "src/spacing.ts",
-          "line": 17,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -12411,7 +12411,7 @@
         {
           "name": "SpacingArgument",
           "file": "src/spacing.ts",
-          "line": 4,
+          "line": 5,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -12496,7 +12496,7 @@
         {
           "name": "Spacing",
           "file": "src/spacing.ts",
-          "line": 5,
+          "line": 6,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -12516,7 +12516,7 @@
         {
           "name": "SpacingOptions",
           "file": "src/spacing.ts",
-          "line": 17,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -12533,7 +12533,7 @@
         {
           "name": "SpacingArgument",
           "file": "src/spacing.ts",
-          "line": 4,
+          "line": 5,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -12618,7 +12618,7 @@
         {
           "name": "Spacing",
           "file": "src/spacing.ts",
-          "line": 5,
+          "line": 6,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -17568,7 +17568,7 @@
     {
       "name": "BreakpointOverrides",
       "file": "src/breakpoints.ts",
-      "line": 3,
+      "line": 4,
       "kind": "type",
       "members": [],
       "references": [],
@@ -17578,7 +17578,7 @@
     {
       "name": "BreakpointFlags",
       "file": "src/breakpoints.ts",
-      "line": 4,
+      "line": 5,
       "kind": "type",
       "members": [],
       "references": [
@@ -17592,7 +17592,7 @@
     {
       "name": "Breakpoint",
       "file": "src/breakpoints.ts",
-      "line": 9,
+      "line": 10,
       "kind": "type",
       "members": [],
       "references": [
@@ -17606,7 +17606,7 @@
     {
       "name": "Breakpoints",
       "file": "src/breakpoints.ts",
-      "line": 15,
+      "line": 16,
       "kind": "type",
       "members": [
         {
@@ -17616,7 +17616,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "keys: Breakpoint[];",
-          "line": 16,
+          "line": 17,
           "kind": "property",
           "type": "Breakpoint[]"
         },
@@ -17627,7 +17627,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "values: { [K in Breakpoint]: number };",
-          "line": 17,
+          "line": 18,
           "kind": "property",
           "type": "{ [K in Breakpoint]: number }"
         },
@@ -17638,7 +17638,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "up: (key: Breakpoint | number) => string;",
-          "line": 18,
+          "line": 19,
           "kind": "property",
           "type": "(key: Breakpoint | number) => string"
         },
@@ -17649,7 +17649,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "down: (key: Breakpoint | number) => string;",
-          "line": 19,
+          "line": 20,
           "kind": "property",
           "type": "(key: Breakpoint | number) => string"
         },
@@ -17660,7 +17660,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "between: (start: Breakpoint | number, end: Breakpoint | number) => string;",
-          "line": 20,
+          "line": 21,
           "kind": "property",
           "type": "(start: Breakpoint | number, end: Breakpoint | number) => string"
         },
@@ -17671,7 +17671,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "only: (key: Breakpoint) => string;",
-          "line": 21,
+          "line": 22,
           "kind": "property",
           "type": "(key: Breakpoint) => string"
         },
@@ -17682,7 +17682,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "not: (key: Breakpoint) => string;",
-          "line": 22,
+          "line": 23,
           "kind": "property",
           "type": "(key: Breakpoint) => string"
         },
@@ -17692,10 +17692,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "unit?: string;",
-          "line": 23,
+          "declaration": "unit?: string | undefined;",
+          "line": 24,
           "kind": "property",
-          "type": "string"
+          "type": "string | undefined"
         },
         {
           "name": "internal_mediaKeys",
@@ -17704,7 +17704,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "internal_mediaKeys: string[];",
-          "line": 24,
+          "line": 25,
           "kind": "property",
           "type": "string[]"
         }
@@ -17718,7 +17718,7 @@
     {
       "name": "BreakpointsOptions",
       "file": "src/breakpoints.ts",
-      "line": 26,
+      "line": 27,
       "kind": "type",
       "members": [
         {
@@ -17727,10 +17727,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "step?: number;",
-          "line": 27,
+          "declaration": "step?: number | undefined;",
+          "line": 28,
           "kind": "property",
-          "type": "number"
+          "type": "number | undefined"
         }
       ],
       "references": [
@@ -18294,7 +18294,7 @@
     {
       "name": "SpacingArgument",
       "file": "src/spacing.ts",
-      "line": 4,
+      "line": 5,
       "kind": "type",
       "members": [],
       "references": [],
@@ -18304,7 +18304,7 @@
     {
       "name": "Spacing",
       "file": "src/spacing.ts",
-      "line": 5,
+      "line": 6,
       "kind": "type",
       "members": [
         {
@@ -18314,7 +18314,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(): string;",
-          "line": 6,
+          "line": 7,
           "kind": "signature",
           "type": "(): string;"
         },
@@ -18325,7 +18325,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(value: SpacingArgument): string;",
-          "line": 7,
+          "line": 8,
           "kind": "signature",
           "type": "(value: SpacingArgument): string;"
         },
@@ -18336,7 +18336,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(topBottom: SpacingArgument, rightLeft: SpacingArgument): string;",
-          "line": 8,
+          "line": 9,
           "kind": "signature",
           "type": "(topBottom: SpacingArgument, rightLeft: SpacingArgument): string;"
         },
@@ -18347,7 +18347,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(top: SpacingArgument, rightLeft: SpacingArgument, bottom: SpacingArgument): string;",
-          "line": 9,
+          "line": 10,
           "kind": "signature",
           "type": "(top: SpacingArgument, rightLeft: SpacingArgument, bottom: SpacingArgument): string;"
         },
@@ -18358,7 +18358,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(\n    top: SpacingArgument,\n    right: SpacingArgument,\n    bottom: SpacingArgument,\n    left: SpacingArgument,\n  ): string;",
-          "line": 10,
+          "line": 11,
           "kind": "signature",
           "type": "(\n    top: SpacingArgument,\n    right: SpacingArgument,\n    bottom: SpacingArgument,\n    left: SpacingArgument,\n  ): string;"
         }
@@ -18372,7 +18372,7 @@
     {
       "name": "SpacingOptions",
       "file": "src/spacing.ts",
-      "line": 17,
+      "line": 18,
       "kind": "type",
       "members": [],
       "references": [
@@ -18386,7 +18386,7 @@
     {
       "name": "Transform",
       "file": "src/spacing.ts",
-      "line": 24,
+      "line": 25,
       "kind": "type",
       "members": [],
       "references": [

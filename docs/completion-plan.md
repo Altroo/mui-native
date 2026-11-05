@@ -122,7 +122,7 @@ The entries below enumerate the 83 current partial status rows and the separatel
 | TextField               |                    50% | [Scope and remaining work](../docs/textfield-slots.md)                   |
 | Typography              |                    50% | [Scope and remaining work](../docs/typography.md)                        |
 
-### System and styling: 9 top-level modules plus core styling work
+### System and styling: 9 component/provider entries plus core helpers
 
 | Existing entry            | Current evidence stage | Guide                                                       |
 | ------------------------- | ---------------------: | ----------------------------------------------------------- |

@@ -18,6 +18,9 @@ Module._load = function (request, parent, main) {
 };
 try {
   const root = requireConsumer('@altroo/mui-native-system');
+  const breakpointEntry = requireConsumer('@altroo/mui-native-system/createBreakpoints');
+  assert.deepEqual(Object.keys(breakpointEntry), ['unstable_createBreakpoints']);
+  assert.equal(breakpointEntry.unstable_createBreakpoints, root.createBreakpoints);
   const defaults = requireConsumer('@altroo/mui-native-system/DefaultPropsProvider');
   const hooks = requireConsumer('@altroo/mui-native-system/useThemeProps');
   const material = requireConsumer('@altroo/mui-native');

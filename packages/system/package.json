@@ -68,6 +68,11 @@
       "types": "./dist/RtlProvider/index.d.ts",
       "react-native": "./src/RtlProvider/index.tsx",
       "default": "./dist/RtlProvider/index.js"
+    },
+    "./createBreakpoints": {
+      "types": "./dist/createBreakpoints/index.d.ts",
+      "react-native": "./src/createBreakpoints/index.ts",
+      "default": "./dist/createBreakpoints/index.js"
     }
   },
   "dependencies": {},

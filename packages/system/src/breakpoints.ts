@@ -1,5 +1,6 @@
 // Adapted from @mui/system 9.5.0 createBreakpoints (MIT).
 // Copyright (c) 2014 Call-Em-All. See NOTICE and upstream/reuse.json.
+// Native adaptation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 export interface BreakpointOverrides {}
 type BreakpointFlags = Omit<
   Record<'xs' | 'sm' | 'md' | 'lg' | 'xl', true>,
@@ -20,11 +21,11 @@ export interface Breakpoints {
   between: (start: Breakpoint | number, end: Breakpoint | number) => string;
   only: (key: Breakpoint) => string;
   not: (key: Breakpoint) => string;
-  unit?: string;
+  unit?: string | undefined;
   internal_mediaKeys: string[];
 }
 export interface BreakpointsOptions extends Partial<Breakpoints> {
-  step?: number;
+  step?: number | undefined;
 }
 export const breakpointKeys = ['xs', 'sm', 'md', 'lg', 'xl'] as Breakpoint[];
 export function createBreakpoints(options: BreakpointsOptions = {}): Breakpoints {
@@ -35,7 +36,9 @@ export function createBreakpoints(options: BreakpointsOptions = {}): Breakpoints
     ...other
   } = options;
   const sortedValues = Object.fromEntries(
-    Object.entries(values).sort((a, b) => a[1] - b[1]),
+    Object.keys(values)
+      .map((key) => [key, values[key as Breakpoint]] as const)
+      .sort((a, b) => a[1] - b[1]),
   ) as Breakpoints['values'];
   const keys = Object.keys(sortedValues) as Breakpoint[];
   const value = (key: Breakpoint | number): string | number =>
@@ -44,15 +47,20 @@ export function createBreakpoints(options: BreakpointsOptions = {}): Breakpoints
       : key;
   const up = (key: Breakpoint | number) => `@media (min-width:${value(key)}${unit})`;
   const down = (key: Breakpoint | number) =>
-    `@media (max-width:${Number(value(key)) - step / 100}${unit})`;
-  const between = (start: Breakpoint | number, end: Breakpoint | number) =>
-    `${up(start)} and (max-width:${Number(value(end)) - step / 100}${unit})`;
+    `@media (max-width:${(value(key) as number) - step / 100}${unit})`;
+  const between = (start: Breakpoint | number, end: Breakpoint | number) => {
+    const endIndex = keys.indexOf(end as Breakpoint);
+    const startQuery = up(start);
+    const endValue =
+      endIndex !== -1 && typeof values[keys[endIndex]] === 'number' ? values[keys[endIndex]] : end;
+    return `${startQuery} and (max-width:${(endValue as number) - step / 100}${unit})`;
+  };
   const only = (key: Breakpoint) =>
     keys.indexOf(key) + 1 < keys.length ? between(key, keys[keys.indexOf(key) + 1]) : up(key);
   const not = (key: Breakpoint) => {
     const index = keys.indexOf(key);
     if (index === 0) return up(keys[1]);
-    if (index === keys.length - 1) return down(key);
+    if (index === keys.length - 1) return down(keys[index]);
     return between(key, keys[index + 1]).replace('@media', '@media not all and');
   };
   return {
