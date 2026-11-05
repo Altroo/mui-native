@@ -16,7 +16,6 @@ import {
   useNativeRootProps,
   NativeTextScope,
   useNativeTextRootRef,
-  NativeIconStyleContext,
   useNativeTextContext,
   nativeTextStyleContext,
   type NativeStyle,
@@ -29,6 +28,8 @@ import {
 import { useTheme, useComponentStyle, useComponentRootStyle } from './themeProvider';
 import { ListContext } from './listContext';
 import { nativeListProps, listDirection } from './listStyles';
+import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
+import { NativeButtonGroupRules } from './buttonGroupContext';
 import { mergeNativeRootStyle } from './nativeControlStyles';
 import { getListItemAvatarUtilityClass, type ListItemAvatarClasses } from './listItemAvatarClasses';
 export * from './listItemAvatarClasses';
@@ -230,12 +231,14 @@ export const ListItemIcon: NativeListItemIconComponent = forwardRef<
   ListItemIconProps
 >(function ListItemIcon(inProps, ref) {
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
+  const styleRef = useNativeStyleRef(scopeRoot, scopeRef);
   const { props, style: preparedStyle } = useNativeRootProps({
     props: inProps,
     name: 'MuiListItemIcon',
   });
   const { component: Root = View, children, style, sx, classes, className, ...native } = props;
-  const { alignItems, menuItem, dense, direction } = useContext(ListContext);
+  const { alignItems, direction } = useContext(ListContext);
+  const ancestry = useContext(NativeButtonGroupRules);
   const theme = useTheme(),
     parent = useNativeTextContext();
   const token = (slot: keyof ListItemIconClasses) => {
@@ -249,31 +252,29 @@ export const ListItemIcon: NativeListItemIconComponent = forwardRef<
     alignItems === 'flex-start' && token('alignItemsFlexStart'),
     className,
   );
-  const { computed: resolved, authored } = useComponentRootStyle(
-    'MuiListItemIcon',
-    { ...props, alignItems },
-    sx,
-    preparedStyle,
-    {
-      ...nativeTextStyleContext(parent, style, theme),
-      overrideKeys: alignItems === 'flex-start' ? ['alignItemsFlexStart'] : [],
-      baseStyle: {
-        // inline-flex uses row flow; RN Views otherwise default to column.
-        flexDirection: 'row',
-        // The MenuItem parent owns this existing native reservation extension.
-        minWidth: menuItem ? 36 : theme.spacing(4.5),
-        flexShrink: 0,
-        color: theme.palette.action.active,
-        ...(alignItems === 'flex-start' ? { marginTop: 8 } : {}),
-      },
-      classes: rootClass.split(/\s+/).filter(Boolean),
-      rootProps: {
-        ...props,
-        ...(props.component ? { as: props.component } : {}),
-        className: rootClass,
-      },
+  const {
+    computed: resolved,
+    authored,
+    prepared,
+  } = useComponentRootStyle('MuiListItemIcon', { ...props, alignItems }, sx, preparedStyle, {
+    ...nativeTextStyleContext(parent, style, theme),
+    overrideKeys: alignItems === 'flex-start' ? ['alignItemsFlexStart'] : [],
+    baseStyle: {
+      // inline-flex uses row flow; RN Views otherwise default to column.
+      flexDirection: 'row',
+      minWidth: theme.spacing(4.5),
+      flexShrink: 0,
+      color: theme.palette.action.active,
+      ...(alignItems === 'flex-start' ? { marginTop: 8 } : {}),
     },
-  );
+    classes: rootClass.split(/\s+/).filter(Boolean),
+    ancestors: nativeStyleAncestors(ancestry, { classes: rootClass.split(/\s+/).filter(Boolean) }),
+    rootProps: {
+      ...props,
+      ...(props.component ? { as: props.component } : {}),
+      className: rootClass,
+    },
+  });
   const merged = mergeNativeRootStyle(
     parent?.direction ?? direction ?? theme.direction,
     resolved,
@@ -282,30 +283,26 @@ export const ListItemIcon: NativeListItemIconComponent = forwardRef<
   const computed =
     applyNativeTextMetrics(merged, resolved, nativeStyleTextMetrics([resolved, authored])) ??
     merged;
-  const inheritedIcon = useContext(NativeIconStyleContext);
-  const cssRootFontSize = theme.cssRootFontSize ?? 16;
-  const iconScope = useMemo(
-    // Original dense MenuItem CSS is 1.25rem. Convert authored units only;
-    // operating-system fontScale is owned by native text, not vector geometry.
-    () =>
-      menuItem && dense ? { ...inheritedIcon, fontSize: 1.25 * cssRootFontSize } : inheritedIcon,
-    [menuItem, dense, inheritedIcon, cssRootFontSize],
-  );
   return (
-    <NativeIconStyleContext.Provider value={iconScope}>
+    <NativeStyleScope
+      root={scopeRoot}
+      theme={theme}
+      classes={rootClass.split(/\s+/).filter(Boolean)}
+      prepared={prepared}
+    >
       <NativeTextScope rootRef={scopeRoot} theme={theme} style={computed} content={children}>
         {(style, content) => (
           <Root
             {...native}
             {...(Root === View ? {} : { className: rootClass })}
-            ref={scopeRef}
+            ref={styleRef}
             style={style}
           >
             {content}
           </Root>
         )}
       </NativeTextScope>
-    </NativeIconStyleContext.Provider>
+    </NativeStyleScope>
   );
 }) as NativeListItemIconComponent;
 export const ListItemAvatar: React.ForwardRefExoticComponent<

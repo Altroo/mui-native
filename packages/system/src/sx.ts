@@ -32,6 +32,11 @@ export type SxProps<T extends Theme = Theme> =
   | ((theme: T) => SxObject | null)
   | readonly (false | null | undefined | SxObject | ((theme: T) => SxObject | null))[];
 export type NativeStyle = ViewStyle & TextStyle;
+export interface NativeStyleTarget {
+  readonly classes: readonly string[];
+  readonly tag?: string | undefined;
+}
+export type { NativePreparedStyle } from './nativeStyledMetadata';
 export type StyleContext = NativeTextContext & {
   baseStyle?: SxProps;
   overrideKeys?: readonly string[];
@@ -46,6 +51,8 @@ export type StyleContext = NativeTextContext & {
   rootProps?: Record<string, unknown>;
   /** Participating native descendants expose finite class tokens to their owning component. */
   descendantClasses?: readonly string[];
+  /** @internal Participating physical roots between the owning sheet and its target. */
+  descendantPath?: readonly NativeStyleTarget[];
   /** Resolve only descendant branches, leaving root declarations on the actual root. */
   descendantOnly?: boolean;
   /** Internal: keep participating physical joins stable under RN's RTL layout/paint swaps. */
@@ -59,6 +66,10 @@ export type StyleContext = NativeTextContext & {
     props: Record<string, unknown>;
     sx?: SxProps;
     context: Omit<StyleContext, 'ancestors'>;
+    /** @internal Recollect retained CSS without rerunning owning callbacks. */
+    prepared?: import('./nativeStyledMetadata').NativePreparedStyle;
+    /** @internal A composed implementation sheet shares this physical root. */
+    sameRoot?: boolean;
   }[];
   logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };
   mode?: 'sx' | 'css';
@@ -175,6 +186,7 @@ function isSpacingLength(value: unknown, property: string): boolean {
 type StyleRule = {
   style: Readonly<Record<string, unknown>>;
   specificity: number;
+  typeSpecificity?: number;
   protectPhysicalGeometry?: boolean;
 };
 type StyleNode = {
@@ -366,50 +378,133 @@ function prepareStyle(
   };
   return build(input);
 }
+type SelectorAtom = { classes: string[]; tag?: string };
 function parseSelectors(key: string) {
   const selectors = key.split(',').map((selector) => selector.trim());
-  const self = selectors.map((selector) => selector.match(/^&((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)+)$/));
-  if (self.every(Boolean)) return { self: true, matches: self };
-  const descendant = selectors.map((selector) =>
-    selector.match(/^&\s+((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)+)$/),
-  );
-  return descendant.every(Boolean) ? { self: false, matches: descendant } : undefined;
+  const parsed = selectors.map((selector) => {
+    const [head, ...parts] = selector.split(/\s+/);
+    const match = head.match(/^&((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)*)$/);
+    if (!match) return undefined;
+    const atoms: SelectorAtom[] = [];
+    for (const part of parts) {
+      const descendant = part.match(/^(svg)?((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)*)$/);
+      if (!descendant || (!descendant[1] && !descendant[2])) return undefined;
+      atoms.push({
+        classes: descendant[2].split('.').slice(1),
+        ...(descendant[1] ? { tag: descendant[1] } : {}),
+      });
+    }
+    return { self: match[1].split('.').slice(1), atoms };
+  });
+  return parsed.every(Boolean)
+    ? (parsed as { self: string[]; atoms: SelectorAtom[] }[])
+    : undefined;
 }
 function collectRules(nodes: readonly PreparedNode[], context: SelectorContext): StyleRule[] {
   const rules: StyleRule[] = [];
-  const collect = (nodes: readonly PreparedNode[], specificity: number, descendant = false) => {
+  const path = context.descendantPath;
+  const root = [
+    ...(context.classes ?? []),
+    ...(context.states ?? []).map((state) => `Mui-${state}`),
+  ];
+  const collect = (
+    nodes: readonly PreparedNode[],
+    specificity: number,
+    typeSpecificity: number,
+    position = -1,
+    descendant = false,
+  ) => {
     for (const node of nodes) {
-      if (Object.keys(node.base).length && (!context.descendantOnly || descendant))
+      const targetMatched = path
+        ? path.length > 0 && position === path.length - 1
+        : !context.descendantOnly || descendant;
+      if (Object.keys(node.base).length && targetMatched)
         rules.push({
           style: node.base,
           specificity,
+          typeSpecificity,
           protectPhysicalGeometry: context.protectPhysicalGeometry,
         });
-      if (!node.conditions) continue;
-      for (const [key, branches] of node.conditions) {
+      for (const [key, branches] of node.conditions ?? []) {
         if (!branches) continue;
         if (key.startsWith('@media')) {
-          if (matchesMedia(key, context.width ?? 0)) collect(branches, specificity, descendant);
+          if (matchesMedia(key, context.width ?? 0))
+            collect(branches, specificity, typeSpecificity, position, descendant);
           continue;
         }
-        const selector = parseSelectors(key);
-        if (!selector) continue;
-        const available = selector.self
-          ? [
-              ...(descendant ? (context.descendantClasses ?? []) : (context.classes ?? [])),
-              ...(context.states ?? []).map((state) => `Mui-${state}`),
-            ]
-          : (context.descendantClasses ?? (context.slot ? [context.slot] : []));
-        const matching = selector.matches.flatMap((match) => {
-          const classes = match![1].slice(1).split('.');
-          return classes.every((name) => available.includes(name)) ? [classes.length] : [];
-        });
-        if (matching.length)
-          collect(branches, specificity + Math.max(...matching), descendant || !selector.self);
+        const selectors = parseSelectors(key);
+        if (!selectors) continue;
+        // One declaration can match several selector-list branches or physical
+        // paths. Its greatest matching specificity applies exactly once.
+        const matches = new Map<number, { classes: number; tags: number }>();
+        for (const selector of selectors) {
+          const available = path
+            ? position < 0
+              ? root
+              : path[position].classes
+            : [
+                ...(descendant ? (context.descendantClasses ?? []) : (context.classes ?? [])),
+                ...(context.states ?? []).map((state) => `Mui-${state}`),
+              ];
+          if (!selector.self.every((name) => available.includes(name))) continue;
+          if (path) {
+            let positions = [position];
+            for (const atom of selector.atoms) {
+              positions = positions.flatMap((previous) =>
+                path.flatMap((target, index) =>
+                  index > previous &&
+                  (!atom.tag || atom.tag === target.tag) &&
+                  atom.classes.every((name) => target.classes.includes(name))
+                    ? [index]
+                    : [],
+                ),
+              );
+            }
+            for (const index of positions) {
+              const value = {
+                classes:
+                  selector.self.length +
+                  selector.atoms.reduce((sum, atom) => sum + atom.classes.length, 0),
+                tags: selector.atoms.filter((atom) => atom.tag).length,
+              };
+              const old = matches.get(index);
+              if (
+                !old ||
+                value.classes > old.classes ||
+                (value.classes === old.classes && value.tags > old.tags)
+              )
+                matches.set(index, value);
+            }
+          } else {
+            // Preserve the existing slot/single-class descendant contract for
+            // nonparticipating components. Physical chains opt in explicitly.
+            if (selector.atoms.length > 1 || selector.atoms.some((atom) => atom.tag)) continue;
+            const atom = selector.atoms[0];
+            if (
+              atom &&
+              !atom.classes.every((name) =>
+                (context.descendantClasses ?? (context.slot ? [context.slot] : [])).includes(name),
+              )
+            )
+              continue;
+            const index = atom ? 0 : position;
+            const value = { classes: selector.self.length + (atom?.classes.length ?? 0), tags: 0 };
+            const old = matches.get(index);
+            if (!old || value.classes > old.classes) matches.set(index, value);
+          }
+        }
+        for (const [index, match] of matches)
+          collect(
+            branches,
+            specificity + match.classes,
+            typeSpecificity + match.tags,
+            index,
+            descendant || index >= 0,
+          );
       }
     }
   };
-  collect(nodes, 0);
+  collect(nodes, 0, 0);
   return rules;
 }
 function resolveRules(input: SxProps | undefined, theme: Theme, context: StyleContext) {
@@ -422,7 +517,9 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
   const result: Record<string, unknown> = {};
   const textOwners: Record<string, Readonly<Record<string, unknown>>> = {};
   // Stable sorting preserves upstream rule order within equal specificity.
-  const ordered = rules.sort((a, b) => a.specificity - b.specificity);
+  const ordered = rules.sort(
+    (a, b) => a.specificity - b.specificity || (a.typeSpecificity ?? 0) - (b.typeSpecificity ?? 0),
+  );
   const protectGeometry =
     context.protectPhysicalGeometry || ordered.some((rule) => rule.protectPhysicalGeometry);
   const inheritedDirection =
@@ -578,6 +675,7 @@ function componentSheets(
         classes: context.classes?.slice(),
         states: context.states?.slice(),
         descendantClasses: context.descendantClasses?.slice(),
+        descendantPath: context.descendantPath,
         descendantOnly: context.descendantOnly,
         slot: context.slot,
         width: context.width,
@@ -653,9 +751,18 @@ function prepareComponent(
 ): PreparedSheet[] {
   return [
     ...(context.ancestors ?? []).flatMap((sheet) =>
-      componentSheets(sheet.theme, sheet.name, sheet.props, sheet.sx, sheet.context).map(
-        (prepared) => ({ ...prepared, ancestor: true }),
-      ),
+      (sheet.prepared
+        ? sheet.prepared.sheets.map((prepared) => ({
+            ...prepared,
+            context: {
+              ...prepared.context,
+              descendantOnly: true,
+              descendantPath: sheet.context.descendantPath,
+              descendantClasses: sheet.context.descendantClasses,
+            },
+          }))
+        : componentSheets(sheet.theme, sheet.name, sheet.props, sheet.sx, sheet.context)
+      ).map((prepared) => ({ ...prepared, ancestor: !sheet.sameRoot })),
     ),
     ...componentSheets(theme, name, props, sx, context),
   ];
@@ -727,6 +834,8 @@ export function createNativeStyledStyle(
 export interface NativeRootStyleResult {
   computed: NativeStyle;
   authored: StyleProp<NativeStyle>;
+  /** @internal Only this physical root's CSS, without inherited sheets. */
+  prepared: import('./nativeStyledMetadata').NativePreparedStyle;
 }
 /**
  * @internal Resolve styles once the participating component knows its final root
@@ -769,5 +878,11 @@ export function componentRootStyle(
     nativeTextMetrics: nativeStyleTextMetrics(native),
   };
   const sheets = [...prepareComponent(theme, name, props, sx, finalContext), ...wrappers];
-  return { computed: finishRules(collectSheets(sheets), theme, finalContext), authored: native };
+  const ownSheets = sheets.filter((sheet) => !sheet.ancestor);
+  for (const sheet of ownSheets) retainPreparedNodes(sheet.nodes);
+  return {
+    computed: finishRules(collectSheets(sheets), theme, finalContext),
+    authored: native,
+    prepared: Object.freeze({ sheets: Object.freeze(ownSheets) }),
+  };
 }

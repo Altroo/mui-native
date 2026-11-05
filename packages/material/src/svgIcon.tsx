@@ -14,6 +14,8 @@ import {
   type NativeStyle,
 } from '@altroo/mui-native-system';
 import { useTheme, useComponentStyle } from './themeProvider';
+import { nativeStyleAncestors } from './nativeStyleScope';
+import { NativeButtonGroupRules } from './buttonGroupContext';
 import { nativeSvgChildren, NativeSvgParentContext } from './nativeSvgChildren';
 import { getSvgIconUtilityClass } from './svgIconClasses';
 import type {
@@ -68,7 +70,8 @@ export const SvgIcon = forwardRef<
   const theme = useTheme(),
     parent = useNativeTextContext(),
     icon = useContext(NativeIconStyleContext),
-    svgParent = useContext(NativeSvgParentContext);
+    svgParent = useContext(NativeSvgParentContext),
+    ancestry = useContext(NativeButtonGroupRules);
   const child =
     React.isValidElement<Record<string, unknown>>(children) &&
     (children.type === 'svg' || children.type === Svg)
@@ -169,6 +172,15 @@ export const SvgIcon = forwardRef<
       ...(inheritedFont === undefined ? {} : { fontSize: inheritedFont }),
     },
     svg: true,
+    classes: String(rootProps.className ?? '')
+      .split(/\s+/)
+      .filter(Boolean),
+    ancestors: nativeStyleAncestors(ancestry, {
+      classes: String(rootProps.className ?? '')
+        .split(/\s+/)
+        .filter(Boolean),
+      ...(component === 'svg' || component === Svg ? { tag: 'svg' } : {}),
+    }),
     rootProps,
     overrideKeys: [
       ...(color === 'inherit' ? [] : ['color' + capital(color)]),

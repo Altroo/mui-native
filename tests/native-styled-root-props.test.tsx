@@ -326,3 +326,46 @@ test('a hidden throwing style getter is never observed by root default preparati
   expect(reads).toBe(0);
   expect(Object.getOwnPropertyDescriptors(props)).toEqual(before);
 });
+
+test('ordinary native callbacks retain identity and are not executed by prop separation or restoration', () => {
+  const callback = jest.fn((state: { pressed: boolean }) => ({ opacity: state.pressed ? 0.5 : 1 }));
+  const props = { style: callback };
+  const split = separateNativeRootProps(props);
+  expect(split.props).toBe(props);
+  expect(restoreNativeRootStyle(split, props)).toBe(callback);
+  expect(callback).not.toHaveBeenCalled();
+});
+test('only prepared CSS plus a default callback creates a deferred carrier, evaluated once per supplied state', () => {
+  const theme = createTheme();
+  const prepared = createNativeStyledStyle(
+    theme,
+    '',
+    {},
+    undefined,
+    { baseStyle: { '&.final-root': { opacity: 0.7 } } },
+    undefined,
+  );
+  const original: {
+    style?: StyleProp<NativeStyle> | ((state: { pressed: boolean }) => StyleProp<NativeStyle>);
+  } = { style: prepared };
+  const split = separateNativeRootProps(original);
+  const callback = jest.fn((state: { pressed: boolean }) =>
+    Object.freeze([{ opacity: state.pressed ? 0.2 : 0.4 }]),
+  );
+  const props = { ...split.props, style: callback };
+  const restored = restoreNativeRootStyle(split, props);
+  expect(callback).not.toHaveBeenCalled();
+  if (typeof restored !== 'function') throw new Error('Expected a deferred native state callback.');
+  const state = Object.freeze({ pressed: true });
+  const supplied = restored(state);
+  expect(callback).toHaveBeenCalledTimes(1);
+  expect(callback).toHaveBeenCalledWith(state);
+  const first = componentRootStyle(theme, '', {}, undefined, supplied, { classes: ['final-root'] });
+  const second = componentRootStyle(theme, '', {}, undefined, supplied, {
+    classes: ['final-root'],
+  });
+  expect(first.computed.opacity).toBe(0.7);
+  expect(StyleSheet.flatten(first.authored)?.opacity).toBe(0.2);
+  expect(second.computed.opacity).toBe(0.7);
+  expect(callback).toHaveBeenCalledTimes(1);
+});

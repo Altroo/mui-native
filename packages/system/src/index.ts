@@ -48,3 +48,6 @@ export {
   useNativeTextRootRef,
   setNativeTextScopeParent,
 } from './nativeTextRegistry';
+
+/** @internal Keep prepared root CSS outside genuine props across composing native defaults. */
+export { separateNativeRootProps, restoreNativeRootStyle } from './nativeStyledMetadata';

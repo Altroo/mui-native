@@ -4,7 +4,7 @@
 import React from 'react';
 import type { ButtonGroupOwnProps } from './buttonGroupTypes';
 import type { ViewInstance } from 'react-native';
-import type { StyleContext } from '@altroo/mui-native-system';
+import type { StyleContext, NativeStyleTarget } from '@altroo/mui-native-system';
 export interface ButtonGroupContextValue
   extends Pick<
     ButtonGroupOwnProps,
@@ -25,9 +25,13 @@ if (process.env.NODE_ENV !== 'production') {
   ButtonGroupButtonContext.displayName = 'ButtonGroupButtonContext';
 }
 export interface NativeButtonGroupRule {
-  /** Actual native group root, used only for physical styling ownership. */
+  /** Actual participating native root, used only for physical styling ownership. */
   readonly element?: ViewInstance | null;
-  cascade: (classes: readonly string[]) => NonNullable<StyleContext['ancestors']>[number];
+  readonly selector?: NativeStyleTarget | undefined;
+  cascade: (
+    classes: readonly string[],
+    path?: readonly NativeStyleTarget[],
+  ) => NonNullable<StyleContext['ancestors']>[number];
 }
 // Styling ancestry stays separate from the two source-facing public contexts.
 export const NativeButtonGroupRules = React.createContext<readonly NativeButtonGroupRule[]>([]);
