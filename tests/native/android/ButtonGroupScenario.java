@@ -5,6 +5,10 @@ import android.app.Instrumentation;
 import android.app.UiAutomation;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -102,14 +106,176 @@ public final class ButtonGroupScenario {
       driver.finish(passed?Activity.RESULT_OK:Activity.RESULT_CANCELED,result);
     }
   }
+  /** The global RTL override is process-local and is restored before completion. */
+  public static void runReading(Instrumentation driver, boolean globalRTL) {
+    new ButtonGroupScenario(driver).reading(globalRTL);
+  }
+  private void reading(boolean globalRTL) {
+    Bundle result=new Bundle(); JSONObject report=new JSONObject(); JSONArray states=new JSONArray(); boolean passed=false;
+    String previousRTL=System.getProperty("FORCE_RTL_FOR_TESTING");
+    try {
+      System.setProperty("FORCE_RTL_FOR_TESTING",Boolean.toString(globalRTL));
+      directory=new File(driver.getTargetContext().getCacheDir(),"mui-button-group-reading-"+System.currentTimeMillis());
+      require(directory.mkdir(),"Preserve existing reading evidence");
+      report.put("schemaVersion",3).put("scenario","button-group-reading-v3").put("driver","native Instrumentation and UiAutomation")
+        .put("artifactDirectory","cache/"+directory.getName()).put("expectedGlobalRTL",globalRTL)
+        .put("device",new JSONObject().put("sdk",Build.VERSION.SDK_INT).put("model",Build.MODEL)
+          .put("fontScale",driver.getTargetContext().getResources().getConfiguration().fontScale)
+          .put("density",driver.getTargetContext().getResources().getDisplayMetrics().density));
+      automation=driver.getUiAutomation(UiAutomation.FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES);
+      Intent launch=driver.getTargetContext().getPackageManager().getLaunchIntentForPackage("dev.altroo.muinative.catalog");
+      require(launch!=null,"Catalog must be installed");launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+      activity=driver.startActivitySync(launch);
+      tagId=driver.getTargetContext().getResources().getIdentifier("react_test_id","id","dev.altroo.muinative.catalog");
+      await(()->ui(()->find("catalog-tab-Groups")!=null),"Catalog tabs must mount");
+      tap("catalog-tab-Groups");tap("group-closure-toggle");
+      await(()->ui(()->find("group-reading-scene")!=null),"Reading scene must mount");
+      tap("group-reading-measurements-toggle");
+      await(()->ui(()->readingMetadata().optJSONObject("metrics")!=null&&readingMetadata().getJSONObject("metrics").optJSONArray("2")!=null),"Real native text receipts must arrive");
+      require(ui(()->readingMetadata().getBoolean("globalRTL"))==globalRTL,"The actual RN global direction must match the requested process profile");
+      tap("group-reading-action-0");
+      await(()->ui(()->text("group-reading-action-0").equals("Save 1")),"Reading action must activate once");
+      states.put(readingState("ltr-horizontal",false,false));capture("reading-ltr-horizontal.png");
+      tap("group-reading-direction");awaitReading("rtl","horizontal");
+      states.put(readingState("rtl-horizontal",true,false));capture("reading-rtl-horizontal.png");
+      tap("group-reading-orientation");awaitReading("rtl","vertical");
+      states.put(readingState("rtl-vertical",true,true));capture("reading-rtl-vertical.png");
+      tap("group-reading-direction");awaitReading("ltr","vertical");
+      states.put(readingState("ltr-vertical",false,true));capture("reading-ltr-vertical.png");
+      tap("group-reading-orientation");awaitReading("ltr","horizontal");
+      states.put(readingState("restored-horizontal",false,false));capture("reading-restored.png");
+      tap("group-reading-action-1");tap("group-reading-action-2");
+      tap("group-reading-follow-toggle");
+      await(()->ui(()->readingMetadata().optBoolean("followSystem")),"Review policy must commit before revealing the next control");
+      tap("group-reading-cap-toggle");
+      await(()->ui(()->readingMetadata().optBoolean("followSystem")&&readingMetadata().optBoolean("uncapped")),"Live native scaling policies must commit");
+      states.put(readingState("scaling-live",false,false));capture("reading-scaling-live.png");
+      tap("group-reading-follow-toggle");
+      await(()->ui(()->!readingMetadata().optBoolean("followSystem")),"Review reset must commit before revealing the next control");
+      tap("group-reading-cap-toggle");
+      await(()->ui(()->!readingMetadata().optBoolean("followSystem")&&!readingMetadata().optBoolean("uncapped")),"Scaling policies must restore without remounting");
+      states.put(readingState("scaling-restored",false,false));capture("reading-scaling-restored.png");
+      tap("group-reading-mixed-action");
+      await(()->ui(()->text("group-reading-mixed-last").equals("delivery 1")),"Mixed authored/literal content must activate once");
+      report.put("mixed",ui(()->new JSONObject().put("count",1).put("root",readingBounds(view("group-reading-mixed-action"))).put("first",readingBounds(view("group-reading-mixed-first"))).put("last",readingBounds(view("group-reading-mixed-last")))));
+      tap("group-reading-text-portal-toggle");
+      await(()->ui(()->find("group-reading-text-portal") instanceof TextView&&readingMetadata().getJSONObject("metrics").optJSONArray("portal")!=null),"Typography-origin Portal must produce a physical native text root and its own layout event");
+      JSONObject portal=ui(()->{
+        TextView leaf=(TextView)view("group-reading-text-portal");
+        float density=leaf.getResources().getDisplayMetrics().density;
+        float font=glyphPaint(leaf).getTextSize();
+        require(Math.abs(font-Math.ceil(14*density))<=1.1,"Text-origin Portal must keep its unscaled root font policy");
+        require(leaf.getLayout()!=null&&leaf.getLayout().getLineCount()>0,"Portal must have actual native glyph layout");
+        return new JSONObject().put("fontPx",font).put("expectedFontPx",Math.ceil(14*density)).put("bounds",readingBounds(leaf)).put("text",leaf.getText().toString());
+      });
+      report.put("portal",portal);capture("reading-text-portal.png");
+      tap("group-reading-text-portal-toggle");await(()->ui(()->find("group-reading-text-portal")==null),"Text-origin Portal must detach");
+      passed=true;
+    } catch(Throwable error) {
+      try {report.put("error",error.toString());if(directory!=null)capture("failure.png");}catch(Throwable ignored){/* Preserve the first failure. */}
+    } finally {
+      if(previousRTL==null)System.clearProperty("FORCE_RTL_FOR_TESTING");else System.setProperty("FORCE_RTL_FOR_TESTING",previousRTL);
+      try {report.put("status",passed?"passed":"failed").put("states",states).put("screenshots",pictures);result.putString("buttonGroupReadingReport",report.toString());}
+      catch(Exception error){result.putString("Error",error.toString());passed=false;}
+      driver.finish(passed?Activity.RESULT_OK:Activity.RESULT_CANCELED,result);
+    }
+  }
+  private JSONObject readingMetadata()throws Exception{View receipt=find("group-reading-metadata");return receipt==null?new JSONObject():new JSONObject(caption(receipt));}
+  private void awaitReading(String direction,String orientation)throws Exception{
+    await(()->ui(()->readingMetadata().getString("direction").equals(direction)&&readingMetadata().getString("orientation").equals(orientation)),"Reading direction/orientation must commit");
+  }
+  private JSONObject readingBounds(View target)throws Exception{
+    int[] origin=new int[2];target.getLocationOnScreen(origin);float density=target.getResources().getDisplayMetrics().density;
+    return new JSONObject().put("x",origin[0]/density).put("y",origin[1]/density).put("width",target.getWidth()/density).put("height",target.getHeight()/density);
+  }
+  private Drawable readingBorder(Drawable drawable){
+    if(drawable==null)return null;
+    if(drawable.getClass().getName().equals("com.facebook.react.uimanager.drawable.BorderDrawable"))return drawable;
+    if(drawable instanceof LayerDrawable){LayerDrawable layers=(LayerDrawable)drawable;for(int i=0;i<layers.getNumberOfLayers();i++){Drawable border=readingBorder(layers.getDrawable(i));if(border!=null)return border;}}
+    return null;
+  }
+  // Draw the actual retained border layer. Reconstructing the same radius inputs
+  // misses a cached native path that did not invalidate on direction changes.
+  private JSONObject readingPaint(View target,boolean vertical)throws Exception{
+    com.facebook.react.uimanager.style.BorderRadiusStyle radii=new com.facebook.react.uimanager.style.BorderRadiusStyle();
+    JSONObject raw=new JSONObject();
+    for(com.facebook.react.uimanager.style.BorderRadiusProp key:com.facebook.react.uimanager.style.BorderRadiusProp.values()){
+      com.facebook.react.uimanager.LengthPercentage value=com.facebook.react.uimanager.BackgroundStyleApplicator.getBorderRadius(target,key);
+      radii.set(key,value);raw.put(key.name(),value==null?JSONObject.NULL:new JSONObject().put("value",value.resolve(100f)).put("unit",value.getType().name()));
+    }
+    float density=target.getResources().getDisplayMetrics().density;
+    com.facebook.react.uimanager.style.ComputedBorderRadius corners=radii.resolve(target.getLayoutDirection(),target.getContext(),target.getWidth()/density,target.getHeight()/density);
+    JSONObject resolved=new JSONObject();
+    String[] names={"topLeft","topRight","bottomLeft","bottomRight"};
+    com.facebook.react.uimanager.style.CornerRadii[] values={corners.getTopLeft(),corners.getTopRight(),corners.getBottomLeft(),corners.getBottomRight()};
+    for(int index=0;index<names.length;index++)resolved.put(names[index],new JSONObject().put("x",values[index].getHorizontal()).put("y",values[index].getVertical()));
+    Drawable border=readingBorder(target.getBackground());require(border!=null,"The actual RN border drawing layer must be present");
+    Rect bounds=border.getBounds();require(bounds.width()>3&&bounds.height()>3,"The border layer must own real drawing bounds");
+    Bitmap raster=Bitmap.createBitmap(bounds.width(),bounds.height(),Bitmap.Config.ARGB_8888);
+    JSONObject pixels=new JSONObject();
+    try {
+      Canvas canvas=new Canvas(raster);canvas.translate(-bounds.left,-bounds.top);border.draw(canvas);
+      // Probe along an edge that is present in this outlined workload: top /
+      // bottom for a row, left / right for a column. Avoid transparent dividers.
+      int inset=Math.max(1,(int)Math.ceil(2*density)),right=raster.getWidth()-1,bottom=raster.getHeight()-1;
+      require(inset<right&&inset<bottom,"The border must have space for actual corner probes");
+      // First/last edge pixels also intersect a one-physical-pixel outline.
+      int[][] points=vertical?new int[][]{{0,inset},{right,inset},{0,bottom-inset},{right,bottom-inset}}
+        :new int[][]{{inset,0},{right-inset,0},{inset,bottom},{right-inset,bottom}};
+      for(int index=0;index<names.length;index++)pixels.put(names[index],Color.alpha(raster.getPixel(points[index][0],points[index][1])));
+    } finally {raster.recycle();}
+    return new JSONObject().put("direction",target.getLayoutDirection()==View.LAYOUT_DIRECTION_RTL?"rtl":"ltr")
+      .put("drawableDirection",border.getLayoutDirection()==View.LAYOUT_DIRECTION_RTL?"rtl":"ltr").put("drawableClass",border.getClass().getName())
+      .put("corners",resolved).put("rawCorners",raw).put("cornerAlpha",pixels);
+  }
+  private JSONObject readingState(String phase,boolean rtl,boolean vertical)throws Exception{
+    ui(()->{View root=view("group-reading-actions");root.requestRectangleOnScreen(new Rect(0,0,root.getWidth(),root.getHeight()),true);return null;});
+    AtomicReference<JSONObject> settled=new AtomicReference<>();AtomicReference<AssertionError> pending=new AtomicReference<>();
+    try {await(()->{try{settled.set(readingStateNow(phase,rtl,vertical));return true;}catch(AssertionError error){pending.set(error);return false;}},"Native reading glyph/layout updates did not settle");}
+    catch(AssertionError error){if(pending.get()!=null)throw new AssertionError("Native reading update failed: "+pending.get(),pending.get());throw error;}
+    return settled.get();
+  }
+  private JSONObject readingStateNow(String phase,boolean rtl,boolean vertical){return ui(()->{
+    JSONObject metadata=readingMetadata();View root=view("group-reading-actions");JSONArray actions=new JSONArray();
+    require(text("group-reading-action-0").equals("Save 1"),"Live direction and orientation must retain action state");
+    require(root.getWidth()>0&&root.getHeight()>0,"Actual reading group must finish layout");
+    JSONObject rootBounds=readingBounds(root);JSONObject previous=null;
+    require(metadata.getString("direction").equals(rtl?"rtl":"ltr")&&metadata.getString("orientation").equals(vertical?"vertical":"horizontal"),"Requested React reading state must commit");
+    for(int index=0;index<3;index++){
+      View action=view("group-reading-action-"+index),label=view("group-reading-label-"+index);
+      require(label instanceof TextView,"Authored labels must keep their own physical native text roots");
+      TextView text=(TextView)label;android.util.DisplayMetrics metrics=text.getResources().getDisplayMetrics();
+      float auto=android.util.TypedValue.applyDimension(android.util.TypedValue.COMPLEX_UNIT_SP,14,metrics);
+      float expected=(float)Math.ceil(index==1&&!metadata.getBoolean("followSystem")?14*metrics.density:index==2&&!metadata.getBoolean("uncapped")?Math.min(auto,14*metrics.density*1.2):auto);
+      float actual=glyphPaint(text).getTextSize();
+      require(Math.abs(actual-expected)<=1.1,"Native glyph font must follow the authored scaling policy for label "+index+": "+actual+" vs "+expected);
+      require(text.getLayout()!=null&&text.getLayout().getLineCount()>0,"Native label must own glyph layout");
+      for(int line=0;line<text.getLayout().getLineCount();line++){
+        require(text.getLayout().getEllipsisCount(line)==0,"Reading text must not be silently ellipsized");
+        require(text.getLayout().getLineLeft(line)>=-1.5&&text.getLayout().getLineRight(line)<=text.getWidth()+1.5,"Actual native glyph line must fit its label");
+      }
+      JSONArray lines=new JSONArray();
+      for(int line=0;line<text.getLayout().getLineCount();line++)lines.put(new JSONObject().put("left",text.getLayout().getLineLeft(line)/metrics.density).put("right",text.getLayout().getLineRight(line)/metrics.density).put("top",text.getLayout().getLineTop(line)/metrics.density).put("bottom",text.getLayout().getLineBottom(line)/metrics.density).put("ellipsis",text.getLayout().getEllipsisCount(line)));
+      int count=index==0||phase.startsWith("scaling-")?1:0;
+      require(text("group-reading-action-"+index).equals(new String[]{"Save","Review","Send"}[index]+" "+count),"Live policy changes must retain every local action counter");
+      JSONObject actionBounds=readingBounds(action);
+      double expectedX=vertical?rootBounds.getDouble("x"):index==0?(rtl?rootBounds.getDouble("x")+rootBounds.getDouble("width")-actionBounds.getDouble("width"):rootBounds.getDouble("x")):rtl?previous.getDouble("x")+1-actionBounds.getDouble("width"):previous.getDouble("x")+previous.getDouble("width")-1;
+      double expectedY=vertical&&index>0?previous.getDouble("y")+previous.getDouble("height")-1:rootBounds.getDouble("y");
+      require(Math.abs(actionBounds.getDouble("x")-expectedX)<=1.5&&Math.abs(actionBounds.getDouble("y")-expectedY)<=1.5,"Native direction/orientation joins must commit");previous=actionBounds;
+      actions.put(new JSONObject().put("paint",readingPaint(action,vertical)).put("count",count).put("lines",lines).put("index",index).put("bounds",readingBounds(action)).put("label",readingBounds(label)).put("fontPx",actual).put("expectedFontPx",expected).put("lineCount",text.getLayout().getLineCount()));
+    }
+    return new JSONObject().put("phase",phase).put("direction",rtl?"rtl":"ltr").put("orientation",vertical?"vertical":"horizontal").put("count",1).put("root",readingBounds(root)).put("container",readingBounds(view("group-reading-scene"))).put("actions",actions).put("metadata",metadata);
+  });}
+
   // Fabric stores run colors in native spans; TextView's fallback color does
   // not describe the glyph paint when a foreground span is present.
-  private int textColor(TextView text){
+  private int textColor(TextView text){return glyphPaint(text).getColor();}
+  private android.text.TextPaint glyphPaint(TextView text){
     android.text.TextPaint paint=new android.text.TextPaint(text.getPaint());
     CharSequence value=text.getText();
     if(value instanceof android.text.Spanned && value.length()>0)
       for(android.text.style.CharacterStyle span:((android.text.Spanned)value).getSpans(0,1,android.text.style.CharacterStyle.class))span.updateDrawState(paint);
-    return paint.getColor();
+    return paint;
   }
   private float width(String id){View target=view(id);return target.getWidth()/target.getResources().getDisplayMetrics().density;}
   private boolean contains(View ancestor,View child){for(android.view.ViewParent parent=child.getParent();parent!=null;parent=parent.getParent())if(parent==ancestor)return true;return ancestor==child;}
