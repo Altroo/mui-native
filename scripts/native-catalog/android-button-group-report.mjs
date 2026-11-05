@@ -7,8 +7,24 @@ export const buttonGroupStages = [
   'disabled-pointer',
   'loading-cycle',
   'dynamic-children',
+  'theme-live',
+  'theme-focus',
+  'nested-live',
+  'portal-window',
+  'portal-inside',
+  'portal-sibling',
+  'portal-closed',
 ];
-export const buttonGroupPictures = ['horizontal.png', 'vertical.png', 'compact.png'];
+export const buttonGroupPictures = [
+  'horizontal.png',
+  'vertical.png',
+  'compact.png',
+  'themed-focus.png',
+  'nested.png',
+  'portal-window.png',
+  'portal-inside.png',
+  'portal-sibling.png',
+];
 /** Accept safe diagnostic locations even when the native assertion failed. */
 export function inspectButtonGroupReport(output) {
   const matches = [
@@ -17,8 +33,8 @@ export function inspectButtonGroupReport(output) {
   if (matches.length !== 1) throw Error('No unambiguous ButtonGroup instrumentation report');
   const report = JSON.parse(matches[0][1]);
   if (
-    report?.schemaVersion !== 1 ||
-    report.scenario !== 'button-group-v1' ||
+    report?.schemaVersion !== 2 ||
+    report.scenario !== 'button-group-v2' ||
     report.driver !== 'native Instrumentation and UiAutomation' ||
     typeof report.artifactDirectory !== 'string' ||
     !/^cache\/mui-button-group-\d+$/.test(report.artifactDirectory) ||
@@ -102,5 +118,47 @@ export function summarizeButtonGroup(output) {
       throw Error('Group endpoints must fill their measured root');
     offset += ids.length;
   }
+  const closure = report.closure;
+  if (
+    !closure ||
+    closure.nativeFocus !== true ||
+    !Number.isFinite(closure.nestedCompact) ||
+    !Number.isFinite(closure.nestedExpanded) ||
+    Math.abs(closure.nestedCompact - 180) > 1.5 ||
+    Math.abs(closure.nestedExpanded - 220) > 1.5 ||
+    !Array.isArray(closure.portals) ||
+    closure.portals.length !== 5
+  )
+    throw Error('Missing native closure focus/nested evidence');
+  const expected = [
+    ['window', 64, 16, false, false, 0],
+    ['inside', 96, 18, true, false, 0],
+    ['inside-updated', 108, 20, true, false, 1],
+    ['sibling', 128, 22, false, true, 0],
+    ['sibling-updated', 140, 24, false, true, 1],
+  ];
+  for (const [index, [phase, width, fontSize, inside, sibling, count]] of expected.entries()) {
+    const sample = closure.portals[index];
+    if (
+      !sample ||
+      sample.phase !== phase ||
+      !Number.isFinite(sample.width) ||
+      Math.abs(sample.width - width) > 1.5 ||
+      !Number.isFinite(sample.fontSize) ||
+      Math.abs(sample.fontSize - fontSize) > 0.5 ||
+      sample.inside !== inside ||
+      sample.sibling !== sibling ||
+      sample.count !== count ||
+      sample.context !== 'Defaults text/inherit/large · last' ||
+      !Number.isInteger(sample.color) ||
+      sample.color < 0 ||
+      sample.color > 0xffffffff
+    )
+      throw Error('Invalid native Portal style/ownership evidence');
+  }
+  const colors = [0xff0d070b, 0xff9c27b0, 0xffbe185d, 0xff1565c0, 0xff0369a1];
+  for (const [index, sample] of closure.portals.entries())
+    if (sample.color !== colors[index])
+      throw Error('Native text paint must follow the physical destination');
   return report;
 }
