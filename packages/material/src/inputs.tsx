@@ -363,6 +363,7 @@ function InputEngine({
     filled,
   };
   const theme = useTheme();
+  const shapeRadius = useSx({ borderRadius: 1 }).borderRadius;
   const states = [
     ...(focused ? ['focused'] : []),
     ...(disabled ? ['disabled'] : []),
@@ -590,8 +591,8 @@ function InputEngine({
               ? { [mapPhysicalSides ? 'paddingLeft' : 'paddingRight']: selectionCaret }
               : {}),
             backgroundColor: variant === 'filled' ? theme.palette.action.hover : 'transparent',
-            borderTopLeftRadius: variant === 'filled' ? theme.shape.borderRadius : undefined,
-            borderTopRightRadius: variant === 'filled' ? theme.shape.borderRadius : undefined,
+            borderTopLeftRadius: variant === 'filled' ? shapeRadius : undefined,
+            borderTopRightRadius: variant === 'filled' ? shapeRadius : undefined,
           },
           baseStyle,
           paddingEdges(baseStyle),
@@ -723,7 +724,7 @@ function InputEngine({
                 : Boolean(startAdornment || focused || filled))
             }
             style={[
-              { borderWidth: focused ? 2 : 1, borderColor, borderRadius: theme.shape.borderRadius },
+              { borderWidth: focused ? 2 : 1, borderColor, borderRadius: shapeRadius },
               outlineStyle,
               outlineProps.style,
             ]}

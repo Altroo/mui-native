@@ -1,5 +1,12 @@
-import React, { createContext, useContext, useMemo } from 'react';
+import React, { createContext, useContext, useMemo, useRef } from 'react';
 import { Text, View, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
+import {
+  setNativeTextScopeParent,
+  useNativeTextScopeRoot,
+  equalNativeTextScopeValue,
+  useNativeTextChildRoots,
+  type NativeTextChildRootTracker,
+} from './nativeTextRegistry';
 import type { Theme } from './theme';
 import type { NativeStyle } from './sx';
 import {
@@ -86,6 +93,7 @@ function resolveScope(
     lineHeight: getTextStyleInheritance(normalized).lineHeight,
     nativeText: kind === 'text',
   };
+  setNativeTextScopeParent(value, parent);
   const inheritable = inheritedTextStyle(flat);
   value.literalStyle = {
     ...value.style,
@@ -106,6 +114,8 @@ export interface NativeTextScopeProps {
   style?: StyleProp<NativeStyle>;
   kind?: 'view' | 'text';
   reset?: boolean;
+  /** Native root owned by this scope; used for physical Portal inheritance. */
+  rootRef?: React.RefObject<object | null>;
   content?: React.ReactNode;
   children: (
     style: NativeStyle,
@@ -119,6 +129,7 @@ export function NativeTextScope({
   style,
   kind = 'view',
   reset = false,
+  rootRef,
   content,
   children,
 }: NativeTextScopeProps) {
@@ -128,12 +139,19 @@ export function NativeTextScope({
     () => resolveScope(theme, parent, style, kind),
     [theme, parent, style, kind],
   );
+  // Equivalent style arrays must not broadcast a fresh inheritance context.
+  // Nested groups inside a custom Portal otherwise feed their own publications.
+  const stable = useRef(resolved.value);
+  if (!equalNativeTextScopeValue(stable.current, resolved.value)) stable.current = resolved.value;
+  setNativeTextScopeParent(stable.current, parent);
+  useNativeTextScopeRoot(rootRef, stable.current);
+  const trackChildren = useNativeTextChildRoots();
   return (
-    <NativeTextStyleContext.Provider value={resolved.value}>
+    <NativeTextStyleContext.Provider value={stable.current}>
       {children(
         resolved.native,
-        renderNativeTextChildren(content, theme, resolved.value),
-        resolved.value,
+        renderNativeTextChildren(content, theme, stable.current, trackChildren),
+        stable.current,
       )}
     </NativeTextStyleContext.Provider>
   );
@@ -142,6 +160,8 @@ export function renderNativeTextChildren(
   content: React.ReactNode,
   theme: Theme,
   scope: NativeTextScopeValue,
+  track?: NativeTextChildRootTracker,
+  parentKey = '',
 ): React.ReactNode {
   const items = React.Children.toArray(content),
     result: React.ReactNode[] = [];
@@ -156,7 +176,11 @@ export function renderNativeTextChildren(
       run = [];
     }
   };
-  for (const child of items) {
+  for (const [index, child] of items.entries()) {
+    // JSON string segments preserve arbitrary React keys, including lone UTF16
+    // surrogates, without allowing a child key to impersonate a path separator.
+    const segment = React.isValidElement(child) ? (child.key ?? index) : index;
+    const key = parentKey + '/' + JSON.stringify(String(segment));
     if (typeof child === 'string' || typeof child === 'number' || typeof child === 'bigint') {
       if (scope.nativeText) {
         result.push(child);
@@ -167,14 +191,18 @@ export function renderNativeTextChildren(
     }
     flush();
     if (
-      React.isValidElement<{ children?: React.ReactNode; style?: StyleProp<NativeStyle> }>(child)
+      React.isValidElement<{
+        children?: React.ReactNode;
+        style?: StyleProp<NativeStyle>;
+        ref?: React.Ref<object>;
+      }>(child)
     ) {
       if (child.type === React.Fragment)
         result.push(
           React.cloneElement(
             child,
             {},
-            renderNativeTextChildren(child.props.children, theme, scope),
+            renderNativeTextChildren(child.props.children, theme, scope, track, key),
           ),
         );
       else if (child.type === Text || child.type === View) {
@@ -187,9 +215,12 @@ export function renderNativeTextChildren(
         result.push(
           React.cloneElement(
             child,
-            { style: resolved.native },
+            {
+              style: resolved.native,
+              ...(track ? { ref: track(key, child.props.ref, resolved.value) } : {}),
+            },
             <NativeTextStyleContext.Provider value={resolved.value}>
-              {renderNativeTextChildren(child.props.children, theme, resolved.value)}
+              {renderNativeTextChildren(child.props.children, theme, resolved.value, track, key)}
             </NativeTextStyleContext.Provider>,
           ),
         );

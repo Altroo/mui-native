@@ -11,6 +11,7 @@ import {
 import {
   useDefaultProps,
   resolveSx,
+  componentStyle,
   resolveSlotProps,
   diagnostic,
   type SxProps,
@@ -95,9 +96,6 @@ const NativeDialogContainer = forwardRef<ViewInstance, NativeContainerProps>(
     );
   },
 );
-function sxList(...values: Array<SxProps | undefined>): SxProps {
-  return values.flatMap((value) => (Array.isArray(value) ? value : [value])) as SxProps;
-}
 function useDialogSlotStyle(
   ownerState: DialogOwnerState,
   keys: string[],
@@ -106,18 +104,13 @@ function useDialogSlotStyle(
 ): StyleProp<ViewStyle> {
   const theme = useTheme();
   const { width } = useWindowDimensions();
-  const config = theme.components.MuiDialog;
-  const overrides = typeof config === 'object' ? config.styleOverrides : undefined;
-  const styles = keys.map((key) => {
-    const value = overrides?.[key];
-    return typeof value === 'function'
-      ? value({ theme, ownerState: ownerState as unknown as Record<string, unknown> })
-      : value;
+  return componentStyle(theme, 'MuiDialog', ownerState as unknown as Record<string, unknown>, sx, {
+    width,
+    rootSlot: keys[0],
+    overrideKeys: keys.slice(1),
+    skipVariants: true,
+    baseStyle: base,
   });
-  return [
-    resolveSx(sxList(base, ...styles), theme, { width, mode: 'css' }),
-    resolveSx(sx, theme, { width }),
-  ];
 }
 export const Dialog: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<DialogProps> & React.RefAttributes<ViewInstance>

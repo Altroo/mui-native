@@ -1,4 +1,4 @@
-import { useTheme } from './themeProvider';
+import { useTheme, useSx } from './themeProvider';
 import React, { useEffect } from 'react';
 import { View, ActivityIndicator, AppState } from 'react-native';
 import { useDefaultProps, type SxProps } from '@altroo/mui-native-system';
@@ -21,6 +21,7 @@ export function Alert(inProps: AlertProps) {
   } = useDefaultProps({ props: inProps, name: 'MuiAlert' });
 
   const theme = useTheme();
+  const shapeRadius = useSx({ borderRadius: 1 }).borderRadius;
   return (
     <Stack
       {...props}
@@ -32,7 +33,7 @@ export function Alert(inProps: AlertProps) {
           gap: 12,
           borderWidth: 1,
           borderColor: theme.palette[severity].main,
-          borderRadius: theme.shape.borderRadius,
+          borderRadius: shapeRadius,
           alignItems: 'center',
         },
         props.style,

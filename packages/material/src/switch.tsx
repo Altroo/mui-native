@@ -4,6 +4,7 @@ import {
   useDefaultProps,
   resolveSlotProps,
   NativeTextScope,
+  useNativeTextRootRef,
   lighten,
   darken,
   alpha,
@@ -89,6 +90,8 @@ export const Switch: React.ForwardRefExoticComponent<
   const root = resolveSlotProps(slotProps.root, owner) ?? {},
     thumb = resolveSlotProps(slotProps.thumb, owner) ?? {},
     track = resolveSlotProps(slotProps.track, owner) ?? {};
+  const thumbTextRoot = useRef<ViewInstance | null>(null);
+  const { root: trackTextRoot, ref: trackTextRef } = useNativeTextRootRef(track.ref);
   const base = resolveSlotProps(slotProps.switchBase, owner) ?? {},
     input = resolveSlotProps(slotProps.input, owner) ?? {};
   const Root = slots.root ?? View,
@@ -281,11 +284,12 @@ export const Switch: React.ForwardRefExoticComponent<
                 easing={theme.transitions.easing.easeInOut}
               >
                 <NativeTextScope
+                  rootRef={thumbTextRoot}
                   theme={theme}
                   style={{ color: style.color, fontSize: diameter }}
                   content={content}
                 >
-                  {(_native, children) => <View>{children}</View>}
+                  {(_native, children) => <View ref={thumbTextRoot}>{children}</View>}
                 </NativeTextScope>
               </ThumbMotion>
             </View>
@@ -325,10 +329,12 @@ export const Switch: React.ForwardRefExoticComponent<
               style={frameStyle}
             >
               <NativeTextScope
+                rootRef={trackTextRoot}
                 theme={theme}
                 content={
                   <Track
                     {...trackNative}
+                    ref={trackTextRef}
                     {...(Track !== View ? { ownerState: owner } : {})}
                     pointerEvents="none"
                     accessible={false}

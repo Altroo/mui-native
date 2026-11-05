@@ -5,6 +5,7 @@ import {
   resolveSlotProps,
   componentStyle,
   NativeTextScope,
+  useNativeTextRootRef,
   alpha,
   diagnostic,
   type NativeStyle,
@@ -103,6 +104,9 @@ export const Chip = forwardRef<
   };
   const root = resolveSlotProps(slotProps.root, owner) ?? {},
     labelSlot = resolveSlotProps(slotProps.label, owner) ?? {};
+  const { root: labelTextRoot, ref: labelTextRef } = useNativeTextRootRef(labelSlot.ref);
+  const decorationTextRoot = useRef<ViewInstance | null>(null),
+    deleteTextRoot = useRef<ViewInstance | null>(null);
   const effectiveDisabled = disabled || Boolean(root.disabled);
   const interactive = Boolean(
     clickable ||
@@ -318,43 +322,39 @@ export const Chip = forwardRef<
   );
   const Label = slots.label;
   const labelContent = (
-    <NativeTextScope theme={theme} kind="view" style={computed}>
-      {() => (
-        <NativeTextScope
-          theme={theme}
-          kind="view"
-          style={[labelStyle, labelSlot.style]}
-          content={label}
-        >
-          {(nativeStyle, content, scope) =>
-            Label ? (
-              <Label
-                {...labelSlot}
-                ownerState={owner}
-                style={Label === View ? nativeStyle : [nativeStyle, scope.style]}
+    <NativeTextScope
+      rootRef={labelTextRoot}
+      theme={theme}
+      kind="view"
+      style={[labelStyle, labelSlot.style]}
+      content={label}
+    >
+      {(nativeStyle, content, scope) =>
+        Label ? (
+          <Label
+            {...labelSlot}
+            ref={labelTextRef}
+            ownerState={owner}
+            style={Label === View ? nativeStyle : [nativeStyle, scope.style]}
+          >
+            {content}
+          </Label>
+        ) : (
+          <View {...labelSlot} ref={labelTextRef} style={[{ overflow: 'hidden' }, nativeStyle]}>
+            {typeof label === 'string' || typeof label === 'number' || typeof label === 'bigint' ? (
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={scope.literalStyle ?? scope.style}
               >
-                {content}
-              </Label>
+                {String(label)}
+              </Text>
             ) : (
-              <View {...labelSlot} style={[{ overflow: 'hidden' }, nativeStyle]}>
-                {typeof label === 'string' ||
-                typeof label === 'number' ||
-                typeof label === 'bigint' ? (
-                  <Text
-                    numberOfLines={1}
-                    ellipsizeMode="tail"
-                    style={scope.literalStyle ?? scope.style}
-                  >
-                    {String(label)}
-                  </Text>
-                ) : (
-                  content
-                )}
-              </View>
-            )
-          }
-        </NativeTextScope>
-      )}
+              content
+            )}
+          </View>
+        )
+      }
     </NativeTextScope>
   );
   const validAvatar = React.isValidElement(avatar),
@@ -407,8 +407,18 @@ export const Chip = forwardRef<
           importantForAccessibility="no-hide-descendants"
           style={{ flexShrink: 0 }}
         >
-          <NativeTextScope theme={theme} kind="view" style={decorationStyle} content={decoration}>
-            {(nativeStyle, content) => <View style={nativeStyle}>{content}</View>}
+          <NativeTextScope
+            rootRef={decorationTextRoot}
+            theme={theme}
+            kind="view"
+            style={decorationStyle}
+            content={decoration}
+          >
+            {(nativeStyle, content) => (
+              <View ref={decorationTextRoot} style={nativeStyle}>
+                {content}
+              </View>
+            )}
           </NativeTextScope>
         </View>
       ) : null}
@@ -427,6 +437,7 @@ export const Chip = forwardRef<
           style={[deleteStyle, { minWidth: 44, minHeight: 44 }]}
         >
           <NativeTextScope
+            rootRef={React.isValidElement(deleteIcon) ? undefined : deleteTextRoot}
             theme={theme}
             kind="view"
             style={[deleteStyle, { minWidth: 44, minHeight: 44 }]}
@@ -444,6 +455,7 @@ export const Chip = forwardRef<
                 content
               ) : (
                 <View
+                  ref={deleteTextRoot}
                   testID={props.testID ? props.testID + '-delete-icon' : undefined}
                   style={{
                     width: small ? 16 : 22,
@@ -593,40 +605,49 @@ export const Chip = forwardRef<
     },
     style: computed,
   };
+  const element = interactive ? (
+    <ButtonBase
+      {...handlers}
+      action={baseAction}
+      component={Root as any}
+      {...(Root ? { ownerState: owner } : {})}
+      ref={ref}
+      disableRipple={Boolean(onDelete) || handlers.disableRipple}
+    >
+      {scopedContents}
+    </ButtonBase>
+  ) : Root ? (
+    <Root
+      {...(handlers as any)}
+      style={Object.fromEntries(
+        Object.entries(computed).filter(([key]) => !isNativeTextStyleProperty(key)),
+      )}
+      ref={ref}
+      ownerState={owner}
+    >
+      {scopedContents}
+    </Root>
+  ) : (
+    <View
+      {...(handlers as any)}
+      style={Object.fromEntries(
+        Object.entries(computed).filter(([key]) => !isNativeTextStyleProperty(key)),
+      )}
+      ref={ref}
+    >
+      {scopedContents}
+    </View>
+  );
   return (
     <NativeButtonActivationKeys.Provider value={focusedControl ? activationKeys : noKeys}>
+      {/* ButtonBase already owns the interactive host's text scope. Reapplying
+          the computed root scope there would resolve relative metrics twice. */}
       {interactive ? (
-        <ButtonBase
-          {...handlers}
-          action={baseAction}
-          component={Root as any}
-          {...(Root ? { ownerState: owner } : {})}
-          ref={ref}
-          disableRipple={Boolean(onDelete) || handlers.disableRipple}
-        >
-          {scopedContents}
-        </ButtonBase>
-      ) : Root ? (
-        <Root
-          {...(handlers as any)}
-          style={Object.fromEntries(
-            Object.entries(computed).filter(([key]) => !isNativeTextStyleProperty(key)),
-          )}
-          ref={ref}
-          ownerState={owner}
-        >
-          {scopedContents}
-        </Root>
+        element
       ) : (
-        <View
-          {...(handlers as any)}
-          style={Object.fromEntries(
-            Object.entries(computed).filter(([key]) => !isNativeTextStyleProperty(key)),
-          )}
-          ref={ref}
-        >
-          {scopedContents}
-        </View>
+        <NativeTextScope rootRef={node} theme={theme} kind="view" style={computed}>
+          {() => element}
+        </NativeTextScope>
       )}
     </NativeButtonActivationKeys.Provider>
   );

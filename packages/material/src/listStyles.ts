@@ -1,4 +1,4 @@
-import { diagnostic, resolveSx, type Theme, type SxProps } from '@altroo/mui-native-system';
+import { diagnostic, componentStyle, type Theme } from '@altroo/mui-native-system';
 export function nativeListProps<P extends object>(props: P): P {
   const { classes, className, focusVisibleClassName, ...native } = props as P &
     Record<string, unknown>;
@@ -16,13 +16,12 @@ export function listSlotStyle(
   ownerState: object,
   width: number,
 ) {
-  const config = theme.components[name];
-  const override = config && typeof config === 'object' ? config.styleOverrides?.[slot] : undefined;
-  const input =
-    typeof override === 'function'
-      ? override({ theme, ownerState: ownerState as Record<string, unknown> })
-      : override;
-  return resolveSx(input as SxProps, theme, { mode: 'css', slot, width });
+  return componentStyle(theme, name, ownerState as Record<string, unknown>, undefined, {
+    slot,
+    width,
+    rootSlot: slot,
+    skipVariants: true,
+  });
 }
 
 // An absolute child sized by its parent cannot define that parent's natural size.

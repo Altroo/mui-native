@@ -1,8 +1,9 @@
 import type { TextStyle, ViewStyle } from 'react-native';
-import type { Theme, Breakpoint } from './theme';
+import type { Theme, Breakpoint, ComponentVariant, ComponentVariantArgs } from './theme';
 export type ResponsiveStyleValue<T> = T | readonly (T | null)[] | { [key: string]: T | null };
 import { diagnostic } from './diagnostics';
 import { normalizeTextStyle, textMetricKeys, type NativeTextContext } from './nativeText';
+import { nativeBoxShadow, bindShadowColor } from './shadows';
 export type SxObject = { [key: string]: unknown };
 export type SxProps<T extends Theme = Theme> =
   | null
@@ -57,7 +58,7 @@ const aliases: Record<string, string[]> = {
   bgcolor: ['backgroundColor'],
 };
 const allowed = new Set(
-  'alignContent alignItems alignSelf aspectRatio backfaceVisibility backgroundColor borderBottomColor borderBottomLeftRadius borderBottomRightRadius borderBottomWidth borderColor borderLeftColor borderLeftWidth borderRadius borderRightColor borderRightWidth borderStyle borderTopColor borderTopLeftRadius borderTopRightRadius borderTopWidth borderWidth bottom color columnGap direction display elevation flex flexBasis flexDirection flexGrow flexShrink flexWrap fontFamily fontSize fontStyle fontWeight gap height justifyContent left letterSpacing lineHeight margin marginTop marginRight marginBottom marginLeft marginStart marginEnd maxHeight maxWidth minHeight minWidth opacity overflow padding paddingTop paddingRight paddingBottom paddingLeft paddingStart paddingEnd position right rowGap shadowColor shadowOffset shadowOpacity shadowRadius start end textAlign textDecorationColor textDecorationLine textDecorationStyle textTransform top transform width zIndex'.split(
+  'alignContent alignItems alignSelf aspectRatio backfaceVisibility backgroundColor borderBottomColor borderBottomLeftRadius borderBottomRightRadius borderBottomWidth borderColor borderLeftColor borderLeftWidth borderRadius borderRightColor borderRightWidth borderStyle borderTopColor borderTopLeftRadius borderTopRightRadius borderTopWidth borderWidth bottom color columnGap direction display elevation flex flexBasis flexDirection flexGrow flexShrink flexWrap fontFamily fontSize fontStyle fontWeight gap height justifyContent left letterSpacing lineHeight margin marginTop marginRight marginBottom marginLeft marginStart marginEnd maxHeight maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineStyle outlineWidth overflow padding paddingTop paddingRight paddingBottom paddingLeft paddingStart paddingEnd position right rowGap shadowColor shadowOffset shadowOpacity shadowRadius start end textAlign textDecorationColor textDecorationLine textDecorationStyle textTransform top transform width zIndex'.split(
     ' ',
   ),
 );
@@ -174,21 +175,8 @@ function resolveRules(
       return;
     }
     if (key === 'boxShadow') {
-      if (typeof value === 'number' && value >= 0)
-        setStyle(
-          target,
-          'boxShadow',
-          value === 0
-            ? { elevation: 0, shadowOpacity: 0 }
-            : {
-                elevation: value,
-                shadowColor: '#000',
-                shadowOpacity: 0.2,
-                shadowRadius: value,
-                shadowOffset: { width: 0, height: value / 2 },
-              },
-        );
-      else diagnostic('box-shadow', 'Only numeric theme shadow indices are supported.');
+      const shadow = nativeBoxShadow(value, theme.shadows, theme.cssRootFontSize ?? 16);
+      if (shadow) setStyle(target, 'boxShadow', shadow);
       return;
     }
     if (key === 'border' && typeof value === 'number') {
@@ -208,6 +196,7 @@ function resolveRules(
       if (
         mode !== 'css' &&
         typeof next === 'string' &&
+        next !== 'inherit' &&
         ['fontFamily', 'fontSize', 'fontWeight', 'fontStyle'].includes(nativeKey)
       ) {
         const parts = next.split('.');
@@ -222,8 +211,17 @@ function resolveRules(
         next = path(theme.palette, next) ?? next;
       if (mode !== 'css' && typeof next === 'number') {
         if (spacing.test(nativeKey)) next = theme.spacing(next);
-        else if (nativeKey === 'borderRadius') next *= theme.shape.borderRadius;
-        else if (sizing.test(nativeKey) && next > 0 && next <= 1) next = `${next * 100}%`;
+        else if (nativeKey === 'borderRadius') {
+          const radius = theme.shape.borderRadius;
+          next =
+            typeof radius === 'string'
+              ? radius.startsWith('var(') && next === 0
+                ? 0
+                : radius.startsWith('var(') && next === 1
+                  ? radius
+                  : `calc(${next} * ${radius})`
+              : next * radius;
+        } else if (sizing.test(nativeKey) && next > 0 && next <= 1) next = `${next * 100}%`;
       }
       if (typeof next === 'string' && (nativeKey === 'margin' || nativeKey === 'padding')) {
         const tokens = next.trim().match(/calc\([^)]*\)|[^\s]+/g) ?? [];
@@ -248,6 +246,22 @@ function resolveRules(
       }
       next = length(next, theme);
       if (next === undefined) continue;
+      if (
+        (nativeKey === 'outlineWidth' || nativeKey === 'outlineOffset') &&
+        (typeof next !== 'number' ||
+          !Number.isFinite(next) ||
+          (nativeKey === 'outlineWidth' && next < 0))
+      ) {
+        diagnostic('outline', `Unsupported native ${nativeKey}: ${String(next)}`);
+        continue;
+      }
+      if (
+        nativeKey === 'outlineStyle' &&
+        !['solid', 'dotted', 'dashed', 'none'].includes(String(next))
+      ) {
+        diagnostic('outline', `Unsupported native outlineStyle: ${String(next)}`);
+        continue;
+      }
       if (spacing.test(nativeKey) && !isSpacingLength(next, nativeKey)) {
         diagnostic('spacing-value', `Unsupported native ${nativeKey}: ${String(next)}`);
         continue;
@@ -413,8 +427,21 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
     foreground == null || ['inherit', 'unset', 'currentColor'].includes(String(foreground))
       ? theme.palette.text.primary
       : foreground;
-  for (const key of ['borderColor', ...edges.map((edge) => 'border' + edge + 'Color')])
+  for (const key of [
+    'borderColor',
+    'outlineColor',
+    ...edges.map((edge) => 'border' + edge + 'Color'),
+  ])
     if (normalized[key] === 'currentColor') normalized[key] = borderPaint;
+  normalized.boxShadow = bindShadowColor(
+    normalized.boxShadow as ViewStyle['boxShadow'],
+    borderPaint as NonNullable<TextStyle['color']>,
+  );
+  if (normalized.boxShadow === undefined) delete normalized.boxShadow;
+  if (normalized.outlineStyle === 'none') {
+    delete normalized.outlineStyle;
+    normalized.outlineWidth = 0;
+  }
   // SVG presentation attributes sit below CSS. Preserve an explicit reset so
   // the SVG boundary can inherit color instead of resurrecting an attribute.
   if (context.svg && ['inherit', 'unset', 'currentColor'].includes(String(result.color)))
@@ -437,37 +464,56 @@ function componentRules(
 ): StyleRule[] {
   const entry = theme.components[name];
   const config = entry && typeof entry === 'object' ? entry : undefined;
-  const bases = [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].flatMap((key) => {
-    const override = config?.styleOverrides?.[key];
-    const style =
-      typeof override === 'function'
-        ? override({ ...context.rootProps, theme, ownerState: props })
-        : override;
-    return resolveRules(style, theme, { ...context, mode: 'css' });
-  });
   // Source callbacks receive merged props, ownerState and theme. Keep theme
   // fields available directly for the existing native style callback extension.
-  let mergedVariantState:
-    | (Theme & { theme: Theme; ownerState: Record<string, unknown> } & Record<string, unknown>)
-    | undefined;
-  const variantState = () =>
-    (mergedVariantState ??= { ...theme, ...context.rootProps, ...props, theme, ownerState: props });
-  const variants = (context.skipVariants ? [] : (config?.variants ?? [])).filter((v) =>
-    typeof v.props === 'function'
-      ? v.props(variantState())
-      : Object.entries(v.props).every(
-          ([k, value]) => props[k] === value || context.rootProps?.[k] === value,
-        ),
+  const createVariantState = (): ComponentVariantArgs => ({
+    ...theme,
+    ...context.rootProps,
+    ...props,
+    theme,
+    ownerState: props,
+  });
+  const variantStyleRules = (input: unknown, callbackProps: ComponentVariantArgs): StyleRule[] => {
+    if (typeof input === 'function') return variantStyleRules(input(callbackProps), callbackProps);
+    if (Array.isArray(input))
+      return input.flatMap((style) => variantStyleRules(style, callbackProps));
+    return resolveRules(input as SxProps, theme, { ...context, mode: 'css' });
+  };
+  const variants = (entries: readonly ComponentVariant[]) => {
+    let mergedVariantState: ComponentVariantArgs | undefined;
+    const variantState = () => (mergedVariantState ??= createVariantState());
+    return entries.flatMap((variant) => {
+      const matches =
+        typeof variant.props === 'function'
+          ? variant.props(variantState())
+          : Object.entries(variant.props).every(
+              ([key, value]) => props[key] === value || context.rootProps?.[key] === value,
+            );
+      return matches ? variantStyleRules(variant.style, variantState()) : [];
+    });
+  };
+  // Adapted from MIT System 9.5.0 createStyled processStyle/processStyleVariants.
+  // An embedded variant belongs to its style layer, even on a non-root slot;
+  // skipVariants applies only to the component-level variants resolver.
+  const processStyle = (input: unknown, callbackProps: object): StyleRule[] => {
+    const resolved = typeof input === 'function' ? input(callbackProps) : input;
+    if (Array.isArray(resolved))
+      return resolved.flatMap((style) => processStyle(style, callbackProps));
+    if (resolved && typeof resolved === 'object' && Array.isArray(resolved.variants)) {
+      const { variants: embedded, ...style } = resolved;
+      return [...resolveRules(style, theme, { ...context, mode: 'css' }), ...variants(embedded)];
+    }
+    return resolveRules(resolved as SxProps, theme, { ...context, mode: 'css' });
+  };
+  const overrideProps = { ...context.rootProps, theme, ownerState: props };
+  const baseRules = processStyle(context.baseStyle, { ...theme, ...overrideProps });
+  const bases = [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].flatMap((key) =>
+    processStyle(config?.styleOverrides?.[key], overrideProps),
   );
   return [
-    ...resolveRules(context.baseStyle, theme, { ...context, mode: 'css' }),
+    ...baseRules,
     ...bases,
-    ...variants.flatMap((v) =>
-      resolveRules(typeof v.style === 'function' ? v.style(variantState()) : v.style, theme, {
-        ...context,
-        mode: 'css',
-      }),
-    ),
+    ...variants(context.skipVariants ? [] : (config?.variants ?? [])),
     ...resolveRules(sx, theme, context),
   ];
 }

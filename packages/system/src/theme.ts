@@ -20,7 +20,11 @@ export type {
   FontStyleOptions,
   TypographyOptions,
 } from './typography';
-import type { SxProps, SxObject } from './sx';
+import type { SxObject } from './sx';
+import { defaultShadows, type Shadows } from './shadows';
+import { resolveFocusVisible, type FocusVisible } from './focusVisible';
+export type { Shadows } from './shadows';
+export type { FocusVisible } from './focusVisible';
 import { darken, lighten, getContrastRatio } from './colorManipulator';
 import { createSpacing, type Spacing, type SpacingOptions } from './spacing';
 import { createBreakpoints, type Breakpoints, type BreakpointsOptions } from './breakpoints';
@@ -137,30 +141,30 @@ export interface PaletteOptions {
   action?: Partial<TypeAction>;
   getContrastText?: (background: string) => string;
 }
+export type ComponentStyleArgs = {
+  theme: Theme;
+  ownerState: Record<string, unknown>;
+} & Record<string, unknown>;
+// Keep direct theme fields on variant callbacks for the original native extension.
+export type ComponentVariantArgs = Theme & ComponentStyleArgs;
+export interface ComponentVariant {
+  props: Record<string, unknown> | ((props: ComponentVariantArgs) => boolean);
+  style: ComponentStyleValue | ((args: ComponentVariantArgs) => ComponentStyle);
+}
+export interface ComponentStyleObject extends SxObject {
+  variants?: readonly ComponentVariant[] | undefined;
+}
+export type ComponentStyleValue =
+  | ComponentStyleObject
+  | null
+  | undefined
+  | false
+  | readonly ComponentStyle[];
+export type ComponentStyle = ComponentStyleValue | ((args: ComponentStyleArgs) => ComponentStyle);
 export interface ComponentConfig {
   defaultProps?: Record<string, unknown>;
-  styleOverrides?: Record<
-    string,
-    | SxObject
-    | ((
-        args: { theme: Theme; ownerState: Record<string, unknown> } & Record<string, unknown>,
-      ) => SxProps)
-  >;
-  variants?: Array<{
-    props:
-      | Record<string, unknown>
-      | ((
-          props: Record<string, unknown> & { theme: Theme; ownerState: Record<string, unknown> },
-        ) => boolean);
-    style:
-      | Exclude<SxProps, Function>
-      | ((
-          args: Theme & { theme: Theme; ownerState: Record<string, unknown> } & Record<
-              string,
-              unknown
-            >,
-        ) => SxProps);
-  }>;
+  styleOverrides?: Record<string, ComponentStyle>;
+  variants?: readonly ComponentVariant[];
 }
 export interface Components {
   [name: string]: ComponentConfig | boolean | undefined;
@@ -169,9 +173,11 @@ export interface Components {
 export interface Theme {
   palette: Palette;
   spacing: Spacing;
-  shape: { borderRadius: number };
+  shape: { borderRadius: number | string };
   direction: 'ltr' | 'rtl';
   typography: TypographyVariants;
+  shadows: Shadows;
+  focusVisible?: FocusVisible | false | undefined;
   /** Native CSS root length basis, independent of MUI's pxToRem calibration hint. */
   cssRootFontSize?: number;
   breakpoints: Breakpoints;
@@ -185,6 +191,8 @@ export interface ThemeOptions {
   shape?: Partial<Theme['shape']>;
   direction?: Theme['direction'];
   typography?: TypographyOptions;
+  shadows?: Shadows | undefined;
+  focusVisible?: boolean | FocusVisible | undefined;
   cssRootFontSize?: number;
   breakpoints?: BreakpointsOptions;
   components?: Theme['components'];
@@ -320,6 +328,7 @@ export function createTheme(options: ThemeOptions = {}, ...overrides: ThemeOptio
     shape: { borderRadius: 4 },
     direction: 'ltr',
     typography: createTypography(palette, options.typography),
+    shadows: defaultShadows.slice() as Shadows,
     cssRootFontSize: 16,
     breakpoints: createBreakpoints(options.breakpoints),
     components: {},
@@ -344,5 +353,8 @@ export function createTheme(options: ThemeOptions = {}, ...overrides: ThemeOptio
   )
     throw Error('cssRootFontSize must be a finite positive number.');
   delete (result.transitions as unknown as Record<string, unknown>).reducedMotion;
+  const focusVisible = result.focusVisible as ThemeOptions['focusVisible'];
+  if (focusVisible != null && focusVisible !== false)
+    result.focusVisible = resolveFocusVisible(focusVisible, result.palette.primary.main);
   return result;
 }

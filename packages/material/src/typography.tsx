@@ -6,6 +6,10 @@ import {
   NativeTextStyleContext,
   useNativeTextContext,
   renderNativeTextChildren,
+  useNativeTextRootRef,
+  useNativeTextScopeRoot,
+  useNativeTextChildRoots,
+  setNativeTextScopeParent,
   getTextStyleInheritance,
   nativeStyleTextMetrics,
   applyNativeTextMetrics,
@@ -57,6 +61,7 @@ const textTags = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'div'
 export const Typography: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<TypographyProps> & React.RefAttributes<TextInstance>
 > = forwardRef<TextInstance, TypographyProps>(function Typography(inProps, ref) {
+  const { root, ref: rootRef } = useNativeTextRootRef(ref);
   const props = useDefaultProps({ props: inProps, name: 'MuiTypography' });
   const {
     sx,
@@ -132,6 +137,9 @@ export const Typography: React.ForwardRefExoticComponent<
     ...getTextStyleInheritance(resolved as TextStyle, parent?.style, adjustedNativeStyle),
     nativeText: true,
   };
+  setNativeTextScopeParent(context, parent);
+  useNativeTextScopeRoot(root, context);
+  const trackChildren = useNativeTextChildRoots();
   const mapped = component ?? variantMapping[variant] ?? defaultMapping[variant] ?? 'span';
   if (typeof mapped === 'string' && !textTags.has(mapped))
     diagnostic(
@@ -149,13 +157,13 @@ export const Typography: React.ForwardRefExoticComponent<
     <NativeTextStyleContext.Provider value={context}>
       <Component
         {...native}
-        ref={ref}
+        ref={rootRef}
         accessibilityRole={native.accessibilityRole ?? (native.role ? undefined : role)}
         numberOfLines={noWrap ? 1 : native.numberOfLines}
         ellipsizeMode={native.ellipsizeMode ?? (noWrap ? 'tail' : undefined)}
         style={finalStyle}
       >
-        {renderNativeTextChildren(native.children, theme, context)}
+        {renderNativeTextChildren(native.children, theme, context, trackChildren)}
       </Component>
     </NativeTextStyleContext.Provider>
   );

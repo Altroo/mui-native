@@ -22,26 +22,29 @@ type Union<Base extends string, Overrides> = Extract<
 >;
 export interface ButtonGroupOwnProps {
   children?: React.ReactNode;
-  classes?: Partial<ButtonGroupClasses>;
-  className?: string;
-  color?: Union<
-    'inherit' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
-    ButtonGroupPropsColorOverrides
-  >;
-  size?: Union<'small' | 'medium' | 'large', ButtonGroupPropsSizeOverrides>;
-  variant?: Union<'text' | 'outlined' | 'contained', ButtonGroupPropsVariantOverrides>;
-  disabled?: boolean;
-  disableElevation?: boolean;
-  disableFocusRipple?: boolean;
-  disableRipple?: boolean;
-  fullWidth?: boolean;
-  orientation?: 'horizontal' | 'vertical';
-  sx?: SxProps;
-  style?: StyleProp<NativeStyle>;
-  id?: string;
-  'data-testid'?: string;
+  classes?: Partial<ButtonGroupClasses> | undefined;
+  className?: string | undefined;
+  color?:
+    | Union<
+        'inherit' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',
+        ButtonGroupPropsColorOverrides
+      >
+    | undefined;
+  size?: Union<'small' | 'medium' | 'large', ButtonGroupPropsSizeOverrides> | undefined;
+  variant?: Union<'text' | 'outlined' | 'contained', ButtonGroupPropsVariantOverrides> | undefined;
+  disabled?: boolean | undefined;
+  disableElevation?: boolean | undefined;
+  disableFocusRipple?: boolean | undefined;
+  disableRipple?: boolean | undefined;
+  fullWidth?: boolean | undefined;
+  orientation?: 'horizontal' | 'vertical' | undefined;
+  sx?: SxProps | undefined;
+  style?: StyleProp<NativeStyle> | undefined;
+  id?: string | undefined;
+  'data-testid'?: string | undefined;
 }
 type Root = React.ComponentType<any> | 'div';
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
 type RootProps<R extends Root> = R extends 'div'
   ? React.ComponentPropsWithRef<typeof View>
   : R extends React.ComponentType<any>
@@ -59,12 +62,13 @@ export type ButtonGroupProps<
   AdditionalProps = {},
 > = ButtonGroupOwnProps &
   AdditionalProps &
-  Omit<RootProps<R>, keyof ButtonGroupOwnProps | keyof AdditionalProps | 'component'> &
-  (R extends typeof View | 'div' ? { component?: R } : { component: R });
+  DistributiveOmit<RootProps<R>, keyof ButtonGroupOwnProps | keyof AdditionalProps | 'component'> &
+  (R extends typeof View | 'div' ? { component?: R | undefined } : { component: R });
 export interface NativeButtonGroupComponent {
-  <R extends Root>(props: ButtonGroupProps<R> & { component: R }): React.ReactNode;
-  (props: ButtonGroupProps): React.ReactNode;
-  displayName?: string;
+  <R extends Root>(props: ButtonGroupProps<R> & { component: R }): React.JSX.Element | null;
+  (props: ButtonGroupProps): React.JSX.Element | null;
+  propTypes?: any;
+  displayName?: string | undefined;
 }
 export interface ButtonGroupOwnerState extends ButtonGroupOwnProps {
   component: Root;

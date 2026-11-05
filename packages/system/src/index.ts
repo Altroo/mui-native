@@ -40,3 +40,11 @@ export type { NativeTextScopeValue, NativeTextScopeProps } from './textScope';
 
 export { NativeIconStyleContext } from './iconContext';
 export type { NativeIconStyle } from './iconContext';
+
+export {
+  nativeTextScopes,
+  useNativeTextChildRoots,
+  useNativeTextScopeRoot,
+  useNativeTextRootRef,
+  setNativeTextScopeParent,
+} from './nativeTextRegistry';

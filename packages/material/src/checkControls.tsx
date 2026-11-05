@@ -533,6 +533,7 @@ export function NativeCheckedControl({ kind, props, forwarded, presentation }: C
     (registry ? registry.tabIndex(radioId, name) : 0);
   const inputViewRef = useForkRef(node, input.ref),
     rootRef = useForkRef(outer, forwarded, root.ref);
+  const glyphTextRoot = useRef<ViewInstance | null>(null);
   const stateStyle = { pressed, focusVisible, disabled };
   const authoredStyle = StyleSheet.flatten(typeof style === 'function' ? style(stateStyle) : style);
   const slotStyle = StyleSheet.flatten(
@@ -686,12 +687,14 @@ export function NativeCheckedControl({ kind, props, forwarded, presentation }: C
       style={computed}
     >
       <NativeTextScope
+        rootRef={glyphTextRoot}
         theme={theme}
         style={[{ color: computed?.color, fontSize: glyphSize }, computed]}
         content={glyph}
       >
         {(_native, content) => (
           <View
+            ref={glyphTextRoot}
             pointerEvents="none"
             accessible={false}
             accessibilityElementsHidden

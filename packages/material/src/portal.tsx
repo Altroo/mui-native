@@ -17,13 +17,26 @@ import {
   type TextInputInstance,
 } from 'react-native';
 import { NativePortalHost, type NativePortalLayout } from '@altroo/mui-native-host';
-import { NativeTextScope, diagnostic } from '@altroo/mui-native-system';
+import {
+  NativeTextScope,
+  NativeTextStyleContext,
+  nativeTextScopes,
+  diagnostic,
+} from '@altroo/mui-native-system';
 import { useTheme } from './themeProvider';
 import { useForkRef } from './utils';
 import { useMenuEvent } from './useMenuEvent';
 import { NativeOverlayReadiness } from './nativeOverlayReadiness';
 import { NativeModalParentContext } from './nativeModalContext';
 import { nativeModalManager as manager } from './nativeModalManager';
+import { NativeButtonGroupRules } from './buttonGroupContext';
+import {
+  nativeStyleTree,
+  nativeStyleParent,
+  nativeStyleTargetAvailable,
+  noStyleTreeSubscription,
+  emptyStyleTreeSnapshot,
+} from './nativeStyleAncestry';
 import { NativePortalContext, type NativePortalPositionOptions } from './portalContext';
 import {
   PortalObservationRegistry,
@@ -89,6 +102,31 @@ export const Portal = forwardRef<
   const [host, setHost] = useState<ViewInstance | null>(null),
     canvas = useRef<ViewInstance | null>(null);
   const [layout, setLayout] = useState<NativePortalLayout | null>(null);
+  const validStyleTarget = nativeStyleTargetAvailable(canvas.current, target.node);
+  const styleTarget = validStyleTarget ? target.node : null;
+  const watchStyleTree = !disablePortal && target.resolved && target.node != null;
+  const styleRevision = useSyncExternalStore(
+    watchStyleTree ? nativeStyleTree.subscribe : noStyleTreeSubscription,
+    watchStyleTree ? nativeStyleTree.snapshot : emptyStyleTreeSnapshot,
+    emptyStyleTreeSnapshot,
+  );
+  const textRevision = useSyncExternalStore(
+    watchStyleTree ? nativeTextScopes.subscribe : noStyleTreeSubscription,
+    watchStyleTree ? nativeTextScopes.snapshot : emptyStyleTreeSnapshot,
+    emptyStyleTreeSnapshot,
+  );
+  const physicalText = useMemo(
+    () => (styleTarget ? nativeTextScopes.at(styleTarget, nativeStyleParent) : undefined),
+    [styleTarget, styleRevision, textRevision],
+  );
+  const physicalGroupRules = useMemo(
+    () => (styleTarget ? nativeStyleTree.groupRulesAt(styleTarget) : []),
+    [styleTarget, styleRevision],
+  );
+  useLayoutEffect(() => {
+    if (disablePortal || !target.resolved || !canvas.current) return;
+    return nativeStyleTree.registerPortal(canvas.current, styleTarget);
+  }, [disablePortal, host, styleTarget, target.resolved, target.revision]);
   const [observation, setObservation] = useState<PortalObservationLease | null>(null);
   const [observations] = useState(() => new PortalObservationRegistry(setObservation));
   const observeAnchor = useCallback(
@@ -147,6 +185,7 @@ export const Portal = forwardRef<
   const top = manager.top();
   const eligible = Boolean(
     !disablePortal &&
+      validStyleTarget &&
       target.resolved &&
       inheritedReady &&
       parent?.open !== false &&
@@ -280,13 +319,17 @@ export const Portal = forwardRef<
       pointerEvents="none"
       style={placeholderStyle}
     >
-      <NativePortalContext.Provider value={surface}>
-        <NativeOverlayReadiness.Provider value={presented}>
-          <NativeTextScope theme={theme} content={children}>
-            {(_style, content) => <>{content}</>}
-          </NativeTextScope>
-        </NativeOverlayReadiness.Provider>
-      </NativePortalContext.Provider>
+      <NativeButtonGroupRules.Provider value={physicalGroupRules}>
+        <NativePortalContext.Provider value={surface}>
+          <NativeOverlayReadiness.Provider value={presented}>
+            <NativeTextStyleContext.Provider value={physicalText}>
+              <NativeTextScope rootRef={canvas} theme={theme} content={children}>
+                {(_style, content) => <>{content}</>}
+              </NativeTextScope>
+            </NativeTextStyleContext.Provider>
+          </NativeOverlayReadiness.Provider>
+        </NativePortalContext.Provider>
+      </NativeButtonGroupRules.Provider>
     </NativePortalHost>
   );
 }) as NativePortalComponent;
