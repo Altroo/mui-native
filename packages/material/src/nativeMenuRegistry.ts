@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import type { ViewInstance } from 'react-native';
 export type MenuFocusSource = 'keyboard' | 'pointer' | null;
 export interface NativeMenuRecord {
@@ -89,7 +90,10 @@ export function resolveMenuActive(
 export class NativeMenuRegistry {
   readonly items = new Map<string, NativeMenuRecord>();
   private order: string[] = [];
-  constructor(private readonly notify: () => void) {}
+  private readonly notify: () => void;
+  constructor(notify: () => void) {
+    this.notify = notify;
+  }
   set(item: NativeMenuRecord) {
     const previous = this.items.get(item.id);
     if (previous && Object.keys(item).every((key) => (previous as any)[key] === (item as any)[key]))

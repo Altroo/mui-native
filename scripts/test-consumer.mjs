@@ -145,6 +145,16 @@ execFileSync(process.execPath, [resolve(nativeHost, 'scripts/verify-native-input
 });
 console.log('Installed native host retains autolinking, codegen and platform sources.');
 await cp('fixtures/native-consumer', consumer, { recursive: true });
+await cp('fixtures/icons-consumer/consumer.tsx', `${consumer}/icon-catalog.tsx`);
+// Artwork license notices must survive actual archive installation, not a workspace symlink.
+for (const notice of ['THIRD_PARTY_NOTICES.md', 'LICENSE.material-icons']) {
+  const expected = await readFile(`packages/icons/${notice}`, 'utf8');
+  const installed = await readFile(
+    `${consumer}/node_modules/@altroo/mui-native-icons/${notice}`,
+    'utf8',
+  );
+  if (installed !== expected) throw new Error(`Installed icons ${notice} differs`);
+}
 await writeFile(
   `${consumer}/tsconfig.native.json`,
   JSON.stringify(require('../packages/compat/index.cjs').createNativeTsconfig(), null, 2),

@@ -45,6 +45,22 @@ final class SvgIconCatalogUITests: XCTestCase {
     attachment.lifetime = .keepAlways
     add(attachment)
   }
+  func testFullCatalogStylesAndComplexGlyphs() {
+    let cases = [
+      ("filled", "Filled add"), ("outlined", "Outlined add"),
+      ("rounded", "Rounded add"), ("sharp", "Sharp add"),
+      ("twotone", "Two-tone add"), ("paths", "Two-tone alarm"),
+      ("groups", "Admin settings"), ("references", "Liquid medication"),
+      ("fragment", "Battery twenty percent"), ("ellipse", "Full join")
+    ]
+    for (suffix, label) in cases {
+      let icon = reveal("catalog-icon-" + suffix)
+      XCTAssertEqual(icon.frame.width, 24, accuracy: 0.6)
+      XCTAssertEqual(icon.frame.height, 24, accuracy: 0.6)
+      XCTAssertEqual(icon.label, label)
+    }
+    capture("svg-icon-ios-full-catalog-primitives")
+  }
   func testSizesPaletteNativeClickAndSVGRef() {
     for (size, expected) in [("small", 20.0), ("medium", 24.0), ("large", 35.0)] {
       let icon = reveal("svg-size-" + size)

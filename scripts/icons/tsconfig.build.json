@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.build.json",
+  "compilerOptions": { "outDir": "../../.cache/icons-types" },
+  "include": ["../../packages/icons/src/**/*.ts"],
+  "exclude": ["../../packages/icons/dist", "../../node_modules"]
+}

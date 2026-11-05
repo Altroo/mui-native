@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { readFile, writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { loadReference } from './load.mjs';
@@ -175,7 +176,7 @@ const cases = [
     actions: [],
   },
 ];
-function run(input) {
+async function run(input) {
   let items = input.items.map((item) => ({ ...item })),
     renderer,
     time = 0;
@@ -186,7 +187,7 @@ function run(input) {
   globalThis.document = doc;
   const now = performance.now;
   performance.now = () => time;
-  function event(target, key, extra = {}) {
+  function event(target, key = undefined, extra = {}) {
     let prevented = false,
       stopped = false;
     return {
@@ -327,14 +328,14 @@ function run(input) {
     trace: [...trace],
   });
   try {
-    act(() => {
+    await act(() => {
       renderer = create(render(), {
         createNodeMock: (element) => node(element.props['data-case']),
       });
     });
     snapshots.push(snapshot());
     for (const action of input.actions) {
-      act(() => {
+      await act(() => {
         if (action.wait != null) {
           time += action.wait;
           return;
@@ -373,12 +374,16 @@ function run(input) {
     }
     return { input, snapshots };
   } finally {
-    act(() => renderer?.unmount());
-    performance.now = now;
+    try {
+      await act(() => renderer?.unmount());
+    } finally {
+      performance.now = now;
+    }
   }
 }
-const fixtures = cases.map(run),
-  file = 'tests/fixtures/mui-menu-list-9.5.0.json';
+const fixtures = [];
+for (const input of cases) fixtures.push(await run(input));
+const file = 'tests/fixtures/mui-menu-list-9.5.0.json';
 const output = await format(
   JSON.stringify({
     references: [material.reference, utils.reference],

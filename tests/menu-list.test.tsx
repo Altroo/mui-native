@@ -14,7 +14,7 @@ import {
   type MenuListActions,
 } from '../packages/material/src';
 import Svg from 'react-native-svg';
-import { Check } from '../packages/icons/src';
+import Check from '../packages/icons/src/Check';
 import reference from './fixtures/mui-menu-list-9.5.0.json';
 import { NativeMenuModel } from './helpers/nativeMenuModel';
 import {

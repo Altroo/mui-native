@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { readFile, writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { loadReference } from './load.mjs';
@@ -88,7 +89,7 @@ const cases = [
     actions: [{ kind: 'focus', visible: true }, { kind: 'action' }],
   },
 ];
-function run(input) {
+async function run(input) {
   const trace = [],
     snapshots = [],
     action = React.createRef();
@@ -130,7 +131,7 @@ function run(input) {
     return React.createElement('div', { ref }, props.children);
   });
   try {
-    act(() => {
+    await act(() => {
       renderer = create(
         React.createElement(
           ButtonBase,
@@ -170,7 +171,7 @@ function run(input) {
     for (const actionInput of input.actions) {
       activation = undefined;
       const e = event(actionInput);
-      act(() => {
+      await act(() => {
         if (actionInput.kind === 'down') rootProps.onKeyDown(e);
         if (actionInput.kind === 'up') rootProps.onKeyUp(e);
         if (actionInput.kind === 'click') {
@@ -198,10 +199,10 @@ function run(input) {
     }
     return { ...input, snapshots };
   } finally {
-    if (renderer) act(() => renderer.unmount());
+    if (renderer) await act(() => renderer.unmount());
   }
 }
-function focusable(disabled, allow) {
+async function focusable(disabled, allow) {
   let renderer, current;
   const node = { tagName: 'DIV', click() {} };
   function Harness() {
@@ -214,7 +215,7 @@ function focusable(disabled, allow) {
     return React.createElement('div', { ref: rootRef });
   }
   try {
-    act(() => {
+    await act(() => {
       renderer = create(React.createElement(Harness), { createNodeMock: () => node });
     });
     return {
@@ -236,17 +237,23 @@ function focusable(disabled, allow) {
       }),
     };
   } finally {
-    if (renderer) act(() => renderer.unmount());
+    if (renderer) await act(() => renderer.unmount());
   }
 }
+const fixtures = [];
+for (const input of cases) fixtures.push(await run(input));
 const filename = 'tests/fixtures/mui-button-base-9.5.0.json';
 const output = await format(
   JSON.stringify({
     reference,
     renderer:
       'react-test-renderer 19.3.0; controlled non-button host, focus matcher and events; no CSS/native input evidence',
-    fixtures: cases.map(run),
-    disabledFocus: [focusable(false, false), focusable(true, false), focusable(true, true)],
+    fixtures,
+    disabledFocus: [
+      await focusable(false, false),
+      await focusable(true, false),
+      await focusable(true, true),
+    ],
   }),
   { ...(await resolveConfig(filename)), filepath: filename },
 );

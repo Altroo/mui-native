@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -10,6 +11,11 @@ import {
 } from './declarations.mjs';
 import { verifyArtifact, verifyIntegrity } from './generate.mjs';
 
+// Export conditions are deliberately untrusted input, including null/native cases.
+/**
+ * @param {Record<string, string>} files
+ * @param {unknown} [exports]
+ */
 const pkg = (files, exports = { '.': { types: './index.d.ts' } }) => ({
   manifest: { exports },
   files: new Map(Object.entries(files)),

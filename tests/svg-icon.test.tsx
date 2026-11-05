@@ -28,7 +28,9 @@ import {
   type SvgIconHandle,
   type ThemeOptions,
 } from '@altroo/mui-native';
-import { Add, createSvgIcon as createLegacyIcon } from '../packages/icons/src';
+// Root/export completeness is checked against all installed glyphs separately.
+import Add from '../packages/icons/src/Add';
+import { createSvgIcon as createLegacyIcon } from '../packages/icons/src/createSvgIcon';
 import reference from './fixtures/mui-svg-icon-9.5.0.json';
 afterEach(cleanup);
 const PathElement = React.createElement('path', { d: 'M4 4h16v16H4z' });
@@ -229,9 +231,9 @@ test('legacy path-string icons share Material defaults, refs and styling', () =>
     height: 31,
   });
 });
-test('existing original artwork remains unchanged', () => {
+test('Add uses the pinned Material Icons artwork', () => {
   const tree = render(<Add />);
-  expect(tree.UNSAFE_getByType(Path).props.d).toBe('M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7Z');
+  expect(tree.UNSAFE_getByType(Path).props.d).toBe('M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z');
 });
 test('composed control icon sizes outrank CSS font rules, while native inline sizing wins', () => {
   const tree = render(

@@ -6,7 +6,7 @@ import { SvgIcon } from './svgIcon';
 import type { SvgIconHandle, SvgIconProps, NativeSvgIconComponent } from './svgIconTypes';
 /** Create a memoized, ref-forwarding icon from native or authored SVG elements. */
 export function createSvgIcon(path: React.ReactNode, displayName: string): NativeSvgIconComponent {
-  const Component = forwardRef<SvgIconHandle, SvgIconProps>(function Icon(props, ref) {
+  function Component(props: SvgIconProps, ref: React.ForwardedRef<SvgIconHandle>) {
     return (
       <SvgIcon
         data-testid={process.env.NODE_ENV !== 'production' ? `${displayName}Icon` : undefined}
@@ -16,9 +16,8 @@ export function createSvgIcon(path: React.ReactNode, displayName: string): Nativ
         {path}
       </SvgIcon>
     );
-  });
-  Component.displayName = `${displayName}Icon`;
-  const Icon = memo(Component) as unknown as NativeSvgIconComponent;
-  Icon.muiName = SvgIcon.muiName;
-  return Icon;
+  }
+  if (process.env.NODE_ENV !== 'production') Component.displayName = `${displayName}Icon`;
+  Component.muiName = SvgIcon.muiName;
+  return memo(forwardRef(Component)) as unknown as NativeSvgIconComponent;
 }

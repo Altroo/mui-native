@@ -1,3 +1,4 @@
+import { buildIconEsm } from './icons/build.mjs';
 import { build } from 'esbuild';
 import { execFileSync } from 'node:child_process';
 import { readFile, readdir, mkdir, cp, rm } from 'node:fs/promises';
@@ -34,6 +35,7 @@ for (const directory of await readdir('packages')) {
     bundle: false,
     sourcemap: true,
   });
+  if (directory === 'icons') await buildIconEsm(folder, await runtimeSources(`${folder}/src`));
   await cp(`.cache/types/${directory}/src`, `${folder}/dist`, { recursive: true });
   for (const file of ['LICENSE', 'NOTICE']) await cp(file, path.join(folder, file));
   console.log(`Built ${pkg.name}: ${entries.length} entry points`);

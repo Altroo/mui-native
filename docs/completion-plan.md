@@ -2,7 +2,7 @@
 
 The current priority is to finish existing implementations before starting another component. This audit is based on the source, type fixtures and guides available on 5 November 2026, including the merged direction/text work at `dfe9130`.
 
-There are **59 rows at 50% or 75%**: 51 Material entries, seven System/styling entries and the native rendering foundation. The renderless RtlProvider module is complete within its [finite native context contract](rtl-provider.md). There are also **28 rows at 25%**: 14 Material entries, nine Community X entries, four existing glyphs and the cross-cutting native validation matrix. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
+There are **59 rows at 50% or 75%**: 51 Material entries, seven System/styling entries and the native rendering foundation. The renderless RtlProvider module is complete within its [finite native context contract](rtl-provider.md). There are also **24 rows at 25%**: 14 Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
 
 ## Completion rules
 
@@ -43,7 +43,7 @@ The immediate parallel priorities are the full pinned icon catalog and small exi
 
 ## All existing partial rows
 
-The entries below enumerate the 87 current partial status rows and the separately completed RtlProvider entry. Material and System DefaultPropsProvider are separate package entries; foundation rows are cross-cutting work rather than extra components. Each linked guide is evidence and a starting point for the finite contract audit, not proof that every inherited API is complete.
+The entries below enumerate the 83 current partial status rows and the separately completed RtlProvider and icon-catalog scopes. Material and System DefaultPropsProvider are separate package entries; foundation rows are cross-cutting work rather than extra components. Each linked guide is evidence and a starting point for the finite contract audit, not proof that every inherited API is complete.
 
 ### Foundations
 
@@ -164,14 +164,9 @@ The entries below enumerate the 87 current partial status rows and the separatel
 | DatePicker           |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | LocalizationProvider |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 
-### Icons: 4 native glyphs; 10,750 tracked upstream names
+### Icons: all 10,750 pinned glyphs
 
-| Existing entry | Current evidence stage | Guide                                                             |
-| -------------- | ---------------------: | ----------------------------------------------------------------- |
-| Add            |                    25% | [Scope and remaining work](../packages/icons/src/Add/index.ts)    |
-| Check          |                    25% | [Scope and remaining work](../packages/icons/src/Check/index.ts)  |
-| Close          |                    25% | [Scope and remaining work](../packages/icons/src/Close/index.ts)  |
-| Remove         |                    25% | [Scope and remaining work](../packages/icons/src/Remove/index.ts) |
+The [complete catalog](material-icons.md) retains every supplied artwork/name and native import route, including all supplied Filled, Outlined, Rounded, Sharp and TwoTone modules. Artwork and import-surface work is complete. Native renderer gaps remain under the existing [SvgIcon row](svg-icon.md), rather than four prototype glyphs or thousands of duplicate status rows. Source completion does not certify every glyph on every device.
 
 ## Concrete gaps that must not be treated as hardware-only
 

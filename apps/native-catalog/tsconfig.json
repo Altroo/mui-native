@@ -19,7 +19,9 @@
       "@mui/x-tree-view": ["../../packages/x-tree-view/src/index.ts"],
       "@mui/x-data-grid": ["../../packages/x-data-grid/src/index.ts"],
       "@mui/x-charts": ["../../packages/x-charts/src/index.ts"],
-      "@mui/x-date-pickers": ["../../packages/x-date-pickers/src/index.ts"]
+      "@mui/x-date-pickers": ["../../packages/x-date-pickers/src/index.ts"],
+      "@mui/icons-material/*": ["../../packages/icons/src/*/index.ts"],
+      "@altroo/mui-native-icons/*": ["../../packages/icons/src/*/index.ts"]
     },
     "noUnusedLocals": true,
     "noUnusedParameters": true
