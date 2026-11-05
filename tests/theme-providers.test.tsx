@@ -220,7 +220,7 @@ test('icons and X charts consume the Material scope without a browser dependency
   const inner = system.createTheme({
     palette: { primary: { main: '#abcdef' }, divider: '#123456' },
   });
-  const { Add } = require('../packages/icons/src');
+  const { default: Add } = require('../packages/icons/src/Add');
   const { LineChart } = require('../packages/x-charts/src');
   const { UNSAFE_getByType } = render(
     <material.ThemeProvider theme={{ [material.THEME_ID]: inner }}>
