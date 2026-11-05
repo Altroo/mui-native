@@ -1,4 +1,6 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 export * from '@altroo/mui-native-system';
+export type { ComponentsProps, ComponentsPropsList } from './props';
 
 export {
   ThemeProvider,

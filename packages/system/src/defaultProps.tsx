@@ -1,11 +1,14 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Provider/default resolution adapts MIT MUI System/Utils 9.5.0. See NOTICE and upstream/reuse.json.
 import React, { createContext, useContext } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
 export type DefaultPropsConfig = Record<string, unknown>;
-export type DefaultPropsMap = Record<string, unknown> & { mergeClassNameAndStyle?: boolean };
-const DefaultsContext = createContext<DefaultPropsMap | undefined>(undefined);
-const object = (value: unknown): DefaultPropsConfig =>
-  value && typeof value === 'object' ? (value as DefaultPropsConfig) : {};
+export type DefaultPropsMap = Record<string, unknown> & {
+  mergeClassNameAndStyle?: boolean | undefined;
+};
+const DefaultsContext = createContext<Record<string, unknown> | undefined>(undefined);
+const object = (value: unknown): DefaultPropsConfig => Object(value) as DefaultPropsConfig;
 function set(target: DefaultPropsConfig, key: string, value: unknown) {
   Object.defineProperty(target, key, {
     value,
@@ -21,9 +24,7 @@ export function joinClassNames(...values: unknown[]): string {
     if (typeof value === 'string' || typeof value === 'number') tokens.push(String(value));
     else if (Array.isArray(value)) tokens.push(joinClassNames(...value));
     else if (typeof value === 'object')
-      tokens.push(
-        ...Object.keys(value).filter((key) => Boolean((value as DefaultPropsConfig)[key])),
-      );
+      for (const key in value) if ((value as DefaultPropsConfig)[key]) tokens.push(key);
   }
   return tokens.filter(Boolean).join(' ');
 }
@@ -33,27 +34,36 @@ export function mergeNativeStyles(defaultStyle: unknown, externalStyle: unknown)
       typeof defaultStyle === 'function' ? defaultStyle(...args) : defaultStyle,
       typeof externalStyle === 'function' ? externalStyle(...args) : externalStyle,
     ];
-  return [defaultStyle, externalStyle] as StyleProp<ViewStyle>;
+  if (
+    Array.isArray(defaultStyle) ||
+    Array.isArray(externalStyle) ||
+    typeof defaultStyle === 'number' ||
+    typeof externalStyle === 'number'
+  )
+    return [defaultStyle, externalStyle] as StyleProp<ViewStyle>;
+  return { ...object(defaultStyle), ...object(externalStyle) };
 }
 
 // Default resolution follows the pinned MUI contract. Native styles retain ordered
 // style arrays and callbacks rather than spreading numeric array keys into objects.
-export function resolveDefaultProps<P extends object>(
-  defaults: DefaultPropsConfig,
-  props: P,
-  mergeStyle = false,
-): P {
-  const output = { ...props } as DefaultPropsConfig;
-  for (const [key, fallback] of Object.entries(defaults)) {
-    const supplied = (props as DefaultPropsConfig)[key];
+export function resolveDefaultProps<P>(defaults: unknown, props: P, mergeStyle = false): P {
+  const output = { ...object(props) };
+  const defaultProps = object(defaults);
+  const externalProps = props as DefaultPropsConfig;
+  for (const key in defaultProps) {
+    if (!Object.hasOwn(defaultProps, key)) continue;
     if (key === 'slots' || key === 'components')
-      set(output, key, { ...object(fallback), ...object(supplied) });
+      set(output, key, { ...object(defaultProps[key]), ...object(output[key]) });
     else if (key === 'slotProps' || key === 'componentsProps') {
+      const fallback = defaultProps[key];
+      const supplied = externalProps[key];
       if (!supplied) set(output, key, fallback || {});
       else if (!fallback) set(output, key, supplied);
       else {
         const slots = { ...object(supplied) };
-        for (const [slot, defaultValue] of Object.entries(object(fallback))) {
+        for (const slot in object(fallback)) {
+          if (!Object.hasOwn(object(fallback), slot)) continue;
+          const defaultValue = object(fallback)[slot];
           const externalValue = object(supplied)[slot];
           set(
             slots,
@@ -74,42 +84,65 @@ export function resolveDefaultProps<P extends object>(
         }
         set(output, key, slots);
       }
-    } else if (key === 'className' && mergeStyle && supplied !== undefined)
-      set(output, key, joinClassNames(fallback, supplied));
-    else if (key === 'style' && mergeStyle && supplied)
-      set(output, key, mergeNativeStyles(fallback, supplied));
-    else if (!Object.hasOwn(output, key) || output[key] === undefined) set(output, key, fallback);
+    } else if (key === 'className' && mergeStyle && externalProps.className !== undefined)
+      set(output, key, joinClassNames(defaultProps.className, externalProps.className));
+    else if (key === 'style' && mergeStyle && externalProps.style)
+      set(output, key, mergeNativeStyles(defaultProps.style, externalProps.style));
+    // Retain the native adapter's existing treatment of __proto__ as own data.
+    else if (output[key] === undefined || (key === '__proto__' && !Object.hasOwn(output, key)))
+      set(output, key, defaultProps[key]);
   }
   return output as P;
 }
-export function getThemeProps<P extends object>({
+type ThemedDefaults<ThemeInput, Name extends PropertyKey> = ThemeInput extends {
+  components: Record<Name, { defaultProps: infer Props }>;
+}
+  ? Props
+  : {};
+export function getThemeProps<ThemeInput, Props, Name extends PropertyKey>({
   props,
   name,
   theme,
 }: {
-  props: P;
-  name: string;
-  theme?: { components?: DefaultPropsMap } | null;
-}): P {
-  const defaults = object(theme?.components?.[name]).defaultProps;
-  return defaults ? resolveDefaultProps(object(defaults), props) : props;
+  props: Props;
+  name: Name;
+  theme?: ThemeInput | undefined;
+}): Props & ThemedDefaults<ThemeInput, Name> {
+  const selected = theme as { components?: Record<PropertyKey, unknown> } | null | undefined;
+  if (
+    !selected ||
+    !selected.components ||
+    !selected.components[name] ||
+    !object(selected.components[name]).defaultProps
+  )
+    return props as Props & ThemedDefaults<ThemeInput, Name>;
+  return resolveDefaultProps(object(selected.components[name]).defaultProps, props) as Props &
+    ThemedDefaults<ThemeInput, Name>;
 }
-export function DefaultPropsProvider({
+export type DefaultPropsProviderProps = React.PropsWithChildren<{
+  // System intentionally accepts arbitrary component names and configuration values.
+  value: Record<string, any> | undefined;
+}>;
+export interface DefaultPropsProviderComponent {
+  (props: DefaultPropsProviderProps): React.JSX.Element;
+  /** Optional native metadata extension; React 19 does not run propTypes validation. */
+  propTypes?: any;
+}
+export const DefaultPropsProvider: DefaultPropsProviderComponent = function DefaultPropsProvider({
   value,
   children,
-}: React.PropsWithChildren<{ value: DefaultPropsMap | undefined }>) {
+}) {
   return <DefaultsContext.Provider value={value}>{children}</DefaultsContext.Provider>;
-}
-export function useDefaultProps<P extends object>({ props, name }: { props: P; name: string }): P {
+};
+export function useDefaultProps<P>({ props, name }: { props: P; name: string }): P {
   const values = useContext(DefaultsContext);
-  const entry = values?.[name];
-  if (!entry || typeof entry !== 'object') return props;
-  const config = object(entry);
-  const defaults =
-    config.defaultProps ?? (!config.styleOverrides && !config.variants ? config : undefined);
-  return defaults
-    ? resolveDefaultProps(object(defaults), props, values?.mergeClassNameAndStyle)
-    : props;
+  if (!values || !values[name]) return props;
+  const config = values[name] as DefaultPropsConfig;
+  if (config.defaultProps)
+    return resolveDefaultProps(config.defaultProps, props, Boolean(values?.mergeClassNameAndStyle));
+  if (!config.styleOverrides && !config.variants)
+    return resolveDefaultProps(config, props, Boolean(values?.mergeClassNameAndStyle));
+  return props;
 }
 export type SlotProps<P, OwnerState> = P | ((ownerState: OwnerState) => P);
 export function resolveSlotProps<P, OwnerState>(

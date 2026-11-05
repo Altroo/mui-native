@@ -175,12 +175,17 @@
         "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
         "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
         "sourceFiles": {
+          "DefaultPropsProvider/index.js": "b8fcdb0e660024701a26d42b496558faa0591de612971c4c307b62862cf9754a",
+          "DefaultPropsProvider/index.d.ts": "5340156ad6a50847cb788acd0b26cd08e7a3cb7f72ad97cd49fdc766c145bc58",
+          "DefaultPropsProvider/DefaultPropsProvider.js": "6234e618376c90c75eadd92dc0af9e078a946cf57d6adb15b473163932fbc739",
+          "DefaultPropsProvider/DefaultPropsProvider.d.ts": "1e8c42aedb0ba9f29ada92cc4be6df03d04cff5f15aa7cbb195066372bde68cb",
           "useThemeProps/getThemeProps.js": "a766955dd15117cbe7bfb26cf43d793b3f57694563507c23ffed10d1cd4b60d6",
-          "DefaultPropsProvider/DefaultPropsProvider.js": "6234e618376c90c75eadd92dc0af9e078a946cf57d6adb15b473163932fbc739"
+          "useThemeProps/getThemeProps.d.ts": "d1a0fa14a456d83ceee71b4751f1d250e76ce1c4f496325b8642f486327be30a"
         }
       },
       "adaptations": [
-        "Native theme/default contexts and legacy/raw configuration selection; no browser styling context is imported."
+        "Native renderless context, legacy/raw configuration selection and generic default inference follow the pinned runtime/declarations.",
+        "Development validator attachment is omitted; source-compatible metadata access remains typed."
       ]
     },
     {
@@ -3116,6 +3121,41 @@
       },
       "adaptations": [
         "Resolve opt-in native outlines and custom shadow layers without the browser-only invisible CSS-variable reset."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/DefaultPropsProvider/DefaultPropsProvider.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "DefaultPropsProvider/index.js": "b8fcdb0e660024701a26d42b496558faa0591de612971c4c307b62862cf9754a",
+          "DefaultPropsProvider/index.d.ts": "5340156ad6a50847cb788acd0b26cd08e7a3cb7f72ad97cd49fdc766c145bc58",
+          "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5",
+          "DefaultPropsProvider/DefaultPropsProvider.d.ts": "0898c1fbfa89ad8ca63c8591fb6ddd9bec74185f1e449cad1690674172767338"
+        }
+      },
+      "adaptations": [
+        "Distinct Material forwarding functions share the pure System context; native root System aliases are retained."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/styles/props.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "styles/props.d.ts": "05084be14d8c1f9b14f83f357f57c8a3ee04f3ec936b72e2cb694cd7b3cb48ee"
+        }
+      },
+      "adaptations": [
+        "Component defaults describe the 60 existing native component props, preserving public generic defaults and augmentation; missing components have no invented stubs."
       ]
     }
   ]

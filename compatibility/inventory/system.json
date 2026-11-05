@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "91ebd3b31f7123a4e8939473b510a947eb452e77fe9f663fcde875faa018fccd",
+  "nativeSourceSha256": "11ab1f8cf96912b11c42b1640effeb2cd94dcac6bdcd7d9701119a0808d61d8d",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7125,7 +7125,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "DefaultPropsMap",
           "kind": "type",
-          "line": 5
+          "line": 7
         }
       ]
     },
@@ -7136,7 +7136,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "DefaultPropsProvider",
           "kind": "value",
-          "line": 97
+          "line": 131
         }
       ]
     },
@@ -7279,7 +7279,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "joinClassNames",
           "kind": "value",
-          "line": 17
+          "line": 20
         }
       ]
     },
@@ -7301,7 +7301,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "mergeNativeStyles",
           "kind": "value",
-          "line": 30
+          "line": 31
         }
       ]
     },
@@ -7543,7 +7543,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "resolveSlotProps",
           "kind": "value",
-          "line": 115
+          "line": 148
         }
       ]
     },
@@ -7598,7 +7598,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "SlotProps",
           "kind": "type",
-          "line": 114
+          "line": 147
         }
       ]
     },
@@ -7796,7 +7796,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "useDefaultProps",
           "kind": "value",
-          "line": 103
+          "line": 137
         }
       ]
     },
@@ -17799,7 +17799,7 @@
     {
       "name": "DefaultPropsConfig",
       "file": "src/defaultProps.tsx",
-      "line": 4,
+      "line": 6,
       "kind": "type",
       "members": [],
       "references": [
@@ -17811,7 +17811,7 @@
     {
       "name": "DefaultPropsMap",
       "file": "src/defaultProps.tsx",
-      "line": 5,
+      "line": 7,
       "kind": "type",
       "members": [
         {
@@ -17820,10 +17820,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "mergeClassNameAndStyle?: boolean",
-          "line": 5,
+          "declaration": "mergeClassNameAndStyle?: boolean | undefined;",
+          "line": 8,
           "kind": "property",
-          "type": "boolean"
+          "type": "boolean | undefined"
         }
       ],
       "references": [
@@ -17833,9 +17833,74 @@
       "package": "@altroo/mui-native-system"
     },
     {
+      "name": "ThemedDefaults",
+      "file": "src/defaultProps.tsx",
+      "line": 97,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Name",
+        "PropertyKey",
+        "Props",
+        "Record",
+        "ThemeInput"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "DefaultPropsProviderProps",
+      "file": "src/defaultProps.tsx",
+      "line": 122,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.PropsWithChildren",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "DefaultPropsProviderComponent",
+      "file": "src/defaultProps.tsx",
+      "line": 126,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: DefaultPropsProviderProps): React.JSX.Element;",
+          "line": 127,
+          "kind": "signature",
+          "type": "(props: DefaultPropsProviderProps): React.JSX.Element;"
+        },
+        {
+          "name": "propTypes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "propTypes?: any;",
+          "line": 129,
+          "kind": "property",
+          "type": "any"
+        }
+      ],
+      "references": [
+        "DefaultPropsProviderProps",
+        "React.JSX.Element"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
       "name": "SlotProps",
       "file": "src/defaultProps.tsx",
-      "line": 114,
+      "line": 147,
       "kind": "type",
       "members": [],
       "references": [
