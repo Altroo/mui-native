@@ -1,6 +1,6 @@
 # Native SvgIcon and icon factories
 
-This implementation is development after `0.0.7-prealpha.0`; it is not in the published preview. Material `SvgIcon`, its class helpers and `createSvgIcon` share the existing native SVG renderer. The four original glyphs in the icon package now use that same implementation. The full upstream artwork collection remains unfinished.
+This implementation is development after `0.0.7-prealpha.0`; it is not in the published preview. Material `SvgIcon`, its class helpers and `createSvgIcon` share the existing native SVG renderer. The [full pinned catalog of 10,750 glyphs](material-icons.md) uses that same implementation. Artwork/import completion does not close the renderer gates below.
 
 ```tsx
 import SvgIcon, { createSvgIcon } from '@mui/material/SvgIcon';
