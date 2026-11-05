@@ -2,6 +2,7 @@
 import { forwardRef, useCallback, useMemo, useRef, useState } from 'react';
 import {
   Text,
+  ScrollView,
   View,
   useWindowDimensions,
   type ViewInstance,
@@ -18,6 +19,7 @@ import {
   ThemeProvider,
   Typography,
   createTheme,
+  useTheme,
   type ListItemAvatarRootProps,
 } from '@mui/material';
 
@@ -27,17 +29,16 @@ const CustomRoot = forwardRef<ViewInstance, ListItemAvatarRootProps>(
 function StatefulBadge() {
   const [count, setCount] = useState(0);
   return (
-    <Typography
-      variant="inherit"
+    <Button
       testID="avatar-contract-child"
-      accessible
-      accessibilityRole="button"
-      accessibilityLabel={`Avatar child count ${count}`}
-      onPress={() => setCount((value) => value + 1)}
-      style={{ width: 40, height: 40, textAlign: 'center', backgroundColor: '#cde4f7' }}
+      variant="outlined"
+      color="inherit"
+      aria-label={`Avatar child count ${count}`}
+      onClick={() => setCount((value) => value + 1)}
+      style={{ minWidth: 44, padding: 0 }}
     >
       {count}
-    </Typography>
+    </Button>
   );
 }
 const image = (
@@ -62,6 +63,7 @@ type Receipt = {
 };
 /** Dedicated measured wrapper scene; the catalog owner chooses where to mount it. */
 export function ListItemAvatarContractExample() {
+  const outer = useTheme();
   const [top, setTop] = useState(false),
     [rtl, setRtl] = useState(false),
     [customStyle, setCustomStyle] = useState(false);
@@ -74,12 +76,14 @@ export function ListItemAvatarContractExample() {
   const theme = useMemo(
     () =>
       createTheme({
+        ...outer,
         direction: rtl ? 'rtl' : 'ltr',
         components: {
+          ...outer.components,
           MuiListItemAvatar: { styleOverrides: { root: { minWidth: customStyle ? 64 : 56 } } },
         },
       }),
-    [rtl, customStyle],
+    [outer, rtl, customStyle],
   );
   const publish = useCallback(
     (key: string, next: Receipt) =>
@@ -167,7 +171,9 @@ export function ListItemAvatarContractExample() {
             backgroundColor: 'background.paper',
           }}
         >
-          <List>{row('portal')}</List>
+          <ScrollView testID="avatar-contract-portal-scroll" style={{ maxHeight: 160 }}>
+            <List>{row('portal')}</List>
+          </ScrollView>
         </Box>
       </Portal>
     </ThemeProvider>
