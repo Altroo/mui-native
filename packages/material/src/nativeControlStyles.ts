@@ -1,6 +1,8 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { StyleSheet, type StyleProp } from 'react-native';
 import type { NativeStyle } from '@altroo/mui-native-system';
 import { nativeInsets } from './nativeInsets';
+import { nativeInlineBorderBase } from './nativeInlineBorders';
 export function directionOf(...values: unknown[]): 'ltr' | 'rtl' {
   const fallback = values.at(-1) === 'rtl' ? 'rtl' : 'ltr';
   for (const value of values) {
@@ -50,4 +52,27 @@ export function mergeNativeStyles(
     parentDirection,
   );
   return mergeNativeStylesAtDirection(layers, direction);
+}
+
+/** Keep CSS longhands below a genuine native shorthand, preserving native arrays. */
+export function mergeNativeRootStyle(
+  parentDirection: 'ltr' | 'rtl',
+  computed: NativeStyle,
+  authored: StyleProp<NativeStyle>,
+): NativeStyle {
+  const inline = StyleSheet.flatten(authored);
+  const direction = directionOf(inline?.direction, computed.direction, parentDirection);
+  const base = { ...nativeInlineBorderBase(computed, inline, direction) };
+  if (inline?.gap != null) {
+    delete base.rowGap;
+    delete base.columnGap;
+  }
+  if (inline?.flex != null) {
+    delete base.flexGrow;
+    delete base.flexShrink;
+    delete base.flexBasis;
+  }
+  // Flatten the authored tree once, so specific native keys keep priority over
+  // later native shorthands while replacing earlier CSS declarations.
+  return mergeNativeStylesAtDirection(inline ? [base, inline] : [base], direction);
 }
