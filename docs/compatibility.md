@@ -53,6 +53,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 - Native Popper with measured native/virtual anchors, Portal/inline rendering, root slots, instance refs, modifier/placement lifecycle and original imports. See [Popper](popper.md) for explicit native boundaries and remaining device/release gates.
 
+- Native [ButtonGroup](button-group.md) defaults, positions, scoped descendant styles, class helpers and typed native roots have source/browser and installed-consumer coverage. Scoped iOS/Android interactions pass; complete device/accessibility/performance matrices remain pending.
+
 - Native [Autocomplete](autocomplete.md) input/listbox composition, mapped and multiple selections, renderValue, grouping, all slots and headless imports have source-backed checks and scoped emulator evidence. Physical/tag keyboard completeness, screen readers, large-option performance and full parity remain open.
 
 ## Unsupported or not yet verified
