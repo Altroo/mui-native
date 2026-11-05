@@ -38,7 +38,7 @@ Default resolution is connected to the existing Material layout, form/control, f
 
 ## Providers and hooks
 
-`DefaultPropsProvider` and `useDefaultProps` are available through `@mui/material/DefaultPropsProvider` and `@mui/system/DefaultPropsProvider`. The named exports are also available from the native root packages. A nested provider replaces the default map; `value={undefined}` resets it. `ThemeProvider` supplies its theme's component map automatically. A standalone default provider does not modify theme tokens or style overrides.
+`DefaultPropsProvider` and `useDefaultProps` are available through `@mui/material/DefaultPropsProvider` and `@mui/system/DefaultPropsProvider`. Native root aliases remain available; Material's deep forwarding functions are distinct while sharing System context. A nested provider replaces the default map; the System provider accepts `value={undefined}` to reset it. See the [finite provider contract](default-props-provider.md) for public types, default selection, aliases and adaptation boundaries. `ThemeProvider` supplies its theme's component map automatically. A standalone default provider does not modify theme tokens or style overrides.
 
 `useThemeProps` remains a System theme lookup and supports `defaultTheme` plus an explicit `themeId`. `getThemeProps` applies a component's `defaultProps` directly. These helpers are available through original root/style imports and `@mui/system/useThemeProps`. System helpers do not consume an independent DefaultPropsProvider override or the Material style-merge flag. Default provider hooks also support MUI's raw configuration form where no defaultProps/styleOverrides/variants wrapper is present.
 
