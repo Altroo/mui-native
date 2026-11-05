@@ -44,6 +44,10 @@ Nested Typography preserves the difference between inherited unitless ratios and
 
 Button labels, textual loading indicators and TextField input text use the same conversion. Authored relative metrics and unitless inheritance metadata are held weakly alongside generated style objects. Styled wrappers preserve those expressions until Typography knows its variant and final font size. Literal native overrides keep absolute semantics. This metadata is never sent to native views and does not retain discarded render styles.
 
+Authored `Text` and `Typography` children inside a Button retain independent native text roots. Their `allowFontScaling` and `maxFontSizeMultiplier` policies survive live changes and clearing, without JavaScript multiplying font sizes by the system scale. Mixed authored and literal labels wrap as native row content. This preserves native scaling policies; it does not establish identical browser paragraph wrapping.
+
+Participating native containers preserve known layout direction separately from text metrics. Logical CSS `start`/`end` alignment resolves in that physical direction and can resolve again when a descendant changes direction. Native inline text values retain their absolute React Native semantics.
+
 ## Custom variants
 
 Extend `TypographyVariants` and `TypographyVariantsOptions` through `@mui/material/styles`, and `TypographyPropsVariantOverrides` through `@mui/material/Typography`. The clean installed-consumer fixture verifies custom variants through both original root and deep imports, disabled default variants, native custom roots and rejection of browser refs. Theme interfaces and component variant overrides are separate, matching MUI's augmentation pattern.

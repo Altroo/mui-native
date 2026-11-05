@@ -211,3 +211,27 @@ The collector requires an empty output directory and preserves raw instrumentati
 The scenario checks small/medium/large dimensions, symbolic currentColor inside a group, palette changes in real rendered pixels, one original onClick touch, actual 48 dp SVG ref measurement/PNG export and larger text ink inside equal viewports. Native Canvas raster bounds supplement screenshots; these debug checks do not measure release performance.
 
 Add [SvgIconCatalogUITests.swift](../tests/native/ios/SvgIconCatalogUITests.swift) to the existing shared iOS UI test target. Run the iOS workspace/device command above with `-only-testing:PopperCatalogUITests/SvgIconCatalogUITests`. Its case checks SVG accessibility names, real frames, touch/palette receipts and PNG export, then retains the two font samples for visual review. Export attachments from a fresh result bundle. iOS glyphs are visually reviewed here; the Android font-raster assertion is separate. Physical screen-reader/keyboard/font/RTL matrices, browser fill animations and calibrated performance remain open.
+
+## Reading direction and system text size
+
+The optional **Reading and direction** controls in Groups exercise horizontal/vertical layouts, live local direction, independent default/fixed/capped text roots, live scaling-policy changes, retained action counts, mixed wrapping and Typography-origin window Portal text. Native measurement JSON is hidden until **Show native measurements** is selected.
+
+Build/install the maintained Android app and instrumentation after running `android-popper.mjs prepare`. The reading scenario uses the existing runner. Select the current emulator explicitly and use new output directories for every attempt:
+
+```sh
+PATH="$ANDROID_HOME/platform-tools:$PATH" node scripts/native-catalog/text-profile.mjs \
+  --platform android --device "$ANDROID_SERIAL" --size 2.0 \
+  --outputDir /tmp/mui-native-reading-android-profile \
+  -- node scripts/native-catalog/android-popper.mjs run \
+  --scenario button-group-reading --serial "$ANDROID_SERIAL" \
+  --adb "$ANDROID_HOME/platform-tools/adb" \
+  --output .cache/native-reading-android
+```
+
+Run once without `--global-rtl` and once with that runner flag, at normal and enlarged text sizes. Global RTL is a process-local test override, not a persistent locale change. The version-three collector requires seven ordered states, eight screenshots, actual native text/line bounds, SP-converted fonts, retained action counters, real Portal text and actual border-layer corner raster samples, alongside resolved radius diagnostics. Missing raster evidence, older geometry-only reports or a fresh radius calculation hiding a stale native drawing path cannot pass. Android SP conversion can be nonlinear; the collector uses platform conversion rather than multiplying by `scaledDensity`.
+
+For iOS, add [ButtonGroupReadingUITests.swift](../tests/native/ios/ButtonGroupReadingUITests.swift) to the shared UI-test target and build it. Run both methods with `-only-testing:PopperCatalogUITests/ButtonGroupReadingUITests`. Wrap the existing `xcodebuild test-without-building` command with `text-profile.mjs --platform ios --device UUID --size accessibility-medium --outputDir /tmp/NEW_PROFILE_DIRECTORY --`. Use a concrete simulator UUID and a fresh result bundle. The tests require the actual requested global direction, native accessibility frames, real `onTextLayout` glyph metrics against UIKit, live scaling policies and independent Portal text. Global direction uses process-local launch arguments. Export and review result-bundle screenshots separately.
+
+The profile helper records the original OS text setting before applying and verifying the requested size, waits for its owned test process group, then restores and verifies the original setting. Its durable receipt and per-device lease stay outside the checkout. It refuses a second run against an existing lease; an unconfirmed child exit, restoration failure or external setting change retains recovery evidence. Supplied collectors remain responsible for ending remote/on-device work before returning. If a device disconnects, preserve the failed receipt, confirm test termination and the original setting after recovery, and resolve that recovery evidence before starting another profile. Do not count an interrupted run as a compatibility result.
+
+These finite emulator/simulator checks do not certify every text category, screen-reader usability, physical-device behavior or release performance.

@@ -31,6 +31,8 @@ Without `container`, or when a container callback returns `null`, Portal uses th
 
 Public React contexts, including theme and ButtonGroup defaults, retain their logical ancestry. Use library Box/Typography containers to carry inherited text through custom native components; raw React Native View/Text elements inside arbitrary external components keep React Native inheritance rules. Finite group descendant styles and inherited text instead follow the actual native destination. Owned text roots register their resolved scope without adding native hosts; native View/Text children preserve their element type and ref cleanup. Self/descendant and cyclic targets remain inactive until valid.
 
+The canvas is a physical View boundary even when Portal is called from inside Typography. It resets React Native's text-ancestor context without adding a layout host, so destination text remains a real native text root with its own scaling policy and layout callbacks. The canvas and participating text scope follow the destination's known native direction; window placement uses React Native's global direction. Logical theme context remains available independently. Inline `disablePortal` keeps ordinary text ancestry.
+
 An explicit container retains its native transforms and ancestor clipping. Default window placement escapes the source ancestor's clipping. Layer order applies among Portal roots within the same physical container, with stable insertion order for equal layers. It does not reorder ordinary React siblings or cross native windows.
 
 ## Props and refs
