@@ -53800,7 +53800,7 @@
     "ZoomOutTwoTone": "8e54aea9327feeb616ca1de8721b3f2d0b04509bf01594476021aaa176a62a20"
   },
   "generatorSources": {
-    "scripts/icons/generate.mjs": "5a8e7d6c8389139f3c56b024e6d9beff27e0a54431f4d40fdeaead68cfc336a3",
+    "scripts/icons/generate.mjs": "5c6960f8a1cdf378b6bf335034a26aabd80cb420df77beff184eb2c1089cbf8c",
     "scripts/icons/read-archive.py": "6bad829f16499389de330920520e7ca3ebdf55642a67fa7f0ff733b361079c0e"
   },
   "generated": {

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { readFile, writeFile } from 'node:fs/promises';
 import { format, resolveConfig } from 'prettier';
 import { loadReference } from './load.mjs';
@@ -126,7 +127,7 @@ const lifecycleInputs = [
     actions: [{ tick: 192 }],
   },
 ];
-function lifecycle(input) {
+async function lifecycle(input) {
   const savedSet = globalThis.setTimeout,
     savedClear = globalThis.clearTimeout;
   let now = 0,
@@ -214,20 +215,20 @@ function lifecycle(input) {
     });
   };
   try {
-    act(() => {
+    await act(() => {
       renderer = create(element(), { createNodeMock: () => node });
     });
     snapshot();
     for (const action of input.actions) {
       if ('height' in action) {
         height = action.height;
-        act(() => renderer.update(element()));
+        await act(() => renderer.update(element()));
       }
       if ('open' in action) {
         open = action.open;
-        act(() => renderer.update(element()));
+        await act(() => renderer.update(element()));
       }
-      if ('done' in action) act(() => done[action.done]());
+      if ('done' in action) await act(() => done[action.done]());
       if ('tick' in action) {
         const end = now + action.tick;
         let count = 0;
@@ -239,7 +240,7 @@ function lifecycle(input) {
           if (++count > 1000) throw new Error('Reference timer loop');
           now = next[1].at;
           timers.delete(next[0]);
-          act(() => next[1].callback());
+          await act(() => next[1].callback());
         }
         now = end;
       }
@@ -247,13 +248,17 @@ function lifecycle(input) {
     }
     return { ...input, snapshots };
   } finally {
-    if (renderer) act(() => renderer.unmount());
-    globalThis.setTimeout = savedSet;
-    globalThis.clearTimeout = savedClear;
+    try {
+      if (renderer) await act(() => renderer.unmount());
+    } finally {
+      globalThis.setTimeout = savedSet;
+      globalThis.clearTimeout = savedClear;
+    }
   }
 }
 
-const fixtures = lifecycleInputs.map(lifecycle);
+const fixtures = [];
+for (const input of lifecycleInputs) fixtures.push(await lifecycle(input));
 const filename = 'tests/fixtures/mui-grow-9.5.0.json';
 const output = await format(
   JSON.stringify({ reference, muiSupportAuto: Grow.muiSupportAuto, fixtures }),

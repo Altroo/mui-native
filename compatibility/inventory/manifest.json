@@ -10890,7 +10890,7 @@
       "packages/material/src/nativeControlStyles.ts": "b11fc2c0c8cebbcb5f02a45f71b8219de68d96fc14c2f459974639910a305d4a",
       "packages/material/src/nativeInputControl.ts": "adb4cbc6d4452a4a98e462b59e01671f2c04078f501cc7ca55420e79088cd816",
       "packages/material/src/nativeInsets.ts": "3e5509c5d81098e4edb4265109903232c730458d6eb7c97dca128b15f1acccbd",
-      "packages/material/src/nativeMenuRegistry.ts": "cc930d3040a96db8c865fa842f2644ba4fecf6fa2e5501912f75dac94ad504b8",
+      "packages/material/src/nativeMenuRegistry.ts": "7f04fe8e1d9ba30a816fe405a474a4d05f551d438556fcbb56e1b055bacc03af",
       "packages/material/src/nativeModalContext.ts": "e2033780b92ca0663c72d122dbb17360ee4014303aadda4295fb37cddb6bd655",
       "packages/material/src/nativeModalManager.ts": "b39ad871c3f68c2f0218454da1c58be55163b46ca09042054ba816f0e0313202",
       "packages/material/src/nativeOverlayReadiness.ts": "029d8aff1fa072b1babcf3cff1a512ea60a0ac8844f94bcb1969a484fc0dec40",
@@ -11050,7 +11050,7 @@
       "packages/x-tree-view/src/RichTreeView/index.ts": "b4492fdbf2f10d6f6d2d368d9fc5932c5a784fb24b5cbd0e58604c5050eb0853",
       "pnpm-lock.yaml": "dd578d0c35cbaea6c3ff21274509bcbb042ae6369942e8acbaf061873400b580",
       "scripts/inventory/declarations.mjs": "7de3a26694ecbdabc9da1a1a6a855e45dbc8dcaad1a27783855d3cb0a30323f4",
-      "scripts/inventory/declarations.test.mjs": "12fd46e1f0891265d541594bc787db2ca122d5b9f4c36fdf24885e8f73889a2f",
+      "scripts/inventory/declarations.test.mjs": "6ddc738a07e2b64cdb339de7e47cbfab1180719ab45e071daac38c5e21e3d16a",
       "scripts/inventory/freshness.mjs": "a170cbd4928d3bc22db5b4a535bbb125376202e1b8527829a796788a3a825734",
       "scripts/inventory/freshness.test.mjs": "c1325b1916093a59874e96a5bbae48462cc35e66a3de4302c5edb0db06203f5f",
       "scripts/inventory/generate.mjs": "978b09e7a095300cd0982444c7574665ae7cd3e984dd5625873b9f61f579baad",
@@ -11117,7 +11117,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "83262a79f559b640914ac4f0f86934c3de6480842588be294fb6686d79adc85a",
+      "nativeSourceSha256": "865e50d652f7e36ee5f0c8bc5d46d521098d450aaa709b46cf6ecccfa732193c",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11129,7 +11129,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "c0af874f534cc8022440ce9f47d7250bee6306690b298f0490d1087ba4ae94ca"
+      "sha256": "dd4f6fe7f3b2534a93351f7fadde63e26685786420d4081f546584603dfbc511"
     },
     {
       "package": "@mui/system",
