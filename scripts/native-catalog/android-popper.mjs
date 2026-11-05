@@ -11,6 +11,8 @@ import { prepareAutocompleteSource } from './android-autocomplete-source.mjs';
 import { prepareInputIntegritySource } from './android-input-integrity-source.mjs';
 import { prepareCollapseSource } from './android-collapse-source.mjs';
 import { prepareAccordionSource } from './android-accordion-source.mjs';
+import { prepareButtonGroupSource } from './android-button-group-source.mjs';
+import { inspectButtonGroupReport, summarizeButtonGroup } from './android-button-group-report.mjs';
 import { prepareSvgIconSource } from './android-svg-icon-source.mjs';
 import { inspectSvgIconReport, summarizeSvgIcon } from './android-svg-icon-report.mjs';
 import { inspectAccordionReport, summarizeAccordion } from './android-accordion-report.mjs';
@@ -65,6 +67,7 @@ export async function prepare(project) {
   await prepareCollapseSource(project);
   await prepareAccordionSource(project);
   await prepareSvgIconSource(project);
+  await prepareButtonGroupSource(project);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, source);
   await writeFile(gradlePath, gradle);
@@ -187,14 +190,14 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon'}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group'}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
   { adb, serial, output, signal, scenario = 'popper' },
   execute = executeFile,
 ) {
-  if (!['popper', 'accordion', 'svg-icon'].includes(scenario))
+  if (!['popper', 'accordion', 'svg-icon', 'button-group'].includes(scenario))
     throw Error('Unknown catalog scenario');
   if (typeof serial !== 'string' || !serial.trim())
     throw Error('Choose one explicit --serial; devices are never selected automatically');
@@ -243,7 +246,9 @@ export async function run(
         ? inspectAccordionReport(text)
         : scenario === 'svg-icon'
           ? inspectSvgIconReport(text)
-          : inspectReport(text);
+          : scenario === 'button-group'
+            ? inspectButtonGroupReport(text)
+            : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -260,6 +265,7 @@ export async function run(
     signal?.throwIfAborted();
     if (scenario === 'accordion') summarizeAccordion(text);
     else if (scenario === 'svg-icon') summarizeSvgIcon(text);
+    else if (scenario === 'button-group') summarizeButtonGroup(text);
     else assertCompleted(text, report);
   } catch (error) {
     failure =
