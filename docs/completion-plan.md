@@ -58,7 +58,7 @@ The entries below enumerate the 83 current partial status rows and the separatel
 | ----------------------- | ---------------------: | ------------------------------------------------------------------------ |
 | Accordion               |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
 | AccordionActions        |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
-| AccordionDetails        |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
+| AccordionDetails        |                    75% | [Scope and remaining work](../docs/accordion-details.md)                 |
 | AccordionSummary        |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
 | Alert                   |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | Autocomplete            |                    75% | [Scope and remaining work](../docs/autocomplete.md)                      |
@@ -84,7 +84,7 @@ The entries below enumerate the 83 current partial status rows and the separatel
 | FilledInput             |                    50% | [Scope and remaining work](../docs/inputs.md)                            |
 | FormControl             |                    50% | [Scope and remaining work](../docs/form-labels.md)                       |
 | FormControlLabel        |                    50% | [Scope and remaining work](../docs/check-controls.md)                    |
-| FormGroup               |                    50% | [Scope and remaining work](../docs/check-controls.md)                    |
+| FormGroup               |                    75% | [Scope and remaining work](../docs/form-group.md)                        |
 | FormHelperText          |                    50% | [Scope and remaining work](../docs/form-labels.md)                       |
 | FormLabel               |                    50% | [Scope and remaining work](../docs/form-labels.md)                       |
 | Grow                    |                    50% | [Scope and remaining work](../docs/grow.md)                              |
@@ -96,9 +96,9 @@ The entries below enumerate the 83 current partial status rows and the separatel
 | LinearProgress          |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | List                    |                    50% | [Scope and remaining work](../docs/lists.md)                             |
 | ListItem                |                    50% | [Scope and remaining work](../docs/lists.md)                             |
-| ListItemAvatar          |                    50% | [Scope and remaining work](../docs/lists.md)                             |
+| ListItemAvatar          |                    75% | [Scope and remaining work](../docs/list-item-avatar.md)                  |
 | ListItemButton          |                    50% | [Scope and remaining work](../docs/lists.md)                             |
-| ListItemIcon            |                    50% | [Scope and remaining work](../docs/lists.md)                             |
+| ListItemIcon            |                    50% | [Scope and remaining work](../docs/list-item-icon.md)                    |
 | ListItemSecondaryAction |                    50% | [Scope and remaining work](../docs/lists.md)                             |
 | ListItemText            |                    50% | [Scope and remaining work](../docs/lists.md)                             |
 | ListSubheader           |                    50% | [Scope and remaining work](../docs/lists.md)                             |

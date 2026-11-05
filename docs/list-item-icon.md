@@ -43,7 +43,7 @@ Opaque custom components returning raw Text cannot gain CSS inheritance through 
 
 The native MenuItem integration retains its 36-unit icon reservation. Its dense SVG scope follows the original executed `1.25rem` rule: 20 authored units with the default 16-unit CSS root, or 30 with a 24-unit CSS root. Operating-system fontScale is not multiplied into vector dimensions in JavaScript; a genuine native SVG inline font size remains last. Those styles belong to the parent menu adapter, separately from the wrapper's own theme spacing and action foreground. Existing menu tests protect that baseline and inherited icon scope.
 
-Arbitrary supported parent MenuItem descendant override priority remains required software work in the MenuItem/shared styling scope. This wrapper increment does not mark those dependencies complete. Shared SvgIcon painting and the full List/Menu families also retain their separate status.
+Supported parent MenuItem descendant rules now join the child CSS cascade by specificity and source order, followed by genuine native inline style. The finite selector grammar, physical Portal boundaries and remaining browser/device gates are documented in [MenuItem icon styling](menu-icon-cascade.md). Shared SvgIcon painting and the full List/Menu contracts retain their separate status.
 
 ## Reproduction
 
@@ -58,12 +58,14 @@ node --test packages/compat/list-item-icon.test.cjs
 
 The reference checks source archive integrity, MIT license hashes and exact executed files, then retains 13 original wrapper/context/default/class observations, CSS declarations, public root/canonical identities and 28 utility identifiers, plus 12 executed styled/default-prop observations covering absent/undefined/null/own values, nested wrappers and merged defaults. It also retains the actual dense MenuItem SVG CSS declaration; native vector-context tests separately check CSS-root conversion and unscaled authored dimensions. Original React DOM static rendering establishes these source observations; it does not establish native or browser geometry.
 
-The strict consumer compiles emitted declarations, including every native attribute/event key, typed native/custom refs, class augmentation, exact optional undefined, canonical/direct native imports and the original JSX return declaration. It separately compiles the unchanged source-compatible fixture through the original published package exports. Fresh installed archive checks and full-project validation remain integration gates.
+The strict consumer compiles emitted declarations, including every native attribute/event key, typed native/custom refs, class augmentation, exact optional undefined, canonical/direct native imports and the original JSX return declaration. It separately compiles the unchanged source-compatible fixture through the original published package exports. Full-project validation and fresh installation of all nine local package archives pass, including this isolated strict consumer and root/canonical helper identities. These checks do not publish a package.
 
-## Pending native evidence
+## Native evidence and remaining gates
 
 `ListItemIconContractExample` is available from the catalog Wrappers tab through Icon. It exposes stock/custom roots, live alignment and spacing/color changes, a persistent caller-owned count, existing dense menu content and guarded onLayout receipts. Its unit test checks update behavior and duplicate receipt handling, without claiming native measurements.
 
-Locally executable iOS/Android checks still need to measure reservation and flex-start offset, compare caller icon/text alignment, exercise native event dispatch/ref measurement, inspect accessibility ownership, and repeat under actual LTR/RTL and baseline/enlarged OS text profiles. Portal placement and an optimized mount/update workload require maintained native evidence. Physical VoiceOver/TalkBack traversal, representative hardware performance and physical keyboard behavior remain external gates.
+The maintained [iOS tests](../tests/native/ios/ListItemIconCatalogUITests.swift) pass stock/custom root measurements, theme reservation and flex-start changes, native ref identity and retained child state, and real dense-menu activation. Baseline and actual largest OS text runs pass; the latter reports native fontScale 3.571. Native vector dimensions remain authored units. Captures were visually reviewed. These assertions do not certify every accessibility event or screen-reader traversal.
+
+Direct Android wrapper checks, local RTL combinations, physical Portal styling and an optimized Icon mount/update workload remain open. Physical VoiceOver/TalkBack traversal, representative hardware performance and physical keyboard behavior remain external gates.
 
 No component, List/Menu family or package is marked 100% by this source/type increment.

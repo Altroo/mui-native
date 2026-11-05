@@ -3261,6 +3261,28 @@
       "adaptations": [
         "Original two-slot mergeable class interface and arbitrary utility lookup semantics, including inherited Object.prototype entries; utility implementations verified separately under the pinned MIT utils reference in upstream/list-item-icon.json. No unsupported class-helper deep export is added."
       ]
+    },
+    {
+      "localFile": "packages/material/src/menuItem.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+          "MenuItem/MenuItem.d.ts": "66cda9a9b310d97f3002ab34f3c76f05dcd7d3f84ea12a9fdfe54ec82217af1b",
+          "MenuItem/menuItemClasses.js": "3b748352c69c42d7c528d740c45ccef408e02df6a091e4dc13b75a556ba8b2b4",
+          "ListItemIcon/ListItemIcon.js": "a504165c16674bc925faecb4d2d2bbf9ad3f28f25e7f2cb0539417f9eea3e7bd",
+          "ListItemIcon/ListItemIcon.d.ts": "a123906a4c450f3dbb7d7233fed51b686baa11743082af151c0b7740e1106854",
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b"
+        }
+      },
+      "adaptations": [
+        "Original default icon reservation, dense SVG rem declaration and finite class/state descendant vocabulary. Native physical ownership and immutable prepared ancestor recollection are independently authored; source/default observations and separate gates are retained in upstream/menu-icon-cascade.json."
+      ]
     }
   ]
 }
