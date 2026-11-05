@@ -3181,6 +3181,34 @@
       "adaptations": [
         "The original published named unstable_createBreakpoints entry forwards to the same native helper without adding a default export."
       ]
+    },
+    {
+      "localFile": "packages/material/src/listItemAvatarClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+          "ListItemAvatar/ListItemAvatar.js": "2914dcf38c93a0577faf78664611c41ab613a324f2a158826b2b2ff35ac892c7",
+          "ListItemAvatar/ListItemAvatar.d.ts": "1c671fa97ad69902c110c7890527f5720a785a2e0b68efcb77c16f37d6274d67",
+          "ListItemAvatar/ListItemAvatar.d.mts": "9bbd46596e7bdf430ddd61954ddb903cfcde5e10683b9f449aaabdfa234cc0cf",
+          "ListItemAvatar/index.js": "09277444eff3c3b90887221eb5c14b53b62ef07e70225b8bcbe146a0924f8ecc",
+          "ListItemAvatar/index.d.ts": "907467198cc07e6eac62f7eb2bcc7afc31e3ee433ae60000eca62213de971e6d",
+          "ListItemAvatar/index.d.mts": "ae4834e1d6c7d5ee4a843af782a44888df6260afd1959effb6e20843312c6c28",
+          "ListItemAvatar/listItemAvatarClasses.js": "1b045eb8f9887f1bec6239ee6c912dfd39e5f412032237d224fa6e666085e648",
+          "ListItemAvatar/listItemAvatarClasses.d.ts": "334bc494ebf7f62684a30a916455dc63c6895784a74b07b835d28d0297785496",
+          "ListItemAvatar/listItemAvatarClasses.d.mts": "334bc494ebf7f62684a30a916455dc63c6895784a74b07b835d28d0297785496",
+          "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
+          "ListItem/ListItem.js": "37ebb4b8746f9c32a8576d0462501b01062a2b0c9212bf856e491155ebe8ac5c",
+          "ListItemButton/ListItemButton.js": "abededff4fe15c71fc8c1a268094c1809505adf2c0075cd981e39770f0d94f17"
+        }
+      },
+      "adaptations": [
+        "Original class interface, utility identifiers and vocabulary; native class metadata also participates in the existing finite root selector context. See upstream/list-item-avatar.json for the full wrapper reference and native adaptations."
+      ]
     }
   ]
 }

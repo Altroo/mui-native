@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// ListItemAvatar class/root composition adapts MIT Material UI 9.5.0; see NOTICE and upstream/list-item-avatar.json.
 import React, { forwardRef, useContext, useMemo } from 'react';
 import {
   View,
@@ -18,14 +20,20 @@ import {
   type NativeStyle,
   type SxProps,
   diagnostic,
+  joinClassNames,
+  applyNativeTextMetrics,
+  nativeStyleTextMetrics,
 } from '@altroo/mui-native-system';
-import { useTheme, useComponentStyle } from './themeProvider';
+import { useTheme, useComponentStyle, useComponentRootStyle } from './themeProvider';
 import { ListContext } from './listContext';
 import { nativeListProps, listDirection } from './listStyles';
+import { mergeNativeRootStyle } from './nativeControlStyles';
+import { getListItemAvatarUtilityClass, type ListItemAvatarClasses } from './listItemAvatarClasses';
+export * from './listItemAvatarClasses';
 export interface NativeListRootProps extends Omit<ViewProps, 'style'> {
-  style?: StyleProp<NativeStyle>;
-  sx?: SxProps;
-  ref?: React.Ref<ViewInstance>;
+  style?: StyleProp<NativeStyle> | undefined;
+  sx?: SxProps | undefined;
+  ref?: React.Ref<ViewInstance> | undefined;
 }
 export type NativeListComponent = React.ComponentType<NativeListRootProps>;
 export interface ListOwnProps {
@@ -43,8 +51,13 @@ export interface ListItemIconProps extends NativeListRootProps {
   component?: NativeListComponent;
 }
 export type ListItemIconOwnProps = ListItemIconProps;
-export interface ListItemAvatarProps extends NativeListRootProps {
-  component?: NativeListComponent;
+/** Native custom roots receive computed class metadata, never CSS styling internals. */
+export interface ListItemAvatarRootProps extends NativeListRootProps {
+  className?: string | undefined;
+}
+export interface ListItemAvatarProps extends ListItemAvatarRootProps {
+  classes?: Partial<ListItemAvatarClasses> | undefined;
+  component?: React.ComponentType<ListItemAvatarRootProps> | undefined;
 }
 export type ListItemAvatarOwnProps = ListItemAvatarProps;
 export interface ListSubheaderOwnProps {
@@ -192,17 +205,17 @@ export const List: React.ForwardRefExoticComponent<
     </ListContext.Provider>
   );
 });
-function useAccessory(name: string, props: NativeListRootProps, icon: boolean) {
+function useIconAccessory(props: NativeListRootProps) {
   const { alignItems, menuItem, dense } = useContext(ListContext),
     theme = useTheme(),
     parent = useNativeTextContext();
-  const resolved = useComponentStyle(name, { ...props, alignItems }, props.sx, {
+  const resolved = useComponentStyle('MuiListItemIcon', { ...props, alignItems }, props.sx, {
     ...nativeTextStyleContext(parent, props.style, theme),
     overrideKeys: alignItems === 'flex-start' ? ['alignItemsFlexStart'] : [],
     baseStyle: {
-      minWidth: icon ? (menuItem ? 36 : theme.spacing(4.5)) : 56,
+      minWidth: menuItem ? 36 : theme.spacing(4.5),
       flexShrink: 0,
-      ...(icon ? { color: theme.palette.action.active } : {}),
+      color: theme.palette.action.active,
       ...(alignItems === 'flex-start' ? { marginTop: 8 } : {}),
     },
   });
@@ -214,7 +227,7 @@ export const ListItemIcon: React.ForwardRefExoticComponent<
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const props = useDefaultProps({ props: inProps, name: 'MuiListItemIcon' });
   const { component: Root = View, children, style, sx, ...native } = props;
-  const { theme, resolved, menuItem, dense } = useAccessory('MuiListItemIcon', props, true);
+  const { theme, resolved, menuItem, dense } = useIconAccessory(props);
   const inheritedIcon = useContext(NativeIconStyleContext);
   const iconScope = useMemo(
     () => (menuItem && dense ? { ...inheritedIcon, fontSize: 20 } : inheritedIcon),
@@ -242,12 +255,59 @@ export const ListItemAvatar: React.ForwardRefExoticComponent<
 > = forwardRef<ViewInstance, ListItemAvatarProps>(function ListItemAvatar(inProps, ref) {
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const props = useDefaultProps({ props: inProps, name: 'MuiListItemAvatar' });
-  const { component: Root = View, children, style, sx, ...native } = props;
-  const { theme, resolved } = useAccessory('MuiListItemAvatar', props, false);
+  const { component: Root = View, children, style, sx, classes, className, ...native } = props;
+  const { alignItems, direction } = useContext(ListContext);
+  const parent = useNativeTextContext(),
+    theme = useTheme();
+  const token = (slot: keyof ListItemAvatarClasses) => {
+    let value = getListItemAvatarUtilityClass(slot);
+    // Source composeClasses reads an active map entry for truthiness, then append.
+    if (classes && classes[slot]) value += ' ' + classes[slot];
+    return value;
+  };
+  const rootClass = joinClassNames(
+    token('root'),
+    alignItems === 'flex-start' && token('alignItemsFlexStart'),
+    className,
+  );
+  const { computed: resolved, authored } = useComponentRootStyle(
+    'MuiListItemAvatar',
+    { ...props, alignItems },
+    sx,
+    style,
+    {
+      ...nativeTextStyleContext(parent, style, theme),
+      overrideKeys: alignItems === 'flex-start' ? ['alignItemsFlexStart'] : [],
+      baseStyle: {
+        minWidth: 56,
+        flexShrink: 0,
+        ...(alignItems === 'flex-start' ? { marginTop: 8 } : {}),
+      },
+      classes: rootClass.split(/\s+/).filter(Boolean),
+      rootProps: {
+        ...props,
+        ...(props.component ? { as: props.component } : {}),
+        className: rootClass,
+      },
+    },
+  );
+  const merged = mergeNativeRootStyle(
+    parent?.direction ?? direction ?? theme.direction,
+    resolved,
+    authored,
+  );
+  const computed =
+    applyNativeTextMetrics(merged, resolved, nativeStyleTextMetrics([resolved, authored])) ??
+    merged;
   return (
-    <NativeTextScope rootRef={scopeRoot} theme={theme} style={[resolved, style]} content={children}>
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={computed} content={children}>
       {(style, content) => (
-        <Root {...nativeListProps(native)} ref={scopeRef} style={style}>
+        <Root
+          {...native}
+          {...(Root === View ? {} : { className: rootClass })}
+          ref={scopeRef}
+          style={style}
+        >
           {content}
         </Root>
       )}
