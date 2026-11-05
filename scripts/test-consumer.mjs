@@ -188,6 +188,27 @@ execFileSync(
   { cwd: consumer, stdio: 'inherit' },
 );
 console.log('Installed strict optional Group, RTL and DefaultProps provider contracts passed.');
+// This helper fixture disables different breakpoint keys from the ordinary
+// consumer. Compile it separately so their module augmentations cannot leak.
+await cp('fixtures/helper-contract-consumer/consumer.ts', `${consumer}/helper-contract.ts`);
+await writeFile(
+  `${consumer}/tsconfig.helper-contract.native.json`,
+  JSON.stringify(
+    {
+      extends: './tsconfig.native.json',
+      compilerOptions: { exactOptionalPropertyTypes: true },
+      include: ['helper-contract.ts'],
+    },
+    null,
+    2,
+  ),
+);
+execFileSync(
+  resolve(consumer, 'node_modules/.bin/tsc'),
+  ['--project', 'tsconfig.helper-contract.native.json', '--noEmit'],
+  { cwd: consumer, stdio: 'inherit' },
+);
+console.log('Installed strict spacing/breakpoint helper contracts passed independently.');
 execFileSync(process.execPath, ['scripts/check-consumer-default-props.cjs', consumer], {
   stdio: 'inherit',
 });
