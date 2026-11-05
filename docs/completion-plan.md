@@ -1,8 +1,8 @@
 # Completion plan for existing modules
 
-The current priority is to finish existing implementations before starting another component. This audit is based on main commit `1bf9bec` and the source, type fixtures and guides available on 5 November 2026.
+The current priority is to finish existing implementations before starting another component. This audit is based on the source, type fixtures and guides available on 5 November 2026, including the merged direction/text work at `dfe9130`.
 
-There are **60 rows at 50% or 75%**: 51 Material entries, eight System/styling entries and the native rendering foundation. There are also **28 rows at 25%**: 14 Material entries, nine Community X entries, four existing glyphs and the cross-cutting native validation matrix. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
+There are **59 rows at 50% or 75%**: 51 Material entries, seven System/styling entries and the native rendering foundation. The renderless RtlProvider module is complete within its [finite native context contract](rtl-provider.md). There are also **28 rows at 25%**: 14 Material entries, nine Community X entries, four existing glyphs and the cross-cutting native validation matrix. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
 
 ## Completion rules
 
@@ -10,9 +10,9 @@ For each family, make the agreed native contract finite: list every eligible pro
 
 Keep three independent checklists: implementation gaps, locally executable verification, and external device/release verification. Missing software behavior must be implemented now. Native emulator tests, accessibility-tree assertions, RTL/large-font checks and release-build benchmarks are local work when the available tools support them. Physical keyboard, IME and screen-reader usability evidence stays explicitly unverified until exercised; it must not conceal an implementation gap or be silently marked complete.
 
-Finish the selected family's implementation and local checks before moving to another family. Only a required dependency can interrupt that order, and its exit conditions must be explicit. Do not promote a row merely because it was rendered indirectly by a later component. Do not add a new zero-percent component to avoid completing an existing dependency.
+Finish each selected family's implementation and local checks within its workstream before moving that workstream to another family. Independent modules may proceed in parallel with isolated source changes and independent review; a required dependency must have explicit exit conditions. Do not promote a row merely because it was rendered indirectly by a later component. Do not add a new zero-percent component to avoid completing an existing dependency.
 
-## Active closure: ButtonGroup and required existing styling
+## Retained closure gates: ButtonGroup and required existing styling
 
 | Contract                        | Concrete work                                                                                                                                                                                                       | Current state                                                                                                                                          |
 | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -26,24 +26,24 @@ Finish the selected family's implementation and local checks before moving to an
 
 ## Ordered completion queue
 
-The queue follows dependencies, not the old percentage alone. Current ButtonGroup closure remains first; existing foundations are completed as required dependencies.
+The immediate parallel priorities are the full pinned icon catalog and small existing provider modules, completing each finite contract before its workstream advances. The queue below retains the larger dependency order. ButtonGroup enlarged-text, shared styling-cache and optimized-build gates remain open; they are not discarded by completing an independent renderless provider or icon catalog.
 
-| Order | Existing family                                                                                              | Concrete exit work                                                                                                                                                                                            |
-| ----- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1     | ButtonGroup; shared shadow/focus/variant support                                                             | Close every active contract above, reconcile native/root/Portal behavior, then run strict packed consumers and both native scenarios.                                                                         |
-| 2     | Defaults/providers, spacing/breakpoints, typography; Box/Paper dependencies                                  | Audit all exported/inherited types and defaults, define native styling boundaries, finish missing utilities and text reset/font policy, then verify responsive/direction/text geometry.                       |
-| 3     | ButtonBase, Button, IconButton                                                                               | Finish inherited/native root contracts, action/focus refs, opt-in focus drawing, feedback/ripple policy, links and disabled/loading/keyboard combinations with direct family scenarios.                       |
-| 4     | SvgIcon and the four existing glyphs                                                                         | Finish renderer/type/child contracts and fill-transition/native rendering policy; validate existing artwork and imports. Do not expand the unimplemented artwork catalog first.                               |
-| 5     | Checkbox, Radio, RadioGroup, FormGroup, FormControlLabel, Switch and Chip                                    | Finish event/label/group/slot contracts, explicit form/native adaptations, Switch motion/drag policy and direct Chip state combinations; verify native interaction and geometry.                              |
-| 6     | Fade, Grow, Collapse and Accordion family                                                                    | Finish transition interoperability, interruptions/custom children and geometry; then sibling grouping, panel rounding/margins and expand-icon motion with the existing Paper dependency.                      |
-| 7     | Inputs, form labels/helpers and TextField                                                                    | Complete inherited/slot/label/adornment contracts and native geometry; diagnose intermittent input omissions and retained activation/deletion failures rather than accepting retries as fixes.                |
-| 8     | Portal, Popper, Modal, Backdrop, Dialog, Popover, Menu, Lists/MenuList, Select/NativeSelect and Autocomplete | Finish physical ownership, focus/scroll/stack restoration, inherited/custom-slot contracts, direct list/picker/combobox matrices and local release benchmark tooling/repeatability.                           |
-| 9     | Remaining existing Material prototypes                                                                       | Complete the existing card/layout, dialog-content/action and feedback APIs with reference, consumer and native coverage.                                                                                      |
-| 10    | Existing Community X prototypes                                                                              | Complete the eligible existing Tree View, picker, chart and grid contracts in that dependency order, including accessibility, data/identity and release workloads. No Pro/Premium source or paid-only parity. |
+| Order | Existing family                                                                                              | Concrete exit work                                                                                                                                                                                                                                           |
+| ----- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1     | ButtonGroup; shared shadow/focus/variant support                                                             | Close every active contract above, reconcile native/root/Portal behavior, then run strict packed consumers and both native scenarios.                                                                                                                        |
+| 2     | Defaults/providers, spacing/breakpoints, typography; Box/Paper dependencies                                  | Audit all exported/inherited types and defaults, define native styling boundaries, finish missing utilities and text reset/font policy, then verify responsive/direction/text geometry.                                                                      |
+| 3     | ButtonBase, Button, IconButton                                                                               | Finish inherited/native root contracts, action/focus refs, opt-in focus drawing, feedback/ripple policy, links and disabled/loading/keyboard combinations with direct family scenarios.                                                                      |
+| 4     | SvgIcon and the complete pinned icon catalog                                                                 | Deliver every pinned icon name and artwork with reproducible generation, licenses, import/type coverage and bounded import costs. Complete renderer/type/child contracts and fill-transition/native rendering policy, then validate actual native rendering. |
+| 5     | Checkbox, Radio, RadioGroup, FormGroup, FormControlLabel, Switch and Chip                                    | Finish event/label/group/slot contracts, explicit form/native adaptations, Switch motion/drag policy and direct Chip state combinations; verify native interaction and geometry.                                                                             |
+| 6     | Fade, Grow, Collapse and Accordion family                                                                    | Finish transition interoperability, interruptions/custom children and geometry; then sibling grouping, panel rounding/margins and expand-icon motion with the existing Paper dependency.                                                                     |
+| 7     | Inputs, form labels/helpers and TextField                                                                    | Complete inherited/slot/label/adornment contracts and native geometry; diagnose intermittent input omissions and retained activation/deletion failures rather than accepting retries as fixes.                                                               |
+| 8     | Portal, Popper, Modal, Backdrop, Dialog, Popover, Menu, Lists/MenuList, Select/NativeSelect and Autocomplete | Finish physical ownership, focus/scroll/stack restoration, inherited/custom-slot contracts, direct list/picker/combobox matrices and local release benchmark tooling/repeatability.                                                                          |
+| 9     | Remaining existing Material prototypes                                                                       | Complete the existing card/layout, dialog-content/action and feedback APIs with reference, consumer and native coverage.                                                                                                                                     |
+| 10    | Existing Community X prototypes                                                                              | Complete the eligible existing Tree View, picker, chart and grid contracts in that dependency order, including accessibility, data/identity and release workloads. No Pro/Premium source or paid-only parity.                                                |
 
 ## All existing partial rows
 
-The entries below exhaust the 88 current partial status rows. Material and System DefaultPropsProvider are separate package entries; foundation rows are cross-cutting work rather than extra components. Each linked guide is evidence and a starting point for the finite contract audit, not proof that every inherited API is complete.
+The entries below enumerate the 87 current partial status rows and the separately completed RtlProvider entry. Material and System DefaultPropsProvider are separate package entries; foundation rows are cross-cutting work rather than extra components. Each linked guide is evidence and a starting point for the finite contract audit, not proof that every inherited API is complete.
 
 ### Foundations
 
@@ -124,16 +124,16 @@ The entries below exhaust the 88 current partial status rows. Material and Syste
 
 ### System and styling: 9 top-level modules plus core styling work
 
-| Existing entry            | Current evidence stage | Guide                                                  |
-| ------------------------- | ---------------------: | ------------------------------------------------------ |
-| DefaultPropsProvider      |                    50% | [Scope and remaining work](../docs/theme-providers.md) |
-| RtlProvider               |                    50% | [Scope and remaining work](../docs/theme-providers.md) |
-| ThemeProvider             |                    50% | [Scope and remaining work](../docs/theme-providers.md) |
-| createTheme / palette     |                    50% | [Scope and remaining work](../docs/theming.md)         |
-| Typography theming        |                    50% | [Scope and remaining work](../docs/typography.md)      |
-| Spacing / breakpoints     |                    50% | [Scope and remaining work](../docs/layout-system.md)   |
-| sx evaluation             |                    50% | [Scope and remaining work](../docs/compatibility.md)   |
-| styled / defaults / slots |                    50% | [Scope and remaining work](../docs/default-props.md)   |
+| Existing entry            | Current evidence stage | Guide                                                       |
+| ------------------------- | ---------------------: | ----------------------------------------------------------- |
+| DefaultPropsProvider      |                    50% | [Scope and remaining work](../docs/theme-providers.md)      |
+| RtlProvider               |                   100% | [Complete native context contract](../docs/rtl-provider.md) |
+| ThemeProvider             |                    50% | [Scope and remaining work](../docs/theme-providers.md)      |
+| createTheme / palette     |                    50% | [Scope and remaining work](../docs/theming.md)              |
+| Typography theming        |                    50% | [Scope and remaining work](../docs/typography.md)           |
+| Spacing / breakpoints     |                    50% | [Scope and remaining work](../docs/layout-system.md)        |
+| sx evaluation             |                    50% | [Scope and remaining work](../docs/compatibility.md)        |
+| styled / defaults / slots |                    50% | [Scope and remaining work](../docs/default-props.md)        |
 
 ### Community Data Grid: 1 top-level public module
 
