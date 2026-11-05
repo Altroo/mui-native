@@ -40,7 +40,12 @@ final class LayoutRootPerformanceUITests: XCTestCase {
     }
     guard tab.exists && tab.isHittable else { throw Refusal.invalid("Wrappers tab is not reachable") }
     tab.tap()
-    guard node("root-layout-benchmark").waitForExistence(timeout: 10), node("root-layout-benchmark").isHittable else { throw Refusal.invalid("Benchmark route is not registered/visible") }
+    guard node("root-layout-benchmark").waitForExistence(timeout: 10) else { throw Refusal.invalid("Benchmark route is not registered") }
+    for _ in 0..<12 {
+      if node("root-layout-benchmark").isHittable { break }
+      node("root-layout-navigation").swipeLeft()
+    }
+    guard node("root-layout-benchmark").isHittable else { throw Refusal.invalid("Benchmark route is not visible") }
     node("root-layout-benchmark").tap()
     try waitFor("Benchmark controller is missing") { self.json(self.node("layout-root-controller-receipt")) != nil }
   }

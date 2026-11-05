@@ -6,10 +6,14 @@ import { FormGroupContractExample } from './FormGroupContractExample';
 import { ListItemAvatarContractExample } from './ListItemAvatarContractExample';
 import { LayoutRootBenchmarkExample } from './LayoutRootBenchmarkExample';
 import { ListItemIconContractExample } from './ListItemIconContractExample';
+import { AccordionDetailsContractExample } from './AccordionDetailsContractExample';
+import { MenuIconCascadeExample } from './MenuIconCascadeExample';
 
 /** Keep each measured example mounted while its own controls update the root. */
 export function RootLayoutExamples() {
-  const [example, setExample] = useState<'group' | 'avatar' | 'icon' | 'benchmark'>('group');
+  const [example, setExample] = useState<
+    'group' | 'avatar' | 'icon' | 'details' | 'menu-styles' | 'benchmark'
+  >('group');
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -46,6 +50,22 @@ export function RootLayoutExamples() {
         </Button>
         <Button
           style={{ maxWidth: '100%' }}
+          testID="root-layout-details"
+          variant={example === 'details' ? 'contained' : 'outlined'}
+          onClick={() => setExample('details')}
+        >
+          Details
+        </Button>
+        <Button
+          style={{ maxWidth: '100%' }}
+          testID="root-layout-menu-styles"
+          variant={example === 'menu-styles' ? 'contained' : 'outlined'}
+          onClick={() => setExample('menu-styles')}
+        >
+          Menu
+        </Button>
+        <Button
+          style={{ maxWidth: '100%' }}
           testID="root-layout-benchmark"
           variant={example === 'benchmark' ? 'contained' : 'outlined'}
           onClick={() => setExample('benchmark')}
@@ -65,8 +85,12 @@ export function RootLayoutExamples() {
             <FormGroupContractExample />
           ) : example === 'avatar' ? (
             <ListItemAvatarContractExample />
-          ) : (
+          ) : example === 'icon' ? (
             <ListItemIconContractExample />
+          ) : example === 'details' ? (
+            <AccordionDetailsContractExample />
+          ) : (
+            <MenuIconCascadeExample />
           )}
         </ScrollView>
       )}
