@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "bdc1d2c846733763c936d8b3fb098e67daaa3a249168f3e9b1624ee6bb8049fc",
+  "nativeSourceSha256": "a97ad497249b471b26bd2fc6d056594df4d479d464212a5dfd4aea184af671d1",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7015,7 +7015,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 376
+          "line": 475
         }
       ]
     },
@@ -7466,7 +7466,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "resolveSx",
           "kind": "value",
-          "line": 369
+          "line": 424
         }
       ]
     },
@@ -18190,13 +18190,57 @@
           "type": "Record<string, unknown>"
         },
         {
+          "name": "descendantClasses",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "descendantClasses?: readonly string[];",
+          "line": 26,
+          "kind": "property",
+          "type": "readonly string[]"
+        },
+        {
+          "name": "descendantOnly",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "descendantOnly?: boolean;",
+          "line": 28,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: readonly string[];",
+          "line": 30,
+          "kind": "property",
+          "type": "readonly string[]"
+        },
+        {
+          "name": "ancestors",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ancestors?: readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n  }[];",
+          "line": 32,
+          "kind": "property",
+          "type": "readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n  }[]"
+        },
+        {
           "name": "logicalInsets",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };",
-          "line": 25,
+          "line": 39,
           "kind": "property",
           "type": "{ parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' }"
         },
@@ -18207,7 +18251,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection: 'ltr' | 'rtl';",
-          "line": 25,
+          "line": 39,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -18218,7 +18262,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | 'inherit'",
-          "line": 25,
+          "line": 39,
           "kind": "property",
           "type": "'ltr' | 'rtl' | 'inherit'"
         },
@@ -18229,15 +18273,18 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode?: 'sx' | 'css';",
-          "line": 26,
+          "line": 40,
           "kind": "property",
           "type": "'sx' | 'css'"
         }
       ],
       "references": [
         "NativeTextContext",
+        "Omit",
         "Record",
-        "SxProps"
+        "StyleContext",
+        "SxProps",
+        "Theme"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native-system"
@@ -18245,7 +18292,7 @@
     {
       "name": "StyleRule",
       "file": "src/sx.ts",
-      "line": 137,
+      "line": 151,
       "kind": "type",
       "members": [
         {
@@ -18255,7 +18302,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style: Record<string, unknown>;",
-          "line": 137,
+          "line": 151,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -18266,7 +18313,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "specificity: number",
-          "line": 137,
+          "line": 151,
           "kind": "property",
           "type": "number"
         }
@@ -18280,7 +18327,7 @@
     {
       "name": "StyleNode",
       "file": "src/sx.ts",
-      "line": 138,
+      "line": 152,
       "kind": "type",
       "members": [
         {
@@ -18290,7 +18337,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "base: Record<string, unknown>;",
-          "line": 139,
+          "line": 153,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -18301,7 +18348,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "conditions?: Map<string, StyleNode[] | undefined>;",
-          "line": 140,
+          "line": 154,
           "kind": "property",
           "type": "Map<string, StyleNode[] | undefined>"
         }

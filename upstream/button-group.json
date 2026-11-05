@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "description": "Pinned MIT ButtonGroup/context/class reference; browser observations do not promote native compatibility.",
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "ButtonGroup/ButtonGroup.js": "d1bc4fd08001d1d0513576e5b79cf72509bbac3eacd9530d83c253191c668289",
+      "ButtonGroup/ButtonGroup.d.ts": "0e974dacd2db2d61518aa2b96e39cda96fe082f297f1648ac92aa06d22f652e6",
+      "ButtonGroup/index.js": "b26c82f7c7314b07125840373590ef9e91c984d42a16af7e1beb91d4d98a84a9",
+      "ButtonGroup/index.d.ts": "7f7b3faa89da29e2f52f73f7f2dd37b40c7d1e6dd8b820be1f9603bbd37080a0",
+      "ButtonGroup/buttonGroupClasses.js": "a545dcdcf209913545f58091e5c8b7fd83c52a33ec11200bd6364b5588b8bbd5",
+      "ButtonGroup/buttonGroupClasses.d.ts": "cbdddc0b90e7a0255522bc377771bf00f56ff71cec6088b29bfa914fa1238e0a",
+      "ButtonGroup/ButtonGroupContext.js": "09a91cd768cb020a77f54eb9bed92a0c921c3b40d854501c091ed3a6fefc8f10",
+      "ButtonGroup/ButtonGroupContext.d.ts": "aa29bfc666c850f62d2d0b1bb1efd7a56074a96b309667e0de5e0f6c9a893957",
+      "ButtonGroup/ButtonGroupButtonContext.js": "a4be4c1b3ec117f4b43d13f9bc6216041d9f3a8be42fec6047766fd41cb36a09",
+      "ButtonGroup/ButtonGroupButtonContext.d.ts": "218daa4b2d1f8f6d3c4f022acce45b10b65d04086a1ab74ea7a135814521627d",
+      "Button/Button.js": "ff23554ae2eac98863f24c29ec04ab07c7903bc489ffbaf81a31f5979149a515",
+      "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b"
+    }
+  },
+  "cachePolicy": "fresh Emotion cache per independently mounted case",
+  "localFiles": [
+    "packages/material/src/buttonGroup.tsx",
+    "packages/material/src/buttonGroupTypes.ts",
+    "packages/material/src/buttonGroupClasses.ts",
+    "packages/material/src/buttonGroupContext.ts"
+  ],
+  "adaptations": [
+    "Native layout and scoped descendant styles replace DOM/CSS grouping. Context defaults and button positions retain original priority.",
+    "Native Views and button hosts replace DOM roots. Physical accessibility and release performance remain separate gates."
+  ]
+}

@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "a7500c324e8a06d9402c64614dea7f7db856a13d4f43a306fdb2f89b7a9d978f",
+  "nativeSourceSha256": "13792e16ab02c04c38aae1caecd62bb7fb6b85e943016456602ec46bfbf3ed2d",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -2815,7 +2815,7 @@
           "file": "ButtonGroup/index.d.mts"
         }
       ],
-      "native": "not-mapped"
+      "native": "mapped-unverified"
     },
     {
       "path": "@mui/material/Card",
@@ -10864,7 +10864,7 @@
           "line": 87
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10883,7 +10883,7 @@
           "line": 5
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10902,7 +10902,7 @@
           "line": 35
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10921,7 +10921,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10940,7 +10940,7 @@
           "line": 33
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10959,7 +10959,7 @@
           "line": 17
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10978,7 +10978,7 @@
           "line": 10
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10997,7 +10997,7 @@
           "line": 88
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11016,7 +11016,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11035,7 +11035,7 @@
           "line": 9
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11054,7 +11054,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11073,7 +11073,7 @@
           "line": 72
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17039,7 +17039,7 @@
           "line": 34
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35311,6 +35311,28 @@
       ]
     },
     {
+      "name": "ButtonGroupNativeRootProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/buttonGroupTypes.ts",
+          "name": "ButtonGroupNativeRootProps",
+          "kind": "type",
+          "line": 81
+        }
+      ]
+    },
+    {
+      "name": "ButtonGroupOwnerState",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/buttonGroupTypes.ts",
+          "name": "ButtonGroupOwnerState",
+          "kind": "type",
+          "line": 69
+        }
+      ]
+    },
+    {
       "name": "CheckChangeEvent",
       "origins": [
         {
@@ -35372,7 +35394,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 376
+          "line": 475
         }
       ]
     },
@@ -35901,6 +35923,17 @@
           "name": "NativeButtonComponent",
           "kind": "type",
           "line": 70
+        }
+      ]
+    },
+    {
+      "name": "NativeButtonGroupComponent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/buttonGroupTypes.ts",
+          "name": "NativeButtonGroupComponent",
+          "kind": "type",
+          "line": 64
         }
       ]
     },
@@ -36846,7 +36879,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "resolveSx",
           "kind": "value",
-          "line": 369
+          "line": 424
         }
       ]
     },
@@ -54835,7 +54868,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupPropsColorOverrides",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupPropsVariantOverrides",
@@ -54845,7 +54885,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupPropsVariantOverrides",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupPropsSizeOverrides",
@@ -54855,7 +54902,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupPropsSizeOverrides",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 9,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupOwnProps",
@@ -54873,7 +54927,7 @@
           "line": 14,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54886,7 +54940,7 @@
           "line": 18,
           "kind": "property",
           "type": "Partial<ButtonGroupClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54899,7 +54953,7 @@
           "line": 25,
           "kind": "property",
           "type": "OverridableStringUnion<'inherit' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning', ButtonGroupPropsColorOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54912,7 +54966,7 @@
           "line": 30,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54925,7 +54979,7 @@
           "line": 35,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54938,7 +54992,7 @@
           "line": 40,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54951,7 +55005,7 @@
           "line": 45,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54964,7 +55018,7 @@
           "line": 50,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54977,7 +55031,7 @@
           "line": 55,
           "kind": "property",
           "type": "'vertical' | 'horizontal' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54990,7 +55044,7 @@
           "line": 61,
           "kind": "property",
           "type": "OverridableStringUnion<'small' | 'medium' | 'large', ButtonGroupPropsSizeOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55003,7 +55057,7 @@
           "line": 66,
           "kind": "property",
           "type": "OverridableStringUnion<'text' | 'outlined' | 'contained', ButtonGroupPropsVariantOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55016,7 +55070,7 @@
           "line": 70,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -55032,7 +55086,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupOwnProps",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 23,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "ButtonGroupProps",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 57,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupTypeMap",
@@ -55050,7 +55117,7 @@
           "line": 73,
           "kind": "property",
           "type": "AdditionalProps & ButtonGroupOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55063,7 +55130,7 @@
           "line": 74,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -55074,7 +55141,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupTypeMap",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 50,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupProps",
@@ -55104,7 +55178,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupProps",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 57,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupPropsColorOverrides",
@@ -55114,7 +55195,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupPropsColorOverrides",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupPropsVariantOverrides",
@@ -55124,7 +55212,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupPropsVariantOverrides",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupPropsSizeOverrides",
@@ -55134,7 +55229,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupPropsSizeOverrides",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 9,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupOwnProps",
@@ -55152,7 +55254,7 @@
           "line": 14,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55165,7 +55267,7 @@
           "line": 18,
           "kind": "property",
           "type": "Partial<ButtonGroupClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55178,7 +55280,7 @@
           "line": 25,
           "kind": "property",
           "type": "OverridableStringUnion<'inherit' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning', ButtonGroupPropsColorOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55191,7 +55293,7 @@
           "line": 30,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55204,7 +55306,7 @@
           "line": 35,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55217,7 +55319,7 @@
           "line": 40,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55230,7 +55332,7 @@
           "line": 45,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55243,7 +55345,7 @@
           "line": 50,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55256,7 +55358,7 @@
           "line": 55,
           "kind": "property",
           "type": "'vertical' | 'horizontal' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55269,7 +55371,7 @@
           "line": 61,
           "kind": "property",
           "type": "OverridableStringUnion<'small' | 'medium' | 'large', ButtonGroupPropsSizeOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55282,7 +55384,7 @@
           "line": 66,
           "kind": "property",
           "type": "OverridableStringUnion<'text' | 'outlined' | 'contained', ButtonGroupPropsVariantOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55295,7 +55397,7 @@
           "line": 70,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -55311,7 +55413,20 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupOwnProps",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 23,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "ButtonGroupProps",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 57,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupTypeMap",
@@ -55329,7 +55444,7 @@
           "line": 73,
           "kind": "property",
           "type": "AdditionalProps & ButtonGroupOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -55342,7 +55457,7 @@
           "line": 74,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -55353,7 +55468,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupTypeMap",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 50,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupProps",
@@ -55383,7 +55505,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupProps",
+          "file": "src/buttonGroupTypes.ts",
+          "line": 57,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupContextType",
@@ -55849,7 +55978,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupClasses",
+          "file": "src/buttonGroupClasses.ts",
+          "line": 22,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupClassKey",
@@ -55861,7 +55997,14 @@
         "ButtonGroupClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupClassKey",
+          "file": "src/buttonGroupClasses.ts",
+          "line": 21,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupClasses",
@@ -56067,7 +56210,14 @@
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupClasses",
+          "file": "src/buttonGroupClasses.ts",
+          "line": 22,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonGroupClassKey",
@@ -56079,7 +56229,14 @@
         "ButtonGroupClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonGroupClassKey",
+          "file": "src/buttonGroupClasses.ts",
+          "line": 21,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CardPropsColorOverrides",
@@ -184476,6 +184633,582 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "ButtonGroupClassKey",
+      "file": "src/buttonGroupClasses.ts",
+      "line": 21,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonGroupClasses",
+      "file": "src/buttonGroupClasses.ts",
+      "line": 22,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ButtonGroupClassKey",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonGroupContextValue",
+      "file": "src/buttonGroupContext.ts",
+      "line": 7,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ButtonGroupOwnProps",
+        "Pick"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeButtonGroupRule",
+      "file": "src/buttonGroupContext.ts",
+      "line": 26,
+      "kind": "type",
+      "members": [
+        {
+          "name": "cascade",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "cascade: (classes: readonly string[]) => NonNullable<StyleContext['ancestors']>[number];",
+          "line": 27,
+          "kind": "property",
+          "type": "(classes: readonly string[]) => NonNullable<StyleContext['ancestors']>[number]"
+        }
+      ],
+      "references": [
+        "NonNullable",
+        "StyleContext"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonGroupPropsColorOverrides",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 8,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonGroupPropsSizeOverrides",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 9,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonGroupPropsVariantOverrides",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Union",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 11,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Base",
+        "Extract",
+        "K",
+        "Omit",
+        "Overrides",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonGroupOwnProps",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 23,
+      "kind": "type",
+      "members": [
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 24,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<ButtonGroupClasses>;",
+          "line": 25,
+          "kind": "property",
+          "type": "Partial<ButtonGroupClasses>"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string;",
+          "line": 26,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "color",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "color?: Union<\n    'inherit' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',\n    ButtonGroupPropsColorOverrides\n  >;",
+          "line": 27,
+          "kind": "property",
+          "type": "Union<\n    'inherit' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',\n    ButtonGroupPropsColorOverrides\n  >"
+        },
+        {
+          "name": "size",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "size?: Union<'small' | 'medium' | 'large', ButtonGroupPropsSizeOverrides>;",
+          "line": 31,
+          "kind": "property",
+          "type": "Union<'small' | 'medium' | 'large', ButtonGroupPropsSizeOverrides>"
+        },
+        {
+          "name": "variant",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant?: Union<'text' | 'outlined' | 'contained', ButtonGroupPropsVariantOverrides>;",
+          "line": 32,
+          "kind": "property",
+          "type": "Union<'text' | 'outlined' | 'contained', ButtonGroupPropsVariantOverrides>"
+        },
+        {
+          "name": "disabled",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disabled?: boolean;",
+          "line": 33,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableElevation",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableElevation?: boolean;",
+          "line": 34,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableFocusRipple",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableFocusRipple?: boolean;",
+          "line": 35,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableRipple",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableRipple?: boolean;",
+          "line": 36,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "fullWidth",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "fullWidth?: boolean;",
+          "line": 37,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "orientation",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "orientation?: 'horizontal' | 'vertical';",
+          "line": 38,
+          "kind": "property",
+          "type": "'horizontal' | 'vertical'"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps;",
+          "line": 39,
+          "kind": "property",
+          "type": "SxProps"
+        },
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: StyleProp<NativeStyle>;",
+          "line": 40,
+          "kind": "property",
+          "type": "StyleProp<NativeStyle>"
+        },
+        {
+          "name": "id",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "id?: string;",
+          "line": 41,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "data-testid",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "'data-testid'?: string;",
+          "line": 42,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "ButtonGroupClasses",
+        "ButtonGroupPropsColorOverrides",
+        "ButtonGroupPropsSizeOverrides",
+        "ButtonGroupPropsVariantOverrides",
+        "NativeStyle",
+        "Partial",
+        "React.ReactNode",
+        "StyleProp",
+        "SxProps",
+        "Union"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Root",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 44,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RootProps",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 45,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "R",
+        "React.ComponentPropsWithRef",
+        "React.ComponentType",
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonGroupTypeMap",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 50,
+      "kind": "type",
+      "members": [
+        {
+          "name": "props",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "props: AdditionalProps & ButtonGroupOwnProps;",
+          "line": 54,
+          "kind": "property",
+          "type": "AdditionalProps & ButtonGroupOwnProps"
+        },
+        {
+          "name": "defaultComponent",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultComponent: RootComponent;",
+          "line": 55,
+          "kind": "property",
+          "type": "RootComponent"
+        }
+      ],
+      "references": [
+        "AdditionalProps",
+        "ButtonGroupOwnProps",
+        "Root",
+        "RootComponent"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonGroupProps",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 57,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AdditionalProps",
+        "ButtonGroupOwnProps",
+        "Omit",
+        "R",
+        "Root",
+        "RootProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeButtonGroupComponent",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 64,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<R extends Root>(props: ButtonGroupProps<R> & { component: R }): React.ReactNode;",
+          "line": 65,
+          "kind": "signature",
+          "type": "<R extends Root>(props: ButtonGroupProps<R> & { component: R }): React.ReactNode;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: ButtonGroupProps): React.ReactNode;",
+          "line": 66,
+          "kind": "signature",
+          "type": "(props: ButtonGroupProps): React.ReactNode;"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string;",
+          "line": 67,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "ButtonGroupProps",
+        "R",
+        "React.ReactNode",
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonGroupOwnerState",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 69,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component: Root;",
+          "line": 70,
+          "kind": "property",
+          "type": "Root"
+        },
+        {
+          "name": "color",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "color: NonNullable<ButtonGroupOwnProps['color']>;",
+          "line": 71,
+          "kind": "property",
+          "type": "NonNullable<ButtonGroupOwnProps['color']>"
+        },
+        {
+          "name": "size",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "size: NonNullable<ButtonGroupOwnProps['size']>;",
+          "line": 72,
+          "kind": "property",
+          "type": "NonNullable<ButtonGroupOwnProps['size']>"
+        },
+        {
+          "name": "variant",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant: NonNullable<ButtonGroupOwnProps['variant']>;",
+          "line": 73,
+          "kind": "property",
+          "type": "NonNullable<ButtonGroupOwnProps['variant']>"
+        },
+        {
+          "name": "orientation",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "orientation: NonNullable<ButtonGroupOwnProps['orientation']>;",
+          "line": 74,
+          "kind": "property",
+          "type": "NonNullable<ButtonGroupOwnProps['orientation']>"
+        },
+        {
+          "name": "disabled",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disabled: boolean;",
+          "line": 75,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableElevation",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableElevation: boolean;",
+          "line": 76,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableFocusRipple",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableFocusRipple: boolean;",
+          "line": 77,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableRipple",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableRipple: boolean;",
+          "line": 78,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "fullWidth",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "fullWidth: boolean;",
+          "line": 79,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "ButtonGroupOwnProps",
+        "NonNullable",
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonGroupNativeRootProps",
+      "file": "src/buttonGroupTypes.ts",
+      "line": 81,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ButtonGroupOwnProps",
+        "Omit",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "ButtonPropsVariantOverrides",
       "file": "src/buttonTypes.ts",
       "line": 6,
@@ -207284,13 +208017,57 @@
           "type": "Record<string, unknown>"
         },
         {
+          "name": "descendantClasses",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "descendantClasses?: readonly string[];",
+          "line": 26,
+          "kind": "property",
+          "type": "readonly string[]"
+        },
+        {
+          "name": "descendantOnly",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "descendantOnly?: boolean;",
+          "line": 28,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: readonly string[];",
+          "line": 30,
+          "kind": "property",
+          "type": "readonly string[]"
+        },
+        {
+          "name": "ancestors",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ancestors?: readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n  }[];",
+          "line": 32,
+          "kind": "property",
+          "type": "readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n  }[]"
+        },
+        {
           "name": "logicalInsets",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };",
-          "line": 25,
+          "line": 39,
           "kind": "property",
           "type": "{ parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' }"
         },
@@ -207301,7 +208078,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection: 'ltr' | 'rtl';",
-          "line": 25,
+          "line": 39,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -207312,7 +208089,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | 'inherit'",
-          "line": 25,
+          "line": 39,
           "kind": "property",
           "type": "'ltr' | 'rtl' | 'inherit'"
         },
@@ -207323,15 +208100,18 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode?: 'sx' | 'css';",
-          "line": 26,
+          "line": 40,
           "kind": "property",
           "type": "'sx' | 'css'"
         }
       ],
       "references": [
         "NativeTextContext",
+        "Omit",
         "Record",
-        "SxProps"
+        "StyleContext",
+        "SxProps",
+        "Theme"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native-system"

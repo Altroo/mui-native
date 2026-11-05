@@ -532,6 +532,26 @@
       "types": "./dist/utils/createSvgIcon/index.d.ts",
       "react-native": "./src/utils/createSvgIcon/index.ts",
       "default": "./dist/utils/createSvgIcon/index.js"
+    },
+    "./ButtonGroup": {
+      "types": "./dist/ButtonGroup/index.d.ts",
+      "react-native": "./src/ButtonGroup/index.ts",
+      "default": "./dist/ButtonGroup/index.js"
+    },
+    "./ButtonGroup/buttonGroupClasses": {
+      "types": "./dist/ButtonGroup/buttonGroupClasses/index.d.ts",
+      "react-native": "./src/ButtonGroup/buttonGroupClasses/index.ts",
+      "default": "./dist/ButtonGroup/buttonGroupClasses/index.js"
+    },
+    "./ButtonGroup/ButtonGroupContext": {
+      "types": "./dist/ButtonGroup/ButtonGroupContext/index.d.ts",
+      "react-native": "./src/ButtonGroup/ButtonGroupContext/index.ts",
+      "default": "./dist/ButtonGroup/ButtonGroupContext/index.js"
+    },
+    "./ButtonGroup/ButtonGroupButtonContext": {
+      "types": "./dist/ButtonGroup/ButtonGroupButtonContext/index.d.ts",
+      "react-native": "./src/ButtonGroup/ButtonGroupButtonContext/index.ts",
+      "default": "./dist/ButtonGroup/ButtonGroupButtonContext/index.js"
     }
   },
   "dependencies": {

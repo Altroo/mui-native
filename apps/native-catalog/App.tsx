@@ -23,6 +23,7 @@ import { KeyboardExamples } from './KeyboardExamples';
 import { InputExamples } from './InputExamples';
 import { CollapseExamples } from './CollapseExamples';
 import { AccordionExamples } from './AccordionExamples';
+import { ButtonGroupExamples } from './ButtonGroupExamples';
 import { SvgIconExamples } from './SvgIconExamples';
 import { AutocompleteExamples } from './AutocompleteExamples';
 import { createCatalogTheme } from './catalogTheme';
@@ -87,6 +88,7 @@ export default function App() {
                   'Transitions',
                   'Accordion',
                   'Icons',
+                  'Groups',
                 ].map((name) => (
                   <Pressable
                     key={name}
@@ -122,6 +124,7 @@ export default function App() {
             {section === 'Transitions' ? <CollapseExamples /> : null}
             {section === 'Accordion' ? <AccordionExamples /> : null}
             {section === 'Icons' ? <SvgIconExamples /> : null}
+            {section === 'Groups' ? <ButtonGroupExamples /> : null}
             {section === 'Form' ? (
               <ScrollView
                 keyboardShouldPersistTaps="handled"

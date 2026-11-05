@@ -40,6 +40,7 @@ export default defineConfig([
     files: [
       'scripts/reference/check-controls-keyboard.mjs',
       'scripts/reference/svg-icon-browser.mjs',
+      'scripts/reference/button-group-browser.mjs',
     ],
     languageOptions: { globals: globals.browser },
   },

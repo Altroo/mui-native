@@ -22,6 +22,20 @@ export type StyleContext = NativeTextContext & {
   svg?: boolean;
   /** Final root props may match a source variant independently of owner state. */
   rootProps?: Record<string, unknown>;
+  /** Participating native descendants expose finite class tokens to their owning component. */
+  descendantClasses?: readonly string[];
+  /** Resolve only descendant branches, leaving root declarations on the actual root. */
+  descendantOnly?: boolean;
+  /** Class tokens for this styled root; descendants use their participating token list. */
+  classes?: readonly string[];
+  /** Ancestor component sheets precede this component in the same specificity cascade. */
+  ancestors?: readonly {
+    theme: Theme;
+    name: string;
+    props: Record<string, unknown>;
+    sx?: SxProps;
+    context: Omit<StyleContext, 'ancestors'>;
+  }[];
   logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };
   mode?: 'sx' | 'css';
 };
@@ -178,7 +192,11 @@ function resolveRules(
       return;
     }
     if (key === 'border' && typeof value === 'number') {
-      setStyle(target, 'border', { borderWidth: value, borderStyle: 'solid' });
+      setStyle(target, 'border', {
+        borderWidth: value,
+        borderStyle: 'solid',
+        borderColor: 'currentColor',
+      });
       return;
     }
     for (const nativeKey of aliases[key] ?? [key]) {
@@ -290,24 +308,42 @@ function resolveRules(
     return [node];
   };
   const rules: StyleRule[] = [];
-  const collect = (nodes: StyleNode[], specificity: number) => {
+  const collect = (nodes: StyleNode[], specificity: number, descendant = false) => {
     for (const node of nodes) {
-      if (Object.keys(node.base).length) rules.push({ style: node.base, specificity });
+      if (Object.keys(node.base).length && (!context.descendantOnly || descendant))
+        rules.push({ style: node.base, specificity });
       if (!node.conditions) continue;
       for (const [key, branches] of node.conditions) {
         if (!branches) continue;
         if (key.startsWith('@media')) {
-          if (matchesMedia(key, context.width ?? 0)) collect(branches, specificity);
+          if (matchesMedia(key, context.width ?? 0)) collect(branches, specificity, descendant);
           continue;
         }
-        const state = key.match(/^&\.Mui-([a-zA-Z]+)$/);
-        const slot = key.match(/^& \.(Mui[A-Za-z]+-[a-zA-Z]+)$/);
-        if (state) {
-          if (context.states?.includes(state[1])) collect(branches, specificity + 1);
+        const self = key
+          .split(',')
+          .map((selector) => selector.trim().match(/^&((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)+)$/));
+        const selectors = key
+          .split(',')
+          .map((selector) => selector.trim().match(/^&\s+((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)+)$/));
+        if (self.every(Boolean)) {
+          const available = [
+            ...(descendant ? (context.descendantClasses ?? []) : (context.classes ?? [])),
+            ...(context.states ?? []).map((state) => `Mui-${state}`),
+          ];
+          const matching = self.flatMap((selector) => {
+            const classes = selector![1].slice(1).split('.');
+            return classes.every((name) => available.includes(name)) ? [classes.length] : [];
+          });
+          if (matching.length) collect(branches, specificity + Math.max(...matching), descendant);
           continue;
         }
-        if (slot) {
-          if (context.slot === slot[1]) collect(branches, specificity + 1);
+        if (selectors.every(Boolean)) {
+          const available = context.descendantClasses ?? (context.slot ? [context.slot] : []);
+          const matching = selectors.flatMap((selector) => {
+            const classes = selector![1].slice(1).split('.');
+            return classes.every((name) => available.includes(name)) ? [classes.length] : [];
+          });
+          if (matching.length) collect(branches, specificity + Math.max(...matching), true);
           continue;
         }
         diagnostic(
@@ -339,6 +375,9 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
       if (logical) key = logical[1] + ((logical[2] === 'Start') !== rtl ? 'Left' : 'Right');
       if (value == null) continue;
       if (key === 'boxShadow' || key === 'border') {
+        if (key === 'border')
+          for (const expanded of Object.keys(value as Record<string, unknown>))
+            for (const edge of edges) delete result['border' + edge + expanded.slice(6)];
         mergeStyles(result, value as Record<string, unknown>);
         continue;
       }
@@ -350,6 +389,12 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
           continue;
         }
       }
+      // CSS border shorthands replace previously authored individual edges.
+      if (key === 'borderColor' || key === 'borderWidth' || key === 'borderStyle')
+        for (const edge of edges) delete result['border' + edge + key.slice(6)];
+      if (key === 'borderRadius')
+        for (const corner of ['TopLeft', 'TopRight', 'BottomLeft', 'BottomRight'])
+          delete result['border' + corner + 'Radius'];
       if (key === 'gap') {
         delete result.rowGap;
         delete result.columnGap;
@@ -360,6 +405,16 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
     }
   }
   const normalized = normalizeTextStyle(result, theme, context);
+  // CSS border shorthands reset paint to currentColor. Bind after the complete
+  // cascade and authored native foreground, never while a parent rule is built.
+  const foreground =
+    context.nativeStyle?.color ?? normalized.color ?? context.parentTextStyle?.color;
+  const borderPaint =
+    foreground == null || ['inherit', 'unset', 'currentColor'].includes(String(foreground))
+      ? theme.palette.text.primary
+      : foreground;
+  for (const key of ['borderColor', ...edges.map((edge) => 'border' + edge + 'Color')])
+    if (normalized[key] === 'currentColor') normalized[key] = borderPaint;
   // SVG presentation attributes sit below CSS. Preserve an explicit reset so
   // the SVG boundary can inherit color instead of resurrecting an attribute.
   if (context.svg && ['inherit', 'unset', 'currentColor'].includes(String(result.color)))
@@ -373,13 +428,13 @@ export function resolveSx(
 ): NativeStyle {
   return finishRules(resolveRules(input, theme, context), theme, context);
 }
-export function componentStyle(
+function componentRules(
   theme: Theme,
   name: string,
   props: Record<string, unknown>,
   sx?: SxProps,
   context: StyleContext = {},
-): NativeStyle {
+): StyleRule[] {
   const entry = theme.components[name];
   const config = entry && typeof entry === 'object' ? entry : undefined;
   const bases = [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].flatMap((key) => {
@@ -404,18 +459,33 @@ export function componentStyle(
           ([k, value]) => props[k] === value || context.rootProps?.[k] === value,
         ),
   );
+  return [
+    ...resolveRules(context.baseStyle, theme, { ...context, mode: 'css' }),
+    ...bases,
+    ...variants.flatMap((v) =>
+      resolveRules(typeof v.style === 'function' ? v.style(variantState()) : v.style, theme, {
+        ...context,
+        mode: 'css',
+      }),
+    ),
+    ...resolveRules(sx, theme, context),
+  ];
+}
+
+export function componentStyle(
+  theme: Theme,
+  name: string,
+  props: Record<string, unknown>,
+  sx?: SxProps,
+  context: StyleContext = {},
+): NativeStyle {
+  if (!context.ancestors?.length)
+    return finishRules(componentRules(theme, name, props, sx, context), theme, context);
+  const inherited = context.ancestors.flatMap((sheet) =>
+    componentRules(sheet.theme, sheet.name, sheet.props, sheet.sx, sheet.context),
+  );
   return finishRules(
-    [
-      ...resolveRules(context.baseStyle, theme, { ...context, mode: 'css' }),
-      ...bases,
-      ...variants.flatMap((v) =>
-        resolveRules(typeof v.style === 'function' ? v.style(variantState()) : v.style, theme, {
-          ...context,
-          mode: 'css',
-        }),
-      ),
-      ...resolveRules(sx, theme, context),
-    ],
+    [...inherited, ...componentRules(theme, name, props, sx, context)],
     theme,
     context,
   );
