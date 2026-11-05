@@ -63,6 +63,24 @@ try {
   }
   const icons = requireConsumer('@altroo/mui-native-icons');
   assert.equal(icons.SvgIcon, material.SvgIcon);
+  const glyphNames = Object.keys(icons).filter((name) => /^[A-Z]/.test(name) && name !== 'SvgIcon');
+  assert.equal(
+    glyphNames.length,
+    10750,
+    'Fresh archive must retain the complete pinned glyph catalog.',
+  );
+  for (const name of glyphNames)
+    assert.equal(
+      requireConsumer('@altroo/mui-native-icons/' + name).default,
+      icons[name],
+      'Installed root and deep glyph imports must share identity: ' + name,
+    );
+  assert.equal(requireConsumer('@altroo/mui-native-icons/index').Add, icons.Add);
+  assert.equal(
+    requireConsumer('@altroo/mui-native-icons/utils/createSvgIcon').default,
+    material.createSvgIcon,
+  );
+
   for (const entry of ['SvgIcon', 'SvgIcon/createSvgIcon', 'utils/createSvgIcon'])
     assert.equal(
       requireConsumer('@altroo/mui-native/' + entry).createSvgIcon,

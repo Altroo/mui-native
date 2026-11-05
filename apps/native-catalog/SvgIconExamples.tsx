@@ -11,7 +11,20 @@ import {
   useTheme,
   type SvgIconHandle,
 } from '@mui/material';
-import { Add, Check, Close, Remove } from '@mui/icons-material';
+// Deep imports keep this preview independent of the complete catalog barrel.
+import Add from '@mui/icons-material/Add';
+import Check from '@mui/icons-material/Check';
+import Close from '@mui/icons-material/Close';
+import Remove from '@mui/icons-material/Remove';
+import AddOutlined from '@mui/icons-material/AddOutlined';
+import AddRounded from '@mui/icons-material/AddRounded';
+import AddSharp from '@mui/icons-material/AddSharp';
+import AddTwoTone from '@mui/icons-material/AddTwoTone';
+import AccessAlarmTwoTone from '@mui/icons-material/AccessAlarmTwoTone';
+import AdminPanelSettingsOutlined from '@mui/icons-material/AdminPanelSettingsOutlined';
+import MedicationLiquidTwoTone from '@mui/icons-material/MedicationLiquidTwoTone';
+import Battery20 from '@mui/icons-material/Battery20';
+import JoinFull from '@mui/icons-material/JoinFull';
 
 // Original geometric artwork, supplied through the Material React-node factory.
 const ParcelIcon = createSvgIcon(
@@ -202,6 +215,29 @@ export function SvgIconExamples() {
             </Typography>
           </Stack>
         </Paper>
+        <Stack spacing={1.5}>
+          <Typography variant="subtitle1">Every Material style</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Filled, outlined, rounded, sharp and two-tone icons share the same API.
+          </Typography>
+          <Stack direction="row" spacing={2} sx={{ alignItems: 'center', color: 'primary.main' }}>
+            <Add testID="catalog-icon-filled" titleAccess="Filled add" />
+            <AddOutlined testID="catalog-icon-outlined" titleAccess="Outlined add" />
+            <AddRounded testID="catalog-icon-rounded" titleAccess="Rounded add" />
+            <AddSharp testID="catalog-icon-sharp" titleAccess="Sharp add" />
+            <AddTwoTone testID="catalog-icon-twotone" titleAccess="Two-tone add" />
+          </Stack>
+          <Stack direction="row" spacing={2} sx={{ alignItems: 'center', color: 'text.secondary' }}>
+            <AccessAlarmTwoTone testID="catalog-icon-paths" titleAccess="Two-tone alarm" />
+            <AdminPanelSettingsOutlined testID="catalog-icon-groups" titleAccess="Admin settings" />
+            <MedicationLiquidTwoTone
+              testID="catalog-icon-references"
+              titleAccess="Liquid medication"
+            />
+            <Battery20 testID="catalog-icon-fragment" titleAccess="Battery twenty percent" />
+            <JoinFull testID="catalog-icon-ellipse" titleAccess="Full join" />
+          </Stack>
+        </Stack>
         <Stack
           direction="row"
           spacing={2}
