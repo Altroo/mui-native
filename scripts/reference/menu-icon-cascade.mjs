@@ -16,6 +16,7 @@ async function serialize(value, path) {
   });
 }
 import { loadReference } from './load.mjs';
+import { createMenuIconBrowserHtml } from './menu-icon-cascade-browser.mjs';
 const { reference, require } = await loadReference('@mui/material', [
   'MenuItem/MenuItem.js',
   'MenuItem/MenuItem.d.ts',
@@ -406,24 +407,6 @@ const target = 'tests/fixtures/mui-menu-icon-cascade-9.5.0.json';
 const serialized = await serialize(output, target);
 if (process.argv.includes('--check')) assert.equal(await readFile(target, 'utf8'), serialized);
 else await writeFile(target, serialized);
-await mkdir('.cache/menu-icon-cascade-reference', { recursive: true });
-await writeFile(
-  '.cache/menu-icon-cascade-reference/original.html',
-  '<!doctype html><html><body>' +
-    fixtures
-      .map(
-        (fixture, index) =>
-          '<section data-case="' +
-          index +
-          '" style="font-size:16px"><h2>' +
-          fixture.input.name +
-          '</h2>' +
-          fixture.markup.replaceAll('id="', 'id="case' + index + '-') +
-          '</section>',
-      )
-      .join('\n') +
-    '</body></html>',
-);
 const provenance = {
   schemaVersion: 1,
   description:
@@ -455,3 +438,16 @@ console.log(
     fixtures.length +
     ' cases, archive/source/license verified.',
 );
+
+if (process.argv.includes('--browser-output')) {
+  const path = '.cache/menu-icon-cascade-reference/browser.html';
+  await mkdir('.cache/menu-icon-cascade-reference', { recursive: true });
+  const html = createMenuIconBrowserHtml({ ...output, sourceFixture: provenance.sourceFixture });
+  await writeFile(path, html);
+  console.log(
+    'Original used-style browser page: ' +
+      path +
+      ' · ' +
+      createHash('sha256').update(html).digest('hex'),
+  );
+}
