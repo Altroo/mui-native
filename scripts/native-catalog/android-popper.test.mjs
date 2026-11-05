@@ -1,8 +1,21 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import test from 'node:test';
-import { spawn } from 'node:child_process';
+import { spawn, execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, readFile, writeFile, readdir, rm, chmod, access } from 'node:fs/promises';
+import {
+  mkdtemp,
+  mkdir,
+  readFile,
+  writeFile,
+  readdir,
+  rm,
+  chmod,
+  access,
+  symlink,
+  realpath,
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import {
@@ -497,5 +510,74 @@ test('opaque falsy cleanup failures never permit catalog restoration', async () 
     } finally {
       await rm(output, { recursive: true, force: true });
     }
+  }
+});
+
+const executeCli = promisify(execFile);
+test('CLI prepare through a symlink runs from the generated-project cwd and writes real sources plus JSON', async () => {
+  const project = await mkdtemp(join(tmpdir(), 'mui-android-cli-prepare-'));
+  try {
+    await mkdir(join(project, 'app'), { recursive: true });
+    await writeFile(
+      join(project, 'app/build.gradle'),
+      "android { defaultConfig { applicationId 'dev.altroo.muinative.catalog' } }\n",
+    );
+    const alias = join(project, 'linked-popper.mjs');
+    await symlink(fileURLToPath(new URL('./android-popper.mjs', import.meta.url)), alias);
+    const { stdout, stderr } = await executeCli(
+      process.execPath,
+      [alias, 'prepare', '--project', '.'],
+      { cwd: project, timeout: 10000 },
+    );
+    assert.equal(stderr, '');
+    const prepared = JSON.parse(stdout);
+    assert.equal(await realpath(prepared.project), await realpath(project));
+    assert.equal(prepared.runner, component.slice(component.indexOf('/') + 1));
+    assert.equal(
+      await readFile(prepared.source, 'utf8'),
+      await readFile(
+        new URL('../../tests/native/android/PopperInstrumentation.java', import.meta.url),
+        'utf8',
+      ),
+    );
+    assert.equal(
+      await readFile(join(dirname(prepared.source), 'LayoutRootScenario.java'), 'utf8'),
+      await readFile(
+        new URL('../../tests/native/android/LayoutRootScenario.java', import.meta.url),
+        'utf8',
+      ),
+    );
+    assert.match(
+      await readFile(join(project, 'app/build.gradle'), 'utf8'),
+      /testInstrumentationRunner 'dev\.altroo\.muinative\.catalog\.test\.PopperInstrumentation'/,
+    );
+  } finally {
+    await rm(project, { recursive: true, force: true });
+  }
+});
+
+test('library imports stay inert with absent, empty and nonexistent argv entry paths', async () => {
+  const project = await mkdtemp(join(tmpdir(), 'mui-android-cli-import-'));
+  try {
+    const blocker = join(project, 'ordinary-file');
+    await writeFile(blocker, 'not a directory');
+    for (const entry of [undefined, '', join(project, 'missing.mjs'), join(blocker, 'child.mjs')]) {
+      const source =
+        'process.argv[1] = ' +
+        JSON.stringify(entry) +
+        '; await import(' +
+        JSON.stringify(new URL('./android-popper.mjs', import.meta.url).href) +
+        '); console.log("library-only");';
+      const { stdout, stderr } = await executeCli(
+        process.execPath,
+        ['--input-type=module', '-e', source],
+        { cwd: project, timeout: 10000 },
+      );
+      assert.equal(stdout, 'library-only\n');
+      assert.equal(stderr, '');
+    }
+    assert.deepEqual(await readdir(project), ['ordinary-file']);
+  } finally {
+    await rm(project, { recursive: true, force: true });
   }
 });
