@@ -1,5 +1,7 @@
 # MUI Native delivery roadmap
 
+Current priority: [finish existing partial modules](docs/completion-plan.md) before adding new components. The queue separates software work, locally executable verification and external validation.
+
 Updated: 2026-11-04. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
 
 ## Decisions

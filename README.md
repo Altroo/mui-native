@@ -21,9 +21,11 @@ I started MUI Native to address that gap: preserve familiar MUI component APIs a
 
 ## Status
 
-Updated: **4 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
+Updated: **5 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
 
 These tables describe development on `main`. Check the [release changelog](CHANGELOG.md) for published package contents; each newer component guide identifies its unpublished status.
+
+The [completion plan](docs/completion-plan.md) lists every existing partial entry and prioritizes closing its concrete implementation and validation gaps before adding new components.
 
 For component/module rows: **0%** = not implemented, **25%** = prototype/subset, **50%** = an implemented subset with source-backed contract and installed-consumer coverage, **75%** = that coverage plus scoped iOS and Android interaction evidence, **100%** = the agreed full contract and release gates are complete. Foundation rows describe their explicitly bounded work. No component family is certified as fully compatible.
 

@@ -32,7 +32,7 @@ Dialog accepts custom breakpoint names for `maxWidth`, converts supported breakp
 - Arbitrary CSS calculations, variables, container queries, orientation, print and user-preference media features remain unsupported. Unsupported queries/expressions emit diagnostics rather than producing invalid native styles.
 - Relative `em` style lengths require typography context and remain unfinished; support for media `em` does not imply support for every CSS style unit.
 - Spacing reference cases cover valid inputs. Upstream oddities such as a one-key `not()` query are not evidence that all generated CSS is meaningful; the native parser rejects unsupported output.
-- Typography variants currently store native absolute line heights. For compatibility with this representation, only positive numeric line heights below four are treated as multipliers; larger numeric values remain native lengths. Explicit `px`/`rem` values stay absolute, including values below four. Full CSS numeric line-height semantics require the planned typography normalization.
+- Public theme and sx numeric line heights are CSS ratios, including values above four; `px`/`rem` lengths are absolute. Explicit native style line heights retain native units. See [typography normalization](typography.md) for inherited metrics and reset boundaries.
 - Full typography inheritance, every responsive utility export, slot styling, RTL/logical-property cascade, font scaling and real-device responsive/accessibility evidence remain open gates.
 - Jest resize tests exercise React Native's Dimensions subscription and native component props in its test runtime. They do not substitute for simulator/device visual or release-performance measurements.
 
@@ -45,3 +45,11 @@ node scripts/reference/layout.mjs --check
 ```
 
 The shared loader checks pinned tarball integrity, installed source bytes and license hashes before loading the original implementation. Source adaptations are recorded in `upstream/reuse.json`, are included in upstream source-impact checks, and carry the MIT notice in distributed packages. These tests do not promote an upstream version to verified support.
+
+## Existing style contract closure
+
+The shared theme now retains all 25 original elevation tokens, custom concrete shadow layers and opt-in focus-visible outline settings. ButtonBase/Group/Button sheets participate in one native specificity calculation; actual native inline styles retain final precedence. Nested style-override arrays, callbacks and embedded variants use the original owner-state merge order. Shape borderRadius accepts number or string tokens; numeric sx factors preserve concrete px/rem/percentage arithmetic. The retained [original observations](../tests/fixtures/mui-system-style-closure-9.5.0.json) and [source reuse record](../upstream/reuse.json) identify the pinned inputs.
+
+Modern native boxShadow retains validated layers, spread/inset and currentColor using the final inherited/native foreground. Android before API 28 uses an explicit diagnosed numeric elevation fallback; inset shadows require API 29. Unsupported CSS expressions remain diagnostics. Theme source parity does not establish platform paint equivalence or release performance.
+
+Native text roots register their resolved inherited values for physical Portal destinations. Scope comparison includes literal native text values, relative line-height provenance and semantic color objects. Equivalent render allocations do not broadcast new inheritance contexts; detached/cyclic destinations do not become text owners. This registry preserves native host geometry and caller ref cleanup.
