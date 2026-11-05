@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "19dee9f722f62a398713fbb52dbfc63667c5e952535f800ee3777ad8a875b0f0",
+  "nativeSourceSha256": "473b49beda6ea0e40df9ff479ab6553b6c828e22abb0a1695b73827d4d661579",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -196727,7 +196727,7 @@
     {
       "name": "MenuFocusSource",
       "file": "src/nativeMenuRegistry.ts",
-      "line": 2,
+      "line": 3,
       "kind": "type",
       "members": [],
       "references": [],
@@ -196737,7 +196737,7 @@
     {
       "name": "NativeMenuRecord",
       "file": "src/nativeMenuRegistry.ts",
-      "line": 3,
+      "line": 4,
       "kind": "type",
       "members": [
         {
@@ -196747,7 +196747,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id: string;",
-          "line": 4,
+          "line": 5,
           "kind": "property",
           "type": "string"
         },
@@ -196758,7 +196758,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "element: ViewInstance;",
-          "line": 5,
+          "line": 6,
           "kind": "property",
           "type": "ViewInstance"
         },
@@ -196769,7 +196769,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "token: object;",
-          "line": 6,
+          "line": 7,
           "kind": "property",
           "type": "object"
         },
@@ -196780,7 +196780,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 7,
+          "line": 8,
           "kind": "property",
           "type": "boolean"
         },
@@ -196791,7 +196791,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusableWhenDisabled: boolean;",
-          "line": 8,
+          "line": 9,
           "kind": "property",
           "type": "boolean"
         },
@@ -196802,7 +196802,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusable: boolean;",
-          "line": 9,
+          "line": 10,
           "kind": "property",
           "type": "boolean"
         },
@@ -196813,7 +196813,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "selected: boolean;",
-          "line": 10,
+          "line": 11,
           "kind": "property",
           "type": "boolean"
         },
@@ -196824,7 +196824,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "textValue?: string;",
-          "line": 11,
+          "line": 12,
           "kind": "property",
           "type": "string"
         },
@@ -196835,7 +196835,7 @@
           "computed": false,
           "memberKind": "TSMethodSignature",
           "declaration": "focus(source: MenuFocusSource): void;",
-          "line": 12,
+          "line": 13,
           "kind": "property",
           "type": "focus(source: MenuFocusSource): void;"
         }
@@ -196850,7 +196850,7 @@
     {
       "name": "MenuTextCriteria",
       "file": "src/nativeMenuRegistry.ts",
-      "line": 24,
+      "line": 25,
       "kind": "type",
       "members": [
         {
@@ -196860,7 +196860,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "keys: string[];",
-          "line": 25,
+          "line": 26,
           "kind": "property",
           "type": "string[]"
         },
@@ -196871,7 +196871,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "repeating: boolean;",
-          "line": 26,
+          "line": 27,
           "kind": "property",
           "type": "boolean"
         },
@@ -196882,7 +196882,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "previousKeyMatched: boolean;",
-          "line": 27,
+          "line": 28,
           "kind": "property",
           "type": "boolean"
         },
@@ -196893,7 +196893,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "lastTime: number | null;",
-          "line": 28,
+          "line": 29,
           "kind": "property",
           "type": "number | null"
         }
