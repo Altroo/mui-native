@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RippleDrawable
 import android.view.KeyEvent
 import android.view.inputmethod.BaseInputConnection
@@ -54,6 +55,25 @@ internal class NativeInputBackspaceRequest(private val current: () -> Boolean, p
   operator fun invoke() { if (current()) deliver() }
 }
 class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(context) {
+  private var drawableDirection: Int? = null
+  private fun invalidateDirectionDrawable(drawable: Drawable?) {
+    if (drawable is LayerDrawable) {
+      for (index in 0 until drawable.numberOfLayers) {
+        invalidateDirectionDrawable(drawable.getDrawable(index))
+      }
+    }
+    drawable?.invalidateSelf()
+  }
+  override fun onRtlPropertiesChanged(layoutDirection: Int) {
+    super.onRtlPropertiesChanged(layoutDirection)
+    if (drawableDirection == layoutDirection) return
+    drawableDirection = layoutDirection
+    // RN 0.88 caches resolved background/border paths without invalidating them
+    // when Drawable.layoutDirection changes. Dirty the actual layers so a live
+    // direction update repaints their logical corners/insets on this same view.
+    invalidateDirectionDrawable(background)
+    invalidateDirectionDrawable(foreground)
+  }
   var nativeTabIndex = 0
   var managedKeys: Set<String> = emptySet()
   var managedDescendantKeys: Set<String> = emptySet()

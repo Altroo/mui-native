@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { createContext, useContext, useMemo, useRef } from 'react';
 import { Text, View, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
 import {
@@ -21,6 +22,10 @@ export interface NativeTextScopeValue {
   style: TextStyle;
   literalStyle?: TextStyle;
   lineHeight?: number;
+  /** Known native layout direction, preserved across physical Portal destinations. */
+  direction?: 'ltr' | 'rtl' | undefined;
+  /** Logical CSS alignment remains logical when a descendant changes direction. */
+  textAlign?: 'start' | 'end' | undefined;
   nativeText: boolean;
 }
 export const NativeTextStyleContext = createContext<NativeTextScopeValue | undefined>(undefined);
@@ -34,6 +39,8 @@ export function nativeTextStyleContext(
     parentTextStyle:
       parent?.style ?? (theme ? { fontSize: theme.cssRootFontSize ?? 16 } : undefined),
     parentLineHeight: parent?.lineHeight,
+    parentDirection: parent?.direction,
+    parentTextAlign: parent?.textAlign,
     nativeStyle: StyleSheet.flatten(style) ?? undefined,
     nativeTextMetrics: nativeStyleTextMetrics(style),
     inheritOnly: true,
@@ -92,6 +99,14 @@ function resolveScope(
     style: { ...base, ...ownText(normalized), ...ownText(adjusted) },
     lineHeight: getTextStyleInheritance(normalized).lineHeight,
     nativeText: kind === 'text',
+    ...(flat.direction === 'ltr' || flat.direction === 'rtl'
+      ? { direction: flat.direction }
+      : parent?.direction
+        ? { direction: parent.direction }
+        : {}),
+    ...(getTextStyleInheritance(normalized).textAlign
+      ? { textAlign: getTextStyleInheritance(normalized).textAlign }
+      : {}),
   };
   setNativeTextScopeParent(value, parent);
   const inheritable = inheritedTextStyle(flat);

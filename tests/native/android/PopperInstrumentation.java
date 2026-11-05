@@ -46,6 +46,8 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean accordionScenario;
   private boolean svgIconScenario;
   private boolean buttonGroupScenario;
+  private boolean buttonGroupReadingScenario;
+  private boolean readingGlobalRTL;
 
   @Override public void onCreate(Bundle arguments) {
     super.onCreate(arguments);
@@ -56,6 +58,8 @@ public final class PopperInstrumentation extends Instrumentation {
     accordionScenario = "accordion".equals(arguments.getString("scenario"));
     svgIconScenario = "svg-icon".equals(arguments.getString("scenario"));
     buttonGroupScenario = "button-group".equals(arguments.getString("scenario"));
+    buttonGroupReadingScenario = "button-group-reading".equals(arguments.getString("scenario"));
+    readingGlobalRTL = "true".equals(arguments.getString("globalRTL"));
     start();
   }
 
@@ -67,6 +71,7 @@ public final class PopperInstrumentation extends Instrumentation {
     if (accordionScenario) { AccordionScenario.run(this); return; }
     if (svgIconScenario) { SvgIconScenario.run(this); return; }
     if (buttonGroupScenario) { ButtonGroupScenario.run(this); return; }
+    if (buttonGroupReadingScenario) { ButtonGroupScenario.runReading(this, readingGlobalRTL); return; }
     JSONObject report = new JSONObject();
     Bundle result = new Bundle();
     boolean passed = false;

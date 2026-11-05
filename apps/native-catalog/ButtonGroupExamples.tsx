@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { ButtonGroupReadingExample } from './ButtonGroupReadingExample';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState, type Ref } from 'react';
 import {
   ScrollView,
@@ -417,6 +418,7 @@ function SurfaceExamples() {
       <ThemeSurface />
       <NestedSurface />
       <PortalSurfaces />
+      <ButtonGroupReadingExample />
     </Stack>
   );
 }

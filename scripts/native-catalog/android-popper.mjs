@@ -13,6 +13,10 @@ import { prepareCollapseSource } from './android-collapse-source.mjs';
 import { prepareAccordionSource } from './android-accordion-source.mjs';
 import { prepareButtonGroupSource } from './android-button-group-source.mjs';
 import { inspectButtonGroupReport, summarizeButtonGroup } from './android-button-group-report.mjs';
+import {
+  inspectReadingReport,
+  summarizeReadingReport,
+} from './android-button-group-reading-report.mjs';
 import { prepareSvgIconSource } from './android-svg-icon-source.mjs';
 import { inspectSvgIconReport, summarizeSvgIcon } from './android-svg-icon-report.mjs';
 import { inspectAccordionReport, summarizeAccordion } from './android-accordion-report.mjs';
@@ -190,15 +194,19 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group'}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading', globalRTL?: boolean}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
-  { adb, serial, output, signal, scenario = 'popper' },
+  { adb, serial, output, signal, scenario = 'popper', globalRTL = false },
   execute = executeFile,
 ) {
-  if (!['popper', 'accordion', 'svg-icon', 'button-group'].includes(scenario))
+  if (
+    !['popper', 'accordion', 'svg-icon', 'button-group', 'button-group-reading'].includes(scenario)
+  )
     throw Error('Unknown catalog scenario');
+  if (typeof globalRTL !== 'boolean' || (globalRTL && scenario !== 'button-group-reading'))
+    throw Error('Global RTL profiles apply only to reading checks');
   if (typeof serial !== 'string' || !serial.trim())
     throw Error('Choose one explicit --serial; devices are never selected automatically');
   signal?.throwIfAborted();
@@ -227,6 +235,7 @@ export async function run(
             '-w',
             '-r',
             ...(scenario === 'popper' ? [] : ['-e', 'scenario', scenario]),
+            ...(scenario === 'button-group-reading' ? ['-e', 'globalRTL', String(globalRTL)] : []),
             component,
           ],
           true,
@@ -246,9 +255,11 @@ export async function run(
         ? inspectAccordionReport(text)
         : scenario === 'svg-icon'
           ? inspectSvgIconReport(text)
-          : scenario === 'button-group'
-            ? inspectButtonGroupReport(text)
-            : inspectReport(text);
+          : scenario === 'button-group-reading'
+            ? inspectReadingReport(text)
+            : scenario === 'button-group'
+              ? inspectButtonGroupReport(text)
+              : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -265,6 +276,7 @@ export async function run(
     signal?.throwIfAborted();
     if (scenario === 'accordion') summarizeAccordion(text);
     else if (scenario === 'svg-icon') summarizeSvgIcon(text);
+    else if (scenario === 'button-group-reading') summarizeReadingReport(text, { globalRTL });
     else if (scenario === 'button-group') summarizeButtonGroup(text);
     else assertCompleted(text, report);
   } catch (error) {
@@ -333,6 +345,7 @@ if (import.meta.url === pathToFileURL(resolve(process.argv[1] ?? '')).href) {
       output: { type: 'string' },
       adb: { type: 'string' },
       scenario: { type: 'string' },
+      'global-rtl': { type: 'boolean', default: false },
     },
   });
   if (positionals.length !== 1 || !['prepare', 'run'].includes(positionals[0]))
@@ -369,6 +382,7 @@ if (import.meta.url === pathToFileURL(resolve(process.argv[1] ?? '')).href) {
               output,
               signal: controller.signal,
               scenario: values.scenario,
+              globalRTL: values['global-rtl'],
             }),
           },
           null,

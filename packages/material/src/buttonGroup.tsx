@@ -9,7 +9,7 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
-import { View, useWindowDimensions, type ViewInstance } from 'react-native';
+import { View, StyleSheet, useWindowDimensions, type ViewInstance } from 'react-native';
 import {
   useDefaultProps,
   NativeTextScope,
@@ -18,6 +18,7 @@ import {
   componentStyle,
   alpha,
   joinClassNames,
+  useRtl,
   type Theme,
   type SxProps,
   type SxObject,
@@ -29,6 +30,8 @@ import {
 import { useTheme } from './themeProvider';
 import { useForkRef } from './utils';
 import { nativeStyleTree } from './nativeStyleAncestry';
+import { directionOf } from './nativeControlStyles';
+import { mergeNativeButtonStyle } from './buttonBase';
 import {
   ButtonGroupContext,
   ButtonGroupButtonContext,
@@ -60,14 +63,18 @@ function useShallowStable<T extends object>(value: T): T {
     stable.current = value;
   return stable.current;
 }
-function baseRules(theme: Theme, owner: ButtonGroupOwnerState): SxProps {
+function baseRules(theme: Theme, owner: ButtonGroupOwnerState, direction: 'ltr' | 'rtl'): SxProps {
   const vertical = owner.orientation === 'vertical',
+    rtl = direction === 'rtl',
+    joinedSide = rtl ? 'Left' : 'Right',
+    leadingSide = rtl ? 'Right' : 'Left',
     first = select('firstButton', 'middleButton'),
     after = select('lastButton', 'middleButton'),
     focused = `${select('grouped')}.Mui-focusVisible`;
   const result: SxObject = {
     display: 'flex',
     flexDirection: vertical ? 'column' : 'row',
+    direction,
     alignSelf: owner.fullWidth ? 'stretch' : 'flex-start',
     borderRadius: theme.shape.borderRadius,
     ...(owner.variant === 'contained' ? { boxShadow: 2 } : {}),
@@ -91,19 +98,24 @@ function baseRules(theme: Theme, owner: ButtonGroupOwnerState): SxProps {
       : {}),
     [first]: vertical
       ? { borderBottomRightRadius: 0, borderBottomLeftRadius: 0 }
-      : { borderTopRightRadius: 0, borderBottomRightRadius: 0 },
+      : { [`borderTop${joinedSide}Radius`]: 0, [`borderBottom${joinedSide}Radius`]: 0 },
     [after]: vertical
       ? { borderTopRightRadius: 0, borderTopLeftRadius: 0 }
-      : { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 },
+      : { [`borderTop${leadingSide}Radius`]: 0, [`borderBottom${leadingSide}Radius`]: 0 },
   };
   const palette = theme.palette as unknown as Record<string, { main?: string; dark?: string }>;
   if (owner.variant === 'outlined') {
     result[first] = {
       ...(result[first] as object),
-      [vertical ? 'borderBottomColor' : 'borderRightColor']: 'transparent',
-      '&.Mui-hover': { [vertical ? 'borderBottomColor' : 'borderRightColor']: 'currentColor' },
+      [vertical ? 'borderBottomColor' : `border${joinedSide}Color`]: 'transparent',
+      '&.Mui-hover': {
+        [vertical ? 'borderBottomColor' : `border${joinedSide}Color`]: 'currentColor',
+      },
     };
-    result[after] = { ...(result[after] as object), [vertical ? 'marginTop' : 'marginLeft']: -1 };
+    result[after] = {
+      ...(result[after] as object),
+      [vertical ? 'marginTop' : `margin${leadingSide}`]: -1,
+    };
   } else if (owner.variant === 'text' || owner.variant === 'contained') {
     const tone = palette[owner.color];
     const fallback =
@@ -120,10 +132,11 @@ function baseRules(theme: Theme, owner: ButtonGroupOwnerState): SxProps {
           : undefined;
     result[first] = {
       ...(result[first] as object),
-      [vertical ? 'borderBottomWidth' : 'borderRightWidth']: 1,
-      [vertical ? 'borderBottomColor' : 'borderRightColor']: fallback,
+      [vertical ? 'borderBottomWidth' : `border${joinedSide}Width`]: 1,
+      [vertical ? 'borderBottomColor' : `border${joinedSide}Color`]: fallback,
       '&.Mui-disabled': {
-        [vertical ? 'borderBottomColor' : 'borderRightColor']: theme.palette.action.disabled,
+        [vertical ? 'borderBottomColor' : `border${joinedSide}Color`]:
+          theme.palette.action.disabled,
       },
       ...(named ? { borderColor: named } : {}),
     };
@@ -273,9 +286,11 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
       ],
     );
     const theme = useTheme(),
+      rtl = useRtl(),
       parent = useNativeTextContext(),
       rawAncestry = useContext(NativeButtonGroupRules),
       { width } = useWindowDimensions();
+    const providerDirection = rtl ? 'rtl' : 'ltr';
     const ancestryInputs = useShallowStable(rawAncestry.flatMap((rule) => [rule, rule.cascade]));
     const ancestry = useMemo(() => rawAncestry, [ancestryInputs]);
     const scopedTheme = useMemo(() => styledTheme(theme), [theme]);
@@ -303,17 +318,26 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
           ...(fullWidth ? ['fullWidth'] : []),
           ...(orientation === 'vertical' ? ['vertical'] : []),
         ],
-        baseStyle: baseRules(theme, owner),
+        baseStyle: baseRules(theme, owner, providerDirection),
+        protectPhysicalGeometry: true,
         rootProps,
         ancestors: ancestry.map((rule) => rule.cascade(rootClass.split(/\s+/))),
       }),
-      [theme, parent, width, owner, rootProps, ancestry],
+      [theme, parent, width, owner, rootProps, ancestry, providerDirection],
     );
     const computed = useMemo(
       () => componentStyle(scopedTheme, 'MuiButtonGroup', { ...owner }, sx, common),
       [scopedTheme, owner, sx, common],
     );
-    const scopeStyle = useMemo(() => [computed, style], [computed, style]);
+    const direction = directionOf(
+      StyleSheet.flatten(style)?.direction,
+      computed.direction,
+      parent?.direction ?? providerDirection,
+    );
+    const scopeStyle = useMemo(
+      () => [mergeNativeButtonStyle(computed, style), { direction }],
+      [computed, style, direction],
+    );
     const ownRule = useMemo<NativeButtonGroupRule>(
       () => ({
         get element() {
@@ -326,12 +350,13 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
           sx,
           context: {
             ...common,
+            baseStyle: baseRules(theme, owner, direction),
             descendantClasses: classes,
             descendantOnly: true,
           },
         }),
       }),
-      [scopedTheme, owner, sx, common],
+      [scopedTheme, owner, sx, common, theme, direction],
     );
     const committedRule = useRef(ownRule);
     const registryRule = useMemo<NativeButtonGroupRule>(

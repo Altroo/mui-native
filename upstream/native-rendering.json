@@ -43,7 +43,18 @@
       "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/InsetBoxShadowDrawable.kt": "207c3d19ef028fd8ff562aa00ffffdec4c9dc302ff31bc68b771206fc4122876",
       "src/private/webapis/dom/nodes/ReadOnlyNode.js": "a8f76b52ea437f4a8d8bb0044fe2f45c21da0be76594a0aa2ca9a2d5e47b290b",
       "Libraries/Components/ScrollView/ScrollView.js": "5c99c1de2118ffd40e59bdfbcb38aeb09ce59236e17c89adf0df1628272d98fc",
-      "ReactAndroid/src/main/java/com/facebook/react/views/text/TextLayoutManager.kt": "5f0e46a199d851ab3e23790678563650a72ed4dab7d52a2db96349a73abad8ce"
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/TextLayoutManager.kt": "5f0e46a199d851ab3e23790678563650a72ed4dab7d52a2db96349a73abad8ce",
+      "Libraries/Components/View/View.js": "bd8bd1250762fde59a24e08680071952d938c06ba72e461b9f763a765ab3c61b",
+      "Libraries/Text/Text.js": "45b34e7d4f4eab9c697a6d0b2ec90c25e80e25951f4a39e4296d0e20bb946527",
+      "Libraries/ReactNative/I18nManager.js": "ae5cd91dc674028f9b1a91b62f677aa33cc9f079dbbe7d7ce41144b7d4dd7bb1",
+      "ReactAndroid/src/main/java/com/facebook/react/modules/i18nmanager/I18nUtil.kt": "5af9e84145622af9e62b404b8f3cc14b758f8b8c97b89a26bd9bf330e324936c",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/style/BorderRadiusStyle.kt": "93164ebcb0c8c124f72af1bfad647e776307e5b4af442159b76ce5d20a83b0b7",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/style/BorderColors.kt": "0f79eafeb4b007acb8649e65f069ea5af2827c424dd9d675dace432e2236a3c1",
+      "ReactCommon/react/renderer/components/view/YogaLayoutableShadowNode.cpp": "66fd3c89d28f6393f1e57e360e9596dd0d81582c6d9083d0cccdc8156ad1bb26",
+      "ReactCommon/react/renderer/components/view/primitives.h": "aeaca1bf384980450695818f21cc3c9a5269cdb207a46eec1c98f9c17a8de206",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/BackgroundDrawable.kt": "fd24c337d541b2f80477eb7a7ce5a959bf3826e5e6a46ab143316f0b8b8dc978",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/BorderDrawable.kt": "978c6722d89d28ec68c95d510b4af771bdd61f6ba6497a83071b6393a0bd28b7",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/BackgroundImageDrawable.kt": "ba39cec25c71f6c7da1f3ed88bb943e03220bb9a0967d8c2d35ca2c5a3da1cbc"
     }
   },
   "localFiles": [
@@ -69,7 +80,16 @@
     "packages/native-host/android/src/main/java/com/altroo/muinativehost/DescendantKeyWindow.kt",
     "packages/system/src/shadows.ts",
     "packages/material/src/nativeStyleAncestry.ts",
-    "packages/system/src/nativeTextRegistry.ts"
+    "packages/system/src/nativeTextRegistry.ts",
+    "packages/native-host/src/nativePortal.tsx",
+    "packages/material/src/portal.tsx",
+    "packages/material/src/buttonGroup.tsx",
+    "packages/material/src/buttonBase.tsx",
+    "packages/material/src/buttons.tsx",
+    "packages/system/src/sx.ts",
+    "packages/system/src/nativeText.ts",
+    "packages/system/src/textScope.tsx",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveView.kt"
   ],
   "adaptations": [
     "Native root child mounting and React Native touch/pointer dispatch follow the verified MIT reference. The new implementation attaches within an existing native window/container, does not create a modal or request focus, preserves React context, and reports actual native affine container bounds.",
@@ -84,6 +104,9 @@
     "Android logical Portal children are managed through RN IViewGroupManager rather than phantom ViewGroup child getters. Framework accessibility/structure traversal sees the true physical tree; manager getters always read the live overlay list, including Fabric direct reparenting.",
     "Android editable-key release ownership resolves the pinned ReactModalHostView public Dialog getter to its real Window. A temporary callback delegates unrelated events and preserves RN's established Escape-up request-close route; unknown application windows remain untouched.",
     "Concrete box-shadow validation and native API gates follow RN0.88.1 processBoxShadow/ViewStyle and Android outset/inset drawables. iOS and Android28+ preserve layered paint; older Android numeric elevation fallback is diagnosed and never drawn alongside a modern boxShadow.",
-    "Physical finite style/text ownership walks the public RN DOM-like node ancestry with explicit native Portal redirections; public ScrollView refs are the native node enriched with scrolling methods. Leases preserve caller refs and reject detached/cyclic/self-container destinations."
+    "Physical finite style/text ownership walks the public RN DOM-like node ancestry with explicit native Portal redirections; public ScrollView refs are the native node enriched with scrolling methods. Leases preserve caller refs and reject detached/cyclic/self-container destinations.",
+    "The physical Portal canvas resets React Native's public text-ancestor context like View, without adding a native layout host. Its direction and inherited text scope follow the physical destination, with the native global direction used for the window.",
+    "ButtonGroup protects generated joined corners, border dividers and overlap against the pinned native RTL edge resolution. Android local-RTL border paint and global Yoga edge swapping are handled separately. Authored native inline styles retain native semantics and their final precedence; authored Text roots remain independent for font-scaling policies.",
+    "The owned Android interactive host invalidates its retained background/foreground drawable layers when native layout direction changes. This repairs the pinned RN drawing-path cache without remounting views, toggling JS style aliases or patching unrelated React Native Views. Native tests rasterize the actual border layer; freshly resolved radius inputs alone do not establish correct paint."
   ]
 }

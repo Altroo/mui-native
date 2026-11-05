@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Activation/style contracts adapt MIT Material UI 9.5.0. See NOTICE and upstream/reuse.json.
 import React, {
   forwardRef,
   useImperativeHandle,
@@ -11,6 +13,7 @@ import {
   StyleSheet,
   Platform,
   Linking,
+  I18nManager,
   useWindowDimensions,
   type PressableProps,
   type PressableStateCallbackType,
@@ -137,13 +140,84 @@ export function mergeNativeButtonStyle(
     }
   const value = { ...computed, ...feedback };
   if (inline) {
+    const direction =
+      inline.direction === 'ltr' || inline.direction === 'rtl' ? inline.direction : value.direction;
+    const rtl = direction === 'rtl' || (direction !== 'ltr' && I18nManager.isRTL);
+    const nativeSide = (side: 'Left' | 'Right' | 'Start' | 'End', paint = true) => {
+      if (I18nManager.isRTL && I18nManager.doLeftAndRightSwapInRTL)
+        side = side === 'Left' ? 'Start' : side === 'Right' ? 'End' : side;
+      else if (paint && Platform.OS === 'android' && rtl && I18nManager.doLeftAndRightSwapInRTL)
+        side = side === 'Left' ? 'Right' : side === 'Right' ? 'Left' : side;
+      return side === 'Start'
+        ? rtl
+          ? 'Right'
+          : 'Left'
+        : side === 'End'
+          ? rtl
+            ? 'Left'
+            : 'Right'
+          : side;
+    };
+    const corners = {
+      TopLeft: ['Top', 'Left'],
+      TopRight: ['Top', 'Right'],
+      BottomLeft: ['Bottom', 'Left'],
+      BottomRight: ['Bottom', 'Right'],
+      TopStart: ['Top', 'Start'],
+      TopEnd: ['Top', 'End'],
+      BottomStart: ['Bottom', 'Start'],
+      BottomEnd: ['Bottom', 'End'],
+      StartStart: ['Top', 'Start'],
+      StartEnd: ['Top', 'End'],
+      EndStart: ['Bottom', 'Start'],
+      EndEnd: ['Bottom', 'End'],
+    } as const;
+    const cornerKeys = Object.keys(corners) as (keyof typeof corners)[];
     if (inline.borderRadius != null)
-      for (const corner of ['TopLeft', 'TopRight', 'BottomLeft', 'BottomRight'] as const)
-        delete value[`border${corner}Radius`];
+      for (const corner of cornerKeys) delete value[`border${corner}Radius`];
+    for (const corner of cornerKeys)
+      if (inline[`border${corner}Radius`] != null) {
+        const [row, side] = corners[corner];
+        for (const other of cornerKeys)
+          if (corners[other][0] === row && nativeSide(corners[other][1]) === nativeSide(side))
+            delete value[`border${other}Radius`];
+      }
     for (const channel of ['Color', 'Width'] as const)
-      if (inline[`border${channel}`] != null)
-        for (const edge of ['Top', 'Right', 'Bottom', 'Left'] as const)
+      if (inline[`border${channel}`] != null) {
+        for (const edge of ['Top', 'Right', 'Bottom', 'Left', 'Start', 'End'] as const)
           delete value[`border${edge}${channel}`];
+      } else {
+        for (const side of ['Left', 'Right', 'Start', 'End'] as const)
+          if (inline[`border${side}${channel}`] != null)
+            for (const other of ['Left', 'Right', 'Start', 'End'] as const)
+              if (nativeSide(side) === nativeSide(other)) delete value[`border${other}${channel}`];
+      }
+    // Native specific edges outrank shorthands regardless of array order.
+    // Remove computed overlap edges before applying a final authored reset;
+    // margins use Yoga's global swap, without Android's local border-paint swap.
+    if (inline.margin != null)
+      for (const edge of [
+        'Top',
+        'Right',
+        'Bottom',
+        'Left',
+        'Start',
+        'End',
+        'Horizontal',
+        'Vertical',
+      ] as const)
+        delete value[`margin${edge}`];
+    else {
+      if (inline.marginHorizontal != null)
+        for (const edge of ['Left', 'Right', 'Start', 'End'] as const)
+          delete value[`margin${edge}`];
+      if (inline.marginVertical != null)
+        for (const edge of ['Top', 'Bottom'] as const) delete value[`margin${edge}`];
+    }
+    for (const side of ['Left', 'Right', 'Start', 'End'] as const)
+      if (inline[`margin${side}`] != null)
+        for (const other of ['Left', 'Right', 'Start', 'End'] as const)
+          if (nativeSide(side, false) === nativeSide(other, false)) delete value[`margin${other}`];
     Object.assign(value, inline);
   }
   return (

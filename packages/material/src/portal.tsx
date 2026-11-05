@@ -12,6 +12,7 @@ import React, {
 } from 'react';
 import {
   findNodeHandle,
+  I18nManager,
   type ViewInstance,
   type TextInstance,
   type TextInputInstance,
@@ -119,6 +120,8 @@ export const Portal = forwardRef<
     () => (styleTarget ? nativeTextScopes.at(styleTarget, nativeStyleParent) : undefined),
     [styleTarget, styleRevision, textRevision],
   );
+  const physicalDirection = physicalText?.direction ?? (I18nManager.isRTL ? 'rtl' : 'ltr');
+  const canvasTextStyle = useMemo(() => ({ direction: physicalDirection }), [physicalDirection]);
   const physicalGroupRules = useMemo(
     () => (styleTarget ? nativeStyleTree.groupRulesAt(styleTarget) : []),
     [styleTarget, styleRevision],
@@ -307,6 +310,7 @@ export const Portal = forwardRef<
       layer={layer}
       geometry={presented ? layout : null}
       surfaceRef={canvas}
+      direction={physicalDirection}
       presented={presented}
       onPortalLayout={report}
       observedTag={observation?.tag ?? 0}
@@ -323,7 +327,12 @@ export const Portal = forwardRef<
         <NativePortalContext.Provider value={surface}>
           <NativeOverlayReadiness.Provider value={presented}>
             <NativeTextStyleContext.Provider value={physicalText}>
-              <NativeTextScope rootRef={canvas} theme={theme} content={children}>
+              <NativeTextScope
+                rootRef={canvas}
+                theme={theme}
+                style={canvasTextStyle}
+                content={children}
+              >
                 {(_style, content) => <>{content}</>}
               </NativeTextScope>
             </NativeTextStyleContext.Provider>

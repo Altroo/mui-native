@@ -1,4 +1,6 @@
-import type { TextStyle, ViewStyle } from 'react-native';
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Style/variant processing adapts MIT MUI System 9.5.0. See NOTICE and upstream/reuse.json.
+import { I18nManager, Platform, type TextStyle, type ViewStyle } from 'react-native';
 import type { Theme, Breakpoint, ComponentVariant, ComponentVariantArgs } from './theme';
 export type ResponsiveStyleValue<T> = T | readonly (T | null)[] | { [key: string]: T | null };
 import { diagnostic } from './diagnostics';
@@ -27,6 +29,8 @@ export type StyleContext = NativeTextContext & {
   descendantClasses?: readonly string[];
   /** Resolve only descendant branches, leaving root declarations on the actual root. */
   descendantOnly?: boolean;
+  /** Internal: keep participating physical joins stable under RN's RTL layout/paint swaps. */
+  protectPhysicalGeometry?: boolean | undefined;
   /** Class tokens for this styled root; descendants use their participating token list. */
   classes?: readonly string[];
   /** Ancestor component sheets precede this component in the same specificity cascade. */
@@ -149,7 +153,11 @@ function isSpacingLength(value: unknown, property: string): boolean {
         (property.startsWith('margin') && value === 'auto')))
   );
 }
-type StyleRule = { style: Record<string, unknown>; specificity: number };
+type StyleRule = {
+  style: Record<string, unknown>;
+  specificity: number;
+  protectPhysicalGeometry?: boolean;
+};
 type StyleNode = {
   base: Record<string, unknown>;
   conditions?: Map<string, StyleNode[] | undefined>;
@@ -325,7 +333,11 @@ function resolveRules(
   const collect = (nodes: StyleNode[], specificity: number, descendant = false) => {
     for (const node of nodes) {
       if (Object.keys(node.base).length && (!context.descendantOnly || descendant))
-        rules.push({ style: node.base, specificity });
+        rules.push({
+          style: node.base,
+          specificity,
+          protectPhysicalGeometry: context.protectPhysicalGeometry,
+        });
       if (!node.conditions) continue;
       for (const [key, branches] of node.conditions) {
         if (!branches) continue;
@@ -374,18 +386,28 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
   const result: Record<string, unknown> = {};
   // Stable sorting preserves upstream rule order within equal specificity.
   const ordered = rules.sort((a, b) => a.specificity - b.specificity);
-  let inheritedDirection = context.logicalInsets?.parentDirection ?? theme.direction;
+  const protectGeometry =
+    context.protectPhysicalGeometry || ordered.some((rule) => rule.protectPhysicalGeometry);
+  const inheritedDirection =
+    context.logicalInsets?.parentDirection ?? context.parentDirection ?? theme.direction;
   let cssDirection: unknown;
-  if (context.logicalInsets)
+  if (context.logicalInsets || protectGeometry)
     for (const rule of ordered)
       if (rule.style.direction != null) cssDirection = rule.style.direction;
-  const direction = context.logicalInsets?.direction ?? cssDirection;
+  const direction =
+    context.logicalInsets?.direction ??
+    (protectGeometry ? context.nativeStyle?.direction : undefined) ??
+    cssDirection;
   const rtl =
     (direction === 'inherit' || direction == null ? inheritedDirection : direction) === 'rtl';
   for (const rule of ordered) {
     for (const [rawKey, value] of Object.entries(rule.style)) {
       let key = rawKey;
-      const logical = context.logicalInsets && key.match(/^(margin|padding)(Start|End)$/);
+      const logical = context.logicalInsets
+        ? key.match(/^(margin|padding)(Start|End)$/)
+        : protectGeometry
+          ? key.match(/^(margin)(Start|End)$/)
+          : null;
       if (logical) key = logical[1] + ((logical[2] === 'Start') !== rtl ? 'Left' : 'Right');
       if (value == null) continue;
       if (key === 'boxShadow' || key === 'border') {
@@ -446,6 +468,43 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
   // the SVG boundary can inherit color instead of resurrecting an attribute.
   if (context.svg && ['inherit', 'unset', 'currentColor'].includes(String(result.color)))
     normalized.color = result.color;
+  if (protectGeometry) normalized.direction = rtl ? 'rtl' : 'ltr';
+  const globalSwap = I18nManager.isRTL && I18nManager.doLeftAndRightSwapInRTL;
+  const paintSwap =
+    globalSwap || (Platform.OS === 'android' && rtl && I18nManager.doLeftAndRightSwapInRTL);
+  if (protectGeometry && paintSwap) {
+    // Fabric logicalizes physical paint for a globally RTL app. Android also
+    // mirrors physical border fallbacks for a locally RTL view, independently
+    // of the app direction. Resolve Group CSS only after its complete cascade,
+    // using the final child direction; native inline styles retain RN semantics.
+    const start = rtl ? 'Right' : 'Left';
+    const end = rtl ? 'Left' : 'Right';
+    for (const [physical, logical] of [
+      [start, 'Start'],
+      [end, 'End'],
+    ] as const) {
+      for (const row of ['Top', 'Bottom'] as const) {
+        const key = `border${row}${physical}Radius`;
+        if (Object.hasOwn(normalized, key)) {
+          normalized[`border${row}${logical}Radius`] = normalized[key];
+          delete normalized[key];
+        }
+      }
+      for (const channel of ['Color', 'Width'] as const) {
+        const key = `border${physical}${channel}`;
+        if (Object.hasOwn(normalized, key)) {
+          normalized[`border${logical}${channel}`] = normalized[key];
+          delete normalized[key];
+        }
+      }
+      // Margins are Yoga layout values, with only the global Fabric swap.
+      const margin = `margin${physical}`;
+      if (globalSwap && Object.hasOwn(normalized, margin)) {
+        normalized[`margin${logical}`] = normalized[margin];
+        delete normalized[margin];
+      }
+    }
+  }
   return normalized as NativeStyle;
 }
 export function resolveSx(

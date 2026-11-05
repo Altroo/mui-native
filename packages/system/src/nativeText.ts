@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { Platform, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
 import type { Theme } from './theme';
 import { diagnostic } from './diagnostics';
@@ -6,6 +7,8 @@ import { defaultTypographyFontFamily } from './typography';
 export type NativeTextContext = {
   parentTextStyle?: TextStyle;
   parentLineHeight?: number;
+  parentDirection?: 'ltr' | 'rtl' | undefined;
+  parentTextAlign?: 'start' | 'end' | undefined;
   nativeTextMetrics?: Record<string, unknown>;
   inheritOnly?: boolean;
   nativeStyle?: TextStyle;
@@ -52,7 +55,7 @@ export function inheritedTextStyle(style: TextStyle): TextStyle {
 }
 const relativeLineHeights = new WeakMap<object, number>();
 const cssTextMetrics = new WeakMap<object, Record<string, unknown>>();
-const relativeMetricKeys = ['fontSize', 'lineHeight', 'letterSpacing'] as const;
+const relativeMetricKeys = ['fontSize', 'lineHeight', 'letterSpacing', 'textAlign'] as const;
 // Preserve authored CSS metrics across library-generated style arrays. Literal native
 // styles clear that provenance and retain their absolute React Native semantics.
 export function nativeStyleTextMetrics(style: StyleProp<TextStyle>): Record<string, unknown> {
@@ -92,9 +95,16 @@ export function applyNativeTextMetrics<T extends TextStyle>(
   return adjusted;
 }
 export function getTextStyleInheritance(style: TextStyle, parent?: TextStyle, native?: TextStyle) {
+  const align =
+    native?.textAlign != null
+      ? cssTextMetrics.get(native)?.textAlign
+      : cssTextMetrics.get(style)?.textAlign;
+  const textAlign: 'start' | 'end' | undefined =
+    align === 'start' || align === 'end' ? align : undefined;
   return {
     style: inheritedTextStyle({ ...parent, ...style, ...native }),
     lineHeight: relativeLineHeights.get(style),
+    textAlign,
   };
 }
 function size(value: unknown, em: number, rem: number): number | undefined {
@@ -216,8 +226,15 @@ export function normalizeTextStyle(
   for (const [key, value] of Object.entries(output))
     if (value && typeof value === 'object' && 'emLength' in value)
       output[key] = Number(value.emLength) * effectiveSize;
-  if (output.textAlign === 'start') output.textAlign = theme.direction === 'rtl' ? 'right' : 'left';
-  if (output.textAlign === 'end') output.textAlign = theme.direction === 'rtl' ? 'left' : 'right';
+  const nativeDirection = context.nativeStyle?.direction;
+  const ownDirection = nativeDirection ?? input.direction;
+  const direction =
+    ownDirection === 'rtl' || ownDirection === 'ltr'
+      ? ownDirection
+      : (context.parentDirection ?? theme.direction);
+  const alignment = output.textAlign ?? context.parentTextAlign;
+  if (alignment === 'start') output.textAlign = direction === 'rtl' ? 'right' : 'left';
+  if (alignment === 'end') output.textAlign = direction === 'rtl' ? 'left' : 'right';
   const nativeAbsoluteHeight =
     context.nativeStyle?.lineHeight != null &&
     !Object.hasOwn(context.nativeTextMetrics ?? {}, 'lineHeight');
@@ -230,8 +247,11 @@ export function normalizeTextStyle(
   if (inheritedRatio !== undefined) relativeLineHeights.set(output, inheritedRatio);
   const metrics: Record<string, unknown> = {};
   for (const key of relativeMetricKeys)
-    if (Object.hasOwn(output, key))
-      metrics[key] = key === 'lineHeight' ? authoredLineHeight : input[key];
+    if (Object.hasOwn(output, key)) {
+      if (key === 'textAlign') {
+        if (alignment === 'start' || alignment === 'end') metrics[key] = alignment;
+      } else metrics[key] = key === 'lineHeight' ? authoredLineHeight : input[key];
+    }
   cssTextMetrics.set(output, metrics);
   return output;
 }

@@ -367,7 +367,7 @@ test('Button sends all supported font and decoration properties to its Text labe
   expect(StyleSheet.flatten(screen.getByRole('button').props.style).fontStyle).toBeUndefined();
 });
 
-test('inherit leaves untracked native Text and Button parent attributes intact', () => {
+test('inherit preserves untracked native Text and computed Button parent attributes', () => {
   render(
     <>
       <Text style={{ fontSize: 40, color: 'red' }}>
@@ -382,12 +382,16 @@ test('inherit leaves untracked native Text and Button parent attributes intact',
       </Button>
     </>,
   );
-  for (const id of ['native-inherit', 'button-inherit']) {
-    const style = StyleSheet.flatten(screen.getByTestId(id).props.style);
-    expect(style.fontSize).toBeUndefined();
-    expect(style.color).toBeUndefined();
-    expect(style.lineHeight).toBeUndefined();
-  }
+  const native = StyleSheet.flatten(screen.getByTestId('native-inherit').props.style);
+  expect(native.fontSize).toBeUndefined();
+  expect(native.color).toBeUndefined();
+  expect(native.lineHeight).toBeUndefined();
+  // Button keeps authored Typography as an independent native Text root.
+  expect(screen.getByTestId('button-inherit')).toHaveStyle({
+    fontSize: 14,
+    color: createTheme().palette.primary.contrastText,
+    lineHeight: 24.5,
+  });
 });
 test('an inherited normal line-height reset produces an actionable native limitation diagnostic', () => {
   const record = jest.fn();

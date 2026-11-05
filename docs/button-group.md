@@ -34,7 +34,17 @@ Nested roots consume the outer group sheets. A Portal retains the logical group'
 
 The shared theme includes all twenty-five original elevation tokens, custom concrete shadow layers and opt-in focus-visible outlines. Contained buttons resolve focus/hover/pressed/disabled shadows through the same cascade, with native inline style precedence. Concrete number, px, rem and percentage shape radii resolve through the shared style engine. Android before API 28 uses a diagnosed numeric elevation fallback; unsupported shadow/radius expressions are diagnosed rather than presented as verified CSS support. These are source contracts; platform paint and interaction still require the native checks below.
 
+The owned Android interactive host also invalidates retained drawing layers on a live native direction change. This fixes the pinned React Native border-path cache while preserving the same native view, refs and action state. Rebuild the Android application to pick up this native change. Arbitrary custom roots and ordinary external React Native Views retain their own paint behavior.
+
 The native cascade uses stable ancestry order for equal-specificity sheets. Original Emotion cache insertion history can alter equal-specificity cross-component results after dynamic style changes; that browser behavior remains an explicit styling gate. Arbitrary DOM selectors, external global stylesheets, pseudo-elements, CSS transition timing and custom browser layout roots are not established by this increment.
+
+## Native direction and readable labels
+
+The native default root follows the nearest `RtlProvider`, including the provider installed by `ThemeProvider`. An authored `sx.direction` or native `style.direction` can override the root; native `direction: 'inherit'` follows its physical parent. Nested groups resolve their own provider default. Grouped corner, divider and overlap rules follow the resulting native direction, including when a child uses the opposite direction. Inline corner, border and margin shorthands replace earlier computed specific edges on both the group and its Buttons. Authored native style objects are preserved.
+
+This is a native adaptation. On the web, DOM direction, the theme/provider and Emotion's RTL processing are independent settings. The [retained original reference](../upstream/button-group-rtl.json) exercises those controls separately using the pinned official RTL plugin. It records 33 geometry cases and seven logical text-alignment cases; those finite cases do not establish arbitrary CSS support. Generated group geometry accounts separately for global native edge swapping and Android's local RTL border paint. Authored native inline edges keep React Native's semantics.
+
+Authored React Native `Text` and `Typography` labels keep independent native text roots, so `allowFontScaling` and `maxFontSizeMultiplier` remain effective and can change without remounting label state. Literal-only labels keep their ordinary shared text root. Mixed authored/literal labels use a wrapping native row with baseline alignment; exact browser paragraph wrapping is not promised. Logical `textAlign: 'start' | 'end'` resolves against the participating native direction, including a physical Portal destination.
 
 ## Evidence and remaining work
 
@@ -44,13 +54,13 @@ The [baseline contract tests](../tests/button-group.test.tsx), [closure regressi
 
 The remaining work is separated by evidence type:
 
-| Gate                  | Remaining verification                                                                                                                                                               |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Local native behavior | Both expanded emulator scenarios pass custom themes, actual focus, nested geometry and Portal text/style/state assertions. Full RTL and large-font geometry matrices remain open.    |
-| Styling boundary      | Repeatable cross-component updates against a shared original Emotion cache, plus the documented finite native selector/unit policy. Arbitrary CSS/global styles are not established. |
-| Performance           | Representative optimized-build interaction, scrolling and memory workloads on both native platforms.                                                                                 |
-| Physical validation   | Screen-reader usability and physical keyboard/IME behavior on supported devices.                                                                                                     |
-| Delivery              | Local packed consumers and full IDE/source checks pass. Reviewed PR and exact-head/main CI remain pending for this closure. No release gate is inferred from unit tests.             |
+| Gate                  | Remaining verification                                                                                                                                                                         |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Local native behavior | Expanded scenes and normal-size LTR/RTL reading checks pass. Android actual-border raster checks reproduce and correct the live RTL cache defect; complete enlarged-text matrices remain open. |
+| Styling boundary      | Repeatable cross-component updates against a shared original Emotion cache, plus the documented finite native selector/unit policy. Arbitrary CSS/global styles are not established.           |
+| Performance           | Representative optimized-build interaction, scrolling and memory workloads on both native platforms.                                                                                           |
+| Physical validation   | Screen-reader usability and physical keyboard/IME behavior on supported devices.                                                                                                               |
+| Delivery              | Local packed consumers and full IDE/source checks pass. Reviewed PR and exact-head/main CI remain pending for this closure. No release gate is inferred from unit tests.                       |
 
 The exhaustive queue for existing partial families is in the [completion plan](completion-plan.md). No package version, tag or release accompanies this development work.
 
