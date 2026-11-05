@@ -1,14 +1,16 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { createContext, useContext, useMemo, forwardRef } from 'react';
-import { useWindowDimensions, StyleSheet, View, Text, type StyleProp } from 'react-native';
+import { useWindowDimensions, View, Text, type StyleProp } from 'react-native';
 import { createTheme, type Theme } from './theme';
 import { diagnostic } from './diagnostics';
 import RtlProvider from './RtlProvider';
 import { DefaultPropsProvider, getThemeProps } from './defaultProps';
-import { nativeStyleTextMetrics, applyNativeTextMetrics } from './nativeText';
 import { useNativeTextRootRef } from './nativeTextRegistry';
 import { NativeTextScope, useNativeTextContext, nativeTextStyleContext } from './textScope';
 import {
   componentStyle,
+  componentRootStyle,
+  createNativeStyledStyle,
   resolveSx,
   type SxProps,
   type SxObject,
@@ -91,6 +93,22 @@ export function useComponentStyle(
   const { width } = useWindowDimensions();
   return componentStyle(theme, name, props as Record<string, unknown>, sx, { width, ...context });
 }
+/** @internal Root-local counterpart to useComponentStyle for native library components. */
+export function useComponentRootStyle(
+  name: string,
+  props: object,
+  sx: SxProps | undefined,
+  style: StyleProp<NativeStyle>,
+  context: StyleContext = {},
+  themeId?: string,
+) {
+  const theme = scopedTheme(useTheme(), themeId);
+  const { width } = useWindowDimensions();
+  return componentRootStyle(theme, name, props as Record<string, unknown>, sx, style, {
+    width,
+    ...context,
+  });
+}
 export function styled<P extends object>(
   Component: React.ComponentType<P>,
   options: { name?: string; shouldForwardProp?: (prop: string) => boolean; themeId?: string } = {},
@@ -110,16 +128,18 @@ export function styled<P extends object>(
         const filtered = Object.fromEntries(
           Object.entries(rest).filter(([key]) => options.shouldForwardProp?.(key) ?? true),
         );
-        const native = StyleSheet.flatten(style) ?? undefined;
-        const nativeMetrics = nativeStyleTextMetrics(style);
-        const computed = componentStyle(theme, options.name ?? '', props, sx, {
-          ...nativeTextStyleContext(parent, style, theme),
-          width,
-          baseStyle: resolved,
-          nativeStyle: native,
-          nativeTextMetrics: nativeMetrics,
-        });
-        const finalStyle = [computed, applyNativeTextMetrics(native, computed, nativeMetrics)];
+        const finalStyle = createNativeStyledStyle(
+          theme,
+          options.name ?? '',
+          props,
+          sx,
+          {
+            ...nativeTextStyleContext(parent, style, theme),
+            width,
+            baseStyle: resolved,
+          },
+          style,
+        );
         if (Component === (View as unknown) || Component === (Text as unknown)) {
           return (
             <NativeTextScope

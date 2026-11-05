@@ -141,6 +141,10 @@ export function normalizeTextStyle(
   input: Record<string, unknown>,
   theme: Theme,
   context: NativeTextContext = {},
+  // A prepared CSS sheet can report one validation per declaration while being
+  // normalized both eagerly and at its final native root. Ordinary text paths
+  // keep the default reporter and their existing diagnostic behavior.
+  report: (code: string, message: string, property: string) => void = diagnostic,
 ): Record<string, unknown> {
   input = { ...input, ...context.nativeTextMetrics };
   const output = { ...input };
@@ -163,7 +167,7 @@ export function normalizeTextStyle(
     if (output[key] === 'inherit' || output[key] === 'unset') delete output[key];
   }
   const invalid = (key: string) => {
-    diagnostic('typography-value', `Unsupported native ${key}: ${String(input[key])}`);
+    report('typography-value', `Unsupported native ${key}: ${String(input[key])}`, key);
     delete output[key];
   };
   if (output.fontSize !== undefined) {
@@ -200,9 +204,10 @@ export function normalizeTextStyle(
     const value = output.lineHeight;
     if (value === 'normal') {
       if (context.parentTextStyle?.lineHeight != null)
-        diagnostic(
+        report(
           'typography-inheritance',
           'lineHeight: normal cannot reset an inherited native line height; use an explicit px length or unitless ratio.',
+          'lineHeight',
         );
       delete output.lineHeight;
     } else {
