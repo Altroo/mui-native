@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "sourceFile": "SvgIcon/createSvgIcon.js",
+    "sha256": "7280a1b5c33ca074a7ddda4154d28ee1e14862ea6d69135ef046b9f52db9eb47"
+  },
+  "cases": [
+    {
+      "mode": "development",
+      "authored": false,
+      "observation": {
+        "outerMuiName": null,
+        "outerDisplayName": null,
+        "forwardMuiName": null,
+        "forwardDisplayName": null,
+        "renderMuiName": "SvgIcon",
+        "renderDisplayName": "ProbeIcon",
+        "testId": "ProbeIcon",
+        "refPreserved": true,
+        "childrenFixed": true,
+        "customRootPreserved": true,
+        "color": null,
+        "fontSize": null,
+        "viewBox": null
+      }
+    },
+    {
+      "mode": "development",
+      "authored": true,
+      "observation": {
+        "outerMuiName": null,
+        "outerDisplayName": null,
+        "forwardMuiName": null,
+        "forwardDisplayName": null,
+        "renderMuiName": "SvgIcon",
+        "renderDisplayName": "ProbeIcon",
+        "testId": "Authored",
+        "refPreserved": true,
+        "childrenFixed": true,
+        "customRootPreserved": true,
+        "color": "secondary",
+        "fontSize": "large",
+        "viewBox": "0 0 48 12"
+      }
+    },
+    {
+      "mode": "production",
+      "authored": false,
+      "observation": {
+        "outerMuiName": null,
+        "outerDisplayName": null,
+        "forwardMuiName": null,
+        "forwardDisplayName": null,
+        "renderMuiName": "SvgIcon",
+        "renderDisplayName": null,
+        "testId": null,
+        "refPreserved": true,
+        "childrenFixed": true,
+        "customRootPreserved": true,
+        "color": null,
+        "fontSize": null,
+        "viewBox": null
+      }
+    },
+    {
+      "mode": "production",
+      "authored": true,
+      "observation": {
+        "outerMuiName": null,
+        "outerDisplayName": null,
+        "forwardMuiName": null,
+        "forwardDisplayName": null,
+        "renderMuiName": "SvgIcon",
+        "renderDisplayName": null,
+        "testId": "Authored",
+        "refPreserved": true,
+        "childrenFixed": true,
+        "customRootPreserved": true,
+        "color": "secondary",
+        "fontSize": "large",
+        "viewBox": "0 0 48 12"
+      }
+    }
+  ]
+}

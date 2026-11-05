@@ -1358,7 +1358,7 @@
         }
       },
       "adaptations": [
-        "Inherited native text color and fontSize=inherit plus menu icon density adapt SvgIcon inherited sizing and color; original icon paths remain independently authored."
+        "Native icon sizing and color share Material SvgIcon. The full original glyph catalog and factory import adaptation are recorded with per-file and artwork hashes in upstream/material-icons.json; the early path-string extension remains in packages/icons/src/createSvgIcon.ts."
       ]
     },
     {
