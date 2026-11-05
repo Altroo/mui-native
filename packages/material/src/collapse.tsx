@@ -23,6 +23,7 @@ import {
 import {
   diagnostic,
   NativeTextScope,
+  useNativeTextRootRef,
   nativeTextStyleContext,
   resolveSlotProps,
   useDefaultProps,
@@ -134,6 +135,7 @@ const Frame = forwardRef<
     children?: React.ReactNode;
   }
 >(function Frame({ slot, Component, owner, resolved, base, identity, children }, ref) {
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const theme = useTheme(),
     parent = useNativeTextContext();
   const { sx, style, ownerState: _ownerState, ref: _ref, component, as, id, ...native } = resolved;
@@ -159,7 +161,7 @@ const Frame = forwardRef<
     nativeStyle: StyleSheet.flatten(style) ?? undefined,
   });
   return (
-    <NativeTextScope theme={theme} style={[computed, style]} content={children}>
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={[computed, style]} content={children}>
       {(viewStyle, content) => (
         <Element
           {...native}
@@ -168,7 +170,7 @@ const Frame = forwardRef<
           onLayout={(event: LayoutChangeEvent) => {
             if (alive.current && committed.current === identity) native.onLayout?.(event);
           }}
-          ref={ref}
+          ref={scopeRef}
           {...(Element === View ? {} : { ownerState: owner })}
           style={viewStyle}
         >
@@ -284,6 +286,7 @@ function Surface({
   } = root as NativeCollapseSlotProps & { key?: React.Key };
   const rootHandle = useForkRef(rootRef, slotRef),
     wrapperHandle = useForkRef(captureWrapper, wrapper.ref);
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(rootHandle);
   const zero = (typeof collapsedSize === 'number' ? `${collapsedSize}px` : collapsedSize) === '0px';
   const hidden = status === 'exited' && !open && zero;
   const computed = useComponentStyle(
@@ -408,13 +411,17 @@ function Surface({
       ? { height: geometry.height }
       : undefined;
   return (
-    <NativeTextScope theme={theme} style={[computed, stripTiming(style), stripTiming(rootStyle)]}>
+    <NativeTextScope
+      rootRef={scopeRoot}
+      theme={theme}
+      style={[computed, stripTiming(style), stripTiming(rootStyle)]}
+    >
       {(viewStyle) => (
         <AnimatedRoot
           {...mergedNative}
           {...(RootSlot !== View && RootLeaf ? { as: RootLeaf } : {})}
           key={rootKey}
-          ref={rootHandle}
+          ref={scopeRef}
           {...(Root === View ? {} : { ownerState: owner })}
           nativeID={rootId}
           onLayout={rootOnLayout}

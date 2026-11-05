@@ -10,6 +10,7 @@ import {
   useDefaultProps,
   resolveSlotProps,
   NativeTextScope,
+  useNativeTextRootRef,
   useNativeTextContext,
   nativeTextStyleContext,
   type SlotProps,
@@ -54,6 +55,7 @@ const NativeSecondaryAction: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<NativeSecondaryActionProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, NativeSecondaryActionProps>(
   function ListItemSecondaryAction(inProps, ref) {
+    const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
     const props = useDefaultProps({ props: inProps, name: 'MuiListItemSecondaryAction' });
     const { component: Root = View, children, sx, style, slotStyle, ...native } = props;
     const { disableGutters, reportActionSize, direction } = useContext(ListContext),
@@ -75,11 +77,16 @@ const NativeSecondaryAction: React.ForwardRefExoticComponent<
       },
     );
     return (
-      <NativeTextScope theme={theme} style={[resolved, slotStyle, style]} content={children}>
+      <NativeTextScope
+        rootRef={scopeRoot}
+        theme={theme}
+        style={[resolved, slotStyle, style]}
+        content={children}
+      >
         {(style, content) => (
           <Root
             {...nativeListProps(native)}
-            ref={ref}
+            ref={scopeRef}
             style={style}
             onLayout={(event) => {
               const final = StyleSheet.flatten(style);
@@ -154,6 +161,7 @@ export const ListItem: React.ForwardRefExoticComponent<
   const root = resolveSlotProps(slotProps.root, owner) ?? {},
     secondary = resolveSlotProps(slotProps.secondaryAction, owner) ?? {};
   const ref = useForkRef(forwarded, root.ref);
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const Root = slots.root ?? component ?? View,
     Secondary = NativeSecondaryAction;
   const resolved = useComponentStyle(
@@ -216,6 +224,7 @@ export const ListItem: React.ForwardRefExoticComponent<
   return (
     <ListContext.Provider value={childContext}>
       <NativeTextScope
+        rootRef={scopeRoot}
         theme={theme}
         style={[resolved, style, rootStyle]}
         content={
@@ -240,7 +249,7 @@ export const ListItem: React.ForwardRefExoticComponent<
           <Root
             {...nativeListProps(other)}
             {...nativeListProps(rootNative)}
-            ref={ref}
+            ref={scopeRef}
             role={root.role ?? other.role ?? 'listitem'}
             style={style}
           >

@@ -466,6 +466,7 @@ export const NativeSelectInput: React.ForwardRefExoticComponent<
       ) : null;
     return (
       <NativeTextScope
+        rootRef={display}
         theme={theme}
         style={[
           defaults,

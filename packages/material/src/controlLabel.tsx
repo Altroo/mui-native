@@ -18,6 +18,7 @@ import {
   type NativeStyle,
   type SxProps,
   NativeTextScope,
+  useNativeTextRootRef,
   diagnostic,
   isNativeTextStyleProperty,
 } from '@altroo/mui-native-system';
@@ -84,6 +85,7 @@ const NativeLabelContainer = forwardRef<TextInstance, TextProps>(function Native
   { children, style, nativeID, testID, accessible, accessibilityLabel, onLayout },
   ref,
 ) {
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const theme = useTheme();
   const layout = Object.fromEntries(
     Object.entries(StyleSheet.flatten(style) ?? {}).filter(
@@ -91,10 +93,10 @@ const NativeLabelContainer = forwardRef<TextInstance, TextProps>(function Native
     ),
   );
   return (
-    <NativeTextScope theme={theme} style={layout} content={children}>
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={layout} content={children}>
       {(native, content) => (
         <View
-          ref={ref}
+          ref={scopeRef}
           nativeID={nativeID}
           testID={testID}
           accessible={accessible}
@@ -116,6 +118,7 @@ export const FormControlLabel: React.ForwardRefExoticComponent<
     theme = useTheme();
   const { width } = useWindowDimensions(),
     labelId = `mui-control-label-${useId()}`;
+  const labelTextRoot = useRef<ViewInstance | null>(null);
   const {
     control,
     label,
@@ -230,12 +233,16 @@ export const FormControlLabel: React.ForwardRefExoticComponent<
           }}
         >
           <NativeTextScope
+            rootRef={labelTextRoot}
             theme={theme}
             style={{ color: disabled ? theme.palette.text.disabled : theme.palette.text.primary }}
             content={text}
           >
             {(_style, content) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}>
+              <View
+                ref={labelTextRoot}
+                style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' }}
+              >
                 {content}
                 {required ? (
                   <Text

@@ -13,6 +13,7 @@ import {
   resolveSx,
   diagnostic,
   NativeTextScope,
+  useNativeTextRootRef,
   type NativeStyle,
   type SlotProps,
   type SxProps,
@@ -137,12 +138,14 @@ const CoordinateSurface = forwardRef<ViewInstance, ModalRootProps>(function Coor
   );
 });
 function ScrollContent({ children }: { children?: React.ReactNode }) {
+  const { root, ref } = useNativeTextRootRef<React.ComponentRef<typeof ScrollView>>();
   const theme = useTheme(),
     update = useContext(UpdatePosition);
   return (
-    <NativeTextScope theme={theme} content={children}>
+    <NativeTextScope rootRef={root} theme={theme} content={children}>
       {(_style, content) => (
         <ScrollView
+          ref={ref}
           style={{ flexGrow: 0, flexShrink: 1 }}
           horizontal={false}
           keyboardShouldPersistTaps="handled"

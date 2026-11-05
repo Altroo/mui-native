@@ -26,6 +26,7 @@ import {
 import {
   useDefaultProps,
   NativeTextScope,
+  useNativeTextRootRef,
   renderNativeTextChildren,
   resolveSlotProps,
   diagnostic,
@@ -108,10 +109,12 @@ const BackdropSurface = forwardRef<ViewInstance, SurfaceProps>(function Backdrop
   ref,
 ) {
   const style = native.style;
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const contentProp = native.children;
   const theme = useTheme();
   return (
     <NativeTextScope
+      rootRef={scopeRoot}
       theme={theme}
       style={[nativeBaseStyle, typeof style === 'function' ? undefined : style]}
       content={typeof contentProp === 'function' ? undefined : contentProp}
@@ -120,7 +123,7 @@ const BackdropSurface = forwardRef<ViewInstance, SurfaceProps>(function Backdrop
         <Root
           {...native}
           {...(Root === Pressable ? {} : { ownerState })}
-          ref={ref}
+          ref={scopeRef}
           accessible={native.accessible ?? false}
           onPress={native.onPress ?? onClick}
           style={typeof style === 'function' ? (state) => [scopeStyle, style(state)] : scopeStyle}
@@ -549,6 +552,7 @@ export const Modal: React.ForwardRefExoticComponent<
     <NativeOverlayReadiness.Provider value={open && presentationReady && manager.isTop(layer)}>
       <ParentContext.Provider value={parentValue}>
         <NativeTextScope
+          rootRef={root}
           theme={modalTheme}
           reset={!disablePortal}
           content={React.cloneElement(children, childProps)}

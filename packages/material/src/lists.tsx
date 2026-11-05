@@ -11,6 +11,7 @@ import {
 import {
   useDefaultProps,
   NativeTextScope,
+  useNativeTextRootRef,
   NativeIconStyleContext,
   useNativeTextContext,
   nativeTextStyleContext,
@@ -77,6 +78,7 @@ const contentKeys = new Set([
 export const List: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ListProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ListProps>(function List(inProps, ref) {
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const props = useDefaultProps({ props: inProps, name: 'MuiList' });
   const headerDefaults = useDefaultProps({
     props: {} as ListSubheaderProps,
@@ -134,13 +136,18 @@ export const List: React.ForwardRefExoticComponent<
   const content = scrollable ? flattenChildren(groups) : groups;
   return (
     <ListContext.Provider value={context}>
-      <NativeTextScope theme={theme} style={[resolved, style]} content={content}>
+      <NativeTextScope
+        rootRef={scopeRoot}
+        theme={theme}
+        style={[resolved, style]}
+        content={content}
+      >
         {(native, content) => {
           if (!scrollable)
             return (
               <Root
                 {...nativeListProps(other)}
-                ref={ref}
+                ref={scopeRef}
                 role={other.role ?? 'list'}
                 style={native}
               >
@@ -170,7 +177,7 @@ export const List: React.ForwardRefExoticComponent<
             <Root
               {...nativeListProps(other)}
               {...scrollViewProps}
-              ref={ref}
+              ref={scopeRef}
               role={other.role ?? 'list'}
               style={viewport}
               contentContainerStyle={[container, scrollViewProps?.contentContainerStyle]}
@@ -204,6 +211,7 @@ function useAccessory(name: string, props: NativeListRootProps, icon: boolean) {
 export const ListItemIcon: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ListItemIconProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ListItemIconProps>(function ListItemIcon(inProps, ref) {
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const props = useDefaultProps({ props: inProps, name: 'MuiListItemIcon' });
   const { component: Root = View, children, style, sx, ...native } = props;
   const { theme, resolved, menuItem, dense } = useAccessory('MuiListItemIcon', props, true);
@@ -214,9 +222,14 @@ export const ListItemIcon: React.ForwardRefExoticComponent<
   );
   return (
     <NativeIconStyleContext.Provider value={iconScope}>
-      <NativeTextScope theme={theme} style={[resolved, style]} content={children}>
+      <NativeTextScope
+        rootRef={scopeRoot}
+        theme={theme}
+        style={[resolved, style]}
+        content={children}
+      >
         {(style, content) => (
-          <Root {...nativeListProps(native)} ref={ref} style={style}>
+          <Root {...nativeListProps(native)} ref={scopeRef} style={style}>
             {content}
           </Root>
         )}
@@ -227,13 +240,14 @@ export const ListItemIcon: React.ForwardRefExoticComponent<
 export const ListItemAvatar: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ListItemAvatarProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ListItemAvatarProps>(function ListItemAvatar(inProps, ref) {
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const props = useDefaultProps({ props: inProps, name: 'MuiListItemAvatar' });
   const { component: Root = View, children, style, sx, ...native } = props;
   const { theme, resolved } = useAccessory('MuiListItemAvatar', props, false);
   return (
-    <NativeTextScope theme={theme} style={[resolved, style]} content={children}>
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={[resolved, style]} content={children}>
       {(style, content) => (
-        <Root {...nativeListProps(native)} ref={ref} style={style}>
+        <Root {...nativeListProps(native)} ref={scopeRef} style={style}>
           {content}
         </Root>
       )}
@@ -243,6 +257,7 @@ export const ListItemAvatar: React.ForwardRefExoticComponent<
 export const ListSubheader: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ListSubheaderProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ListSubheaderProps>(function ListSubheader(inProps, ref) {
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const props = useDefaultProps({ props: inProps, name: 'MuiListSubheader' });
   const {
     component: Root = View,
@@ -284,11 +299,11 @@ export const ListSubheader: React.ForwardRefExoticComponent<
   });
 
   return (
-    <NativeTextScope theme={theme} style={[resolved, style]} content={children}>
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={[resolved, style]} content={children}>
       {(style, content) => (
         <Root
           {...nativeListProps(native)}
-          ref={ref}
+          ref={scopeRef}
           accessibilityRole={native.accessibilityRole ?? 'header'}
           style={style}
         >

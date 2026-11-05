@@ -5,6 +5,7 @@ import { diagnostic } from './diagnostics';
 import RtlProvider from './RtlProvider';
 import { DefaultPropsProvider, getThemeProps } from './defaultProps';
 import { nativeStyleTextMetrics, applyNativeTextMetrics } from './nativeText';
+import { useNativeTextRootRef } from './nativeTextRegistry';
 import { NativeTextScope, useNativeTextContext, nativeTextStyleContext } from './textScope';
 import {
   componentStyle,
@@ -97,6 +98,7 @@ export function styled<P extends object>(
   return (styles: SxObject | ((props: P & { theme: Theme; ownerState?: unknown }) => SxProps)) =>
     forwardRef<unknown, P & { sx?: SxProps; style?: StyleProp<NativeStyle>; ownerState?: unknown }>(
       (props, ref) => {
+        const { root, ref: rootRef } = useNativeTextRootRef(ref);
         const theme = scopedTheme(useTheme(), options.themeId);
         const parent = useNativeTextContext();
         const { width } = useWindowDimensions();
@@ -121,6 +123,7 @@ export function styled<P extends object>(
         if (Component === (View as unknown) || Component === (Text as unknown)) {
           return (
             <NativeTextScope
+              rootRef={root as React.RefObject<object | null>}
               theme={theme}
               kind={Component === (Text as unknown) ? 'text' : 'view'}
               style={finalStyle}
@@ -129,7 +132,7 @@ export function styled<P extends object>(
               {(style, children) =>
                 React.createElement(Component, {
                   ...filtered,
-                  ref,
+                  ref: rootRef,
                   style,
                   children,
                 } as unknown as P)

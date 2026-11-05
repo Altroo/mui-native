@@ -4,6 +4,7 @@ import {
   useDefaultProps,
   resolveSlotProps,
   NativeTextScope,
+  useNativeTextRootRef,
   useNativeTextContext,
   nativeTextStyleContext,
   type SlotProps,
@@ -79,6 +80,7 @@ export const ListItemText: React.ForwardRefExoticComponent<
   const primaryDefaults = useDefaultProps({ props: primaryProps, name: 'MuiTypography' }),
     secondaryDefaults = useDefaultProps({ props: secondaryProps, name: 'MuiTypography' });
   const ref = useForkRef(forwarded, root.ref);
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const Root = slots.root ?? View,
     Primary = slots.primary ?? Typography,
     Secondary = slots.secondary ?? Typography;
@@ -138,6 +140,7 @@ export const ListItemText: React.ForwardRefExoticComponent<
   const { sx: rootSx, style: rootStyle, ref: rootRef, ...rootNative } = root;
   return (
     <NativeTextScope
+      rootRef={scopeRoot}
       theme={theme}
       style={[
         resolved,
@@ -155,7 +158,12 @@ export const ListItemText: React.ForwardRefExoticComponent<
       }
     >
       {(style, content) => (
-        <Root {...nativeListProps(native)} {...nativeListProps(rootNative)} ref={ref} style={style}>
+        <Root
+          {...nativeListProps(native)}
+          {...nativeListProps(rootNative)}
+          ref={scopeRef}
+          style={style}
+        >
           {content}
         </Root>
       )}

@@ -335,7 +335,8 @@ test('default Switch does not emit unsupported-style diagnostics and keeps a nat
     const style = StyleSheet.flatten(
       tree.getByTestId('thumb', { includeHiddenElements: true }).props.style,
     );
-    expect(style.elevation).toBe(1);
+    expect(style.boxShadow).toBe(createTheme().shadows[1]);
+    expect(style.elevation).toBeUndefined();
   } finally {
     reset();
   }

@@ -31,7 +31,9 @@ public final class ButtonGroupScenario {
   private UiAutomation automation;
   private int tagId;
   private File directory;
-  private final JSONArray stages=new JSONArray(), pictures=new JSONArray(), samples=new JSONArray();
+  private final JSONArray stages=new JSONArray(), pictures=new JSONArray(), samples=new JSONArray(), portalSamples=new JSONArray();
+  private float nestedCompact,nestedExpanded;
+  private boolean nativeFocus;
   private ButtonGroupScenario(Instrumentation driver) {this.driver=driver;}
   public static void run(Instrumentation driver) {new ButtonGroupScenario(driver).run();}
   private void run() {
@@ -39,7 +41,7 @@ public final class ButtonGroupScenario {
     try {
       directory=new File(driver.getTargetContext().getCacheDir(),"mui-button-group-"+System.currentTimeMillis());
       require(directory.mkdir(),"Preserve existing native evidence");
-      report.put("schemaVersion",1).put("scenario","button-group-v1").put("driver","native Instrumentation and UiAutomation")
+      report.put("schemaVersion",2).put("scenario","button-group-v2").put("driver","native Instrumentation and UiAutomation")
         .put("artifactDirectory","cache/"+directory.getName()).put("device",new JSONObject().put("sdk",Build.VERSION.SDK_INT).put("model",Build.MODEL));
       automation=driver.getUiAutomation(UiAutomation.FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES);
       Intent launch=driver.getTargetContext().getPackageManager().getLaunchIntentForPackage("dev.altroo.muinative.catalog");
@@ -67,15 +69,62 @@ public final class ButtonGroupScenario {
       tap("group-toggle-preview");await(()->ui(()->find("group-preview")==null),"Dynamic child must unmount");
       tap("group-horizontal");await(()->ui(()->view("document-actions").getHeight()<view("group-save").getHeight()*1.5),"Compact layout must return to a row");
       geometry("compact",new String[]{"document-content","document-actions","group-save","group-send"});
-      require(ui(()->text("group-save").equals("Save 1")),"Child removal must preserve first action state");stage("dynamic-children");capture("compact.png");passed=true;
+      require(ui(()->text("group-save").equals("Save 1")),"Child removal must preserve first action state");stage("dynamic-children");capture("compact.png");
+      tap("group-closure-toggle");
+      await(()->ui(()->find("group-closure-themed-first")!=null),"Surface examples must mount");
+      tap("group-closure-themed-first");
+      tap("group-closure-theme-toggle");
+      await(()->ui(()->text("group-closure-theme-status").startsWith("Violet")),"Custom theme must update");
+      require(ui(()->text("group-closure-themed-first").equalsIgnoreCase("Review 1")),"Theme changes must retain local state");stage("theme-live");
+      tap("group-closure-focus-first");
+      await(()->ui(()->text("group-closure-focus-status").endsWith("· focused")&&!text("group-closure-focus-status").startsWith("focus 0 ")),"Native focus callback must arrive");
+      nativeFocus=ui(()->view("group-closure-themed-first").isFocused());
+      require(nativeFocus,"The actual first native control must own focus");stage("theme-focus");capture("themed-focus.png");
+      nestedCompact=ui(()->width("group-closure-nested"));
+      tap("group-closure-nested-first");tap("group-closure-nested-toggle");
+      await(()->ui(()->width("group-closure-nested")>nestedCompact+30),"Nested descendant styles must update geometry");
+      nestedExpanded=ui(()->width("group-closure-nested"));
+      require(ui(()->text("group-closure-nested-first").equals("Nested 1")),"Nested style updates must retain local state");stage("nested-live");capture("nested.png");
+      tap("group-closure-portal-window");awaitPortal("window");portalSample("window",false,false,0);tap("group-closure-portal-action");
+      await(()->ui(()->text("group-closure-portal-action").equals("Go 1")),"Window action must activate");stage("portal-window");capture("portal-window.png");
+      tap("group-closure-portal-inside");awaitPortal("inside");portalSample("inside",true,false,0);tap("group-closure-portal-action");
+      tap("group-closure-portal-paint-toggle");await(()->ui(()->width("group-closure-portal-action")>103),"Inside paint must change width");portalSample("inside-updated",true,false,1);
+      tap("group-closure-portal-paint-toggle");stage("portal-inside");capture("portal-inside.png");
+      tap("group-closure-portal-sibling");awaitPortal("sibling");portalSample("sibling",false,true,0);tap("group-closure-portal-action");
+      tap("group-closure-portal-paint-toggle");await(()->ui(()->width("group-closure-portal-action")>135),"Sibling paint must change width");portalSample("sibling-updated",false,true,1);
+      stage("portal-sibling");capture("portal-sibling.png");
+      tap("group-closure-portal-close");await(()->ui(()->find("group-closure-portal-action")==null),"Closed Portal must detach its physical content");stage("portal-closed");passed=true;
     } catch(Throwable error) {
       try {report.put("error",error.toString());if(directory!=null)capture("failure.png");} catch(Throwable ignored) { /* Preserve the original assertion. */ }
     } finally {
-      try {report.put("status",passed?"passed":"failed").put("stages",stages).put("screenshots",pictures).put("samples",samples);result.putString("buttonGroupReport",report.toString());}
+      try {report.put("status",passed?"passed":"failed").put("stages",stages).put("screenshots",pictures).put("samples",samples).put("closure",new JSONObject().put("nativeFocus",nativeFocus).put("nestedCompact",nestedCompact).put("nestedExpanded",nestedExpanded).put("portals",portalSamples));result.putString("buttonGroupReport",report.toString());}
       catch(Exception error){result.putString("Error",error.toString());passed=false;}
       driver.finish(passed?Activity.RESULT_OK:Activity.RESULT_CANCELED,result);
     }
   }
+  // Fabric stores run colors in native spans; TextView's fallback color does
+  // not describe the glyph paint when a foreground span is present.
+  private int textColor(TextView text){
+    android.text.TextPaint paint=new android.text.TextPaint(text.getPaint());
+    CharSequence value=text.getText();
+    if(value instanceof android.text.Spanned && value.length()>0)
+      for(android.text.style.CharacterStyle span:((android.text.Spanned)value).getSpans(0,1,android.text.style.CharacterStyle.class))span.updateDrawState(paint);
+    return paint.getColor();
+  }
+  private float width(String id){View target=view(id);return target.getWidth()/target.getResources().getDisplayMetrics().density;}
+  private boolean contains(View ancestor,View child){for(android.view.ViewParent parent=child.getParent();parent!=null;parent=parent.getParent())if(parent==ancestor)return true;return ancestor==child;}
+  private void awaitPortal(String mode)throws Exception{await(()->ui(()->text("group-closure-portal-status").contains("route "+mode+" · presented")),"Portal must attach to "+mode);}
+  private void portalSample(String phase,boolean inside,boolean sibling,int count){ui(()->{
+    View action=view("group-closure-portal-action"),raw=view("group-closure-portal-text");
+    require(raw instanceof TextView,"Physical text probe must be an actual native TextView");TextView text=(TextView)raw;
+    boolean inSource=contains(view("group-closure-portal-inside-target"),action),inSibling=contains(view("group-closure-portal-sibling-target"),action);
+    require(inSource==inside&&inSibling==sibling,"Actual native parent must match destination");
+    require(text("group-closure-portal-action").equals("Go "+count),"Container changes reset local state; same-container changes retain it");
+    String context=text("group-closure-portal-context");require(context.equals("Defaults text/inherit/large · last"),"Public defaults and position must remain logical");
+    portalSamples.put(new JSONObject().put("phase",phase).put("width",width("group-closure-portal-action"))
+      .put("fontSize",text.getTextSize()/text.getResources().getDisplayMetrics().scaledDensity).put("color",Integer.toUnsignedLong(textColor(text)))
+      .put("inside",inSource).put("sibling",inSibling).put("context",context).put("count",count));return null;
+  });}
   private String text(String id){return caption(view(id));}
   private String caption(View target){if(target instanceof TextView)return ((TextView)target).getText().toString();StringBuilder value=new StringBuilder();if(target instanceof ViewGroup)for(int index=0;index<((ViewGroup)target).getChildCount();index++)value.append(caption(((ViewGroup)target).getChildAt(index)));return value.toString();}
   private void stage(String name){stages.put(name);Bundle update=new Bundle();update.putString("buttonGroupStage",name);driver.sendStatus(1,update);}
@@ -86,7 +135,10 @@ public final class ButtonGroupScenario {
   private void tap(String id) throws Exception {
     await(() -> ui(() -> find(id)!=null && view(id).isShown() && view(id).getWidth()>0), "Native touch target did not lay out: " + id);
     ui(() -> { View target=view(id); target.requestRectangleOnScreen(new Rect(0,0,target.getWidth(),target.getHeight()),true); return null; });
-    float[] point=ui(() -> { View target=view(id); Rect visible=new Rect(); int[] origin=new int[2]; require(target.getLocalVisibleRect(visible)&&!visible.isEmpty(),"Native touch target is covered"); target.getLocationOnScreen(origin); return new float[]{origin[0]+visible.exactCenterX(),origin[1]+visible.exactCenterY()}; });
+    // Custom target resizing and ScrollView reveal commit asynchronously. Wait
+    // for the real native clipped rectangle before choosing a touch coordinate.
+    await(() -> ui(() -> { View target=find(id); Rect visible=new Rect(); return target!=null&&target.getLocalVisibleRect(visible)&&!visible.isEmpty(); }),"Native touch target remains clipped: "+id);
+    float[] point=ui(() -> { View target=view(id); Rect visible=new Rect(); int[] origin=new int[2]; require(target.getLocalVisibleRect(visible)&&!visible.isEmpty(),"Native touch target is covered: "+id); target.getLocationOnScreen(origin); return new float[]{origin[0]+visible.exactCenterX(),origin[1]+visible.exactCenterY()}; });
     long time=SystemClock.uptimeMillis();
     for(int action:new int[]{MotionEvent.ACTION_DOWN,MotionEvent.ACTION_UP}) { MotionEvent event=MotionEvent.obtain(time,SystemClock.uptimeMillis(),action,point[0],point[1],0); event.setSource(InputDevice.SOURCE_TOUCHSCREEN); try { require(automation.injectInputEvent(event,true),"Native touch injection failed"); } finally { event.recycle(); } SystemClock.sleep(30); }
   }

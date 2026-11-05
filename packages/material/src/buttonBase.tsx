@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Platform,
   Linking,
+  useWindowDimensions,
   type PressableProps,
   type PressableStateCallbackType,
   type ViewInstance,
@@ -22,12 +23,16 @@ import {
   NativeTextScope,
   useNativeTextContext,
   nativeTextStyleContext,
+  applyNativeTextMetrics,
+  nativeStyleTextMetrics,
   isNativeTextStyleProperty,
   diagnostic,
+  componentStyle,
   type SxProps,
   type NativeStyle,
+  type StyleContext,
 } from '@altroo/mui-native-system';
-import { useComponentStyle, useTheme } from './themeProvider';
+import { useTheme } from './themeProvider';
 import { useForkRef } from './utils';
 import {
   buttonKeyEvent,
@@ -54,6 +59,12 @@ export interface ButtonBaseState extends PressableStateCallbackType {
   focusVisible: boolean;
   disabled: boolean;
 }
+/** @internal Shared sheets preserve specificity across native styled wrappers. */
+export type NativeButtonBaseStyleSheet = NonNullable<StyleContext['ancestors']>[number];
+export interface NativeButtonBaseStyleResult {
+  computed: NativeStyle;
+  authored: StyleProp<NativeStyle>;
+}
 export interface ButtonBaseRootProps extends PressableProps {
   ref?: React.Ref<ViewInstance>;
   href?: string;
@@ -64,6 +75,13 @@ export interface ButtonBaseOwnProps {
   _muiNativeItemState?: { focused: boolean; focusVisible: boolean; selected: boolean };
   /** @internal Exact generated class metadata; authored CSS still diagnoses. */
   _muiNativeClassName?: string;
+  /** @internal A composing control can own its theme focus ring. */
+  internalDisabledThemeFocusVisible?: boolean;
+  /** @internal Keep wrapper CSS in the same cascade, separately from native inline styles. */
+  _muiNativeStyle?: (
+    state: ButtonBaseState,
+    base: NativeButtonBaseStyleSheet,
+  ) => NativeButtonBaseStyleResult;
   disabled?: boolean;
   autoFocus?: boolean;
   ref?: React.Ref<ViewInstance>;
@@ -101,6 +119,37 @@ function viewStyle(input: StyleProp<NativeStyle>): StyleProp<ViewStyle> {
     Object.fromEntries(Object.entries(flattened).filter(([key]) => !isNativeTextStyleProperty(key)))
   );
 }
+/** @internal Apply true native inline declarations after the shared CSS cascade. */
+export function mergeNativeButtonStyle(
+  computed: NativeStyle,
+  authored: StyleProp<NativeStyle>,
+  feedback?: NativeStyle,
+): NativeStyle {
+  const flattened = StyleSheet.flatten(authored);
+  const inline = flattened && { ...flattened };
+  if (inline)
+    for (const edge of ['Top', 'Right', 'Bottom', 'Left'] as const) {
+      const value =
+        inline[`padding${edge}`] ??
+        inline[edge === 'Top' || edge === 'Bottom' ? 'paddingVertical' : 'paddingHorizontal'] ??
+        inline.padding;
+      if (value != null) inline[`padding${edge}`] = value;
+    }
+  const value = { ...computed, ...feedback };
+  if (inline) {
+    if (inline.borderRadius != null)
+      for (const corner of ['TopLeft', 'TopRight', 'BottomLeft', 'BottomRight'] as const)
+        delete value[`border${corner}Radius`];
+    for (const channel of ['Color', 'Width'] as const)
+      if (inline[`border${channel}`] != null)
+        for (const edge of ['Top', 'Right', 'Bottom', 'Left'] as const)
+          delete value[`border${edge}${channel}`];
+    Object.assign(value, inline);
+  }
+  return (
+    applyNativeTextMetrics(value, computed, nativeStyleTextMetrics([computed, authored])) ?? value
+  );
+}
 export const ButtonBase: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ButtonBaseProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ButtonBaseProps>(function ButtonBase(inProps, forwarded) {
@@ -121,6 +170,8 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     focusRipple = false,
     focusableWhenDisabled = false,
     suppressFocusVisible = false,
+    internalDisabledThemeFocusVisible = false,
+    _muiNativeStyle,
     _muiNativeItemState,
     _muiNativeClassName,
     onClick,
@@ -177,7 +228,8 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     node.current?.focus();
   });
   const theme = useTheme(),
-    parent = useNativeTextContext();
+    parent = useNativeTextContext(),
+    { width } = useWindowDimensions();
   const isLink = Boolean(href || to);
   const chosen = component === Pressable ? NativePressable : component;
   const link = LinkComponent === Pressable ? NativePressable : LinkComponent;
@@ -187,40 +239,52 @@ export const ButtonBase: React.ForwardRefExoticComponent<
       : chosen;
   const ownedLink = Root === NativePressable && Boolean(href);
   const staticStyle = typeof style === 'function' ? undefined : style;
-  const computed = useComponentStyle(
-    'MuiButtonBase',
-    {
-      ...props,
-      disabled,
-      disableRipple,
-      disableTouchRipple,
-      focusRipple,
-      tabIndex,
-      focusVisible: visualFocusVisible,
+  const ownerState = {
+    ...props,
+    disabled,
+    disableRipple,
+    disableTouchRipple,
+    focusRipple,
+    internalDisabledThemeFocusVisible,
+    tabIndex,
+    focusVisible: visualFocusVisible,
+  };
+  const styleContext = {
+    ...nativeTextStyleContext(parent, staticStyle, theme),
+    width,
+    states: [
+      ...(disabled ? ['disabled'] : []),
+      ...(_muiNativeItemState?.focused ? ['focused'] : []),
+      ...(_muiNativeItemState?.selected ? ['selected'] : []),
+      ...(visualFocusVisible ? ['focusVisible'] : []),
+    ],
+    baseStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: 'relative',
+      backgroundColor: 'transparent',
+      borderWidth: 0,
+      borderRadius: 0,
+      margin: 0,
+      padding: 0,
+      color: 'inherit',
+      ...(focusVisible && !internalDisabledThemeFocusVisible && theme.focusVisible
+        ? { '&.Mui-focusVisible': theme.focusVisible }
+        : {}),
     },
+  };
+  const baseSheet: NativeButtonBaseStyleSheet = {
+    theme,
+    name: 'MuiButtonBase',
+    props: ownerState,
     sx,
-    {
-      ...nativeTextStyleContext(parent, staticStyle, theme),
-      states: [
-        ...(disabled ? ['disabled'] : []),
-        ...(_muiNativeItemState?.focused ? ['focused'] : []),
-        ...(_muiNativeItemState?.selected ? ['selected'] : []),
-        ...(visualFocusVisible ? ['focusVisible'] : []),
-      ],
-      baseStyle: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        backgroundColor: 'transparent',
-        borderWidth: 0,
-        borderRadius: 0,
-        margin: 0,
-        padding: 0,
-        color: 'inherit',
-      },
-    },
-  );
+    context: styleContext,
+  };
+  const computed =
+    _muiNativeStyle || typeof style === 'function'
+      ? undefined
+      : componentStyle(theme, 'MuiButtonBase', ownerState, sx, styleContext);
   useImperativeHandle(
     action,
     () => ({
@@ -249,16 +313,43 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     focusVisible: visualFocusVisible,
     disabled,
   });
-  const effectiveStyle = (state: PressableStateCallbackType): StyleProp<NativeStyle> => [
-    computed,
-    focusVisible && focusRipple && !disableRipple
-      ? { outlineWidth: 2, outlineColor: theme.palette.primary.main, outlineStyle: 'solid' }
-      : undefined,
-    Platform.OS !== 'android' && state.pressed && !disabled && !disableRipple && !disableTouchRipple
-      ? { opacity: (typeof computed.opacity === 'number' ? computed.opacity : 1) * 0.8 }
-      : undefined,
-    typeof style === 'function' ? style(stateFor(state)) : style,
-  ];
+  let styleCache: { authored: StyleProp<NativeStyle>; computed: NativeStyle } | undefined;
+  const effectiveStyle = (state: PressableStateCallbackType): StyleProp<NativeStyle> => {
+    let authored: StyleProp<NativeStyle>;
+    let resolved: NativeStyle;
+    if (_muiNativeStyle) {
+      ({ computed: resolved, authored } = _muiNativeStyle(stateFor(state), baseSheet));
+    } else if (typeof style === 'function') {
+      authored = style(stateFor(state));
+      if (styleCache && styleCache.authored === authored) resolved = styleCache.computed;
+      else {
+        resolved = componentStyle(theme, 'MuiButtonBase', ownerState, sx, {
+          ...styleContext,
+          ...nativeTextStyleContext(parent, authored, theme),
+        });
+        styleCache = { authored, computed: resolved };
+      }
+    } else {
+      authored = style;
+      resolved = computed!;
+    }
+    return mergeNativeButtonStyle(resolved, authored, {
+      ...(focusVisible && focusRipple && !disableRipple && !theme.focusVisible
+        ? {
+            outlineWidth: 2,
+            outlineColor: theme.palette.primary.main,
+            outlineStyle: 'solid' as const,
+          }
+        : {}),
+      ...(Platform.OS !== 'android' &&
+      state.pressed &&
+      !disabled &&
+      !disableRipple &&
+      !disableTouchRipple
+        ? { opacity: (typeof resolved.opacity === 'number' ? resolved.opacity : 1) * 0.8 }
+        : {}),
+    });
+  };
   const {
     classes,
     className,
@@ -377,6 +468,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     >
       {(state) => (
         <NativeTextScope
+          rootRef={node}
           theme={theme}
           style={effectiveStyle(state)}
           content={typeof children === 'function' ? children(stateFor(state)) : children}

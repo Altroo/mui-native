@@ -6,6 +6,7 @@ import { View, type ViewInstance, type ViewProps, type StyleProp } from 'react-n
 import {
   useDefaultProps,
   NativeTextScope,
+  useNativeTextRootRef,
   useNativeTextContext,
   nativeTextStyleContext,
   type NativeStyle,
@@ -24,13 +25,14 @@ export const Box: React.ForwardRefExoticComponent<
   { sx, style, children, component: Component = View, ...props },
   ref,
 ) {
+  const { root, ref: rootRef } = useNativeTextRootRef(ref);
   const theme = useTheme();
   const parent = useNativeTextContext();
   const resolved = useSx(sx, nativeTextStyleContext(parent, style, theme));
   return (
-    <NativeTextScope theme={theme} style={[resolved, style]} content={children}>
+    <NativeTextScope rootRef={root} theme={theme} style={[resolved, style]} content={children}>
       {(native, content) => (
-        <Component {...props} ref={ref} style={native}>
+        <Component {...props} ref={rootRef} style={native}>
           {content}
         </Component>
       )}
@@ -89,30 +91,23 @@ export const Paper: React.ForwardRefExoticComponent<
     children,
     ...rest
   } = props;
+  const { root, ref: rootRef } = useNativeTextRootRef(ref);
   const theme = useTheme();
-  const shadow = useSx({ boxShadow: variant === 'elevation' ? elevation : 0 });
   const parent = useNativeTextContext();
   const resolved = useComponentStyle('MuiPaper', { ...props, elevation, variant, square }, sx, {
     ...nativeTextStyleContext(parent, style, theme),
-    baseStyle: { color: theme.palette.text.primary },
+    baseStyle: {
+      color: theme.palette.text.primary,
+      backgroundColor: theme.palette.background.paper,
+      borderRadius: square ? 0 : theme.shape.borderRadius,
+      boxShadow: variant === 'elevation' ? elevation : 0,
+      ...(variant === 'outlined' ? { borderWidth: 1, borderColor: theme.palette.divider } : {}),
+    },
   });
   return (
-    <NativeTextScope
-      theme={theme}
-      content={children}
-      style={[
-        {
-          backgroundColor: theme.palette.background.paper,
-          borderRadius: square ? 0 : theme.shape.borderRadius,
-          ...(variant === 'outlined' ? { borderWidth: 1, borderColor: theme.palette.divider } : {}),
-        },
-        shadow,
-        resolved,
-        style,
-      ]}
-    >
+    <NativeTextScope rootRef={root} theme={theme} content={children} style={[resolved, style]}>
       {(native, content) => (
-        <Component {...rest} ref={ref} style={native}>
+        <Component {...rest} ref={rootRef} style={native}>
           {content}
         </Component>
       )}

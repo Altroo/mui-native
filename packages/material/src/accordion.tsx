@@ -5,6 +5,7 @@ import React, { createContext, forwardRef, useCallback, useContext, useMemo } fr
 import { View, useWindowDimensions, type ViewInstance, type StyleProp } from 'react-native';
 import {
   NativeTextScope,
+  useNativeTextRootRef,
   useNativeTextContext,
   nativeTextStyleContext,
   useDefaultProps,
@@ -86,6 +87,7 @@ const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
     ...native
   } = resolved;
   const ref = useForkRef(forwarded, slotRef);
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const Element = Component === View ? (component ?? as ?? View) : Component;
   const computed = useComponentStyle(name, { ...owner }, sx, {
     ...nativeTextStyleContext(parent, style, theme),
@@ -97,12 +99,12 @@ const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
     baseStyle: base,
   });
   return (
-    <NativeTextScope theme={theme} style={[computed, style]} content={children}>
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={[computed, style]} content={children}>
       {(viewStyle, content) => (
         <Element
           {...native}
           nativeID={id ?? native.nativeID}
-          ref={ref}
+          ref={scopeRef}
           {...(Element === View ? {} : { ownerState: owner })}
           {...(Component !== View && (component ?? as) ? { as: component ?? as } : {})}
           style={viewStyle}
@@ -162,6 +164,7 @@ export const Accordion: React.ForwardRefExoticComponent<
     ...rootNative
   } = root;
   const ref = useForkRef(forwarded, slotRef);
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const theme = useTheme(),
     parent = useNativeTextContext();
   const states = [...(expanded ? ['expanded'] : []), ...(disabled ? ['disabled'] : [])];
@@ -198,12 +201,12 @@ export const Accordion: React.ForwardRefExoticComponent<
     Transition = slots.transition ?? Collapse;
   const leaf = rootComponent ?? component ?? rootAs;
   return (
-    <NativeTextScope theme={theme} style={[computed, style, rootStyle]}>
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={[computed, style, rootStyle]}>
       {(viewStyle) => (
         <Root
           {...other}
           {...rootNative}
-          ref={ref}
+          ref={scopeRef}
           component={leaf}
           {...(Root === Paper || Root === View ? {} : { ownerState: owner })}
           style={viewStyle}

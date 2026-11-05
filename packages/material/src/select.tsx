@@ -605,6 +605,7 @@ export const SelectInput = forwardRef<SelectInputHandle, InternalInputProps>(
     return (
       <>
         <NativeTextScope
+          rootRef={display}
           theme={theme}
           style={[
             selectionDefaults,

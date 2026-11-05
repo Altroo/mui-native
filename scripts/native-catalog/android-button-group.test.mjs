@@ -13,14 +13,35 @@ import {
 import { prepareButtonGroupSource } from './android-button-group-source.mjs';
 const sample = (name, x, y, width, height) => ({ name, x, y, width, height });
 const complete = {
-  schemaVersion: 1,
-  scenario: 'button-group-v1',
+  schemaVersion: 2,
+  scenario: 'button-group-v2',
   driver: 'native Instrumentation and UiAutomation',
   status: 'passed',
   artifactDirectory: 'cache/mui-button-group-123',
   device: { sdk: 37, model: 'test-device' },
   stages: buttonGroupStages,
   screenshots: buttonGroupPictures,
+  closure: {
+    nativeFocus: true,
+    nestedCompact: 180,
+    nestedExpanded: 220,
+    portals: [
+      ['window', 64, 16, false, false, 0],
+      ['inside', 96, 18, true, false, 0],
+      ['inside-updated', 108, 20, true, false, 1],
+      ['sibling', 128, 22, false, true, 0],
+      ['sibling-updated', 140, 24, false, true, 1],
+    ].map(([phase, width, fontSize, inside, sibling, count], index) => ({
+      phase,
+      width,
+      fontSize,
+      inside,
+      sibling,
+      count,
+      color: [0xff0d070b, 0xff9c27b0, 0xffbe185d, 0xff1565c0, 0xff0369a1][index],
+      context: 'Defaults text/inherit/large · last',
+    })),
+  },
   samples: [
     sample('horizontal:document-content', 0, 0, 298, 300),
     sample('horizontal:document-actions', 0, 0, 298, 44),
@@ -100,5 +121,24 @@ test('group source preparation preserves contributor edits', async () => {
     assert.equal(await readFile(file, 'utf8'), source + '\n// contributor edit\n');
   } finally {
     await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test('closure receipt rejects absent focus, forged layout and missing physical inheritance', () => {
+  for (const closure of [
+    undefined,
+    { ...complete.closure, nativeFocus: false },
+    { ...complete.closure, nestedExpanded: 180 },
+    { ...complete.closure, nestedExpanded: undefined },
+    { ...complete.closure, nestedCompact: '180' },
+    { ...complete.closure, portals: complete.closure.portals.slice(1) },
+    ...['width', 'fontSize', 'inside', 'context', 'count', 'color'].map((key) => ({
+      ...complete.closure,
+      portals: complete.closure.portals.map((s, i) =>
+        i === 1 ? { ...s, [key]: key === 'inside' ? false : key === 'context' ? 'wrong' : -1 } : s,
+      ),
+    })),
+  ]) {
+    assert.throws(() => summarizeButtonGroup(output({ ...complete, closure })));
   }
 });

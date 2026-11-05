@@ -387,8 +387,7 @@ test('responsive holes remove synthetic shadow and border declarations but typog
   expect(
     resolveSx({ [condition]: { boxShadow: 2 }, boxShadow: [0, null, 3] }, theme, { width: 700 }),
   ).toEqual({
-    elevation: 0,
-    shadowOpacity: 0,
+    boxShadow: 'none',
   });
   expect(
     resolveSx({ [condition]: { border: 2 }, border: [0, null, 3] }, theme, { width: 700 }),

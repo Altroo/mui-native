@@ -11,6 +11,7 @@ import {
   useRtl,
   resolveSlotProps,
   NativeTextScope,
+  useNativeTextRootRef,
   type NativeStyle,
   type SlotProps,
   type SxProps,
@@ -211,6 +212,7 @@ function PopperContent({
   const slotStyle = useComponentStyle('', ownerState, root.sx),
     handleRoot = useCallback((value: ViewInstance | null) => setNode(value), []),
     ref = useForkRef(handleRoot, forwarded, root.ref);
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   // Gate child interaction while geometry is pending. Transition enter callbacks must
   // still run: they activate the engine, so gating those callbacks would deadlock entry.
   const inheritedReady = useContext(NativeOverlayReadiness),
@@ -243,7 +245,7 @@ function PopperContent({
     .filter(Boolean)
     .join(' ');
   const element = (
-    <NativeTextScope theme={theme} style={rootStyle} content={content}>
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={rootStyle} content={content}>
       {(textStyle, content) => (
         <Root
           role="tooltip"
@@ -253,7 +255,7 @@ function PopperContent({
           {...root}
           className={resolvedClass}
           ownerState={ownerState}
-          ref={ref}
+          ref={scopeRef}
           collapsable={false}
           style={textStyle}
           onLayout={onLayout}

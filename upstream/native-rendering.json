@@ -36,7 +36,14 @@
       "ReactCommon/react/renderer/graphics/Transform.cpp": "ae7718e1702be80d6d5075e7291ab21a355f67d6afdaeef02f9fbbb03732b00b",
       "ReactAndroid/src/main/java/com/facebook/react/uimanager/ViewGroupManager.kt": "5c1aae161c98af54f2161543e529a6ca0b2010fff2ed4c27cde037131d4d70d0",
       "ReactAndroid/src/main/java/com/facebook/react/uimanager/IViewGroupManager.kt": "b3bea743bf92c4efce41a1f379aae60a7f0d99e02275aad32e8a3f68a247080d",
-      "ReactAndroid/src/main/java/com/facebook/react/fabric/mounting/SurfaceMountingManager.kt": "9fe64c96f15ce00489339372b1ad71a9065613997e5efccfec4c9227a0786116"
+      "ReactAndroid/src/main/java/com/facebook/react/fabric/mounting/SurfaceMountingManager.kt": "9fe64c96f15ce00489339372b1ad71a9065613997e5efccfec4c9227a0786116",
+      "Libraries/StyleSheet/processBoxShadow.js": "c3fa39d82e2b3566144db039f1297e889b8486858c0208cc2c5f2ecec62fa7db",
+      "Libraries/StyleSheet/StyleSheetTypes.js": "a39ca0a5ec106e8abbc23960775bcdae0d37fea6bba3910cecba6ee613256277",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/OutsetBoxShadowDrawable.kt": "fc273efa2fce9eea2b906d67036768116b9c4742a83613e83c773235f41c9934",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/InsetBoxShadowDrawable.kt": "207c3d19ef028fd8ff562aa00ffffdec4c9dc302ff31bc68b771206fc4122876",
+      "src/private/webapis/dom/nodes/ReadOnlyNode.js": "a8f76b52ea437f4a8d8bb0044fe2f45c21da0be76594a0aa2ca9a2d5e47b290b",
+      "Libraries/Components/ScrollView/ScrollView.js": "5c99c1de2118ffd40e59bdfbcb38aeb09ce59236e17c89adf0df1628272d98fc",
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/TextLayoutManager.kt": "5f0e46a199d851ab3e23790678563650a72ed4dab7d52a2db96349a73abad8ce"
     }
   },
   "localFiles": [
@@ -59,7 +66,10 @@
     "packages/native-host/android/src/main/java/com/altroo/muinativehost/PortalObservationEvent.kt",
     "packages/native-host/ios/AltrooPortalPlanarTransform.h",
     "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIPortalHostManager.kt",
-    "packages/native-host/android/src/main/java/com/altroo/muinativehost/DescendantKeyWindow.kt"
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/DescendantKeyWindow.kt",
+    "packages/system/src/shadows.ts",
+    "packages/material/src/nativeStyleAncestry.ts",
+    "packages/system/src/nativeTextRegistry.ts"
   ],
   "adaptations": [
     "Native root child mounting and React Native touch/pointer dispatch follow the verified MIT reference. The new implementation attaches within an existing native window/container, does not create a modal or request focus, preserves React context, and reports actual native affine container bounds.",
@@ -72,6 +82,8 @@
     "Observation-only hosts support inline Popper without attaching a native Portal root or requesting focus. Empty native/window clipping remains empty before inverse affine conversion. Native host 0.0.5 requires an application rebuild.",
     "UIKit observations accept invertible planar XY transforms with an independent finite Z scale, including RN uniform scale. Perspective, tilted planes, nonfinite and singular transforms remain unavailable geometry.",
     "Android logical Portal children are managed through RN IViewGroupManager rather than phantom ViewGroup child getters. Framework accessibility/structure traversal sees the true physical tree; manager getters always read the live overlay list, including Fabric direct reparenting.",
-    "Android editable-key release ownership resolves the pinned ReactModalHostView public Dialog getter to its real Window. A temporary callback delegates unrelated events and preserves RN's established Escape-up request-close route; unknown application windows remain untouched."
+    "Android editable-key release ownership resolves the pinned ReactModalHostView public Dialog getter to its real Window. A temporary callback delegates unrelated events and preserves RN's established Escape-up request-close route; unknown application windows remain untouched.",
+    "Concrete box-shadow validation and native API gates follow RN0.88.1 processBoxShadow/ViewStyle and Android outset/inset drawables. iOS and Android28+ preserve layered paint; older Android numeric elevation fallback is diagnosed and never drawn alongside a modern boxShadow.",
+    "Physical finite style/text ownership walks the public RN DOM-like node ancestry with explicit native Portal redirections; public ScrollView refs are the native node enriched with scrolling methods. Leases preserve caller refs and reject detached/cyclic/self-container destinations."
   ]
 }

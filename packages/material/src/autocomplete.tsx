@@ -19,6 +19,7 @@ import {
   resolveSlotProps,
   componentStyle,
   NativeTextScope,
+  useNativeTextRootRef,
   useNativeTextContext,
   nativeTextStyleContext,
   isNativeTextStyleProperty,
@@ -345,6 +346,7 @@ export const Autocomplete = forwardRef<ViewInstance, RuntimeProps>(
       PaperSlot = (slots.paper ?? Paper) as React.ComponentType<any>,
       PopperSlot = (slots.popper ?? Popper) as React.ComponentType<any>;
     const rootRef = useForkRef(forwarded, root.ref);
+    const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(rootRef);
     const listBindings = state.getListboxProps(listbox);
     const listRef = useForkRef(listBindings.ref, listbox.ref);
     const [anchorWidth, setAnchorWidth] = useState<number>();
@@ -683,12 +685,12 @@ export const Autocomplete = forwardRef<ViewInstance, RuntimeProps>(
       ...statusProps
     } = status;
     return (
-      <NativeTextScope theme={theme} style={rootStyle}>
+      <NativeTextScope rootRef={scopeRoot} theme={theme} style={rootStyle}>
         {() => (
           <>
             <Root
               {...rootBindings}
-              ref={rootRef}
+              ref={scopeRef}
               style={rootStyle}
               {...(slots.root
                 ? {

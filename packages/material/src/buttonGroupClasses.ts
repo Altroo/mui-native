@@ -18,11 +18,43 @@ const slots = [
   'lastButton',
   'middleButton',
 ] as const;
-export type ButtonGroupClassKey = (typeof slots)[number];
-export type ButtonGroupClasses = Record<ButtonGroupClassKey, string>;
-export function getButtonGroupUtilityClass(slot: string) {
-  return slot === 'disabled' ? 'Mui-disabled' : `MuiButtonGroup-${slot}`;
+export interface ButtonGroupClasses {
+  root: string;
+  contained: string;
+  outlined: string;
+  text: string;
+  disableElevation: string;
+  disabled: string;
+  firstButton: string;
+  fullWidth: string;
+  horizontal: string;
+  vertical: string;
+  colorPrimary: string;
+  colorSecondary: string;
+  grouped: string;
+  lastButton: string;
+  middleButton: string;
 }
+export type ButtonGroupClassKey = keyof ButtonGroupClasses;
+const globalStates = new Set([
+  'active',
+  'checked',
+  'completed',
+  'disabled',
+  'error',
+  'expanded',
+  'focused',
+  'focusVisible',
+  'open',
+  'readOnly',
+  'required',
+  'selected',
+]);
+export function getButtonGroupUtilityClass(slot: string) {
+  return globalStates.has(slot) ? `Mui-${slot}` : `MuiButtonGroup-${slot}`;
+}
+// Declaration merging extends the public type, while this runtime vocabulary
+// remains the pinned source slots.
 export const buttonGroupClasses = Object.fromEntries(
   slots.map((slot) => [slot, getButtonGroupUtilityClass(slot)]),
-) as ButtonGroupClasses;
+) as Record<(typeof slots)[number], string> as ButtonGroupClasses;

@@ -19,8 +19,13 @@ const sources = [
   'ButtonGroup/ButtonGroupButtonContext.d.ts',
   'Button/Button.js',
   'ButtonBase/ButtonBase.js',
+  'Portal/Portal.js',
+  'Typography/Typography.js',
 ];
 const { reference } = await loadReference('@mui/material', sources);
+const { reference: utilitiesReference } = await loadReference('@mui/utils', [
+  'generateUtilityClass/generateUtilityClass.js',
+]);
 const browserSource = 'scripts/reference/button-group-browser.mjs';
 const browserSha256 = createHash('sha256')
   .update(await readFile(browserSource))
@@ -28,6 +33,7 @@ const browserSha256 = createHash('sha256')
 const action = process.argv[2] ?? 'prepare';
 const metadata = {
   reference,
+  utilitiesReference,
   browserSource,
   browserSha256,
   cachePolicy: 'fresh Emotion cache per independently mounted case',
@@ -75,11 +81,22 @@ if (
   if (
     JSON.stringify(data.metadata) !== JSON.stringify(metadata) ||
     data.fixtures?.length !== 51 ||
-    !data.classes
+    !data.classes ||
+    !data.contracts?.customRoot ||
+    !data.contracts?.nested ||
+    data.contracts?.live?.length !== 2 ||
+    data.contracts?.focus?.length !== 7 ||
+    data.contracts?.portalOwnership?.length !== 3 ||
+    data.contracts?.portalDestinations?.length !== 2 ||
+    data.contracts?.portalText?.length !== 4 ||
+    data.contracts?.slotVariants?.length !== 2 ||
+    !data.contracts?.callbacks ||
+    Object.keys(data.contracts?.utilityClasses ?? {}).length !== 13
   )
     throw Error('Stale or incomplete original-browser observation');
   await json('tests/fixtures/mui-button-group-9.5.0.json', {
     reference,
+    utilitiesReference,
     browserProbe: {
       source: browserSource,
       sha256: browserSha256,
@@ -87,12 +104,14 @@ if (
     },
     classes: data.classes,
     fixtures: data.fixtures,
+    contracts: data.contracts,
   });
   await json('upstream/button-group.json', {
     schemaVersion: 1,
     description:
       'Pinned MIT ButtonGroup/context/class reference; browser observations do not promote native compatibility.',
     reference,
+    utilitiesReference,
     cachePolicy: metadata.cachePolicy,
     localFiles: [
       'packages/material/src/buttonGroup.tsx',

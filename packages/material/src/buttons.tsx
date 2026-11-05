@@ -2,9 +2,8 @@
  * Copyright (c) MUI contributors. See NOTICE,
  * upstream/reuse.json and upstream/button-group.json.
  * Native implementation: Copyright (c) 2026 Altroo and contributors. */
-import React, { forwardRef, useId, useState, useContext } from 'react';
+import React, { forwardRef, useId, useState, useContext, useRef } from 'react';
 import {
-  StyleSheet,
   View,
   Text,
   ActivityIndicator,
@@ -16,6 +15,7 @@ import {
 import {
   useDefaultProps,
   NativeTextScope,
+  useNativeTextRootRef,
   useNativeTextContext,
   nativeTextStyleContext,
   nativeStyleTextMetrics,
@@ -28,7 +28,12 @@ import {
   type Theme,
 } from '@altroo/mui-native-system';
 import { useTheme } from './themeProvider';
-import { ButtonBase, type ButtonBaseState } from './buttonBase';
+import {
+  ButtonBase,
+  mergeNativeButtonStyle,
+  type ButtonBaseState,
+  type NativeButtonBaseStyleSheet,
+} from './buttonBase';
 import { Typography } from './typography';
 import {
   ButtonGroupContext,
@@ -73,18 +78,6 @@ const buttonRootClassKeys = new Set([
   'colorWarning',
 ]);
 const cap = (value: string) => value[0].toUpperCase() + value.slice(1);
-function expandPadding(style: NativeStyle | null | undefined) {
-  if (!style) return style;
-  const output = { ...style };
-  for (const edge of ['Top', 'Right', 'Bottom', 'Left'] as const) {
-    const value =
-      style[`padding${edge}`] ??
-      style[edge === 'Top' || edge === 'Bottom' ? 'paddingVertical' : 'paddingHorizontal'] ??
-      style.padding;
-    if (value != null) output[`padding${edge}`] = value;
-  }
-  return output;
-}
 function typographyTextRoot(
   child: React.ReactElement<{ component?: unknown }>,
   defaultComponent: unknown,
@@ -114,14 +107,24 @@ function Content({
   children: React.ReactNode;
   hidden?: boolean;
 }) {
+  const { root, ref } = useNativeTextRootRef<ViewInstance>();
   const text = textOnly(children, defaultTypographyComponent);
   return (
-    <NativeTextScope theme={theme} kind={text ? 'text' : 'view'} style={style} content={children}>
+    <NativeTextScope
+      rootRef={root}
+      theme={theme}
+      kind={text ? 'text' : 'view'}
+      style={style}
+      content={children}
+    >
       {(native, content) =>
         text ? (
-          <Text style={[native, hidden ? { opacity: 0 } : undefined]}>{content}</Text>
+          <Text ref={ref} style={[native, hidden ? { opacity: 0 } : undefined]}>
+            {content}
+          </Text>
         ) : (
           <View
+            ref={ref}
             style={[native, { flexShrink: 1, minWidth: 0 }, hidden ? { opacity: 0 } : undefined]}
           >
             {content}
@@ -193,26 +196,6 @@ function readableButtonName(
   }
   return result.trim() ? result : undefined;
 }
-function mergeNativeStyle(computed: NativeStyle, authored: StyleProp<NativeStyle>): NativeStyle {
-  const inline = expandPadding(StyleSheet.flatten(authored));
-  const value = { ...computed };
-  // Inline shorthands outrank grouped CSS longhands. Preserve explicit native
-  // corner/edge values within the authored style, then retain text provenance
-  // from the original computed owner below.
-  if (inline) {
-    if (inline.borderRadius != null)
-      for (const corner of ['TopLeft', 'TopRight', 'BottomLeft', 'BottomRight'] as const)
-        delete value[`border${corner}Radius`];
-    for (const channel of ['Color', 'Width'] as const)
-      if (inline[`border${channel}`] != null)
-        for (const edge of ['Top', 'Right', 'Bottom', 'Left'] as const)
-          delete value[`border${edge}${channel}`];
-    Object.assign(value, inline);
-  }
-  return (
-    applyNativeTextMetrics(value, computed, nativeStyleTextMetrics([computed, authored])) ?? value
-  );
-}
 function DefaultProgress({ color, label, id }: { color: string; label?: string; id: string }) {
   const scope = useNativeTextContext();
   const effective = typeof scope?.style.color === 'string' ? scope.style.color : color;
@@ -276,6 +259,11 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     { width } = useWindowDimensions(),
     generated = useId();
   const [hovered, setHovered] = useState(false);
+  const startIconTextRoot = useRef<ViewInstance | null>(null),
+    endIconTextRoot = useRef<ViewInstance | null>(null),
+    startLoadingTextRoot = useRef<ViewInstance | null>(null),
+    endLoadingTextRoot = useRef<ViewInstance | null>(null),
+    centerLoadingTextRoot = useRef<ViewInstance | null>(null);
   const colors = palette(theme, color, parent?.style.color),
     inactive = disabled || loading === true,
     hide = loading === true && loadingPosition === 'center';
@@ -304,9 +292,25 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     disableFocusRipple,
     loadingIndicator: indicator,
   };
-  let cache: { pressed: boolean; focusVisible: boolean; style: NativeStyle } | undefined;
-  const styled = (state: ButtonBaseState): NativeStyle => {
-    if (cache && cache.pressed === state.pressed && cache.focusVisible === state.focusVisible)
+  let baseSheet: NativeButtonBaseStyleSheet | undefined;
+  let cache:
+    | {
+        pressed: boolean;
+        focusVisible: boolean;
+        sheet?: NativeButtonBaseStyleSheet;
+        computed: NativeStyle;
+        authored: StyleProp<NativeStyle>;
+        style: NativeStyle;
+      }
+    | undefined;
+  const styled = (state: ButtonBaseState, sheet = baseSheet): NativeStyle => {
+    baseSheet = sheet;
+    if (
+      cache &&
+      cache.pressed === state.pressed &&
+      cache.focusVisible === state.focusVisible &&
+      cache.sheet === sheet
+    )
       return cache.style;
     const activeHover = hovered && !inactive;
     const primary = variant === 'contained' ? colors.contrastText : colors.main;
@@ -368,12 +372,16 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
       ),
       ...(state.focusVisible ? (focusVisibleClassName ?? '').split(/\s+/) : []),
       ...(activeHover ? ['Mui-hover'] : []),
+      ...(state.pressed && !inactive ? ['Mui-active'] : []),
     ]
       .flatMap((token) => token.split(/\s+/))
       .filter(Boolean);
     const computed = componentStyle(theme, 'MuiButton', actualOwner, sx, {
       classes: groupTokens,
-      ancestors: groupRules.map((rule) => rule.cascade(groupTokens)),
+      ancestors: [
+        ...(sheet ? [sheet] : []),
+        ...groupRules.map((rule) => rule.cascade(groupTokens)),
+      ],
       ...nativeTextStyleContext(parent, authored, theme),
       width,
       states: [
@@ -381,6 +389,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
         ...(loading ? ['loading'] : []),
         ...(state.focusVisible ? ['focusVisible'] : []),
         ...(activeHover ? ['hover'] : []),
+        ...(state.pressed && !inactive ? ['active'] : []),
       ],
       overrideKeys: [
         variant,
@@ -420,21 +429,25 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
                 ? colors.main
                 : alpha(colors.main, 0.5)
               : colors.main,
-          elevation:
-            variant === 'contained' && !disableElevation && !inactive
-              ? state.pressed
-                ? 8
-                : state.focusVisible
-                  ? 6
-                  : activeHover
-                    ? 4
-                    : 2
-              : 0,
           color: foreground,
+          ...(variant === 'contained'
+            ? {
+                boxShadow: 2,
+                '&.Mui-hover': { boxShadow: 4 },
+                '&.Mui-active': { boxShadow: 8 },
+                '&.Mui-focusVisible': {
+                  ...(theme.focusVisible || {}),
+                  boxShadow:
+                    theme.focusVisible && theme.focusVisible.boxShadow
+                      ? `${theme.shadows[6]}, ${theme.focusVisible.boxShadow}`
+                      : 6,
+                },
+              }
+            : {}),
           '&.Mui-disabled': {
             color: theme.palette.action.disabled,
             ...(variant === 'contained'
-              ? { backgroundColor: theme.palette.action.disabledBackground, elevation: 0 }
+              ? { backgroundColor: theme.palette.action.disabledBackground, boxShadow: 0 }
               : {}),
             ...(outlined
               ? { borderWidth: 1, borderColor: theme.palette.action.disabledBackground }
@@ -442,12 +455,33 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
           },
           ...(hide ? { '&.MuiButton-loading': { color: 'transparent' } } : {}),
         },
+        ...(disableElevation
+          ? [
+              {
+                boxShadow: 'none',
+                '&.Mui-hover': { boxShadow: 'none' },
+                '&.Mui-focusVisible': {
+                  boxShadow:
+                    (theme.focusVisible ? theme.focusVisible.boxShadow : undefined) ?? 'none',
+                },
+                '&.Mui-active': { boxShadow: 'none' },
+                '&.Mui-disabled': { boxShadow: 'none' },
+              },
+            ]
+          : []),
       ],
     });
     // Shared cascade resolves currentColor against the final native foreground.
     // Retain the computed object that owns inherited relative text metrics.
-    const value = mergeNativeStyle(computed, authored);
-    cache = { pressed: state.pressed, focusVisible: state.focusVisible, style: value };
+    const value = mergeNativeButtonStyle(computed, authored);
+    cache = {
+      pressed: state.pressed,
+      focusVisible: state.focusVisible,
+      sheet,
+      computed,
+      authored,
+      style: value,
+    };
     return value;
   };
   const icon = (node: React.ReactNode, position: 'start' | 'end', state: ButtonBaseState) => {
@@ -467,6 +501,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
         }}
       >
         <NativeTextScope
+          rootRef={position === 'start' ? startIconTextRoot : endIconTextRoot}
           theme={theme}
           style={[
             {
@@ -496,7 +531,11 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
             )
           }
         >
-          {(native, content) => <View style={native}>{content}</View>}
+          {(native, content) => (
+            <View ref={position === 'start' ? startIconTextRoot : endIconTextRoot} style={native}>
+              {content}
+            </View>
+          )}
         </NativeTextScope>
         {replace ? (
           <View
@@ -512,6 +551,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
             }}
           >
             <NativeTextScope
+              rootRef={position === 'start' ? startLoadingTextRoot : endLoadingTextRoot}
               theme={theme}
               style={[
                 { color: styled(state).color },
@@ -519,7 +559,14 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
               ]}
               content={indicator}
             >
-              {(native, content) => <View style={native}>{content}</View>}
+              {(native, content) => (
+                <View
+                  ref={position === 'start' ? startLoadingTextRoot : endLoadingTextRoot}
+                  style={native}
+                >
+                  {content}
+                </View>
+              )}
             </NativeTextScope>
           </View>
         ) : null}
@@ -544,6 +591,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
       >
         {loading && loadingPosition === 'center' ? (
           <NativeTextScope
+            rootRef={centerLoadingTextRoot}
             theme={theme}
             style={[
               { color: theme.palette.action.disabled },
@@ -551,7 +599,11 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
             ]}
             content={indicator}
           >
-            {(native, content) => <View style={native}>{content}</View>}
+            {(native, content) => (
+              <View ref={centerLoadingTextRoot} style={native}>
+                {content}
+              </View>
+            )}
           </NativeTextScope>
         ) : null}
       </View>
@@ -580,6 +632,10 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
       focusRipple={other.focusRipple ?? !disableFocusRipple}
       sx={undefined}
       style={styled}
+      _muiNativeStyle={(state, sheet) => {
+        styled(state, sheet);
+        return { computed: cache!.computed, authored: cache!.authored };
+      }}
       onHoverIn={(event) => {
         setHovered(true);
         onHoverIn?.(event);
@@ -656,6 +712,7 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
       { width } = useWindowDimensions(),
       generated = useId();
     const [hovered, setHovered] = useState(false);
+    const loadingTextRoot = useRef<ViewInstance | null>(null);
     const colors =
         color === 'default'
           ? { main: theme.palette.action.active }
@@ -683,9 +740,25 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
       loading,
       loadingIndicator: indicator,
     };
-    let cache: { pressed: boolean; focusVisible: boolean; style: NativeStyle } | undefined;
-    const styled = (state: ButtonBaseState) => {
-      if (cache && cache.pressed === state.pressed && cache.focusVisible === state.focusVisible)
+    let baseSheet: NativeButtonBaseStyleSheet | undefined;
+    let cache:
+      | {
+          pressed: boolean;
+          focusVisible: boolean;
+          sheet?: NativeButtonBaseStyleSheet;
+          computed: NativeStyle;
+          authored: StyleProp<NativeStyle>;
+          style: NativeStyle;
+        }
+      | undefined;
+    const styled = (state: ButtonBaseState, sheet = baseSheet) => {
+      baseSheet = sheet;
+      if (
+        cache &&
+        cache.pressed === state.pressed &&
+        cache.focusVisible === state.focusVisible &&
+        cache.sheet === sheet
+      )
         return cache.style;
       const activeHover = hovered && !inactive && !other.disableRipple,
         padding = size === 'small' ? 5 : size === 'large' ? 12 : 8;
@@ -696,6 +769,7 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
         { ...owner, pressed: state.pressed, focusVisible: state.focusVisible },
         sx,
         {
+          ancestors: sheet ? [sheet] : [],
           ...nativeTextStyleContext(parent, authored, theme),
           width,
           states: [
@@ -731,8 +805,15 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
           },
         },
       );
-      const value = mergeNativeStyle(computed, authored);
-      cache = { pressed: state.pressed, focusVisible: state.focusVisible, style: value };
+      const value = mergeNativeButtonStyle(computed, authored);
+      cache = {
+        pressed: state.pressed,
+        focusVisible: state.focusVisible,
+        sheet,
+        computed,
+        authored,
+        style: value,
+      };
       return value;
     };
     return (
@@ -750,6 +831,10 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
         focusRipple={other.focusRipple ?? !disableFocusRipple}
         sx={undefined}
         style={styled}
+        _muiNativeStyle={(state, sheet) => {
+          styled(state, sheet);
+          return { computed: cache!.computed, authored: cache!.authored };
+        }}
         onHoverIn={(event) => {
           setHovered(true);
           onHoverIn?.(event);
@@ -770,6 +855,7 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
                 ]}
               >
                 <NativeTextScope
+                  rootRef={loadingTextRoot}
                   theme={theme}
                   style={[
                     { display: loading ? 'flex' : 'none', color: theme.palette.action.disabled },
@@ -777,7 +863,11 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
                   ]}
                   content={loading ? indicator : null}
                 >
-                  {(native, content) => <View style={native}>{content}</View>}
+                  {(native, content) => (
+                    <View ref={loadingTextRoot} style={native}>
+                      {content}
+                    </View>
+                  )}
                 </NativeTextScope>
               </View>
             ) : null}

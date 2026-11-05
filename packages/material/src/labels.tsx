@@ -1,4 +1,4 @@
-import { useTheme, useSx, useComponentStyle } from './themeProvider';
+import { useTheme, useComponentStyle } from './themeProvider';
 import React, {
   forwardRef,
   useContext,
@@ -13,6 +13,7 @@ import {
   Animated,
   I18nManager,
   StyleSheet,
+  useWindowDimensions,
   type TextInstance,
   type TextProps,
   type TextStyle,
@@ -80,31 +81,20 @@ function useLabelState(props: FormLabelProps) {
     required: props.required ?? form?.required,
   };
 }
-function slotOverride(
-  theme: import('@altroo/mui-native-system').Theme,
-  name: string,
-  slot: string,
-  ownerState: object,
-) {
-  const config = theme.components[name];
-  const value = config && typeof config === 'object' ? config.styleOverrides?.[slot] : undefined;
-  return typeof value === 'function'
-    ? value({ theme, ownerState: ownerState as Record<string, unknown> })
-    : value;
-}
 function NativeFormLabel({
   inProps,
   labelRef,
-  asteriskSx,
+  inputLabelOwnerState,
 }: {
   inProps: FormLabelProps;
   labelRef: React.ForwardedRef<TextInstance>;
-  asteriskSx?: SxProps;
+  inputLabelOwnerState?: object;
 }) {
   const props = useDefaultProps({ props: inProps, name: 'MuiFormLabel' });
   const state = useLabelState(props);
   const form = useContext(FormContext);
   const theme = useTheme();
+  const { width: viewportWidth } = useWindowDimensions();
   const {
     children,
     sx,
@@ -151,12 +141,30 @@ function NativeFormLabel({
       position: 'relative',
     },
   });
-  const asterisk = useSx(
-    [slotOverride(theme, 'MuiFormLabel', 'asterisk', state), asteriskSx].flat() as SxProps,
+  const asteriskContext = {
+    width: viewportWidth,
+    rootSlot: 'asterisk',
+    skipVariants: true,
+    inheritOnly: true,
+    parentTextStyle: StyleSheet.flatten([resolved, style]) ?? undefined,
+    parentLineHeight: getTextStyleInheritance(resolved as TextStyle).lineHeight,
+  };
+  const asterisk = useComponentStyle(
+    inputLabelOwnerState ? 'MuiInputLabel' : 'MuiFormLabel',
+    inputLabelOwnerState ?? state,
+    undefined,
     {
-      inheritOnly: true,
-      parentTextStyle: StyleSheet.flatten([resolved, style]) ?? undefined,
-      parentLineHeight: getTextStyleInheritance(resolved as TextStyle).lineHeight,
+      ...asteriskContext,
+      ancestors: inputLabelOwnerState
+        ? [
+            {
+              theme,
+              name: 'MuiFormLabel',
+              props: state,
+              context: asteriskContext,
+            },
+          ]
+        : [],
     },
   );
   const Component =
@@ -346,7 +354,7 @@ export const InputLabel: React.ForwardRefExoticComponent<
   return (
     <NativeFormLabel
       labelRef={ref}
-      asteriskSx={slotOverride(theme, 'MuiInputLabel', 'asterisk', state)}
+      inputLabelOwnerState={state}
       inProps={{
         ...native,
         children,
