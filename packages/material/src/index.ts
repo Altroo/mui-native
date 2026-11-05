@@ -167,3 +167,5 @@ export * from './collapse';
 export * from './accordion';
 
 export * from './svgIcon';
+
+export * from './buttonGroup';

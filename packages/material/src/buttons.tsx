@@ -1,4 +1,8 @@
-import React, { forwardRef, useId, useState } from 'react';
+/* Button wrappers and group defaults adapt MIT-licensed Material UI 9.5.0.
+ * Copyright (c) MUI contributors. See NOTICE,
+ * upstream/reuse.json and upstream/button-group.json.
+ * Native implementation: Copyright (c) 2026 Altroo and contributors. */
+import React, { forwardRef, useId, useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -26,6 +30,13 @@ import {
 import { useTheme } from './themeProvider';
 import { ButtonBase, type ButtonBaseState } from './buttonBase';
 import { Typography } from './typography';
+import {
+  ButtonGroupContext,
+  ButtonGroupButtonContext,
+  NativeButtonGroupRules,
+  resolveButtonGroupDefaults,
+} from './buttonGroupContext';
+import { getButtonUtilityClass, type ButtonClassKey } from './buttonClasses';
 import { listSlotStyle } from './listStyles';
 import type {
   ButtonOwnProps,
@@ -35,6 +46,32 @@ import type {
 } from './buttonTypes';
 export * from './buttonTypes';
 export * from './buttonClasses';
+// Only root identities participate in the finite group cascade. Icon/loading
+// slot classes still require native slot styles and retain migration diagnostics.
+const buttonRootClassKeys = new Set([
+  'root',
+  'disabled',
+  'focusVisible',
+  'text',
+  'outlined',
+  'contained',
+  'disableElevation',
+  'fullWidth',
+  'loading',
+  'loadingPositionCenter',
+  'loadingPositionStart',
+  'loadingPositionEnd',
+  'sizeSmall',
+  'sizeMedium',
+  'sizeLarge',
+  'colorInherit',
+  'colorPrimary',
+  'colorSecondary',
+  'colorSuccess',
+  'colorError',
+  'colorInfo',
+  'colorWarning',
+]);
 const cap = (value: string) => value[0].toUpperCase() + value.slice(1);
 function expandPadding(style: NativeStyle | null | undefined) {
   if (!style) return style;
@@ -157,7 +194,21 @@ function readableButtonName(
   return result.trim() ? result : undefined;
 }
 function mergeNativeStyle(computed: NativeStyle, authored: StyleProp<NativeStyle>): NativeStyle {
-  const value = StyleSheet.flatten([computed, expandPadding(StyleSheet.flatten(authored))]) ?? {};
+  const inline = expandPadding(StyleSheet.flatten(authored));
+  const value = { ...computed };
+  // Inline shorthands outrank grouped CSS longhands. Preserve explicit native
+  // corner/edge values within the authored style, then retain text provenance
+  // from the original computed owner below.
+  if (inline) {
+    if (inline.borderRadius != null)
+      for (const corner of ['TopLeft', 'TopRight', 'BottomLeft', 'BottomRight'] as const)
+        delete value[`border${corner}Radius`];
+    for (const channel of ['Color', 'Width'] as const)
+      if (inline[`border${channel}`] != null)
+        for (const edge of ['Top', 'Right', 'Bottom', 'Left'] as const)
+          delete value[`border${edge}${channel}`];
+    Object.assign(value, inline);
+  }
   return (
     applyNativeTextMetrics(value, computed, nativeStyleTextMetrics([computed, authored])) ?? value
   );
@@ -177,7 +228,13 @@ function DefaultProgress({ color, label, id }: { color: string; label?: string; 
   );
 }
 export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(inProps, ref) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiButton' });
+  const group = useContext(ButtonGroupContext),
+    groupPosition = useContext(ButtonGroupButtonContext),
+    groupRules = useContext(NativeButtonGroupRules);
+  const props = useDefaultProps({
+    props: resolveButtonGroupDefaults(group, inProps),
+    name: 'MuiButton',
+  });
   const typographyDefaults = useDefaultProps({
     props: {} as { component?: unknown },
     name: 'MuiTypography',
@@ -208,11 +265,12 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     onHoverOut,
     ...other
   } = props;
-  classDiagnostic(
-    classes,
-    className ?? focusVisibleClassName,
-    focusVisibleClassName ? undefined : _muiNativeClassName,
-  );
+  if (!groupRules.length || Object.keys(classes ?? {}).some((key) => !buttonRootClassKeys.has(key)))
+    classDiagnostic(
+      classes,
+      className ?? focusVisibleClassName,
+      focusVisibleClassName ? undefined : (_muiNativeClassName ?? group.className),
+    );
   const theme = useTheme(),
     parent = useNativeTextContext(),
     { width } = useWindowDimensions(),
@@ -286,7 +344,36 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     const outlined = variant === 'outlined';
     const actualOwner = { ...owner, pressed: state.pressed, focusVisible: state.focusVisible };
     const authored = typeof style === 'function' ? style(state) : style;
+    // Match the original Button and ButtonBase root utility slots. These finite
+    // identities let an owning group target classes without a global CSS engine.
+    const rootSlots: (ButtonClassKey | false)[] = [
+      'root',
+      variant,
+      `size${cap(size)}` as ButtonClassKey,
+      `color${cap(color)}` as ButtonClassKey,
+      disableElevation && 'disableElevation',
+      fullWidth && 'fullWidth',
+      loading === true && 'loading',
+      loading === true && (`loadingPosition${cap(loadingPosition)}` as ButtonClassKey),
+      inactive && 'disabled',
+      state.focusVisible && 'focusVisible',
+    ];
+    const groupTokens = [
+      ...(group.className ?? '').split(/\s+/),
+      ...(className ?? '').split(/\s+/),
+      ...(groupPosition ?? '').split(/\s+/),
+      'MuiButtonBase-root',
+      ...rootSlots.flatMap((key) =>
+        key ? [getButtonUtilityClass(key), classes?.[key] ?? ''] : [],
+      ),
+      ...(state.focusVisible ? (focusVisibleClassName ?? '').split(/\s+/) : []),
+      ...(activeHover ? ['Mui-hover'] : []),
+    ]
+      .flatMap((token) => token.split(/\s+/))
+      .filter(Boolean);
     const computed = componentStyle(theme, 'MuiButton', actualOwner, sx, {
+      classes: groupTokens,
+      ancestors: groupRules.map((rule) => rule.cascade(groupTokens)),
       ...nativeTextStyleContext(parent, authored, theme),
       width,
       states: [
@@ -319,7 +406,9 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
           gap: 8,
           justifyContent: 'center',
           alignItems: 'center',
-          alignSelf: fullWidth ? 'stretch' : 'flex-start',
+          ...(groupRules.length
+            ? { flexShrink: 1 }
+            : { alignSelf: fullWidth ? 'stretch' : 'flex-start' }),
           ...(fullWidth ? { width: '100%' } : {}),
           borderRadius: theme.shape.borderRadius,
           backgroundColor: background,
@@ -327,7 +416,9 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
           borderColor: inactive
             ? theme.palette.action.disabledBackground
             : outlined
-              ? alpha(colors.main, 0.5)
+              ? activeHover
+                ? colors.main
+                : alpha(colors.main, 0.5)
               : colors.main,
           elevation:
             variant === 'contained' && !disableElevation && !inactive
@@ -340,9 +431,21 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
                     : 2
               : 0,
           color: foreground,
+          '&.Mui-disabled': {
+            color: theme.palette.action.disabled,
+            ...(variant === 'contained'
+              ? { backgroundColor: theme.palette.action.disabledBackground, elevation: 0 }
+              : {}),
+            ...(outlined
+              ? { borderWidth: 1, borderColor: theme.palette.action.disabledBackground }
+              : {}),
+          },
+          ...(hide ? { '&.MuiButton-loading': { color: 'transparent' } } : {}),
         },
       ],
     });
+    // Shared cascade resolves currentColor against the final native foreground.
+    // Retain the computed object that owns inherited relative text metrics.
     const value = mergeNativeStyle(computed, authored);
     cache = { pressed: state.pressed, focusVisible: state.focusVisible, style: value };
     return value;
@@ -465,6 +568,15 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
         busy: loading === true,
       }}
       disabled={inactive}
+      // The original inherited Mui-disabled class blocks pointer targeting even
+      // when a child explicitly retains disabled=false and keyboard eligibility.
+      pointerEvents={
+        [group.className, className, classes?.root].some((value) =>
+          value?.split(/\s+/).includes('Mui-disabled'),
+        )
+          ? 'none'
+          : other.pointerEvents
+      }
       focusRipple={other.focusRipple ?? !disableFocusRipple}
       sx={undefined}
       style={styled}

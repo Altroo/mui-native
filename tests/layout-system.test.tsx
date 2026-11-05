@@ -395,6 +395,7 @@ test('responsive holes remove synthetic shadow and border declarations but typog
   ).toEqual({
     borderWidth: 0,
     borderStyle: 'solid',
+    borderColor: theme.palette.text.primary,
   });
   expect(
     resolveSx({ [condition]: { typography: 'h1' }, typography: ['body1', null, 'button'] }, theme, {
@@ -404,6 +405,7 @@ test('responsive holes remove synthetic shadow and border declarations but typog
   expect(resolveSx({ border: 2, borderBottomWidth: 4 }, theme)).toEqual({
     borderWidth: 2,
     borderStyle: 'solid',
+    borderColor: theme.palette.text.primary,
     borderBottomWidth: 4,
   });
 });

@@ -455,7 +455,10 @@ test('Button component defaults beat typography defaults while explicit componen
   rerender(content(true));
   expect(screen.getByText('Contrast')).toHaveStyle({ color: theme.palette.action.disabled });
   rerender(content(false, true));
-  expect(screen.getByText('Contrast')).toHaveStyle({ color: theme.palette.action.disabled });
+  // Original centered loading makes the label transparent; the visible loader
+  // still inherits disabled contrast instead of the allVariants red text color.
+  expect(screen.getByText('Contrast')).toHaveStyle({ color: 'transparent', opacity: 0 });
+  expect(screen.getByRole('progressbar').props.color).toBe(theme.palette.action.disabled);
   rerender(content(false, false, { color: 'green', bgcolor: 'black' }));
   expect(screen.getByText('Contrast')).toHaveStyle({ color: 'green' });
   expect(screen.getByRole('button')).toHaveStyle({ backgroundColor: 'black' });

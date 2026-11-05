@@ -8,14 +8,14 @@
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
       "package.json": "fa80b50c11ab727f366329b98293c5d4d2d26a649f2a031c16e0ff6677fddd48",
       "packages/compat/package.json": "59904f1e9920728c84cb290e1ce34d0e6e4f7c7832b65b0eb8ff70c01df2c4de",
-      "packages/compat/supported.json": "0ccc2ca0882effeca6081500693104b18ced4e19586e96318cbad21f3494ee2b",
+      "packages/compat/supported.json": "c6a349c157aa6f03a3eac494aaeaaade8dcad29c2948aeb05197a12547e66b11",
       "packages/icons/package.json": "1cec3817ffe76fac0091053808225eaabce3f4a3e8d982155818620df7fe34d1",
       "packages/icons/src/Add/index.ts": "98626742b0c19873110d9795934647ddc6fb5f6be09a5d60189115afdd9c8b01",
       "packages/icons/src/Check/index.ts": "fab7a03732117fa85b0210f6cc3551eb29d0aa46a374c7bd7bced61ac85d76cb",
       "packages/icons/src/Close/index.ts": "f2a34cbc09d0a0ec63821425960975c5363c19d61476cb13bcb610a1a39b1a66",
       "packages/icons/src/index.ts": "e3a8e065e9164a3564ab1c8485ea459785d54d175d975bab8701c163378fa2c4",
       "packages/icons/src/Remove/index.ts": "611c0fd1f80c46a7fc1c83a13a041b91e0066701fcab042c4cc87839151dab00",
-      "packages/material/package.json": "99b778b39a19ccbb874dc0cd9ec1a1fd4f2f5f74f1b3dbdc0dbbc9c6debe1563",
+      "packages/material/package.json": "8dd0ded8c03c01410c2c18344862a02217e320d8e18937d2ec4aef011cea8eb5",
       "packages/material/src/accordion.tsx": "89b68df70f0b3bbfb3473e48dbb19c82ac20cbf5f9e9d245549b82942ef240f7",
       "packages/material/src/Accordion/accordionClasses/index.ts": "7bd64e00bf10c8bb5b05ecba5fa2b85e18eb8eab54de23cd011038d951a9ed4c",
       "packages/material/src/Accordion/index.ts": "9639db89ce8b969ce9d85cef78ac49d12dad8cdba505a74ba477e621cf102fac",
@@ -42,7 +42,15 @@
       "packages/material/src/buttonBase.tsx": "233f3ffff0ac68ee3792a0fe5e3a515ad78f96fdc0a35ff1e2cbb50af8d370ad",
       "packages/material/src/ButtonBase/index.ts": "9a878462816e8c473fa575d246fd63e93a5e7591c947c577b791e677cb3c7a3a",
       "packages/material/src/buttonClasses.ts": "1baee169b6df93ab1b8796587a9872f112e8f9d9b7973498cfcbb1031230743f",
-      "packages/material/src/buttons.tsx": "b8affcc223d742456e89329c3f89c5825a0b11530bf7a6480da85c8e5615a5a5",
+      "packages/material/src/buttonGroup.tsx": "c5cd78da03612e916cf5e96ac23851ef9040f783234daec5f8e4243ac656d153",
+      "packages/material/src/ButtonGroup/ButtonGroupButtonContext/index.ts": "52f013bde2558f32f64b90ef71e3c8880c8657630fc6623ef6eb2bfdf9f01df5",
+      "packages/material/src/ButtonGroup/buttonGroupClasses/index.ts": "1795b670fbf200b19c86dc64efb812fbf97bd4c77114d101fa1d4d696d627be4",
+      "packages/material/src/ButtonGroup/ButtonGroupContext/index.ts": "9c1f9a707a6eaa0d8f38f9053ca5c7c6d4aa5e2caec46189e0e2e9e8c2324856",
+      "packages/material/src/ButtonGroup/index.ts": "c20d6064957d0b6d7b5b765e787c8dd144a44c83ee0a8fc3c0a277fc2173e0ef",
+      "packages/material/src/buttonGroupClasses.ts": "ed35bd89711f70f67c2299338af9f85cdf922ee926a14c025d4b0861db15d4e6",
+      "packages/material/src/buttonGroupContext.ts": "67e3b74848038dd030492f3b9195e8ba1465939abd06a90e6bb0b4ac303bac77",
+      "packages/material/src/buttonGroupTypes.ts": "6cf32e5d26c80922ec1c664d131c785e770ddfceb2a70361c9cd5ea9842bbdfa",
+      "packages/material/src/buttons.tsx": "6d353d08f96f479628f439f6afd34c9b70c44829afae53698a1803426f7f5514",
       "packages/material/src/buttonTypes.ts": "da8530f9cd3a5a85459cfdcd2d66e8a819e98eec4b97666cb87186877d5532ba",
       "packages/material/src/Card/index.ts": "e84541d29a0eff6838b86551dae04bcff6be0512a9ff1b7c861d7f4e72151394",
       "packages/material/src/CardActions/index.ts": "eef2c705901a2db5a074095e57ee593586785264c96d0938e441307e21889116",
@@ -89,7 +97,7 @@
       "packages/material/src/Grow/index.ts": "7e747efc5a2eed3c1a6762294ea9600bce4aeb7bce21521ddfee59ae34b5d8a8",
       "packages/material/src/IconButton/iconButtonClasses/index.ts": "bfa2f781c240af1c02802c3b286511dceaf96c3a7d882d52c1a8e5e74c467c5f",
       "packages/material/src/IconButton/index.ts": "7cc501394f4693c7531333c28a281ce3364d147ae012e435e4e7c54d640a801a",
-      "packages/material/src/index.ts": "698a3671ab45de8f062400eb5754b354c9884b7027679efb6e83b1b70a7dd609",
+      "packages/material/src/index.ts": "e4880c1e86c642708e6dd714a9153214d73f62c547c0ef5ca057592bf3094d3d",
       "packages/material/src/Input/index.ts": "9c6687959c875f6a480ba0bc5620a5d74c5259ce607526ca64a0a4db2442b50c",
       "packages/material/src/InputAdornment/index.ts": "8ee899763437210b3027f092a116ffd21c58f26e142d931f23199ad9837a5bbb",
       "packages/material/src/InputBase/index.ts": "b0034ca1d11f85b615c3518f0c23a2d99c8442a2f194c4ca42cc73e310cb6fbc",
@@ -253,7 +261,7 @@
       "packages/system/src/provider.tsx": "42de40a795a024d88dd3005cebf19833895c3dd3b1e3ab96b4c8892effef298a",
       "packages/system/src/RtlProvider/index.tsx": "fea327d6abaf69ecf9a1f8be71d29a4ec74990ecf1637f5af9c5bc66b4155301",
       "packages/system/src/spacing.ts": "95cb1c41dcd2c19ac970f6adad5fe4307f9f0f3db0ea8b8cd7334cad9dec964b",
-      "packages/system/src/sx.ts": "8596963cbb2992e83e922c7a42640947f5ba930b47ddc9901725dcca102a4539",
+      "packages/system/src/sx.ts": "98bbf1aecd5389422aaa3adf799ed069da8864b9bac0f9ab366b46421d33c65f",
       "packages/system/src/textScope.tsx": "313020459239b4783f73ee45e4273fc433293e3d1cbde97c8a10f2551e4464a9",
       "packages/system/src/theme.ts": "db3e47a7ae4f203526757ffc8e2a55174aabaf4d17de7b5de3240ee280c1187c",
       "packages/system/src/ThemeProvider/index.ts": "ab3008c2fe41aee2a32d75c3d7b9d353f41d7f922e286275f428b24ff8257c2b",
@@ -332,7 +340,7 @@
   },
   "documentation": {
     "path": "docs/coverage.md",
-    "sha256": "b583c36dec31634fd6f8a3e71dbe63a08bebedd9b24267176c010faca07456a4"
+    "sha256": "6b97de93eb6fc3e40e951b288ebc357af313a4f4a30dffbe6b6eaca846166966"
   },
   "referenceDependencies": [
     {
@@ -354,11 +362,11 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "a7500c324e8a06d9402c64614dea7f7db856a13d4f43a306fdb2f89b7a9d978f",
+      "nativeSourceSha256": "13792e16ab02c04c38aae1caecd62bb7fb6b85e943016456602ec46bfbf3ed2d",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
-      "locallyDeclaredRootNames": 439,
+      "locallyDeclaredRootNames": 452,
       "directMembers": 4046,
       "eventDeclarations": 112,
       "slotDeclarations": 219,
@@ -366,7 +374,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "89aa42b913c893549c4e8281ff60b8773fe5b7e2b2654e3befe1e98e4db55b0c"
+      "sha256": "94e1d9b6e8a23ffcdc9b6a981f5b3e63fc6215516d96517b7e9325ec2fa997a1"
     },
     {
       "package": "@mui/system",
@@ -376,7 +384,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "bdc1d2c846733763c936d8b3fb098e67daaa3a249168f3e9b1624ee6bb8049fc",
+      "nativeSourceSha256": "a97ad497249b471b26bd2fc6d056594df4d479d464212a5dfd4aea184af671d1",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -388,7 +396,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "b8237a8b3f4fd3d00ee63073f6e4b2378e9f772171cec3ebc7f89f5da6c6ba67"
+      "sha256": "d04141ca816ff12ead6589093af9da6fdfa85e38e143d69659c88fc808cadb3f"
     },
     {
       "package": "@mui/icons-material",

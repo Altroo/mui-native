@@ -21,6 +21,23 @@ try {
   const defaults = requireConsumer('@altroo/mui-native-system/DefaultPropsProvider');
   const hooks = requireConsumer('@altroo/mui-native-system/useThemeProps');
   const material = requireConsumer('@altroo/mui-native');
+  const groupModule = requireConsumer('@altroo/mui-native/ButtonGroup');
+  assert.equal(groupModule.default, material.ButtonGroup);
+  assert.equal(groupModule.ButtonGroupContext, material.ButtonGroupContext);
+  assert.equal(groupModule.ButtonGroupButtonContext, material.ButtonGroupButtonContext);
+  assert.equal(
+    requireConsumer('@altroo/mui-native/ButtonGroup/ButtonGroupContext').default,
+    material.ButtonGroupContext,
+  );
+  assert.equal(
+    requireConsumer('@altroo/mui-native/ButtonGroup/ButtonGroupButtonContext').default,
+    material.ButtonGroupButtonContext,
+  );
+  assert.equal(
+    requireConsumer('@altroo/mui-native/ButtonGroup/buttonGroupClasses').default,
+    material.buttonGroupClasses,
+  );
+
   const materialDefaults = requireConsumer('@altroo/mui-native/DefaultPropsProvider');
   for (const name of [
     'NativeTextScope',

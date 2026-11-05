@@ -101,7 +101,11 @@
       "SvgIcon",
       "SvgIcon/svgIconClasses",
       "SvgIcon/createSvgIcon",
-      "utils/createSvgIcon"
+      "utils/createSvgIcon",
+      "ButtonGroup",
+      "ButtonGroup/buttonGroupClasses",
+      "ButtonGroup/ButtonGroupContext",
+      "ButtonGroup/ButtonGroupButtonContext"
     ]
   },
   "@mui/system": {
