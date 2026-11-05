@@ -11,6 +11,7 @@ import React, {
 import { View, StyleSheet, type ViewProps, type ViewInstance, type StyleProp } from 'react-native';
 import {
   useDefaultProps,
+  useNativeRootProps,
   type SxProps,
   type NativeStyle,
   diagnostic,
@@ -52,8 +53,11 @@ export interface FormGroupProps extends Omit<ViewProps, 'style'> {
 }
 export const FormGroup = forwardRef<ViewInstance, FormGroupProps>(function FormGroup(inProps, ref) {
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
-  const props = useDefaultProps({ props: inProps, name: 'MuiFormGroup' }),
-    form = useContext(FormContext);
+  const { props, style: preparedStyle } = useNativeRootProps({
+    props: inProps,
+    name: 'MuiFormGroup',
+  });
+  const form = useContext(FormContext);
   const {
     children,
     row = false,
@@ -91,7 +95,7 @@ export const FormGroup = forwardRef<ViewInstance, FormGroupProps>(function FormG
     'MuiFormGroup',
     { ...props, row, error },
     sx,
-    style,
+    preparedStyle,
     {
       ...nativeTextStyleContext(parent, style, theme),
       classes: rootClass.split(/\s+/),

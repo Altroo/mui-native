@@ -19,6 +19,12 @@ import {
   type NativeTextContext,
 } from './nativeText';
 import { nativeBoxShadow, bindShadowColor } from './shadows';
+import {
+  nativeStyledStyles,
+  type NativePreparedNode as PreparedNode,
+  type NativeSelectorContext as SelectorContext,
+  type NativePreparedSheet as PreparedSheet,
+} from './nativeStyledMetadata';
 export type SxObject = { [key: string]: unknown };
 export type SxProps<T extends Theme = Theme> =
   | null
@@ -369,20 +375,6 @@ function parseSelectors(key: string) {
   );
   return descendant.every(Boolean) ? { self: false, matches: descendant } : undefined;
 }
-type PreparedNode = {
-  readonly base: Readonly<Record<string, unknown>>;
-  readonly conditions?: ReadonlyMap<string, readonly PreparedNode[] | undefined>;
-};
-type SelectorContext = Pick<
-  StyleContext,
-  | 'classes'
-  | 'states'
-  | 'descendantClasses'
-  | 'descendantOnly'
-  | 'slot'
-  | 'width'
-  | 'protectPhysicalGeometry'
->;
 function collectRules(nodes: readonly PreparedNode[], context: SelectorContext): StyleRule[] {
   const rules: StyleRule[] = [];
   const collect = (nodes: readonly PreparedNode[], specificity: number, descendant = false) => {
@@ -652,11 +644,6 @@ function componentSheets(
   ];
 }
 
-type PreparedSheet = {
-  readonly nodes: readonly PreparedNode[];
-  readonly context: SelectorContext;
-  readonly ancestor?: boolean;
-};
 function prepareComponent(
   theme: Theme,
   name: string,
@@ -702,14 +689,6 @@ function retainPreparedNodes(nodes: readonly PreparedNode[]) {
   }
   Object.freeze(nodes);
 }
-interface StyledStyleDescriptor {
-  readonly sheets: readonly PreparedSheet[];
-  readonly authored: StyleProp<NativeStyle>;
-}
-// Only arrays created by our styled() implementation are registered. The
-// descriptor retains the original tree before RN flattens nested wrappers;
-// neither caller objects nor native style payloads receive metadata properties.
-const styledStyles = new WeakMap<object, StyledStyleDescriptor>();
 /** @internal Eager native fallback plus prepared CSS for participating library roots. */
 export function createNativeStyledStyle(
   theme: Theme,
@@ -734,7 +713,14 @@ export function createNativeStyledStyle(
     computed,
     applyNativeTextMetrics(native, computed, nativeStyleTextMetrics(authored)),
   ];
-  styledStyles.set(finalStyle, Object.freeze({ sheets: Object.freeze(sheets), authored }));
+  nativeStyledStyles.set(
+    finalStyle,
+    Object.freeze({
+      sheets: Object.freeze(sheets),
+      authored,
+      hasAuthoredStyle: Object.hasOwn(props, 'style') || authored !== undefined,
+    }),
+  );
   return finalStyle;
 }
 /** @internal The genuine native layers remain separate from the complete CSS cascade. */
@@ -758,7 +744,8 @@ export function componentRootStyle(
   const wrappers: PreparedSheet[] = [];
   const native: StyleProp<NativeStyle>[] = [];
   const visit = (style: StyleProp<NativeStyle>) => {
-    const descriptor = style && typeof style === 'object' ? styledStyles.get(style) : undefined;
+    const descriptor =
+      style && typeof style === 'object' ? nativeStyledStyles.get(style) : undefined;
     if (descriptor) {
       wrappers.push(
         ...descriptor.sheets.map((sheet) =>

@@ -12,6 +12,7 @@ import {
   resolveSx,
   useTheme,
   useComponentRootStyle,
+  useNativeRootProps,
   NativeTextScope,
   useNativeTextContext,
   nativeTextStyleContext,
@@ -27,7 +28,8 @@ interface RootProps {
   children?: React.ReactNode;
   onPress?: () => void;
 }
-const Root = forwardRef<ViewInstance, RootProps>(function Root(props, ref) {
+const Root = forwardRef<ViewInstance, RootProps>(function Root(inProps, ref) {
+  const { props, style: preparedStyle } = useNativeRootProps({ props: inProps, name: 'MuiProbe' });
   const { error, align } = useContext(State);
   const theme = useTheme(),
     parent = useNativeTextContext();
@@ -41,7 +43,7 @@ const Root = forwardRef<ViewInstance, RootProps>(function Root(props, ref) {
     'MuiProbe',
     { ...props, error, align },
     props.sx,
-    props.style,
+    preparedStyle,
     {
       ...nativeTextStyleContext(parent, props.style, theme),
       classes,

@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {
   useDefaultProps,
+  useNativeRootProps,
   NativeTextScope,
   useNativeTextRootRef,
   NativeIconStyleContext,
@@ -254,7 +255,10 @@ export const ListItemAvatar: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ListItemAvatarProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ListItemAvatarProps>(function ListItemAvatar(inProps, ref) {
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
-  const props = useDefaultProps({ props: inProps, name: 'MuiListItemAvatar' });
+  const { props, style: preparedStyle } = useNativeRootProps({
+    props: inProps,
+    name: 'MuiListItemAvatar',
+  });
   const { component: Root = View, children, style, sx, classes, className, ...native } = props;
   const { alignItems, direction } = useContext(ListContext);
   const parent = useNativeTextContext(),
@@ -274,7 +278,7 @@ export const ListItemAvatar: React.ForwardRefExoticComponent<
     'MuiListItemAvatar',
     { ...props, alignItems },
     sx,
-    style,
+    preparedStyle,
     {
       ...nativeTextStyleContext(parent, style, theme),
       overrideKeys: alignItems === 'flex-start' ? ['alignItemsFlexStart'] : [],

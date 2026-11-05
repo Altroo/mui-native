@@ -4,7 +4,8 @@ import { useWindowDimensions, View, Text, type StyleProp } from 'react-native';
 import { createTheme, type Theme } from './theme';
 import { diagnostic } from './diagnostics';
 import RtlProvider from './RtlProvider';
-import { DefaultPropsProvider, getThemeProps } from './defaultProps';
+import { DefaultPropsProvider, getThemeProps, useDefaultProps } from './defaultProps';
+import { separateNativeRootProps, restoreNativeRootStyle } from './nativeStyledMetadata';
 import { useNativeTextRootRef } from './nativeTextRegistry';
 import { NativeTextScope, useNativeTextContext, nativeTextStyleContext } from './textScope';
 import {
@@ -109,6 +110,22 @@ export function useComponentRootStyle(
     width,
     ...context,
   });
+}
+/**
+ * @internal Resolve participating root defaults against genuine authored props.
+ * Pass the separate style only to useComponentRootStyle, never to public owner
+ * callbacks or native hosts. sx retains the existing styled consumption policy.
+ */
+export function useNativeRootProps<Props extends { style?: StyleProp<NativeStyle> | undefined }>({
+  props,
+  name,
+}: {
+  props: Props;
+  name: string;
+}): { props: Props; style: StyleProp<NativeStyle> } {
+  const input = separateNativeRootProps(props);
+  const resolved = useDefaultProps({ props: input.props, name });
+  return { props: resolved, style: restoreNativeRootStyle(input, resolved) };
 }
 export function styled<P extends object>(
   Component: React.ComponentType<P>,

@@ -1,0 +1,566 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+      "index.js": "3ef26e6ff602e27a6a3a8bd34a95cc3f9b1f903ab5ba90aa7bb3cf41217deafd",
+      "index.d.ts": "88f12707de0dd1b6a15db521a6b7d1308b3a88aef114b0bc2964ece74d007d5e",
+      "index.d.mts": "5b05f0c0198a9f0dea406ca740f74fe8df8766c3b9a80ad512d55b9add46de10",
+      "ListItemIcon/ListItemIcon.js": "a504165c16674bc925faecb4d2d2bbf9ad3f28f25e7f2cb0539417f9eea3e7bd",
+      "ListItemIcon/ListItemIcon.d.ts": "a123906a4c450f3dbb7d7233fed51b686baa11743082af151c0b7740e1106854",
+      "ListItemIcon/ListItemIcon.d.mts": "a6ca7f74a6cbc44ecdce93a69409239663bcd758edafaa7225dfb071a5a421c4",
+      "ListItemIcon/index.js": "2a8d7fe31b58a2b6860c5209b25477c7527324d6e548a637521e8cb9d2e7631d",
+      "ListItemIcon/index.d.ts": "a723cf11acbb7f1d9b620b90a5cdc50f60f9ac8c2ec7bb6f69751729093180b6",
+      "ListItemIcon/index.d.mts": "c1d2bc352b2cfd64288e7f417ab691c40066e00fd4a4e2bb7f8cc77f0044f4cf",
+      "ListItemIcon/listItemIconClasses.js": "c9b26c93a3ce58a6b275cb6b5e58aa86ba0467c2edd641781a9ff5d24de30309",
+      "ListItemIcon/listItemIconClasses.d.ts": "4263e62ba6e779cd26752ab3fcfb42249d009efcf110bf7a69412c1f33582e22",
+      "ListItemIcon/listItemIconClasses.d.mts": "4263e62ba6e779cd26752ab3fcfb42249d009efcf110bf7a69412c1f33582e22",
+      "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
+      "List/List.js": "dd68db6acbfdc9a26ea46a0d597e471f1a8a7f775020a70faeb4b4feb55c3982",
+      "ListItem/ListItem.js": "37ebb4b8746f9c32a8576d0462501b01062a2b0c9212bf856e491155ebe8ac5c",
+      "ListItemButton/ListItemButton.js": "abededff4fe15c71fc8c1a268094c1809505adf2c0075cd981e39770f0d94f17",
+      "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+      "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+      "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d",
+      "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+    }
+  },
+  "utilitiesReference": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+      "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f",
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+      "resolveProps/resolveProps.js": "f1ca742842ec733f23b40eda4bcbfff608300144f46cf928e1e0f8ab604c36c4"
+    }
+  },
+  "stylingReference": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+      "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf",
+      "DefaultPropsProvider/DefaultPropsProvider.js": "6234e618376c90c75eadd92dc0af9e078a946cf57d6adb15b473163932fbc739"
+    }
+  },
+  "styledDefaults": [
+    {
+      "input": { "name": "no defaults or authored values" },
+      "observation": { "hasStyle": false, "style": null, "hasSx": false, "sx": null },
+      "cssOpacity": 0.8,
+      "inlineStyle": null
+    },
+    {
+      "input": { "name": "default style, absent own style", "defaultStyle": { "opacity": 0.2 } },
+      "observation": { "hasStyle": true, "style": { "opacity": 0.2 }, "hasSx": false, "sx": null },
+      "cssOpacity": 0.8,
+      "inlineStyle": "opacity:0.2"
+    },
+    {
+      "input": {
+        "name": "default style, explicit undefined own style",
+        "defaultStyle": { "opacity": 0.2 },
+        "style": "$undefined"
+      },
+      "observation": { "hasStyle": true, "style": { "opacity": 0.2 }, "hasSx": false, "sx": null },
+      "cssOpacity": 0.8,
+      "inlineStyle": "opacity:0.2"
+    },
+    {
+      "input": {
+        "name": "default style, explicit null own style",
+        "defaultStyle": { "opacity": 0.2 },
+        "style": null
+      },
+      "observation": { "hasStyle": true, "style": null, "hasSx": false, "sx": null },
+      "cssOpacity": 0.8,
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "own style replaces default",
+        "defaultStyle": { "opacity": 0.2 },
+        "style": { "opacity": 0.9 }
+      },
+      "observation": { "hasStyle": true, "style": { "opacity": 0.9 }, "hasSx": false, "sx": null },
+      "cssOpacity": 0.8,
+      "inlineStyle": "opacity:0.9"
+    },
+    {
+      "input": {
+        "name": "own unrelated style replaces entire default",
+        "defaultStyle": { "opacity": 0.2 },
+        "style": { "paddingTop": 3 }
+      },
+      "observation": { "hasStyle": true, "style": { "paddingTop": 3 }, "hasSx": false, "sx": null },
+      "cssOpacity": 0.8,
+      "inlineStyle": "padding-top:3px"
+    },
+    {
+      "input": { "name": "default sx, absent own sx", "defaultSx": { "opacity": 0.2 } },
+      "observation": { "hasStyle": false, "style": null, "hasSx": true, "sx": { "opacity": 0.2 } },
+      "cssOpacity": 0.8,
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "default sx with authored sx",
+        "defaultSx": { "opacity": 0.2 },
+        "sx": { "opacity": 0.9 }
+      },
+      "observation": { "hasStyle": false, "style": null, "hasSx": true, "sx": { "opacity": 0.2 } },
+      "cssOpacity": 0.9,
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "default sx with authored null",
+        "defaultSx": { "opacity": 0.2 },
+        "sx": null
+      },
+      "observation": { "hasStyle": false, "style": null, "hasSx": true, "sx": { "opacity": 0.2 } },
+      "cssOpacity": 0.8,
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "default sx with explicit undefined",
+        "defaultSx": { "opacity": 0.2 },
+        "sx": "$undefined"
+      },
+      "observation": { "hasStyle": false, "style": null, "hasSx": true, "sx": { "opacity": 0.2 } },
+      "cssOpacity": 0.8,
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "nested styled default style and own sx",
+        "defaultStyle": { "opacity": 0.2 },
+        "defaultSx": { "paddingLeft": 1 },
+        "sx": { "opacity": 0.9 },
+        "nested": true
+      },
+      "observation": {
+        "hasStyle": true,
+        "style": { "opacity": 0.2 },
+        "hasSx": true,
+        "sx": { "paddingLeft": 1 }
+      },
+      "cssOpacity": 0.9,
+      "inlineStyle": "opacity:0.2"
+    },
+    {
+      "input": {
+        "name": "merged default style with authored field",
+        "defaultStyle": { "opacity": 0.2 },
+        "style": { "paddingTop": 3 },
+        "merge": true
+      },
+      "observation": {
+        "hasStyle": true,
+        "style": { "opacity": 0.2, "paddingTop": 3 },
+        "hasSx": false,
+        "sx": null
+      },
+      "cssOpacity": 0.8,
+      "inlineStyle": "opacity:0.2;padding-top:3px"
+    }
+  ],
+  "denseMenu": {
+    "fontSize": "1.25rem",
+    "renderer": "Executed original dense MenuItem descendant CSS; native size conversion is tested separately."
+  },
+  "renderer": "Original React DOM static markup and theme callbacks; no native or browser geometry evidence",
+  "fixtures": [
+    {
+      "input": {
+        "name": "active nested class getters preserve read order and whitespace",
+        "alignItems": "flex-start",
+        "classesGetter": true,
+        "className": " authored "
+      },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root custom-2 MuiListItemIcon-alignItemsFlexStart custom-4  authored ",
+        "id": "icon-probe",
+        "classes": "<accessor map>",
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root custom-2 MuiListItemIcon-alignItemsFlexStart custom-4 authored",
+      "inlineStyle": null,
+      "classAccesses": ["root", "root", "alignItemsFlexStart", "alignItemsFlexStart"],
+      "declarations": {
+        "min-width": "36px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex",
+        "margin-top": "8px"
+      }
+    },
+    {
+      "input": {
+        "name": "inline shorthand resets flex-start",
+        "list": true,
+        "alignItems": "flex-start",
+        "style": { "margin": 0 }
+      },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root MuiListItemIcon-alignItemsFlexStart",
+        "id": "icon-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root MuiListItemIcon-alignItemsFlexStart",
+      "inlineStyle": "margin:0",
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "36px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex",
+        "margin-top": "8px"
+      }
+    },
+    {
+      "input": {
+        "name": "inline shorthand resets theme edges",
+        "list": true,
+        "alignItems": "flex-start",
+        "edges": { "marginTop": 13, "paddingTop": 9, "paddingLeft": 7 },
+        "style": { "margin": 0, "padding": 0 }
+      },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root MuiListItemIcon-alignItemsFlexStart",
+        "id": "icon-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root MuiListItemIcon-alignItemsFlexStart",
+      "inlineStyle": "margin:0;padding:0",
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "36px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex",
+        "margin-top": "13px",
+        "padding-top": "9px",
+        "padding-left": "7px"
+      }
+    },
+    {
+      "input": { "name": "unscoped" },
+      "observation": {
+        "alignItems": null,
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root",
+        "id": "icon-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root",
+      "inlineStyle": null,
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "36px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex"
+      }
+    },
+    {
+      "input": { "name": "custom spacing and foreground", "spacing": 10, "activeColor": "#123456" },
+      "observation": {
+        "alignItems": null,
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root",
+        "id": "icon-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root",
+      "inlineStyle": null,
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "45px",
+        "color": "#123456",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex"
+      }
+    },
+    {
+      "input": { "name": "List only", "list": true },
+      "observation": {
+        "alignItems": null,
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root",
+        "id": "icon-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root",
+      "inlineStyle": null,
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "36px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex"
+      }
+    },
+    {
+      "input": {
+        "name": "nested List resets outer row alignment",
+        "alignItems": "flex-start",
+        "nestedList": true
+      },
+      "observation": {
+        "alignItems": null,
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root",
+        "id": "icon-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root",
+      "inlineStyle": null,
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "36px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex"
+      }
+    },
+    {
+      "input": { "name": "center", "alignItems": "center" },
+      "observation": {
+        "alignItems": "center",
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root",
+        "id": "icon-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root",
+      "inlineStyle": null,
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "36px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex"
+      }
+    },
+    {
+      "input": { "name": "flex-start", "alignItems": "flex-start" },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root MuiListItemIcon-alignItemsFlexStart",
+        "id": "icon-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root MuiListItemIcon-alignItemsFlexStart",
+      "inlineStyle": null,
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "36px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex",
+        "margin-top": "8px"
+      }
+    },
+    {
+      "input": { "name": "button flex-start", "alignItems": "flex-start", "button": true },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root MuiListItemIcon-alignItemsFlexStart",
+        "id": "icon-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root MuiListItemIcon-alignItemsFlexStart",
+      "inlineStyle": null,
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "36px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex",
+        "margin-top": "8px"
+      }
+    },
+    {
+      "input": {
+        "name": "authored classes",
+        "alignItems": "flex-start",
+        "classes": { "root": "custom-root", "alignItemsFlexStart": "custom-top" },
+        "className": "authored"
+      },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root custom-root MuiListItemIcon-alignItemsFlexStart custom-top authored",
+        "id": "icon-probe",
+        "classes": { "root": "custom-root", "alignItemsFlexStart": "custom-top" },
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root custom-root MuiListItemIcon-alignItemsFlexStart custom-top authored",
+      "inlineStyle": null,
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "36px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex",
+        "margin-top": "8px"
+      }
+    },
+    {
+      "input": {
+        "name": "theme defaults",
+        "alignItems": "flex-start",
+        "defaults": {
+          "className": "default",
+          "classes": { "root": "default-root" },
+          "sx": { "minWidth": 64 }
+        }
+      },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root default-root MuiListItemIcon-alignItemsFlexStart default",
+        "id": "icon-probe",
+        "classes": { "root": "default-root" },
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root default-root MuiListItemIcon-alignItemsFlexStart default",
+      "inlineStyle": null,
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "64px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex",
+        "margin-top": "8px"
+      }
+    },
+    {
+      "input": {
+        "name": "supplied props replace defaults",
+        "alignItems": "center",
+        "defaults": {
+          "className": "default",
+          "classes": { "root": "default-root" },
+          "sx": { "minWidth": 64 }
+        },
+        "classes": { "root": "local-root" },
+        "className": "local",
+        "sx": { "minWidth": 72 }
+      },
+      "observation": {
+        "alignItems": "center",
+        "hasAlignment": true,
+        "className": "MuiListItemIcon-root local-root local",
+        "id": "icon-probe",
+        "classes": { "root": "local-root" },
+        "hasAs": false
+      },
+      "className": "MuiListItemIcon-root local-root local",
+      "inlineStyle": null,
+      "classAccesses": [],
+      "declarations": {
+        "min-width": "72px",
+        "color": "rgba(0, 0, 0, 0.54)",
+        "-webkit-flex-shrink": "0",
+        "-ms-flex-negative": "0",
+        "flex-shrink": "0",
+        "display": "inline-flex"
+      }
+    }
+  ],
+  "component": {
+    "kind": "object",
+    "forwardRef": "Symbol(react.forward_ref)",
+    "renderName": "ListItemIcon",
+    "renderArity": 2
+  },
+  "classes": {
+    "root": "MuiListItemIcon-root",
+    "alignItemsFlexStart": "MuiListItemIcon-alignItemsFlexStart"
+  },
+  "utilities": {
+    "root": "MuiListItemIcon-root",
+    "alignItemsFlexStart": "MuiListItemIcon-alignItemsFlexStart",
+    "disabled": "Mui-disabled",
+    "error": "Mui-error",
+    "selected": "Mui-selected",
+    "focusVisible": "Mui-focusVisible",
+    "active": "Mui-active",
+    "checked": "Mui-checked",
+    "completed": "Mui-completed",
+    "expanded": "Mui-expanded",
+    "focused": "Mui-focused",
+    "open": "Mui-open",
+    "readOnly": "Mui-readOnly",
+    "required": "Mui-required",
+    "": "MuiListItemIcon-",
+    "custom": "MuiListItemIcon-custom",
+    "constructor": "Mui-function Object() { [native code] }",
+    "__defineGetter__": "Mui-function __defineGetter__() { [native code] }",
+    "__defineSetter__": "Mui-function __defineSetter__() { [native code] }",
+    "hasOwnProperty": "Mui-function hasOwnProperty() { [native code] }",
+    "__lookupGetter__": "Mui-function __lookupGetter__() { [native code] }",
+    "__lookupSetter__": "Mui-function __lookupSetter__() { [native code] }",
+    "isPrototypeOf": "Mui-function isPrototypeOf() { [native code] }",
+    "propertyIsEnumerable": "Mui-function propertyIsEnumerable() { [native code] }",
+    "toString": "Mui-function toString() { [native code] }",
+    "valueOf": "Mui-function valueOf() { [native code] }",
+    "__proto__": "Mui-[object Object]",
+    "toLocaleString": "Mui-function toLocaleString() { [native code] }"
+  }
+}
