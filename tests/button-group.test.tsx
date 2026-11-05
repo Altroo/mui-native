@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { useContext } from 'react';
 import { StyleSheet, processColor } from 'react-native';
 import { render, cleanup, fireEvent } from '@testing-library/react-native';
@@ -14,7 +15,7 @@ import {
   configureDiagnostics,
   type ThemeOptions,
 } from '../packages/material/src';
-import { resolveSx, NativeTextStyleContext } from '../packages/system/src';
+import { resolveSx, NativeTextStyleContext, RtlProvider } from '../packages/system/src';
 import reference from './fixtures/mui-button-group-9.5.0.json';
 afterEach(cleanup);
 const authored = ({ $undefined = [], ...props }: Record<string, any> = {}) => {
@@ -76,14 +77,18 @@ test.each(reference.fixtures)('original ButtonGroup contract: $input.name', (fix
         : buttons;
   const tree = render(
     <ThemeProvider theme={theme}>
-      {/* Match the reference document's inherited body color and 16px root. */}
-      <NativeTextStyleContext.Provider
-        value={{ style: { color: '#000', fontSize: 16 }, nativeText: false }}
-      >
-        <ButtonGroup {...input.props} testID="group">
-          {children}
-        </ButtonGroup>
-      </NativeTextStyleContext.Provider>
+      {/* This original probe used an LTR DOM/cache, even for theme.direction=rtl.
+          Configured RTL comparisons have their own independently pinned probe. */}
+      <RtlProvider value={false}>
+        {/* Match the reference document's inherited body color and 16px root. */}
+        <NativeTextStyleContext.Provider
+          value={{ style: { color: '#000', fontSize: 16 }, nativeText: false }}
+        >
+          <ButtonGroup {...input.props} testID="group">
+            {children}
+          </ButtonGroup>
+        </NativeTextStyleContext.Provider>
+      </RtlProvider>
     </ThemeProvider>,
   );
   if (typeof input.hoverIndex === 'number')

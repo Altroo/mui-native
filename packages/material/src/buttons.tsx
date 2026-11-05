@@ -85,6 +85,13 @@ function typographyTextRoot(
   const component = child.props.component === undefined ? defaultComponent : child.props.component;
   return child.type === Typography && (component == null || typeof component === 'string');
 }
+function literalOnly(children: React.ReactNode): boolean {
+  return React.Children.toArray(children).every(
+    (child) =>
+      !React.isValidElement<{ children?: React.ReactNode }>(child) ||
+      (child.type === React.Fragment && literalOnly(child.props.children)),
+  );
+}
 function textOnly(children: React.ReactNode, defaultComponent: unknown): boolean {
   return React.Children.toArray(children).every(
     (child) =>
@@ -108,7 +115,10 @@ function Content({
   hidden?: boolean;
 }) {
   const { root, ref } = useNativeTextRootRef<ViewInstance>();
-  const text = textOnly(children, defaultTypographyComponent);
+  // Authored Text roots must keep their native scaling policy. Keep their
+  // boundary stable when a public scaling prop changes or is cleared.
+  const text = literalOnly(children);
+  const inline = !text && textOnly(children, defaultTypographyComponent);
   return (
     <NativeTextScope
       rootRef={root}
@@ -125,7 +135,14 @@ function Content({
         ) : (
           <View
             ref={ref}
-            style={[native, { flexShrink: 1, minWidth: 0 }, hidden ? { opacity: 0 } : undefined]}
+            style={[
+              native,
+              { flexShrink: 1, minWidth: 0 },
+              inline
+                ? { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'baseline' }
+                : undefined,
+              hidden ? { opacity: 0 } : undefined,
+            ]}
           >
             {content}
           </View>

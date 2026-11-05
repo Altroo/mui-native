@@ -171,7 +171,12 @@ test('button content scope keeps its own palette and resolves inherit color from
       <Button color="inherit">Inherited</Button>
     </Box>,
   );
-  expect(StyleSheet.flatten(screen.getByTestId('contained').props.style).color).toBeUndefined();
+  // The authored Typography stays a native root so its font-scaling policy is
+  // effective. Inherited computed color is explicit across the View boundary.
+  expect(screen.getByTestId('contained')).toHaveStyle({
+    color: theme.palette.primary.contrastText,
+    fontSize: 14,
+  });
   expect(screen.getByText('Inherited')).toHaveStyle({ color: 'red' });
   let label = screen.getByText('Contained').parent;
   while (label && StyleSheet.flatten(label.props.style)?.fontSize !== 14) label = label.parent;

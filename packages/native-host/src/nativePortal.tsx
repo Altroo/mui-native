@@ -1,4 +1,6 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { forwardRef } from 'react';
+import { I18nManager, unstable_TextAncestorContext as TextAncestorContext } from 'react-native';
 import type { ViewInstance, NativeSyntheticEvent } from 'react-native';
 import type { NativeProps } from './AltrooMUIPortalHostNativeComponent';
 import { portalCalibration } from './portalCoordinates';
@@ -81,13 +83,22 @@ export interface NativePortalHostProps
   geometry?: NativePortalLayout | null;
   surfaceRef?: React.Ref<ViewInstance>;
   presented?: boolean;
+  /** Physical destination direction, independent of the logical React parent. */
+  direction?: 'ltr' | 'rtl';
 }
 let implementation: typeof import('./AltrooMUIPortalHostNativeComponent') | undefined;
 let canvasImplementation: typeof import('./AltrooMUIPortalCanvasNativeComponent') | undefined;
 export const NativePortalHost: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<NativePortalHostProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, NativePortalHostProps>(function NativePortalHost(
-  { children, geometry, surfaceRef, presented = false, ...props },
+  {
+    children,
+    geometry,
+    surfaceRef,
+    presented = false,
+    direction = I18nManager.isRTL ? 'rtl' : 'ltr',
+    ...props
+  },
   ref,
 ) {
   implementation ??= require('./AltrooMUIPortalHostNativeComponent');
@@ -114,6 +125,7 @@ export const NativePortalHost: React.ForwardRefExoticComponent<
         collapsable={false}
         pointerEvents={presented ? 'box-none' : 'none'}
         style={{
+          direction,
           position: 'absolute',
           left: 0,
           top: 0,
@@ -122,7 +134,9 @@ export const NativePortalHost: React.ForwardRefExoticComponent<
           opacity: presented ? 1 : 0,
         }}
       >
-        {children}
+        {/* A canvas is a physical View boundary, even when its logical caller
+            is Text. Match RN View's host-context reset without a layout box. */}
+        <TextAncestorContext.Provider value={false}>{children}</TextAncestorContext.Provider>
       </Canvas>
     </Host>
   );

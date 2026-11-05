@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "description": "Configured original DOM/theme/official-plugin RTL observations, with independent negative controls. Native direction is an explicit adapter policy.",
+  "material": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "ButtonGroup/ButtonGroup.js": "d1bc4fd08001d1d0513576e5b79cf72509bbac3eacd9530d83c253191c668289",
+      "Button/Button.js": "ff23554ae2eac98863f24c29ec04ab07c7903bc489ffbaf81a31f5979149a515",
+      "Typography/Typography.js": "791ce01d7581defa70c9d08c2a9a0eb751719e0bde7fb36719f16b7139154d81"
+    }
+  },
+  "system": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "RtlProvider/index.js": "791d4454366a950cff318fe2b97006e51431441d44d6696aa0aa8333a456f878",
+      "ThemeProvider/ThemeProvider.js": "cca6ab3f8adfb1c0664cdda3c89dfb1cf1f83b034390fe2670b276bed2a28569"
+    }
+  },
+  "plugin": {
+    "name": "@mui/stylis-plugin-rtl",
+    "version": "9.5.0",
+    "integrity": "sha512-AyS9NC0FGhBTyH+IiCD8LnOlvHgJHckVHn74mjXbY97dKAaf7HlH5LXsbZFlPmSC0V0gXkyipqmMhliT99v+qg==",
+    "license": "MIT",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "index.js": "26b2067bab66248a7bc4272664c90477e20455859945de984a9b05a693d07e19",
+      "index.mjs": "51c01d89d70b577d98ea8b4cdcb441d08d61d2aab91e1a1841c9b2dc572dd747",
+      "LICENSE": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d"
+    }
+  },
+  "browserSource": "scripts/reference/button-group-rtl-browser.mjs",
+  "browserSha256": "7c6ff1b86568bbbb6479a333c49563dc044290ba2fda23f6de740b98c4b1574f",
+  "cachePolicy": "fresh Emotion cache per case; DOM direction and official RTL plugin configured independently"
+}

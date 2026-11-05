@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Typography composition adapts MIT Material UI 9.5.0. See NOTICE and upstream/reuse.json.
 import { useTheme, useComponentStyle } from './themeProvider';
 import React, { forwardRef } from 'react';
 import { Text, StyleSheet, type TextInstance, type TextProps, type TextStyle } from 'react-native';
@@ -106,6 +108,8 @@ export const Typography: React.ForwardRefExoticComponent<
       ],
       parentTextStyle: parent?.style,
       parentLineHeight: inheritedRatio,
+      parentDirection: parent?.direction,
+      parentTextAlign: parent?.textAlign,
       nativeStyle,
       nativeTextMetrics: nativeMetrics,
       inheritOnly: variant === 'inherit',
@@ -133,9 +137,13 @@ export const Typography: React.ForwardRefExoticComponent<
     resolved as TextStyle,
     adjustedNativeStyle,
   ]);
+  const ownDirection = nativeStyle?.direction ?? resolved.direction;
+  const direction =
+    ownDirection === 'ltr' || ownDirection === 'rtl' ? ownDirection : parent?.direction;
   const context = {
     ...getTextStyleInheritance(resolved as TextStyle, parent?.style, adjustedNativeStyle),
     nativeText: true,
+    ...(direction ? { direction } : {}),
   };
   setNativeTextScopeParent(context, parent);
   useNativeTextScopeRoot(root, context);
