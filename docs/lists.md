@@ -50,7 +50,7 @@ The owned ScrollView moves list padding/layout into contentContainerStyle and ke
 
 Wrapped/custom subheader components and external scroll hosts own their native stickyHeaderIndices. component and replacement roots must implement their selected host contract; scrollable custom roots must honor ScrollView props and content/viewport style separation. Large datasets need an application-owned virtualized renderer; this List does not create a FlashList or recycle rows. Native sticky geometry, nested scrolling and accessibility still require platform interaction evidence.
 
-The complete existing ListItemAvatar wrapper checklist, class/import surface and separate native gates are documented in [ListItemAvatar](list-item-avatar.md).
+The existing accessory wrapper contracts, class/import surfaces and separate native gates are documented in [ListItemAvatar](list-item-avatar.md) and [ListItemIcon](list-item-icon.md).
 
 ## Evidence and boundaries
 

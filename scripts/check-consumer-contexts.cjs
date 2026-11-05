@@ -28,6 +28,7 @@ try {
   for (const [name, classes, utility] of [
     ['FormGroup', 'formGroupClasses', 'getFormGroupUtilityClass'],
     ['ListItemAvatar', 'listItemAvatarClasses', 'getListItemAvatarUtilityClass'],
+    ['ListItemIcon', 'listItemIconClasses', 'getListItemIconUtilityClass'],
   ]) {
     const entry = requireConsumer('@altroo/mui-native/' + name);
     assert.equal(entry.default, material[name]);

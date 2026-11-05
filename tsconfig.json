@@ -24,7 +24,9 @@
       "@altroo/mui-native-host": ["./packages/native-host/src/index.tsx"],
       "@altroo/mui-native-system/DefaultPropsProvider": [
         "./packages/system/src/DefaultPropsProvider/index.ts"
-      ]
+      ],
+      "@mui/icons-material/*": ["./packages/icons/src/*"],
+      "@altroo/mui-native-icons/*": ["./packages/icons/src/*"]
     },
     "customConditions": ["react-native"],
     "noUnusedLocals": true,

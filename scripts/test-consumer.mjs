@@ -231,7 +231,7 @@ execFileSync(
 console.log('Installed strict spacing/breakpoint helper contracts passed independently.');
 // Each wrapper gets an isolated strict consumer so class augmentation cannot
 // accidentally satisfy another fixture through a shared compiler invocation.
-for (const contract of ['form-group-contract', 'list-item-avatar']) {
+for (const contract of ['form-group-contract', 'list-item-avatar', 'list-item-icon']) {
   await cp(`fixtures/${contract}-consumer/consumer.tsx`, `${consumer}/${contract}.tsx`);
   const config = `tsconfig.${contract}.native.json`;
   await writeFile(
@@ -251,7 +251,9 @@ for (const contract of ['form-group-contract', 'list-item-avatar']) {
     stdio: 'inherit',
   });
 }
-console.log('Installed strict FormGroup and ListItemAvatar contracts passed independently.');
+console.log(
+  'Installed strict FormGroup, ListItemAvatar and ListItemIcon contracts passed independently.',
+);
 execFileSync(process.execPath, ['scripts/check-consumer-default-props.cjs', consumer], {
   stdio: 'inherit',
 });
