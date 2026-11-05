@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "measuredOn": "2026-11-05",
+  "sourceId": "faab3095eb529528cf71121eade2aba15fb100216cd64f54dabcf2d4cd112561",
+  "nativeAppExecutableSHA256": "f22ece89882b9f86505a2b66fc5092648dc06164869c49c2f1945eb3bbf52686",
+  "bundleSHA256": "59cb6c8b218df45e1f8642d08929a0af9592e17254cfbc8cf9858b4ac3c100f2",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS 27.0",
+    "sdk": "iPhoneSimulator 27.1",
+    "nativeConfiguration": "Release",
+    "swiftOptimization": "-O",
+    "gccOptimization": "s",
+    "hermes": true,
+    "developmentJS": false
+  },
+  "workload": {
+    "id": "layout-root-v1",
+    "rows": 100,
+    "operation": "update",
+    "epochsPerCohort": 16,
+    "discardedWarmupsPerMode": 1,
+    "reportedSamplesPerMode": 3,
+    "order": ["mui", "rn"],
+    "allTestsPassed": true,
+    "expectedNativeRootsPerCohort": 100,
+    "expectedRootCleanupsDuringUpdates": 0,
+    "expectedRowUpdateCommitsPerCohort": 1600
+  },
+  "limits": [
+    "Raw simulator app CPU and physical-memory metrics include native accessibility acknowledgements.",
+    "Fixed MUI-first order and concurrent development work limit cross-mode conclusions.",
+    "Peak memory is process-wide; noisy memory deltas are not used as leak or improvement evidence.",
+    "No input-latency, scrolling, mount-cost or physical-device performance claim.",
+    "The fingerprint identifies the measured local build snapshot, including generated build inputs."
+  ],
+  "measurements": [
+    {
+      "family": "form-group",
+      "mode": "mui",
+      "metric": "appCpuSeconds",
+      "samples": [9.311161, 9.228641, 9.270981],
+      "mean": 9.270261,
+      "relativeStandardDeviationPercent": 0.363
+    },
+    {
+      "family": "form-group",
+      "mode": "mui",
+      "metric": "peakPhysicalMemoryKB",
+      "samples": [104204.88, 109513.296, 107022.928],
+      "mean": 106913.70133333333,
+      "relativeStandardDeviationPercent": 2.028
+    },
+    {
+      "family": "form-group",
+      "mode": "rn",
+      "metric": "appCpuSeconds",
+      "samples": [8.865365, 8.833245, 8.826721],
+      "mean": 8.841777,
+      "relativeStandardDeviationPercent": 0.191
+    },
+    {
+      "family": "form-group",
+      "mode": "rn",
+      "metric": "peakPhysicalMemoryKB",
+      "samples": [123800.144, 122554.96, 124734.032],
+      "mean": 123696.37866666667,
+      "relativeStandardDeviationPercent": 0.722
+    },
+    {
+      "family": "list-item-avatar",
+      "mode": "mui",
+      "metric": "appCpuSeconds",
+      "samples": [9.575686, 9.465872, 9.541473],
+      "mean": 9.527676999999999,
+      "relativeStandardDeviationPercent": 0.482
+    },
+    {
+      "family": "list-item-avatar",
+      "mode": "mui",
+      "metric": "peakPhysicalMemoryKB",
+      "samples": [122833.512, 122473.064, 122276.456],
+      "mean": 122527.67733333334,
+      "relativeStandardDeviationPercent": 0.188
+    },
+    {
+      "family": "list-item-avatar",
+      "mode": "rn",
+      "metric": "appCpuSeconds",
+      "samples": [9.905554, 9.344864, 9.383994],
+      "mean": 9.544804,
+      "relativeStandardDeviationPercent": 2.678
+    },
+    {
+      "family": "list-item-avatar",
+      "mode": "rn",
+      "metric": "peakPhysicalMemoryKB",
+      "samples": [128895.592, 127617.64, 126339.688],
+      "mean": 127617.64,
+      "relativeStandardDeviationPercent": 0.818
+    }
+  ]
+}
