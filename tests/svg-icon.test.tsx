@@ -28,7 +28,9 @@ import {
   type SvgIconHandle,
   type ThemeOptions,
 } from '@altroo/mui-native';
-import { Add, createSvgIcon as createLegacyIcon } from '../packages/icons/src';
+// Root/export completeness is checked against all installed glyphs separately.
+import Add from '../packages/icons/src/Add';
+import { createSvgIcon as createLegacyIcon } from '../packages/icons/src/createSvgIcon';
 import reference from './fixtures/mui-svg-icon-9.5.0.json';
 afterEach(cleanup);
 const PathElement = React.createElement('path', { d: 'M4 4h16v16H4z' });
