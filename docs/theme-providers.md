@@ -49,7 +49,7 @@ The native resolver supports @mui/system/ThemeProvider, useTheme, useThemeWithou
 
 useThemeWithoutDefault returns null outside a nonempty provider, or a supplied fallback. An empty System theme resolves through the hook fallback. The native default theme remains Material-shaped; this increment does not complete a separate System createTheme/default-token contract.
 
-RtlProvider and useRtl preserve the reference context defaults: the hook is false without a provider, an omitted provider value means true, and explicit false wins. ThemeProvider supplies the selected theme's direction. This context does not change the device's global layout direction. Physical RTL, font scaling, screen-reader order and device geometry still require native validation.
+The [complete renderless RTL context contract](rtl-provider.md) is tracked separately from the broader provider family. RtlProvider and useRtl preserve the reference context defaults: the hook is false without a provider, an omitted provider value means true, and explicit false wins. ThemeProvider supplies the selected theme's direction. This context does not change the device's global layout direction. Physical RTL, font scaling, screen-reader order and device geometry still require native validation.
 
 ## Evidence and remaining work
 

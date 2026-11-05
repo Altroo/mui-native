@@ -154,7 +154,7 @@ execFileSync(
   ['--project', 'tsconfig.native.json', '--noEmit'],
   { cwd: consumer, stdio: 'inherit' },
 );
-// Keep strict optional Group contracts isolated from unrelated preview APIs.
+// Keep completed strict-optional contracts isolated from unrelated preview APIs.
 // This checks installed declarations and resolver paths, not workspace sources.
 await writeFile(
   `${consumer}/tsconfig.exact-optional.native.json`,
@@ -162,7 +162,7 @@ await writeFile(
     {
       extends: './tsconfig.native.json',
       compilerOptions: { exactOptionalPropertyTypes: true },
-      include: ['button-group-exact-optional.tsx'],
+      include: ['button-group-exact-optional.tsx', 'rtl-provider-exact-optional.tsx'],
     },
     null,
     2,
@@ -173,7 +173,7 @@ execFileSync(
   ['--project', 'tsconfig.exact-optional.native.json', '--noEmit'],
   { cwd: consumer, stdio: 'inherit' },
 );
-console.log('Installed strict optional Group contracts passed.');
+console.log('Installed strict optional Group and RTL provider contracts passed.');
 execFileSync(process.execPath, ['scripts/check-consumer-contexts.cjs', consumer], {
   stdio: 'inherit',
 });

@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "af03eb4851630b4d92648df48a5d6de7b98badaff7524f19d06650ba89642a09",
+  "nativeSourceSha256": "91ebd3b31f7123a4e8939473b510a947eb452e77fe9f663fcde875faa018fccd",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7565,7 +7565,7 @@
           "module": "@altroo/mui-native-system:src/RtlProvider/index.tsx",
           "name": "RtlProviderProps",
           "kind": "type",
-          "line": 3
+          "line": 4
         }
       ]
     },
@@ -10376,7 +10376,7 @@
         {
           "name": "RtlProviderProps",
           "file": "src/RtlProvider/index.tsx",
-          "line": 3,
+          "line": 4,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -10422,7 +10422,7 @@
         {
           "name": "RtlProviderProps",
           "file": "src/RtlProvider/index.tsx",
-          "line": 3,
+          "line": 4,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -18149,7 +18149,7 @@
     {
       "name": "RtlProviderProps",
       "file": "src/RtlProvider/index.tsx",
-      "line": 3,
+      "line": 4,
       "kind": "type",
       "members": [
         {
@@ -18159,7 +18159,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 4,
+          "line": 5,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -18169,10 +18169,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "value?: boolean;",
-          "line": 5,
+          "declaration": "value?: boolean | undefined;",
+          "line": 6,
           "kind": "property",
-          "type": "boolean"
+          "type": "boolean | undefined"
         }
       ],
       "references": [
