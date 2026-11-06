@@ -1,6 +1,12 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { useState } from 'react';
-import { I18nManager, Platform, StyleSheet, processColor } from 'react-native';
+import {
+  I18nManager,
+  Platform,
+  StyleSheet,
+  processColor,
+  unstable_TextAncestorContext as TextAncestorContext,
+} from 'react-native';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 import {
   Box,
@@ -20,6 +26,14 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 const flat = (value: StyleProp<NativeStyle>) => StyleSheet.flatten(value) ?? {};
+// RN0.88 native Text mirrors explicit left/right in RTL paragraphs on iOS
+// and Android. Compare consumed native alignment with source ink, not prop names.
+const textInkSide = (alignment: unknown, direction: 'ltr' | 'rtl') =>
+  direction === 'rtl' && (alignment === 'left' || alignment === 'right')
+    ? alignment === 'left'
+      ? 'right'
+      : 'left'
+    : alignment;
 const actionStyle = (tree: ReturnType<typeof render>, index = 0) =>
   flat(
     tree
@@ -125,7 +139,7 @@ test('inherited direction and start alignment use a participating physical paren
   );
   expect(flat(tree.getByTestId('inherit').props.style).direction).toBe('rtl');
   expect(actionStyle(tree).textAlign).toBe('right');
-  expect(flat(tree.getByTestId('start').props.style).textAlign).toBe('right');
+  expect(textInkSide(flat(tree.getByTestId('start').props.style).textAlign, 'rtl')).toBe('right');
 });
 
 test('host RTL configuration is read without changing global native settings', () => {
@@ -695,7 +709,7 @@ test('inherited logical text alignment resolves again after a nested native dire
       </Box>
     </ThemeProvider>,
   );
-  expect(flat(tree.getByTestId('logical').props.style).textAlign).toBe('right');
+  expect(textInkSide(flat(tree.getByTestId('logical').props.style).textAlign, 'rtl')).toBe('right');
   expect(flat(tree.getByTestId('literal').props.style).textAlign).toBe('left');
 });
 
@@ -802,11 +816,20 @@ test.each(original.alignments)('original used logical alignment: %j', ({ input, 
   const tree = render(
     <ThemeProvider theme={createTheme({ direction })}>
       <ButtonGroup>
-        {input.inherited ? <Typography sx={{ textAlign: input.align }}>{text}</Typography> : text}
+        {input.inherited ? (
+          <Typography sx={{ textAlign: input.align }}>
+            <TextAncestorContext.Provider value={true}>{text}</TextAncestorContext.Provider>
+          </Typography>
+        ) : (
+          text
+        )}
       </ButtonGroup>
     </ThemeProvider>,
   );
-  expect(flat(tree.getByTestId('aligned').props.style).textAlign).toBe(inkSide);
+  const paragraphDirection = input.inherited ? direction : childDirection;
+  expect(
+    textInkSide(flat(tree.getByTestId('aligned').props.style).textAlign, paragraphDirection),
+  ).toBe(inkSide);
 });
 
 test('original controls distinguish DOM direction, theme/provider context and RTL stylesheet processing', () => {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "description": "Supporting React Native source provenance for the in-window portal root. This is separate from MUI release detection and does not promote verified compatibility.",
+  "description": "Supporting React Native source provenance for native Portal rendering, physical style/text ownership and host behavior. This is separate from MUI release detection and does not promote verified compatibility.",
   "package": {
     "name": "react-native",
     "version": "0.88.1",
@@ -54,7 +54,19 @@
       "ReactCommon/react/renderer/components/view/primitives.h": "aeaca1bf384980450695818f21cc3c9a5269cdb207a46eec1c98f9c17a8de206",
       "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/BackgroundDrawable.kt": "fd24c337d541b2f80477eb7a7ce5a959bf3826e5e6a46ab143316f0b8b8dc978",
       "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/BorderDrawable.kt": "978c6722d89d28ec68c95d510b4af771bdd61f6ba6497a83071b6393a0bd28b7",
-      "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/BackgroundImageDrawable.kt": "ba39cec25c71f6c7da1f3ed88bb943e03220bb9a0967d8c2d35ca2c5a3da1cbc"
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/drawable/BackgroundImageDrawable.kt": "ba39cec25c71f6c7da1f3ed88bb943e03220bb9a0967d8c2d35ca2c5a3da1cbc",
+      "Libraries/Text/TextAncestorContext.js": "bf1a2a6b0f76d505b0c447d6f3be8fa827dc07adb22a9f291c142550c442832c",
+      "types_generated/index.d.ts": "34b15149f573c1d032f3049dfce13b9136255783aa77763f8f1a64beaef770d3",
+      "ReactCommon/react/renderer/components/text/ParagraphShadowNode.cpp": "22053df9c418b4580c546d3c9db7fe09ff7db39fb6def658ee8806fce5dbf849",
+      "ReactCommon/react/renderer/components/text/BaseTextShadowNode.cpp": "cb36cfb581b414a11da4d4a1864d291a78571c519fd1663cd8e5326ec5509d35",
+      "ReactCommon/react/renderer/components/text/BaseTextProps.cpp": "233da3da27a29002d82a20fab768c3147be0eacfe8af9f4309812952c8a11a22",
+      "ReactCommon/react/renderer/components/text/TextProps.h": "b451fcb328e18f0dc43dc255d4eb23e9598839e96db3d200b687c8f25920526c",
+      "ReactCommon/react/renderer/components/text/TextShadowNode.h": "f9557f6dd26bc580ba502844fa4c3e0a74bdb04f843ef92dc8c7662e1aadbff7",
+      "ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTAttributedTextUtils.mm": "9cbbb59d3885f30c8a8dc463780a3401e83ef5502b8dc0db83c9bd13fd8f1069",
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/TextAttributeProps.kt": "2312b2a52222046737ce93a67dda418d3bbb2db92f7005a06f2f35fecc30ba39",
+      "ReactCommon/react/renderer/textlayoutmanager/TextMeasureCache.h": "1656f733b47e7866dc79dcd9846fdab3a3fbb7796dd79df18709b114d61ac640",
+      "ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/TextLayoutManager.mm": "05f3f9918e21e3fa5f130df58d26920b1e1caa3e339e9ac233cbd2bf9b66b846",
+      "ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm": "44cdc0f1928699e607b702fdba61824c4c2d9420946f80cd2caafff2e913894f"
     }
   },
   "localFiles": [
@@ -89,7 +101,8 @@
     "packages/system/src/sx.ts",
     "packages/system/src/nativeText.ts",
     "packages/system/src/textScope.tsx",
-    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveView.kt"
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveView.kt",
+    "packages/material/src/typography.tsx"
   ],
   "adaptations": [
     "Native root child mounting and React Native touch/pointer dispatch follow the verified MIT reference. The new implementation attaches within an existing native window/container, does not create a modal or request focus, preserves React context, and reports actual native affine container bounds.",
@@ -107,6 +120,8 @@
     "Physical finite style/text ownership walks the public RN DOM-like node ancestry with explicit native Portal redirections; public ScrollView refs are the native node enriched with scrolling methods. Leases preserve caller refs and reject detached/cyclic/self-container destinations.",
     "The physical Portal canvas resets React Native's public text-ancestor context like View, without adding a native layout host. Its direction and inherited text scope follow the physical destination, with the native global direction used for the window.",
     "ButtonGroup protects generated joined corners, border dividers and overlap against the pinned native RTL edge resolution. Android local-RTL border paint and global Yoga edge swapping are handled separately. Authored native inline styles retain native semantics and their final precedence; authored Text roots remain independent for font-scaling policies.",
-    "The owned Android interactive host invalidates its retained background/foreground drawable layers when native layout direction changes. This repairs the pinned RN drawing-path cache without remounting views, toggling JS style aliases or patching unrelated React Native Views. Native tests rasterize the actual border layer; freshly resolved radius inputs alone do not establish correct paint."
+    "The owned Android interactive host invalidates its retained background/foreground drawable layers when native layout direction changes. This repairs the pinned RN drawing-path cache without remounting views, toggling JS style aliases or patching unrelated React Native Views. Native tests rasterize the actual border layer; freshly resolved radius inputs alone do not establish correct paint.",
+    "CSS physical/logical text alignment retains semantic provenance until Text emission, where pinned iOS and Android RTL mirroring is encoded once. Genuine native inline alignment and resets retain native behavior. Public TextAncestorContext and View reset semantics identify the owning paragraph across virtual Text and View boundaries; this policy does not change the global device direction or native input adapters.",
+    "Text layout events and actual drawing use separate native paths. Horizontal glyph-placement assertions read actual rendered Text ink; line-event metrics retain their own font, line-height and enclosure checks, including across live layout-direction changes."
   ]
 }

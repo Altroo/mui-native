@@ -1,6 +1,6 @@
 # Default-prop context providers
 
-This guide covers the finite native React context contract of Material and System `DefaultPropsProvider`, `useDefaultProps` and their default-resolution helpers, based on MUI 9.5.0. These corrections are **unpublished development after `0.0.7-prealpha.0`**. This guide does not promote either module to 100% support; delivery gates remain tracked in [validation](validation.md) and the [completion plan](completion-plan.md).
+This guide covers the finite native React context contract of Material and System `DefaultPropsProvider`, `useDefaultProps` and their default-resolution helpers, based on MUI 9.5.0. These corrections are **unpublished development after `0.0.7-prealpha.0`**. Both modules are complete at **100% for this finite native context contract**. This excludes the broader ThemeProvider, style engine and consuming-component contracts; it does not update the published packages.
 
 ## Imports and types
 
@@ -86,3 +86,9 @@ The [retained reference](../tests/fixtures/mui-default-props-contract-9.5.0.json
 Optional `propTypes: any` typing preserves metadata-access compatibility. No runtime validators are attached; original development-only attachment and web/RSC metadata are excluded from this native scope.
 
 These providers add no native host or platform binary and do not change global device settings. Broader ThemeProvider/styling contracts, consuming renderers, physical-device/accessibility validation and calibrated performance gates remain open. Context and consumer checks do not establish those results.
+
+## Completion checks
+
+The finite contract covers the provider values and children, public generics and augmentation, nearest-context replacement and reset, live map changes with retained child state, default selection and getter behavior, deferred slot callbacks, class/style merge rules, documented native adaptations and canonical import identities. The provider creates only a React context boundary, with no native host or platform binary. Its own contract has no geometry, keyboard, screen-reader or device-performance behavior to certify.
+
+The pinned original checks and 72 focused tests pass. Strict original-package and emitted native consumers pass with exact optional properties. Fresh installation of all nine current local archives verifies pure provider imports, shared context and canonical identities. The provider source is unchanged from the [reviewed provider delivery](https://github.com/Altroo/mui-native/pull/75); an independent source/provenance and completion review found no remaining provider-owned gap. Runtime development-only PropTypes attachment and browser/RSC metadata remain outside the stated native scope. Broader application validation remains in [validation](validation.md).

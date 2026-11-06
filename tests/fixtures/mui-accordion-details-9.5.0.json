@@ -1,0 +1,675 @@
+{
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+        "index.js": "3ef26e6ff602e27a6a3a8bd34a95cc3f9b1f903ab5ba90aa7bb3cf41217deafd",
+        "index.d.ts": "88f12707de0dd1b6a15db521a6b7d1308b3a88aef114b0bc2964ece74d007d5e",
+        "index.d.mts": "5b05f0c0198a9f0dea406ca740f74fe8df8766c3b9a80ad512d55b9add46de10",
+        "AccordionDetails/AccordionDetails.js": "96a7a5ae34ceadb8a11a1de78144e7002462d6e94dea9d7da7d74245cac82960",
+        "AccordionDetails/AccordionDetails.d.ts": "f69b380742957c3cb43b061ab3293ac7ba9d2af1771eba33ef2f814de2353140",
+        "AccordionDetails/AccordionDetails.d.mts": "7ce31f7816c59a6572b8a0e3a72d8ca3a02072116a2a4021479d7a2a8b0d1df7",
+        "AccordionDetails/index.js": "e6862e9f18f3d365e99a60873d9bb88260bbd789b806161c56d73b3d5bdd985d",
+        "AccordionDetails/index.d.ts": "a6c16d7e6060828143259e5ce1ad0228e3a34e2ff2cf35d2300adc78b6fcb130",
+        "AccordionDetails/index.d.mts": "ea2827c1bf000bfc8779641d26604d5b003603b259140cdec960bdb74af4af6e",
+        "AccordionDetails/accordionDetailsClasses.js": "9a1aba2925d27a4b122067340b7ebbfa77140694ffe85f6fae3864b156d0f245",
+        "AccordionDetails/accordionDetailsClasses.d.ts": "725e63c5518a0ca69dc44c12dc4cde29218e4bfd8088368ec67836f394cfc7a4",
+        "AccordionDetails/accordionDetailsClasses.d.mts": "725e63c5518a0ca69dc44c12dc4cde29218e4bfd8088368ec67836f394cfc7a4",
+        "internal/index.d.ts": "dab4f30b9d72cb7596989c6cee8787309e45945f236d984db885ad611e59a259",
+        "internal/index.d.mts": "f4183ce238df75e707ae636b09690a3cf283b7f33f30b12335f53f3be6d4f233",
+        "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+        "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa",
+        "styles/slotShouldForwardProp.js": "94273fe410b5da39daf022f286c2d746538878d094694eab5307d0eb6bd3501c",
+        "utils/memoTheme.js": "ba795253c43a4fd740281e725b4fe0b77a25bf0c1a26e3f12b5f89a790a8a497",
+        "zero-styled/index.js": "50f7cf89a8e3794b42b932af95d6720f21597bd4b9a296bcb92f87eab5789eb6",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+        "resolveProps/resolveProps.js": "f1ca742842ec733f23b40eda4bcbfff608300144f46cf928e1e0f8ab604c36c4"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+        "createStyled/createStyled.d.ts": "c959b5a46b59b4d5761505fd62f97b38b6b06421d68a6949ac27bff0daa0825c",
+        "createStyled/createStyled.d.mts": "8803339e35c364b41644464262abe60d5c5e5ac245f16fee733763f7cf2f160e",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "6234e618376c90c75eadd92dc0af9e078a946cf57d6adb15b473163932fbc739",
+        "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf"
+      }
+    }
+  ],
+  "publicExports": {
+    "rootIdentity": true,
+    "canonical": true,
+    "originalClassLeafExport": false,
+    "nativeExistingClassLeafAlias": true
+  },
+  "classes": { "root": "MuiAccordionDetails-root" },
+  "utilities": {
+    "root": "MuiAccordionDetails-root",
+    "active": "Mui-active",
+    "checked": "Mui-checked",
+    "completed": "Mui-completed",
+    "disabled": "Mui-disabled",
+    "error": "Mui-error",
+    "expanded": "Mui-expanded",
+    "focused": "Mui-focused",
+    "focusVisible": "Mui-focusVisible",
+    "open": "Mui-open",
+    "readOnly": "Mui-readOnly",
+    "required": "Mui-required",
+    "selected": "Mui-selected",
+    "": "MuiAccordionDetails-",
+    "custom": "MuiAccordionDetails-custom",
+    "__proto__": "Mui-[object Object]",
+    "constructor": "Mui-function Object() { [native code] }",
+    "toString": "Mui-function toString() { [native code] }",
+    "hasOwnProperty": "Mui-function hasOwnProperty() { [native code] }"
+  },
+  "fixtures": [
+    {
+      "input": { "name": "source defaults" },
+      "observation": {
+        "ownerClass": null,
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "details-reference",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px" },
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "authored classes",
+        "props": { "classes": { "root": "chosen" }, "className": "authored" }
+      },
+      "observation": {
+        "ownerClass": "authored",
+        "rootClass": "MuiAccordionDetails-root chosen authored",
+        "id": "details-reference",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root chosen authored",
+      "declarations": { "padding": "8px 16px 16px" },
+      "inlineStyle": null
+    },
+    {
+      "input": { "name": "class getter timing", "classGetter": true, "className": " authored " },
+      "observation": {
+        "ownerClass": "authored",
+        "rootClass": "MuiAccordionDetails-root getter-2 authored",
+        "id": "details-reference",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": ["root", "root"],
+      "className": "MuiAccordionDetails-root getter-2 authored",
+      "declarations": { "padding": "8px 16px 16px" },
+      "inlineStyle": null
+    },
+    {
+      "input": { "name": "numeric spacing", "spacing": 10 },
+      "observation": {
+        "ownerClass": null,
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "details-reference",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "10px 20px 20px" },
+      "inlineStyle": null
+    },
+    {
+      "input": { "name": "array spacing", "spacing": [0, 3, 7] },
+      "observation": {
+        "ownerClass": null,
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "details-reference",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "3px 7px 7px" },
+      "inlineStyle": null
+    },
+    {
+      "input": { "name": "rem spacing", "spacing": "rem" },
+      "observation": {
+        "ownerClass": null,
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "details-reference",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "0.25rem 0.5rem 0.5rem" },
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "theme defaults",
+        "defaults": {
+          "className": "theme",
+          "classes": { "root": "theme-root" },
+          "style": { "opacity": 0.2 },
+          "sx": { "paddingTop": 2 }
+        }
+      },
+      "observation": {
+        "ownerClass": "theme",
+        "rootClass": "MuiAccordionDetails-root theme-root theme",
+        "id": "details-reference",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "opacity": 0.2 },
+        "hasOwnerSx": true,
+        "ownerSx": { "paddingTop": 2 },
+        "rootStyle": { "opacity": 0.2 },
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root theme-root theme",
+      "declarations": { "padding": "8px 16px 16px", "padding-top": "16px" },
+      "inlineStyle": "opacity:0.2"
+    },
+    {
+      "input": {
+        "name": "own values replace defaults",
+        "defaults": {
+          "className": "theme",
+          "classes": { "root": "theme-root" },
+          "style": { "opacity": 0.2 }
+        },
+        "props": {
+          "className": "own",
+          "classes": { "root": "own-root" },
+          "style": { "paddingTop": 3 }
+        }
+      },
+      "observation": {
+        "ownerClass": "own",
+        "rootClass": "MuiAccordionDetails-root own-root own",
+        "id": "details-reference",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "paddingTop": 3 },
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": { "paddingTop": 3 },
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root own-root own",
+      "declarations": { "padding": "8px 16px 16px" },
+      "inlineStyle": "padding-top:3px"
+    },
+    {
+      "input": {
+        "name": "explicit undefined selects defaults",
+        "defaults": {
+          "className": "theme",
+          "style": { "opacity": 0.2 },
+          "sx": { "paddingTop": 2 }
+        },
+        "props": { "className": "$undefined", "style": "$undefined", "sx": "$undefined" }
+      },
+      "observation": {
+        "ownerClass": "theme",
+        "rootClass": "MuiAccordionDetails-root theme",
+        "id": "details-reference",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "opacity": 0.2 },
+        "hasOwnerSx": true,
+        "ownerSx": { "paddingTop": 2 },
+        "rootStyle": { "opacity": 0.2 },
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root theme",
+      "declarations": { "padding": "8px 16px 16px", "padding-top": "16px" },
+      "inlineStyle": "opacity:0.2"
+    },
+    {
+      "input": {
+        "name": "opt-in class and plain style merge",
+        "merge": true,
+        "defaults": { "className": "theme", "style": { "opacity": 0.2, "paddingTop": 9 } },
+        "props": { "className": "own", "style": { "paddingTop": 3 } }
+      },
+      "observation": {
+        "ownerClass": "theme own",
+        "rootClass": "MuiAccordionDetails-root theme own",
+        "id": "details-reference",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "opacity": 0.2, "paddingTop": 3 },
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": { "opacity": 0.2, "paddingTop": 3 },
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root theme own",
+      "declarations": { "padding": "8px 16px 16px" },
+      "inlineStyle": "opacity:0.2;padding-top:3px"
+    },
+    {
+      "input": {
+        "name": "root override then sx",
+        "overrides": { "paddingTop": 7, "opacity": 0.4 },
+        "props": { "sx": { "paddingTop": 2, "opacity": 0.8 } }
+      },
+      "observation": {
+        "ownerClass": null,
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "details-reference",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": true,
+        "ownerSx": { "paddingTop": 2, "opacity": 0.8 },
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "padding-top": "16px", "opacity": "0.8" },
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "inline resets CSS edges",
+        "overrides": { "paddingTop": 7, "paddingLeft": 9 },
+        "props": { "style": { "padding": 0 } }
+      },
+      "observation": {
+        "ownerClass": null,
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "details-reference",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "padding": 0 },
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": { "padding": 0 },
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "padding-top": "7px", "padding-left": "9px" },
+      "inlineStyle": "padding:0"
+    },
+    {
+      "input": {
+        "name": "predicate variant owner values override root collisions",
+        "variant": true,
+        "props": { "className": "authored", "classes": { "root": "chosen" } }
+      },
+      "observation": {
+        "ownerClass": "authored",
+        "rootClass": "MuiAccordionDetails-root chosen authored",
+        "id": "details-reference",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "variantArguments": [
+        {
+          "ownerClass": "authored",
+          "rootClass": "authored",
+          "id": "details-reference",
+          "hasOwnerStyle": false,
+          "ownerStyle": null,
+          "hasOwnerSx": false,
+          "ownerSx": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "ownerClass": "authored",
+          "rootClass": "authored",
+          "id": "details-reference",
+          "hasOwnerStyle": false,
+          "ownerStyle": null,
+          "hasOwnerSx": false,
+          "ownerSx": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        }
+      ],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root chosen authored",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.45", "min-width": "33px" },
+      "inlineStyle": null
+    },
+    {
+      "input": { "name": "embedded root variants", "embedded": true },
+      "observation": {
+        "ownerClass": null,
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "details-reference",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "variantArguments": [],
+      "classAccesses": [],
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "min-width": "37px" },
+      "inlineStyle": null
+    }
+  ],
+  "styledDefaults": [
+    {
+      "input": { "name": "no defaults or own style" },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.8" },
+      "inlineStyle": null
+    },
+    {
+      "input": { "name": "default style absent own", "defaultStyle": { "opacity": 0.2 } },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "opacity": 0.2 },
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": { "opacity": 0.2 },
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.8" },
+      "inlineStyle": "opacity:0.2"
+    },
+    {
+      "input": {
+        "name": "default style own undefined",
+        "defaultStyle": { "opacity": 0.2 },
+        "style": "$undefined"
+      },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "opacity": 0.2 },
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": { "opacity": 0.2 },
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.8" },
+      "inlineStyle": "opacity:0.2"
+    },
+    {
+      "input": {
+        "name": "default style own null",
+        "defaultStyle": { "opacity": 0.2 },
+        "style": null
+      },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": true,
+        "ownerStyle": null,
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.8" },
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "own style replaces default",
+        "defaultStyle": { "opacity": 0.2 },
+        "style": { "opacity": 0.9 }
+      },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "opacity": 0.9 },
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": { "opacity": 0.9 },
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.8" },
+      "inlineStyle": "opacity:0.9"
+    },
+    {
+      "input": {
+        "name": "unrelated own style replaces entire default",
+        "defaultStyle": { "opacity": 0.2 },
+        "style": { "paddingTop": 3 }
+      },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "paddingTop": 3 },
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": { "paddingTop": 3 },
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.8" },
+      "inlineStyle": "padding-top:3px"
+    },
+    {
+      "input": { "name": "default sx consumed by outer styled", "defaultSx": { "opacity": 0.2 } },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": true,
+        "ownerSx": { "opacity": 0.2 },
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.8" },
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "authored sx consumed by outer styled",
+        "defaultSx": { "opacity": 0.2 },
+        "sx": { "opacity": 0.9 }
+      },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": true,
+        "ownerSx": { "opacity": 0.2 },
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.9" },
+      "inlineStyle": null
+    },
+    {
+      "input": { "name": "authored null sx", "defaultSx": { "opacity": 0.2 }, "sx": null },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": true,
+        "ownerSx": { "opacity": 0.2 },
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.8" },
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "authored undefined sx",
+        "defaultSx": { "opacity": 0.2 },
+        "sx": "$undefined"
+      },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": false,
+        "ownerStyle": null,
+        "hasOwnerSx": true,
+        "ownerSx": { "opacity": 0.2 },
+        "rootStyle": null,
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.8" },
+      "inlineStyle": null
+    },
+    {
+      "input": {
+        "name": "nested styled with defaults",
+        "defaultStyle": { "opacity": 0.2 },
+        "defaultSx": { "paddingLeft": 1 },
+        "sx": { "opacity": 0.9 },
+        "nested": true
+      },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "opacity": 0.2 },
+        "hasOwnerSx": true,
+        "ownerSx": { "paddingLeft": 1 },
+        "rootStyle": { "opacity": 0.2 },
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "padding-left": "8px", "opacity": "0.9" },
+      "inlineStyle": "opacity:0.2"
+    },
+    {
+      "input": {
+        "name": "opt-in merged style under styled",
+        "defaultStyle": { "opacity": 0.2 },
+        "style": { "paddingTop": 3 },
+        "merge": true
+      },
+      "observation": {
+        "ownerClass": "",
+        "rootClass": "MuiAccordionDetails-root",
+        "id": "styled-details",
+        "hasOwnerStyle": true,
+        "ownerStyle": { "opacity": 0.2, "paddingTop": 3 },
+        "hasOwnerSx": false,
+        "ownerSx": null,
+        "rootStyle": { "opacity": 0.2, "paddingTop": 3 },
+        "direction": "ltr"
+      },
+      "className": "MuiAccordionDetails-root",
+      "declarations": { "padding": "8px 16px 16px", "opacity": "0.8" },
+      "inlineStyle": "opacity:0.2;padding-top:3px"
+    }
+  ],
+  "customRoot": {
+    "className": "MuiAccordionDetails-root chosen authored",
+    "refArgument": "requested",
+    "styleIdentity": true,
+    "onClickIdentity": true,
+    "filtered": []
+  }
+}

@@ -1,7 +1,9 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { mkdir, readFile, readdir, writeFile, cp, rm, access } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
+import { assertSystemDeclarationIsolation } from './system-declarations.mjs';
 const require = createRequire(import.meta.url);
 const consumer = resolve('.cache/consumer');
 const workspace = JSON.parse(await readFile('package.json', { encoding: 'utf8' }));
@@ -47,6 +49,24 @@ for (const directory of await readdir('packages')) {
     if (installed !== expected) throw new Error(`${manifest.name}: installed ${notice} differs`);
   }
 }
+// Inspect actual installed declarations, including inferred import() result
+// types. A full workspace install can otherwise conceal a reverse dependency.
+async function systemDeclarations(directory, prefix = '') {
+  const result = new Map();
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const name = prefix + entry.name;
+    const path = `${directory}/${entry.name}`;
+    if (entry.isDirectory())
+      for (const [file, source] of await systemDeclarations(path, name + '/'))
+        result.set(file, source);
+    else if (/\.d\.[cm]?ts$/.test(name)) result.set(name, await readFile(path, 'utf8'));
+  }
+  return result;
+}
+assertSystemDeclarationIsolation(
+  await systemDeclarations(`${consumer}/node_modules/@altroo/mui-native-system/dist`),
+);
+console.log('Installed System declarations remain independent of Material.');
 // A published native package must retain source/config needed by autolinking and codegen.
 const nativeHost = `${consumer}/node_modules/@altroo/mui-native-host`;
 for (const file of [
@@ -176,6 +196,7 @@ await writeFile(
         'button-group-exact-optional.tsx',
         'rtl-provider-exact-optional.tsx',
         'default-props-contract.tsx',
+        'native-root-style-contract.tsx',
       ],
     },
     null,
@@ -209,6 +230,36 @@ execFileSync(
   { cwd: consumer, stdio: 'inherit' },
 );
 console.log('Installed strict spacing/breakpoint helper contracts passed independently.');
+// Each wrapper gets an isolated strict consumer so class augmentation cannot
+// accidentally satisfy another fixture through a shared compiler invocation.
+for (const [contract, fixture] of [
+  ['form-group-contract', 'consumer.tsx'],
+  ['list-item-avatar', 'consumer.tsx'],
+  ['list-item-icon', 'consumer.tsx'],
+  ['accordion-details', 'native.tsx'],
+]) {
+  await cp(`fixtures/${contract}-consumer/${fixture}`, `${consumer}/${contract}.tsx`);
+  const config = `tsconfig.${contract}.native.json`;
+  await writeFile(
+    `${consumer}/${config}`,
+    JSON.stringify(
+      {
+        extends: './tsconfig.native.json',
+        compilerOptions: { exactOptionalPropertyTypes: true },
+        include: [`${contract}.tsx`],
+      },
+      null,
+      2,
+    ),
+  );
+  execFileSync(resolve(consumer, 'node_modules/.bin/tsc'), ['--project', config, '--noEmit'], {
+    cwd: consumer,
+    stdio: 'inherit',
+  });
+}
+console.log(
+  'Installed strict FormGroup, Avatar, Icon and AccordionDetails contracts passed independently.',
+);
 execFileSync(process.execPath, ['scripts/check-consumer-default-props.cjs', consumer], {
   stdio: 'inherit',
 });

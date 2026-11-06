@@ -1053,11 +1053,27 @@
           "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
           "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
           "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
-          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7"
+          "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
+          "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+          "index.js": "3ef26e6ff602e27a6a3a8bd34a95cc3f9b1f903ab5ba90aa7bb3cf41217deafd",
+          "index.d.ts": "88f12707de0dd1b6a15db521a6b7d1308b3a88aef114b0bc2964ece74d007d5e",
+          "index.d.mts": "5b05f0c0198a9f0dea406ca740f74fe8df8766c3b9a80ad512d55b9add46de10",
+          "ListItemIcon/ListItemIcon.d.mts": "a6ca7f74a6cbc44ecdce93a69409239663bcd758edafaa7225dfb071a5a421c4",
+          "ListItemIcon/index.js": "2a8d7fe31b58a2b6860c5209b25477c7527324d6e548a637521e8cb9d2e7631d",
+          "ListItemIcon/index.d.ts": "a723cf11acbb7f1d9b620b90a5cdc50f60f9ac8c2ec7bb6f69751729093180b6",
+          "ListItemIcon/index.d.mts": "c1d2bc352b2cfd64288e7f417ab691c40066e00fd4a4e2bb7f8cc77f0044f4cf",
+          "ListItemIcon/listItemIconClasses.js": "c9b26c93a3ce58a6b275cb6b5e58aa86ba0467c2edd641781a9ff5d24de30309",
+          "ListItemIcon/listItemIconClasses.d.ts": "4263e62ba6e779cd26752ab3fcfb42249d009efcf110bf7a69412c1f33582e22",
+          "ListItemIcon/listItemIconClasses.d.mts": "4263e62ba6e779cd26752ab3fcfb42249d009efcf110bf7a69412c1f33582e22",
+          "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+          "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5",
+          "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d"
         }
       },
       "adaptations": [
-        "Native List context, padding, icon/avatar/subheader style contracts adapt the pinned MIT source. Owned ScrollView/sticky indices and fragment identity are native extensions."
+        "Native List context, padding, icon/avatar/subheader style contracts adapt the pinned MIT source. Owned ScrollView/sticky indices and fragment identity are native extensions.",
+        "ListItemIcon preserves source root/context/default/class composition, native attributes/ref ownership and final prepared styled-root cascade. See upstream/list-item-icon.json for exact declaration/utility/export proof and separate native parent-menu boundaries."
       ]
     },
     {
@@ -2033,7 +2049,8 @@
         }
       },
       "adaptations": [
-        "Checkbox/Radio checked/value/event/slot contracts and label/group precedence follow verified original MUI 9.5.0 source and actual Chromium reference cases. Native ButtonBase, input target handles, scoped registration, Space/arrow navigation and View/Text boundaries replace DOM controls. Native readOnly keeps the authored model instead of browser DOM drift. Full browser forms/global named groups and physical native behavior remain unverified."
+        "Checkbox/Radio checked/value/event/slot contracts and label/group precedence follow verified original MUI 9.5.0 source and actual Chromium reference cases. Native ButtonBase, input target handles, scoped registration, Space/arrow navigation and View/Text boundaries replace DOM controls. Native readOnly keeps the authored model instead of browser DOM drift. Full browser forms/global named groups and physical native behavior remain unverified.",
+        "FormGroup-only utility/class interface closure preserves canonical class helpers and augmentable class declarations; 13 original observations and 20 utility identifiers are retained in upstream/form-group.json. Other controls in this file are not promoted."
       ]
     },
     {
@@ -2107,7 +2124,8 @@
         }
       },
       "adaptations": [
-        "Checkbox/Radio checked/value/event/slot contracts and label/group precedence follow verified original MUI 9.5.0 source and actual Chromium reference cases. Native ButtonBase, input target handles, scoped registration, Space/arrow navigation and View/Text boundaries replace DOM controls. Native readOnly keeps the authored model instead of browser DOM drift. Full browser forms/global named groups and physical native behavior remain unverified."
+        "Checkbox/Radio checked/value/event/slot contracts and label/group precedence follow verified original MUI 9.5.0 source and actual Chromium reference cases. Native ButtonBase, input target handles, scoped registration, Space/arrow navigation and View/Text boundaries replace DOM controls. Native readOnly keeps the authored model instead of browser DOM drift. Full browser forms/global named groups and physical native behavior remain unverified.",
+        "FormGroup-only closure retains undefined/inherited/own error states, original class getter order, native root props/ref lifecycle, scoped text and per-layer inline insets; shared styled/root-argument composition is recorded in upstream/form-group.json. Native/device/performance evidence remains separate."
       ]
     },
     {
@@ -3178,6 +3196,92 @@
       },
       "adaptations": [
         "The original published named unstable_createBreakpoints entry forwards to the same native helper without adding a default export."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/listItemAvatarClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+          "ListItemAvatar/ListItemAvatar.js": "2914dcf38c93a0577faf78664611c41ab613a324f2a158826b2b2ff35ac892c7",
+          "ListItemAvatar/ListItemAvatar.d.ts": "1c671fa97ad69902c110c7890527f5720a785a2e0b68efcb77c16f37d6274d67",
+          "ListItemAvatar/ListItemAvatar.d.mts": "9bbd46596e7bdf430ddd61954ddb903cfcde5e10683b9f449aaabdfa234cc0cf",
+          "ListItemAvatar/index.js": "09277444eff3c3b90887221eb5c14b53b62ef07e70225b8bcbe146a0924f8ecc",
+          "ListItemAvatar/index.d.ts": "907467198cc07e6eac62f7eb2bcc7afc31e3ee433ae60000eca62213de971e6d",
+          "ListItemAvatar/index.d.mts": "ae4834e1d6c7d5ee4a843af782a44888df6260afd1959effb6e20843312c6c28",
+          "ListItemAvatar/listItemAvatarClasses.js": "1b045eb8f9887f1bec6239ee6c912dfd39e5f412032237d224fa6e666085e648",
+          "ListItemAvatar/listItemAvatarClasses.d.ts": "334bc494ebf7f62684a30a916455dc63c6895784a74b07b835d28d0297785496",
+          "ListItemAvatar/listItemAvatarClasses.d.mts": "334bc494ebf7f62684a30a916455dc63c6895784a74b07b835d28d0297785496",
+          "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
+          "ListItem/ListItem.js": "37ebb4b8746f9c32a8576d0462501b01062a2b0c9212bf856e491155ebe8ac5c",
+          "ListItemButton/ListItemButton.js": "abededff4fe15c71fc8c1a268094c1809505adf2c0075cd981e39770f0d94f17"
+        }
+      },
+      "adaptations": [
+        "Original class interface, utility identifiers and vocabulary; native class metadata also participates in the existing finite root selector context. See upstream/list-item-avatar.json for the full wrapper reference and native adaptations."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/listItemIconClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+          "index.js": "3ef26e6ff602e27a6a3a8bd34a95cc3f9b1f903ab5ba90aa7bb3cf41217deafd",
+          "index.d.ts": "88f12707de0dd1b6a15db521a6b7d1308b3a88aef114b0bc2964ece74d007d5e",
+          "index.d.mts": "5b05f0c0198a9f0dea406ca740f74fe8df8766c3b9a80ad512d55b9add46de10",
+          "ListItemIcon/ListItemIcon.js": "a504165c16674bc925faecb4d2d2bbf9ad3f28f25e7f2cb0539417f9eea3e7bd",
+          "ListItemIcon/ListItemIcon.d.ts": "a123906a4c450f3dbb7d7233fed51b686baa11743082af151c0b7740e1106854",
+          "ListItemIcon/ListItemIcon.d.mts": "a6ca7f74a6cbc44ecdce93a69409239663bcd758edafaa7225dfb071a5a421c4",
+          "ListItemIcon/index.js": "2a8d7fe31b58a2b6860c5209b25477c7527324d6e548a637521e8cb9d2e7631d",
+          "ListItemIcon/index.d.ts": "a723cf11acbb7f1d9b620b90a5cdc50f60f9ac8c2ec7bb6f69751729093180b6",
+          "ListItemIcon/index.d.mts": "c1d2bc352b2cfd64288e7f417ab691c40066e00fd4a4e2bb7f8cc77f0044f4cf",
+          "ListItemIcon/listItemIconClasses.js": "c9b26c93a3ce58a6b275cb6b5e58aa86ba0467c2edd641781a9ff5d24de30309",
+          "ListItemIcon/listItemIconClasses.d.ts": "4263e62ba6e779cd26752ab3fcfb42249d009efcf110bf7a69412c1f33582e22",
+          "ListItemIcon/listItemIconClasses.d.mts": "4263e62ba6e779cd26752ab3fcfb42249d009efcf110bf7a69412c1f33582e22",
+          "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
+          "List/List.js": "dd68db6acbfdc9a26ea46a0d597e471f1a8a7f775020a70faeb4b4feb55c3982",
+          "ListItem/ListItem.js": "37ebb4b8746f9c32a8576d0462501b01062a2b0c9212bf856e491155ebe8ac5c",
+          "ListItemButton/ListItemButton.js": "abededff4fe15c71fc8c1a268094c1809505adf2c0075cd981e39770f0d94f17",
+          "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+          "MenuList/MenuList.js": "08cd588895955152f56d5c485c2735344b0065e2823c37bafa88ccea4cfce2ed",
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d",
+          "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+        }
+      },
+      "adaptations": [
+        "Original two-slot mergeable class interface and arbitrary utility lookup semantics, including inherited Object.prototype entries; utility implementations verified separately under the pinned MIT utils reference in upstream/list-item-icon.json. No unsupported class-helper deep export is added."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/menuItem.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+          "MenuItem/MenuItem.d.ts": "66cda9a9b310d97f3002ab34f3c76f05dcd7d3f84ea12a9fdfe54ec82217af1b",
+          "MenuItem/menuItemClasses.js": "3b748352c69c42d7c528d740c45ccef408e02df6a091e4dc13b75a556ba8b2b4",
+          "ListItemIcon/ListItemIcon.js": "a504165c16674bc925faecb4d2d2bbf9ad3f28f25e7f2cb0539417f9eea3e7bd",
+          "ListItemIcon/ListItemIcon.d.ts": "a123906a4c450f3dbb7d7233fed51b686baa11743082af151c0b7740e1106854",
+          "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d",
+          "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b"
+        }
+      },
+      "adaptations": [
+        "Original default icon reservation, dense SVG rem declaration and finite class/state descendant vocabulary. Native physical ownership and immutable prepared ancestor recollection are independently authored; source/default observations and separate gates are retained in upstream/menu-icon-cascade.json."
       ]
     }
   ]

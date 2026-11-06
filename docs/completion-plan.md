@@ -2,7 +2,7 @@
 
 The current priority is to finish existing implementations before starting another component. This audit is based on the source, type fixtures and guides available on 5 November 2026, including the merged direction/text work at `dfe9130`.
 
-There are **59 rows at 50% or 75%**: 51 Material entries, seven System/styling entries and the native rendering foundation. The renderless RtlProvider module is complete within its [finite native context contract](rtl-provider.md). There are also **24 rows at 25%**: 14 Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
+There are **57 rows at 50% or 75%**: 50 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **24 rows at 25%**: 14 Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
 
 ## Completion rules
 
@@ -43,7 +43,7 @@ The immediate parallel priorities are the full pinned icon catalog and small exi
 
 ## All existing partial rows
 
-The entries below enumerate the 83 current partial status rows and the separately completed RtlProvider and icon-catalog scopes. Material and System DefaultPropsProvider are separate package entries; foundation rows are cross-cutting work rather than extra components. Each linked guide is evidence and a starting point for the finite contract audit, not proof that every inherited API is complete.
+The entries below enumerate the 81 current partial status rows and the separately completed RtlProvider, two DefaultPropsProvider entries and icon-catalog scopes. Material and System DefaultPropsProvider are separate package entries; foundation rows are cross-cutting work rather than extra components. Each linked guide is evidence and a starting point for the finite contract audit, not proof that every inherited API is complete.
 
 ### Foundations
 
@@ -58,7 +58,7 @@ The entries below enumerate the 83 current partial status rows and the separatel
 | ----------------------- | ---------------------: | ------------------------------------------------------------------------ |
 | Accordion               |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
 | AccordionActions        |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
-| AccordionDetails        |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
+| AccordionDetails        |                    75% | [Scope and remaining work](../docs/accordion-details.md)                 |
 | AccordionSummary        |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
 | Alert                   |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | Autocomplete            |                    75% | [Scope and remaining work](../docs/autocomplete.md)                      |
@@ -74,7 +74,7 @@ The entries below enumerate the 83 current partial status rows and the separatel
 | Chip                    |                    50% | [Scope and remaining work](../docs/chip.md)                              |
 | CircularProgress        |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | Collapse                |                    75% | [Scope and remaining work](../docs/collapse.md)                          |
-| DefaultPropsProvider    |                    50% | [Scope and remaining work](../docs/default-props.md)                     |
+| DefaultPropsProvider    |                   100% | [Scope and remaining work](../docs/default-props-provider.md)            |
 | Dialog                  |                    50% | [Scope and remaining work](../docs/modals.md)                            |
 | DialogActions           |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | DialogContent           |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
@@ -84,7 +84,7 @@ The entries below enumerate the 83 current partial status rows and the separatel
 | FilledInput             |                    50% | [Scope and remaining work](../docs/inputs.md)                            |
 | FormControl             |                    50% | [Scope and remaining work](../docs/form-labels.md)                       |
 | FormControlLabel        |                    50% | [Scope and remaining work](../docs/check-controls.md)                    |
-| FormGroup               |                    50% | [Scope and remaining work](../docs/check-controls.md)                    |
+| FormGroup               |                    75% | [Scope and remaining work](../docs/form-group.md)                        |
 | FormHelperText          |                    50% | [Scope and remaining work](../docs/form-labels.md)                       |
 | FormLabel               |                    50% | [Scope and remaining work](../docs/form-labels.md)                       |
 | Grow                    |                    50% | [Scope and remaining work](../docs/grow.md)                              |
@@ -96,9 +96,9 @@ The entries below enumerate the 83 current partial status rows and the separatel
 | LinearProgress          |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | List                    |                    50% | [Scope and remaining work](../docs/lists.md)                             |
 | ListItem                |                    50% | [Scope and remaining work](../docs/lists.md)                             |
-| ListItemAvatar          |                    50% | [Scope and remaining work](../docs/lists.md)                             |
+| ListItemAvatar          |                    75% | [Scope and remaining work](../docs/list-item-avatar.md)                  |
 | ListItemButton          |                    50% | [Scope and remaining work](../docs/lists.md)                             |
-| ListItemIcon            |                    50% | [Scope and remaining work](../docs/lists.md)                             |
+| ListItemIcon            |                    50% | [Scope and remaining work](../docs/list-item-icon.md)                    |
 | ListItemSecondaryAction |                    50% | [Scope and remaining work](../docs/lists.md)                             |
 | ListItemText            |                    50% | [Scope and remaining work](../docs/lists.md)                             |
 | ListSubheader           |                    50% | [Scope and remaining work](../docs/lists.md)                             |
@@ -124,16 +124,16 @@ The entries below enumerate the 83 current partial status rows and the separatel
 
 ### System and styling: 9 component/provider entries plus core helpers
 
-| Existing entry            | Current evidence stage | Guide                                                       |
-| ------------------------- | ---------------------: | ----------------------------------------------------------- |
-| DefaultPropsProvider      |                    50% | [Scope and remaining work](../docs/theme-providers.md)      |
-| RtlProvider               |                   100% | [Complete native context contract](../docs/rtl-provider.md) |
-| ThemeProvider             |                    50% | [Scope and remaining work](../docs/theme-providers.md)      |
-| createTheme / palette     |                    50% | [Scope and remaining work](../docs/theming.md)              |
-| Typography theming        |                    50% | [Scope and remaining work](../docs/typography.md)           |
-| Spacing / breakpoints     |                    50% | [Scope and remaining work](../docs/layout-system.md)        |
-| sx evaluation             |                    50% | [Scope and remaining work](../docs/compatibility.md)        |
-| styled / defaults / slots |                    50% | [Scope and remaining work](../docs/default-props.md)        |
+| Existing entry            | Current evidence stage | Guide                                                         |
+| ------------------------- | ---------------------: | ------------------------------------------------------------- |
+| DefaultPropsProvider      |                   100% | [Scope and remaining work](../docs/default-props-provider.md) |
+| RtlProvider               |                   100% | [Complete native context contract](../docs/rtl-provider.md)   |
+| ThemeProvider             |                    50% | [Scope and remaining work](../docs/theme-providers.md)        |
+| createTheme / palette     |                    50% | [Scope and remaining work](../docs/theming.md)                |
+| Typography theming        |                    50% | [Scope and remaining work](../docs/typography.md)             |
+| Spacing / breakpoints     |                    50% | [Scope and remaining work](../docs/layout-system.md)          |
+| sx evaluation             |                    50% | [Scope and remaining work](../docs/compatibility.md)          |
+| styled / defaults / slots |                    50% | [Scope and remaining work](../docs/default-props.md)          |
 
 ### Community Data Grid: 1 top-level public module
 

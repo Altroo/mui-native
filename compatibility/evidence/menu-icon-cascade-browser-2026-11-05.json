@@ -1,0 +1,3375 @@
+{
+  "recordedOn": "2026-11-05",
+  "htmlSha256": "c76051bf05252621eba4b68b1357a4ee2e0589048a1f166fba123359b3a26270",
+  "schemaVersion": 1,
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "MenuItem/MenuItem.js": "0cceedd39766b44361c36c7bded8745a8defcc777d344b8429fc4dffcfd5641f",
+      "MenuItem/MenuItem.d.ts": "66cda9a9b310d97f3002ab34f3c76f05dcd7d3f84ea12a9fdfe54ec82217af1b",
+      "MenuItem/menuItemClasses.js": "3b748352c69c42d7c528d740c45ccef408e02df6a091e4dc13b75a556ba8b2b4",
+      "ListItemIcon/ListItemIcon.js": "a504165c16674bc925faecb4d2d2bbf9ad3f28f25e7f2cb0539417f9eea3e7bd",
+      "ListItemIcon/ListItemIcon.d.ts": "a123906a4c450f3dbb7d7233fed51b686baa11743082af151c0b7740e1106854",
+      "SvgIcon/SvgIcon.js": "439eafa0c2fba2a16e88bcb39d49c9d1ebbfb400eeccde520f690e7d30b1251d",
+      "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b"
+    }
+  },
+  "systemReference": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+      "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf"
+    }
+  },
+  "sourceFixture": {
+    "path": "tests/fixtures/mui-menu-icon-cascade-9.5.0.json",
+    "sha256": "6262289cfcaba76de8130a94a6580bad806c8199f9ed2c42e0a943bd56292fcd"
+  },
+  "renderer": "Actual browser DOM getComputedStyle and bounding rectangles; original SSR, scripts disabled inside frames.",
+  "baseline": [
+    {
+      "ids": {
+        "frame": "menu-style-frame-00",
+        "root": "menu-style-case-00-root",
+        "icon": "menu-style-case-00-icon",
+        "svg": "menu-style-case-00-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "base",
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-00-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-1wycqwo-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-00-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 36,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-00-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-01",
+        "root": "menu-style-case-01-root",
+        "icon": "menu-style-case-01-icon",
+        "svg": "menu-style-case-01-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "dense16",
+        "dense": true,
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 20
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 20
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-01-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-dense MuiMenuItem-gutters css-nxhf2a-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "32px",
+          "fontSize": "14px",
+          "lineHeight": "20.02px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 32
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-01-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "20px",
+          "fontSize": "14px",
+          "lineHeight": "20.02px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 14,
+          "width": 36,
+          "height": 20
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-01-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "20px",
+          "height": "20px",
+          "fontSize": "20px",
+          "lineHeight": "28.6px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 14,
+          "width": 20,
+          "height": 20
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 20,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 20
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-02",
+        "root": "menu-style-case-02-root",
+        "icon": "menu-style-case-02-icon",
+        "svg": "menu-style-case-02-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "dense20",
+        "dense": true,
+        "htmlFontSize": 20,
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 25
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 25
+      },
+      "documentRoot": 20,
+      "root": {
+        "id": "menu-style-case-02-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-dense MuiMenuItem-gutters css-1jl5guk-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "33px",
+          "fontSize": "14px",
+          "lineHeight": "20.02px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 33
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-02-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "25px",
+          "fontSize": "14px",
+          "lineHeight": "20.02px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 12,
+          "width": 36,
+          "height": 25
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-02-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1x183a7-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "25px",
+          "height": "25px",
+          "fontSize": "25px",
+          "lineHeight": "35.75px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 12,
+          "width": 25,
+          "height": 25
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 25,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 25
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-03",
+        "root": "menu-style-case-03-root",
+        "icon": "menu-style-case-03-icon",
+        "svg": "menu-style-case-03-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "parent override child sx",
+        "override": {
+          "& .MuiListItemIcon-root": {
+            "minWidth": 61,
+            "color": "green"
+          },
+          "& .MuiListItemIcon-root svg": {
+            "fontSize": "31px"
+          }
+        },
+        "iconSx": {
+          "minWidth": 80,
+          "color": "purple"
+        },
+        "svgSx": {
+          "fontSize": 45
+        },
+        "expected": {
+          "minWidth": 61,
+          "fontSize": 31,
+          "color": "green"
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 61,
+        "fontSize": 31,
+        "color": "green"
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-03-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-1bl5wfs-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-03-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-1m0yeyc-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "61px",
+          "width": "61px",
+          "height": "31px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 128, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 16.5,
+          "width": 61,
+          "height": 31
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-03-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1heo5z5-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "31px",
+          "height": "31px",
+          "fontSize": "31px",
+          "lineHeight": "46.5px",
+          "color": "rgb(0, 128, 0)",
+          "fill": "rgb(0, 128, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 16.5,
+          "width": 31,
+          "height": 31
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 61,
+        "fontSize": 31,
+        "color": "rgb(0, 128, 0)"
+      },
+      "expectedNative": {
+        "minWidth": 61,
+        "fontSize": 31,
+        "color": "rgb(0, 128, 0)"
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-04",
+        "root": "menu-style-case-04-root",
+        "icon": "menu-style-case-04-icon",
+        "svg": "menu-style-case-04-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "parent sx child sx",
+        "sx": {
+          "& .MuiListItemIcon-root": {
+            "minWidth": 61,
+            "color": "green"
+          },
+          "& .MuiListItemIcon-root svg": {
+            "fontSize": "31px"
+          }
+        },
+        "iconSx": {
+          "minWidth": 80
+        },
+        "svgSx": {
+          "fontSize": 45
+        },
+        "expected": {
+          "minWidth": 61,
+          "fontSize": 31
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 61,
+        "fontSize": 31
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-04-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-34vjly-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-04-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-u96pvo-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "61px",
+          "width": "61px",
+          "height": "31px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 128, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 16.5,
+          "width": 61,
+          "height": 31
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-04-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1heo5z5-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "31px",
+          "height": "31px",
+          "fontSize": "31px",
+          "lineHeight": "46.5px",
+          "color": "rgb(0, 128, 0)",
+          "fill": "rgb(0, 128, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 16.5,
+          "width": 31,
+          "height": 31
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 61,
+        "fontSize": 31,
+        "color": "rgb(0, 128, 0)"
+      },
+      "expectedNative": {
+        "minWidth": 61,
+        "fontSize": 31
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-05",
+        "root": "menu-style-case-05-root",
+        "icon": "menu-style-case-05-icon",
+        "svg": "menu-style-case-05-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "parent variant child sx",
+        "variant": {
+          "& .MuiListItemIcon-root": {
+            "minWidth": 61,
+            "color": "green"
+          },
+          "& .MuiListItemIcon-root svg": {
+            "fontSize": "31px"
+          }
+        },
+        "iconSx": {
+          "minWidth": 80
+        },
+        "svgSx": {
+          "fontSize": 45
+        },
+        "expected": {
+          "minWidth": 61,
+          "fontSize": 31
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 61,
+        "fontSize": 31
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-05-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters Mui-selected css-nk9d9k-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-05-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-u96pvo-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "61px",
+          "width": "61px",
+          "height": "31px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 128, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 16.5,
+          "width": 61,
+          "height": 31
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-05-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1heo5z5-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "31px",
+          "height": "31px",
+          "fontSize": "31px",
+          "lineHeight": "46.5px",
+          "color": "rgb(0, 128, 0)",
+          "fill": "rgb(0, 128, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 16.5,
+          "width": 31,
+          "height": 31
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 61,
+        "fontSize": 31,
+        "color": "rgb(0, 128, 0)"
+      },
+      "expectedNative": {
+        "minWidth": 61,
+        "fontSize": 31
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-06",
+        "root": "menu-style-case-06-root",
+        "icon": "menu-style-case-06-icon",
+        "svg": "menu-style-case-06-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "custom classes",
+        "sx": {
+          "& .custom-icon": {
+            "minWidth": 67
+          },
+          "& .custom-icon .custom-svg": {
+            "fontSize": 33
+          }
+        },
+        "iconClasses": {
+          "root": "custom-icon"
+        },
+        "svgClasses": {
+          "root": "custom-svg"
+        },
+        "expected": {
+          "minWidth": 67,
+          "fontSize": 33
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 67,
+        "fontSize": 33
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-06-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-1haao4n-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-06-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root custom-icon css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "67px",
+          "width": "67px",
+          "height": "33px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 15.5,
+          "width": 67,
+          "height": 33
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-06-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root custom-svg MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "33px",
+          "height": "33px",
+          "fontSize": "33px",
+          "lineHeight": "49.5px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 15.5,
+          "width": 33,
+          "height": 33
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 67,
+        "fontSize": 33,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 67,
+        "fontSize": 33
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-07",
+        "root": "menu-style-case-07-root",
+        "icon": "menu-style-case-07-icon",
+        "svg": "menu-style-case-07-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "selected parent self prefix",
+        "selected": true,
+        "sx": {
+          "&.Mui-selected .MuiListItemIcon-root": {
+            "minWidth": 65
+          }
+        },
+        "expected": {
+          "minWidth": 65
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 65
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-07-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters Mui-selected css-1opj6eq-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-07-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "65px",
+          "width": "65px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 65,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-07-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 65,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 65,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-08",
+        "root": "menu-style-case-08-root",
+        "icon": "menu-style-case-08-icon",
+        "svg": "menu-style-case-08-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "unselected prefix does not match",
+        "sx": {
+          "&.Mui-selected .MuiListItemIcon-root": {
+            "minWidth": 65
+          }
+        },
+        "expected": {
+          "minWidth": 36
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 36
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-08-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-1opj6eq-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-08-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 36,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-08-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-09",
+        "root": "menu-style-case-09-root",
+        "icon": "menu-style-case-09-icon",
+        "svg": "menu-style-case-09-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "child compound specificity tie",
+        "sx": {
+          "& .MuiListItemIcon-root": {
+            "minWidth": 61
+          }
+        },
+        "iconSx": {
+          "&.MuiListItemIcon-root": {
+            "minWidth": 82
+          }
+        },
+        "expected": {
+          "minWidth": 82
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 82
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-09-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-1uoexgl-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-09-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-l73cce-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "82px",
+          "width": "82px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 82,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-09-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 82,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 82,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-10",
+        "root": "menu-style-case-10-root",
+        "icon": "menu-style-case-10-icon",
+        "svg": "menu-style-case-10-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "parent compound specificity",
+        "sx": {
+          "& .MuiListItemIcon-root.custom-icon": {
+            "minWidth": 62
+          }
+        },
+        "iconClasses": {
+          "root": "custom-icon"
+        },
+        "iconSx": {
+          "&.MuiListItemIcon-root": {
+            "minWidth": 82
+          }
+        },
+        "expected": {
+          "minWidth": 62
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 62
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-10-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-vwgzv5-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-10-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root custom-icon css-l73cce-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "62px",
+          "width": "62px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 62,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-10-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 62,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 62,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-11",
+        "root": "menu-style-case-11-root",
+        "icon": "menu-style-case-11-icon",
+        "svg": "menu-style-case-11-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "native inline remains final",
+        "sx": {
+          "& .MuiListItemIcon-root": {
+            "minWidth": 61,
+            "color": "green"
+          },
+          "& .MuiListItemIcon-root svg": {
+            "fontSize": "31px"
+          }
+        },
+        "iconStyle": {
+          "minWidth": 83,
+          "color": "blue"
+        },
+        "svgStyle": {
+          "fontSize": 47
+        },
+        "expected": {
+          "minWidth": 83,
+          "fontSize": 47,
+          "color": "blue"
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 83,
+        "fontSize": 47,
+        "color": "blue"
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-11-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-34vjly-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "59px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 59
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-11-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": "min-width:83px;color:blue",
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "83px",
+          "width": "83px",
+          "height": "47px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 255)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 14,
+          "width": 83,
+          "height": 47
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-11-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": "font-size:47px",
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "47px",
+          "height": "47px",
+          "fontSize": "47px",
+          "lineHeight": "70.5px",
+          "color": "rgb(0, 0, 255)",
+          "fill": "rgb(0, 0, 255)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 14,
+          "width": 47,
+          "height": 47
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 83,
+        "fontSize": 47,
+        "color": "rgb(0, 0, 255)"
+      },
+      "expectedNative": {
+        "minWidth": 83,
+        "fontSize": 47,
+        "color": "rgb(0, 0, 255)"
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-12",
+        "root": "menu-style-case-12-root",
+        "icon": "menu-style-case-12-icon",
+        "svg": "menu-style-case-12-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "parent native inline does not become descendant css",
+        "style": {
+          "minWidth": 99,
+          "fontSize": 37
+        },
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": true,
+        "style": {
+          "minWidth": 99,
+          "fontSize": 37
+        }
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-12-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-1wycqwo-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": "min-width:99px;font-size:37px",
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "99px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "37px",
+          "lineHeight": "55.5px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-12-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "24px",
+          "fontSize": "37px",
+          "lineHeight": "55.5px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 36,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-12-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-13",
+        "root": "menu-style-case-13-root",
+        "icon": "menu-style-case-13-icon",
+        "svg": "menu-style-case-13-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "icon own descendant css",
+        "iconSx": {
+          "& .MuiSvgIcon-root": {
+            "fontSize": 35,
+            "color": "orange"
+          }
+        },
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 35,
+          "color": "orange"
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 35,
+        "color": "orange"
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-13-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-1wycqwo-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-13-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-13ryc2z-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "35px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 14.5,
+          "width": 36,
+          "height": 35
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-13-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "35px",
+          "height": "35px",
+          "fontSize": "35px",
+          "lineHeight": "52.5px",
+          "color": "rgb(255, 165, 0)",
+          "fill": "rgb(255, 165, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 14.5,
+          "width": 35,
+          "height": 35
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 35,
+        "color": "rgb(255, 165, 0)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 35,
+        "color": "rgb(255, 165, 0)"
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-14",
+        "root": "menu-style-case-14-root",
+        "icon": "menu-style-case-14-icon",
+        "svg": "menu-style-case-14-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "icon own tag equal specificity loses parent class",
+        "sx": {
+          "& .MuiListItemIcon-root svg": {
+            "fontSize": 31
+          }
+        },
+        "iconSx": {
+          "& svg": {
+            "fontSize": 35
+          }
+        },
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 31
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 31
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-14-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-1upv1gu-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-14-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-1pgtoj-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "31px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 16.5,
+          "width": 36,
+          "height": 31
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-14-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "31px",
+          "height": "31px",
+          "fontSize": "31px",
+          "lineHeight": "46.5px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 16.5,
+          "width": 31,
+          "height": 31
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 31,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 31
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-15",
+        "root": "menu-style-case-15-root",
+        "icon": "menu-style-case-15-icon",
+        "svg": "menu-style-case-15-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "parent tag breaks equal class specificity tie",
+        "sx": {
+          "& .MuiListItemIcon-root svg": {
+            "fontSize": 31
+          }
+        },
+        "iconSx": {
+          "& .MuiSvgIcon-root": {
+            "fontSize": 35
+          }
+        },
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 31
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 31
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-15-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-1upv1gu-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-15-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-pzlrly-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "31px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 16.5,
+          "width": 36,
+          "height": 31
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-15-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "31px",
+          "height": "31px",
+          "fontSize": "31px",
+          "lineHeight": "46.5px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 16.5,
+          "width": 31,
+          "height": 31
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 31,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 31
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-16",
+        "root": "menu-style-case-16-root",
+        "icon": "menu-style-case-16-icon",
+        "svg": "menu-style-case-16-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "styled default native style",
+        "wrapped": true,
+        "defaultStyle": {
+          "opacity": 0.3
+        },
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": true,
+        "style": {
+          "opacity": 0.3
+        }
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-16-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-17sdfc0-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": "opacity:0.3",
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "0.3",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-16-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 36,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-16-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-17",
+        "root": "menu-style-case-17-root",
+        "icon": "menu-style-case-17-icon",
+        "svg": "menu-style-case-17-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "styled explicit undefined selects default",
+        "wrapped": true,
+        "defaultStyle": {
+          "opacity": 0.3
+        },
+        "style": "$undefined",
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": true,
+        "style": {
+          "opacity": 0.3
+        }
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-17-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-17sdfc0-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": "opacity:0.3",
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "0.3",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-17-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 36,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-17-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-18",
+        "root": "menu-style-case-18-root",
+        "icon": "menu-style-case-18-icon",
+        "svg": "menu-style-case-18-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "styled null masks native default",
+        "wrapped": true,
+        "defaultStyle": {
+          "opacity": 0.3
+        },
+        "style": null,
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": true,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-18-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-17sdfc0-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "0.8",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-18-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 36,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-18-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-19",
+        "root": "menu-style-case-19-root",
+        "icon": "menu-style-case-19-icon",
+        "svg": "menu-style-case-19-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "styled authored native style",
+        "wrapped": true,
+        "defaultStyle": {
+          "opacity": 0.3
+        },
+        "style": {
+          "opacity": 0.5
+        },
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": true,
+        "style": {
+          "opacity": 0.5
+        }
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-19-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-17sdfc0-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": "opacity:0.5",
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "0.5",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-19-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 36,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-19-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-20",
+        "root": "menu-style-case-20-root",
+        "icon": "menu-style-case-20-icon",
+        "svg": "menu-style-case-20-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "nested styled native default",
+        "wrapped": true,
+        "nested": true,
+        "defaultStyle": {
+          "opacity": 0.3
+        },
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": true,
+        "style": {
+          "opacity": 0.3
+        }
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-20-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-ymfv0e-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": "opacity:0.3",
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "0.3",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-20-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 36,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-20-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-21",
+        "root": "menu-style-case-21-root",
+        "icon": "menu-style-case-21-icon",
+        "svg": "menu-style-case-21-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "styled merged native defaults",
+        "wrapped": true,
+        "merge": true,
+        "defaultStyle": {
+          "opacity": 0.3,
+          "paddingLeft": 2
+        },
+        "style": {
+          "paddingLeft": 7
+        },
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": true,
+        "style": {
+          "opacity": 0.3,
+          "paddingLeft": 7
+        }
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-21-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-17sdfc0-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": "opacity:0.3;padding-left:7px",
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "0.3",
+          "marginTop": "0px",
+          "paddingLeft": "7px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-21-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 7,
+          "y": 20,
+          "width": 36,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-21-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 7,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-22",
+        "root": "menu-style-case-22-root",
+        "icon": "menu-style-case-22-icon",
+        "svg": "menu-style-case-22-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "equal specificity initial order",
+        "sx": {
+          "& .MuiListItemIcon-root": {
+            "minWidth": 61
+          },
+          "& .custom-icon": {
+            "minWidth": 67
+          }
+        },
+        "iconClasses": {
+          "root": "custom-icon"
+        },
+        "expected": {
+          "minWidth": 67,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 67,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-22-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-a9b1it-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-22-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root custom-icon css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "67px",
+          "width": "67px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 67,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-22-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 67,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 67,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-23",
+        "root": "menu-style-case-23-root",
+        "icon": "menu-style-case-23-icon",
+        "svg": "menu-style-case-23-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "equal specificity reversed order",
+        "sx": {
+          "& .custom-icon": {
+            "minWidth": 67
+          },
+          "& .MuiListItemIcon-root": {
+            "minWidth": 61
+          }
+        },
+        "iconClasses": {
+          "root": "custom-icon"
+        },
+        "expected": {
+          "minWidth": 61,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 61,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-23-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-12f4mc3-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-23-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root custom-icon css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "61px",
+          "width": "61px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 61,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-23-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 61,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 61,
+        "fontSize": 24
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-24",
+        "root": "menu-style-case-24-root",
+        "icon": "menu-style-case-24-icon",
+        "svg": "menu-style-case-24-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "inherited dense does not invent an authored dense utility class",
+        "inheritedDense": true,
+        "sx": {
+          "&.MuiMenuItem-dense .MuiListItemIcon-root": {
+            "minWidth": 99
+          }
+        },
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 20
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 20
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-24-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-16bk51y-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "32px",
+          "fontSize": "14px",
+          "lineHeight": "20.02px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 32
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-24-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "20px",
+          "fontSize": "14px",
+          "lineHeight": "20.02px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 14,
+          "width": 36,
+          "height": 20
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-24-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "20px",
+          "height": "20px",
+          "fontSize": "20px",
+          "lineHeight": "28.6px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 14,
+          "width": 20,
+          "height": 20
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 20,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 20
+      }
+    },
+    {
+      "ids": {
+        "frame": "menu-style-frame-25",
+        "root": "menu-style-case-25-root",
+        "icon": "menu-style-case-25-icon",
+        "svg": "menu-style-case-25-svg"
+      },
+      "kind": "baseline",
+      "input": {
+        "name": "ButtonBase actual root class selector",
+        "baseOverride": {
+          "&.MuiButtonBase-root .MuiListItemIcon-root": {
+            "minWidth": 75
+          }
+        },
+        "expected": {
+          "minWidth": 75,
+          "fontSize": 24
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 75,
+        "fontSize": 24
+      },
+      "documentRoot": 16,
+      "root": {
+        "id": "menu-style-case-25-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-gutters css-nxu1nr-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "48px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 48
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-25-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "75px",
+          "width": "75px",
+          "height": "24px",
+          "fontSize": "16px",
+          "lineHeight": "24px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 75,
+          "height": 24
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-25-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "24px",
+          "height": "24px",
+          "fontSize": "24px",
+          "lineHeight": "36px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 20,
+          "width": 24,
+          "height": 24
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 75,
+        "fontSize": 24,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 75,
+        "fontSize": 24
+      }
+    }
+  ],
+  "calibrations": [
+    {
+      "ids": {
+        "frame": "menu-style-frame-26",
+        "root": "menu-style-case-26-root",
+        "icon": "menu-style-case-26-icon",
+        "svg": "menu-style-case-26-svg"
+      },
+      "kind": "document-root-calibration",
+      "input": {
+        "name": "dense16",
+        "dense": true,
+        "expected": {
+          "minWidth": 36,
+          "fontSize": 20
+        }
+      },
+      "owner": {
+        "hasStyle": false,
+        "style": null
+      },
+      "expected": {
+        "minWidth": 36,
+        "fontSize": 30
+      },
+      "documentRoot": 24,
+      "root": {
+        "id": "menu-style-case-26-root",
+        "tag": "li",
+        "className": "MuiButtonBase-root MuiMenuItem-root MuiMenuItem-dense MuiMenuItem-gutters css-nxhf2a-MuiButtonBase-root-MuiMenuItem-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "0px",
+          "width": "400px",
+          "height": "38px",
+          "fontSize": "21px",
+          "lineHeight": "30.03px",
+          "color": "rgb(0, 0, 0)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "16px",
+          "paddingRight": "16px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 8,
+          "width": 400,
+          "height": 38
+        }
+      },
+      "icon": {
+        "id": "menu-style-case-26-icon",
+        "tag": "div",
+        "className": "MuiListItemIcon-root css-sqdpnb-MuiListItemIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "flex",
+          "direction": "ltr",
+          "minWidth": "36px",
+          "width": "36px",
+          "height": "30px",
+          "fontSize": "21px",
+          "lineHeight": "30.03px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgb(0, 0, 0)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 12,
+          "width": 36,
+          "height": 30
+        }
+      },
+      "svg": {
+        "id": "menu-style-case-26-svg",
+        "tag": "svg",
+        "className": "MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1umw9bq-MuiSvgIcon-root",
+        "inlineStyle": null,
+        "computed": {
+          "display": "block",
+          "direction": "ltr",
+          "minWidth": "auto",
+          "width": "30px",
+          "height": "30px",
+          "fontSize": "30px",
+          "lineHeight": "42.9px",
+          "color": "rgba(0, 0, 0, 0.54)",
+          "fill": "rgba(0, 0, 0, 0.54)",
+          "opacity": "1",
+          "marginTop": "0px",
+          "paddingLeft": "0px",
+          "paddingRight": "0px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 12,
+          "width": 30,
+          "height": 30
+        }
+      },
+      "nativeAdaptation": {
+        "minWidth": 36,
+        "fontSize": 30,
+        "color": "rgba(0, 0, 0, 0.54)"
+      },
+      "expectedNative": {
+        "minWidth": 36,
+        "fontSize": 30
+      }
+    }
+  ],
+  "failures": [],
+  "passed": true
+}

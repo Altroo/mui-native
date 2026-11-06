@@ -343,7 +343,8 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
         get element() {
           return groupRoot.current;
         },
-        cascade: (classes: readonly string[]) => ({
+        selector: { classes: rootClass.split(/\s+/).filter(Boolean) },
+        cascade: (classes, path) => ({
           theme: scopedTheme,
           name: 'MuiButtonGroup',
           props: { ...owner },
@@ -352,6 +353,7 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
             ...common,
             baseStyle: baseRules(theme, owner, direction),
             descendantClasses: classes,
+            descendantPath: path,
             descendantOnly: true,
           },
         }),
@@ -363,6 +365,9 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
       () => ({
         get element() {
           return groupRoot.current;
+        },
+        get selector() {
+          return committedRule.current.selector;
         },
         get cascade() {
           return committedRule.current.cascade;

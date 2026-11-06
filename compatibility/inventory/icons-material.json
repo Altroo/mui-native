@@ -397835,7 +397835,7 @@
           "module": "@altroo/mui-native:src/svgIcon.tsx",
           "name": "SvgIcon",
           "kind": "value",
-          "line": 47
+          "line": 49
         }
       ]
     },

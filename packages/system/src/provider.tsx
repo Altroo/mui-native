@@ -1,19 +1,28 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { createContext, useContext, useMemo, forwardRef } from 'react';
-import { useWindowDimensions, StyleSheet, View, Text, type StyleProp } from 'react-native';
+import { useWindowDimensions, View, Text, type StyleProp } from 'react-native';
 import { createTheme, type Theme } from './theme';
 import { diagnostic } from './diagnostics';
 import RtlProvider from './RtlProvider';
-import { DefaultPropsProvider, getThemeProps } from './defaultProps';
-import { nativeStyleTextMetrics, applyNativeTextMetrics } from './nativeText';
+import { DefaultPropsProvider, getThemeProps, useDefaultProps } from './defaultProps';
+import {
+  separateNativeRootProps,
+  restoreNativeRootStyle,
+  type NativeRootStyle,
+  type NativeRootStyleInput,
+} from './nativeStyledMetadata';
 import { useNativeTextRootRef } from './nativeTextRegistry';
 import { NativeTextScope, useNativeTextContext, nativeTextStyleContext } from './textScope';
 import {
   componentStyle,
+  componentRootStyle,
+  createNativeStyledStyle,
   resolveSx,
   type SxProps,
   type SxObject,
   type StyleContext,
   type NativeStyle,
+  type NativeRootStyleResult,
 } from './sx';
 export const systemDefaultTheme = createTheme();
 const EMPTY_THEME = {};
@@ -91,60 +100,100 @@ export function useComponentStyle(
   const { width } = useWindowDimensions();
   return componentStyle(theme, name, props as Record<string, unknown>, sx, { width, ...context });
 }
+/** @internal Root-local counterpart to useComponentStyle for native library components. */
+export function useComponentRootStyle(
+  name: string,
+  props: object,
+  sx: SxProps | undefined,
+  style: StyleProp<NativeStyle>,
+  context: StyleContext = {},
+  themeId?: string,
+): NativeRootStyleResult {
+  const theme = scopedTheme(useTheme(), themeId);
+  const { width } = useWindowDimensions();
+  return componentRootStyle(theme, name, props as Record<string, unknown>, sx, style, {
+    width,
+    ...context,
+  });
+}
+/**
+ * @internal Resolve participating root defaults against genuine authored props.
+ * Pass the separate style only to useComponentRootStyle, never to public owner
+ * callbacks or native hosts. sx retains the existing styled consumption policy.
+ */
+export function useNativeRootProps<Props extends { style?: NativeRootStyleInput | undefined }>({
+  props,
+  name,
+}: {
+  props: Props;
+  name: string;
+}): { props: Props; style: NativeRootStyle<Props['style']> } {
+  const input = separateNativeRootProps(props);
+  const resolved = useDefaultProps({ props: input.props, name });
+  return { props: resolved, style: restoreNativeRootStyle(input, resolved) };
+}
+type NativeStyledRef<Props> = 'ref' extends keyof Props
+  ? Props extends { ref?: React.Ref<infer Instance> | undefined }
+    ? Instance
+    : unknown
+  : unknown;
 export function styled<P extends object>(
   Component: React.ComponentType<P>,
   options: { name?: string; shouldForwardProp?: (prop: string) => boolean; themeId?: string } = {},
 ) {
   return (styles: SxObject | ((props: P & { theme: Theme; ownerState?: unknown }) => SxProps)) =>
-    forwardRef<unknown, P & { sx?: SxProps; style?: StyleProp<NativeStyle>; ownerState?: unknown }>(
-      (props, ref) => {
-        const { root, ref: rootRef } = useNativeTextRootRef(ref);
-        const theme = scopedTheme(useTheme(), options.themeId);
-        const parent = useNativeTextContext();
-        const { width } = useWindowDimensions();
-        const { sx, style, ownerState, ...rest } = props;
-        const resolved =
-          typeof styles === 'function'
-            ? styles({ ...props, theme } as P & { theme: Theme; ownerState?: unknown })
-            : styles;
-        const filtered = Object.fromEntries(
-          Object.entries(rest).filter(([key]) => options.shouldForwardProp?.(key) ?? true),
-        );
-        const native = StyleSheet.flatten(style) ?? undefined;
-        const nativeMetrics = nativeStyleTextMetrics(style);
-        const computed = componentStyle(theme, options.name ?? '', props, sx, {
+    forwardRef<
+      NativeStyledRef<P>,
+      P & { sx?: SxProps | undefined; style?: StyleProp<NativeStyle>; ownerState?: unknown }
+    >((props, ref) => {
+      const { root, ref: rootRef } = useNativeTextRootRef(ref);
+      const theme = scopedTheme(useTheme(), options.themeId);
+      const parent = useNativeTextContext();
+      const { width } = useWindowDimensions();
+      const { sx, style, ownerState, ...rest } = props;
+      const resolved =
+        typeof styles === 'function'
+          ? styles({ ...props, theme } as P & { theme: Theme; ownerState?: unknown })
+          : styles;
+      const filtered = Object.fromEntries(
+        Object.entries(rest).filter(([key]) => options.shouldForwardProp?.(key) ?? true),
+      );
+      const finalStyle = createNativeStyledStyle(
+        theme,
+        options.name ?? '',
+        props,
+        sx,
+        {
           ...nativeTextStyleContext(parent, style, theme),
           width,
           baseStyle: resolved,
-          nativeStyle: native,
-          nativeTextMetrics: nativeMetrics,
-        });
-        const finalStyle = [computed, applyNativeTextMetrics(native, computed, nativeMetrics)];
-        if (Component === (View as unknown) || Component === (Text as unknown)) {
-          return (
-            <NativeTextScope
-              rootRef={root as React.RefObject<object | null>}
-              theme={theme}
-              kind={Component === (Text as unknown) ? 'text' : 'view'}
-              style={finalStyle}
-              content={(filtered as { children?: React.ReactNode }).children}
-            >
-              {(style, children) =>
-                React.createElement(Component, {
-                  ...filtered,
-                  ref: rootRef,
-                  style,
-                  children,
-                } as unknown as P)
-              }
-            </NativeTextScope>
-          );
-        }
-        return React.createElement(Component, {
-          ...filtered,
-          ref,
-          style: finalStyle,
-        } as unknown as P);
-      },
-    );
+        },
+        style,
+      );
+      if (Component === (View as unknown) || Component === (Text as unknown)) {
+        return (
+          <NativeTextScope
+            rootRef={root as React.RefObject<object | null>}
+            theme={theme}
+            kind={Component === (Text as unknown) ? 'text' : 'view'}
+            style={finalStyle}
+            content={(filtered as { children?: React.ReactNode }).children}
+          >
+            {(style, children) =>
+              React.createElement(Component, {
+                ...filtered,
+                ref: rootRef,
+                style,
+                children,
+              } as unknown as P)
+            }
+          </NativeTextScope>
+        );
+      }
+      return React.createElement(Component, {
+        ...filtered,
+        ref,
+        style: finalStyle,
+      } as unknown as P);
+    });
 }

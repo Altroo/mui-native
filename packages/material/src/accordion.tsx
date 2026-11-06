@@ -1,6 +1,7 @@
 /* Accordion composition, event ordering and slots adapt MIT-licensed Material UI 9.5.0.
  * Copyright (c) MUI contributors. See NOTICE and upstream/accordion.json.
- * Native layout and interaction: Copyright (c) 2026 Altroo and contributors. */
+ * Native layout and interaction: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+ * Details contract observations: upstream/accordion-details.json. */
 import React, { createContext, forwardRef, useCallback, useContext, useMemo } from 'react';
 import { View, useWindowDimensions, type ViewInstance, type StyleProp } from 'react-native';
 import {
@@ -9,6 +10,10 @@ import {
   useNativeTextContext,
   nativeTextStyleContext,
   useDefaultProps,
+  useNativeRootProps,
+  joinClassNames,
+  applyNativeTextMetrics,
+  nativeStyleTextMetrics,
   resolveSlotProps,
   diagnostic,
   componentStyle,
@@ -19,8 +24,10 @@ import { Paper } from './layout';
 import { ButtonBase, type ButtonBaseState, type ButtonBaseActivationEvent } from './buttonBase';
 import { Collapse } from './collapse';
 import { useControlled } from './formState';
-import { useTheme, useComponentStyle } from './themeProvider';
+import { useTheme, useComponentStyle, useComponentRootStyle } from './themeProvider';
 import { useForkRef } from './utils';
+import { getAccordionDetailsUtilityClass } from './accordionClasses';
+import { mergeNativeRootStyle } from './nativeControlStyles';
 import type {
   AccordionProps,
   AccordionOwnerState,
@@ -404,31 +411,68 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
   );
 });
 
-export const AccordionDetails: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<AccordionDetailsProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, AccordionDetailsProps>(function AccordionDetails(inProps, ref) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiAccordionDetails' });
-  const { classes, className, component, children, ...native } = props;
-  classesDiagnostic('AccordionDetails', classes, className);
-  const theme = useTheme();
-  return (
-    <Frame
-      name="MuiAccordionDetails"
-      owner={props}
-      resolved={native}
-      component={component}
-      ref={ref}
-      base={{
-        paddingTop: theme.spacing(1),
-        paddingStart: theme.spacing(2),
-        paddingEnd: theme.spacing(2),
-        paddingBottom: theme.spacing(2),
-      }}
-    >
-      {children}
-    </Frame>
+interface NativeAccordionDetailsComponent
+  extends Omit<
+    React.ForwardRefExoticComponent<
+      React.PropsWithoutRef<AccordionDetailsProps> & React.RefAttributes<ViewInstance>
+    >,
+    never
+  > {
+  (props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;
+}
+export const AccordionDetails: NativeAccordionDetailsComponent = forwardRef<
+  ViewInstance,
+  AccordionDetailsProps
+>(function AccordionDetails(inProps, ref) {
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
+  const { props, style: preparedStyle } = useNativeRootProps({
+    props: inProps,
+    name: 'MuiAccordionDetails',
+  });
+  const { classes, className, component: Root = View, children, sx, style, ...native } = props;
+  const theme = useTheme(),
+    parent = useNativeTextContext();
+  const utility = getAccordionDetailsUtilityClass('root');
+  // composeClasses intentionally reads an active custom class accessor twice.
+  const rootClass = joinClassNames(
+    classes?.root ? `${utility} ${classes.root}` : utility,
+    className,
   );
-});
+  const { computed: resolved, authored } = useComponentRootStyle(
+    'MuiAccordionDetails',
+    props,
+    sx,
+    preparedStyle,
+    {
+      ...nativeTextStyleContext(parent, style, theme),
+      classes: rootClass.split(/\s+/).filter(Boolean),
+      rootProps: {
+        ...props,
+        ...(props.component ? { as: props.component } : {}),
+        className: rootClass,
+      },
+      baseStyle: { padding: theme.spacing(1, 2, 2) },
+    },
+  );
+  const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, resolved, authored);
+  const computed =
+    applyNativeTextMetrics(merged, resolved, nativeStyleTextMetrics([resolved, authored])) ??
+    merged;
+  return (
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={computed} content={children}>
+      {(style, content) => (
+        <Root
+          {...native}
+          {...(Root === View ? {} : { className: rootClass })}
+          ref={scopeRef}
+          style={style}
+        >
+          {content}
+        </Root>
+      )}
+    </NativeTextScope>
+  );
+}) as NativeAccordionDetailsComponent;
 export const AccordionActions: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<AccordionActionsProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, AccordionActionsProps>(function AccordionActions(inProps, ref) {

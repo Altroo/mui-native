@@ -47,6 +47,7 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean svgIconScenario;
   private boolean buttonGroupScenario;
   private boolean buttonGroupReadingScenario;
+  private boolean layoutRootScenario;
   private boolean readingGlobalRTL;
 
   @Override public void onCreate(Bundle arguments) {
@@ -59,11 +60,13 @@ public final class PopperInstrumentation extends Instrumentation {
     svgIconScenario = "svg-icon".equals(arguments.getString("scenario"));
     buttonGroupScenario = "button-group".equals(arguments.getString("scenario"));
     buttonGroupReadingScenario = "button-group-reading".equals(arguments.getString("scenario"));
+    layoutRootScenario = "layout-roots".equals(arguments.getString("scenario"));
     readingGlobalRTL = "true".equals(arguments.getString("globalRTL"));
     start();
   }
 
   @Override public void onStart() {
+    if (layoutRootScenario) { LayoutRootScenario.run(this); return; }
     if (keyboardScenario) { KeyboardScenario.run(this); return; }
     if (autocompleteScenario) { AutocompleteScenario.run(this); return; }
     if (inputIntegrityScenario) { InputIntegrityScenario.run(this); return; }

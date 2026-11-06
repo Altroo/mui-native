@@ -1,6 +1,12 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { createRef } from 'react';
-import { I18nManager, StyleSheet, type TextInstance } from 'react-native';
+import {
+  I18nManager,
+  StyleSheet,
+  type StyleProp,
+  type TextInstance,
+  type TextStyle,
+} from 'react-native';
 import { act, cleanup } from '@testing-library/react-native';
 import {
   ThemeProvider,
@@ -10,6 +16,16 @@ import {
 } from '../packages/material/src';
 import { nativeTextScopes } from '../packages/system/src';
 import { NativePortalModel } from './helpers/nativePortalModel';
+
+// Decode the pinned iOS/Android paragraph consumer, independently of the CSS
+// encoder. A native left prop paints on the right in an actual RTL paragraph.
+function physicalAlignment(style: StyleProp<TextStyle>, rtl: boolean) {
+  const alignment = StyleSheet.flatten(style)?.textAlign;
+  if (!rtl) return alignment;
+  if (alignment === 'left') return 'right';
+  if (alignment === 'right') return 'left';
+  return alignment;
+}
 
 let restoreDiagnostics: () => void;
 beforeEach(() => {
@@ -43,7 +59,7 @@ test.each([false, true])(
     await model.layout();
     expect(model.host().props.direction).toBe(globalRTL ? 'rtl' : 'ltr');
     expect(
-      StyleSheet.flatten(model.tree!.getByTestId('destination-text').props.style).textAlign,
+      physicalAlignment(model.tree!.getByTestId('destination-text').props.style, globalRTL),
     ).toBe(globalRTL ? 'right' : 'left');
   },
 );
@@ -72,17 +88,17 @@ test('custom Portal follows live destination direction without remounting its te
     const mountedText = ref.current;
     expect(mountedText).not.toBeNull();
     expect(model.host().props.direction).toBe('rtl');
-    expect(
-      StyleSheet.flatten(model.tree!.getByTestId('destination-text').props.style),
-    ).toMatchObject({ textAlign: 'right' });
+    expect(physicalAlignment(model.tree!.getByTestId('destination-text').props.style, true)).toBe(
+      'right',
+    );
     await act(async () =>
       lease.update({ style: { fontSize: 23 }, direction: 'ltr', nativeText: false }),
     );
     expect(ref.current).toBe(mountedText);
     expect(model.host().props.direction).toBe('ltr');
-    expect(
-      StyleSheet.flatten(model.tree!.getByTestId('destination-text').props.style).textAlign,
-    ).toBe('left');
+    expect(physicalAlignment(model.tree!.getByTestId('destination-text').props.style, false)).toBe(
+      'left',
+    );
   } finally {
     await act(async () => lease.remove());
   }

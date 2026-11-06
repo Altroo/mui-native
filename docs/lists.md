@@ -50,6 +50,8 @@ The owned ScrollView moves list padding/layout into contentContainerStyle and ke
 
 Wrapped/custom subheader components and external scroll hosts own their native stickyHeaderIndices. component and replacement roots must implement their selected host contract; scrollable custom roots must honor ScrollView props and content/viewport style separation. Large datasets need an application-owned virtualized renderer; this List does not create a FlashList or recycle rows. Native sticky geometry, nested scrolling and accessibility still require platform interaction evidence.
 
+The existing accessory wrapper contracts, class/import surfaces and separate native gates are documented in [ListItemAvatar](list-item-avatar.md) and [ListItemIcon](list-item-icon.md).
+
 ## Evidence and boundaries
 
 `node scripts/reference/lists.mjs --check` reproduces the checked-in composition fixtures against integrity-verified original MUI 9.5.0 after the [isolated reference setup](theming.md). Native tests cover those owner states/Typography choices, default composition, slots/ref cleanup, scrolling/indexing/identity, measurement feedback, logical action layout and ButtonBase states. Installed-consumer checks cover root/deep imports, native refs, slot augmentation and invalid browser contracts.

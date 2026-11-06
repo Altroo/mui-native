@@ -1,9 +1,9 @@
 // Copyright (c) 2026 Altroo and contributors.
 // SPDX-License-Identifier: MIT
-import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, readdir, realpath } from 'node:fs/promises';
 import { execFile } from 'node:child_process';
 import { resolve, join, dirname } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { fileURLToPath } from 'node:url';
 import { parseArgs } from 'node:util';
 import { createHash } from 'node:crypto';
 import { prepareKeyboardSource } from './android-keyboard-source.mjs';
@@ -17,6 +17,8 @@ import {
   inspectReadingReport,
   summarizeReadingReport,
 } from './android-button-group-reading-report.mjs';
+import { prepareLayoutRootSource } from './android-layout-root-source.mjs';
+import { inspectLayoutRootReport, summarizeLayoutRoots } from './android-layout-root-report.mjs';
 import { prepareSvgIconSource } from './android-svg-icon-source.mjs';
 import { inspectSvgIconReport, summarizeSvgIcon } from './android-svg-icon-report.mjs';
 import { inspectAccordionReport, summarizeAccordion } from './android-accordion-report.mjs';
@@ -72,6 +74,7 @@ export async function prepare(project) {
   await prepareAccordionSource(project);
   await prepareSvgIconSource(project);
   await prepareButtonGroupSource(project);
+  await prepareLayoutRootSource(project);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, source);
   await writeFile(gradlePath, gradle);
@@ -194,7 +197,7 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading', globalRTL?: boolean}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots', globalRTL?: boolean}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
@@ -202,7 +205,14 @@ export async function run(
   execute = executeFile,
 ) {
   if (
-    !['popper', 'accordion', 'svg-icon', 'button-group', 'button-group-reading'].includes(scenario)
+    ![
+      'popper',
+      'accordion',
+      'svg-icon',
+      'button-group',
+      'button-group-reading',
+      'layout-roots',
+    ].includes(scenario)
   )
     throw Error('Unknown catalog scenario');
   if (typeof globalRTL !== 'boolean' || (globalRTL && scenario !== 'button-group-reading'))
@@ -251,15 +261,17 @@ export async function run(
     }
     await writeFile(join(output, 'instrumentation.txt'), text);
     report =
-      scenario === 'accordion'
-        ? inspectAccordionReport(text)
-        : scenario === 'svg-icon'
-          ? inspectSvgIconReport(text)
-          : scenario === 'button-group-reading'
-            ? inspectReadingReport(text)
-            : scenario === 'button-group'
-              ? inspectButtonGroupReport(text)
-              : inspectReport(text);
+      scenario === 'layout-roots'
+        ? inspectLayoutRootReport(text)
+        : scenario === 'accordion'
+          ? inspectAccordionReport(text)
+          : scenario === 'svg-icon'
+            ? inspectSvgIconReport(text)
+            : scenario === 'button-group-reading'
+              ? inspectReadingReport(text)
+              : scenario === 'button-group'
+                ? inspectButtonGroupReport(text)
+                : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -274,7 +286,8 @@ export async function run(
       await writeFile(join(output, file), bytes);
     }
     signal?.throwIfAborted();
-    if (scenario === 'accordion') summarizeAccordion(text);
+    if (scenario === 'layout-roots') summarizeLayoutRoots(text);
+    else if (scenario === 'accordion') summarizeAccordion(text);
     else if (scenario === 'svg-icon') summarizeSvgIcon(text);
     else if (scenario === 'button-group-reading') summarizeReadingReport(text, { globalRTL });
     else if (scenario === 'button-group') summarizeButtonGroup(text);
@@ -336,7 +349,22 @@ export async function run(
   return report;
 }
 
-if (import.meta.url === pathToFileURL(resolve(process.argv[1] ?? '')).href) {
+async function isMainEntry() {
+  const entry = process.argv[1];
+  if (typeof entry !== 'string' || !entry) return false;
+  try {
+    const [entryPath, modulePath] = await Promise.all([
+      realpath(resolve(entry)),
+      realpath(fileURLToPath(import.meta.url)),
+    ]);
+    return entryPath === modulePath;
+  } catch (error) {
+    if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return false;
+    throw error;
+  }
+}
+
+if (await isMainEntry()) {
   const { positionals, values } = parseArgs({
     allowPositionals: true,
     options: {

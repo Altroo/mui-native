@@ -1,5 +1,6 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StatusBar, View } from 'react-native';
+import { Pressable, ScrollView, StatusBar, View, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import {
   ThemeProvider,
@@ -25,6 +26,7 @@ import { CollapseExamples } from './CollapseExamples';
 import { AccordionExamples } from './AccordionExamples';
 import { ButtonGroupExamples } from './ButtonGroupExamples';
 import { SvgIconExamples } from './SvgIconExamples';
+import { RootLayoutExamples } from './RootLayoutExamples';
 import { AutocompleteExamples } from './AutocompleteExamples';
 import { createCatalogTheme } from './catalogTheme';
 import { RichTreeView } from '@mui/x-tree-view';
@@ -32,6 +34,8 @@ import { BarChart, LineChart } from '@mui/x-charts';
 import { DatePicker, LocalizationProvider, AdapterDayjs } from '@mui/x-date-pickers';
 import supported from '../../packages/compat/supported.json';
 export default function App() {
+  const { fontScale } = useWindowDimensions();
+  const compactHeader = fontScale > 1.5;
   const [section, setSection] = useState('Grid');
   const [dark, setDark] = useState(false);
   const [name, setName] = useState('');
@@ -56,10 +60,14 @@ export default function App() {
           >
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingBottom: 8 }}>
               <View style={{ flex: 1 }}>
-                <Typography variant="h6">Native catalog</Typography>
-                <Typography variant="caption" color="text.secondary">
-                  Altroo · Pre-alpha
+                <Typography variant={compactHeader ? 'body2' : 'h6'} numberOfLines={1}>
+                  Native catalog
                 </Typography>
+                {compactHeader ? null : (
+                  <Typography variant="caption" color="text.secondary">
+                    Altroo · Pre-alpha
+                  </Typography>
+                )}
               </View>
               <Switch
                 checked={dark}
@@ -89,6 +97,7 @@ export default function App() {
                   'Accordion',
                   'Icons',
                   'Groups',
+                  'Wrappers',
                 ].map((name) => (
                   <Pressable
                     key={name}
@@ -125,6 +134,7 @@ export default function App() {
             {section === 'Accordion' ? <AccordionExamples /> : null}
             {section === 'Icons' ? <SvgIconExamples /> : null}
             {section === 'Groups' ? <ButtonGroupExamples /> : null}
+            {section === 'Wrappers' ? <RootLayoutExamples /> : null}
             {section === 'Form' ? (
               <ScrollView
                 keyboardShouldPersistTaps="handled"

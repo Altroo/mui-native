@@ -1,0 +1,256 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+      "ListItemAvatar/ListItemAvatar.js": "2914dcf38c93a0577faf78664611c41ab613a324f2a158826b2b2ff35ac892c7",
+      "ListItemAvatar/ListItemAvatar.d.ts": "1c671fa97ad69902c110c7890527f5720a785a2e0b68efcb77c16f37d6274d67",
+      "ListItemAvatar/ListItemAvatar.d.mts": "9bbd46596e7bdf430ddd61954ddb903cfcde5e10683b9f449aaabdfa234cc0cf",
+      "ListItemAvatar/index.js": "09277444eff3c3b90887221eb5c14b53b62ef07e70225b8bcbe146a0924f8ecc",
+      "ListItemAvatar/index.d.ts": "907467198cc07e6eac62f7eb2bcc7afc31e3ee433ae60000eca62213de971e6d",
+      "ListItemAvatar/index.d.mts": "ae4834e1d6c7d5ee4a843af782a44888df6260afd1959effb6e20843312c6c28",
+      "ListItemAvatar/listItemAvatarClasses.js": "1b045eb8f9887f1bec6239ee6c912dfd39e5f412032237d224fa6e666085e648",
+      "ListItemAvatar/listItemAvatarClasses.d.ts": "334bc494ebf7f62684a30a916455dc63c6895784a74b07b835d28d0297785496",
+      "ListItemAvatar/listItemAvatarClasses.d.mts": "334bc494ebf7f62684a30a916455dc63c6895784a74b07b835d28d0297785496",
+      "List/ListContext.js": "00974be926947714818e5a84b3fb2c7a29da422b2c66106c3bd90660070044a5",
+      "ListItem/ListItem.js": "37ebb4b8746f9c32a8576d0462501b01062a2b0c9212bf856e491155ebe8ac5c",
+      "ListItemButton/ListItemButton.js": "abededff4fe15c71fc8c1a268094c1809505adf2c0075cd981e39770f0d94f17"
+    }
+  },
+  "utilitiesReference": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+      "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f",
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
+    }
+  },
+  "renderer": "Original React DOM static markup and theme callbacks; no native or browser geometry evidence",
+  "fixtures": [
+    {
+      "input": {
+        "name": "active nested class getters preserve read order and whitespace",
+        "alignItems": "flex-start",
+        "classesGetter": true,
+        "className": " authored "
+      },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root custom-2 MuiListItemAvatar-alignItemsFlexStart custom-4  authored ",
+        "id": "avatar-probe",
+        "classes": "<accessor map>",
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root custom-2 MuiListItemAvatar-alignItemsFlexStart custom-4 authored",
+      "inlineStyle": null,
+      "classAccesses": ["root", "root", "alignItemsFlexStart", "alignItemsFlexStart"]
+    },
+    {
+      "input": {
+        "name": "inline shorthand resets flex-start",
+        "list": true,
+        "alignItems": "flex-start",
+        "style": { "margin": 0 }
+      },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart",
+        "id": "avatar-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart",
+      "inlineStyle": "margin:0",
+      "classAccesses": []
+    },
+    {
+      "input": {
+        "name": "inline shorthand resets theme edges",
+        "list": true,
+        "alignItems": "flex-start",
+        "edges": { "marginTop": 13, "paddingTop": 9, "paddingLeft": 7 },
+        "style": { "margin": 0, "padding": 0 }
+      },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart",
+        "id": "avatar-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart",
+      "inlineStyle": "margin:0;padding:0",
+      "classAccesses": []
+    },
+    {
+      "input": { "name": "unscoped" },
+      "observation": {
+        "alignItems": null,
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root",
+        "id": "avatar-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root",
+      "inlineStyle": null,
+      "classAccesses": []
+    },
+    {
+      "input": { "name": "List only", "list": true },
+      "observation": {
+        "alignItems": null,
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root",
+        "id": "avatar-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root",
+      "inlineStyle": null,
+      "classAccesses": []
+    },
+    {
+      "input": { "name": "center", "alignItems": "center" },
+      "observation": {
+        "alignItems": "center",
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root",
+        "id": "avatar-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root",
+      "inlineStyle": null,
+      "classAccesses": []
+    },
+    {
+      "input": { "name": "flex-start", "alignItems": "flex-start" },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart",
+        "id": "avatar-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart",
+      "inlineStyle": null,
+      "classAccesses": []
+    },
+    {
+      "input": { "name": "button flex-start", "alignItems": "flex-start", "button": true },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart",
+        "id": "avatar-probe",
+        "classes": null,
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart",
+      "inlineStyle": null,
+      "classAccesses": []
+    },
+    {
+      "input": {
+        "name": "authored classes",
+        "alignItems": "flex-start",
+        "classes": { "root": "custom-root", "alignItemsFlexStart": "custom-top" },
+        "className": "authored"
+      },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root custom-root MuiListItemAvatar-alignItemsFlexStart custom-top authored",
+        "id": "avatar-probe",
+        "classes": { "root": "custom-root", "alignItemsFlexStart": "custom-top" },
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root custom-root MuiListItemAvatar-alignItemsFlexStart custom-top authored",
+      "inlineStyle": null,
+      "classAccesses": []
+    },
+    {
+      "input": {
+        "name": "theme defaults",
+        "alignItems": "flex-start",
+        "defaults": {
+          "className": "default",
+          "classes": { "root": "default-root" },
+          "sx": { "minWidth": 64 }
+        }
+      },
+      "observation": {
+        "alignItems": "flex-start",
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root default-root MuiListItemAvatar-alignItemsFlexStart default",
+        "id": "avatar-probe",
+        "classes": { "root": "default-root" },
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root default-root MuiListItemAvatar-alignItemsFlexStart default",
+      "inlineStyle": null,
+      "classAccesses": []
+    },
+    {
+      "input": {
+        "name": "supplied props replace defaults",
+        "alignItems": "center",
+        "defaults": {
+          "className": "default",
+          "classes": { "root": "default-root" },
+          "sx": { "minWidth": 64 }
+        },
+        "classes": { "root": "local-root" },
+        "className": "local",
+        "sx": { "minWidth": 72 }
+      },
+      "observation": {
+        "alignItems": "center",
+        "hasAlignment": true,
+        "className": "MuiListItemAvatar-root local-root local",
+        "id": "avatar-probe",
+        "classes": { "root": "local-root" },
+        "hasAs": false
+      },
+      "className": "MuiListItemAvatar-root local-root local",
+      "inlineStyle": null,
+      "classAccesses": []
+    }
+  ],
+  "classes": {
+    "root": "MuiListItemAvatar-root",
+    "alignItemsFlexStart": "MuiListItemAvatar-alignItemsFlexStart"
+  },
+  "utilities": {
+    "root": "MuiListItemAvatar-root",
+    "alignItemsFlexStart": "MuiListItemAvatar-alignItemsFlexStart",
+    "disabled": "Mui-disabled",
+    "error": "Mui-error",
+    "selected": "Mui-selected",
+    "focusVisible": "Mui-focusVisible",
+    "active": "Mui-active",
+    "checked": "Mui-checked",
+    "completed": "Mui-completed",
+    "expanded": "Mui-expanded",
+    "focused": "Mui-focused",
+    "open": "Mui-open",
+    "readOnly": "Mui-readOnly",
+    "required": "Mui-required",
+    "": "MuiListItemAvatar-",
+    "custom": "MuiListItemAvatar-custom",
+    "__proto__": "Mui-[object Object]"
+  }
+}

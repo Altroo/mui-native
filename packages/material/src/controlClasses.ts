@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Utility identifiers adapt MIT Material UI 9.5.0; see NOTICE and upstream/reuse.json.
 const globalStates = new Set([
   'active',
   'checked',
@@ -17,7 +19,12 @@ const utility = (name: string, slot: string) =>
 export const getCheckboxUtilityClass = (slot: string) => utility('MuiCheckbox', slot);
 export const getRadioUtilityClass = (slot: string) => utility('MuiRadio', slot);
 export const getRadioGroupUtilityClass = (slot: string) => utility('MuiRadioGroup', slot);
-export const getFormGroupUtilityClass = (slot: string) => utility('MuiFormGroup', slot);
+// The pinned utility uses ordinary object lookup, including inherited keys.
+const formGroupGlobalStates = Object.fromEntries([...globalStates].map((state) => [state, state]));
+export const getFormGroupUtilityClass = (slot: string) => {
+  const global = formGroupGlobalStates[slot];
+  return global ? `Mui-${global}` : `MuiFormGroup-${slot}`;
+};
 export const getFormControlLabelUtilityClasses = (slot: string) =>
   utility('MuiFormControlLabel', slot);
 const checkbox = [
@@ -57,8 +64,13 @@ export type RadioClassKey = (typeof radio)[number];
 export type RadioClasses = Record<RadioClassKey, string>;
 export type RadioGroupClassKey = (typeof group)[number];
 export type RadioGroupClasses = Record<RadioGroupClassKey, string>;
-export type FormGroupClassKey = (typeof group)[number];
-export type FormGroupClasses = Record<FormGroupClassKey, string>;
+// Keep the public class map open to canonical component-module augmentation.
+export interface FormGroupClasses {
+  root: string;
+  row: string;
+  error: string;
+}
+export type FormGroupClassKey = keyof FormGroupClasses;
 export type FormControlLabelClassKey = (typeof label)[number];
 export type FormControlLabelClasses = Record<FormControlLabelClassKey, string>;
 export const checkboxClasses = Object.fromEntries(
@@ -70,9 +82,11 @@ export const radioClasses = Object.fromEntries(
 export const radioGroupClasses = Object.fromEntries(
   group.map((key) => [key, getRadioGroupUtilityClass(key)]),
 ) as RadioGroupClasses;
-export const formGroupClasses = Object.fromEntries(
-  group.map((key) => [key, getFormGroupUtilityClass(key)]),
-) as FormGroupClasses;
+export const formGroupClasses = {
+  root: getFormGroupUtilityClass('root'),
+  row: getFormGroupUtilityClass('row'),
+  error: getFormGroupUtilityClass('error'),
+} as FormGroupClasses;
 export const formControlLabelClasses = Object.fromEntries(
   label.map((key) => [key, getFormControlLabelUtilityClasses(key)]),
 ) as FormControlLabelClasses;
