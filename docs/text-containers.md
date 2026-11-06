@@ -33,6 +33,10 @@ CSS theme/sx left/right/start/end keep their semantic values through the text sc
 
 The source-pinned backend and paragraph contracts are recorded in [native rendering provenance](../upstream/native-rendering.json). The [alignment regressions](../tests/native-text-alignment.test.tsx) cover native inline precedence, resets, nested Text and opposite-direction View boundaries. Direct Details tests verify actual glyph paint at baseline and the largest iOS OS text profile. Layout events retain useful font/line metrics, but a separate or cached measurement can differ from the final drawing position; native horizontal-placement assertions inspect rendered ink.
 
+The retained [Android baseline observations](../compatibility/evidence/native-text-alignment-android-2026-11-06.json) cover an API 37 emulator at actual native fontScale 1. Stock and custom AccordionDetails roots pass authored 20-dp LTR, 24-dp RTL and restored 20-dp LTR states. Twelve native Text observations include half-size descendants and an inherited 1.25 line-height ratio. Native font paint, Text/root frames, ref measurements, physical parent paths and twelve glyph-ink records from six screenshots agree. Root and Text identities remain stable; a real child tap and bubbling event advance the retained counter from 0 to 1 across the updates.
+
+All twelve observations use ReactTextView's TextView backend. The record retains the runtime source fingerprint, five driver hashes, React Native backend/license hashes and six locally retained PNG hashes. PNG binaries are omitted. The glyph oracle checks the logical-start edge, opposite-edge blank space and native advance together, so a full-width foreground cannot count as aligned text. Prepared-layout backend execution, actual enlarged Android OS text, broader typography/Portal profiles, TalkBack and optimized performance remain separate gates. The 20-to-24 change is an authored font-size update at OS scale 1.
+
 ## Custom native containers
 
 NativeTextScope is a native extension from @altroo/mui-native-system. It provides a React-only scope with a render callback and leaves the native host to the caller:
