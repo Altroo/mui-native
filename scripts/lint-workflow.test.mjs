@@ -44,6 +44,7 @@ for (const config of [
   'apps/native-catalog/tsconfig.json',
   'apps/native-benchmark/tsconfig.json',
   'fixtures/native-consumer/tsconfig.json',
+  'fixtures/typography-consumer/tsconfig.json',
 ]) {
   test(`TypeScript unused-code gate covers ${config} and preserves exports`, async () => {
     const directory = await mkdtemp(join(tmpdir(), 'mui-native-quality-'));
