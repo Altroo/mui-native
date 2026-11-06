@@ -19,6 +19,10 @@ import {
 } from './android-button-group-reading-report.mjs';
 import { prepareLayoutRootSource } from './android-layout-root-source.mjs';
 import { inspectLayoutRootReport, summarizeLayoutRoots } from './android-layout-root-report.mjs';
+import {
+  inspectTextAlignmentReport,
+  summarizeTextAlignment,
+} from './android-text-alignment-report.mjs';
 import { prepareSvgIconSource } from './android-svg-icon-source.mjs';
 import { inspectSvgIconReport, summarizeSvgIcon } from './android-svg-icon-report.mjs';
 import { inspectAccordionReport, summarizeAccordion } from './android-accordion-report.mjs';
@@ -197,7 +201,7 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots', globalRTL?: boolean}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'text-alignment', globalRTL?: boolean}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
@@ -212,6 +216,7 @@ export async function run(
       'button-group',
       'button-group-reading',
       'layout-roots',
+      'text-alignment',
     ].includes(scenario)
   )
     throw Error('Unknown catalog scenario');
@@ -219,6 +224,8 @@ export async function run(
     throw Error('Global RTL profiles apply only to reading checks');
   if (typeof serial !== 'string' || !serial.trim())
     throw Error('Choose one explicit --serial; devices are never selected automatically');
+  if (scenario === 'text-alignment' && serial !== 'emulator-5554')
+    throw Error('Text alignment proof is restricted to the existing emulator-5554');
   signal?.throwIfAborted();
   /** @returns {Promise<Uint8Array | string>} */
   const call = async (args, instrument = false) =>
@@ -261,17 +268,19 @@ export async function run(
     }
     await writeFile(join(output, 'instrumentation.txt'), text);
     report =
-      scenario === 'layout-roots'
-        ? inspectLayoutRootReport(text)
-        : scenario === 'accordion'
-          ? inspectAccordionReport(text)
-          : scenario === 'svg-icon'
-            ? inspectSvgIconReport(text)
-            : scenario === 'button-group-reading'
-              ? inspectReadingReport(text)
-              : scenario === 'button-group'
-                ? inspectButtonGroupReport(text)
-                : inspectReport(text);
+      scenario === 'text-alignment'
+        ? inspectTextAlignmentReport(text)
+        : scenario === 'layout-roots'
+          ? inspectLayoutRootReport(text)
+          : scenario === 'accordion'
+            ? inspectAccordionReport(text)
+            : scenario === 'svg-icon'
+              ? inspectSvgIconReport(text)
+              : scenario === 'button-group-reading'
+                ? inspectReadingReport(text)
+                : scenario === 'button-group'
+                  ? inspectButtonGroupReport(text)
+                  : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -286,7 +295,8 @@ export async function run(
       await writeFile(join(output, file), bytes);
     }
     signal?.throwIfAborted();
-    if (scenario === 'layout-roots') summarizeLayoutRoots(text);
+    if (scenario === 'text-alignment') summarizeTextAlignment(text);
+    else if (scenario === 'layout-roots') summarizeLayoutRoots(text);
     else if (scenario === 'accordion') summarizeAccordion(text);
     else if (scenario === 'svg-icon') summarizeSvgIcon(text);
     else if (scenario === 'button-group-reading') summarizeReadingReport(text, { globalRTL });

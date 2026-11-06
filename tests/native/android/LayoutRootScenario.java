@@ -6,6 +6,7 @@ import android.app.Instrumentation;
 import android.app.UiAutomation;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public final class LayoutRootScenario {
   private static final String[] GROUPS = {"inherited", "own-false", "custom", "styled"};
   private static final String[] AVATARS = {"native", "custom", "portal"};
   private final Instrumentation driver;
+  private final boolean textAlignment;
   private final JSONArray stages = new JSONArray(), states = new JSONArray(), pictures = new JSONArray();
   private final Map<String, View> hosts = new HashMap<>();
   private Activity activity;
@@ -47,14 +49,15 @@ public final class LayoutRootScenario {
   private int tagId;
   private String textDiagnostic;
 
-  private LayoutRootScenario(Instrumentation driver) { this.driver = driver; }
-  public static void run(Instrumentation driver) { new LayoutRootScenario(driver).run(); }
+  private LayoutRootScenario(Instrumentation driver, boolean textAlignment) { this.driver = driver; this.textAlignment = textAlignment; }
+  public static void run(Instrumentation driver) { new LayoutRootScenario(driver, false).run(); }
+  public static void runTextAlignment(Instrumentation driver) { new LayoutRootScenario(driver, true).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
-      directory = new File(driver.getTargetContext().getCacheDir(), "mui-layout-roots-" + System.currentTimeMillis());
+      directory = new File(driver.getTargetContext().getCacheDir(), (textAlignment ? "mui-text-alignment-" : "mui-layout-roots-") + System.currentTimeMillis());
       require(directory.mkdir(), "Preserve existing native evidence");
-      report.put("schemaVersion", 1).put("scenario", "layout-roots-v1")
+      report.put("schemaVersion", 1).put("scenario", textAlignment ? "text-alignment-v1" : "layout-roots-v1")
         .put("driver", "native Instrumentation and UiAutomation").put("artifactDirectory", "cache/" + directory.getName())
         .put("device", new JSONObject().put("sdk", Build.VERSION.SDK_INT).put("model", Build.MODEL)
           .put("density", driver.getTargetContext().getResources().getDisplayMetrics().density)
@@ -67,6 +70,14 @@ public final class LayoutRootScenario {
       tagId = driver.getTargetContext().getResources().getIdentifier("react_test_id", "id", PACKAGE);
       require(tagId != 0, "Native test identifier resource is missing");
       tap("catalog-tab-Wrappers");
+      if (textAlignment) {
+        revealComplete("root-layout-details"); tap("root-layout-details");
+        alignment("alignment-20-ltr", 20, false, 0);
+        tap("details-contract-child"); tap("details-contract-font"); tap("details-contract-rtl");
+        alignment("alignment-24-rtl", 24, true, 1);
+        tap("details-contract-font"); tap("details-contract-rtl");
+        alignment("alignment-restored-ltr", 20, false, 1);
+      } else {
       group("group-initial", false, false, false, false, 16, 0); capture("group-column.png");
       tap("form-group-contract-child-custom");
       group("group-counter", false, false, false, false, 16, 1);
@@ -95,6 +106,7 @@ public final class LayoutRootScenario {
       avatar("avatar-rtl", true, true, true, 1); capture("avatar-themed-rtl.png");
       tap("avatar-contract-rtl"); tap("avatar-contract-theme"); tap("avatar-contract-alignment");
       avatar("avatar-restored", false, false, false, 1); capture("avatar-restored.png");
+      }
       passed = true;
     } catch (Throwable error) {
       try { report.put("error", describeFailure(error)); if (textDiagnostic != null) report.put("nativeTextDiagnostic", textDiagnostic); if (directory != null) capture("failure.png"); }
@@ -102,10 +114,121 @@ public final class LayoutRootScenario {
     } finally {
       try {
         report.put("status", passed ? "passed" : "failed").put("stages", stages).put("states", states).put("screenshots", pictures);
-        result.putString("layoutRootReport", report.toString());
+        result.putString(textAlignment ? "textAlignmentReport" : "layoutRootReport", report.toString());
       } catch (Exception error) { result.putString("Error", error.toString()); passed = false; }
       driver.finish(passed ? Activity.RESULT_OK : Activity.RESULT_CANCELED, result);
     }
+  }
+
+  /** Three source-unique short text states; glyph position comes from actual PNG pixels. */
+  private void alignment(String name, int font, boolean rtl, int count) throws Exception {
+    JSONArray roots = new JSONArray(); JSONObject metadata = null;
+    for (String key : new String[]{"stock", "custom"}) {
+      revealComplete("details-contract-" + key);
+      JSONObject root = settled(() -> {
+        JSONObject current = metadata("details-contract-receipt");
+        require(current.getBoolean("large") == (font == 24) && current.getBoolean("rtl") == rtl &&
+          current.getInt("childCount") == count && current.getString("spacing").equals("source") &&
+          !current.getBoolean("inline") && !current.getBoolean("adjusted"), "Details controls/state have not committed");
+        scale(current);
+        require(Math.abs(current.getDouble("fontScale") - 1) < .01, "First alignment proof requires the actual baseline OS font scale");
+        View host = retained("details-contract-" + key), content = retained("details-contract-content-" + key);
+        JSONObject refs = current.getJSONObject("refs").getJSONObject(key);
+        require(refs.getInt("attached") == 1 && refs.getInt("cleaned") == 0 && refs.getBoolean("sameRoot"), "Details actual root ref must survive");
+        require(host.getLayoutDirection() == (rtl ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR), "Actual Details root direction differs");
+        View action = retained("details-contract-child");
+        require(text(action).equalsIgnoreCase("Mark " + count), "Actual native child counter must survive");
+        if (count > 0) {
+          JSONObject touch = current.getJSONObject("touches").getJSONObject("custom");
+          require(touch.getInt("count") > 0 && touch.getInt("target") > 0 && Double.isFinite(touch.getDouble("pageX")) &&
+            Double.isFinite(touch.getDouble("pageY")) && Double.isFinite(touch.getDouble("timestamp")), "Actual bubbling native touch receipt missing");
+        }
+        JSONArray texts = new JSONArray();
+        for (String kind : new String[]{"primary", "small"}) {
+          String id = "details-contract-" + kind + "-" + key;
+          View leaf = retained(id); NativeText nativeLeaf = nativeText(leaf);
+          String expected = kind.equals("primary") ? (key.equals("stock") ? "Dock 3." : "Notes.") : (key.equals("stock") ? "Keep dry." : "Fragile.");
+          require(nativeLeaf.text.toString().equals(expected), "Source-unique native text differs: " + id);
+          require(leaf.getLayoutDirection() == (rtl ? View.LAYOUT_DIRECTION_RTL : View.LAYOUT_DIRECTION_LTR), "Actual Text direction differs: " + id);
+          float authored = kind.equals("primary") ? font : font * .5f;
+          float expectedPx = (float)Math.ceil(PixelUtil.toPixelFromSP(authored));
+          TextPaint paint = nativeLeaf.glyphPaint(); float density = leaf.getResources().getDisplayMetrics().density;
+          require(Math.abs(paint.getTextSize() - expectedPx) <= 1.1 && nativeLeaf.layout.getLineCount() == 1, "Actual native font/line count differs: " + id);
+          JSONObject actual = bounds(leaf), frame = current.getJSONObject("textFrames").getJSONObject(kind + "-" + key);
+          double lineHeight = (nativeLeaf.layout.getLineBottom(0) - nativeLeaf.layout.getLineTop(0)) / density;
+          JSONArray lines = current.getJSONObject("metrics").getJSONArray(kind + "-" + key);
+          require(lines.length() == 1 && Math.abs(lines.getJSONObject(0).getDouble("height") - authored * 1.25) <= 1.5 &&
+            lines.getJSONObject(0).getDouble("capHeight") > 0, "Current native line receipt missing/stale: " + id);
+          require(Math.abs(lineHeight - authored * 1.25) <= 1.5 && Math.abs(actual.getDouble("height") - authored * 1.25) <= 1.5 &&
+            Math.abs(frame.getDouble("width") - actual.getDouble("width")) <= 1.5 && Math.abs(frame.getDouble("height") - actual.getDouble("height")) <= 1.5,
+            "Actual inherited native line height/frame differs: " + id);
+          texts.put(new JSONObject().put("id", id).put("text", expected).put("nativeId", leaf.getId()).put("class", leaf.getClass().getName())
+            .put("backend", nativeLeaf.backend).put("bounds", actual).put("direction", rtl ? "rtl" : "ltr")
+            .put("fontPx", paint.getTextSize()).put("expectedFontPx", expectedPx).put("lineHeight", lineHeight)
+            .put("advance", nativeLeaf.desiredWidth() / density));
+        }
+        View primary = view("details-contract-primary-" + key), small = view("details-contract-small-" + key);
+        return measured(key, host, current).put("refs", refs).put("content", bounds(content))
+          .put("physical", physicalChildren(host, new String[]{"content"}, new View[]{content}))
+          .put("textPhysical", physicalChildren(content, new String[]{"primary", "small"}, new View[]{primary, small}))
+          .put("contentId", content.getId()).put("texts", texts).put("metadata", current);
+      }, name + "-" + key);
+      String picture = name + "-" + key + ".png"; capture(picture);
+      Bitmap bitmap = BitmapFactory.decodeFile(new File(directory, picture).getPath());
+      require(bitmap != null, "Decode actual native screenshot");
+      try {
+        for (int index = 0; index < root.getJSONArray("texts").length(); index++) {
+          JSONObject leaf = root.getJSONArray("texts").getJSONObject(index);
+          JSONObject painted = ui(() -> screenshotInk(view(leaf.getString("id")), leaf, bitmap));
+          double blank = leaf.getJSONObject("bounds").getDouble("width") - leaf.getDouble("advance");
+          double authored = leaf.getString("id").contains("-small-") ? font * .5 : font;
+          double tolerance = Math.min(Math.max(2, authored * .2), blank / 3);
+          require(blank > Math.max(6, authored * .1) && painted.getDouble("width") > authored, "Fixture must distinguish native glyph edges");
+          double inset = rtl ? leaf.getJSONObject("bounds").getDouble("width") - painted.getDouble("x") - painted.getDouble("width") : painted.getDouble("x");
+          double oppositeInset = rtl ? painted.getDouble("x") : leaf.getJSONObject("bounds").getDouble("width") - painted.getDouble("x") - painted.getDouble("width");
+          require(inset >= -1 && inset <= tolerance && oppositeInset >= blank - tolerance && painted.getDouble("width") <= leaf.getDouble("advance") + tolerance,
+            "Actual screenshot glyph edges/blank space differ: " + leaf.getString("id") + " rtl=" + rtl + " ink=" + painted + " blank=" + blank + " opposite=" + oppositeInset + " tolerance=" + tolerance);
+          leaf.put("ink", painted);
+        }
+      } finally { bitmap.recycle(); }
+      metadata = root.getJSONObject("metadata"); root.remove("metadata");
+      roots.put(root.put("screenshot", picture));
+    }
+    JSONObject child = ui(() -> { View action = retained("details-contract-child"); return new JSONObject().put("nativeId", action.getId()).put("text", text(action)); });
+    states.put(new JSONObject().put("name", name).put("metadata", metadata).put("roots", roots).put("child", child)); stage(name);
+  }
+  private void revealComplete(String id) throws Exception {
+    await(() -> ui(() -> find(id) != null && view(id).isShown() && view(id).getWidth() > 0), "Native target must mount: " + id);
+    ui(() -> { View target = view(id); target.requestRectangleOnScreen(new Rect(0, 0, target.getWidth(), target.getHeight()), true); return null; });
+    await(() -> ui(() -> { View target = view(id); Rect visible = new Rect(); return target.getGlobalVisibleRect(visible) && visible.width() == target.getWidth() && visible.height() == target.getHeight(); }), "Complete native frame must be visible: " + id);
+  }
+  private static double colorDistance(int a, int b) {
+    return Math.abs(((a >> 16) & 255) - ((b >> 16) & 255)) + Math.abs(((a >> 8) & 255) - ((b >> 8) & 255)) + Math.abs((a & 255) - (b & 255));
+  }
+  private JSONObject screenshotInk(View leaf, JSONObject sample, Bitmap bitmap) throws Exception {
+    Rect visible = new Rect(); int[] origin = new int[2]; leaf.getLocationOnScreen(origin);
+    require(leaf.getGlobalVisibleRect(visible) && visible.width() == leaf.getWidth() && visible.height() == leaf.getHeight(), "Actual Text screenshot frame must be fully visible");
+    int width = leaf.getWidth(), height = leaf.getHeight(), x = origin[0], y = origin[1];
+    require(width > 4 && height > 4 && x >= 0 && y >= 0 && x + width <= bitmap.getWidth() && y + height <= bitmap.getHeight(), "Actual Text must fit screenshot pixels");
+    JSONObject actual = bounds(leaf), before = sample.getJSONObject("bounds");
+    for (String axis : new String[]{"x", "y", "width", "height"}) require(Math.abs(actual.getDouble(axis) - before.getDouble(axis)) <= .5, "Native Text moved during screenshot");
+    int background = bitmap.getPixel(x, y), foreground = nativeText(leaf).glyphPaint().getColor();
+    for (int corner : new int[]{bitmap.getPixel(x + width - 1, y), bitmap.getPixel(x, y + height - 1), bitmap.getPixel(x + width - 1, y + height - 1)})
+      require(colorDistance(corner, background) <= 24, "Text screenshot background must be uniform at its corners");
+    double contrast = colorDistance(background, foreground); require(contrast >= 48, "Native glyphs need measurable screenshot contrast");
+    int left = width, right = -1, top = height, bottom = -1, pixels = 0;
+    // Read the actual visible frame, not Layout.lineLeft: draw-time gravity may
+    // move glyphs without changing intrinsic line coordinates on either backend.
+    for (int row = 0; row < height; row++) for (int column = 0; column < width; column++) {
+      int pixel = bitmap.getPixel(x + column, y + row);
+      if (colorDistance(pixel, background) > Math.max(36, contrast * .2) && colorDistance(pixel, foreground) < contrast * .9) {
+        left = Math.min(left, column); right = Math.max(right, column); top = Math.min(top, row); bottom = Math.max(bottom, row); pixels++;
+      }
+    }
+    require(pixels >= 12, "Screenshot must contain meaningful native glyph paint");
+    float density = leaf.getResources().getDisplayMetrics().density;
+    return new JSONObject().put("x", left / density).put("y", top / density).put("width", (right - left + 1) / density)
+      .put("height", (bottom - top + 1) / density).put("pixels", pixels);
   }
 
   private void group(String stage, boolean row, boolean error, boolean themed, boolean rtl, int fontSize, int count) throws Exception {
@@ -402,7 +525,7 @@ public final class LayoutRootScenario {
     finally { bitmap.recycle(); }
     pictures.put(name);
   }
-  private void stage(String name) { stages.put(name); Bundle update = new Bundle(); update.putString("layoutRootStage", name); driver.sendStatus(1, update); }
+  private void stage(String name) { stages.put(name); Bundle update = new Bundle(); update.putString(textAlignment ? "textAlignmentStage" : "layoutRootStage", name); driver.sendStatus(1, update); }
   private JSONObject settled(java.util.concurrent.Callable<JSONObject> sample, String name) throws Exception {
     long deadline = SystemClock.uptimeMillis() + 20000; Throwable last = null;
     do { textDiagnostic = null; try { return ui(sample); } catch (AssertionError error) { last = error; } SystemClock.sleep(16); } while (SystemClock.uptimeMillis() < deadline);
