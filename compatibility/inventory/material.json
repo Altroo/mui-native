@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "7a95ae0341d1c187ea2d4bfce99089eb420d783b3ceb5050cceab92e3e3af275",
+  "nativeSourceSha256": "b0922d6cd706f2a968e57088f1a964a75eca46ecf45f25f4da77ab5e1d27cc19",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -19053,7 +19053,7 @@
           "line": 46
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -34158,7 +34158,7 @@
           "line": 47
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -34177,7 +34177,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -34196,7 +34196,7 @@
           "line": 45
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -34215,7 +34215,7 @@
           "line": 10
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -34310,7 +34310,7 @@
           "line": 73
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -36813,7 +36813,7 @@
           "module": "@altroo/mui-native:src/typography.tsx",
           "name": "NativeTypographyComponent",
           "kind": "type",
-          "line": 43
+          "line": 51
         }
       ]
     },
@@ -37506,7 +37506,7 @@
           "module": "@altroo/mui-native:src/typography.tsx",
           "name": "TypographyVariantProp",
           "kind": "type",
-          "line": 39
+          "line": 47
         }
       ]
     },
@@ -138613,7 +138613,7 @@
         {
           "name": "TypographyPropsVariantOverrides",
           "file": "src/typography.tsx",
-          "line": 32,
+          "line": 40,
           "package": "@altroo/mui-native"
         }
       ]
@@ -138630,7 +138630,7 @@
         {
           "name": "TypographyPropsColorOverrides",
           "file": "src/typography.tsx",
-          "line": 33,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -138664,7 +138664,7 @@
           "line": 19,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -138677,7 +138677,7 @@
           "line": 23,
           "kind": "property",
           "type": "Partial<TypographyClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -138776,9 +138776,15 @@
       "inheritanceResolved": false,
       "nativeCandidates": [
         {
+          "name": "TypographyOwnProps",
+          "file": "src/typography.tsx",
+          "line": 54,
+          "package": "@altroo/mui-native"
+        },
+        {
           "name": "TypographyProps",
           "file": "src/typography.tsx",
-          "line": 46,
+          "line": 93,
           "package": "@altroo/mui-native"
         }
       ]
@@ -138799,7 +138805,7 @@
           "line": 74,
           "kind": "property",
           "type": "AdditionalProps & TypographyOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -138812,7 +138818,7 @@
           "line": 75,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -138823,7 +138829,14 @@
         "TypographyOwnProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "TypographyTypeMap",
+          "file": "src/typography.tsx",
+          "line": 86,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "TypographyProps",
@@ -138857,7 +138870,7 @@
         {
           "name": "TypographyProps",
           "file": "src/typography.tsx",
-          "line": 46,
+          "line": 93,
           "package": "@altroo/mui-native"
         }
       ]
@@ -138874,7 +138887,7 @@
         {
           "name": "TypographyPropsVariantOverrides",
           "file": "src/typography.tsx",
-          "line": 32,
+          "line": 40,
           "package": "@altroo/mui-native"
         }
       ]
@@ -138891,7 +138904,7 @@
         {
           "name": "TypographyPropsColorOverrides",
           "file": "src/typography.tsx",
-          "line": 33,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -138925,7 +138938,7 @@
           "line": 19,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -138938,7 +138951,7 @@
           "line": 23,
           "kind": "property",
           "type": "Partial<TypographyClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139037,9 +139050,15 @@
       "inheritanceResolved": false,
       "nativeCandidates": [
         {
+          "name": "TypographyOwnProps",
+          "file": "src/typography.tsx",
+          "line": 54,
+          "package": "@altroo/mui-native"
+        },
+        {
           "name": "TypographyProps",
           "file": "src/typography.tsx",
-          "line": 46,
+          "line": 93,
           "package": "@altroo/mui-native"
         }
       ]
@@ -139060,7 +139079,7 @@
           "line": 74,
           "kind": "property",
           "type": "AdditionalProps & TypographyOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139073,7 +139092,7 @@
           "line": 75,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -139084,7 +139103,14 @@
         "TypographyOwnProps"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "TypographyTypeMap",
+          "file": "src/typography.tsx",
+          "line": 86,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "TypographyProps",
@@ -139118,7 +139144,7 @@
         {
           "name": "TypographyProps",
           "file": "src/typography.tsx",
-          "line": 46,
+          "line": 93,
           "package": "@altroo/mui-native"
         }
       ]
@@ -139139,7 +139165,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139152,7 +139178,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139165,7 +139191,7 @@
           "line": 7,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139178,7 +139204,7 @@
           "line": 9,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139191,7 +139217,7 @@
           "line": 11,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139204,7 +139230,7 @@
           "line": 13,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139217,7 +139243,7 @@
           "line": 15,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139230,7 +139256,7 @@
           "line": 17,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139243,7 +139269,7 @@
           "line": 19,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139256,7 +139282,7 @@
           "line": 21,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139269,7 +139295,7 @@
           "line": 23,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139282,7 +139308,7 @@
           "line": 25,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139295,7 +139321,7 @@
           "line": 27,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139308,7 +139334,7 @@
           "line": 29,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139321,7 +139347,7 @@
           "line": 31,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139334,7 +139360,7 @@
           "line": 33,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139347,7 +139373,7 @@
           "line": 35,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139360,7 +139386,7 @@
           "line": 37,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139373,7 +139399,7 @@
           "line": 39,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139386,7 +139412,7 @@
           "line": 41,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139399,13 +139425,20 @@
           "line": 43,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "TypographyClasses",
+          "file": "src/typographyClasses.ts",
+          "line": 4,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "TypographyClassKey",
@@ -139417,7 +139450,14 @@
         "TypographyClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "TypographyClassKey",
+          "file": "src/typographyClasses.ts",
+          "line": 27,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "TypographyClasses",
@@ -139435,7 +139475,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139448,7 +139488,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139461,7 +139501,7 @@
           "line": 7,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139474,7 +139514,7 @@
           "line": 9,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139487,7 +139527,7 @@
           "line": 11,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139500,7 +139540,7 @@
           "line": 13,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139513,7 +139553,7 @@
           "line": 15,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139526,7 +139566,7 @@
           "line": 17,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139539,7 +139579,7 @@
           "line": 19,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139552,7 +139592,7 @@
           "line": 21,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139565,7 +139605,7 @@
           "line": 23,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139578,7 +139618,7 @@
           "line": 25,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139591,7 +139631,7 @@
           "line": 27,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139604,7 +139644,7 @@
           "line": 29,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139617,7 +139657,7 @@
           "line": 31,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139630,7 +139670,7 @@
           "line": 33,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139643,7 +139683,7 @@
           "line": 35,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139656,7 +139696,7 @@
           "line": 37,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139669,7 +139709,7 @@
           "line": 39,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139682,7 +139722,7 @@
           "line": 41,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -139695,13 +139735,20 @@
           "line": 43,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "TypographyClasses",
+          "file": "src/typographyClasses.ts",
+          "line": 4,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "TypographyClassKey",
@@ -139713,7 +139760,14 @@
         "TypographyClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "TypographyClassKey",
+          "file": "src/typographyClasses.ts",
+          "line": 27,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "FocusTrapProps",
@@ -206650,7 +206704,7 @@
     {
       "name": "TypographyPropsVariantOverrides",
       "file": "src/typography.tsx",
-      "line": 32,
+      "line": 40,
       "kind": "type",
       "members": [],
       "references": [],
@@ -206660,7 +206714,7 @@
     {
       "name": "TypographyPropsColorOverrides",
       "file": "src/typography.tsx",
-      "line": 33,
+      "line": 41,
       "kind": "type",
       "members": [],
       "references": [],
@@ -206670,7 +206724,7 @@
     {
       "name": "VariantFlags",
       "file": "src/typography.tsx",
-      "line": 34,
+      "line": 42,
       "kind": "type",
       "members": [],
       "references": [
@@ -206685,7 +206739,7 @@
     {
       "name": "TypographyVariantProp",
       "file": "src/typography.tsx",
-      "line": 39,
+      "line": 47,
       "kind": "type",
       "members": [],
       "references": [
@@ -206699,7 +206753,7 @@
     {
       "name": "NativeTypographyComponent",
       "file": "src/typography.tsx",
-      "line": 43,
+      "line": 51,
       "kind": "type",
       "members": [],
       "references": [
@@ -206712,21 +206766,54 @@
       "package": "@altroo/mui-native"
     },
     {
-      "name": "TypographyProps",
+      "name": "TypographyOwnProps",
       "file": "src/typography.tsx",
-      "line": 46,
+      "line": 54,
       "kind": "type",
       "members": [
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 55,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<TypographyClasses> | undefined;",
+          "line": 56,
+          "kind": "property",
+          "type": "Partial<TypographyClasses> | undefined"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string | undefined;",
+          "line": 57,
+          "kind": "property",
+          "type": "string | undefined"
+        },
         {
           "name": "sx",
           "optional": true,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "sx?: SxProps;",
-          "line": 47,
+          "declaration": "sx?: SxProps | undefined;",
+          "line": 58,
           "kind": "property",
-          "type": "SxProps"
+          "type": "SxProps | undefined"
         },
         {
           "name": "variant",
@@ -206734,10 +206821,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "variant?: TypographyVariantProp;",
-          "line": 48,
+          "declaration": "variant?: TypographyVariantProp | undefined;",
+          "line": 59,
           "kind": "property",
-          "type": "TypographyVariantProp"
+          "type": "TypographyVariantProp | undefined"
         },
         {
           "name": "align",
@@ -206745,10 +206832,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "align?: TextStyle['textAlign'] | 'inherit';",
-          "line": 49,
+          "declaration": "align?: TextStyle['textAlign'] | 'inherit' | undefined;",
+          "line": 60,
           "kind": "property",
-          "type": "TextStyle['textAlign'] | 'inherit'"
+          "type": "TextStyle['textAlign'] | 'inherit' | undefined"
         },
         {
           "name": "color",
@@ -206756,10 +206843,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "color?: string;",
-          "line": 50,
+          "declaration": "color?: string | undefined;",
+          "line": 61,
           "kind": "property",
-          "type": "string"
+          "type": "string | undefined"
         },
         {
           "name": "gutterBottom",
@@ -206767,10 +206854,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "gutterBottom?: boolean;",
-          "line": 51,
+          "declaration": "gutterBottom?: boolean | undefined;",
+          "line": 62,
           "kind": "property",
-          "type": "boolean"
+          "type": "boolean | undefined"
         },
         {
           "name": "noWrap",
@@ -206778,10 +206865,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "noWrap?: boolean;",
-          "line": 52,
+          "declaration": "noWrap?: boolean | undefined;",
+          "line": 63,
           "kind": "property",
-          "type": "boolean"
+          "type": "boolean | undefined"
         },
         {
           "name": "paragraph",
@@ -206789,21 +206876,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "paragraph?: boolean;",
-          "line": 54,
+          "declaration": "paragraph?: boolean | undefined;",
+          "line": 65,
           "kind": "property",
-          "type": "boolean"
-        },
-        {
-          "name": "component",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "component?: NativeTypographyComponent | string;",
-          "line": 55,
-          "kind": "property",
-          "type": "NativeTypographyComponent | string"
+          "type": "boolean | undefined"
         },
         {
           "name": "variantMapping",
@@ -206811,20 +206887,467 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "variantMapping?: Partial<Record<TypographyVariantProp, string>>;",
-          "line": 56,
+          "declaration": "variantMapping?: Partial<Record<TypographyVariantProp, string>> | undefined;",
+          "line": 66,
           "kind": "property",
-          "type": "Partial<Record<TypographyVariantProp, string>>"
+          "type": "Partial<Record<TypographyVariantProp, string>> | undefined"
         }
       ],
       "references": [
-        "NativeTypographyComponent",
         "Partial",
+        "React.ReactNode",
         "Record",
         "SxProps",
-        "TextProps",
         "TextStyle",
+        "TypographyClasses",
         "TypographyVariantProp"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeTypographyRoot",
+      "file": "src/typography.tsx",
+      "line": 68,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.JSXElementConstructor"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RootProps",
+      "file": "src/typography.tsx",
+      "line": 69,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ComponentPropsWithRef",
+        "React.ElementType",
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CompatibleRoot",
+      "file": "src/typography.tsx",
+      "line": 74,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "RefCompatibleRoot",
+        "Root",
+        "RootProps",
+        "Style",
+        "TextProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RefCompatibleRoot",
+      "file": "src/typography.tsx",
+      "line": 80,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Instance",
+        "React.Ref",
+        "Root",
+        "RootProps",
+        "TextInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "TypographyTypeMap",
+      "file": "src/typography.tsx",
+      "line": 86,
+      "kind": "type",
+      "members": [
+        {
+          "name": "props",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "props: AdditionalProps & TypographyOwnProps;",
+          "line": 90,
+          "kind": "property",
+          "type": "AdditionalProps & TypographyOwnProps"
+        },
+        {
+          "name": "defaultComponent",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultComponent: RootComponent;",
+          "line": 91,
+          "kind": "property",
+          "type": "RootComponent"
+        }
+      ],
+      "references": [
+        "AdditionalProps",
+        "NativeTypographyRoot",
+        "RootComponent",
+        "TypographyOwnProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "TypographyProps",
+      "file": "src/typography.tsx",
+      "line": 93,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: RootComponent | NativeTypographyComponent | string | undefined;",
+          "line": 99,
+          "kind": "property",
+          "type": "RootComponent | NativeTypographyComponent | string | undefined"
+        }
+      ],
+      "references": [
+        "AdditionalProps",
+        "NativeTypographyComponent",
+        "NativeTypographyRoot",
+        "Omit",
+        "RootComponent",
+        "RootProps",
+        "TypographyOwnProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeTypographyRootComponent",
+      "file": "src/typography.tsx",
+      "line": 101,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<Root extends NativeTypographyRoot>(\n    props: TypographyProps<Root> & { component: Root & CompatibleRoot<Root> },\n  ): React.JSX.Element | null;",
+          "line": 103,
+          "kind": "signature",
+          "type": "<Root extends NativeTypographyRoot>(\n    props: TypographyProps<Root> & { component: Root & CompatibleRoot<Root> },\n  ): React.JSX.Element | null;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: TypographyProps): React.JSX.Element | null;",
+          "line": 106,
+          "kind": "signature",
+          "type": "(props: TypographyProps): React.JSX.Element | null;"
+        }
+      ],
+      "references": [
+        "CompatibleRoot",
+        "NativeTypographyRoot",
+        "Omit",
+        "React.ForwardRefExoticComponent",
+        "React.JSX.Element",
+        "Root",
+        "TypographyProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "TypographyRenderProps",
+      "file": "src/typography.tsx",
+      "line": 108,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: NativeTypographyRoot | undefined",
+          "line": 109,
+          "kind": "property",
+          "type": "NativeTypographyRoot | undefined"
+        }
+      ],
+      "references": [
+        "NativeTypographyRoot",
+        "TextProps",
+        "TypographyOwnProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "TypographyClasses",
+      "file": "src/typographyClasses.ts",
+      "line": 4,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: string;",
+          "line": 5,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "h1",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "h1: string;",
+          "line": 6,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "h2",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "h2: string;",
+          "line": 7,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "h3",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "h3: string;",
+          "line": 8,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "h4",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "h4: string;",
+          "line": 9,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "h5",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "h5: string;",
+          "line": 10,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "h6",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "h6: string;",
+          "line": 11,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "subtitle1",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "subtitle1: string;",
+          "line": 12,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "subtitle2",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "subtitle2: string;",
+          "line": 13,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "body1",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "body1: string;",
+          "line": 14,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "body2",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "body2: string;",
+          "line": 15,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "inherit",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "inherit: string;",
+          "line": 16,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "button",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "button: string;",
+          "line": 17,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "caption",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "caption: string;",
+          "line": 18,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "overline",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "overline: string;",
+          "line": 19,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "alignLeft",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "alignLeft: string;",
+          "line": 20,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "alignRight",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "alignRight: string;",
+          "line": 21,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "alignCenter",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "alignCenter: string;",
+          "line": 22,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "alignJustify",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "alignJustify: string;",
+          "line": 23,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "noWrap",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "noWrap: string;",
+          "line": 24,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "gutterBottom",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "gutterBottom: string;",
+          "line": 25,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "TypographyClassKey",
+      "file": "src/typographyClasses.ts",
+      "line": 27,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "TypographyClasses"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"

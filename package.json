@@ -24,7 +24,9 @@
     "coverage:verify": "node scripts/inventory/freshness.mjs",
     "native-host:codegen": "node node_modules/react-native/scripts/generate-codegen-artifacts.js --path packages/native-host --outputPath .cache/native-host-codegen --targetPlatform all --source library",
     "lint": "eslint . --max-warnings=0 && pnpm typecheck",
-    "typecheck:consumer": "tsc --noEmit -p fixtures/native-consumer/tsconfig.json"
+    "typecheck:consumer": "tsc --noEmit -p fixtures/native-consumer/tsconfig.json && pnpm typecheck:typography",
+    "typecheck:typography": "tsc --noEmit -p fixtures/typography-consumer/tsconfig.json",
+    "reference:typography": "node scripts/reference/typography.mjs --check && node scripts/reference/typography-contract.mjs --check && node scripts/reference/check-typography-consumer.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",

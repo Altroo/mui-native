@@ -6,7 +6,7 @@
     "files": {
       ".nvmrc": "45507e6d96329a845faa642c0f485313bcb2ca1e08b043589cde4ddd15969cd6",
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
-      "package.json": "9557648174b69c30e5d601830099e99537b5b94c39cf0962bdd0ac788c60d03b",
+      "package.json": "cdbed15b31b9389a2fa0370e6be1372fb110d8aa920f74ae8990b920bfc26088",
       "packages/compat/package.json": "59904f1e9920728c84cb290e1ce34d0e6e4f7c7832b65b0eb8ff70c01df2c4de",
       "packages/compat/supported.json": "389104ed87e108fc577cae5ac28046117cc6fa3320b6bc4f136568ae18c749ff",
       "packages/icons/package.json": "b2066761b6f8b5ea49d9e75aeb75fab01bddda969cb6959ba57c6cf0d09011d8",
@@ -10969,8 +10969,9 @@
       "packages/material/src/transitionReadiness.ts": "7cd66b0245b59e533c8147c7b58eae1dc14f63e46b2a9a2ae62b60ebacfd2e1b",
       "packages/material/src/transitions/index.ts": "546d17934941fa6afc2456a1dce661eb58acd153ce519d43a4d3d4bdb4869221",
       "packages/material/src/transitions/types/index.ts": "2be28a80b322dae98eac4c54284bd51cdcb1b81b5cbbdbe329cd4b0641ee818d",
-      "packages/material/src/typography.tsx": "234d07d5cc3602256044d9c48a83dbaee5def26edc2c34856b2dd979a181ce3d",
-      "packages/material/src/Typography/index.ts": "a4abb6b777a7fa90349f8bf180a0b9829a7ac4738c5ced7b40cb353192223c79",
+      "packages/material/src/typography.tsx": "e211ddb421e8ca6f8fe1e68a00aad7286c1146c8acc279eaf1c806a32edf6208",
+      "packages/material/src/Typography/index.ts": "263434707cb41883ddd1857c2434c3870ddad1cc74214ac5ee42de835ace8af8",
+      "packages/material/src/typographyClasses.ts": "1f969e5d8c928e270d5ceeb3a27ece76fc30d446ec104ba7eb07084cfb70fdc7",
       "packages/material/src/useAutocomplete.ts": "be7c440f71759db1d8683d4efca1f661c9edf178362b78af5f1b0556b2d083fa",
       "packages/material/src/useAutocomplete/index.ts": "8629714cad3703e232d12d536928d6b4b0cd43ab25cdc1e5456b391e2a76c40e",
       "packages/material/src/useAutocompleteTypes.ts": "9275b363b200c98f053bf6ff006917b5685ca0c4e6b2f5d4692a3c7a3234f3f5",
@@ -11101,7 +11102,7 @@
   },
   "documentation": {
     "path": "docs/coverage.md",
-    "sha256": "01d23c34043a48399e8dc10aec81a22629f4159eeaea8fcde99dbdafa9ae210f"
+    "sha256": "de9fb9be4b9e8e9ae888ad5c892a33037882dc126f623422d33b2372316070e8"
   },
   "referenceDependencies": [
     {
@@ -11123,11 +11124,11 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "7a95ae0341d1c187ea2d4bfce99089eb420d783b3ceb5050cceab92e3e3af275",
+      "nativeSourceSha256": "b0922d6cd706f2a968e57088f1a964a75eca46ecf45f25f4da77ab5e1d27cc19",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
-      "locallyDeclaredRootNames": 462,
+      "locallyDeclaredRootNames": 468,
       "directMembers": 4046,
       "eventDeclarations": 112,
       "slotDeclarations": 219,
@@ -11135,7 +11136,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "4d4dbb215cb61db0989ab3883c0d5ee12967a8b91609ebccef2648ae3ad4c01a"
+      "sha256": "f8ce0ce46f9b6c0b8d6fa820a1148001f06e6a9931433c5714231d236baee8a4"
     },
     {
       "package": "@mui/system",

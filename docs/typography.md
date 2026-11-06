@@ -30,7 +30,7 @@ Applications must load custom fonts with their native font-loading mechanism. Th
 - Theme variants, `sx`, styled definitions and component overrides use CSS conventions. Numeric line heights are multipliers, including values greater than four. Use `lineHeight: '24px'` for an absolute height. `rem`, `em`, percentages and simple multiplication `calc()` lengths are normalized where supported.
 - Native `style` and input-slot styles keep React Native units. Their numeric line heights are absolute. A native font-size override participates in relative CSS line-height, letter-spacing and gutter calculations.
 - `sx` typography token names include `fontWeight: 'medium'`, `fontFamily: 'default'`, `fontSize: 'body1.fontSize'` and `typography: 'body1'`. Typography shorthand preserves CSS spacing units and responsive rules from the variant. It does not apply spacing multipliers to the variant again.
-- The cascade is base variant, root and applicable named overrides, matching component variants, `sx`, then native `style`. Existing supported selector specificity and breakpoint ordering still apply.
+- Base variants, root and applicable named overrides, component variants, prepared styled definitions and `sx` participate in the existing CSS specificity and declaration order. Genuine native `style` applies last. Native inline margin and padding shorthands replace earlier computed edges, including `style={{ margin: 0 }}` clearing a gutter.
 
 Earlier pre-alpha themes stored absolute numeric line heights in `theme.typography`. Change those to explicit pixel strings. Directly spreading theme variants into React Native `style` is no longer valid; use `Typography`, `sx={{ typography: 'body1' }}` or `resolveSx(theme.typography.body1, theme, { mode: 'css' })`. The catalog theme has been migrated.
 
@@ -38,7 +38,11 @@ Earlier pre-alpha themes stored absolute numeric line heights in `theme.typograp
 
 Typography supports standard and augmented variants, `inherit`, alignment, palette color names, `gutterBottom`, no-wrap truncation, native text props/refs and custom native text roots. Heading tags selected by the default mapping, `variantMapping` or `component` become native heading roles. String roots render Text, not HTML; unsupported tags emit a diagnostic. A mapping to `a` supplies link semantics only, not browser navigation. Native screen-reader announcements still require device verification.
 
-`MuiTypography.styleOverrides` can target root, variant names, alignment names, `noWrap` and `gutterBottom`; defaults and component variants also apply. The older `paragraph` prop remains a native compatibility extension with a 16-dp bottom margin; it is absent from the pinned MUI 9.5 declaration.
+`MuiTypography.styleOverrides` can target root, variant names, alignment names, `noWrap` and `gutterBottom`; defaults and component variants also apply. Class composition follows the original root, variant, alignment, gutter and no-wrap order, including custom `classes` entries. The composed classes drive supported selectors at the actual Text root. Participating ancestors such as MenuItem and Typography publish supported descendant rules through the existing physical style scope; Portal placement changes ownership without adding a native Typography wrapper. Arbitrary selector grammar and opaque custom-host discovery are outside that mechanism.
+
+Prepared `styled(Typography)` CSS stays separate from authored `style`. An absent style still selects `defaultProps.style`, explicit `undefined` selects the default, and explicit `null` suppresses it. Theme merge options preserve their existing class/style behavior. Owner-state and root callbacks see genuine public props and the original resolved defaults; prepared CSS does not become an inline prop. Native text event callbacks receive the original event and return value, and React 19 callback-ref cleanup follows the actual custom Text host lease.
+
+The older `paragraph` prop remains a native compatibility extension with a 16-dp bottom margin; it is absent from the pinned MUI 9.5 declaration. Literal `color` strings such as `#ff0000` are also an existing native extension: the original 9.5 runtime accepts the prop but has no matching color style for that literal. Standard palette colors, custom palette entries with `main`, and `textPrimary`, `textSecondary` and `textDisabled` retain their source behavior. Native `start`, `end` and `auto` alignment values extend the original public alignment union.
 
 Nested Typography preserves the difference between inherited unitless ratios and absolute line heights. A parent with 40-dp text and lineHeight 1.5 gives a 20-dp inheriting child a 30-dp line height. A parent's 60-pixel or computed percentage height stays 60. With an ordinary React Native Text parent, `variant="inherit"` leaves unspecified font metrics and color untouched. Relative `sx` values cannot discover an untracked native parent's measured font size. They use the nearest tracked text scope, or the configured root/default basis if none exists. Participating library containers and direct native Text/View children now establish scopes; opaque custom component internals still need explicit dimensions or a [native text scope](text-containers.md). Resetting an inherited native height with CSS `normal` is unsupported and emits a diagnostic; supply an explicit ratio or pixel length.
 
@@ -46,14 +50,56 @@ Button labels, textual loading indicators and TextField input text use the same 
 
 Authored `Text` and `Typography` children inside a Button retain independent native text roots. Their `allowFontScaling` and `maxFontSizeMultiplier` policies survive live changes and clearing, without JavaScript multiplying font sizes by the system scale. Mixed authored and literal labels wrap as native row content. This preserves native scaling policies; it does not establish identical browser paragraph wrapping.
 
-Participating native containers preserve known layout direction separately from text metrics. Logical CSS `start`/`end` alignment resolves in that physical direction and can resolve again when a descendant changes direction. Native inline text values retain their absolute React Native semantics.
+Participating native containers preserve known layout direction separately from text metrics. Logical CSS `start`/`end` alignment resolves in that physical direction and can resolve again when a descendant changes direction. The final Text boundary encodes CSS left/right for React Native 0.88.1's RTL mirroring. Virtual Text uses the owning paragraph's direction; an actual View or physical Portal canvas starts another paragraph. Without a tracked direction, the native global direction supplies the basis rather than a theme-only hint. Native inline text alignment retains React Native semantics.
+
+`noWrap` selects `numberOfLines={1}`, defaults `ellipsizeMode` to `tail`, and keeps an authored native ellipsize mode. It requires a bounded native layout to truncate. Browser block/inline formatting and exact browser line breaking are not reproduced by changing semantic string tags.
+
+## Imports and custom roots
+
+The original root and component entry export `Typography`, `typographyClasses`, `getTypographyUtilityClass`, `TypographyClasses`, `TypographyClassKey`, `TypographyOwnProps`, `TypographyProps` and `TypographyTypeMap`. Native routing supports both `@mui/material/Typography` and `@altroo/mui-native/Typography`; original web imports remain original MUI. The 21 declared class slots and all 12 global state utility names follow the pinned helper. The source-shaped `Typography/typographyClasses` path is not an original public package export and has no added native route.
+
+An explicit custom native root retains its required extra props and declared native ref type:
+
+```tsx
+import { forwardRef } from 'react';
+import { Text, type TextInstance, type TextProps } from 'react-native';
+import Typography from '@mui/material/Typography';
+
+type LabelProps = TextProps & { tone: 'quiet' | 'loud'; className?: string | undefined };
+const Label = forwardRef<TextInstance, LabelProps>(
+  ({ tone, className: _className, ...props }, ref) => (
+    <Text {...props} accessibilityHint={tone} ref={ref} />
+  ),
+);
+
+<Typography component={Label} tone="quiet" selectable />;
+```
+
+The root must render a Text-compatible native host and forward its text props, style and ref. A custom root may consume the composed `className` metadata; raw native Text does not receive CSS class props. Browser attributes and DOM refs are rejected. React Native declares TextInstance and ViewInstance as the same structural HostInstance type, so declarations cannot prove what host an arbitrary custom component renders. Custom root internals remain the author's responsibility.
 
 ## Custom variants
 
-Extend `TypographyVariants` and `TypographyVariantsOptions` through `@mui/material/styles`, and `TypographyPropsVariantOverrides` through `@mui/material/Typography`. The clean installed-consumer fixture verifies custom variants through both original root and deep imports, disabled default variants, native custom roots and rejection of browser refs. Theme interfaces and component variant overrides are separate, matching MUI's augmentation pattern.
+Extend `TypographyVariants` and `TypographyVariantsOptions` through `@mui/material/styles`, and `TypographyPropsVariantOverrides` through `@mui/material/Typography`. `TypographyClasses` can be augmented through that component entry. The strict source and emitted-declaration consumers verify custom variants, disabled default variants, explicit undefined options, native custom roots and rejection of browser refs. A separate strict consumer checks the original published declarations without native aliases. Theme interfaces and component variant overrides are separate, matching MUI's augmentation pattern.
 
 ## Evidence and remaining limits
 
-The reference fixture covers nine configurations, palette callbacks, custom conversion and five `sx` cases from the integrity-checked Material UI/System 9.5.0 packages. Reproduce with the isolated reference setup in [theming](theming.md), then run `node scripts/reference/typography.mjs --check`. Normal tests use the committed fixture without a browser MUI dependency.
+The theme reference fixture covers nine configurations, palette callbacks, custom conversion and five `sx` cases. The component reference adds 44 actual original renders, eight prepared styled/default cases and 37 utility inputs from integrity-checked Material UI/System/Utils 9.5.0 archives. These ReactDOM server observations verify declarations, callback props and class ordering; they do not measure native layout or attached DOM refs. Source, license and fixture hashes are recorded in `upstream/typography-contract.json`.
 
-This is a finite typography contract, not full CSS or MUI parity. Browser font loading, arbitrary CSS calculations/variables, native font-availability discovery, DOM nodes/refs/classes, responsiveFontSizes and all typography utility exports remain unfinished. Unsupported text values are diagnosed and omitted instead of being sent as invalid native lengths. Native text layout, font scaling, RTL, screen readers, screenshots and release performance remain device-validation gates. Original MUI continues to serve web imports.
+Reproduce with the isolated reference setup in [theming](theming.md), then run:
+
+```sh
+node scripts/reference/typography.mjs --check
+node scripts/reference/typography-contract.mjs --check
+node scripts/reference/check-typography-consumer.mjs
+```
+
+The last command checks source, normally emitted native declarations under strict exact-optional settings, and the original public declarations. It needs the isolated original reference dependencies. Normal component tests use the committed JSON fixtures without loading browser MUI. Portal tests use the maintained native model and establish routing/lifetime behavior, not native paint.
+
+Locally executable software checks cover source props/defaults/classes/imports, style and callback precedence, relative metric provenance, supported ancestor selectors, native event forwarding, custom-root ref cleanup, child state and physical Portal ownership. Those checks do not close the following native gates:
+
+- iOS and Android text geometry, truncation, custom fonts, mixed virtual text and RTL glyph placement at real layout sizes.
+- Actual OS accessibility text sizes with default, disabled and capped `allowFontScaling` / `maxFontSizeMultiplier` policies, including live policy changes and Portal placement. Authored JavaScript font units remain unscaled.
+- Native selection, text/responder events and assistive-technology heading/link announcements on the supported platforms.
+- Optimized native startup, update, frame and memory evidence for representative text workloads, followed by the normal integration and delivery checks.
+
+Browser font loading and fallback discovery, arbitrary CSS calculations/variables, DOM nodes/refs and the separate `responsiveFontSizes` helper are outside this native component contract. Unsupported text values are diagnosed and omitted instead of being sent as invalid native lengths. This source and declaration work does not establish full CSS parity or completed native validation.

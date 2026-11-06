@@ -149,8 +149,58 @@
         }
       },
       "adaptations": [
-        "Typography defaults, variant mapping, color names and override ordering use native Text and accessibility semantics instead of DOM/CSS rendering.",
-        "Native style and text inheritance are platform extensions; browser elements, CSS classes and DOM refs are not rendered."
+        "Typography source defaults, callback root arguments, composed classes and ordered styles use native Text rather than DOM rendering. Text-compatible custom roots preserve required props and declared native refs.",
+        "Prepared styled CSS remains separate from authored native style; existing style/text scopes preserve supported descendant rules, relative metric provenance and physical Portal ownership.",
+        "Semantic string mappings supply native heading/link roles. Paragraph, literal colors and native alignment values remain documented additive extensions; native layout, OS scaling, assistive technology and performance require separate evidence."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/typographyClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Typography/typographyClasses.js": "47f46d08640663089d546e9ba4f00f9e18e4d5bce483f4a1d56c340f7f081ade",
+          "Typography/typographyClasses.d.ts": "900790979002d5d2a0cefd316a648566b6c33eaa2b9cec886acbb1b93f0903a8"
+        }
+      },
+      "adaptations": [
+        "The 21 original class slots and canonical public helper/type exports are preserved; no private source-shaped package route is added."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/typographyClasses.ts",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574"
+        }
+      },
+      "adaptations": [
+        "Utility identifiers preserve the pinned global-state lookup; composed tokens feed the existing native selector protocol rather than DOM class attributes."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/typography.tsx",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
+        }
+      },
+      "adaptations": [
+        "Active slot composition retains original order and two-read accessor behavior while custom native roots can consume class metadata."
       ]
     },
     {
