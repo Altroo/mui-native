@@ -190,6 +190,44 @@ final class AccordionDetailsCatalogUITests: XCTestCase {
     retainedChild()
     capture("accordion-details-ios-restored")
   }
+  /// onTextLayout supplies glyph metrics from a separate layout. Check actual
+  /// drawn alignment from this fully visible Text frame instead of assuming its x matches paint.
+  private func paintedTextInk(_ text: XCUIElement) -> (bounds: CGRect, samples: Int, frameWidth: CGFloat)? {
+    let frame = text.frame
+    guard frame.width > 0 && frame.height > 0,
+      let image = UIImage(data: text.screenshot().pngRepresentation)?.cgImage else { return nil }
+    let width = image.width, height = image.height
+    guard width > 0 && height > 0 else { return nil }
+    var pixels = [UInt8](repeating: 0, count: width * height * 4)
+    let rendered = pixels.withUnsafeMutableBytes { bytes -> Bool in
+      guard let context = CGContext(data: bytes.baseAddress, width: width, height: height,
+        bitsPerComponent: 8, bytesPerRow: width * 4, space: CGColorSpaceCreateDeviceRGB(),
+        bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else { return false }
+      context.draw(image, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
+      return true
+    }
+    guard rendered else { return nil }
+    // The fixture has a solid background. Contrast against its empty corner also
+    // supports light text on a dark palette; antialiased edge pixels need not match exactly.
+    let backgroundRed = Int(pixels[0]), backgroundGreen = Int(pixels[1]), backgroundBlue = Int(pixels[2])
+    var minX = width, minY = height, maxX = -1, maxY = -1, samples = 0
+    for y in 0..<height {
+      for x in 0..<width {
+        let offset = (y * width + x) * 4
+        let red = abs(Int(pixels[offset]) - backgroundRed)
+        let green = abs(Int(pixels[offset + 1]) - backgroundGreen)
+        let blue = abs(Int(pixels[offset + 2]) - backgroundBlue)
+        if pixels[offset + 3] >= 245 && max(red, max(green, blue)) >= 80 {
+          minX = min(minX, x); maxX = max(maxX, x)
+          minY = min(minY, y); maxY = max(maxY, y); samples += 1
+        }
+      }
+    }
+    guard maxX >= minX && maxY >= minY, samples >= max(12, width * height / 2000) else { return nil }
+    let scaleX = CGFloat(width) / frame.width, scaleY = CGFloat(height) / frame.height
+    return (CGRect(x: CGFloat(minX) / scaleX, y: CGFloat(minY) / scaleY,
+      width: CGFloat(maxX - minX + 1) / scaleX, height: CGFloat(maxY - minY + 1) / scaleY), samples, frame.width)
+  }
   private func metrics(_ font: Double, rtl: Bool) throws {
     let scale = try XCTUnwrap(metadata()?["fontScale"] as? Double)
     XCTAssertTrue(scale.isFinite && scale > 0)
@@ -213,7 +251,6 @@ final class AccordionDetailsCatalogUITests: XCTestCase {
               return [x, y, w, h].allSatisfy { $0.isFinite } && h > 0 && y >= -1.5 && y + h <= height + 1.5
                 && abs(h - expectedLineHeight) <= 1.5
                 && x >= -1.5 && x + w <= width + 1.5
-                && (rtl ? abs(x + w - width) <= 1.5 : abs(x) <= 1.5)
             }
         }
       }
@@ -250,9 +287,25 @@ final class AccordionDetailsCatalogUITests: XCTestCase {
           XCTAssertLessThanOrEqual(y + lineHeight, height + 1.5)
           XCTAssertGreaterThanOrEqual(x, -1.5)
           XCTAssertLessThanOrEqual(x + lineWidth, width + 1.5)
-          if rtl { XCTAssertEqual(x + lineWidth, width, accuracy: 1.5, "Native logical start must align right") }
-          else { XCTAssertEqual(x, 0, accuracy: 1.5, "Native logical start must align left") }
         }
+        let advance = try XCTUnwrap(nativeLines.compactMap { $0["width"] as? Double }.max())
+        waitFor("Actual native glyph paint must follow logical start: " + name) {
+          guard let ink = self.paintedTextInk(text), ink.bounds.width > authoredSize * scale else { return false }
+          let blankSpace = Double(ink.frameWidth) - advance
+          guard blankSpace > max(6, authoredSize * scale * 0.1) else { return false }
+          let tolerance = min(max(2, authoredSize * scale * 0.2), blankSpace / 3)
+          let inset = rtl ? Double(ink.frameWidth - ink.bounds.maxX) : Double(ink.bounds.minX)
+          return inset >= -1 && inset <= tolerance
+        }
+        let ink = try XCTUnwrap(paintedTextInk(text), "Native Text must paint meaningful visible glyphs")
+        let blankSpace = Double(ink.frameWidth) - advance
+        XCTAssertGreaterThan(blankSpace, max(6, authoredSize * scale * 0.1), "Fixture must distinguish the two physical edges")
+        let tolerance = min(max(2, authoredSize * scale * 0.2), blankSpace / 3)
+        let inset = rtl ? Double(ink.frameWidth - ink.bounds.maxX) : Double(ink.bounds.minX)
+        XCTAssertGreaterThan(ink.samples, 0)
+        XCTAssertGreaterThan(ink.bounds.width, authoredSize * scale)
+        XCTAssertGreaterThanOrEqual(inset, -1)
+        XCTAssertLessThanOrEqual(inset, tolerance, "Actual native logical-start ink edge: " + name)
       }
     }
     try measured()
