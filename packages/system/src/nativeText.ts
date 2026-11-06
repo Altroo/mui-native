@@ -1,14 +1,15 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
-import { Platform, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
+import { I18nManager, Platform, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
 import type { Theme } from './theme';
 import { diagnostic } from './diagnostics';
 import { defaultTypographyFontFamily } from './typography';
 
+export type NativeCssTextAlign = 'left' | 'right' | 'start' | 'end';
 export type NativeTextContext = {
   parentTextStyle?: TextStyle;
   parentLineHeight?: number;
   parentDirection?: 'ltr' | 'rtl' | undefined;
-  parentTextAlign?: 'start' | 'end' | undefined;
+  parentTextAlign?: NativeCssTextAlign | undefined;
   nativeTextMetrics?: Record<string, unknown>;
   inheritOnly?: boolean;
   nativeStyle?: TextStyle;
@@ -96,16 +97,54 @@ export function applyNativeTextMetrics<T extends TextStyle>(
 }
 export function getTextStyleInheritance(style: TextStyle, parent?: TextStyle, native?: TextStyle) {
   const align =
-    native?.textAlign != null
+    native && Object.hasOwn(native, 'textAlign')
       ? cssTextMetrics.get(native)?.textAlign
       : cssTextMetrics.get(style)?.textAlign;
-  const textAlign: 'start' | 'end' | undefined =
-    align === 'start' || align === 'end' ? align : undefined;
+  const textAlign: NativeCssTextAlign | undefined =
+    align === 'left' || align === 'right' || align === 'start' || align === 'end'
+      ? align
+      : undefined;
   return {
     style: inheritedTextStyle({ ...parent, ...style, ...native }),
     lineHeight: relativeLineHeights.get(style),
     textAlign,
   };
+}
+/** The native paragraph, unlike a virtual Text span, owns Yoga direction. */
+export function nativeTextParagraphDirection(
+  direction: 'ltr' | 'rtl' | undefined,
+  parentParagraphDirection: 'ltr' | 'rtl' | undefined,
+  hasTextAncestor: boolean,
+): 'ltr' | 'rtl' {
+  return (
+    (hasTextAncestor ? parentParagraphDirection : direction) ?? (I18nManager.isRTL ? 'rtl' : 'ltr')
+  );
+}
+/** Encode CSS physical alignment only at Text emission. Genuine RN inline values
+ * have no CSS provenance and retain RN's own direction-dependent behavior.
+ * Pinned RN0.88.1 RCTResolveTextAlignment (iOS) and TextLayoutManager /
+ * TextAttributeProps (Android) both mirror native left/right in RTL paragraphs.
+ */
+export function nativeTextAlignmentStyle<T extends TextStyle | null | undefined>(
+  style: T,
+  alignment: NativeCssTextAlign | undefined,
+  paragraphDirection: 'ltr' | 'rtl',
+): T {
+  if (!style || !alignment) return style;
+  const metrics = cssTextMetrics.get(style);
+  const physical = metrics?.emittedTextAlign ?? style.textAlign;
+  if (physical !== 'left' && physical !== 'right') return style;
+  const textAlign =
+    paragraphDirection === 'rtl' && (Platform.OS === 'ios' || Platform.OS === 'android')
+      ? physical === 'left'
+        ? 'right'
+        : 'left'
+      : physical;
+  const native = textAlign === style.textAlign ? style : { ...style, textAlign };
+  // Keep emitted styles recognizable if a composing library root processes them
+  // again. This marker stays in the existing weak metadata, never in native props.
+  cssTextMetrics.set(native, { ...metrics, textAlign: alignment, emittedTextAlign: physical });
+  return native;
 }
 function size(value: unknown, em: number, rem: number): number | undefined {
   if (typeof value === 'number') return Number.isFinite(value) ? value : undefined;
@@ -238,6 +277,7 @@ export function normalizeTextStyle(
       ? ownDirection
       : (context.parentDirection ?? theme.direction);
   const alignment = output.textAlign ?? context.parentTextAlign;
+  if (alignment === 'left' || alignment === 'right') output.textAlign = alignment;
   if (alignment === 'start') output.textAlign = direction === 'rtl' ? 'right' : 'left';
   if (alignment === 'end') output.textAlign = direction === 'rtl' ? 'left' : 'right';
   const nativeAbsoluteHeight =
@@ -254,7 +294,13 @@ export function normalizeTextStyle(
   for (const key of relativeMetricKeys)
     if (Object.hasOwn(output, key)) {
       if (key === 'textAlign') {
-        if (alignment === 'start' || alignment === 'end') metrics[key] = alignment;
+        if (
+          alignment === 'left' ||
+          alignment === 'right' ||
+          alignment === 'start' ||
+          alignment === 'end'
+        )
+          metrics[key] = alignment;
       } else metrics[key] = key === 'lineHeight' ? authoredLineHeight : input[key];
     }
   cssTextMetrics.set(output, metrics);

@@ -11,6 +11,8 @@ export {
   getTextStyleInheritance,
   nativeStyleTextMetrics,
   applyNativeTextMetrics,
+  nativeTextAlignmentStyle,
+  nativeTextParagraphDirection,
   isNativeTextStyleProperty,
 } from './nativeText';
 

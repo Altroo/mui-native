@@ -1,6 +1,13 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { createContext, useContext, useMemo, useRef } from 'react';
-import { Text, View, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  unstable_TextAncestorContext as TextAncestorContext,
+  type StyleProp,
+  type TextStyle,
+} from 'react-native';
 import {
   setNativeTextScopeParent,
   useNativeTextScopeRoot,
@@ -17,6 +24,9 @@ import {
   normalizeTextStyle,
   applyNativeTextMetrics,
   getTextStyleInheritance,
+  nativeTextAlignmentStyle,
+  nativeTextParagraphDirection,
+  type NativeCssTextAlign,
 } from './nativeText';
 export interface NativeTextScopeValue {
   style: TextStyle;
@@ -24,8 +34,10 @@ export interface NativeTextScopeValue {
   lineHeight?: number;
   /** Known native layout direction, preserved across physical Portal destinations. */
   direction?: 'ltr' | 'rtl' | undefined;
-  /** Logical CSS alignment remains logical when a descendant changes direction. */
-  textAlign?: 'start' | 'end' | undefined;
+  /** CSS physical/logical alignment stays distinct from genuine native inline values. */
+  textAlign?: NativeCssTextAlign | undefined;
+  /** Actual emitting paragraph; virtual Text has no independent Yoga direction. */
+  paragraphDirection?: 'ltr' | 'rtl' | undefined;
   nativeText: boolean;
 }
 export const NativeTextStyleContext = createContext<NativeTextScopeValue | undefined>(undefined);
@@ -39,7 +51,7 @@ export function nativeTextStyleContext(
     parentTextStyle:
       parent?.style ?? (theme ? { fontSize: theme.cssRootFontSize ?? 16 } : undefined),
     parentLineHeight: parent?.lineHeight,
-    parentDirection: parent?.direction,
+    parentDirection: nativeTextParagraphDirection(parent?.direction, undefined, false),
     parentTextAlign: parent?.textAlign,
     nativeStyle: StyleSheet.flatten(style) ?? undefined,
     nativeTextMetrics: nativeStyleTextMetrics(style),
@@ -58,6 +70,7 @@ function resolveScope(
   parent: NativeTextScopeValue | undefined,
   style: StyleProp<NativeStyle>,
   kind: 'view' | 'text',
+  owningParagraph?: 'ltr' | 'rtl',
 ) {
   const flat = StyleSheet.flatten(style) ?? {};
   const text = { ...inheritedTextStyle(flat) };
@@ -95,18 +108,32 @@ function resolveScope(
         own[key as keyof typeof own] === 'unset')
     )
       delete own[key as keyof typeof own];
+  const direction =
+    flat.direction === 'ltr' || flat.direction === 'rtl'
+      ? flat.direction
+      : nativeTextParagraphDirection(parent?.direction, undefined, false);
+  // RN View resets TextAncestorContext (View.js:125-128). Preserve CSS
+  // inheritance across Views, but only Text can retain an owning paragraph.
+  const paragraphDirection = kind === 'text' ? (owningParagraph ?? direction) : undefined;
+  const inheritance = getTextStyleInheritance(normalized, undefined, adjusted);
+  const inherited = { ...base, ...ownText(normalized), ...ownText(adjusted) };
+  // A genuine native undefined/null reset clears this property, including a
+  // synthetic parent CSS value. It must not turn back into CSS inheritance.
+  if (
+    Object.hasOwn(flat, 'textAlign') &&
+    flat.textAlign == null &&
+    !Object.hasOwn(metrics, 'textAlign')
+  ) {
+    delete own.textAlign;
+    delete inherited.textAlign;
+  }
   const value: NativeTextScopeValue = {
-    style: { ...base, ...ownText(normalized), ...ownText(adjusted) },
-    lineHeight: getTextStyleInheritance(normalized).lineHeight,
+    style: inherited,
+    lineHeight: inheritance.lineHeight,
     nativeText: kind === 'text',
-    ...(flat.direction === 'ltr' || flat.direction === 'rtl'
-      ? { direction: flat.direction }
-      : parent?.direction
-        ? { direction: parent.direction }
-        : {}),
-    ...(getTextStyleInheritance(normalized).textAlign
-      ? { textAlign: getTextStyleInheritance(normalized).textAlign }
-      : {}),
+    direction,
+    ...(paragraphDirection ? { paragraphDirection } : {}),
+    ...(inheritance.textAlign ? { textAlign: inheritance.textAlign } : {}),
   };
   setNativeTextScopeParent(value, parent);
   const inheritable = inheritedTextStyle(flat);
@@ -122,7 +149,13 @@ function resolveScope(
     kind === 'view'
       ? Object.fromEntries(Object.entries(own).filter(([key]) => !isNativeTextStyleProperty(key)))
       : { ...(parent && !parent.nativeText ? value.style : {}), ...own };
-  return { value, native };
+  return {
+    value,
+    native:
+      kind === 'text'
+        ? nativeTextAlignmentStyle(native, value.textAlign, paragraphDirection ?? direction)
+        : native,
+  };
 }
 export interface NativeTextScopeProps {
   theme: Theme;
@@ -150,9 +183,14 @@ export function NativeTextScope({
 }: NativeTextScopeProps) {
   const outer = useNativeTextContext();
   const parent = reset ? undefined : outer;
+  const hasTextAncestor = useContext(TextAncestorContext);
+  const owningParagraph =
+    kind === 'text' && hasTextAncestor
+      ? nativeTextParagraphDirection(undefined, parent?.paragraphDirection, true)
+      : undefined;
   const resolved = useMemo(
-    () => resolveScope(theme, parent, style, kind),
-    [theme, parent, style, kind],
+    () => resolveScope(theme, parent, style, kind, owningParagraph),
+    [theme, parent, style, kind, owningParagraph],
   );
   // Equivalent style arrays must not broadcast a fresh inheritance context.
   // Nested groups inside a custom Portal otherwise feed their own publications.
@@ -184,7 +222,16 @@ export function renderNativeTextChildren(
   const flush = () => {
     if (run.length) {
       result.push(
-        <Text key={'native-text:' + result.length} style={scope.literalStyle ?? scope.style}>
+        <Text
+          key={'native-text:' + result.length}
+          style={nativeTextAlignmentStyle(
+            scope.literalStyle ?? scope.style,
+            scope.textAlign,
+            scope.paragraphDirection ??
+              scope.direction ??
+              nativeTextParagraphDirection(undefined, undefined, false),
+          )}
+        >
           {run.join('')}
         </Text>,
       );
@@ -226,6 +273,7 @@ export function renderNativeTextChildren(
           scope,
           child.props.style,
           child.type === Text ? 'text' : 'view',
+          child.type === Text ? scope.paragraphDirection : undefined,
         );
         result.push(
           React.cloneElement(

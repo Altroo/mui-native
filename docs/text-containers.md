@@ -21,11 +21,17 @@ Contiguous strings, numbers and bigints share a minimal native Text host. Arrays
 
 A container carries font, color, text alignment/transform, decorations, font variants/variation settings, text shadows and writing direction to descendant text scopes. Inheritable text fields are removed from its native View style. Box style accepts native ViewStyle and TextStyle fields. Native-only text layout/selection fields, such as includeFontPadding and textAlignVertical, apply to literal runs owned by that container and do not become inherited attributes of nested containers.
 
-The root native fallback uses theme.typography.htmlFontSize, the configured font family and palette.text.primary. It does not apply the body1 variant or MuiTypography component configuration. The default family maps to the system font; custom font availability remains application-owned. This is a defined native fallback, not an automatic CssBaseline port.
+The root native fallback uses the configured authored CSS root size (theme.cssRootFontSize, default 16), the configured font family and palette.text.primary. typography.htmlFontSize calibrates pxToRem and does not change that document-root equivalent. It does not apply the body1 variant or MuiTypography component configuration. The default family maps to the system font; custom font availability remains application-owned. This is a defined native fallback, not an automatic CssBaseline port.
 
 CSS theme/sx metrics keep their authored semantics. A unitless lineHeight ratio follows a descendant's font size. Percentage or length line heights inherit as computed lengths, and computed em letter spacing stays an absolute inherited length. Literal native style.lineHeight is an absolute React Native length. Native style overrides win over sx within their layer. Explicit Text children establish their own native font/height/color before a tracked descendant resolves relative metrics. Unknown custom component internals cannot be measured automatically.
 
 Paper resets color to palette.text.primary, following pinned MUI; paper sx/style overrides win. Paper component replacement now receives the normalized native root style and retains its forwarded ref. A native Modal window starts a fresh text scope; disablePortal inline mode inherits its surrounding scope. Dialog Paper still establishes its own text color. Button labels establish their own text context, and color="inherit" uses the enclosing scope when present.
+
+## CSS alignment and native paragraphs
+
+CSS theme/sx left/right/start/end keep their semantic values through the text scope. At a Text host, the adapter accounts for React Native's RTL mirroring once. Genuine native style.textAlign values and resets keep React Native semantics. Nested virtual Text uses its owning paragraph's actual direction; a View starts a fresh paragraph boundary while retaining supported CSS inheritance. This does not change the device's global direction or native input adapters.
+
+The source-pinned backend and paragraph contracts are recorded in [native rendering provenance](../upstream/native-rendering.json). The [alignment regressions](../tests/native-text-alignment.test.tsx) cover native inline precedence, resets, nested Text and opposite-direction View boundaries. Direct Details tests verify actual glyph paint at baseline and the largest iOS OS text profile. Layout events retain useful font/line metrics, but a separate or cached measurement can differ from the final drawing position; native horizontal-placement assertions inspect rendered ink.
 
 ## Custom native containers
 

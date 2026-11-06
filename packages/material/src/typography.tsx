@@ -2,7 +2,14 @@
 // Typography composition adapts MIT Material UI 9.5.0. See NOTICE and upstream/reuse.json.
 import { useTheme, useComponentStyle } from './themeProvider';
 import React, { forwardRef } from 'react';
-import { Text, StyleSheet, type TextInstance, type TextProps, type TextStyle } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  type TextInstance,
+  type TextProps,
+  type TextStyle,
+  unstable_TextAncestorContext as TextAncestorContext,
+} from 'react-native';
 import {
   useDefaultProps,
   NativeTextStyleContext,
@@ -15,6 +22,8 @@ import {
   getTextStyleInheritance,
   nativeStyleTextMetrics,
   applyNativeTextMetrics,
+  nativeTextAlignmentStyle,
+  nativeTextParagraphDirection,
   diagnostic,
   type SxProps,
   type TypographyVariant,
@@ -80,6 +89,7 @@ export const Typography: React.ForwardRefExoticComponent<
   } = props;
   const theme = useTheme();
   const parent = useNativeTextContext();
+  const hasTextAncestor = React.useContext(TextAncestorContext);
   const nativeStyle = StyleSheet.flatten(style) ?? undefined;
   const inheritedRatio = parent?.lineHeight;
   const nativeMetrics = nativeStyleTextMetrics(style);
@@ -108,7 +118,7 @@ export const Typography: React.ForwardRefExoticComponent<
       ],
       parentTextStyle: parent?.style,
       parentLineHeight: inheritedRatio,
-      parentDirection: parent?.direction,
+      parentDirection: nativeTextParagraphDirection(parent?.direction, undefined, false),
       parentTextAlign: parent?.textAlign,
       nativeStyle,
       nativeTextMetrics: nativeMetrics,
@@ -143,6 +153,11 @@ export const Typography: React.ForwardRefExoticComponent<
   const context = {
     ...getTextStyleInheritance(resolved as TextStyle, parent?.style, adjustedNativeStyle),
     nativeText: true,
+    paragraphDirection: nativeTextParagraphDirection(
+      direction,
+      parent?.paragraphDirection,
+      hasTextAncestor,
+    ),
     ...(direction ? { direction } : {}),
   };
   setNativeTextScopeParent(context, parent);
@@ -169,7 +184,7 @@ export const Typography: React.ForwardRefExoticComponent<
         accessibilityRole={native.accessibilityRole ?? (native.role ? undefined : role)}
         numberOfLines={noWrap ? 1 : native.numberOfLines}
         ellipsizeMode={native.ellipsizeMode ?? (noWrap ? 'tail' : undefined)}
-        style={finalStyle}
+        style={nativeTextAlignmentStyle(finalStyle, context.textAlign, context.paragraphDirection)}
       >
         {renderNativeTextChildren(native.children, theme, context, trackChildren)}
       </Component>

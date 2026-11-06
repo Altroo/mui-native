@@ -84,7 +84,9 @@ test('authored parent metrics and em child metrics update without multiplying th
     expect(tree.getByTestId(`details-contract-primary-${key}`)).toHaveStyle({
       fontSize: 24,
       lineHeight: 30,
-      textAlign: 'right',
+      // RN mirrors native left/right in RTL; this paints at CSS logical start.
+      // The unchanged native glyph assertion verifies the actual right edge.
+      textAlign: 'left',
     });
     expect(tree.getByTestId(`details-contract-small-${key}`)).toHaveStyle({
       fontSize: 12,
