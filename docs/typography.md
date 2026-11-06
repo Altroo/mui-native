@@ -95,11 +95,21 @@ node scripts/reference/check-typography-consumer.mjs
 
 The last command checks source, normally emitted native declarations under strict exact-optional settings, and the original public declarations. It needs the isolated original reference dependencies. Normal component tests use the committed JSON fixtures without loading browser MUI. Portal tests use the maintained native model and establish routing/lifetime behavior, not native paint.
 
-Locally executable software checks cover source props/defaults/classes/imports, style and callback precedence, relative metric provenance, supported ancestor selectors, native event forwarding, custom-root ref cleanup, child state and physical Portal ownership. Those checks do not close the following native gates:
+Locally executable software checks cover source props/defaults/classes/imports, style and callback precedence, relative metric provenance, supported ancestor selectors, native event forwarding, custom-root ref cleanup, child state and physical Portal ownership. The normal workspace check compiles an isolated strict exact-optional consumer against emitted declarations; fresh package checks repeat it against installed archives and verify root/deep component, classes and helper identity.
 
-- iOS and Android text geometry, truncation, custom fonts, mixed virtual text and RTL glyph placement at real layout sizes.
-- Actual OS accessibility text sizes with default, disabled and capped `allowFontScaling` / `maxFontSizeMultiplier` policies, including live policy changes and Portal placement. Authored JavaScript font units remain unscaled.
-- Native selection, text/responder events and assistive-technology heading/link announcements on the supported platforms.
-- Optimized native startup, update, frame and memory evidence for representative text workloads, followed by the normal integration and delivery checks.
+### Observed iOS coverage
 
-Browser font loading and fallback discovery, arbitrary CSS calculations/variables, DOM nodes/refs and the separate `responsiveFontSizes` helper are outside this native component contract. Unsupported text values are diagnosed and omitted instead of being sent as invalid native lengths. This source and declaration work does not establish full CSS parity or completed native validation.
+The direct [catalog scene](../apps/native-catalog/TypographyContractExample.tsx) and [iOS collector](../tests/native/ios/TypographyCatalogUITests.swift) pass two scenarios at normal OS text and the same two at the largest accessibility text profile on iPhone 18 Pro / iOS 27. This is unreleased source evidence from [3eae4405](https://github.com/Altroo/mui-native/commit/3eae4405fc666912c61f5e351625a2469cb63d7d).
+
+At normal fontScale 1, the collector checks all thirteen standard variants plus `inherit`, native system-font cap/line geometry, authored gutter spacing and a bounded 180-dp Text root with actual tail-ellipsis pixels. At actual OS fontScale 3.571, it checks `body1`, `caption`, `h6` and `inherit`, along with the same source-sized native ellipsis and default uncapped scaling. The profile runner restores the original OS text size afterward. Rendering keeps authored JavaScript font units unscaled.
+
+Both profiles check genuine inline resets, supported MenuItem ancestor colors, rendered RTL paragraph and opposing virtual-span alignment, a real nested counter press, public Text press events and measurements through five stable forwarded refs. Actual screenshots establish glyph placement independently of cached `onTextLayout` x positions. The scenario retains the counter and host/ref identities through theme, inline and direction changes. Independent review covers all sixteen normal captures and six largest-profile captures with their paired native receipts.
+
+### Remaining native gates
+
+- Android component geometry, truncation, mixed virtual text and RTL paint; custom fonts and broader multiline/mixed-script layouts on both platforms.
+- Disabled and capped `allowFontScaling` / `maxFontSizeMultiplier` policies, live policy changes and physical Portal placement. The direct scenario above covers default uncapped scaling.
+- Native selection, the full text/responder event surface and physical assistive-technology heading/link announcements.
+- Optimized native startup, update, frame and memory evidence for representative text workloads.
+
+Browser font loading and fallback discovery, arbitrary CSS calculations/variables, DOM nodes/refs and the separate `responsiveFontSizes` helper are outside this native component contract. Unsupported text values are diagnosed and omitted instead of being sent as invalid native lengths. These scoped checks do not establish full CSS parity or complete cross-platform native validation.
