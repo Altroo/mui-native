@@ -27,11 +27,12 @@ test('workload owns its viewport without nesting inside the contract scene scrol
   expect(tree.getByTestId('root-layout-scroll')).toBeTruthy();
 });
 
-test('direct Details and Menu style scenes share the contract scroll viewport', () => {
+test('direct Details, Menu and Typography scenes share the contract scroll viewport', () => {
   const tree = render(<RootLayoutExamples />);
   for (const [route, receipt] of [
     ['details', 'details-contract-receipt'],
     ['menu-styles', 'menu-style-receipt'],
+    ['typography', 'type-contract-receipt'],
   ]) {
     fireEvent.press(tree.getByTestId('root-layout-' + route));
     expect(tree.getByTestId('root-layout-scroll')).toBeTruthy();
