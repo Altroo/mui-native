@@ -6,7 +6,7 @@
     "files": {
       ".nvmrc": "45507e6d96329a845faa642c0f485313bcb2ca1e08b043589cde4ddd15969cd6",
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
-      "package.json": "cdbed15b31b9389a2fa0370e6be1372fb110d8aa920f74ae8990b920bfc26088",
+      "package.json": "1542f375fdc231e3b5044a72b66adc7763e0cc50d6a47dd594bc53438106f9e4",
       "packages/compat/package.json": "59904f1e9920728c84cb290e1ce34d0e6e4f7c7832b65b0eb8ff70c01df2c4de",
       "packages/compat/supported.json": "389104ed87e108fc577cae5ac28046117cc6fa3320b6bc4f136568ae18c749ff",
       "packages/icons/package.json": "b2066761b6f8b5ea49d9e75aeb75fab01bddda969cb6959ba57c6cf0d09011d8",

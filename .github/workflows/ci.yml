@@ -26,7 +26,19 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Lint, unused-code, contracts and build checks
-        run: pnpm check
+      # Keep every pnpm check gate explicit so a stopped runner retains the
+      # exact failing phase and its completed predecessor results.
+      - name: Lint, types and unused-code checks
+        run: pnpm lint
+      - name: Runtime and tooling contracts
+        run: pnpm test
+      - name: Coverage inventory freshness
+        run: pnpm coverage:verify
+      - name: Package builds
+        run: pnpm build
+      - name: Consumer declaration contracts
+        run: pnpm typecheck:consumer
+      - name: Native host code generation
+        run: pnpm native-host:codegen
       - run: pnpm test:consumer
       - run: pnpm format:check
