@@ -451,11 +451,16 @@ final class BoxCatalogUITests: XCTestCase {
         } else {
           // Reset must remove painted edges as well as their layout inset. The
           // interior samples alone would miss a stale two-point styled border.
-          let edgeY = min(pixels.height - 1, max(0, Int(sy.rounded())))
-          let edgeColor = pixels.rgba(x: pixels.width / 2, y: edgeY)
-          XCTAssertEqual(edgeColor[3], 255)
-          for i in 0..<3 { XCTAssertLessThanOrEqual(abs(edgeColor[i] - background[i]), 3) }
-          samples.append(["x": pixels.width / 2, "y": edgeY, "rgba": edgeColor])
+          // Include the outermost physical row: sampling only one point
+          // inward would miss a stale one-point outline after it was removed.
+          for px in [pixels.width / 4, pixels.width / 2, 3 * pixels.width / 4] {
+            for py in 0...min(pixels.height - 1, max(0, Int(ceil(sy)))) {
+              let edgeColor = pixels.rgba(x: px, y: py)
+              XCTAssertEqual(edgeColor[3], 255)
+              for i in 0..<3 { XCTAssertLessThanOrEqual(abs(edgeColor[i] - background[i]), 3) }
+              samples.append(["x": px, "y": py, "rgba": edgeColor])
+            }
+          }
         }
         let glyph = try snapshot(
           copy, name: "box-ios-\(profile.rawValue)-\(stage.name)-\(key)-copy")
