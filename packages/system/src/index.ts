@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 export * from './theme';
 export * from './sx';
 export * from './diagnostics';
@@ -53,3 +54,11 @@ export {
 
 /** @internal Keep prepared root CSS outside genuine props across composing native defaults. */
 export { separateNativeRootProps, restoreNativeRootStyle } from './nativeStyledMetadata';
+
+/** @internal Declaration provenance and final native border paint. */
+export {
+  nativeStyleBorderDeclarations,
+  copyNativeBorderStyle,
+  applyNativeBorderStyle,
+  nativeStyleBorderStyle,
+} from './borders';

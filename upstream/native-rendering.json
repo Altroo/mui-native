@@ -66,7 +66,15 @@
       "ReactAndroid/src/main/java/com/facebook/react/views/text/TextAttributeProps.kt": "2312b2a52222046737ce93a67dda418d3bbb2db92f7005a06f2f35fecc30ba39",
       "ReactCommon/react/renderer/textlayoutmanager/TextMeasureCache.h": "1656f733b47e7866dc79dcd9846fdab3a3fbb7796dd79df18709b114d61ac640",
       "ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/TextLayoutManager.mm": "05f3f9918e21e3fa5f130df58d26920b1e1caa3e339e9ac233cbd2bf9b66b846",
-      "ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm": "44cdc0f1928699e607b702fdba61824c4c2d9420946f80cd2caafff2e913894f"
+      "ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm": "44cdc0f1928699e607b702fdba61824c4c2d9420946f80cd2caafff2e913894f",
+      "ReactAndroid/src/main/java/com/facebook/react/common/assets/ReactFontManager.kt": "38abb17464b9e6b7a214a002d6e144e6fed391cdb0134773a5abf336aa21efaf",
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/ReactTypefaceUtils.kt": "819f2af68827c7aeed6a6e6699f55dc169267ff575ecb0adbdd66ff49c7444a8",
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/internal/span/CustomStyleSpan.kt": "4571327fefb97cb94c79fead5bfe422fd9f4f856a736233ba2f696441afee343",
+      "ReactAndroid/src/main/java/com/facebook/react/runtime/ReactInstance.kt": "938b9f59eda88f444242b2ab8c79ab11ae1b07c2177552feb2752e226bc3d01d",
+      "ReactAndroid/src/main/java/com/facebook/react/ReactPackage.kt": "870803cc88a31d8b3d9c41ff44dbf2a6eaafbb2cbbb0b8a833a37b914dccf996",
+      "ReactCommon/yoga/yoga/style/Style.h": "d6800ae12c4bf903c0ffad1cadfd4878dbc0305a961bb91579e1ae5af4a920f8",
+      "ReactCommon/react/renderer/components/view/YogaStylableProps.cpp": "b4e7e7939de5a1bbb0b809aef92867d390d145ceda6f00c90bf2a19e50e8c609",
+      "ReactCommon/react/renderer/core/RawValue.h": "631e3d717a14c61c2faa5817a134ad328e295314442759cba144cf0de8baacd6"
     }
   },
   "localFiles": [
@@ -102,7 +110,13 @@
     "packages/system/src/nativeText.ts",
     "packages/system/src/textScope.tsx",
     "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMUIInteractiveView.kt",
-    "packages/material/src/typography.tsx"
+    "packages/material/src/typography.tsx",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMuiNativeHostPackage.kt",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/SystemFontRegistration.java",
+    "packages/material/src/nativeControlStyles.ts",
+    "tests/native-root-insets.test.ts",
+    "tests/helpers/nativeInsetEdges.ts",
+    "tests/protected-geometry.test.tsx"
   ],
   "adaptations": [
     "Native root child mounting and React Native touch/pointer dispatch follow the verified MIT reference. The new implementation attaches within an existing native window/container, does not create a modal or request focus, preserves React context, and reports actual native affine container bounds.",
@@ -122,6 +136,9 @@
     "ButtonGroup protects generated joined corners, border dividers and overlap against the pinned native RTL edge resolution. Android local-RTL border paint and global Yoga edge swapping are handled separately. Authored native inline styles retain native semantics and their final precedence; authored Text roots remain independent for font-scaling policies.",
     "The owned Android interactive host invalidates its retained background/foreground drawable layers when native layout direction changes. This repairs the pinned RN drawing-path cache without remounting views, toggling JS style aliases or patching unrelated React Native Views. Native tests rasterize the actual border layer; freshly resolved radius inputs alone do not establish correct paint.",
     "CSS physical/logical text alignment retains semantic provenance until Text emission, where pinned iOS and Android RTL mirroring is encoded once. Genuine native inline alignment and resets retain native behavior. Public TextAncestorContext and View reset semantics identify the owning paragraph across virtual Text and View boundaries; this policy does not change the global device direction or native input adapters.",
-    "Text layout events and actual drawing use separate native paths. Horizontal glyph-placement assertions read actual rendered Text ink; line-event metrics retain their own font, line-height and enclosure checks, including across live layout-direction changes."
+    "Text layout events and actual drawing use separate native paths. Horizontal glyph-placement assertions read actual rendered Text ink; line-event metrics retain their own font, line-height and enclosure checks, including across live layout-direction changes.",
+    "Android package construction registers Typeface.DEFAULT only under the library-owned private CSS-default font alias, through RN's public customFontFamilies/addCustomFont APIs. The families getter returns a snapshot, so the guard queries it inside the same lock as registration. Android CSS-derived default sans-serif names and the exact stock MUI font stack map to that alias; literal native styles and custom/app font names, including System, are untouched. The registered-family path applies numeric TypefaceStyle weights on Android28+; older Android retains RN's normal/bold fallback. Native Android default-font rendering requires the matching rebuilt direct host dependency; verified pure context/helper entries do not load it.",
+    "Native root insets retain computed CSS aliases through Fabric global RTL edge swapping. Genuine inline native aliases remain unexpanded; computed overlaps are removed using the pinned layout-edge semantics before merging the authored style.",
+    "Existing opt-in physical geometry protection resolves CSS logical layout edges in the final native direction, then protects physical padding, margin and position from the global Fabric swap. Android local border-paint swapping stays separate. An own nullish native direction resets to inherited direction; absent native direction retains the CSS cascade. Genuine native inline declarations remain unmodified."
   ]
 }

@@ -15,7 +15,7 @@ Updated: 2026-11-04. Priority: maximum compatibility with existing MUI app code,
 
 ## Feature completion workflow
 
-Each feature needs appropriate local checks and independent review of hidden bugs, edge cases, design, architecture, performance and library consumers. Run `pnpm lint` and the affected validation before delivery; inspect changed source with WebStorm and resolve actionable warnings, unused imports and unused private declarations. Preserve exported library APIs. Fix actionable findings, rerun affected checks and review meaningful fixes again. Record device-only gaps explicitly. Deliver coherent changes with issue and validation links.
+Each feature needs appropriate local checks and independent review of hidden bugs, edge cases, design, architecture, performance and library consumers. Run `pnpm lint` and the affected validation before delivery; review changed source and resolve actionable warnings, unused imports and unused private declarations. Preserve exported library APIs. Fix actionable findings, rerun affected checks and review meaningful fixes again. Record device-only gaps explicitly. Deliver coherent changes with issue and validation links.
 
 ## 0. Repository, provenance, and automation
 

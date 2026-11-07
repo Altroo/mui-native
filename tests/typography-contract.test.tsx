@@ -240,12 +240,12 @@ test('inline margin/padding shorthands reset computed gutter and theme edges', (
       </Typography>
     </ThemeProvider>,
   );
-  expect(StyleSheet.flatten(tree.getByTestId('text').props.style)).toMatchObject({
-    marginTop: 0,
-    marginBottom: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
-  });
+  const native = StyleSheet.flatten(tree.getByTestId('text').props.style);
+  expect(native).toMatchObject({ margin: 0, padding: 0 });
+  // No computed edge may outrank these genuine native all-edge resets.
+  for (const kind of ['margin', 'padding'])
+    for (const edge of ['Top', 'Bottom', 'Left', 'Right', 'Start', 'End', 'Horizontal', 'Vertical'])
+      expect(native).not.toHaveProperty(`${kind}${edge}`);
 });
 test('native inline physical edges use actual global direction rather than a theme-only RTL hint', () => {
   const globalDirection = jest.replaceProperty(I18nManager, 'isRTL', false);
@@ -257,7 +257,10 @@ test('native inline physical edges use actual global direction rather than a the
         </Typography>
       </ThemeProvider>,
     );
-    expect(tree.getByTestId('text')).toHaveStyle({ marginStart: 5, marginEnd: 0 });
+    expect(tree.getByTestId('text')).toHaveStyle({ marginLeft: 5, margin: 0 });
+    const native = StyleSheet.flatten(tree.getByTestId('text').props.style);
+    expect(native).not.toHaveProperty('marginStart');
+    expect(native).not.toHaveProperty('marginEnd');
   } finally {
     globalDirection.restore();
   }

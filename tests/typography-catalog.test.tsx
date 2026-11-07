@@ -1,12 +1,17 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 jest.mock('@mui/material', () => jest.requireActual('../packages/material/src'), { virtual: true });
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native';
-import { Text, type TextInstance } from 'react-native';
+import { I18nManager, Text, type TextInstance } from 'react-native';
 import {
   TypographyContractExample,
   typographySourceVariants,
 } from '../apps/native-catalog/TypographyContractExample';
 import reference from './fixtures/mui-typography-9.5.0.json';
+import { backendEdges } from './helpers/nativeInsetEdges';
+beforeEach(() => {
+  jest.replaceProperty(I18nManager, 'isRTL', false);
+  jest.replaceProperty(I18nManager, 'doLeftAndRightSwapInRTL', false);
+});
 afterEach(cleanup);
 const receipt = (tree: ReturnType<typeof render>) =>
   JSON.parse(tree.getByTestId('type-contract-receipt').props.accessibilityLabel);
@@ -50,12 +55,16 @@ test('actual classes and parent Menu CSS retain priority until a genuine native 
   expect(tree.getByTestId('type-contract-selected')).toHaveStyle({ textAlign: 'left' });
   expect(tree.getByTestId('type-contract-paragraph')).toHaveStyle({ textAlign: 'right' });
   fireEvent.press(tree.getByTestId('type-contract-style'));
-  expect(tree.getByTestId('type-contract-selected')).toHaveStyle({
-    paddingTop: 0,
-    paddingLeft: 0,
-    marginBottom: 0,
-    textAlign: 'right',
-  });
+  expect(tree.getByTestId('type-contract-selected')).toHaveStyle({ textAlign: 'right' });
+  for (const kind of ['margin', 'padding'] as const)
+    expect(
+      backendEdges(tree.getByTestId('type-contract-selected').props.style, kind, 'rtl', false),
+    ).toEqual({
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    });
   expect(tree.getByTestId('type-contract-menu')).toHaveStyle({ color: '#276749' });
   expect(tree.getByTestId('type-contract-nowrap').props).toMatchObject({
     numberOfLines: 1,

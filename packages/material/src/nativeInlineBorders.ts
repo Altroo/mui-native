@@ -1,6 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { I18nManager, Platform, StyleSheet, type StyleProp } from 'react-native';
-import type { NativeStyle } from '@altroo/mui-native-system';
+import { nativeStyleBorderDeclarations, type NativeStyle } from '@altroo/mui-native-system';
 
 type NativeSide = 'Left' | 'Right' | 'Start' | 'End';
 /** @internal Map authored aliases using RN layout or border-paint semantics. */
@@ -44,8 +44,8 @@ export function nativeInlineBorderBase(
   computed: NativeStyle,
   authored: StyleProp<NativeStyle>,
   parentDirection?: 'ltr' | 'rtl',
-): NativeStyle {
-  const value = { ...computed };
+): ReturnType<typeof nativeStyleBorderDeclarations> {
+  const value = nativeStyleBorderDeclarations(computed);
   const inline = StyleSheet.flatten(authored);
   if (inline) {
     const nativeSide = nativeInlineSideMapper(value, inline, parentDirection);

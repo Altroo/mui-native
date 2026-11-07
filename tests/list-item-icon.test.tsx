@@ -1,6 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { createRef, forwardRef, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, type ViewInstance } from 'react-native';
+import { I18nManager, View, Text, StyleSheet, type ViewInstance } from 'react-native';
 import { cleanup, render, fireEvent } from '@testing-library/react-native';
 import {
   Box,
@@ -24,6 +24,11 @@ import DeepIcon, {
 import reference from './fixtures/mui-list-item-icon-9.5.0.json';
 import { NativePortalModel } from './helpers/nativePortalModel';
 
+import { backendEdges } from './helpers/nativeInsetEdges';
+beforeEach(() => {
+  jest.replaceProperty(I18nManager, 'isRTL', false);
+  jest.replaceProperty(I18nManager, 'doLeftAndRightSwapInRTL', false);
+});
 afterEach(cleanup);
 test('alignment and authored class selectors participate in the actual root cascade', () => {
   const tree = render(
@@ -162,7 +167,7 @@ test.each(reference.fixtures)('original complete wrapper composition: $input.nam
   expect(classAccesses).toEqual(fixture.classAccesses);
   if (input.style) {
     expect(fixture.inlineStyle).toMatch(/^margin:0/);
-    expect(StyleSheet.flatten(tree.getByTestId('icon').props.style).marginTop).toBe(0);
+    expect(backendEdges(tree.getByTestId('icon').props.style, 'margin', 'ltr', false).top).toBe(0);
   }
   expect(StyleSheet.flatten(tree.getByTestId('icon').props.style)).toMatchObject({
     minWidth: input.sx ? 72 : input.defaults ? 64 : input.spacing ? input.spacing * 4.5 : 36,
@@ -236,11 +241,11 @@ test('inline margin shorthand resets the original flex-start edge inside List/Li
       </ListItem>
     </List>,
   );
-  expect(StyleSheet.flatten(tree.getByTestId('icon').props.style)).toMatchObject({
-    marginTop: 0,
-    marginRight: 0,
-    marginBottom: 0,
-    marginLeft: 0,
+  expect(backendEdges(tree.getByTestId('icon').props.style, 'margin', 'ltr', false)).toEqual({
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
   });
 });
 test('inline margin/padding shorthands reset theme edges after computed styles', () => {
@@ -264,20 +269,13 @@ test('inline margin/padding shorthands reset theme edges after computed styles',
       </List>
     </ThemeProvider>,
   );
-  expect(StyleSheet.flatten(tree.getByTestId('icon').props.style)).toMatchObject({
-    marginTop: 0,
-    marginRight: 0,
-    marginBottom: 0,
-    marginLeft: 0,
-    marginStart: 0,
-    marginEnd: 0,
-    paddingTop: 0,
-    paddingRight: 0,
-    paddingBottom: 0,
-    paddingLeft: 0,
-    paddingStart: 0,
-    paddingEnd: 0,
-  });
+  for (const kind of ['margin', 'padding'] as const)
+    expect(backendEdges(tree.getByTestId('icon').props.style, kind, 'ltr', false)).toEqual({
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+    });
 });
 test('native inline arrays retain their edge semantics in the inherited RTL direction', () => {
   const offsets = StyleSheet.create({ offsets: { marginTop: 3, paddingLeft: 2 } });
@@ -293,18 +291,20 @@ test('native inline arrays retain their edge semantics in the inherited RTL dire
       </Box>
     </ThemeProvider>,
   );
-  expect(StyleSheet.flatten(tree.getByTestId('icon').props.style)).toMatchObject({
-    marginTop: 3,
-    marginBottom: 0,
-    marginStart: 0,
-    marginEnd: 6,
-    paddingLeft: 2,
-    paddingRight: 0,
-    paddingStart: 0,
-    paddingEnd: 2,
+  expect(backendEdges(tree.getByTestId('icon').props.style, 'margin', 'rtl', false)).toEqual({
+    top: 3,
+    bottom: 0,
+    left: 6,
+    right: 0,
+  });
+  expect(backendEdges(tree.getByTestId('icon').props.style, 'padding', 'rtl', false)).toEqual({
+    top: 0,
+    bottom: 0,
+    left: 2,
+    right: 0,
   });
 });
-test('inline direction overrides parent RTL for logical shorthand expansion', () => {
+test('inline direction overrides parent RTL for native edge resolution', () => {
   const tree = render(
     <Box sx={{ direction: 'rtl' }}>
       <ListItemIcon testID="icon" style={{ direction: 'ltr', padding: 0, paddingLeft: 7 }}>
@@ -312,12 +312,12 @@ test('inline direction overrides parent RTL for logical shorthand expansion', ()
       </ListItemIcon>
     </Box>,
   );
-  expect(StyleSheet.flatten(tree.getByTestId('icon').props.style)).toMatchObject({
-    direction: 'ltr',
-    paddingLeft: 7,
-    paddingRight: 0,
-    paddingStart: 7,
-    paddingEnd: 0,
+  expect(StyleSheet.flatten(tree.getByTestId('icon').props.style).direction).toBe('ltr');
+  expect(backendEdges(tree.getByTestId('icon').props.style, 'padding', 'ltr', false)).toEqual({
+    top: 0,
+    bottom: 0,
+    left: 7,
+    right: 0,
   });
 });
 test('inset merging preserves CSS relative text provenance for a smaller descendant', () => {
@@ -640,11 +640,16 @@ test('nested styled icon rules retain specificity while native insets remain fin
       <Outer testID="styled-inline-icon" style={{ padding: 0, margin: 0 }} />
     </ListItem>,
   );
-  expect(tree.getByTestId('styled-inline-icon')).toHaveStyle({
-    paddingLeft: 0,
-    marginTop: 0,
-    opacity: 0.4,
-  });
+  expect(tree.getByTestId('styled-inline-icon')).toHaveStyle({ opacity: 0.4 });
+  for (const kind of ['margin', 'padding'] as const)
+    expect(
+      backendEdges(tree.getByTestId('styled-inline-icon').props.style, kind, 'ltr', false),
+    ).toEqual({
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+    });
 });
 
 test.each([null, undefined, false, '', 0, 7n])(

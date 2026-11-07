@@ -1,6 +1,13 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { createRef, forwardRef, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, type ViewInstance, type ViewProps } from 'react-native';
+import {
+  I18nManager,
+  View,
+  Text,
+  StyleSheet,
+  type ViewInstance,
+  type ViewProps,
+} from 'react-native';
 import { cleanup, render, fireEvent } from '@testing-library/react-native';
 import {
   AccordionDetails,
@@ -16,6 +23,11 @@ import {
   type ComponentStyleArgs,
 } from '../packages/material/src';
 
+import { backendEdges } from './helpers/nativeInsetEdges';
+beforeEach(() => {
+  jest.replaceProperty(I18nManager, 'isRTL', false);
+  jest.replaceProperty(I18nManager, 'doLeftAndRightSwapInRTL', false);
+});
 afterEach(cleanup);
 test('Details custom roots receive composed classes and source-filtered public props', () => {
   const Root = forwardRef<ViewInstance, ViewProps & { className?: string | undefined }>(
@@ -54,13 +66,12 @@ test('Details genuine native shorthands reset computed CSS edges and gap axes', 
     </ThemeProvider>,
   );
   const style = StyleSheet.flatten(tree.getByTestId('details').props.style);
-  expect(style).toMatchObject({
-    borderRadius: 7,
-    gap: 0,
-    paddingTop: 0,
-    paddingLeft: 0,
-    paddingRight: 0,
-    paddingBottom: 0,
+  expect(style).toMatchObject({ borderRadius: 7, gap: 0 });
+  expect(backendEdges(style, 'padding', 'ltr', false)).toEqual({
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   });
   expect(style.borderTopLeftRadius).toBeUndefined();
   expect(style.rowGap).toBeUndefined();
@@ -276,9 +287,15 @@ test.each(reference.fixtures)(
     expect(observation).toEqual(fixture.observation);
     expect(variants).toEqual(fixture.variantArguments);
     expect(classAccesses).toEqual(fixture.classAccesses);
-    expect(tree.getByTestId('details')).toHaveStyle(
-      expectedSourceStyle(fixture.declarations, fixture.inlineStyle),
-    );
+    const { paddingTop, paddingRight, paddingBottom, paddingLeft, ...otherStyles } =
+      expectedSourceStyle(fixture.declarations, fixture.inlineStyle);
+    expect(tree.getByTestId('details')).toHaveStyle(otherStyles);
+    expect(backendEdges(tree.getByTestId('details').props.style, 'padding', 'ltr', false)).toEqual({
+      top: paddingTop,
+      right: paddingRight,
+      bottom: paddingBottom,
+      left: paddingLeft,
+    });
   },
 );
 interface StyledInput {
@@ -336,9 +353,15 @@ test.each(reference.styledDefaults)(
     const { ownerClass: _generated, ...expected } = fixture.observation;
     const { ownerClass: _native, ...actual } = observation!;
     expect(actual).toEqual(expected);
-    expect(tree.getByTestId('details')).toHaveStyle(
-      expectedSourceStyle(fixture.declarations, fixture.inlineStyle),
-    );
+    const { paddingTop, paddingRight, paddingBottom, paddingLeft, ...otherStyles } =
+      expectedSourceStyle(fixture.declarations, fixture.inlineStyle);
+    expect(tree.getByTestId('details')).toHaveStyle(otherStyles);
+    expect(backendEdges(tree.getByTestId('details').props.style, 'padding', 'ltr', false)).toEqual({
+      top: paddingTop,
+      right: paddingRight,
+      bottom: paddingBottom,
+      left: paddingLeft,
+    });
   },
 );
 test('Details retains exact native attributes, event objects, original style callback references and custom root ref', () => {
