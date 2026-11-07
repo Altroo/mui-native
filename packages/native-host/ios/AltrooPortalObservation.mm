@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Altroo and contributors.
+// SPDX-License-Identifier: MIT
 /* RN clipping-mask geometry follows RCTViewComponentView 0.88.1.
  * Copyright (c) Meta Platforms, Inc. and affiliates. MIT; see native-rendering provenance. */
 #import "AltrooPortalObservation.h"
@@ -80,13 +82,17 @@ AltrooObservedRect AltrooObserveViewport(UIWindow *window) {
   return {safe.origin.x,safe.origin.y,safe.size.width,safe.size.height};
 }
 
+// RN implements this selector; this declaration does not add a native method.
+@interface RCTViewComponentView (AltrooPositioningContentSurface)
+- (UIView *)currentContainerView;
+@end
+
 // This prefixed category reads protected RN layout metrics through its declaring class.
 // It adds no ivars, swizzle, global feature flag or private reflection.
 @interface RCTViewComponentView (AltrooPositioningMetrics)
 - (CGRect)altrooPositioningPaddingFrame;
 - (CGRect)altrooPositioningFrame;
 - (BOOL)altrooPositioningSwapsInsets;
-- (UIView *)currentContainerView;
 @end
 @implementation RCTViewComponentView (AltrooPositioningMetrics)
 - (CGRect)altrooPositioningFrame { const auto frame = _layoutMetrics.frame; return CGRectMake(frame.origin.x,frame.origin.y,frame.size.width,frame.size.height); }
