@@ -10,6 +10,8 @@ import Box from '@mui/material/Box';
 </Box>;
 ```
 
+This guide describes unpublished development after `0.0.7-prealpha.0`. See the [changelog](../CHANGELOG.md) for released package contents.
+
 ## Props and roots
 
 The default native root is View. `component="div"` is the supported web host alias. Other strings are rejected by native types and diagnosed in development; provide a native component for another root. Eligible native View props/events retain their normal React Native payloads. Custom roots retain declared required/discriminated props and compatible native View refs. TypeScript cannot inspect the host returned by a structurally compatible ref-less wrapper; its author owns native rendering and forwarding.
@@ -50,4 +52,4 @@ As upstream, boxClasses and the default root vocabulary capture module-load valu
 
 `node scripts/reference/box.mjs --check` verifies pinned package/license/source bytes and original SSR observations. `node scripts/reference/check-box-consumer.mjs` checks emitted native declarations and the real original public package with exact optional properties. Runtime regressions cover class/import identity, filtering, no invented defaults/system props, native events/refs/cleanup, styling/ancestor/text inheritance and source/native theme boundaries.
 
-Actual iOS/Android interaction, geometry, RTL/large-font/physical accessibility and optimized performance require dedicated native evidence. Passing software/type/reference checks alone does not promote a support percentage. The stock RN 0.88.1 mixed physical/logical RTL margin limitation remains a backend boundary; Box does not install a JavaScript engine workaround. Package/archive validation remains part of integration, independently of this scoped source work.
+The maintained eleven-state scene now has scoped iOS/Android development-build evidence for default, custom and styled roots at normal and enlarged text sizes. It exercises real counters, retained refs, inherited Copy text, physical RTL spacing, style priority, reset and restoration; see the [recorded validation](validation.md#2026-11-07-finite-native-box-contracts). Wider native matrices, physical accessibility and optimized Box performance remain separate gates. Passing software/type/reference checks alone does not promote a support percentage. The stock RN 0.88.1 mixed physical/logical RTL margin limitation remains a backend boundary; Box does not install a JavaScript engine workaround. Package/archive validation remains part of integration, independently of this scoped source work.
