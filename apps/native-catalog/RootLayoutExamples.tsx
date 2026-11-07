@@ -11,6 +11,7 @@ import { MenuIconCascadeExample } from './MenuIconCascadeExample';
 import { TypographyContractExample } from './TypographyContractExample';
 import { DividerContractExample } from './DividerContractExample';
 import { PaperContractExample } from './PaperContractExample';
+import { PaperBenchmarkExample } from './PaperBenchmarkExample';
 
 /** Keep each measured example mounted while its own controls update the root. */
 export function RootLayoutExamples() {
@@ -24,6 +25,7 @@ export function RootLayoutExamples() {
     | 'divider'
     | 'paper'
     | 'benchmark'
+    | 'paper-benchmark'
   >('group');
   return (
     <View style={{ flex: 1 }}>
@@ -105,9 +107,18 @@ export function RootLayoutExamples() {
         >
           Workload
         </Button>
+        <Button
+          testID="root-layout-paper-benchmark"
+          variant={example === 'paper-benchmark' ? 'contained' : 'outlined'}
+          onClick={() => setExample('paper-benchmark')}
+        >
+          Paper workload
+        </Button>
       </ScrollView>
       {example === 'benchmark' ? (
         <LayoutRootBenchmarkExample />
+      ) : example === 'paper-benchmark' ? (
+        <PaperBenchmarkExample />
       ) : (
         <ScrollView
           testID="root-layout-scroll"
