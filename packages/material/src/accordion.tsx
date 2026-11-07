@@ -30,6 +30,7 @@ import { getAccordionDetailsUtilityClass } from './accordionClasses';
 import { mergeNativeRootStyle } from './nativeControlStyles';
 import type {
   AccordionProps,
+  AccordionRootSlotProps,
   AccordionOwnerState,
   AccordionSummaryProps,
   AccordionSummaryOwnerState,
@@ -204,7 +205,9 @@ export const Accordion: React.ForwardRefExoticComponent<
     throw new Error(
       'MUI Native: Accordion requires a summary element as its first child; use AccordionSummary directly rather than a Fragment.',
     );
-  const Root = slots.root ?? Paper,
+  // The private slot keeps its existing runtime contract; public Paper retains
+  // its stricter generic root inference at direct call sites.
+  const Root = slots.root ?? (Paper as React.ComponentType<AccordionRootSlotProps>),
     Transition = slots.transition ?? Collapse;
   const leaf = rootComponent ?? component ?? rootAs;
   return (

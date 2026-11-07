@@ -7,6 +7,7 @@ import {
   type ThemeOptions as SystemThemeOptions,
 } from '@altroo/mui-native-system';
 import type { DividerProps } from '../dividerTypes';
+import type { PaperProps } from '../paperTypes';
 
 // Material checks its native root defaults without coupling System's standalone
 // theme engine to Material components or changing custom component definitions.
@@ -22,6 +23,10 @@ export interface Components
   // Component props interfaces need not carry an open string index signature.
   // Keep custom defaults object-shaped and validate known native roots below.
   mergeClassNameAndStyle?: boolean | undefined;
+  MuiPaper?:
+    | (Omit<ComponentOptions, 'defaultProps'> & { defaultProps?: Partial<PaperProps> | undefined })
+    | boolean
+    | undefined;
   MuiDivider?:
     | (Omit<ComponentOptions, 'defaultProps'> & {
         defaultProps?: Partial<DividerProps> | undefined;

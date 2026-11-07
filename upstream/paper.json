@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "description": "Finite Paper source/software contract. No native paint, device, DOM or full compatibility certification.",
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+        "Paper/Paper.d.ts": "c2c81483f868985bb08311eebf892228be4dd61523a693097c4d7224b06e011a",
+        "Paper/Paper.d.mts": "aff9a3a90d1ed6e423774e979673cb3f3a05c400105ad45d1ebd556b4484063b",
+        "Paper/paperClasses.js": "a1018d4c7cdc4390e25ef889da1889eb7c13d19111d3465f25320dc1f5550f01",
+        "Paper/paperClasses.d.ts": "c9bfc8572556f746686beb2ac476f999356253c4b3fcba189327b25b30c47801",
+        "Paper/paperClasses.d.mts": "c9bfc8572556f746686beb2ac476f999356253c4b3fcba189327b25b30c47801",
+        "Paper/index.js": "9e8e26f6ce3a42e8e4946b95436d1608c9acc963ecd72277a9e7a87512158fb8",
+        "Paper/index.d.ts": "6af214e64dbf7c599257f7f0851cb57b267c6eef97dbca04b1f2d204ac571fdb",
+        "Paper/index.d.mts": "9de62af019a1c0bebb52b911dc14e89abab301b26c90a45845288067ea972a44",
+        "styles/getOverlayAlpha.js": "2703a5cb9333ba13b957c0f9aba760e5706f94ddf598260082c1d89fa27b5ca4",
+        "styles/getOverlayAlpha.d.ts": "c326bb72f933aa18f366a29a27dfd4193749c4c077b0464bb31054134a84aa8b",
+        "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+        "styles/components.d.ts": "358dac701e57422878d7164f4ba31b1672e641dcf2c1378354da779400b0255f",
+        "styles/props.d.ts": "05084be14d8c1f9b14f83f357f57c8a3ee04f3ec936b72e2cb694cd7b3cb48ee",
+        "styles/overrides.d.ts": "0c134aee37b4efcabad2e3c8e96a54178099d87ea10d91e469081aca1c51c8ae",
+        "Accordion/Accordion.d.ts": "95ae93fbf86e3c7a210b2d5fe0b3043cf3115f9161e3a6e181b94ec33ec44123",
+        "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7",
+        "zero-styled/index.js": "50f7cf89a8e3794b42b932af95d6720f21597bd4b9a296bcb92f87eab5789eb6",
+        "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+        "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa",
+        "utils/memoTheme.js": "ba795253c43a4fd740281e725b4fe0b77a25bf0c1a26e3f12b5f89a790a8a497",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+        "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf",
+        "styleFunctionSx/defaultSxConfig.js": "d8efd9936072efe65f1faaec85230f59e22eac85c29579df0e32492321e8e706",
+        "style/style.js": "ae36c11e3fe1e5f23cc3485e64281bab51665780d1ec2e788742586eef9ba8d9"
+      }
+    }
+  ],
+  "fixture": {
+    "path": "tests/fixtures/mui-paper-9.5.0.json",
+    "sha256": "3f21d9a82f00a4537a50523b2f4bc468bb7976e74441f2721896779ffac6f577",
+    "rootCases": 32,
+    "darkOverlayCases": 25,
+    "shadowAccessObservations": 8,
+    "shadowTableAccessObservations": 2,
+    "systemShadowAccessObservations": 12
+  },
+  "nativeBackgroundImage": {
+    "name": "react-native",
+    "version": "0.88.1",
+    "license": "MIT",
+    "sourceFiles": {
+      "types_generated/Libraries/StyleSheet/StyleSheetTypes.d.ts": "606e9658e36887a347c995099a7e3e3eefdf5af97f10a88b2233c3cbc5f217ee",
+      "Libraries/Components/View/ReactNativeStyleAttributes.js": "bb5412ec77a49018ef7f875736a007dd22b12e1e2cf7d512dbc7e0650a06570f",
+      "Libraries/StyleSheet/processBackgroundImage.js": "0f6dc6d92805bb99c4b809182a2b55186b3b990b0ec52aeb020631f0bec850cc",
+      "ReactCommon/react/renderer/components/view/BaseViewProps.cpp": "62a5e928c534b15c9dc1e6dc5cbd0355a756219e3ccc5ae4f2291d39765616ab",
+      "ReactCommon/react/renderer/components/view/BackgroundImagePropsConversions.h": "bc549d79ce64985663e8be11bc7752976e506d290c681b8a09b594ad17453a45",
+      "ReactCommon/react/renderer/components/view/BackgroundImagePropsConversions.cpp": "43f49a5fec0ccf80beaf8af701e83286b960a86ded8d8e5560fff971e94df34e",
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
+    },
+    "boundary": "Installed RN type/attribute/processor/native-prop source evidence; actual compiled device paint is a separate gate."
+  },
+  "localFiles": [
+    "packages/material/src/paper.tsx",
+    "packages/material/src/paperTypes.ts",
+    "packages/material/src/paperClasses.ts"
+  ],
+  "adaptations": [
+    "Native View replaces the div alias; custom native roots retain their declared props and refs. Genuine native styles keep final precedence.",
+    "Concrete native shadow tokens and typed constant-white gradient stops replace private CSS variables. No additional native host or flattened surface color is introduced.",
+    "Source-ordered diagnostic/selected shadow access retains the same captured callback/output value, including production unused-slot and changing-accessor observations. The legacy native adapter reuses a descriptor overlay without mutating the caller theme or enumerating other depths.",
+    "CSS literal shadows skip unused token-table access. Default and explicit sx retain source lookup behavior; numeric CSS shadow lookup remains a native extension. Ordinary static base styles avoid enumerating unused theme fields without new Proxy traps. Function/array native callback snapshots retain their prior timing; static embedded-variant snapshots are resolved after the existing first variants read. Direct theme fields remain a native extension.",
+    "Existing shared style/default/ancestor/text/ref boundaries are reused. Paper does not implement browser shadow transitions, DOM element refs, CSS variable themes or arbitrary background-image CSS authoring."
+  ]
+}

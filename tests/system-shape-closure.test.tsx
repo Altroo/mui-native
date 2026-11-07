@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { StyleSheet } from 'react-native';
 import { render, screen, cleanup } from '@testing-library/react-native';
 import { ButtonGroup, Paper, Button, ThemeProvider, createTheme } from '../packages/material/src';
 import { resolveSx, configureDiagnostics } from '../packages/system/src';
@@ -25,7 +27,8 @@ test.each([
   expect(screen.getByTestId('base')).toHaveStyle({ borderRadius: base });
   expect(screen.getByTestId('factor')).toHaveStyle({ borderRadius: doubled });
   expect(screen.getByTestId('paper')).toHaveStyle({ borderRadius: base });
-  expect(screen.getByTestId('square')).toHaveStyle({ borderRadius: 0 });
+  // Pinned Paper omits the rounded declaration for square roots; native defaults are zero.
+  expect(StyleSheet.flatten(screen.getByTestId('square').props.style).borderRadius).toBeUndefined();
 });
 test('unsupported variable radii diagnose while source zero factor stays native zero', () => {
   const diagnostic = jest.fn(),

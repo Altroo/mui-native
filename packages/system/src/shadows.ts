@@ -133,7 +133,7 @@ function parseShadow(input: string, rem: number): ParsedShadow | undefined {
 
 export function nativeBoxShadow(
   value: unknown,
-  shadows: Shadows,
+  shadows: Shadows | undefined,
   rem: number,
 ): ViewStyle | undefined {
   const index =

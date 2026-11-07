@@ -10,6 +10,7 @@ import type { SelectProps } from '../select';
 import type { TextFieldProps } from '../forms';
 import type { PopperProps } from '../popper';
 import type { DividerProps } from '../dividerTypes';
+import type { PaperProps } from '../paperTypes';
 
 type MaterialExports = typeof import('../index');
 // Only existing native exports from the pinned ComponentsPropsList participate.
@@ -90,6 +91,7 @@ interface GenericComponentProps {
   MuiTextField: TextFieldProps;
   MuiPopper: PopperProps;
   MuiDivider: DividerProps;
+  MuiPaper: PaperProps;
 }
 export interface ComponentsPropsList
   extends Omit<ExistingComponentProps, keyof GenericComponentProps>,

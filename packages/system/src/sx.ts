@@ -221,7 +221,15 @@ function prepareStyle(
       return;
     }
     if (key === 'boxShadow') {
-      const shadow = nativeBoxShadow(value, theme.shadows, theme.cssRootFontSize ?? 16);
+      // CSS literals do not use the theme token table. Keep default/SX reads
+      // and the existing numeric CSS extension, including numeric strings.
+      const shadows =
+        mode !== 'css' ||
+        typeof value === 'number' ||
+        (typeof value === 'string' && /^(0|[1-9]\d*)$/.test(value))
+          ? theme.shadows
+          : undefined;
+      const shadow = nativeBoxShadow(value, shadows, theme.cssRootFontSize ?? 16);
       if (shadow) setStyle(target, 'boxShadow', shadow);
       return;
     }
@@ -776,23 +784,42 @@ function componentSheets(
   };
   // Source processStyle resolves functions/arrays and embedded variants. It
   // does not traverse ordinary CSS objects until its resolver selects them.
-  const processStyle = (input: unknown, callbackProps: ComponentStyleArgs): ResolvedLayer[] => {
-    const resolved = typeof input === 'function' ? input(callbackProps) : input;
+  const processStyle = (
+    input: unknown,
+    callbackProps: ComponentStyleArgs,
+    baseCallbackProps?: () => ComponentStyleArgs,
+  ): ResolvedLayer[] => {
+    const resolved =
+      typeof input === 'function' ? input(baseCallbackProps?.() ?? callbackProps) : input;
     if (Array.isArray(resolved))
-      return resolved.flatMap((style) => processStyle(style, callbackProps));
+      return resolved.flatMap((style) => processStyle(style, callbackProps, baseCallbackProps));
     if (Array.isArray(resolved?.variants)) {
+      const variantProps = baseCallbackProps?.() ?? callbackProps;
       let rootStyle;
       if (resolved.isProcessed) rootStyle = resolved.style;
       else {
         const { variants: _variants, ...otherStyles } = resolved;
         rootStyle = otherStyles;
       }
-      return variants(resolved.variants, callbackProps, [{ input: rootStyle }]);
+      return variants(resolved.variants, variantProps, [{ input: rootStyle }]);
     }
     return [{ input: resolved?.isProcessed ? resolved.style : resolved }];
   };
   const overrideProps = { ...context.rootProps, theme, ownerState: props };
-  const baseRules = prepareLayers(processStyle(context.baseStyle, { ...theme, ...overrideProps }));
+  const baseStyle = context.baseStyle;
+  // Preserve the native direct-theme snapshot for function/array bases. Static
+  // bases only need arguments after processStyle's existing variants read has
+  // selected that path; do not add observable Proxy presence/descriptor traps.
+  let baseCallbackProps: ComponentStyleArgs | undefined;
+  const resolveBaseCallbackProps = () => (baseCallbackProps ??= { ...theme, ...overrideProps });
+  const eagerBase = typeof baseStyle === 'function' || Array.isArray(baseStyle);
+  const baseRules = prepareLayers(
+    processStyle(
+      baseStyle,
+      eagerBase ? resolveBaseCallbackProps() : overrideProps,
+      eagerBase ? undefined : resolveBaseCallbackProps,
+    ),
+  );
   const componentConfig = () => {
     const entry = theme.components[name];
     return entry && typeof entry === 'object' ? entry : undefined;
