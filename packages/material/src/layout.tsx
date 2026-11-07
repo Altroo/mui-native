@@ -1,47 +1,18 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
-import { useTheme, useSx, useComponentStyle } from './themeProvider';
+import { useComponentStyle } from './themeProvider';
 import React, { forwardRef } from 'react';
 import { Typography, type TypographyProps } from './typography';
 export * from './typography';
 import { Paper, type PaperProps } from './paper';
 export * from './paper';
-import { View, type ViewInstance, type ViewProps, type StyleProp } from 'react-native';
+import type { ViewInstance } from 'react-native';
+import { Box, type BoxProps } from './nativeBox';
+export * from './nativeBox';
 import {
   useDefaultProps,
-  NativeTextScope,
-  useNativeTextRootRef,
-  useNativeTextContext,
-  nativeTextStyleContext,
-  type NativeStyle,
-  type SxProps,
   type SpacingArgument,
   type ResponsiveStyleValue,
 } from '@altroo/mui-native-system';
-export interface BoxProps extends Omit<ViewProps, 'style'> {
-  style?: StyleProp<NativeStyle>;
-  sx?: SxProps;
-  component?: React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>;
-}
-export const Box: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<BoxProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, BoxProps>(function Box(
-  { sx, style, children, component: Component = View, ...props },
-  ref,
-) {
-  const { root, ref: rootRef } = useNativeTextRootRef(ref);
-  const theme = useTheme();
-  const parent = useNativeTextContext();
-  const resolved = useSx(sx, nativeTextStyleContext(parent, style, theme));
-  return (
-    <NativeTextScope rootRef={root} theme={theme} style={[resolved, style]} content={children}>
-      {(native, content) => (
-        <Component {...props} ref={rootRef} style={native}>
-          {content}
-        </Component>
-      )}
-    </NativeTextScope>
-  );
-});
 export interface StackProps extends BoxProps {
   direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';
   spacing?: ResponsiveStyleValue<SpacingArgument>;

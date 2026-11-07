@@ -3564,6 +3564,141 @@
       "adaptations": [
         "Paper native adaptation and finite source observations are recorded in upstream/paper.json. No browser, native paint or full compatibility certification."
       ]
+    },
+    {
+      "localFile": "packages/material/src/nativeBox.tsx",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "createBox/createBox.js": "8cee82044816a0bdb217b3fdaf47354ebd42fb4c6987167c87ceb7e0e6c39e27"
+        }
+      },
+      "adaptations": [
+        "Box source/software contract: finite native root/classes/filtering/type behavior is recorded in upstream/box.json. Anonymous roots skip component configuration; named-root ordering is unchanged. No native device, DOM or full compatibility certification."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/nativeBox.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Box/Box.js": "306d78c5254c68f321b72999149d084a76903e4b45797999cc9f71eea80b79ce",
+          "styles/identifier.js": "e75aca64cb87bbbb2c752b14873c81211d8b14e97621014ab05043a19ded0bf0"
+        }
+      },
+      "adaptations": [
+        "Box source/software contract: finite native root/classes/filtering/type behavior is recorded in upstream/box.json. Anonymous roots skip component configuration; named-root ordering is unchanged. No native device, DOM or full compatibility certification."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/className/index.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
+          "className/index.d.ts": "86b0a71225727fbbd97a30311f348c08270ae6c56e608d854901064bef027eda"
+        }
+      },
+      "adaptations": [
+        "Box source/software contract: finite native root/classes/filtering/type behavior is recorded in upstream/box.json. Anonymous roots skip component configuration; named-root ordering is unchanged. No native device, DOM or full compatibility certification."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/boxTypes.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Box/Box.d.ts": "3cdcb429aa85dd0daf21d399af976838d440aee22806ae1a526876cd06a1beba",
+          "Box/Box.d.mts": "eb5ffdac37ed6bb0633e7dc862de40c44d3c80cb5683c710b687aa76ff3ca004"
+        }
+      },
+      "adaptations": [
+        "Box source/software contract: finite native root/classes/filtering/type behavior is recorded in upstream/box.json. Anonymous roots skip component configuration; named-root ordering is unchanged. No native device, DOM or full compatibility certification."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/boxTypes.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Box/Box.d.ts": "484a0a6fa666edc19a90cad50e3e7538f00b71440236e6b21ee882542ae9a5ba",
+          "Box/Box.d.mts": "514cd0ff20daf91479fbaac47b3fbe0b95bb1c9c52266b05f26d27b04d8f88bd"
+        }
+      },
+      "adaptations": [
+        "Box source/software contract: finite native root/classes/filtering/type behavior is recorded in upstream/box.json. Anonymous roots skip component configuration; named-root ordering is unchanged. No native device, DOM or full compatibility certification."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/boxClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Box/boxClasses.js": "36f662712cbe738b217fce3d52ce438b8e4142b301eeebda31289558cc2d316e",
+          "Box/boxClasses.d.ts": "68f1a4ec2937052ae0dd18407eb8d1b579708970ced79c6e7cfe4a93d0a00385"
+        }
+      },
+      "adaptations": [
+        "Box source/software contract: finite native root/classes/filtering/type behavior is recorded in upstream/box.json. Anonymous roots skip component configuration; named-root ordering is unchanged. No native device, DOM or full compatibility certification."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/classNameGenerator.ts",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0",
+          "ClassNameGenerator/ClassNameGenerator.d.ts": "4d0113cabab03b2fdb7fca4e7c4ffd366f125ae3fa72d340979bb343ec75c073"
+        }
+      },
+      "adaptations": [
+        "Box source/software contract: finite native root/classes/filtering/type behavior is recorded in upstream/box.json. Anonymous roots skip component configuration; named-root ordering is unchanged. No native device, DOM or full compatibility certification."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/sx.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "createBox/createBox.js": "8cee82044816a0bdb217b3fdaf47354ebd42fb4c6987167c87ceb7e0e6c39e27",
+          "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+        }
+      },
+      "adaptations": [
+        "Box source/software contract: finite native root/classes/filtering/type behavior is recorded in upstream/box.json. Anonymous roots skip component configuration; named-root ordering is unchanged. No native device, DOM or full compatibility certification."
+      ]
     }
   ]
 }

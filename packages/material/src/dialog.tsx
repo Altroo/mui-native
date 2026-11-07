@@ -45,7 +45,8 @@ export interface DialogSlots {
   backdrop?: React.ComponentType<BackdropProps & React.RefAttributes<ViewInstance>>;
   transition?: React.ComponentType<FadeProps>;
 }
-export interface DialogProps extends BoxProps, NativeModalControlProps {
+export interface DialogProps extends Omit<BoxProps, 'component'>, NativeModalControlProps {
+  component?: ModalProps['component'];
   fullWidth?: boolean;
   fullScreen?: boolean;
   maxWidth?: Breakpoint | false;

@@ -11,6 +11,7 @@ import { MenuIconCascadeExample } from './MenuIconCascadeExample';
 import { TypographyContractExample } from './TypographyContractExample';
 import { DividerContractExample } from './DividerContractExample';
 import { PaperContractExample } from './PaperContractExample';
+import { BoxContractExample } from './BoxContractExample';
 import { PaperBenchmarkExample } from './PaperBenchmarkExample';
 
 /** Keep each measured example mounted while its own controls update the root. */
@@ -24,6 +25,7 @@ export function RootLayoutExamples() {
     | 'typography'
     | 'divider'
     | 'paper'
+    | 'box'
     | 'benchmark'
     | 'paper-benchmark'
   >('group');
@@ -100,6 +102,13 @@ export function RootLayoutExamples() {
           Paper
         </Button>
         <Button
+          testID="root-layout-box"
+          variant={example === 'box' ? 'contained' : 'outlined'}
+          onClick={() => setExample('box')}
+        >
+          Box
+        </Button>
+        <Button
           style={{ maxWidth: '100%' }}
           testID="root-layout-benchmark"
           variant={example === 'benchmark' ? 'contained' : 'outlined'}
@@ -137,6 +146,8 @@ export function RootLayoutExamples() {
             <DividerContractExample />
           ) : example === 'paper' ? (
             <PaperContractExample />
+          ) : example === 'box' ? (
+            <BoxContractExample />
           ) : example === 'typography' ? (
             <TypographyContractExample />
           ) : (

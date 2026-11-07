@@ -3,6 +3,7 @@
     "target": "@altroo/mui-native",
     "subpaths": [
       "styles",
+      "className",
       "Box",
       "Stack",
       "Typography",

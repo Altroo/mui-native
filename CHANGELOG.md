@@ -2,7 +2,8 @@
 
 ## Unreleased
 
-- Add shared native SvgIcon, React-node factories, original root/deep imports, source-ordered theme/paint priority, refs and typed native roots. Existing four original glyphs share the implementation; the full artwork set remains unfinished. The next Material package requires `react-native-svg` directly in the app.
+- Align Material Box with its pinned 9.5.0 props, classes, native roots, selected themes and style priority. Add canonical className routing, exact-optional installed consumers and eleven-state iOS/Android checks at normal/enlarged text sizes. Browser themes, wider native matrices, physical accessibility and optimized Box performance remain separate gates.
+- Add shared native SvgIcon, React-node factories, original root/deep imports, source-ordered theme/paint priority, refs and typed native roots. The full pinned Material Icons artwork/import catalog is implemented; shared SvgIcon rendering gates remain separate. The next Material package requires `react-native-svg` directly in the app.
 - Separate native CSS rem root sizing (`cssRootFontSize`, default 16) from MUI's `htmlFontSize` pxToRem calibration. Correct SVG text font binding and authored gradient inline-paint priority, with scoped iOS/Android checks.
 
 - Add the native Accordion family, original root/deep imports and class helpers, source-defined expansion/slot/callback priority, native refs and shared ButtonBase/Collapse composition. Scoped device checks do not complete physical accessibility, inherited APIs or performance gates.
