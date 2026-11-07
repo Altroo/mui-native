@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "description": "Bounded all-edge CSS/SX borders and retained declaration provenance for native none paint.",
+  "references": [
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "borders/borders.js": "cff20651e71b83cca11760d01bcb4ed71c7c35a4a31e03b7433f834b76b12917",
+        "styleFunctionSx/defaultSxConfig.js": "d8efd9936072efe65f1faaec85230f59e22eac85c29579df0e32492321e8e706"
+      }
+    }
+  ],
+  "nativeReference": {
+    "name": "react-native",
+    "version": "0.88.1",
+    "license": "MIT",
+    "sourceFiles": {
+      "LICENSE": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "ReactCommon/react/renderer/components/view/conversions.h": "e040421c84ef4fd1abaaf6c567df2826fc573f31837645288d949a93df33bdb7"
+    }
+  },
+  "fixture": "tests/fixtures/mui-css-borders-9.5.0.json",
+  "localFiles": [
+    "packages/system/src/borders.ts",
+    "packages/system/src/sx.ts",
+    "packages/system/src/index.ts",
+    "packages/system/src/nativeText.ts",
+    "packages/system/src/textScope.tsx",
+    "packages/material/src/nativeInlineBorders.ts",
+    "packages/material/src/nativeControlStyles.ts",
+    "packages/material/src/buttonBase.tsx",
+    "tests/css-borders.test.tsx"
+  ],
+  "adaptations": [
+    "Numeric MUI borders retain their px solid/currentColor meaning. Supported all-edge string declarations are parsed into native width/style/color without treating literal colors as palette tokens.",
+    "CSS none retains declared widths in private weak metadata until final native paint. The payload uses valid solid/zero widths; later CSS declarations or explicit native borderStyle/reset can restore declared widths. Width-only native overrides retain CSS none.",
+    "Prepared sheets retain raw CSS. Existing style mergers and text-metric clones preserve the none declaration without adding native payload properties, hosts, contexts or globals."
+  ],
+  "limits": [
+    "Per-edge border shorthands, arbitrary CSS functions, inherited/global shorthand keywords and paint styles beyond solid/dotted/dashed/none are not implemented by this translation.",
+    "This source record does not establish device border painting, assistive technology or performance. Divider-owned slot inheritance requires its coordinated helper integration."
+  ]
+}

@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { copyNativeBorderStyle } from './borders';
 import { I18nManager, Platform, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
 import type { Theme } from './theme';
 import { diagnostic } from './diagnostics';
@@ -84,7 +85,7 @@ export function applyNativeTextMetrics<T extends TextStyle>(
   metrics: Record<string, unknown>,
 ): T | undefined {
   if (!native || !Object.keys(metrics).length) return native;
-  const adjusted = { ...native };
+  const adjusted = copyNativeBorderStyle(native, { ...native });
   for (const key of relativeMetricKeys)
     if (Object.hasOwn(metrics, key)) {
       if (Object.hasOwn(resolved, key)) (adjusted as Record<string, unknown>)[key] = resolved[key];
@@ -140,7 +141,8 @@ export function nativeTextAlignmentStyle<T extends TextStyle | null | undefined>
         ? 'right'
         : 'left'
       : physical;
-  const native = textAlign === style.textAlign ? style : { ...style, textAlign };
+  const native =
+    textAlign === style.textAlign ? style : copyNativeBorderStyle(style, { ...style, textAlign });
   // Keep emitted styles recognizable if a composing library root processes them
   // again. This marker stays in the existing weak metadata, never in native props.
   cssTextMetrics.set(native, { ...metrics, textAlign: alignment, emittedTextAlign: physical });

@@ -11,6 +11,7 @@ import {
 import type { Theme, Breakpoint, ComponentVariant, ComponentVariantArgs } from './theme';
 export type ResponsiveStyleValue<T> = T | readonly (T | null)[] | { [key: string]: T | null };
 import { diagnostic } from './diagnostics';
+import { cssBorder, finishCssBorderStyle } from './borders';
 import {
   normalizeTextStyle,
   textMetricKeys,
@@ -218,12 +219,18 @@ function prepareStyle(
       if (shadow) setStyle(target, 'boxShadow', shadow);
       return;
     }
-    if (key === 'border' && typeof value === 'number') {
-      setStyle(target, 'border', {
-        borderWidth: value,
-        borderStyle: 'solid',
-        borderColor: 'currentColor',
-      });
+    if (key === 'border') {
+      const declaration = cssBorder(value);
+      if (!declaration) diagnostic('border', `Unsupported CSS border: ${String(value)}`);
+      else {
+        const border: StyleNode = { base: {} };
+        assign(border, 'borderWidth', declaration.borderWidth, 'css');
+        assign(border, 'borderStyle', declaration.borderStyle, 'css');
+        // A shorthand color is literal CSS, not a palette token. In particular,
+        // keep currentColor deferred even if a custom palette shares its name.
+        border.base.borderColor = declaration.borderColor;
+        setStyle(target, 'border', border.base);
+      }
       return;
     }
     for (const nativeKey of aliases[key] ?? [key]) {
@@ -595,8 +602,12 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
   });
   // CSS border shorthands reset paint to currentColor. Bind after the complete
   // cascade and authored native foreground, never while a parent rule is built.
+  // An owned native reset clears CSS foreground and inherits the text scope's
+  // parent/default color. An absent native color keeps the computed CSS color.
   const foreground =
-    context.nativeStyle?.color ?? normalized.color ?? context.parentTextStyle?.color;
+    context.nativeStyle && Object.hasOwn(context.nativeStyle, 'color')
+      ? (context.nativeStyle.color ?? context.parentTextStyle?.color)
+      : (normalized.color ?? context.parentTextStyle?.color);
   const borderPaint =
     foreground == null || ['inherit', 'unset', 'currentColor'].includes(String(foreground))
       ? theme.palette.text.primary
@@ -668,7 +679,7 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
       }
     }
   }
-  return normalized as NativeStyle;
+  return finishCssBorderStyle(normalized as NativeStyle);
 }
 export function resolveSx(
   input: SxProps | undefined,

@@ -1,0 +1,27 @@
+{
+  "reference": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "borders/borders.js": "cff20651e71b83cca11760d01bcb4ed71c7c35a4a31e03b7433f834b76b12917",
+      "styleFunctionSx/defaultSxConfig.js": "d8efd9936072efe65f1faaec85230f59e22eac85c29579df0e32492321e8e706"
+    }
+  },
+  "scope": "Actual pinned MUI border transform/output declarations. These are not browser-used-style or native device observations.",
+  "cases": [
+    { "input": 0, "output": { "border": "0px solid" } },
+    { "input": 1, "output": { "border": "1px solid" } },
+    { "input": 2, "output": { "border": "2px solid" } },
+    { "input": "3px solid red", "output": { "border": "3px solid red" } },
+    { "input": "red solid 3px", "output": { "border": "red solid 3px" } },
+    { "input": "none", "output": { "border": "none" } },
+    {
+      "input": "0.25rem dashed rgba(10, 20, 30, 0.5)",
+      "output": { "border": "0.25rem dashed rgba(10, 20, 30, 0.5)" }
+    },
+    { "input": "2px dotted currentColor", "output": { "border": "2px dotted currentColor" } }
+  ]
+}

@@ -3333,6 +3333,23 @@
       "adaptations": [
         "Original default icon reservation, dense SVG rem declaration and finite class/state descendant vocabulary. Native physical ownership and immutable prepared ancestor recollection are independently authored; source/default observations and separate gates are retained in upstream/menu-icon-cascade.json."
       ]
+    },
+    {
+      "localFile": "packages/system/src/borders.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "borders/borders.js": "cff20651e71b83cca11760d01bcb4ed71c7c35a4a31e03b7433f834b76b12917",
+          "styleFunctionSx/defaultSxConfig.js": "d8efd9936072efe65f1faaec85230f59e22eac85c29579df0e32492321e8e706"
+        }
+      },
+      "adaptations": [
+        "Bounded all-edge string parsing and numeric border transform; CSS none declaration provenance and final native zero-width paint. See upstream/css-borders.json for explicit limits."
+      ]
     }
   ]
 }

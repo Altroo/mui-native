@@ -1,6 +1,10 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { StyleSheet, type StyleProp } from 'react-native';
-import type { NativeStyle } from '@altroo/mui-native-system';
+import {
+  nativeStyleBorderDeclarations,
+  applyNativeBorderStyle,
+  type NativeStyle,
+} from '@altroo/mui-native-system';
 import { nativeInsets } from './nativeInsets';
 import { nativeInlineBorderBase, nativeInlineSideMapper } from './nativeInlineBorders';
 
@@ -47,8 +51,8 @@ export function mergeNativeStylesAtDirection(
   layers: NativeStyle[],
   direction: 'ltr' | 'rtl',
 ): NativeStyle {
-  return (
-    StyleSheet.flatten(
+  return applyNativeBorderStyle(
+    nativeStyleBorderDeclarations(
       layers.flatMap((style) => [
         style,
         nativeInsets(style, 'padding'),
@@ -56,7 +60,7 @@ export function mergeNativeStylesAtDirection(
         nativeInsets(style, 'margin'),
         logicalInsets(style, 'margin', direction),
       ]),
-    ) ?? {}
+    ),
   );
 }
 export function mergeNativeStyles(
@@ -64,7 +68,7 @@ export function mergeNativeStyles(
   ...input: StyleProp<NativeStyle>[]
 ): NativeStyle {
   const layers = input
-    .map((value) => StyleSheet.flatten(value))
+    .map((value) => (value ? nativeStyleBorderDeclarations(value) : undefined))
     .filter((value): value is NativeStyle => Boolean(value));
   const direction = directionOf(
     ...layers
@@ -89,8 +93,10 @@ export function mergeNativeRootStyle(
     : directionOf(inline?.direction, computed.direction, parentDirection);
   // A real native reset inherits its parent, while an absent property keeps
   // computed CSS direction. Matching must use the same final native direction.
-  const matching = resetDirection ? { ...computed, direction } : computed;
-  const base = { ...nativeInlineBorderBase(matching, inline, direction) };
+  const matching = resetDirection
+    ? nativeStyleBorderDeclarations([computed, { direction }])
+    : computed;
+  const base = nativeInlineBorderBase(matching, inline, direction);
   if (inline?.gap != null) {
     delete base.rowGap;
     delete base.columnGap;
@@ -127,5 +133,5 @@ export function mergeNativeRootStyle(
   // Fabric can replace logical edges with defined physical aliases during its
   // global RTL swap. Keep computed CSS protection intact and let Yoga resolve
   // the original native shorthand/specific edges instead of synthesizing sides.
-  return Object.assign(base, inline);
+  return applyNativeBorderStyle(nativeStyleBorderDeclarations([base, inline]));
 }

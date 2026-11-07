@@ -26,6 +26,12 @@ Theme tokens/providers, palette, typography, spacing, breakpoints and supported 
 
 See the [component status](https://github.com/Altroo/mui-native#status), [compatibility contract](https://github.com/Altroo/mui-native/blob/main/docs/compatibility.md) and [package guide](https://github.com/Altroo/mui-native/blob/main/docs/compatibility.md). Scoped emulator tests and type checks do not certify full physical-device, accessibility or release-performance behavior.
 
+## CSS borders in source development
+
+Unpublished source accepts numeric all-edge borders and supported literal shorthand strings such as `border: '3px solid red'`. Colors inside the shorthand remain literal CSS; use the separate `borderColor` property for palette tokens. Supported native paint styles are `solid`, `dotted` and `dashed`.
+
+CSS `borderStyle: 'none'` suppresses border paint while retaining declared widths for later style changes. Genuine native inline `borderStyle` values, including an explicit reset, retain final priority; a width-only override does not cancel CSS `none`. This applies to the participating prepared-style and native-root paths. It does not add per-edge CSS shorthand support or arbitrary CSS grammar. Unsupported border declarations remain diagnosed. The [source record](https://github.com/Altroo/mui-native/blob/main/upstream/css-borders.json) distinguishes source checks from pending native-device and performance evidence.
+
 ## License
 
 Original code is [MIT licensed](https://github.com/Altroo/mui-native/blob/main/LICENSE), Copyright (c) 2026 Altroo and contributors. This package includes `LICENSE` and `NOTICE`; adapted upstream code retains its original notices. See [upstream attribution](https://github.com/Altroo/mui-native/blob/main/NOTICE).

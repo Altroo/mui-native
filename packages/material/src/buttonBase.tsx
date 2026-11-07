@@ -21,6 +21,9 @@ import {
   type StyleProp,
 } from 'react-native';
 import {
+  nativeStyleBorderDeclarations,
+  copyNativeBorderStyle,
+  applyNativeBorderStyle,
   useDefaultProps,
   NativeTextScope,
   useNativeTextContext,
@@ -119,7 +122,12 @@ function viewStyle(input: StyleProp<NativeStyle>): StyleProp<ViewStyle> {
   const flattened = StyleSheet.flatten(input);
   return (
     flattened &&
-    Object.fromEntries(Object.entries(flattened).filter(([key]) => !isNativeTextStyleProperty(key)))
+    copyNativeBorderStyle(
+      flattened,
+      Object.fromEntries(
+        Object.entries(flattened).filter(([key]) => !isNativeTextStyleProperty(key)),
+      ),
+    )
   );
 }
 /** @internal Apply true native inline declarations after the shared CSS cascade. */
@@ -138,7 +146,10 @@ export function mergeNativeButtonStyle(
         inline.padding;
       if (value != null) inline[`padding${edge}`] = value;
     }
-  const value = nativeInlineBorderBase(feedback ? { ...computed, ...feedback } : computed, inline);
+  const value = nativeInlineBorderBase(
+    feedback ? nativeStyleBorderDeclarations([computed, feedback]) : computed,
+    inline,
+  );
   if (inline) {
     const nativeSide = nativeInlineSideMapper(value, inline);
     // Native specific edges outrank shorthands regardless of array order.
@@ -170,7 +181,11 @@ export function mergeNativeButtonStyle(
     Object.assign(value, inline);
   }
   return (
-    applyNativeTextMetrics(value, computed, nativeStyleTextMetrics([computed, authored])) ?? value
+    applyNativeTextMetrics(
+      applyNativeBorderStyle(nativeStyleBorderDeclarations([value, inline])),
+      computed,
+      nativeStyleTextMetrics([computed, authored]),
+    ) ?? value
   );
 }
 export const ButtonBase: React.ForwardRefExoticComponent<
