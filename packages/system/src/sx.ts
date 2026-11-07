@@ -528,21 +528,26 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
   if (context.logicalInsets || protectGeometry)
     for (const rule of ordered)
       if (rule.style.direction != null) cssDirection = rule.style.direction;
-  const direction =
-    context.logicalInsets?.direction ??
-    (protectGeometry ? context.nativeStyle?.direction : undefined) ??
-    cssDirection;
+  // An authored nullish direction resets Yoga to its inherited direction.
+  // Absence keeps the computed CSS direction; optional logicalInsets hints
+  // retain their established non-nullish caller priority.
+  const nativeDirection =
+    protectGeometry && Object.hasOwn(context.nativeStyle ?? {}, 'direction')
+      ? (context.nativeStyle?.direction ?? 'inherit')
+      : undefined;
+  const direction = context.logicalInsets?.direction ?? nativeDirection ?? cssDirection;
   const rtl =
     (direction === 'inherit' || direction == null ? inheritedDirection : direction) === 'rtl';
   for (const rule of ordered) {
     for (const [rawKey, value] of Object.entries(rule.style)) {
       let key = rawKey;
-      const logical = context.logicalInsets
-        ? key.match(/^(margin|padding)(Start|End)$/)
-        : protectGeometry
-          ? key.match(/^(margin)(Start|End)$/)
+      const logical =
+        context.logicalInsets || protectGeometry
+          ? key.match(/^(margin|padding)(Start|End)$/)
           : null;
       if (logical) key = logical[1] + ((logical[2] === 'Start') !== rtl ? 'Left' : 'Right');
+      if (protectGeometry && (key === 'start' || key === 'end'))
+        key = (key === 'start') !== rtl ? 'left' : 'right';
       if (value == null) continue;
       if (key === 'boxShadow' || key === 'border') {
         if (key === 'border')
@@ -622,7 +627,7 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
   if (protectGeometry && paintSwap) {
     // Fabric logicalizes physical paint for a globally RTL app. Android also
     // mirrors physical border fallbacks for a locally RTL view, independently
-    // of the app direction. Resolve Group CSS only after its complete cascade,
+    // of the app direction. Resolve protected CSS after its complete cascade,
     // using the final child direction; native inline styles retain RN semantics.
     const start = rtl ? 'Right' : 'Left';
     const end = rtl ? 'Left' : 'Right';
@@ -644,11 +649,22 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
           delete normalized[key];
         }
       }
-      // Margins are Yoga layout values, with only the global Fabric swap.
-      const margin = `margin${physical}`;
-      if (globalSwap && Object.hasOwn(normalized, margin)) {
-        normalized[`margin${logical}`] = normalized[margin];
-        delete normalized[margin];
+      // Yoga logicalizes physical layout fields only for the global Fabric
+      // swap. A locally RTL Android border-paint swap must not affect them.
+      // See the pinned YogaLayoutableShadowNode.cpp swapStyleLeftAndRight.
+      if (globalSwap) {
+        for (const kind of ['margin', 'padding']) {
+          const key = `${kind}${physical}`;
+          if (Object.hasOwn(normalized, key)) {
+            normalized[`${kind}${logical}`] = normalized[key];
+            delete normalized[key];
+          }
+        }
+        const position = physical.toLowerCase();
+        if (Object.hasOwn(normalized, position)) {
+          normalized[logical.toLowerCase()] = normalized[position];
+          delete normalized[position];
+        }
       }
     }
   }

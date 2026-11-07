@@ -1,6 +1,13 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { createRef, forwardRef, useEffect } from 'react';
-import { Text, View, StyleSheet, type ViewInstance, type ViewProps } from 'react-native';
+import {
+  I18nManager,
+  Text,
+  View,
+  StyleSheet,
+  type ViewInstance,
+  type ViewProps,
+} from 'react-native';
 import { cleanup, render } from '@testing-library/react-native';
 import {
   Box,
@@ -16,10 +23,13 @@ import {
 } from '../packages/material/src';
 import { nativeTextScopes } from '../packages/system/src';
 import original from './fixtures/mui-form-group-contract-9.5.0.json';
+import { backendEdges } from './helpers/nativeInsetEdges';
 
 let restoreDiagnostics: () => void;
 let diagnostics: string[];
 beforeEach(() => {
+  jest.replaceProperty(I18nManager, 'isRTL', false);
+  jest.replaceProperty(I18nManager, 'doLeftAndRightSwapInRTL', false);
   diagnostics = [];
   restoreDiagnostics = configureDiagnostics(({ message }) => diagnostics.push(message));
 });
@@ -332,11 +342,16 @@ test('root then row overrides, sx and native inline shorthands retain source pri
   );
   expect(tree.getByTestId('group')).toHaveStyle({
     opacity: 1,
-    paddingLeft: 0,
-    marginTop: 0,
     flexDirection: 'row',
     flexWrap: 'wrap',
   });
+  for (const kind of ['margin', 'padding'] as const)
+    expect(backendEdges(tree.getByTestId('group').props.style, kind, 'ltr', false)).toEqual({
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    });
 });
 
 // CSS ratios inherit with the child's font size; RN style numbers stay absolute.
@@ -408,12 +423,21 @@ test('styled selector insets remain CSS while genuine native shorthands reset th
   const tree = render(
     <Outer testID="styled-inline" row style={[{ paddingLeft: 17 }, { padding: 0, margin: 0 }]} />,
   );
-  expect(tree.getByTestId('styled-inline')).toHaveStyle({
-    paddingLeft: 17,
-    paddingRight: 0,
-    paddingTop: 0,
-    paddingBottom: 0,
-    marginTop: 0,
+  expect(
+    backendEdges(tree.getByTestId('styled-inline').props.style, 'padding', 'ltr', false),
+  ).toEqual({
+    left: 17,
+    right: 0,
+    top: 0,
+    bottom: 0,
+  });
+  expect(
+    backendEdges(tree.getByTestId('styled-inline').props.style, 'margin', 'ltr', false),
+  ).toEqual({
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   });
   expect(diagnostics).toEqual([]);
 });

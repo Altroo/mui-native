@@ -1,5 +1,5 @@
 import React, { forwardRef, useState, useRef, useImperativeHandle } from 'react';
-import { View, Text, TextInput, StyleSheet, type ViewInstance } from 'react-native';
+import { I18nManager, View, Text, TextInput, StyleSheet, type ViewInstance } from 'react-native';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react-native';
 import {
   Accordion,
@@ -27,8 +27,11 @@ import {
 } from '@altroo/mui-native';
 import { NativeButtonModel } from './helpers/nativeButtonModel';
 import reference from './fixtures/mui-accordion-9.5.0.json';
+import { backendEdges } from './helpers/nativeInsetEdges';
 let restore: () => void;
 beforeEach(() => {
+  jest.replaceProperty(I18nManager, 'isRTL', false);
+  jest.replaceProperty(I18nManager, 'doLeftAndRightSwapInRTL', false);
   jest.useFakeTimers();
   restore = configureDiagnostics(() => {});
 });
@@ -417,10 +420,11 @@ test('native root/content/region styles, gutter states and theme defaults compos
   expect(StyleSheet.flatten(screen.getByTestId('region').props.style)).toMatchObject({
     paddingBottom: 5,
   });
-  expect(StyleSheet.flatten(screen.getByTestId('details').props.style)).toMatchObject({
-    paddingTop: 7,
-    paddingBottom: 16,
-    paddingStart: 16,
+  expect(backendEdges(screen.getByTestId('details').props.style, 'padding', 'ltr', false)).toEqual({
+    top: 7,
+    bottom: 16,
+    left: 16,
+    right: 16,
   });
   expect(StyleSheet.flatten(screen.getByTestId('actions').props.style)).toMatchObject({
     columnGap: 8,

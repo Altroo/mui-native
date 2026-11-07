@@ -1,8 +1,13 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 jest.mock('@mui/material', () => jest.requireActual('../packages/material/src'), { virtual: true });
 import { act, cleanup, render, fireEvent } from '@testing-library/react-native';
-import { StyleSheet, View, type ViewInstance } from 'react-native';
+import { I18nManager, StyleSheet, View, type ViewInstance } from 'react-native';
 import { FormGroupContractExample } from '../apps/native-catalog/FormGroupContractExample';
+import { backendEdges } from './helpers/nativeInsetEdges';
+beforeEach(() => {
+  jest.replaceProperty(I18nManager, 'isRTL', false);
+  jest.replaceProperty(I18nManager, 'doLeftAndRightSwapInRTL', false);
+});
 afterEach(cleanup);
 test('live FormGroup scene keeps native roots, keyed counters, inheritance and inline resets', () => {
   const tree = render(<FormGroupContractExample />);
@@ -14,17 +19,24 @@ test('live FormGroup scene keeps native roots, keyed counters, inheritance and i
   );
   expect(StyleSheet.flatten(root('inherited').props.style)).toMatchObject({
     flexDirection: 'column',
-    marginTop: 0,
-    paddingLeft: 0,
-    paddingTop: 0,
   });
+  for (const kind of ['margin', 'padding'] as const)
+    expect(backendEdges(root('inherited').props.style, kind, 'ltr', false)).toEqual({
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    });
   expect(tree.getByText('Literal inherited')).toHaveStyle({ fontSize: 16, lineHeight: 22.4 });
   fireEvent.press(tree.getByTestId('form-group-contract-child-inherited'));
   fireEvent.press(tree.getByTestId('form-group-contract-child-custom'));
   fireEvent.press(tree.getByTestId('form-group-contract-row'));
-  expect(StyleSheet.flatten(root('inherited').props.style)).toMatchObject({
-    flexDirection: 'row',
-    paddingRight: 0,
+  expect(StyleSheet.flatten(root('inherited').props.style)).toMatchObject({ flexDirection: 'row' });
+  expect(backendEdges(root('inherited').props.style, 'padding', 'ltr', false)).toEqual({
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   });
   expect(StyleSheet.flatten(root('styled').props.style).borderRightWidth).toBe(4);
   fireEvent.press(tree.getByTestId('form-group-contract-error'));
