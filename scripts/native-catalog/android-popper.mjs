@@ -19,6 +19,8 @@ import {
 } from './android-button-group-reading-report.mjs';
 import { prepareDividerSource } from './android-divider-source.mjs';
 import { preparePaperSource } from './android-paper-source.mjs';
+import { prepareBoxSource } from './android-box-source.mjs';
+import { inspectBoxReport, summarizeBox } from './android-box-report.mjs';
 import { inspectPaperReport, summarizePaper } from './android-paper-report.mjs';
 import { inspectDividerReport, summarizeDivider } from './android-divider-report.mjs';
 import { prepareLayoutRootSource } from './android-layout-root-source.mjs';
@@ -85,6 +87,7 @@ export async function prepare(project) {
   await prepareLayoutRootSource(project);
   await prepareDividerSource(project);
   await preparePaperSource(project);
+  await prepareBoxSource(project);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, source);
   await writeFile(gradlePath, gradle);
@@ -207,7 +210,7 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'text-alignment' | 'divider' | 'paper', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'text-alignment' | 'divider' | 'paper' | 'box', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
@@ -225,18 +228,19 @@ export async function run(
       'text-alignment',
       'divider',
       'paper',
+      'box',
     ].includes(scenario)
   )
     throw Error('Unknown catalog scenario');
   if (typeof globalRTL !== 'boolean' || (globalRTL && scenario !== 'button-group-reading'))
     throw Error('Global RTL profiles apply only to reading checks');
   if (
-    ['divider', 'paper'].includes(scenario)
+    ['divider', 'paper', 'box'].includes(scenario)
       ? !['normal', 'enlarged'].includes(fontProfile)
       : fontProfile !== undefined
   )
     throw Error(
-      (scenario === 'paper' ? 'Paper' : 'Divider') +
+      (scenario === 'box' ? 'Box' : scenario === 'paper' ? 'Paper' : 'Divider') +
         ' checks require an explicit normal/enlarged font profile',
     );
   if (typeof serial !== 'string' || !serial.trim())
@@ -269,7 +273,9 @@ export async function run(
             '-w',
             '-r',
             ...(scenario === 'popper' ? [] : ['-e', 'scenario', scenario]),
-            ...(['divider', 'paper'].includes(scenario) ? ['-e', 'fontProfile', fontProfile] : []),
+            ...(['divider', 'paper', 'box'].includes(scenario)
+              ? ['-e', 'fontProfile', fontProfile]
+              : []),
             ...(scenario === 'button-group-reading' ? ['-e', 'globalRTL', String(globalRTL)] : []),
             component,
           ],
@@ -286,23 +292,25 @@ export async function run(
     }
     await writeFile(join(output, 'instrumentation.txt'), text);
     report =
-      scenario === 'paper'
-        ? inspectPaperReport(text)
-        : scenario === 'text-alignment'
-          ? inspectTextAlignmentReport(text)
-          : scenario === 'divider'
-            ? inspectDividerReport(text)
-            : scenario === 'layout-roots'
-              ? inspectLayoutRootReport(text)
-              : scenario === 'accordion'
-                ? inspectAccordionReport(text)
-                : scenario === 'svg-icon'
-                  ? inspectSvgIconReport(text)
-                  : scenario === 'button-group-reading'
-                    ? inspectReadingReport(text)
-                    : scenario === 'button-group'
-                      ? inspectButtonGroupReport(text)
-                      : inspectReport(text);
+      scenario === 'box'
+        ? inspectBoxReport(text)
+        : scenario === 'paper'
+          ? inspectPaperReport(text)
+          : scenario === 'text-alignment'
+            ? inspectTextAlignmentReport(text)
+            : scenario === 'divider'
+              ? inspectDividerReport(text)
+              : scenario === 'layout-roots'
+                ? inspectLayoutRootReport(text)
+                : scenario === 'accordion'
+                  ? inspectAccordionReport(text)
+                  : scenario === 'svg-icon'
+                    ? inspectSvgIconReport(text)
+                    : scenario === 'button-group-reading'
+                      ? inspectReadingReport(text)
+                      : scenario === 'button-group'
+                        ? inspectButtonGroupReport(text)
+                        : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -317,7 +325,8 @@ export async function run(
       await writeFile(join(output, file), bytes);
     }
     signal?.throwIfAborted();
-    if (scenario === 'paper') summarizePaper(text, { fontProfile });
+    if (scenario === 'box') summarizeBox(text, { fontProfile });
+    else if (scenario === 'paper') summarizePaper(text, { fontProfile });
     else if (scenario === 'text-alignment') summarizeTextAlignment(text);
     else if (scenario === 'divider') summarizeDivider(text, { fontProfile });
     else if (scenario === 'layout-roots') summarizeLayoutRoots(text);
