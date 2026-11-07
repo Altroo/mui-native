@@ -1,0 +1,1205 @@
+{
+  "schemaVersion": 1,
+  "measuredOn": "2026-11-06",
+  "scenario": "AccordionDetails baseline native text inheritance and logical-start alignment",
+  "status": "passed",
+  "environment": {
+    "platform": "android",
+    "api": 37,
+    "deviceKind": "emulator",
+    "model": "sdk_gphone64_arm64",
+    "density": 2.625,
+    "nativeFontScale": 1,
+    "observedTextBackend": "ReactTextView / TextView",
+    "instrumentationVariant": "debugAndroidTest"
+  },
+  "runtimeSource": {
+    "recordedRuntimeCommit": "72172bdfe96700855525368c731daa3aceab8a65",
+    "equivalentMainCommit": "e9627ddcd2802357b31f39c5e8927bafcf667a4a",
+    "gitTrees": {
+      "packages/material": "07ea0aae7e0ff34eafe25153a9d785fbe8d66734",
+      "packages/system": "2c4a41d1ff3ca22f1d57170b75d2fb38360559bf",
+      "packages/native-host": "bfcbb6cfec400520cc4235f7e048515294d60c87"
+    },
+    "filesSha256": {
+      "apps/native-catalog/AccordionDetailsContractExample.tsx": "d0d5e31ba043347aeadcc2107892740d55019b9b1435b4b60b3bb5c85959abd1",
+      "apps/native-catalog/RootLayoutExamples.tsx": "51afbb55d929d9718ea55bbea31df33250d2193e4ca548296908a7cb6d24e805",
+      "package.json": "9557648174b69c30e5d601830099e99537b5b94c39cf0962bdd0ac788c60d03b",
+      "packages/material/src/accordion.tsx": "9be74c5c20978f39d1469a65816daa9cb39235ab54eaa512e12ebcac58fbe537",
+      "packages/material/src/layout.tsx": "3800bcefb2d47173a525a2a2fe4149f1af5b28aa7c33c0c622ddb0061c6784a6",
+      "packages/material/src/nativeStyleAncestry.ts": "2e6433dad13fe374267066af5497ebeb850fd5fe3a87e785be60c93a4906e56b",
+      "packages/material/src/nativeStyleScope.tsx": "8b184214b218fe59a5581376bb08de6a9d63e081d7f047ceb00a3261d8455e26",
+      "packages/material/src/typography.tsx": "234d07d5cc3602256044d9c48a83dbaee5def26edc2c34856b2dd979a181ce3d",
+      "packages/system/src/index.ts": "501a046de070c976c4178dabcb522f43db7dded5f52f4ce00ffdc6e588b37d0c",
+      "packages/system/src/nativeText.ts": "d020476d48b692d174ebc68b2b83f27aee3140e80380be78e804715675216503",
+      "packages/system/src/provider.tsx": "1c4ed4b4e36fafba988545850b923c32ed9e15ebd857416f3b71bff5ae7b07ef",
+      "packages/system/src/sx.ts": "1ac1a68ef0b1eb8639e9df37cdfcf7314a031f68debf5b0ba85b11c200a4e72a",
+      "packages/system/src/textScope.tsx": "08c1ebfe1df6dba46f8b72e377fbc744f27e2cafb46cf33cb7d232e64e20de72",
+      "pnpm-lock.yaml": "dd578d0c35cbaea6c3ff21274509bcbb042ae6369942e8acbaf061873400b580"
+    },
+    "fingerprintSha256": "639859995edb00388353fed0f21ed5ff7de410445b786ac2ad4564b2bd698e28",
+    "scope": "Listed committed runtime/catalog inputs and matching package trees. This source fingerprint is separate from compiled APK or served-bundle authentication."
+  },
+  "driverFilesSha256": {
+    "tests/native/android/LayoutRootScenario.java": "ab1a88cc79208d989a9147ebb5883cde6ed63b14c592d6f92be2b935cb336c34",
+    "tests/native/android/PopperInstrumentation.java": "9c03d3ba09c70df114e15e9bb76c49943ab9fbe01125cfbd07befe19612998ea",
+    "scripts/native-catalog/android-popper.mjs": "b70423c2c67a058624ee8812dfca15bfb9491c86865a71bfd3cdfbf7b2d204a0",
+    "scripts/native-catalog/android-text-alignment-report.mjs": "883a6ff2c3d18a8df234179efa8204208bc4752ee6a3074ec775951754085a08",
+    "scripts/native-catalog/android-text-alignment.test.mjs": "9f34b07aa279dafae444ce14cfb72080996aa00d1b01664c7ce825b08781c57b"
+  },
+  "reactNativeReference": {
+    "version": "0.88.1",
+    "license": "MIT",
+    "licenseSha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+    "sourceFiles": {
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/PreparedLayoutTextView.kt": "b00e7d54c8229b8e346604648507999d2fa2c050fcacb56c378d03f055eb6ac4",
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/PreparedLayout.kt": "c3ceaa3b0ab040b3e4bdea5c09b69dc86d59d4ac2aa897114ca655ecce7c128e",
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/TextLayoutManager.kt": "5f0e46a199d851ab3e23790678563650a72ed4dab7d52a2db96349a73abad8ce",
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/internal/span/CustomLineHeightSpan.kt": "e1d8e9d6df9be11b9231597e63ae07eb2d45c95bcfd626ef4c5746c15b09026d",
+      "ReactAndroid/src/main/java/com/facebook/react/uimanager/PixelUtil.kt": "e1df4d3d4ae6775aba49215dbc68aed318086b0be3874de7277a713c8b71faf9",
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/ReactTextView.java": "dcd4deaf727a9785187fb32177497437ec8ead08d07bfcba871a56599368f1ca",
+      "ReactAndroid/src/main/java/com/facebook/react/views/text/TextAttributeProps.kt": "2312b2a52222046737ce93a67dda418d3bbb2db92f7005a06f2f35fecc30ba39"
+    },
+    "name": "react-native",
+    "integrity": "sha512-wajWcLZ93GCN7k4Uwh4CS4L2Ah8ohcvkOXnvIYmh4Yvuqho5j3APZ9qozK+nQrHWSgauq4h8D3HN5DKK84SrHA=="
+  },
+  "nativeValidation": {
+    "sdkGradleCompile": "passed",
+    "testApkInstall": "passed",
+    "instrumentation": "passed",
+    "rawReportSha256": "3573b3c32aa4445f4b119bd6a444314a0180fd551945422c115f816bfcd64635",
+    "instrumentationSha256": "1bd44e75ca7c76f4ece5ec87023d82487494de52bb58cf1a3022c1ed816e45a1",
+    "buildLogSha256": "4c985ddd3757d3ed4c0fb09afcca03b492128ef1b713b288a1bbd76fa8505aff",
+    "installLogSha256": "781a31c82430c97897af612ece5e0ca2205e301cb5ff121ce2660541ea5182c7",
+    "observations": 12,
+    "states": 3,
+    "screenshots": 6,
+    "visualReview": "All six retained PNGs reviewed. PNG binaries are not included in this record.",
+    "priorAttempt": "An earlier attempt was blocked by a System UI ANR overlay. Only the subsequent completed run contributes these observations."
+  },
+  "assertions": [
+    "Authored parent 20 dp LTR, 24 dp RTL and restored 20 dp LTR; half-size descendants 10 dp/12 dp/10 dp with an inherited 1.25 line-height ratio.",
+    "Actual native paint font sizes, line heights, root/Text frames, forwarded-ref dimensions and physical parent paths agree with receipts.",
+    "Actual screenshot glyphs reach the logical-start edge, retain opposite-edge blank space, and stay bounded by native text advance. Cached line-event x is not used as paint position.",
+    "The stock/custom roots and four Text leaves retain native identities across all states; root ref leases remain attached=1, cleaned=0 and sameRoot=true.",
+    "A real native child tap and bubbling root event advance the retained counter from 0 to 1; restoration keeps 1."
+  ],
+  "screenshots": [
+    {
+      "file": "alignment-20-ltr-stock.png",
+      "sha256": "198318fbebfa0f7d1339395afec191d741ce700b41c51515b04a399301460eca",
+      "bytes": 118014
+    },
+    {
+      "file": "alignment-20-ltr-custom.png",
+      "sha256": "01fdb0ba7008fb0d05e2d01dc93876ba2eb314d3adb78e0ca9b7d2143a9df301",
+      "bytes": 111334
+    },
+    {
+      "file": "alignment-24-rtl-stock.png",
+      "sha256": "72167abb6406a5edd180c1322a9c38711a1485aa1114eb8b0af031bb1cab749d",
+      "bytes": 117600
+    },
+    {
+      "file": "alignment-24-rtl-custom.png",
+      "sha256": "4c72e9ba2818be72c1c24a4363cd55707ece83ee4de51b7788dd99386202bbe8",
+      "bytes": 112315
+    },
+    {
+      "file": "alignment-restored-ltr-stock.png",
+      "sha256": "3d80a7887cc19658cbbbcaea91efe4866061eee10fd15b44c12ed9fa2f512afd",
+      "bytes": 112307
+    },
+    {
+      "file": "alignment-restored-ltr-custom.png",
+      "sha256": "affc7f20676ad4b610777fa4e607e0c3ad8038b425bab6b22874ac7194a0d264",
+      "bytes": 110620
+    }
+  ],
+  "report": {
+    "schemaVersion": 1,
+    "scenario": "text-alignment-v1",
+    "driver": "native Instrumentation and UiAutomation",
+    "artifactDirectory": "cache/mui-text-alignment-1793925818577",
+    "device": {
+      "sdk": 37,
+      "model": "sdk_gphone64_arm64",
+      "density": 2.625,
+      "fontScale": 1
+    },
+    "status": "passed",
+    "stages": ["alignment-20-ltr", "alignment-24-rtl", "alignment-restored-ltr"],
+    "states": [
+      {
+        "name": "alignment-20-ltr",
+        "metadata": {
+          "spacing": "source",
+          "inline": false,
+          "adjusted": false,
+          "rtl": false,
+          "large": false,
+          "fontScale": 1,
+          "childCount": 0,
+          "receipts": {
+            "stock": {
+              "local": {
+                "x": 0,
+                "y": 0,
+                "width": 363.4285583496094,
+                "height": 65.52381134033203
+              },
+              "window": {
+                "x": 24,
+                "y": 337.5238037109375,
+                "width": 363.4285583496094,
+                "height": 65.5238037109375
+              }
+            },
+            "custom": {
+              "local": {
+                "x": 0,
+                "y": 65.9047622680664,
+                "width": 363.4285583496094,
+                "height": 113.9047622680664
+              },
+              "window": {
+                "x": 24,
+                "y": 403.42852783203125,
+                "width": 363.4285583496094,
+                "height": 113.90478515625
+              }
+            }
+          },
+          "refRevision": 2,
+          "textFrames": {
+            "primary-stock": {
+              "x": 0,
+              "y": 0,
+              "width": 331.4285583496094,
+              "height": 25.14285659790039
+            },
+            "small-stock": {
+              "x": 0,
+              "y": 28.952381134033203,
+              "width": 331.4285583496094,
+              "height": 12.571428298950195
+            },
+            "primary-custom": {
+              "x": 0,
+              "y": 0,
+              "width": 331.4285583496094,
+              "height": 25.14285659790039
+            },
+            "small-custom": {
+              "x": 0,
+              "y": 28.952381134033203,
+              "width": 331.4285583496094,
+              "height": 12.571428298950195
+            }
+          },
+          "metrics": {
+            "primary-stock": [
+              {
+                "text": "Dock 3.",
+                "x": 0,
+                "y": 0,
+                "width": 67.24256134033203,
+                "height": 25.14285659790039,
+                "capHeight": 14.51428508758545
+              }
+            ],
+            "small-stock": [
+              {
+                "text": "Keep dry.",
+                "x": 0,
+                "y": 0,
+                "width": 41.97172546386719,
+                "height": 12.571428298950195,
+                "capHeight": 7.394285678863525
+              }
+            ],
+            "primary-custom": [
+              {
+                "text": "Notes.",
+                "x": 0,
+                "y": 0,
+                "width": 58.970237731933594,
+                "height": 25.14285659790039,
+                "capHeight": 14.51428508758545
+              }
+            ],
+            "small-custom": [
+              {
+                "text": "Fragile.",
+                "x": 0,
+                "y": 0,
+                "width": 33.37202453613281,
+                "height": 12.571428298950195,
+                "capHeight": 7.394285678863525
+              }
+            ]
+          },
+          "touches": {},
+          "refs": {
+            "stock": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            },
+            "custom": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            }
+          }
+        },
+        "roots": [
+          {
+            "key": "stock",
+            "nativeId": 874,
+            "bounds": {
+              "x": 24,
+              "y": 337.5238037109375,
+              "width": 363.4285583496094,
+              "height": 65.52381134033203
+            },
+            "receipt": {
+              "local": {
+                "x": 0,
+                "y": 0,
+                "width": 363.4285583496094,
+                "height": 65.52381134033203
+              },
+              "window": {
+                "x": 24,
+                "y": 337.5238037109375,
+                "width": 363.4285583496094,
+                "height": 65.5238037109375
+              }
+            },
+            "direction": "ltr",
+            "refs": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            },
+            "content": {
+              "x": 40,
+              "y": 345.5238037109375,
+              "width": 331.4285583496094,
+              "height": 41.52381134033203
+            },
+            "physical": {
+              "mode": "descendants",
+              "parentId": 808,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 1,
+              "contentParentId": 874,
+              "contentAncestors": [874, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "textPhysical": {
+              "mode": "descendants",
+              "parentId": 874,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 2,
+              "primaryParentId": 872,
+              "primaryAncestors": [872, 874, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1],
+              "smallParentId": 872,
+              "smallAncestors": [872, 874, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "contentId": 872,
+            "texts": [
+              {
+                "id": "details-contract-primary-stock",
+                "text": "Dock 3.",
+                "nativeId": 866,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 345.5238037109375,
+                  "width": 331.4285583496094,
+                  "height": 25.14285659790039
+                },
+                "direction": "ltr",
+                "fontPx": 53,
+                "expectedFontPx": 53,
+                "lineHeight": 25.14285659790039,
+                "advance": 67.24256134033203,
+                "ink": {
+                  "x": 1.523809552192688,
+                  "y": 4.190476417541504,
+                  "width": 64,
+                  "height": 15.619047164916992,
+                  "pixels": 2009
+                }
+              },
+              {
+                "id": "details-contract-small-stock",
+                "text": "Keep dry.",
+                "nativeId": 870,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 374.4761962890625,
+                  "width": 331.4285583496094,
+                  "height": 12.571428298950195
+                },
+                "direction": "ltr",
+                "fontPx": 27,
+                "expectedFontPx": 27,
+                "lineHeight": 12.571428298950195,
+                "advance": 41.97172546386719,
+                "ink": {
+                  "x": 0.761904776096344,
+                  "y": 2.2857143878936768,
+                  "width": 40.380950927734375,
+                  "height": 9.904762268066406,
+                  "pixels": 762
+                }
+              }
+            ],
+            "screenshot": "alignment-20-ltr-stock.png"
+          },
+          {
+            "key": "custom",
+            "nativeId": 894,
+            "bounds": {
+              "x": 24,
+              "y": 403.4285583496094,
+              "width": 363.4285583496094,
+              "height": 113.9047622680664
+            },
+            "receipt": {
+              "local": {
+                "x": 0,
+                "y": 65.9047622680664,
+                "width": 363.4285583496094,
+                "height": 113.9047622680664
+              },
+              "window": {
+                "x": 24,
+                "y": 403.42852783203125,
+                "width": 363.4285583496094,
+                "height": 113.90478515625
+              }
+            },
+            "direction": "ltr",
+            "refs": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            },
+            "content": {
+              "x": 40,
+              "y": 411.4285583496094,
+              "width": 331.4285583496094,
+              "height": 89.9047622680664
+            },
+            "physical": {
+              "mode": "descendants",
+              "parentId": 808,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 1,
+              "contentParentId": 894,
+              "contentAncestors": [894, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "textPhysical": {
+              "mode": "descendants",
+              "parentId": 894,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 3,
+              "primaryParentId": 892,
+              "primaryAncestors": [892, 894, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1],
+              "smallParentId": 892,
+              "smallAncestors": [892, 894, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "contentId": 892,
+            "texts": [
+              {
+                "id": "details-contract-primary-custom",
+                "text": "Notes.",
+                "nativeId": 878,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 411.4285583496094,
+                  "width": 331.4285583496094,
+                  "height": 25.14285659790039
+                },
+                "direction": "ltr",
+                "fontPx": 53,
+                "expectedFontPx": 53,
+                "lineHeight": 25.14285659790039,
+                "advance": 58.970237731933594,
+                "ink": {
+                  "x": 1.523809552192688,
+                  "y": 4.952381134033203,
+                  "width": 56,
+                  "height": 14.857142448425293,
+                  "pixels": 1981
+                }
+              },
+              {
+                "id": "details-contract-small-custom",
+                "text": "Fragile.",
+                "nativeId": 882,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 440.3809509277344,
+                  "width": 331.4285583496094,
+                  "height": 12.571428298950195
+                },
+                "direction": "ltr",
+                "fontPx": 27,
+                "expectedFontPx": 27,
+                "lineHeight": 12.571428298950195,
+                "advance": 33.37202453613281,
+                "ink": {
+                  "x": 0.761904776096344,
+                  "y": 2.2857143878936768,
+                  "width": 32,
+                  "height": 9.904762268066406,
+                  "pixels": 637
+                }
+              }
+            ],
+            "screenshot": "alignment-20-ltr-custom.png"
+          }
+        ],
+        "child": {
+          "nativeId": 890,
+          "text": "Mark 0"
+        }
+      },
+      {
+        "name": "alignment-24-rtl",
+        "metadata": {
+          "spacing": "source",
+          "inline": false,
+          "adjusted": false,
+          "rtl": true,
+          "large": true,
+          "fontScale": 1,
+          "childCount": 1,
+          "receipts": {
+            "stock": {
+              "local": {
+                "x": 0,
+                "y": 0,
+                "width": 363.4285583496094,
+                "height": 73.14286041259766
+              },
+              "window": {
+                "x": 24,
+                "y": 337.5238037109375,
+                "width": 363.4285583496094,
+                "height": 73.142822265625
+              }
+            },
+            "custom": {
+              "local": {
+                "x": 0,
+                "y": 73.52381134033203,
+                "width": 363.4285583496094,
+                "height": 121.52381134033203
+              },
+              "window": {
+                "x": 24,
+                "y": 411.047607421875,
+                "width": 363.4285583496094,
+                "height": 121.5238037109375
+              }
+            }
+          },
+          "refRevision": 2,
+          "textFrames": {
+            "primary-stock": {
+              "x": 0,
+              "y": 0,
+              "width": 331.4285583496094,
+              "height": 30.095237731933594
+            },
+            "small-stock": {
+              "x": 0,
+              "y": 33.904762268066406,
+              "width": 331.4285583496094,
+              "height": 15.2380952835083
+            },
+            "primary-custom": {
+              "x": 0,
+              "y": 0,
+              "width": 331.4285583496094,
+              "height": 30.095237731933594
+            },
+            "small-custom": {
+              "x": 0,
+              "y": 33.904762268066406,
+              "width": 331.4285583496094,
+              "height": 15.2380952835083
+            }
+          },
+          "metrics": {
+            "primary-stock": [
+              {
+                "text": "Dock 3.",
+                "x": 0,
+                "y": 0,
+                "width": 79.93154907226562,
+                "height": 30.095237731933594,
+                "capHeight": 17.253334045410156
+              }
+            ],
+            "small-stock": [
+              {
+                "text": "Keep dry.",
+                "x": 0,
+                "y": 0,
+                "width": 49.75,
+                "height": 15.2380952835083,
+                "capHeight": 8.7619047164917
+              }
+            ],
+            "primary-custom": [
+              {
+                "text": "Notes.",
+                "x": 0,
+                "y": 0,
+                "width": 70.09821319580078,
+                "height": 30.095237731933594,
+                "capHeight": 17.253334045410156
+              }
+            ],
+            "small-custom": [
+              {
+                "text": "Fragile.",
+                "x": 0,
+                "y": 0,
+                "width": 39.55952453613281,
+                "height": 15.2380952835083,
+                "capHeight": 8.7619047164917
+              }
+            ]
+          },
+          "touches": {
+            "custom": {
+              "count": 1,
+              "pageX": 78.66666412353516,
+              "pageY": 479.23809814453125,
+              "target": 888,
+              "timestamp": 40328097
+            }
+          },
+          "refs": {
+            "stock": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            },
+            "custom": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            }
+          }
+        },
+        "roots": [
+          {
+            "key": "stock",
+            "nativeId": 874,
+            "bounds": {
+              "x": 24,
+              "y": 337.5238037109375,
+              "width": 363.4285583496094,
+              "height": 73.14286041259766
+            },
+            "receipt": {
+              "local": {
+                "x": 0,
+                "y": 0,
+                "width": 363.4285583496094,
+                "height": 73.14286041259766
+              },
+              "window": {
+                "x": 24,
+                "y": 337.5238037109375,
+                "width": 363.4285583496094,
+                "height": 73.142822265625
+              }
+            },
+            "direction": "rtl",
+            "refs": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            },
+            "content": {
+              "x": 40,
+              "y": 345.5238037109375,
+              "width": 331.4285583496094,
+              "height": 49.14285659790039
+            },
+            "physical": {
+              "mode": "descendants",
+              "parentId": 808,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 1,
+              "contentParentId": 874,
+              "contentAncestors": [874, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "textPhysical": {
+              "mode": "descendants",
+              "parentId": 874,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 2,
+              "primaryParentId": 872,
+              "primaryAncestors": [872, 874, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1],
+              "smallParentId": 872,
+              "smallAncestors": [872, 874, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "contentId": 872,
+            "texts": [
+              {
+                "id": "details-contract-primary-stock",
+                "text": "Dock 3.",
+                "nativeId": 866,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 345.5238037109375,
+                  "width": 331.4285583496094,
+                  "height": 30.095237731933594
+                },
+                "direction": "rtl",
+                "fontPx": 63,
+                "expectedFontPx": 63,
+                "lineHeight": 30.095237731933594,
+                "advance": 79.93154907226562,
+                "ink": {
+                  "x": 253.7142791748047,
+                  "y": 5.333333492279053,
+                  "width": 76.19047546386719,
+                  "height": 18.285715103149414,
+                  "pixels": 2792
+                }
+              },
+              {
+                "id": "details-contract-small-stock",
+                "text": "Keep dry.",
+                "nativeId": 870,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 379.4285583496094,
+                  "width": 331.4285583496094,
+                  "height": 15.2380952835083
+                },
+                "direction": "rtl",
+                "fontPx": 32,
+                "expectedFontPx": 32,
+                "lineHeight": 15.2380952835083,
+                "advance": 49.75,
+                "ink": {
+                  "x": 282.6666564941406,
+                  "y": 2.6666667461395264,
+                  "width": 48,
+                  "height": 11.809523582458496,
+                  "pixels": 1087
+                }
+              }
+            ],
+            "screenshot": "alignment-24-rtl-stock.png"
+          },
+          {
+            "key": "custom",
+            "nativeId": 894,
+            "bounds": {
+              "x": 24,
+              "y": 411.047607421875,
+              "width": 363.4285583496094,
+              "height": 121.52381134033203
+            },
+            "receipt": {
+              "local": {
+                "x": 0,
+                "y": 73.52381134033203,
+                "width": 363.4285583496094,
+                "height": 121.52381134033203
+              },
+              "window": {
+                "x": 24,
+                "y": 411.047607421875,
+                "width": 363.4285583496094,
+                "height": 121.5238037109375
+              }
+            },
+            "direction": "rtl",
+            "refs": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            },
+            "content": {
+              "x": 40,
+              "y": 419.047607421875,
+              "width": 331.4285583496094,
+              "height": 97.52381134033203
+            },
+            "physical": {
+              "mode": "descendants",
+              "parentId": 808,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 1,
+              "contentParentId": 894,
+              "contentAncestors": [894, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "textPhysical": {
+              "mode": "descendants",
+              "parentId": 894,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 3,
+              "primaryParentId": 892,
+              "primaryAncestors": [892, 894, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1],
+              "smallParentId": 892,
+              "smallAncestors": [892, 894, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "contentId": 892,
+            "texts": [
+              {
+                "id": "details-contract-primary-custom",
+                "text": "Notes.",
+                "nativeId": 878,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 419.047607421875,
+                  "width": 331.4285583496094,
+                  "height": 30.095237731933594
+                },
+                "direction": "rtl",
+                "fontPx": 63,
+                "expectedFontPx": 63,
+                "lineHeight": 30.095237731933594,
+                "advance": 70.09821319580078,
+                "ink": {
+                  "x": 263.23809814453125,
+                  "y": 6.095238208770752,
+                  "width": 66.28571319580078,
+                  "height": 17.5238094329834,
+                  "pixels": 2657
+                }
+              },
+              {
+                "id": "details-contract-small-custom",
+                "text": "Fragile.",
+                "nativeId": 882,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 452.952392578125,
+                  "width": 331.4285583496094,
+                  "height": 15.2380952835083
+                },
+                "direction": "rtl",
+                "fontPx": 32,
+                "expectedFontPx": 32,
+                "lineHeight": 15.2380952835083,
+                "advance": 39.55952453613281,
+                "ink": {
+                  "x": 292.952392578125,
+                  "y": 2.6666667461395264,
+                  "width": 38.095237731933594,
+                  "height": 11.809523582458496,
+                  "pixels": 878
+                }
+              }
+            ],
+            "screenshot": "alignment-24-rtl-custom.png"
+          }
+        ],
+        "child": {
+          "nativeId": 890,
+          "text": "Mark 1"
+        }
+      },
+      {
+        "name": "alignment-restored-ltr",
+        "metadata": {
+          "spacing": "source",
+          "inline": false,
+          "adjusted": false,
+          "rtl": false,
+          "large": false,
+          "fontScale": 1,
+          "childCount": 1,
+          "receipts": {
+            "stock": {
+              "local": {
+                "x": 0,
+                "y": 0,
+                "width": 363.4285583496094,
+                "height": 65.52381134033203
+              },
+              "window": {
+                "x": 24,
+                "y": 337.5238037109375,
+                "width": 363.4285583496094,
+                "height": 65.5238037109375
+              }
+            },
+            "custom": {
+              "local": {
+                "x": 0,
+                "y": 65.9047622680664,
+                "width": 363.4285583496094,
+                "height": 113.9047622680664
+              },
+              "window": {
+                "x": 24,
+                "y": 403.42852783203125,
+                "width": 363.4285583496094,
+                "height": 113.90478515625
+              }
+            }
+          },
+          "refRevision": 2,
+          "textFrames": {
+            "primary-stock": {
+              "x": 0,
+              "y": 0,
+              "width": 331.4285583496094,
+              "height": 25.14285659790039
+            },
+            "small-stock": {
+              "x": 0,
+              "y": 28.952381134033203,
+              "width": 331.4285583496094,
+              "height": 12.571428298950195
+            },
+            "primary-custom": {
+              "x": 0,
+              "y": 0,
+              "width": 331.4285583496094,
+              "height": 25.14285659790039
+            },
+            "small-custom": {
+              "x": 0,
+              "y": 28.952381134033203,
+              "width": 331.4285583496094,
+              "height": 12.571428298950195
+            }
+          },
+          "metrics": {
+            "primary-stock": [
+              {
+                "text": "Dock 3.",
+                "x": 0,
+                "y": 0,
+                "width": 67.24256134033203,
+                "height": 25.14285659790039,
+                "capHeight": 14.51428508758545
+              }
+            ],
+            "small-stock": [
+              {
+                "text": "Keep dry.",
+                "x": 0,
+                "y": 0,
+                "width": 41.97172546386719,
+                "height": 12.571428298950195,
+                "capHeight": 7.394285678863525
+              }
+            ],
+            "primary-custom": [
+              {
+                "text": "Notes.",
+                "x": 0,
+                "y": 0,
+                "width": 58.970237731933594,
+                "height": 25.14285659790039,
+                "capHeight": 14.51428508758545
+              }
+            ],
+            "small-custom": [
+              {
+                "text": "Fragile.",
+                "x": 0,
+                "y": 0,
+                "width": 33.37202453613281,
+                "height": 12.571428298950195,
+                "capHeight": 7.394285678863525
+              }
+            ]
+          },
+          "touches": {
+            "custom": {
+              "count": 1,
+              "pageX": 78.66666412353516,
+              "pageY": 479.23809814453125,
+              "target": 888,
+              "timestamp": 40328097
+            }
+          },
+          "refs": {
+            "stock": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            },
+            "custom": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            }
+          }
+        },
+        "roots": [
+          {
+            "key": "stock",
+            "nativeId": 874,
+            "bounds": {
+              "x": 24,
+              "y": 337.5238037109375,
+              "width": 363.4285583496094,
+              "height": 65.52381134033203
+            },
+            "receipt": {
+              "local": {
+                "x": 0,
+                "y": 0,
+                "width": 363.4285583496094,
+                "height": 65.52381134033203
+              },
+              "window": {
+                "x": 24,
+                "y": 337.5238037109375,
+                "width": 363.4285583496094,
+                "height": 65.5238037109375
+              }
+            },
+            "direction": "ltr",
+            "refs": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            },
+            "content": {
+              "x": 40,
+              "y": 345.5238037109375,
+              "width": 331.4285583496094,
+              "height": 41.52381134033203
+            },
+            "physical": {
+              "mode": "descendants",
+              "parentId": 808,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 1,
+              "contentParentId": 874,
+              "contentAncestors": [874, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "textPhysical": {
+              "mode": "descendants",
+              "parentId": 874,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 2,
+              "primaryParentId": 872,
+              "primaryAncestors": [872, 874, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1],
+              "smallParentId": 872,
+              "smallAncestors": [872, 874, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "contentId": 872,
+            "texts": [
+              {
+                "id": "details-contract-primary-stock",
+                "text": "Dock 3.",
+                "nativeId": 866,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 345.5238037109375,
+                  "width": 331.4285583496094,
+                  "height": 25.14285659790039
+                },
+                "direction": "ltr",
+                "fontPx": 53,
+                "expectedFontPx": 53,
+                "lineHeight": 25.14285659790039,
+                "advance": 67.24256134033203,
+                "ink": {
+                  "x": 1.523809552192688,
+                  "y": 4.190476417541504,
+                  "width": 64,
+                  "height": 15.619047164916992,
+                  "pixels": 2009
+                }
+              },
+              {
+                "id": "details-contract-small-stock",
+                "text": "Keep dry.",
+                "nativeId": 870,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 374.4761962890625,
+                  "width": 331.4285583496094,
+                  "height": 12.571428298950195
+                },
+                "direction": "ltr",
+                "fontPx": 27,
+                "expectedFontPx": 27,
+                "lineHeight": 12.571428298950195,
+                "advance": 41.97172546386719,
+                "ink": {
+                  "x": 0.761904776096344,
+                  "y": 2.2857143878936768,
+                  "width": 40.380950927734375,
+                  "height": 9.904762268066406,
+                  "pixels": 762
+                }
+              }
+            ],
+            "screenshot": "alignment-restored-ltr-stock.png"
+          },
+          {
+            "key": "custom",
+            "nativeId": 894,
+            "bounds": {
+              "x": 24,
+              "y": 403.4285583496094,
+              "width": 363.4285583496094,
+              "height": 113.9047622680664
+            },
+            "receipt": {
+              "local": {
+                "x": 0,
+                "y": 65.9047622680664,
+                "width": 363.4285583496094,
+                "height": 113.9047622680664
+              },
+              "window": {
+                "x": 24,
+                "y": 403.42852783203125,
+                "width": 363.4285583496094,
+                "height": 113.90478515625
+              }
+            },
+            "direction": "ltr",
+            "refs": {
+              "attached": 1,
+              "cleaned": 0,
+              "sameRoot": true
+            },
+            "content": {
+              "x": 40,
+              "y": 411.4285583496094,
+              "width": 331.4285583496094,
+              "height": 89.9047622680664
+            },
+            "physical": {
+              "mode": "descendants",
+              "parentId": 808,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 1,
+              "contentParentId": 894,
+              "contentAncestors": [894, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "textPhysical": {
+              "mode": "descendants",
+              "parentId": 894,
+              "parentClass": "com.facebook.react.views.view.ReactViewGroup",
+              "rootChildren": 3,
+              "primaryParentId": 892,
+              "primaryAncestors": [892, 894, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1],
+              "smallParentId": 892,
+              "smallAncestors": [892, 894, 808, 810, 276, 2, 1, 16908290, 2131230775, -1, -1, -1]
+            },
+            "contentId": 892,
+            "texts": [
+              {
+                "id": "details-contract-primary-custom",
+                "text": "Notes.",
+                "nativeId": 878,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 411.4285583496094,
+                  "width": 331.4285583496094,
+                  "height": 25.14285659790039
+                },
+                "direction": "ltr",
+                "fontPx": 53,
+                "expectedFontPx": 53,
+                "lineHeight": 25.14285659790039,
+                "advance": 58.970237731933594,
+                "ink": {
+                  "x": 1.523809552192688,
+                  "y": 4.952381134033203,
+                  "width": 56,
+                  "height": 14.857142448425293,
+                  "pixels": 1981
+                }
+              },
+              {
+                "id": "details-contract-small-custom",
+                "text": "Fragile.",
+                "nativeId": 882,
+                "class": "com.facebook.react.views.text.ReactTextView",
+                "backend": "TextView",
+                "bounds": {
+                  "x": 40,
+                  "y": 440.3809509277344,
+                  "width": 331.4285583496094,
+                  "height": 12.571428298950195
+                },
+                "direction": "ltr",
+                "fontPx": 27,
+                "expectedFontPx": 27,
+                "lineHeight": 12.571428298950195,
+                "advance": 33.37202453613281,
+                "ink": {
+                  "x": 0.761904776096344,
+                  "y": 2.2857143878936768,
+                  "width": 32,
+                  "height": 9.904762268066406,
+                  "pixels": 637
+                }
+              }
+            ],
+            "screenshot": "alignment-restored-ltr-custom.png"
+          }
+        ],
+        "child": {
+          "nativeId": 890,
+          "text": "Mark 1"
+        }
+      }
+    ],
+    "screenshots": [
+      "alignment-20-ltr-stock.png",
+      "alignment-20-ltr-custom.png",
+      "alignment-24-rtl-stock.png",
+      "alignment-24-rtl-custom.png",
+      "alignment-restored-ltr-stock.png",
+      "alignment-restored-ltr-custom.png"
+    ]
+  },
+  "limits": [
+    "This run uses actual native fontScale 1. Authored 20-to-24 sizing is not an OS accessibility text-size change.",
+    "Only the ReactTextView/TextView backend was observed. Prepared-layout backend source/parser coverage is not a native observation in this record.",
+    "The source snapshot is runtime 72172, equivalent to main e962 for the listed inputs. Later Typography source changes require their own native evidence.",
+    "This closes a bounded baseline font/line/paint/ref/action observation, not all Android, AccordionDetails or Typography props/states.",
+    "Maximum OS text, wider direction/script/font/Portal profiles, TalkBack/assistive technology and optimized performance remain separate gates.",
+    "No PNG binaries, private artifact paths, device serials or account identifiers are published."
+  ]
+}
