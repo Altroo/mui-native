@@ -225,17 +225,19 @@ export function PaperContractExample() {
       });
     }
   };
-  const onTouchEnd = useCallback(
-    (event: GestureResponderEvent) =>
-      setTouch((previous) => ({
-        count: (previous?.count ?? 0) + 1,
-        target: event.nativeEvent.target,
-        pageX: event.nativeEvent.pageX,
-        pageY: event.nativeEvent.pageY,
-        timestamp: event.timeStamp,
-      })),
-    [],
-  );
+  const onTouchEnd = useCallback((event: GestureResponderEvent) => {
+    // Snapshot raw fields before React can defer the updater. This receipt
+    // captures the first event only: count=1 is not a total touchEnd count.
+    // Later reveal-scroll/cancel events may legitimately bubble here.
+    const captured = {
+      count: 1,
+      target: event.nativeEvent.target,
+      pageX: event.nativeEvent.pageX,
+      pageY: event.nativeEvent.pageY,
+      timestamp: event.timeStamp,
+    };
+    setTouch((previous) => previous ?? captured);
+  }, []);
   const theme = useMemo(
     () =>
       createTheme({

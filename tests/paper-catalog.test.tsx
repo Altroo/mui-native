@@ -114,6 +114,53 @@ test('both hosts, retained child counters and raw custom native callbacks surviv
     next(tree);
   }
 });
+test('later bubbled scroll touch preserves the first raw event after all prop updates', () => {
+  const tree = render(<PaperContractExample />),
+    roots = paperContractKeys.map((key) => host(tree, key));
+  fireEvent.press(tree.getByTestId('paper-contract-counter'));
+  fireEvent.press(tree.getByTestId('paper-contract-customtouch'));
+  const first = {
+    nativeEvent: { target: 646, pageX: 164, pageY: 756.666 },
+    timeStamp: 32378112.636708,
+  };
+  fireEvent(tree.getByTestId('paper-contract-custom'), 'touchEnd', first);
+  const captured = receipt(tree).touch;
+  for (let state = 1; state < paperContractStates.length; state++) next(tree);
+  expect(receipt(tree).input.name).toBe('restored');
+  const scroll = {
+    nativeEvent: { target: 650, pageX: 201, pageY: 757.666 },
+    timeStamp: 32672476.631917,
+  };
+  fireEvent(tree.getByTestId('paper-contract-custom'), 'touchEnd', scroll);
+  expect(receipt(tree)).toMatchObject({ state: 32, count: 1, customCount: 1, touch: captured });
+  expect(receipt(tree).touch).toEqual({
+    count: 1,
+    target: 646,
+    pageX: 164,
+    pageY: 756.666,
+    timestamp: 32378112.636708,
+  });
+  for (const [index, key] of paperContractKeys.entries())
+    expect(host(tree, key)).toBe(roots[index]);
+});
+test('batched native events snapshot first primitive fields before event objects change', () => {
+  const tree = render(<PaperContractExample />);
+  const handler = tree.getByTestId('paper-contract-custom').props.onTouchEnd;
+  const first = { nativeEvent: { target: 29, pageX: 12, pageY: 34 }, timeStamp: 567 };
+  act(() => {
+    handler(first);
+    first.nativeEvent.target = 99;
+    first.nativeEvent.pageX = 88;
+    first.nativeEvent.pageY = 77;
+    first.timeStamp = 666;
+    handler({ nativeEvent: { target: 30, pageX: 56, pageY: 78 }, timeStamp: 789 });
+  });
+  expect(receipt(tree)).toMatchObject({
+    count: 0,
+    customCount: 0,
+    touch: { count: 1, target: 29, pageX: 12, pageY: 34, timestamp: 567 },
+  });
+});
 test('fresh requests reject superseded callbacks, old states and invalid frames for either key', () => {
   const tree = render(<PaperContractExample />);
   type Done = Parameters<ViewInstance['measureInWindow']>[0];

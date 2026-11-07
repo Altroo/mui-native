@@ -260,13 +260,21 @@ public final class PaperScenario {
   }
   private void tap(String id) throws Exception { tap(id, false); }
   private void tap(String id, boolean navigationTouch) throws Exception {
+    await(this::catalogOwnsTouchWindow, "Catalog must own the focused window before touch: " + id);
     await(() -> ui(() -> find(id) != null && view(id).getWidth() > 0 && view(id).getHeight() > 0), "Touch target must mount: " + id);
     ui(() -> { View target = view(id); target.requestRectangleOnScreen(new Rect(0, 0, target.getWidth(), target.getHeight()), true); return null; });
     await(() -> ui(() -> { Rect visible = new Rect(); return view(id).getGlobalVisibleRect(visible) && visible.width() > 0 && visible.height() > 0; }), "Touch target must be visible");
     if (navigationTouch) commitFrame();
     float[] point = ui(() -> { Rect visible = new Rect(); require(view(id).getGlobalVisibleRect(visible), "Touch target clipped"); return new float[]{visible.exactCenterX(), visible.exactCenterY()}; });
     long down = SystemClock.uptimeMillis();
-    for (int action : new int[]{MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP}) { MotionEvent event = MotionEvent.obtain(down, SystemClock.uptimeMillis(), action, point[0], point[1], 0); event.setSource(InputDevice.SOURCE_TOUCHSCREEN); try { require(automation.injectInputEvent(event, true), "Native touch injection failed"); } finally { event.recycle(); } SystemClock.sleep(30); }
+    for (int action : new int[]{MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP}) { require(catalogOwnsTouchWindow(), "Catalog lost its focused touch window: " + id); MotionEvent event = MotionEvent.obtain(down, SystemClock.uptimeMillis(), action, point[0], point[1], 0); event.setSource(InputDevice.SOURCE_TOUCHSCREEN); try { require(automation.injectInputEvent(event, true), "Native touch injection failed"); } finally { event.recycle(); } SystemClock.sleep(30); }
+  }
+  // Offscreen bounds can remain valid underneath a system or another app window.
+  // Check actual focus and the active accessibility owner before each injected event.
+  private boolean catalogOwnsTouchWindow() {
+    AccessibilityNodeInfo owner = automation.getRootInActiveWindow();
+    return owner != null && PACKAGE.equals(String.valueOf(owner.getPackageName()))
+      && ui(() -> activity.hasWindowFocus());
   }
   private void commitFrame() throws Exception {
     CountDownLatch committed = new CountDownLatch(1);

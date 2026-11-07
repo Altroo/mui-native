@@ -248,3 +248,31 @@ Run its two methods separately with the existing iOS workspace/device command. U
 The tests fail a wrong profile: normal requires native fontScale near 1, and the largest accessibility run requires the pinned RN 0.88.1 multiplier 3.571 within serialization tolerance. Do not run both methods under one unchanged profile or substitute an authored font-size change. The existing profile wrapper records and restores the actual OS setting; these Swift tests change no OS setting.
 
 Retain each twelve-stage JSON attachment and review the PNG attachments separately. Scrolling changes screen origins, so ref association compares fresh measured dimensions with the independently revealed native root; root/parent geometry uses their current accessibility frames. XCUI exposes no React Native View tag or UIView pointer, so identity evidence is the retained child plus forwarded-ref lifecycle. The PNG samples use public composited element screenshots; they do not reuse Android's text-excluded retained-view raster or establish full physical ancestry, every pixel or screen-reader behavior. See the [recorded validation](validation.md#2026-11-07-finite-native-divider-contracts) for scoped execution evidence. Adding or compiling this collector alone is not an execution or visual-pass claim.
+
+### Paper finite native scene
+
+The **Wrappers > Paper** scene keeps a stock View root and a custom native root mounted across 33 states: default, outlined, square, light zero elevation, every dark elevation from zero through 24, dark square, RTL, an explicit native-style reset and restoration. The two press counters must remain one after their initial real touches. The raw event receipt retains the first captured native touch; later scroll/cancel touch-end events may still bubble normally and must not replace that receipt.
+
+Run `node scripts/native-catalog/android-popper.mjs prepare --project apps/native-catalog/android`, then build/install the maintained instrumentation in the existing development project. Keep the catalog connected to Metro and foreground it before testing. The [Paper collector](../tests/native/android/PaperScenario.java) requires Android 29 or later for frame-commit capture and checks the active catalog accessibility window and native focus before injecting each touch event. These ownership checks are snapshots, not an atomic guarantee across OS window changes. A blocking system window fails the check; it is not permission to inject events into another app.
+
+With an explicit existing emulator serial and fresh output directories, run normal text as follows:
+
+```sh
+PATH="$ANDROID_HOME/platform-tools:$PATH" node scripts/native-catalog/text-profile.mjs \
+  --platform android --device "$ANDROID_SERIAL" --size 1.0 \
+  --outputDir "$HOME/.cache/mui-native-paper-normal-profile-1" \
+  -- node scripts/native-catalog/android-popper.mjs run \
+  --scenario paper --font-profile normal --serial "$ANDROID_SERIAL" \
+  --adb "$ANDROID_HOME/platform-tools/adb" --output .cache/native-paper-normal
+```
+
+Repeat with `--size 2.0`, `--font-profile enlarged` and new profile/evidence output directories. Profile directories must stay outside the checkout; only the inner Android evidence directory may use `.cache`. The profile helper must find the SDK's `adb`, so retain the PATH prefix for both runs. It records and restores the original OS text setting. The native collector checks SP-converted font paint, retained native root/text/control instances, fresh ref measurements, intrinsic height and padding, border/radius properties, real event fields and all 25 source-backed dark overlays. Its five text-excluded raster samples per root come from `View.draw`; they are separate from the named full-window screenshots and do not certify GPU shadow equivalence.
+
+For iOS, add [PaperCatalogUITests.swift](../tests/native/ios/PaperCatalogUITests.swift) to the existing shared UI-test target and build it. Preserve its Swift 6 main-actor class and asynchronous XCTest lifecycle. Run the methods separately through the existing `text-profile.mjs` wrapper and workspace/device command, with a concrete existing simulator UUID and fresh profile/result directories:
+
+- Normal: `--size large` and `-only-testing:PopperCatalogUITests/PaperCatalogUITests/testAllThirtyThreeStagesAtNormalDynamicType`.
+- Enlarged: `--size accessibility-extra-extra-extra-large` and `-only-testing:PopperCatalogUITests/PaperCatalogUITests/testAllThirtyThreeStagesAtEnlargedDynamicType`.
+
+The Swift tests require fontScale one and the pinned RN 0.88.1 largest-category multiplier 3.571 respectively. They verify current accessibility geometry, intrinsic scaled content, raw event retention, 33 fresh ref requests, composited surface colors, square/rounded cutouts, the outlined edge and scaled counter glyphs. The outline raster-width bound is specific to the tested 3x pixel scale. XCUI identity evidence is the forwarded-ref lifecycle and retained child; no native UIView pointer or React tag is exposed.
+
+Export all authored JSON and PNG attachments and inspect failed runs too. Keep passed, failed and skipped XCTest counts separate. The collectors provide finite native evidence; adding or compiling them alone establishes no execution result. General radius reconstruction, calibrated GPU shadows, every density/platform version, physical accessibility and optimized-build performance remain separate gates. See the [Paper contract](paper.md) for supported source behavior and native adaptations.
