@@ -51,11 +51,13 @@ The maintained [catalog scene](../apps/native-catalog/PaperContractExample.tsx) 
 
 Android verifies actual retained native root/text/control instances, SP-converted text, independent bounds, border/radius properties and text-excluded `View.draw` interior samples. iOS verifies forwarded-ref/child lifetime, current accessibility geometry, composited element screenshots, rounded/square cutouts, the outlined edge and scaled counter ink. Neither method establishes every pixel, calibrated GPU shadows, physical accessibility or optimized-build performance. See [validation](validation.md#2026-11-07-finite-native-paper-contracts) and [reproduction instructions](native-catalog-testing.md#paper-finite-native-scene).
 
+The separate [optimized iOS simulator pilot](performance-paper.md#exploratory-optimized-simulator-pilot) compares 100 Paper and native View roots for hot mounting, eight retained updates and matched scroll cycles in both mode orders. Its whole-app CPU/memory observations cover normal text and LTR only; Android, physical-device, input-latency, frame and calibrated performance remain separate gates.
+
 ## Explicit boundaries
 
 The shared CSS grammar still determines supported declarations, selectors and responsive values. Arbitrary CSS background-image authoring, browser custom properties including private `--Paper-shadow`/`--Paper-overlay` overrides, CSS-variable color-scheme themes, general Emotion serialization, web box-shadow transitions and modular CSS layers are separate work. Paper supplies concrete default shadow/overlay payloads and source callback metadata; it does not add another CSS engine. Genuine native `style.backgroundImage` remains available through RN's public typed API.
 
-Development diagnostics identify unavailable shadow indices. Full web propTypes behavior, browser tags/attributes/ref objects, browser layout/wrapping, physical accessibility services, calibrated native shadow/gradient equivalence, performance and the wider device/version/density matrix remain separate gates. Existing stock RN0.88.1 mixed physical/logical RTL geometry limitations are not fixed by this component.
+Development diagnostics identify unavailable shadow indices. Full web propTypes behavior, browser tags/attributes/ref objects, browser layout/wrapping, physical accessibility services, calibrated native shadow/gradient equivalence, representative performance beyond the recorded simulator pilot and the wider device/version/density matrix remain separate gates. Existing stock RN0.88.1 mixed physical/logical RTL geometry limitations are not fixed by this component.
 
 ## Reproduce the finite reference
 

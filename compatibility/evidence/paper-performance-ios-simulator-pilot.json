@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 1,
+  "kind": "exploratory-simulator-pilot",
+  "publicPerformanceSourceCommit": "2677686ead693774051e007300fc08d2d71b4a33",
+  "sourceFingerprint": "c711ca3633ff7dd991cab07c05b87b547fd7b739e9fa25c888382ec4db2cc129",
+  "sourceSnapshotScope": "The measured local snapshot includes additional catalog scenes common to both modes; it is not attributed to the public source commit alone.",
+  "buildIdentity": {
+    "appExecutableSha256": "6ef314666770c46e07dff5819fd6edf692ae94f79cd336684939553528b14608",
+    "bundleSha256": "20a281bcc1b36530791f1367ba5ce053c3da0779ff69d857116579e820e88498",
+    "collectorSourceSha256": "8b10488822209c088b696eb1ce047ce6cb672b3c16d5b35b099fbd8d77e12ca7",
+    "bundleFormat": "Hermes JavaScript bytecode, version 99",
+    "compilerPreflight": {
+      "CONFIGURATION": "Release",
+      "SWIFT_OPTIMIZATION_LEVEL": "-O",
+      "GCC_OPTIMIZATION_LEVEL": "s"
+    }
+  },
+  "environment": {
+    "platform": "iOS Simulator",
+    "modelName": "iPhone 18 Pro",
+    "osVersion": "27.0",
+    "architecture": "arm64",
+    "sdkName": "iphonesimulator27.1",
+    "sdkVersion": "27.1",
+    "appSwiftLanguageVersion": "5.0",
+    "collectorSwiftLanguageVersion": "6.0"
+  },
+  "textProfile": "normal",
+  "globalDirection": "ltr",
+  "testOutcomes": {
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0
+  },
+  "samplesPerCase": 3,
+  "discardedWarmupsPerCase": 1,
+  "cases": [
+    {
+      "sequence": 1,
+      "phase": "mount",
+      "order": "forward",
+      "mode": "rn",
+      "method": "testMountRN",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [0.9797800750000001, 1.030150543, 1.012572654],
+        "mean": 1.0075010906666666
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [114035.208, 117492.232, 120621.576],
+        "mean": 117383.00533333333
+      }
+    },
+    {
+      "sequence": 2,
+      "phase": "mount",
+      "order": "forward",
+      "mode": "mui",
+      "method": "testMountMUI",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [1.0507033510000001, 1.056559873, 1.074359039],
+        "mean": 1.0605407543333334
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [120179.184, 120965.616, 120162.8],
+        "mean": 120435.86666666665
+      }
+    },
+    {
+      "sequence": 3,
+      "phase": "mount",
+      "order": "reverse",
+      "mode": "mui",
+      "method": "testMountMUI",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [1.0573114030000001, 1.0596782100000002, 1.070420087],
+        "mean": 1.0624699000000002
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [120015.344, 120867.312, 120064.496],
+        "mean": 120315.71733333333
+      }
+    },
+    {
+      "sequence": 4,
+      "phase": "mount",
+      "order": "reverse",
+      "mode": "rn",
+      "method": "testMountRN",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [1.0361000120000001, 1.001261164, 1.0273471680000001],
+        "mean": 1.0215694480000002
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [114690.544, 118114.8, 121211.376],
+        "mean": 118005.57333333332
+      }
+    },
+    {
+      "sequence": 5,
+      "phase": "updates",
+      "order": "forward",
+      "mode": "rn",
+      "method": "testUpdatesRN",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [3.884163618, 3.8611386330000004, 3.855822573],
+        "mean": 3.8670416080000005
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [128813.6, 121031.176, 122014.24],
+        "mean": 123953.00533333333
+      }
+    },
+    {
+      "sequence": 6,
+      "phase": "updates",
+      "order": "forward",
+      "mode": "mui",
+      "method": "testUpdatesMUI",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [4.1201891790000005, 4.130528149, 4.102544952000001],
+        "mean": 4.117754093333334
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [119343.624, 119867.912, 119458.312],
+        "mean": 119556.616
+      }
+    },
+    {
+      "sequence": 7,
+      "phase": "updates",
+      "order": "reverse",
+      "mode": "mui",
+      "method": "testUpdatesMUI",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [4.0924816250000005, 4.097486413, 4.0963974940000005],
+        "mean": 4.095455177333334
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [119654.92, 119966.216, 119982.6],
+        "mean": 119867.91200000001
+      }
+    },
+    {
+      "sequence": 8,
+      "phase": "updates",
+      "order": "reverse",
+      "mode": "rn",
+      "method": "testUpdatesRN",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [3.8258075390000004, 3.7827332670000002, 3.841772939],
+        "mean": 3.8167712483333336
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [128453.128, 121047.56, 122227.208],
+        "mean": 123909.29866666667
+      }
+    },
+    {
+      "sequence": 9,
+      "phase": "scroll",
+      "order": "forward",
+      "mode": "rn",
+      "method": "testScrollRN",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [5.48603575, 5.444295987, 5.42740329],
+        "mean": 5.452578342333333
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [100387.312, 103287.28, 106416.624],
+        "mean": 103363.73866666667
+      }
+    },
+    {
+      "sequence": 10,
+      "phase": "scroll",
+      "order": "forward",
+      "mode": "mui",
+      "method": "testScrollMUI",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [5.418346882000001, 5.4184847650000005, 5.476181769],
+        "mean": 5.4376711386666665
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [104581.616, 105613.808, 105122.288],
+        "mean": 105105.904
+      }
+    },
+    {
+      "sequence": 11,
+      "phase": "scroll",
+      "order": "reverse",
+      "mode": "mui",
+      "method": "testScrollMUI",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [5.404824303000001, 5.4133991660000005, 5.486557516],
+        "mean": 5.4349269950000005
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [104565.232, 105581.04, 104810.992],
+        "mean": 104985.75466666666
+      }
+    },
+    {
+      "sequence": 12,
+      "phase": "scroll",
+      "order": "reverse",
+      "mode": "rn",
+      "method": "testScrollRN",
+      "testOutcomes": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "acknowledgementAttachments": 4,
+      "cpuTime": {
+        "identifier": "com.apple.dt.XCTMetric_CPU-dev.altroo.muinative.catalog.time",
+        "unit": "s",
+        "samples": [5.342198033000001, 5.421506998, 5.423581352],
+        "mean": 5.395762127666667
+      },
+      "peakPhysicalMemory": {
+        "identifier": "com.apple.dt.XCTMetric_Memory-dev.altroo.muinative.catalog.physical_peak",
+        "unit": "kB",
+        "samples": [100354.568, 103172.616, 106351.112],
+        "mean": 103292.76533333333
+      }
+    }
+  ],
+  "limitations": [
+    "Optimized normal-LTR iOS simulator pilot; three reported samples and one discarded warm-up per case.",
+    "CPU/memory target the whole app, including its input/AX handling; runner-process CPU/memory is excluded.",
+    "Orders and phases remain separate. No per-component allocation, leak, latency, FPS or tail-distribution claim.",
+    "Cold startup, calibrated GPU shadows, physical-device and representative optimized-build performance remain unverified.",
+    "Local builds and test suites were held during collection; existing virtual devices and Metro remained running, and light source editing/browser review continued."
+  ],
+  "measuredOn": "2026-11-07",
+  "conditions": "Local builds and test suites were held during collection. Existing virtual devices and Metro remained running; light source editing and browser review continued."
+}
