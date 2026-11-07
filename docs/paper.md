@@ -1,6 +1,6 @@
 # Paper
 
-`Paper` provides the existing Material surface contract on a native View. The finite software reference is Material UI 9.5.0. This page records source behavior and native adaptations; it does not certify device paint or complete web compatibility.
+`Paper` provides the existing Material surface contract on a native View. The finite software reference is Material UI 9.5.0. This page records source behavior, native adaptations and the finite native checks below. Complete web compatibility remains unverified.
 
 ```tsx
 import Paper from '@altroo/mui-native/Paper';
@@ -12,6 +12,8 @@ import { Typography } from '@altroo/mui-native';
 ```
 
 The package root exports the same `Paper`, `paperClasses`, `getPaperUtilityClass` and public props/classes/type-map types as the canonical native subpath. Existing additive Box, Stack, Typography and Card imports from the Paper subpath remain available.
+
+This guide describes unpublished development after `0.0.7-prealpha.0`. See the [changelog](../CHANGELOG.md) for released package contents.
 
 ## Source software contract
 
@@ -43,11 +45,17 @@ const Surface = forwardRef<ViewInstance, ViewProps & { tracking: string }>(
 
 Opaque custom roots keep control of their final native style composition. Paper does not rewrite their implementation or install a React Native monkey patch.
 
+## Finite native verification
+
+The maintained [catalog scene](../apps/native-catalog/PaperContractExample.tsx) passes its 33 states at normal and enlarged OS text sizes on the existing Android API37 emulator and iPhone18Pro/iOS27 simulator. Each run keeps stock and custom roots mounted, touches both counters once, traverses all 25 dark elevations, switches shape/outline/direction, applies explicit native resets and restores the defaults. The first raw touch fields remain captured while later scroll events bubble normally.
+
+Android verifies actual retained native root/text/control instances, SP-converted text, independent bounds, border/radius properties and text-excluded `View.draw` interior samples. iOS verifies forwarded-ref/child lifetime, current accessibility geometry, composited element screenshots, rounded/square cutouts, the outlined edge and scaled counter ink. Neither method establishes every pixel, calibrated GPU shadows, physical accessibility or optimized-build performance. See [validation](validation.md#2026-11-07-finite-native-paper-contracts) and [reproduction instructions](native-catalog-testing.md#paper-finite-native-scene).
+
 ## Explicit boundaries
 
 The shared CSS grammar still determines supported declarations, selectors and responsive values. Arbitrary CSS background-image authoring, browser custom properties including private `--Paper-shadow`/`--Paper-overlay` overrides, CSS-variable color-scheme themes, general Emotion serialization, web box-shadow transitions and modular CSS layers are separate work. Paper supplies concrete default shadow/overlay payloads and source callback metadata; it does not add another CSS engine. Genuine native `style.backgroundImage` remains available through RN's public typed API.
 
-Development diagnostics identify unavailable shadow indices. Full web propTypes behavior, browser tags/attributes/ref objects, browser layout/wrapping, physical accessibility services, native shadow/gradient raster equivalence, performance and the actual iOS/Android integration matrix remain separate gates. Existing stock RN0.88.1 mixed physical/logical RTL geometry limitations are not fixed by this component.
+Development diagnostics identify unavailable shadow indices. Full web propTypes behavior, browser tags/attributes/ref objects, browser layout/wrapping, physical accessibility services, calibrated native shadow/gradient equivalence, performance and the wider device/version/density matrix remain separate gates. Existing stock RN0.88.1 mixed physical/logical RTL geometry limitations are not fixed by this component.
 
 ## Reproduce the finite reference
 

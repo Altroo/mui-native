@@ -79,6 +79,8 @@ Native [SvgIcon and factories](docs/svg-icon.md) now share actual SVG rendering,
 
 Native [Divider](docs/divider.md) now has pinned variants, label geometry, utility classes, generic native roots, defaults/overrides and retained refs. Its twelve-state scene passes on iOS and Android at normal and enlarged OS text sizes. General pseudo-elements, sibling selectors, broader native RTL/swap and viewport cases, physical assistive technology and calibrated performance remain open. This is unpublished development after `0.0.7-prealpha.0`; the finite native checks do not certify full compatibility.
 
+Native [Paper](docs/paper.md) now has pinned surface defaults, all 29 utility classes, custom native roots/refs, typed theme configuration and all 25 dark-elevation overlays. Its two retained roots pass the 33-state scene at normal and enlarged OS text sizes on iOS and Android. Browser CSS-variable themes, calibrated GPU shadows, wider native matrices, physical accessibility and optimized-build performance remain explicit gates.
+
 ## Early public pre-alpha channel
 
 Early preview packages may be published under the `prealpha` dist-tag for consumer feedback before family certification. They must contain real implementations, clear compatibility/native-build limits, MIT/upstream notices and aligned dependency versions. Require local checks, clean archive-consumer installation, package-content inspection, a publish dry run and independent review. Keep verified/released upstream-support state unchanged. This channel does not complete the verified-alpha checklist.

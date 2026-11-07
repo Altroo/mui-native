@@ -2,7 +2,7 @@
 
 The current priority is to finish existing implementations before starting another component. This audit is based on the source, type fixtures and guides available on 7 November 2026, including the merged Divider contract and finite native validation at `6e223c98`.
 
-There are **58 rows at 50% or 75%**: 51 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **23 rows at 25%**: 13 Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
+There are **59 rows at 50% or 75%**: 52 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **22 rows at 25%**: 12 Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
 
 ## Completion rules
 
@@ -108,7 +108,7 @@ The entries below enumerate the 81 current partial status rows and the separatel
 | Modal                   |                    50% | [Scope and remaining work](../docs/modals.md)                            |
 | NativeSelect            |                    50% | [Scope and remaining work](../docs/native-select.md)                     |
 | OutlinedInput           |                    50% | [Scope and remaining work](../docs/inputs.md)                            |
-| Paper                   |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
+| Paper                   |                    75% | [Scope and remaining work](../docs/paper.md)                             |
 | Popover                 |                    50% | [Scope and remaining work](../docs/popover.md)                           |
 | Popper                  |                    75% | [Scope and remaining work](../docs/popper.md)                            |
 | Portal                  |                    75% | [Scope and remaining work](../docs/portal.md)                            |
