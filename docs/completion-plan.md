@@ -2,7 +2,7 @@
 
 The current priority is to finish existing implementations before starting another component. This audit is based on the source, type fixtures and guides available on 7 November 2026, including the merged Divider contract and finite native validation at `6e223c98`.
 
-There are **60 rows at 50% or 75%**: 53 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **21 rows at 25%**: 11 Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
+There are **61 rows at 50% or 75%**: 54 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **20 rows at 25%**: 10 Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
 
 ## Completion rules
 
@@ -67,7 +67,7 @@ The entries below enumerate the 81 current partial status rows and the separatel
 | Button                  |                    50% | [Scope and remaining work](../docs/button.md)                            |
 | ButtonBase              |                    50% | [Scope and remaining work](../docs/button-base.md)                       |
 | ButtonGroup             |                    75% | [Scope and remaining work](../docs/button-group.md)                      |
-| Card                    |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
+| Card                    |                    75% | [Scope and remaining work](../docs/card.md)                              |
 | CardActions             |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | CardContent             |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | Checkbox                |                    50% | [Scope and remaining work](../docs/check-controls.md)                    |
@@ -175,7 +175,7 @@ The [complete catalog](material-icons.md) retains every supplied artwork/name an
 - Accordion still needs sibling grouping/rounding, margin and expand-icon motion policies; these are software work.
 - Portal/container policies, direct picker presentation/dismissal, List/MenuList geometry/navigation and Popper benchmark repeatability/iOS tooling can be exercised locally.
 - Autocomplete's default ScrollView mounts all filtered options. Large-list/listbox contracts and unresolved input failures remain implementation or local verification work.
-- Existing layout types omit contracts such as Stack responsive direction/useFlexGap, Card raised, CardActions disableSpacing. Divider now has source-backed variants/text alignment, strict consumers and scoped normal/enlarged iOS/Android evidence; its wider native RTL, physical accessibility and performance gates remain explicit in the guide. Dialog content/action wrappers and feedback controls also need dedicated type/API coverage.
+- Existing layout types omit contracts such as Stack responsive direction/useFlexGap and CardActions disableSpacing. Divider now has source-backed variants/text alignment, strict consumers and scoped normal/enlarged iOS/Android evidence; its wider native RTL, physical accessibility and performance gates remain explicit in the guide. Dialog content/action wrappers and feedback controls also need dedicated type/API coverage.
 - Community X entries retain substantial software gaps: grid editing/sizing/virtualization/apiRef/keyboard/operators; tree APIs/loading/roles; chart axes/composition/scales/tooltips/interactions; picker sections/adapter/lifecycle/locales/timezones.
 
 No percentage changes to 100% are made by this planning document. Completed contract items need source, consumer and runtime evidence; remaining external gates keep their own truthful status.

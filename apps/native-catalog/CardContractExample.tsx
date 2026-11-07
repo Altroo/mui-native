@@ -28,7 +28,7 @@ import {
   type Theme,
 } from '@mui/material';
 
-// Authored inputs only. The independent private protocol owns paint/geometry expectations.
+// Authored inputs only. Native collectors independently check paint and geometry.
 const initial = {
   name: 'default',
   raisedInput: 'absent',
