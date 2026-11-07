@@ -259,11 +259,9 @@ using namespace facebook::react;
     else [host scheduleSync];
   }];
 }
+// Adaptive dismissal covers both sheets and popovers on supported iOS versions.
 - (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
   if (presentationController.presentedViewController == _navigation) [self finishDismiss:_navigation session:_presentedSession reason:@"cancel" notify:YES];
-}
-- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController {
-  [self presentationControllerDidDismiss:popoverPresentationController];
 }
 - (void)layoutSubviews {
   [super layoutSubviews];
