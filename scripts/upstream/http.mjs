@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 async function responseFor(
   url,
   { token = process.env.GITHUB_TOKEN, json = true, ...options } = {},
@@ -14,7 +15,10 @@ async function responseFor(
   if (token && github) headers.set('Authorization', `Bearer ${token}`);
   const response = await fetch(url, { ...options, headers, signal: AbortSignal.timeout(30000) });
   if (!response.ok)
-    throw new Error(`HTTP ${response.status} for ${endpoint.origin}${endpoint.pathname}`);
+    throw Object.assign(
+      new Error(`HTTP ${response.status} for ${endpoint.origin}${endpoint.pathname}`),
+      { status: response.status },
+    );
   return response;
 }
 export async function request(url, options = {}) {
