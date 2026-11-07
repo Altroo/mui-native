@@ -231,7 +231,7 @@ function Control({
     </Pressable>
   );
 }
-/** Two retained Card roots and four fresh native measurements, with no JS paint oracle. */
+/** Two retained Card roots and seven fresh native measurements, with no JS paint oracle. */
 export function CardContractExample() {
   const [state, setState] = useState(0),
     [request, setRequest] = useState(0),

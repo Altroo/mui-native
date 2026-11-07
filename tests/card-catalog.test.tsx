@@ -98,7 +98,7 @@ test('two real counters, native root/text refs and first raw custom event surviv
   });
   expect(receipt(tree).counts).toEqual({ stock: 1, custom: 1 });
 });
-test('all four measured targets reject superseded requests and old states, then publish distinct raw frames', () => {
+test('all seven measured targets reject superseded requests and old states, then publish distinct raw frames', () => {
   const tree = render(<CardContractExample />);
   type Done = Parameters<NativeNode['measureInWindow']>[0];
   const nodes = Object.fromEntries(targets.map((key) => [key, host(tree, key)])) as Record<
