@@ -161,13 +161,25 @@ function size(value: unknown, em: number, rem: number): number | undefined {
   const result = amount * (unit === 'rem' ? rem : unit === 'em' ? em : unit === '%' ? em / 100 : 1);
   return Number.isFinite(result) ? result : undefined;
 }
+// The matching Android host registers this private alias with Typeface.DEFAULT.
+// Only CSS-derived defaults use it; genuine native style layers remain untouched.
+const androidDefaultFontFamily = '__AltrooMUIPlatformDefaultSansSerif';
 function fontFamily(value: unknown): string | undefined {
   if (typeof value !== 'string') return undefined;
-  if (value === defaultTypographyFontFamily) return 'System';
+  const platformDefault = Platform.OS === 'android' ? androidDefaultFontFamily : 'System';
+  // The stock MUI stack starts with quoted Roboto and retains its established
+  // platform-default mapping before handling authored custom family names.
+  if (value === defaultTypographyFontFamily) return platformDefault;
   const first = value.trim().match(/^(?:"([^"]+)"|'([^']+)'|([^,]+))/);
   const family = (first?.[1] ?? first?.[2] ?? first?.[3])?.trim();
   if (!family) return undefined;
-  if (['system-ui', 'sans-serif', 'System', '-apple-system'].includes(family)) return 'System';
+  if (['system-ui', 'sans-serif', 'System', '-apple-system'].includes(family)) {
+    // Quoted names are literal CSS custom families. Preserve an app's System
+    // name rather than routing it to our private default alias on Android.
+    if (Platform.OS === 'android' && (first?.[1] !== undefined || first?.[2] !== undefined))
+      return family;
+    return platformDefault;
+  }
   if (family === 'serif') return Platform.OS === 'ios' ? 'Times New Roman' : 'serif';
   if (family === 'monospace') return Platform.OS === 'ios' ? 'Menlo' : 'monospace';
   return family;
