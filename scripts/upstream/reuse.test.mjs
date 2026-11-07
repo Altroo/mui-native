@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdtemp, rm } from 'node:fs/promises';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -139,4 +139,47 @@ test('supporting MIT references are monitored without becoming native compatibil
   assert.ok(!packages.some((p) => p.name === '@mui/utils'));
   assert.throws(() => assertEligible('@mui/utils'), /allowlist/);
   assert.throws(() => assertSourceEligible('@mui/x-data-grid-premium'), /allowlist/);
+});
+
+// Exercise the actual monitor registration, not a hand-built reuse fixture.
+test('Divider source changes identify the maintained native implementation and public contracts', async () => {
+  const reuse = JSON.parse(
+    await readFile(new URL('../../upstream/reuse.json', import.meta.url), 'utf8'),
+  );
+  const divider = JSON.parse(
+    await readFile(new URL('../../upstream/divider.json', import.meta.url), 'utf8'),
+  );
+  const cases = [
+    ['@mui/material', 'Divider/Divider.js', 'packages/material/src/divider.tsx'],
+    ['@mui/material', 'Divider/Divider.d.ts', 'packages/material/src/dividerTypes.ts'],
+    ['@mui/material', 'Divider/Divider.d.mts', 'packages/material/src/dividerTypes.ts'],
+    ['@mui/material', 'Divider/dividerClasses.js', 'packages/material/src/dividerClasses.ts'],
+    ['@mui/material', 'Divider/index.js', 'packages/material/src/Divider/index.ts'],
+    ['@mui/material', 'styles/createThemeNoVars.js', 'packages/material/src/styles/createTheme.ts'],
+    ['@mui/material', 'styles/components.d.ts', 'packages/material/src/styles/props.ts'],
+    ['@mui/utils', 'composeClasses/composeClasses.js', 'packages/material/src/divider.tsx'],
+    ['@mui/system', 'createStyled/createStyled.js', 'packages/material/src/divider.tsx'],
+  ];
+  for (const [name, path, localFile] of cases) {
+    const files = reusedFiles(reuse, name);
+    const source = files.find((file) => file.path === path);
+    assert.ok(source, `Missing monitor registration: ${name}/${path}`);
+    const reference = divider.references.find((item) => item.name === name);
+    assert.equal(
+      source.sha256,
+      reference.sourceFiles[path],
+      'Monitor must retain the reviewed source hash',
+    );
+    assert.ok(source.localFiles.includes(localFile), `Missing affected native file: ${localFile}`);
+    const artifact = Object.fromEntries(files.map((file) => [file.path, file.sha256]));
+    assert.deepEqual(compareReusedFiles(files, artifact), []);
+    artifact[path] = '0'.repeat(64);
+    const changes = compareReusedFiles(files, artifact);
+    assert.equal(changes.length, 1);
+    assert.equal(changes[0].path, path);
+    assert.equal(changes[0].status, 'changed');
+    assert.ok(changes[0].localFiles.includes(localFile));
+    delete artifact[path];
+    assert.equal(compareReusedFiles(files, artifact)[0].status, 'removed');
+  }
 });
