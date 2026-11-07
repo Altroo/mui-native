@@ -1,5 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { build } from 'esbuild';
+import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { readdir, mkdir, writeFile, cp, rm } from 'node:fs/promises';
 import { resolve, dirname, relative, join } from 'node:path';
@@ -28,41 +29,52 @@ export async function buildIconEsm(folder = resolve(root, 'packages/icons'), sou
   sources ??= await iconSources(sourceRoot);
   sources = sources.map((file) => resolve(file));
   const known = new Set(sources);
-  const result = await build({
-    entryPoints: sources,
-    outbase: sourceRoot,
-    outdir: destination,
-    outExtension: { '.js': '.mjs' },
-    platform: 'neutral',
-    format: 'esm',
-    bundle: false,
-    write: false,
-  });
-  for (const output of result.outputFiles) {
-    const sourceDirectory = resolve(sourceRoot, dirname(relative(destination, output.path)));
-    const text = output.text.replace(
-      /(from\s+["'])(\.[^"']+)(["'])/g,
-      (_match, before, specifier, after) => {
-        const target = resolve(sourceDirectory, specifier);
-        let source = '';
-        for (const suffix of ['.ts', '.tsx', '/index.ts', '/index.tsx']) {
-          const candidate = target + suffix;
-          if (known.has(candidate)) {
-            source = candidate;
-            break;
+  const outputHashes = new Map();
+  // Bound esbuild's working set while keeping every source available for import rewriting.
+  const batchSize = 256;
+  for (let offset = 0; offset < sources.length; offset += batchSize) {
+    const result = await build({
+      entryPoints: sources.slice(offset, offset + batchSize),
+      outbase: sourceRoot,
+      outdir: destination,
+      outExtension: { '.js': '.mjs' },
+      platform: 'neutral',
+      format: 'esm',
+      bundle: false,
+      write: false,
+    });
+    for (const output of result.outputFiles) {
+      // Preserve esbuild's conflicting-output check across separate batches.
+      const hash = createHash('sha256').update(output.contents).digest('hex');
+      const previous = outputHashes.get(output.path);
+      if (previous !== undefined && previous !== hash)
+        throw Error('Conflicting icon ESM output: ' + relative(destination, output.path));
+      outputHashes.set(output.path, hash);
+      const sourceDirectory = resolve(sourceRoot, dirname(relative(destination, output.path)));
+      const text = output.text.replace(
+        /(from\s+["'])(\.[^"']+)(["'])/g,
+        (_match, before, specifier, after) => {
+          const target = resolve(sourceDirectory, specifier);
+          let source = '';
+          for (const suffix of ['.ts', '.tsx', '/index.ts', '/index.tsx']) {
+            const candidate = target + suffix;
+            if (known.has(candidate)) {
+              source = candidate;
+              break;
+            }
           }
-        }
-        if (!source) throw Error('Unresolved icon ESM dependency: ' + specifier);
-        const emitted = resolve(
-          destination,
-          relative(sourceRoot, source).replace(/\.tsx?$/, '.mjs'),
-        );
-        const path = relative(dirname(output.path), emitted).replaceAll('\\', '/');
-        return before + (path.startsWith('.') ? path : './' + path) + after;
-      },
-    );
-    await mkdir(dirname(output.path), { recursive: true });
-    await writeFile(output.path, text);
+          if (!source) throw Error('Unresolved icon ESM dependency: ' + specifier);
+          const emitted = resolve(
+            destination,
+            relative(sourceRoot, source).replace(/\.tsx?$/, '.mjs'),
+          );
+          const path = relative(dirname(output.path), emitted).replaceAll('\\', '/');
+          return before + (path.startsWith('.') ? path : './' + path) + after;
+        },
+      );
+      await mkdir(dirname(output.path), { recursive: true });
+      await writeFile(output.path, text);
+    }
   }
 }
 export async function buildIcons() {
