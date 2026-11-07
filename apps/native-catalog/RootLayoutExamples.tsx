@@ -11,6 +11,7 @@ import { MenuIconCascadeExample } from './MenuIconCascadeExample';
 import { TypographyContractExample } from './TypographyContractExample';
 import { DividerContractExample } from './DividerContractExample';
 import { PaperContractExample } from './PaperContractExample';
+import { CardContractExample } from './CardContractExample';
 import { BoxContractExample } from './BoxContractExample';
 import { PaperBenchmarkExample } from './PaperBenchmarkExample';
 
@@ -25,6 +26,7 @@ export function RootLayoutExamples() {
     | 'typography'
     | 'divider'
     | 'paper'
+    | 'card'
     | 'box'
     | 'benchmark'
     | 'paper-benchmark'
@@ -102,6 +104,13 @@ export function RootLayoutExamples() {
           Paper
         </Button>
         <Button
+          testID="root-layout-card"
+          variant={example === 'card' ? 'contained' : 'outlined'}
+          onClick={() => setExample('card')}
+        >
+          Card
+        </Button>
+        <Button
           testID="root-layout-box"
           variant={example === 'box' ? 'contained' : 'outlined'}
           onClick={() => setExample('box')}
@@ -146,6 +155,8 @@ export function RootLayoutExamples() {
             <DividerContractExample />
           ) : example === 'paper' ? (
             <PaperContractExample />
+          ) : example === 'card' ? (
+            <CardContractExample />
           ) : example === 'box' ? (
             <BoxContractExample />
           ) : example === 'typography' ? (
