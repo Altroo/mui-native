@@ -69,6 +69,6 @@
     "Native View/div alias and native root refs replace DOM roots.",
     "Pinned9.5 Box does not consume top-level system props or MuiBox defaults/overrides.",
     "Native prop/ref/type-map helpers preserve root requirements; known custom-root spreads are checked more strictly than the original fallback overload. Reserved overrides require a complete native Theme; scoped raw null/undefined overrides diagnose only in development and retain the selected native theme.",
-    "Class generator facade currently participates in Box only; remaining native families keep their existing utility behavior."
+    "Box participates in the canonical class generator facade. Additional participating families are recorded in their own source/software contracts."
   ]
 }

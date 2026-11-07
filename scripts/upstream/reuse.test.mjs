@@ -5,7 +5,7 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
-import { reusedFiles, compareReusedFiles } from './reuse.mjs';
+import { reusedFiles, compareReusedFiles, replaceUniqueLocalFileEntries } from './reuse.mjs';
 const entry = {
   localFile: 'packages/system/src/theme.ts',
   reference: { name: '@mui/material', sourceFiles: { 'styles/createPalette.js': 'a'.repeat(64) } },
@@ -182,4 +182,59 @@ test('Divider source changes identify the maintained native implementation and p
     delete artifact[path];
     assert.equal(compareReusedFiles(files, artifact)[0].status, 'removed');
   }
+});
+
+test('reference updates preserve interleaved family records and are idempotent without mutation', () => {
+  const ownedA = Object.freeze({ ...entry, localFile: 'paper-a' }),
+    ownedB = Object.freeze({ ...entry, localFile: 'paper-b' });
+  const foreignA = Object.freeze({ ...entry, localFile: 'box' }),
+    foreignB = Object.freeze({ ...entry, localFile: 'card' });
+  const input = Object.freeze([foreignA, ownedA, foreignB, ownedB]);
+  const a = Object.freeze({ ...ownedA, adaptations: ['current'] }),
+    b = Object.freeze({ ...ownedB, adaptations: ['current'] });
+  const output = replaceUniqueLocalFileEntries(input, [a, b]);
+  assert.deepEqual(output, [foreignA, a, foreignB, b]);
+  assert.equal(output[0], foreignA);
+  assert.equal(output[2], foreignB);
+  assert.deepEqual(input, [foreignA, ownedA, foreignB, ownedB]);
+  assert.deepEqual(replaceUniqueLocalFileEntries(output, [a, b]), output);
+});
+test('changed, missing and duplicate owned records still stale strict reference checks', () => {
+  const a = { ...entry, localFile: 'paper-a' },
+    b = { ...entry, localFile: 'paper-b' };
+  const changed = {
+    ...a,
+    reference: { ...a.reference, sourceFiles: { 'styles/createPalette.js': 'b'.repeat(64) } },
+  };
+  assert.notDeepEqual(replaceUniqueLocalFileEntries([a, b], [changed, b]), [a, b]);
+  assert.deepEqual(replaceUniqueLocalFileEntries([a], [a, b]), [a, b]);
+  assert.throws(() => replaceUniqueLocalFileEntries([a, a, b], [a, b]), /Ambiguous duplicate/);
+  assert.throws(() => replaceUniqueLocalFileEntries([a], [a, a]), /unique upstream\/local file/);
+});
+
+test('a local file attributed to another upstream remains intact and ambiguous owned origins reject', () => {
+  const material = Object.freeze({ ...entry, localFile: 'paper' });
+  const utils = Object.freeze({
+    ...entry,
+    localFile: 'paper',
+    reference: { ...entry.reference, name: '@mui/utils' },
+  });
+  const changed = { ...material, adaptations: ['current'] };
+  const input = Object.freeze([material, utils]);
+  const output = replaceUniqueLocalFileEntries(input, [changed]);
+  assert.deepEqual(output, [changed, utils]);
+  assert.equal(output[1], utils);
+  assert.deepEqual(input, [material, utils]);
+  const conflicting = {
+    ...material,
+    reference: { ...material.reference, sourceFiles: { 'another.js': 'b'.repeat(64) } },
+  };
+  assert.throws(
+    () => replaceUniqueLocalFileEntries([material, conflicting, utils], [changed]),
+    /Ambiguous duplicate/,
+  );
+  assert.deepEqual(replaceUniqueLocalFileEntries([material, utils], [changed, utils]), [
+    changed,
+    utils,
+  ]);
 });

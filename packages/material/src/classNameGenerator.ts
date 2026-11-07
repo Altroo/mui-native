@@ -3,7 +3,7 @@
  * Native adaptation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 const identity = (componentName: string) => componentName;
 let generate = identity;
-/** Canonical configuration object. Box participates; other native families are separate work. */
+/** Canonical configuration object shared by participating native component families. */
 export const unstable_ClassNameGenerator = {
   configure(generator: (componentName: string) => string): void {
     generate = generator;

@@ -908,6 +908,8 @@ export function createNativeStyledStyle(
   sx: SxProps | undefined,
   context: StyleContext,
   authored: StyleProp<NativeStyle>,
+  // A selected owner state may differ from the original prop style presence.
+  suppliedStyle?: boolean,
 ): StyleProp<NativeStyle> {
   const sheets = prepareComponent(theme, name, props, sx, context);
   for (const sheet of sheets) {
@@ -929,7 +931,7 @@ export function createNativeStyledStyle(
     Object.freeze({
       sheets: Object.freeze(sheets),
       authored,
-      hasAuthoredStyle: Object.hasOwn(props, 'style') || authored !== undefined,
+      hasAuthoredStyle: suppliedStyle ?? (Object.hasOwn(props, 'style') || authored !== undefined),
     }),
   );
   return finalStyle;

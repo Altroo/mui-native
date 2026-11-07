@@ -8,6 +8,7 @@ import {
 } from '@altroo/mui-native-system';
 import type { DividerProps } from '../dividerTypes';
 import type { PaperProps } from '../paperTypes';
+import type { CardProps } from '../cardTypes';
 
 // Material checks its native root defaults without coupling System's standalone
 // theme engine to Material components or changing custom component definitions.
@@ -25,6 +26,10 @@ export interface Components
   mergeClassNameAndStyle?: boolean | undefined;
   MuiPaper?:
     | (Omit<ComponentOptions, 'defaultProps'> & { defaultProps?: Partial<PaperProps> | undefined })
+    | boolean
+    | undefined;
+  MuiCard?:
+    | (Omit<ComponentOptions, 'defaultProps'> & { defaultProps?: Partial<CardProps> | undefined })
     | boolean
     | undefined;
   MuiDivider?:
