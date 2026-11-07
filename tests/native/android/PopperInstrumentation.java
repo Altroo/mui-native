@@ -53,6 +53,7 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean paperScenario;
   private boolean boxScenario;
   private boolean cardScenario;
+  private boolean structureScenario;
   private String dividerFontProfile;
   private boolean readingGlobalRTL;
 
@@ -73,11 +74,13 @@ public final class PopperInstrumentation extends Instrumentation {
     paperScenario = "paper".equals(arguments.getString("scenario"));
     boxScenario = "box".equals(arguments.getString("scenario"));
     cardScenario = "card".equals(arguments.getString("scenario"));
+    structureScenario = "structure".equals(arguments.getString("scenario"));
     dividerFontProfile = arguments.getString("fontProfile");
     start();
   }
 
   @Override public void onStart() {
+    if (structureScenario) { StructuralObservationScenario.run(this); return; }
     if (cardScenario) { CardScenario.run(this, dividerFontProfile); return; }
     if (boxScenario) { BoxScenario.run(this, dividerFontProfile); return; }
     if (paperScenario) { PaperScenario.run(this, dividerFontProfile); return; }
