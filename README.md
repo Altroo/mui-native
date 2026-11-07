@@ -21,7 +21,7 @@ I started MUI Native to address that gap: preserve familiar MUI component APIs a
 
 ## Status
 
-Updated: **5 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
+Updated: **7 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
 
 These tables describe development on `main`. Check the [release changelog](CHANGELOG.md) for published package contents; each newer component guide identifies its unpublished status.
 
@@ -92,7 +92,7 @@ Expand a family to see individual entries. Percentages link to the implementatio
 | 🔧    | **DialogContent**           | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                                                                                                  |
 | 🗺️    | **DialogContentText**       |          [0%](ROADMAP.md#4-complete-material-ui) | Dedicated composition, styling and slot contracts are not implemented.                                                                                                                                                                            |
 | 🔧    | **DialogTitle**             | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                                                                                                  |
-| 🔧    | **Divider**                 | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                                                                                                  |
+| 🔧    | **Divider**                 |                           [75%](docs/divider.md) | Source-backed variants, labels, classes, native roots and styling have contract/consumer and normal/enlarged iOS/Android evidence. Wider native RTL, physical accessibility and performance gates remain.                                         |
 | 🗺️    | **Drawer**                  |          [0%](ROADMAP.md#4-complete-material-ui) | Native drawer, gestures, focus and keyboard interactions are not implemented.                                                                                                                                                                     |
 | 🗺️    | **Fab**                     |          [0%](ROADMAP.md#4-complete-material-ui) | Native floating-action composition and interaction contracts are not implemented.                                                                                                                                                                 |
 | 🔧    | **Fade**                    |                       [50%](docs/transitions.md) | Native opacity/lifecycle and reduced-motion subset is covered; complete transition interoperability remains.                                                                                                                                      |
