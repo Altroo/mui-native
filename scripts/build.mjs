@@ -1,10 +1,16 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { buildIconEsm } from './icons/build.mjs';
 import { build } from 'esbuild';
 import { execFileSync } from 'node:child_process';
 import { readFile, readdir, mkdir, cp, rm } from 'node:fs/promises';
 import path from 'node:path';
 await rm('.cache/types', { recursive: true, force: true });
-execFileSync('pnpm', ['exec', 'tsc', '-p', 'tsconfig.build.json'], { stdio: 'inherit' });
+// Native TypeScript uses Go. Give declaration generation a soft memory budget;
+// other source checks keep their defaults. An explicit caller budget wins.
+execFileSync('pnpm', ['exec', 'tsc', '-p', 'tsconfig.build.json'], {
+  stdio: 'inherit',
+  env: { ...process.env, GOMEMLIMIT: process.env.GOMEMLIMIT ?? '4GiB' },
+});
 async function runtimeSources(directory) {
   const files = [];
   for (const entry of (await readdir(directory, { withFileTypes: true })).sort((a, b) =>
