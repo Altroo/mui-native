@@ -1,9 +1,14 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 jest.mock('@mui/material', () => jest.requireActual('../packages/material/src'), { virtual: true });
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
-import { StyleSheet, View } from 'react-native';
+import { I18nManager, StyleSheet, View } from 'react-native';
 import type { ReactTestInstance } from 'react-test-renderer';
 import { LayoutRootBenchmark } from '../apps/native-benchmark/LayoutRootBenchmark';
+import { backendEdges } from './helpers/nativeInsetEdges';
+beforeEach(() => {
+  jest.replaceProperty(I18nManager, 'isRTL', false);
+  jest.replaceProperty(I18nManager, 'doLeftAndRightSwapInRTL', false);
+});
 afterEach(cleanup);
 const read = (tree: ReturnType<typeof render>) =>
   JSON.parse(tree.getByTestId('layout-root-receipt').props.accessibilityLabel);
@@ -92,9 +97,16 @@ test.each([
     expect(StyleSheet.flatten(tree.getByTestId('layout-root-row-000').props.style)).toMatchObject({
       minHeight: 52,
       borderRadius: 8,
-      marginTop: 0,
-      paddingTop: 0,
     });
+    for (const kind of ['margin', 'padding'] as const)
+      expect(
+        backendEdges(tree.getByTestId('layout-root-row-000').props.style, kind, 'ltr', false),
+      ).toEqual({
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      });
   },
 );
 test('mount operation holds an initial cohort, caps rendered rows and reports the real source identity', () => {

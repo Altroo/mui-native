@@ -1,0 +1,7 @@
+{
+  "extends": "../native-consumer/tsconfig.json",
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true
+  },
+  "include": ["native.tsx"]
+}

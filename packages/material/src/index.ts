@@ -169,3 +169,6 @@ export * from './accordion';
 export * from './svgIcon';
 
 export * from './buttonGroup';
+
+export { createTheme } from './styles/createTheme';
+export type { Components, ThemeOptions } from './styles/createTheme';

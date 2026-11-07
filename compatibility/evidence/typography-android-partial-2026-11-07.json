@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-07",
+  "sourceCommit": "2946a0b3f0861bfb82ac38a1ba485386c627e6c7",
+  "scope": "Partial Android Typography run: rendered variant checks passed; native no-wrap failed. No complete Android component pass.",
+  "overallStatus": "failed",
+  "rawReportSha256": "ff4be0cb6c3d29d8dd8df205de57cd3b22c85c7292395eb9b78e96a45dd4671b",
+  "producer": {
+    "path": "tests/native/android/LayoutRootScenario.java",
+    "sha256": "df8de409c09cd7934f0b47583b3d48fcc7146c2d2b386fee1904c7b143417df3",
+    "status": "Reviewed diagnostic producer; not included in sourceCommit or main yet. All original rendering assertions retained."
+  },
+  "sourceFiles": {
+    "packages/material/src/typography.tsx": "e211ddb421e8ca6f8fe1e68a00aad7286c1146c8acc279eaf1c806a32edf6208",
+    "packages/system/src/nativeText.ts": "3acfb6fd19d29a772b84253daedeeecab1db4f16c1895b166a6772f7d506e496",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMuiNativeHostPackage.kt": "b7c1b183064f7291a7b4a752e9f54ec0e1358d748475c66c4c4d38106379b0b7",
+    "packages/native-host/android/src/main/java/com/altroo/muinativehost/SystemFontRegistration.java": "e048b3b1729b2a11dbd1fe38e6fd36e538806722a617ac0e9a02af687b7e4da2",
+    "apps/native-catalog/TypographyContractExample.tsx": "095078da54e7041c0047e73a866234aaeac0274e584b6a71ea560a00a448bfc8"
+  },
+  "device": {
+    "sdk": 37,
+    "model": "sdk_gphone64_arm64",
+    "density": 2.625,
+    "fontScale": 1
+  },
+  "completedStages": [
+    "type-variant-body1",
+    "type-variant-body2",
+    "type-variant-button",
+    "type-variant-caption",
+    "type-variant-overline",
+    "type-variant-inherit",
+    "type-variant-h1",
+    "type-variant-h2",
+    "type-variant-h3",
+    "type-variant-h4",
+    "type-variant-h5",
+    "type-variant-h6",
+    "type-variant-subtitle1",
+    "type-variant-subtitle2"
+  ],
+  "variants": [
+    {
+      "fontPx": 42,
+      "weight": 400,
+      "lineHeight": 24,
+      "lineCount": 1,
+      "gutter": 5.71429443359375,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "body1"
+    },
+    {
+      "fontPx": 37,
+      "weight": 400,
+      "lineHeight": 20.190475463867188,
+      "lineCount": 1,
+      "gutter": 4.9524078369140625,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "body2"
+    },
+    {
+      "fontPx": 37,
+      "weight": 500,
+      "lineHeight": 24.761905670166016,
+      "lineCount": 1,
+      "gutter": 4.952388763427734,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "button"
+    },
+    {
+      "fontPx": 32,
+      "weight": 400,
+      "lineHeight": 20.190475463867188,
+      "lineCount": 1,
+      "gutter": 4.1904754638671875,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "caption"
+    },
+    {
+      "fontPx": 32,
+      "weight": 400,
+      "lineHeight": 32,
+      "lineCount": 1,
+      "gutter": 4.19049072265625,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "overline"
+    },
+    {
+      "fontPx": 42,
+      "weight": 400,
+      "lineHeight": 24,
+      "lineCount": 1,
+      "gutter": 5.71429443359375,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "inherit"
+    },
+    {
+      "fontPx": 252,
+      "weight": 300,
+      "lineHeight": 112.38095092773438,
+      "lineCount": 1,
+      "gutter": 33.523834228515625,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "h1"
+    },
+    {
+      "fontPx": 158,
+      "weight": 300,
+      "lineHeight": 72,
+      "lineCount": 1,
+      "gutter": 20.952392578125,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "h2"
+    },
+    {
+      "fontPx": 126,
+      "weight": 400,
+      "lineHeight": 56.380950927734375,
+      "lineCount": 1,
+      "gutter": 16.761932373046875,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "h3"
+    },
+    {
+      "fontPx": 90,
+      "weight": 400,
+      "lineHeight": 42.28571319580078,
+      "lineCount": 1,
+      "gutter": 11.809532165527344,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "h4"
+    },
+    {
+      "fontPx": 63,
+      "weight": 400,
+      "lineHeight": 32.380950927734375,
+      "lineCount": 1,
+      "gutter": 8.3809814453125,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "h5"
+    },
+    {
+      "fontPx": 53,
+      "weight": 500,
+      "lineHeight": 32,
+      "lineCount": 1,
+      "gutter": 6.857147216796875,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "h6"
+    },
+    {
+      "fontPx": 42,
+      "weight": 400,
+      "lineHeight": 28.190475463867188,
+      "lineCount": 1,
+      "gutter": 5.7143096923828125,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "subtitle1"
+    },
+    {
+      "fontPx": 37,
+      "weight": 500,
+      "lineHeight": 22.095237731933594,
+      "lineCount": 1,
+      "gutter": 4.952400207519531,
+      "refs": {
+        "attached": 1,
+        "cleaned": 0,
+        "sameRoot": true
+      },
+      "variant": "subtitle2"
+    }
+  ],
+  "noWrap": {
+    "kind": "typography-nowrap-layout",
+    "class": "com.facebook.react.views.text.ReactTextView",
+    "frame": {
+      "x": 24,
+      "y": 489.5238037109375,
+      "width": 180.1904754638672,
+      "height": 24
+    },
+    "text": "WWWWWWWWWWWWWWWWWWWWWWWWW",
+    "lineCount": 3,
+    "maxLines": 1,
+    "selectable": true,
+    "ellipsize": "END",
+    "paddingLeft": 0,
+    "paddingRight": 0,
+    "layoutClass": "android.text.DynamicLayout",
+    "layoutWidth": 473,
+    "layoutHeight": 189,
+    "lines": [
+      {
+        "start": 0,
+        "end": 12,
+        "visibleEnd": 12,
+        "width": 447.140625,
+        "ellipsisStart": 0,
+        "ellipsisCount": 0
+      },
+      {
+        "start": 12,
+        "end": 24,
+        "visibleEnd": 24,
+        "width": 447.140625,
+        "ellipsisStart": 0,
+        "ellipsisCount": 0
+      },
+      {
+        "start": 24,
+        "end": 25,
+        "visibleEnd": 25,
+        "width": 37.26171875,
+        "ellipsisStart": 0,
+        "ellipsisCount": 0
+      }
+    ]
+  },
+  "remaining": [
+    "Native no-wrap with selectable text",
+    "Style/RTL/press stages after truncation",
+    "Custom-font and broader scaling coverage",
+    "Assistive technology and optimized performance"
+  ]
+}

@@ -9,7 +9,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "typecheck": "tsc --noEmit && tsc --noEmit -p apps/native-catalog/tsconfig.json && tsc --noEmit -p apps/native-benchmark/tsconfig.json",
-    "test": "jest --runInBand && node --test scripts/icons/*.test.mjs scripts/lint-workflow.test.mjs scripts/theme-imports.test.mjs scripts/native-catalog/*.test.mjs scripts/performance/*.test.mjs scripts/packages-archives.test.mjs scripts/native-rendering.test.mjs scripts/native-text-input.test.mjs scripts/native-positioning.test.mjs scripts/inventory/*.test.mjs scripts/upstream/*.test.mjs packages/compat/*.test.cjs",
+    "test": "jest --runInBand && node --test scripts/compiler-diagnostics.test.mjs scripts/icons/*.test.mjs scripts/lint-workflow.test.mjs scripts/theme-imports.test.mjs scripts/native-catalog/*.test.mjs scripts/performance/*.test.mjs scripts/packages-archives.test.mjs scripts/native-rendering.test.mjs scripts/native-text-input.test.mjs scripts/native-positioning.test.mjs scripts/inventory/*.test.mjs scripts/upstream/*.test.mjs packages/compat/*.test.cjs",
     "check": "pnpm lint && pnpm test && pnpm coverage:verify && pnpm build && pnpm typecheck:consumer && pnpm native-host:codegen",
     "upstream:check": "node scripts/upstream/detect.mjs",
     "upstream:baseline": "node scripts/upstream/baseline.mjs",
@@ -24,7 +24,9 @@
     "coverage:verify": "node scripts/inventory/freshness.mjs",
     "native-host:codegen": "node node_modules/react-native/scripts/generate-codegen-artifacts.js --path packages/native-host --outputPath .cache/native-host-codegen --targetPlatform all --source library",
     "lint": "eslint . --max-warnings=0 && pnpm typecheck",
-    "typecheck:consumer": "tsc --noEmit -p fixtures/native-consumer/tsconfig.json"
+    "typecheck:consumer": "tsc --noEmit -p fixtures/native-consumer/tsconfig.json && pnpm typecheck:typography",
+    "typecheck:typography": "tsc --noEmit -p fixtures/typography-consumer/tsconfig.json",
+    "reference:typography": "node scripts/reference/typography.mjs --check && node scripts/reference/typography-contract.mjs --check && node scripts/reference/check-typography-consumer.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",

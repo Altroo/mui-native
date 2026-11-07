@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { readFile, mkdir, writeFile, rm } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
@@ -7,8 +8,12 @@ import { releaseResolver } from './source.mjs';
 import { inspectArtifact } from './artifact.mjs';
 import { detectPackage, mergeReport } from './model.mjs';
 import { reusedFiles, compareReusedFiles } from './reuse.mjs';
+import { stateHash, readTracking, withTracking } from './tracking.mjs';
 export async function detect({
   state,
+  mainState = state,
+  trackingSha = null,
+  tracking = null,
   reuse = { schemaVersion: 1, entries: [] },
   fetchRegistry = async (name) => request(`https://registry.npmjs.org/${encodeURIComponent(name)}`),
   now = new Date().toISOString(),
@@ -107,7 +112,10 @@ export async function detect({
   return {
     schemaVersion: 1,
     complete: enrich,
-    baseStateHash: createHash('sha256').update(JSON.stringify(state)).digest('hex'),
+    baseStateHash: stateHash(mainState),
+    baseDetectionHash: stateHash(state),
+    baseTrackingSha: trackingSha,
+    baseTracking: structuredClone(tracking),
     checkedAt: now,
     changes,
     advisories: [...new Map(advisories.map((a) => [a.ghsa_id, a])).values()],
@@ -115,14 +123,26 @@ export async function detect({
   };
 }
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  const state = JSON.parse(await readFile('upstream/state.json', 'utf8'));
+  const mainState = JSON.parse(await readFile('upstream/state.json', 'utf8'));
+  let state = mainState;
   const reuse = JSON.parse(await readFile('upstream/reuse.json', 'utf8'));
   await mkdir('artifacts/upstream', { recursive: true });
   await rm('artifacts/upstream/report.json', { force: true });
   await rm('artifacts/upstream/error.json', { force: true });
   try {
+    const tracking = process.env.GITHUB_REPOSITORY
+      ? await readTracking({
+          repository: process.env.GITHUB_REPOSITORY,
+          token: process.env.GITHUB_TOKEN,
+        })
+      : { sha: null, content: null };
+    const telemetry = tracking.content === null ? null : JSON.parse(tracking.content);
+    state = withTracking(mainState, telemetry);
     const report = await detect({
       state,
+      mainState,
+      trackingSha: tracking.sha,
+      tracking: telemetry,
       reuse,
       enrich: !process.argv.includes('--registry-only'),
     });

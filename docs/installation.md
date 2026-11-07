@@ -22,6 +22,14 @@ Install the matching `0.0.7-prealpha.0` versions of every `@altroo/mui-native*` 
 
 The native editor adapter requires **React Native 0.88.1** in both JavaScript and the application binary. Its peer/source guards intentionally reject unreviewed ABIs. Keep React 19.3.0 and the matched Expo SDK 58 baseline, then perform the usual native dependency installation/build. Do not bypass a missing-descriptor or peer-source mismatch error; follow its generated-cache/rebuild guidance in [the native-host guide](native-host.md#native-text-editor).
 
+## Android system fonts in source development
+
+The unpublished source after `0.0.7-prealpha.0` routes Android CSS-derived platform-default sans-serif fonts through a private library alias registered during native-host package construction. Native default-font rendering needs the matching `@altroo/mui-native-host` as a direct application dependency and an Android rebuild, including applications using System without Material or X. Without that rebuilt host, the alias follows React Native's ordinary unregistered-family normal/bold fallback. The renderless `DefaultPropsProvider` and `RtlProvider` entries and the canonical `createBreakpoints` helper entry still work without initializing the native renderer or host.
+
+React Native applies exact numeric Typeface weights on Android 28 and later; Android 24-27 retain its native normal/bold fallback. The actual stock MUI font stack and CSS platform-default names map to the internal Android alias. An explicit CSS default-font value remains an effective reset inside a custom-font paragraph; it is never omitted in favor of inheriting that paragraph's font.
+
+The registration does not use or shadow the public `System` name, app assets or other custom families. Genuine native inline font names and quoted custom CSS names retain their meaning; stored theme font stacks and iOS mapping are unchanged. Reserve the `__AltrooMUI` font namespace for library internals.
+
 ## Build local archives instead
 
 To test source changes before a registry release, build and pack local tarballs:

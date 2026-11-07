@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, writeFile, rm } from 'node:fs/promises';
@@ -8,6 +9,7 @@ import { detect } from './detect.mjs';
 import { publishReport } from './publish-report.mjs';
 import { simulatePublication } from './simulate.mjs';
 import { hash, simulatedGitHub } from './testing/github.mjs';
+import { trackingBranch, trackingPath, trackingFromState } from './tracking.mjs';
 
 async function fixture() {
   const directory = await mkdtemp(join(tmpdir(), 'mui-upstream-'));
@@ -141,162 +143,325 @@ async function fixture() {
   }
 }
 
-test('full detection and publication simulate drafts, license holds, deduplication and preserved human edits', async () => {
+const telemetryPut = (call) =>
+  call.method === 'PUT' && call.path.endsWith('/contents/' + trackingPath);
+function setMain(remote, state) {
+  const content = JSON.stringify(state);
+  remote.branches.get('main').set('upstream/state.json', {
+    content: Buffer.from(content).toString('base64'),
+    sha: hash(content),
+  });
+}
+function setTracking(remote, value) {
+  const content = JSON.stringify(value, null, 2) + '\n';
+  remote.branches
+    .get(trackingBranch)
+    .set(trackingPath, { content: Buffer.from(content).toString('base64'), sha: hash(content) });
+}
+function refreshReport(report, remote) {
+  return {
+    ...structuredClone(report),
+    baseStateHash: hash(JSON.stringify(remote.state())),
+    baseDetectionHash: hash(JSON.stringify(remote.effectiveState())),
+    baseTrackingSha: remote.branches.get(trackingBranch)?.get(trackingPath)?.sha ?? null,
+    baseTracking: remote.tracking(),
+  };
+}
+async function publication(action) {
   const { report, state } = await fixture();
-  const summary = await simulatePublication(report, state, { prepareDrafts: true });
-  assert.equal(summary.drafts, 1);
-  assert.equal(summary.issues, 4);
-  assert.equal(summary.dispatches, 2);
-  assert.equal(summary.networkWrites, 0);
+  const remote = simulatedGitHub(state);
+  const original = globalThis.fetch;
+  globalThis.fetch = remote.fetch;
+  const publish = (value = report) =>
+    publishReport({
+      report: structuredClone(value),
+      repository: remote.repository,
+      token: 'simulation-token',
+    });
+  try {
+    await action({ report, state, remote, publish });
+  } finally {
+    globalThis.fetch = original;
+  }
+}
+
+test('protected-main publication simulates detection-only branch persistence and deduplication', async () => {
+  const { report, state } = await fixture();
+  const summary = await simulatePublication(report, state);
+  assert.deepEqual(summary, { issues: 4, drafts: 0, dispatches: 0, networkWrites: 0 });
 });
-test('permission and dispatch failures preserve detection state and retries do not duplicate work', async () => {
-  const { report, state } = await fixture();
-  for (const suffix of ['/pulls', '/actions/workflows/ci.yml/dispatches']) {
-    const remote = simulatedGitHub(state);
-    remote.failNext((call) => call.method === 'POST' && call.path.endsWith(suffix));
-    const original = globalThis.fetch;
-    globalThis.fetch = remote.fetch;
-    const publish = () =>
+
+test('automatic drafts fail closed before any network operation', async () => {
+  await publication(async ({ report, remote }) => {
+    await assert.rejects(
       publishReport({
-        report: structuredClone(report),
+        report,
         repository: remote.repository,
         token: 'simulation-token',
         prepareDrafts: true,
-      });
-    try {
-      await assert.rejects(publish(), /HTTP 403/);
-      assert.deepEqual(remote.state(), state);
-      await publish();
-      assert.equal(remote.pulls.length, 1);
-      assert.ok(
-        remote.issues.some(
-          (issue) =>
-            issue.body.includes('styles/createPalette.js') &&
-            issue.body.includes('packages/system/src/theme.ts'),
-        ),
-        'Release review must identify changed adapted source and its native consumer',
-      );
-      assert.equal(remote.issues.length, 4);
-      assert.equal(remote.dispatches.length, 1);
-      assert.equal(remote.state().packages['@mui/material'].candidate.version, '1.0.1');
-      assert.equal(remote.state().packages['@mui/x-chat'].candidate, null);
-    } finally {
-      globalThis.fetch = original;
-    }
-  }
+      }),
+      /Automatic draft preparation is disabled/,
+    );
+    assert.equal(remote.calls.length, 0);
+  });
 });
-test('partial, stale and commercial-package reports cannot perform writes', async () => {
+
+test('partial, stale, commercial and reviewed-state-changing reports cannot write', async () => {
   const { report, state } = await fixture();
-  for (const [value, error] of [
+  const modified = structuredClone(report);
+  modified.nextState.packages['@mui/material'].portedAndVerified = '1.0.1';
+  const cases = [
     [{ ...report, complete: false }, /Partial reports/],
     [{ ...report, baseStateHash: 'stale' }, /Baseline changed/],
+    [{ ...report, baseTrackingSha: 'stale' }, /Detection telemetry changed/],
+    [{ ...report, baseDetectionHash: 'stale' }, /Detection telemetry changed/],
     [
       { ...report, changes: [{ ...report.changes[0], name: '@mui/x-data-grid-premium' }] },
-      /outside the MIT Community allowlist/,
+      /allowlist/,
     ],
-  ]) {
-    const remote = simulatedGitHub(state);
-    const original = globalThis.fetch;
+    [modified, /changes reviewed support/],
+  ];
+  for (const [value, pattern] of cases) {
+    const remote = simulatedGitHub(state),
+      original = globalThis.fetch;
     globalThis.fetch = remote.fetch;
     try {
       await assert.rejects(
         publishReport({ report: value, repository: remote.repository, token: 'simulation-token' }),
-        error,
+        pattern,
       );
-      assert.ok(remote.calls.every((call) => call.method === 'GET'));
+      assert(remote.calls.every((c) => c.method === 'GET'));
       assert.deepEqual(remote.state(), state);
+      assert.equal(remote.tracking(), null);
     } finally {
       globalThis.fetch = original;
     }
   }
 });
-test('a rejected state write can be retried after candidate side effects without losing support', async () => {
-  const { report, state } = await fixture();
-  const remote = simulatedGitHub(state);
-  remote.failNext(
-    (call) => call.method === 'PUT' && call.path.endsWith('/contents/upstream/state.json'),
-    409,
-  );
-  const original = globalThis.fetch;
-  globalThis.fetch = remote.fetch;
-  const publish = () =>
-    publishReport({
-      report: structuredClone(report),
-      repository: remote.repository,
-      token: 'simulation-token',
-      prepareDrafts: true,
-    });
-  try {
-    await assert.rejects(publish(), /HTTP 409/);
+
+test('failed issue preparation never advances the telemetry cursor and retries deduplicate', async () => {
+  await publication(async ({ state, remote, publish }) => {
+    remote.failNext((c) => c.method === 'POST' && c.path.endsWith('/issues'));
+    await assert.rejects(publish(), /HTTP 403/);
+    assert.equal(remote.tracking(), null);
     assert.deepEqual(remote.state(), state);
     await publish();
-    assert.equal(remote.pulls.length, 1);
     assert.equal(remote.issues.length, 4);
-    assert.equal(remote.state().packages['@mui/material'].portedAndVerified, null);
-    assert.equal(remote.state().packages['@mui/material'].releasedSupport, null);
-  } finally {
-    globalThis.fetch = original;
-  }
+    assert.deepEqual(remote.state(), state);
+  });
 });
 
-test('default issue-only operation never requests PR permissions or dispatches candidate CI', async () => {
+for (const committed of [false, true])
+  test('transient conditional PUT recovery committed=' + committed, async () => {
+    await publication(async ({ state, remote, publish }) => {
+      remote.failNext(telemetryPut, 500, { committed });
+      await publish();
+      assert.equal(remote.calls.filter(telemetryPut).length, committed ? 1 : 2);
+      assert.equal(remote.issues.length, 4);
+      assert.deepEqual(remote.state(), state);
+      assert.equal(remote.effectiveState().packages['@mui/material'].latestDetected, '1.0.1');
+      const file = remote.tracking();
+      assert.deepEqual(Object.keys(file).sort(), [
+        'lastSuccessfulCheck',
+        'packages',
+        'schemaVersion',
+      ]);
+      assert.deepEqual(Object.keys(file.packages['@mui/material']).sort(), [
+        'latestDetected',
+        'observedVersions',
+      ]);
+    });
+  });
+
+test('nonretryable telemetry permissions fail immediately without retry or main fallback', async () => {
+  await publication(async ({ state, remote, publish }) => {
+    remote.failNext(telemetryPut, 403);
+    await assert.rejects(publish(), /HTTP 403/);
+    assert.equal(remote.calls.filter(telemetryPut).length, 1);
+    assert(telemetryPut(remote.calls.at(-1)));
+    assert.equal(remote.tracking(), null);
+    assert.deepEqual(remote.state(), state);
+  });
+});
+
+test('transient retry budget is bounded and a later fresh retry does not duplicate issues', async () => {
+  await publication(async ({ state, remote, publish }) => {
+    for (let i = 0; i < 3; i++) remote.failNext(telemetryPut, 500);
+    await assert.rejects(publish(), /HTTP 500/);
+    assert.equal(remote.calls.filter(telemetryPut).length, 3);
+    assert.equal(remote.tracking(), null);
+    await publish();
+    assert.equal(remote.issues.length, 4);
+    assert.deepEqual(remote.state(), state);
+  });
+});
+
+test('a concurrent telemetry write after an ambiguous failure is never overwritten', async () => {
+  await publication(async ({ report, state, remote, publish }) => {
+    await publish();
+    const next = refreshReport(report, remote);
+    next.checkedAt = '2026-11-03T12:00:00Z';
+    next.nextState.lastSuccessfulCheck = next.checkedAt;
+    remote.failNext(telemetryPut, 500);
+    let failed = false,
+      changed = false;
+    globalThis.fetch = async (input, options) => {
+      if (
+        options?.method === 'PUT' &&
+        new URL(input).pathname.endsWith('/contents/' + trackingPath)
+      )
+        failed = true;
+      else if (
+        failed &&
+        !changed &&
+        new URL(input).pathname.endsWith('/contents/' + trackingPath)
+      ) {
+        const value = remote.tracking();
+        value.packages['@mui/material'].latestDetected = '1.0.2';
+        setTracking(remote, value);
+        changed = true;
+      }
+      return remote.fetch(input, options);
+    };
+    const count = remote.calls.filter(telemetryPut).length;
+    await assert.rejects(publish(next), /changed after a failed write/);
+    assert.equal(remote.calls.filter(telemetryPut).length, count + 1);
+    assert.equal(remote.tracking().packages['@mui/material'].latestDetected, '1.0.2');
+    assert.deepEqual(remote.state(), state);
+  });
+});
+
+test('main reviewed support changed during issue preparation prevents cursor advancement', async () => {
+  await publication(async ({ state, remote, publish }) => {
+    let changed = false;
+    globalThis.fetch = async (input, options) => {
+      if (!changed && options?.method === 'POST' && new URL(input).pathname.endsWith('/issues')) {
+        const value = remote.state();
+        value.packages['@mui/material'].portedAndVerified = 'human-reviewed';
+        setMain(remote, value);
+        changed = true;
+      }
+      return remote.fetch(input, options);
+    };
+    await assert.rejects(publish(), /State changed while preparing updates/);
+    assert.equal(remote.tracking(), null);
+    assert.equal(remote.calls.filter(telemetryPut).length, 0);
+    assert.equal(remote.state().packages['@mui/material'].portedAndVerified, 'human-reviewed');
+    assert.equal(state.packages['@mui/material'].portedAndVerified, null);
+  });
+});
+
+test('an ambiguous committed branch creation is read back without resetting the branch', async () => {
+  await publication(async ({ remote, publish }) => {
+    remote.failNext((c) => c.method === 'POST' && c.path.endsWith('/git/refs'), 500, {
+      committed: true,
+    });
+    await publish();
+    assert.equal(
+      remote.calls.filter((c) => c.method === 'POST' && c.path.endsWith('/git/refs')).length,
+      1,
+    );
+    assert(remote.tracking());
+  });
+});
+
+test('supporting Utils releases are monitored without native candidates or support promotion', async () => {
+  await publication(async ({ report, state, remote, publish }) => {
+    const utility = {
+      ...report.changes.find((c) => c.name === '@mui/material'),
+      name: '@mui/utils',
+    };
+    report.changes.push(utility);
+    report.nextState.packages['@mui/utils'].latestDetected = utility.version;
+    report.nextState.packages['@mui/utils'].observedVersions.push(utility.version);
+    await publish(report);
+    assert(remote.issues.some((i) => i.body.includes('@mui/utils@1.0.1')));
+    assert.equal(remote.effectiveState().packages['@mui/utils'].latestDetected, '1.0.1');
+    assert.deepEqual(remote.state(), state);
+    assert.equal(remote.pulls.length, 0);
+    assert.equal(remote.dispatches.length, 0);
+  });
+});
+
+test('detector fingerprints and dry-run publication include an existing telemetry cursor', async () => {
   const { report, state } = await fixture();
-  const summary = await simulatePublication(report, state);
+  const telemetry = trackingFromState(state);
+  const remote = simulatedGitHub(state, { telemetry });
+  const value = refreshReport(report, remote);
+  const summary = await simulatePublication(value, state);
   assert.equal(summary.issues, 4);
   assert.equal(summary.drafts, 0);
-  assert.equal(summary.dispatches, 0);
-  assert.equal(summary.networkWrites, 0);
 });
 
-test('supporting Utils releases publish with native updates but never become native candidates', async () => {
-  const { report, state } = await fixture();
-  const utility = {
-    ...report.changes.find((change) => change.name === '@mui/material'),
-    name: '@mui/utils',
-    adaptedSourceChanges: [
-      {
-        path: 'resolveProps/resolveProps.js',
-        status: 'changed',
-        localFiles: ['packages/system/src/defaultProps.tsx'],
-      },
-    ],
-  };
-  report.changes.push(utility);
-  report.nextState.packages['@mui/utils'].latestDetected = utility.version;
-  report.nextState.packages['@mui/utils'].observedVersions.push(utility.version);
-  const previous = globalThis.fetch;
-  try {
-    for (const prepareDrafts of [false, true]) {
-      const remote = simulatedGitHub(state);
-      globalThis.fetch = remote.fetch;
-      await publishReport({
-        report: structuredClone(report),
-        repository: remote.repository,
-        token: 'simulation-token',
-        prepareDrafts,
-      });
-      assert.ok(
-        remote.issues.some(
-          (issue) =>
-            issue.body.includes('@mui/utils@1.0.1') &&
-            issue.body.includes('resolveProps/resolveProps.js'),
-        ),
-      );
-      assert.ok(remote.issues.some((issue) => issue.body.includes('@mui/material@1.0.1')));
-      assert.equal(remote.state().packages['@mui/utils'].latestDetected, '1.0.1');
-      assert.equal(remote.state().packages['@mui/utils'].portedAndVerified, null);
-      assert.equal(remote.state().packages['@mui/utils'].candidate, null);
-      assert.equal(remote.pulls.length, prepareDrafts ? 1 : 0);
-      assert.equal(remote.dispatches.length, prepareDrafts ? 1 : 0);
-      if (prepareDrafts) {
-        const file = remote.branches
-          .get('upstream/core/stable/v1')
-          .get('upstream/candidates/core-stable-v1.json');
-        const candidate = JSON.parse(Buffer.from(file.content, 'base64').toString());
-        assert.ok(candidate.changes.every((change) => change.name !== '@mui/utils'));
+test('a direct blob CAS conflict fails without overwriting another cursor', async () => {
+  await publication(async ({ report, state, remote, publish }) => {
+    await publish();
+    const next = refreshReport(report, remote);
+    next.checkedAt = '2026-11-03T12:00:00Z';
+    next.nextState.lastSuccessfulCheck = next.checkedAt;
+    let changed = false;
+    globalThis.fetch = async (input, options) => {
+      if (
+        !changed &&
+        options?.method === 'PUT' &&
+        new URL(input).pathname.endsWith('/contents/' + trackingPath)
+      ) {
+        const value = remote.tracking();
+        value.lastSuccessfulCheck = '2026-11-04T12:00:00Z';
+        setTracking(remote, value);
+        changed = true;
       }
-    }
+      return remote.fetch(input, options);
+    };
+    const count = remote.calls.filter(telemetryPut).length;
+    await assert.rejects(publish(next), (e) => e.status === 409);
+    assert.equal(remote.calls.filter(telemetryPut).length, count + 1);
+    assert.equal(remote.tracking().lastSuccessfulCheck, '2026-11-04T12:00:00Z');
+    assert.deepEqual(remote.state(), state);
+  });
+});
+
+test('an unavailable failed-write read-back prevents a blind retry', async () => {
+  await publication(async ({ remote, publish }) => {
+    remote.failNext(telemetryPut, 500);
+    remote.failNext((c) => c.method === 'GET' && c.path.endsWith('/contents/' + trackingPath), 500);
+    await assert.rejects(publish(), (e) => e.status === 500);
+    assert.equal(remote.calls.filter(telemetryPut).length, 1);
+    assert.equal(remote.tracking(), null);
+  });
+});
+
+test('nonempty main-reviewed candidates and support remain authoritative in the dashboard', async () => {
+  const { report, state } = await fixture();
+  const item = state.packages['@mui/material'];
+  Object.assign(item, {
+    candidate: { version: '1.0.1', pullRequest: 'https://github.com/example/reviewed' },
+    portedAndVerified: '0.9.0',
+    releasedSupport: '0.8.0',
+  });
+  Object.assign(report.nextState.packages['@mui/material'], {
+    candidate: structuredClone(item.candidate),
+    portedAndVerified: item.portedAndVerified,
+    releasedSupport: item.releasedSupport,
+  });
+  report.baseStateHash = hash(JSON.stringify(state));
+  report.baseDetectionHash = report.baseStateHash;
+  const remote = simulatedGitHub(state),
+    original = globalThis.fetch;
+  globalThis.fetch = remote.fetch;
+  try {
+    await publishReport({ report, repository: remote.repository, token: 'simulation-token' });
+    assert.deepEqual(remote.state(), state);
+    assert(
+      remote.issues
+        .find((i) => i.body.includes('<!-- upstream-dashboard -->'))
+        .body.includes('| @mui/material | 1.0.1 | 1.0.1 | 0.9.0 | 0.8.0 |'),
+    );
+    assert.deepEqual(Object.keys(remote.tracking().packages['@mui/material']).sort(), [
+      'latestDetected',
+      'observedVersions',
+    ]);
   } finally {
-    globalThis.fetch = previous;
+    globalThis.fetch = original;
   }
 });

@@ -1,13 +1,18 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { publishReport } from './publish-report.mjs';
 import { simulatedGitHub, hash } from './testing/github.mjs';
+import { trackingBranch, trackingPath } from './tracking.mjs';
 
 export async function simulatePublication(report, state, { prepareDrafts = false } = {}) {
   assert.equal(report.complete, true);
   assert.equal(report.baseStateHash, hash(JSON.stringify(state)));
-  const remote = simulatedGitHub(state);
+  const remote = simulatedGitHub(state, {
+    telemetry: report.baseTracking,
+    telemetrySha: report.baseTrackingSha,
+  });
   const original = globalThis.fetch;
   const publish = (value) =>
     publishReport({
@@ -19,45 +24,47 @@ export async function simulatePublication(report, state, { prepareDrafts = false
   globalThis.fetch = remote.fetch;
   try {
     await publish(report);
-    if (!prepareDrafts) {
-      assert.equal(remote.pulls.length, 0);
-      assert.equal(remote.dispatches.length, 0);
-      assert.equal(remote.branches.size, 1);
-      assert.ok(remote.calls.every((call) => !/\/(pulls|git\/refs|actions)\b/.test(call.path)));
-    }
-    const first = remote.state();
-    for (const [name, before] of Object.entries(state.packages)) {
-      assert.deepEqual(first.packages[name].baseline, before.baseline);
-      assert.equal(first.packages[name].portedAndVerified, before.portedAndVerified);
-      assert.equal(first.packages[name].releasedSupport, before.releasedSupport);
-    }
-    const counts = { issues: remote.issues.length, drafts: remote.pulls.length };
+    assert.deepEqual(remote.state(), state, 'Automation must never change main');
+    assert.equal(remote.pulls.length, 0);
+    assert.equal(remote.dispatches.length, 0);
+    assert.equal(remote.branches.size, 2);
+    assert.ok(remote.calls.every((call) => !/\/(pulls|actions)\b/.test(call.path)));
+    assert.ok(
+      remote.calls
+        .filter((call) => call.method === 'PUT')
+        .every(
+          (call) =>
+            call.body.branch === trackingBranch && call.path.endsWith('/contents/' + trackingPath),
+        ),
+    );
+    const first = remote.effectiveState();
+    const counts = { issues: remote.issues.length, drafts: 0 };
     const next = {
       ...structuredClone(report),
-      baseStateHash: hash(JSON.stringify(first)),
+      baseDetectionHash: hash(JSON.stringify(first)),
+      baseTrackingSha: remote.branches.get(trackingBranch).get(trackingPath).sha,
+      baseTracking: remote.tracking(),
       nextState: first,
     };
-    for (const [name, files] of remote.branches) {
-      if (name !== 'main') files.set('human-work.txt', { content: 'preserve-me', sha: 'human' });
-    }
+    remote.branches
+      .get(trackingBranch)
+      .set('human-work.txt', { content: 'preserve-me', sha: 'human' });
     await publish(next);
     assert.equal(
       remote.issues.length,
       counts.issues,
       'Repeated releases must not duplicate issues',
     );
-    assert.equal(remote.pulls.length, counts.drafts, 'Repeated releases must not duplicate drafts');
-    for (const [name, files] of remote.branches) {
-      if (name !== 'main') assert.equal(files.get('human-work.txt').content, 'preserve-me');
-    }
+    assert.equal(remote.branches.get(trackingBranch).get('human-work.txt').content, 'preserve-me');
+    assert.deepEqual(remote.state(), state);
     assert.ok(
       remote.issues.some(
         (issue) => issue.body.includes('<!-- upstream-dashboard -->') && issue.pinned,
       ),
     );
-    if (report.baseStateHash !== hash(JSON.stringify(first)))
-      await assert.rejects(publish(report), /Baseline changed/);
-    return { ...counts, dispatches: remote.dispatches.length, networkWrites: 0 };
+    if (report.baseTrackingSha !== next.baseTrackingSha)
+      await assert.rejects(publish(report), /Detection telemetry changed/);
+    return { ...counts, dispatches: 0, networkWrites: 0 };
   } finally {
     globalThis.fetch = original;
   }
@@ -67,10 +74,13 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     await readFile(process.argv[2] ?? 'artifacts/upstream/report.json', 'utf8'),
   );
   const state = JSON.parse(await readFile('upstream/state.json', 'utf8'));
-  const result = await simulatePublication(report, state);
   console.log(
     JSON.stringify(
-      { simulation: 'passed', detectedReleases: report.changes.length, ...result },
+      {
+        simulation: 'passed',
+        detectedReleases: report.changes.length,
+        ...(await simulatePublication(report, state)),
+      },
       null,
       2,
     ),

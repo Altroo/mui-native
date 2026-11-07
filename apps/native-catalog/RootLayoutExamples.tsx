@@ -8,11 +8,13 @@ import { LayoutRootBenchmarkExample } from './LayoutRootBenchmarkExample';
 import { ListItemIconContractExample } from './ListItemIconContractExample';
 import { AccordionDetailsContractExample } from './AccordionDetailsContractExample';
 import { MenuIconCascadeExample } from './MenuIconCascadeExample';
+import { TypographyContractExample } from './TypographyContractExample';
+import { DividerContractExample } from './DividerContractExample';
 
 /** Keep each measured example mounted while its own controls update the root. */
 export function RootLayoutExamples() {
   const [example, setExample] = useState<
-    'group' | 'avatar' | 'icon' | 'details' | 'menu-styles' | 'benchmark'
+    'group' | 'avatar' | 'icon' | 'details' | 'menu-styles' | 'typography' | 'divider' | 'benchmark'
   >('group');
   return (
     <View style={{ flex: 1 }}>
@@ -66,6 +68,21 @@ export function RootLayoutExamples() {
         </Button>
         <Button
           style={{ maxWidth: '100%' }}
+          testID="root-layout-typography"
+          variant={example === 'typography' ? 'contained' : 'outlined'}
+          onClick={() => setExample('typography')}
+        >
+          Typography
+        </Button>
+        <Button
+          testID="root-layout-divider"
+          variant={example === 'divider' ? 'contained' : 'outlined'}
+          onClick={() => setExample('divider')}
+        >
+          Divider
+        </Button>
+        <Button
+          style={{ maxWidth: '100%' }}
           testID="root-layout-benchmark"
           variant={example === 'benchmark' ? 'contained' : 'outlined'}
           onClick={() => setExample('benchmark')}
@@ -89,6 +106,10 @@ export function RootLayoutExamples() {
             <ListItemIconContractExample />
           ) : example === 'details' ? (
             <AccordionDetailsContractExample />
+          ) : example === 'divider' ? (
+            <DividerContractExample />
+          ) : example === 'typography' ? (
+            <TypographyContractExample />
           ) : (
             <MenuIconCascadeExample />
           )}

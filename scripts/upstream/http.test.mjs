@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { request, pages } from './http.mjs';
@@ -161,4 +162,22 @@ test('partial registry checks cannot be confused with a complete successful chec
     /rate limited/,
   );
   assert.equal(state.lastSuccessfulCheck, null);
+});
+
+test('HTTP errors retain status for conditional-write recovery without exposing response bodies', async () => {
+  const original = globalThis.fetch;
+  let calls = 0;
+  globalThis.fetch = async () => {
+    calls++;
+    return Response.json({ message: 'PRIVATE_RESPONSE_BODY' }, { status: 500 });
+  };
+  try {
+    await assert.rejects(
+      request('https://api.github.com/test?private=do-not-log', { method: 'PUT' }),
+      (e) => e.status === 500 && e.message === 'HTTP 500 for https://api.github.com/test',
+    );
+    assert.equal(calls, 1);
+  } finally {
+    globalThis.fetch = original;
+  }
 });

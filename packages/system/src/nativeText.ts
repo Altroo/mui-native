@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { copyNativeBorderStyle } from './borders';
 import { I18nManager, Platform, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
 import type { Theme } from './theme';
 import { diagnostic } from './diagnostics';
@@ -84,7 +85,7 @@ export function applyNativeTextMetrics<T extends TextStyle>(
   metrics: Record<string, unknown>,
 ): T | undefined {
   if (!native || !Object.keys(metrics).length) return native;
-  const adjusted = { ...native };
+  const adjusted = copyNativeBorderStyle(native, { ...native });
   for (const key of relativeMetricKeys)
     if (Object.hasOwn(metrics, key)) {
       if (Object.hasOwn(resolved, key)) (adjusted as Record<string, unknown>)[key] = resolved[key];
@@ -140,7 +141,8 @@ export function nativeTextAlignmentStyle<T extends TextStyle | null | undefined>
         ? 'right'
         : 'left'
       : physical;
-  const native = textAlign === style.textAlign ? style : { ...style, textAlign };
+  const native =
+    textAlign === style.textAlign ? style : copyNativeBorderStyle(style, { ...style, textAlign });
   // Keep emitted styles recognizable if a composing library root processes them
   // again. This marker stays in the existing weak metadata, never in native props.
   cssTextMetrics.set(native, { ...metrics, textAlign: alignment, emittedTextAlign: physical });
@@ -161,13 +163,25 @@ function size(value: unknown, em: number, rem: number): number | undefined {
   const result = amount * (unit === 'rem' ? rem : unit === 'em' ? em : unit === '%' ? em / 100 : 1);
   return Number.isFinite(result) ? result : undefined;
 }
+// The matching Android host registers this private alias with Typeface.DEFAULT.
+// Only CSS-derived defaults use it; genuine native style layers remain untouched.
+const androidDefaultFontFamily = '__AltrooMUIPlatformDefaultSansSerif';
 function fontFamily(value: unknown): string | undefined {
   if (typeof value !== 'string') return undefined;
-  if (value === defaultTypographyFontFamily) return 'System';
+  const platformDefault = Platform.OS === 'android' ? androidDefaultFontFamily : 'System';
+  // The stock MUI stack starts with quoted Roboto and retains its established
+  // platform-default mapping before handling authored custom family names.
+  if (value === defaultTypographyFontFamily) return platformDefault;
   const first = value.trim().match(/^(?:"([^"]+)"|'([^']+)'|([^,]+))/);
   const family = (first?.[1] ?? first?.[2] ?? first?.[3])?.trim();
   if (!family) return undefined;
-  if (['system-ui', 'sans-serif', 'System', '-apple-system'].includes(family)) return 'System';
+  if (['system-ui', 'sans-serif', 'System', '-apple-system'].includes(family)) {
+    // Quoted names are literal CSS custom families. Preserve an app's System
+    // name rather than routing it to our private default alias on Android.
+    if (Platform.OS === 'android' && (first?.[1] !== undefined || first?.[2] !== undefined))
+      return family;
+    return platformDefault;
+  }
   if (family === 'serif') return Platform.OS === 'ios' ? 'Times New Roman' : 'serif';
   if (family === 'monospace') return Platform.OS === 'ios' ? 'Menlo' : 'monospace';
   return family;

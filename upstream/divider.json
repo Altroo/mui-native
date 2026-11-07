@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "description": "Finite existing Divider source contract. Source SSR is separate from native geometry/paint/accessibility/performance gates.",
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+        "index.js": "3ef26e6ff602e27a6a3a8bd34a95cc3f9b1f903ab5ba90aa7bb3cf41217deafd",
+        "index.d.ts": "88f12707de0dd1b6a15db521a6b7d1308b3a88aef114b0bc2964ece74d007d5e",
+        "Divider/Divider.js": "f1a279f004a67fa1d89371c3fda06aa5e7e6d1f795b08a5446b17cd752c9ca3d",
+        "Divider/Divider.d.ts": "7d96139ce863c53e3e4994516b7a974c47349ff4963f743d21f6bf4211a96710",
+        "Divider/Divider.d.mts": "0e273eaa9e2693d507d57a1d16604de789d6872869da28f8fd9067e87ffe2e61",
+        "Divider/dividerClasses.js": "eaad79a02843ae1b680ee7f89ca382187112a76ff2e5549bb978ab6edaa7aef2",
+        "Divider/dividerClasses.d.ts": "d4500753bcb1f002b5c2d7d9e8cac3e6ce75f0f39d68e6484228e849082a1c8b",
+        "Divider/dividerClasses.d.mts": "d4500753bcb1f002b5c2d7d9e8cac3e6ce75f0f39d68e6484228e849082a1c8b",
+        "Divider/index.js": "ee4b8d0ff835db85a0f19fb5d3ac8622b21410f01fa98f7fb035555a9f8799bf",
+        "Divider/index.d.ts": "242258092f0ed6960f328b9d7a455c6559c7253c6b57b08883a2fb859c4cfdbb",
+        "Divider/index.d.mts": "e1975c70583ce8ce129b0fc411eac1743739f88c1e05f00f6626ee60b29246ca",
+        "styles/components.d.ts": "358dac701e57422878d7164f4ba31b1672e641dcf2c1378354da779400b0255f",
+        "styles/components.d.mts": "87ba2055d099224fa7e94ff0a504177fd0ba2f4a78150414699bdb3ef7d71454",
+        "styles/createThemeNoVars.d.ts": "65a184175a5305cdedf83c628eca71f4cb44f6d997f8c55733974b228b30a037",
+        "styles/createThemeNoVars.d.mts": "bb6e81cd507b319efcc3b1843b321a038cf00c1b72ce32f92f16b3ff6125bbed",
+        "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+        "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+        "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa",
+        "styles/slotShouldForwardProp.js": "94273fe410b5da39daf022f286c2d746538878d094694eab5307d0eb6bd3501c",
+        "zero-styled/index.js": "50f7cf89a8e3794b42b932af95d6720f21597bd4b9a296bcb92f87eab5789eb6",
+        "utils/memoTheme.js": "ba795253c43a4fd740281e725b4fe0b77a25bf0c1a26e3f12b5f89a790a8a497",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f",
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+      }
+    }
+  ],
+  "fixture": {
+    "path": "tests/fixtures/mui-divider-9.5.0.json",
+    "sha256": "e51fa1708630e829b14b4ab9a335541c2cd17c4420b47c301decad4ace88f4e5",
+    "rootCases": 27,
+    "themeCases": 3,
+    "utilityIdentifiers": 30,
+    "styledCases": 1,
+    "customRootSpyCases": 1,
+    "unusedSlotErrorCases": 2,
+    "renderer": "Actual pinned React DOM SSR and forwarded-ref argument spy. SSR does not attach refs; no mounted DOM/native paint is claimed."
+  },
+  "localFiles": [
+    "packages/material/src/divider.tsx",
+    "packages/material/src/dividerTypes.ts",
+    "packages/material/src/dividerClasses.ts",
+    "packages/material/src/Divider/index.ts",
+    "packages/material/src/styles/createTheme.ts",
+    "packages/material/src/styles/props.ts",
+    "packages/material/src/styles/index.ts",
+    "packages/material/src/index.ts"
+  ],
+  "adaptations": [
+    "Native View roots and owned before/after line Views replace DOM hr/div and CSS decoration. Native refs/events/inline arrays retain RN semantics.",
+    "Literal text keeps one line; authored child elements keep native policy and identity. Native separator role is supported; DOM aria-orientation is not certified as a native AT property.",
+    "Source physical CSS margins/borders use existing native physical-geometry protection. DOM direction, theme/RTL context and web RTL stylesheet transforms remain separate inputs.",
+    "Arbitrary pseudo-element selectors and adjacent-sibling MenuItem selectors remain diagnosed unsupported software exits. No general CSS grammar expansion.",
+    "Shared override resolution now evaluates every enumerable slot before selecting native CSS, including the retained unused root/wrapper throws and four-call root/wrapper source trace. General Emotion serialization and renderer-wide invocation counts remain separate boundaries.",
+    "Development propTypes, RSC/web metadata, browser wrapping equivalence, renderer/device/physical AT and calibrated performance gates remain open."
+  ]
+}

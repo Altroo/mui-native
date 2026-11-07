@@ -16,6 +16,11 @@ import {
   type NativeTextChildRootTracker,
 } from './nativeTextRegistry';
 import type { Theme } from './theme';
+import {
+  nativeStyleBorderDeclarations,
+  applyNativeBorderStyle,
+  copyNativeBorderStyle,
+} from './borders';
 import type { NativeStyle } from './sx';
 import {
   inheritedTextStyle,
@@ -72,7 +77,7 @@ function resolveScope(
   kind: 'view' | 'text',
   owningParagraph?: 'ltr' | 'rtl',
 ) {
-  const flat = StyleSheet.flatten(style) ?? {};
+  const flat = nativeStyleBorderDeclarations(style);
   const text = { ...inheritedTextStyle(flat) };
   const metrics = nativeStyleTextMetrics(style);
   // Literal RN lineHeight is an absolute length, unlike a CSS unitless ratio.
@@ -151,10 +156,14 @@ function resolveScope(
       : { ...(parent && !parent.nativeText ? value.style : {}), ...own };
   return {
     value,
-    native:
-      kind === 'text'
-        ? nativeTextAlignmentStyle(native, value.textAlign, paragraphDirection ?? direction)
-        : native,
+    native: applyNativeBorderStyle(
+      copyNativeBorderStyle(
+        flat,
+        kind === 'text'
+          ? nativeTextAlignmentStyle(native, value.textAlign, paragraphDirection ?? direction)
+          : native,
+      ),
+    ),
   };
 }
 export interface NativeTextScopeProps {

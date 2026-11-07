@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "a7fde730084085ae5f2fa587d8557bdc846ee88a21977e5126081149190fb738",
+  "nativeSourceSha256": "76c2e7677d973ad83507dd87ea93297324a7b072f0118bbcdc69c40ab9fbcd59",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -6943,13 +6943,24 @@
   ],
   "nativeOnlyExports": [
     {
+      "name": "applyNativeBorderStyle",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/borders.ts",
+          "name": "applyNativeBorderStyle",
+          "kind": "value",
+          "line": 98
+        }
+      ]
+    },
+    {
       "name": "applyNativeTextMetrics",
       "origins": [
         {
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "applyNativeTextMetrics",
           "kind": "value",
-          "line": 81
+          "line": 82
         }
       ]
     },
@@ -6960,7 +6971,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "Color",
           "kind": "type",
-          "line": 42
+          "line": 43
         }
       ]
     },
@@ -6971,7 +6982,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "ColorPartial",
           "kind": "type",
-          "line": 58
+          "line": 59
         }
       ]
     },
@@ -6982,7 +6993,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "CommonColors",
           "kind": "type",
-          "line": 59
+          "line": 60
         }
       ]
     },
@@ -6993,7 +7004,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "ComponentConfig",
           "kind": "type",
-          "line": 164
+          "line": 165
         }
       ]
     },
@@ -7004,7 +7015,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentRootStyle",
           "kind": "value",
-          "line": 845
+          "line": 920
         }
       ]
     },
@@ -7015,7 +7026,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "Components",
           "kind": "type",
-          "line": 169
+          "line": 170
         }
       ]
     },
@@ -7026,7 +7037,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 774
+          "line": 849
         }
       ]
     },
@@ -7037,7 +7048,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "ComponentStyle",
           "kind": "type",
-          "line": 163
+          "line": 164
         }
       ]
     },
@@ -7048,7 +7059,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "ComponentStyleArgs",
           "kind": "type",
-          "line": 144
+          "line": 145
         }
       ]
     },
@@ -7059,7 +7070,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "ComponentStyleObject",
           "kind": "type",
-          "line": 154
+          "line": 155
         }
       ]
     },
@@ -7070,7 +7081,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "ComponentStyleValue",
           "kind": "type",
-          "line": 157
+          "line": 158
         }
       ]
     },
@@ -7081,7 +7092,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "ComponentVariant",
           "kind": "type",
-          "line": 150
+          "line": 151
         }
       ]
     },
@@ -7092,7 +7103,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "ComponentVariantArgs",
           "kind": "type",
-          "line": 149
+          "line": 150
         }
       ]
     },
@@ -7104,6 +7115,17 @@
           "name": "configureDiagnostics",
           "kind": "value",
           "line": 5
+        }
+      ]
+    },
+    {
+      "name": "copyNativeBorderStyle",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/borders.ts",
+          "name": "copyNativeBorderStyle",
+          "kind": "value",
+          "line": 67
         }
       ]
     },
@@ -7125,7 +7147,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "createNativeStyledStyle",
           "kind": "value",
-          "line": 800
+          "line": 875
         }
       ]
     },
@@ -7268,7 +7290,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "getTextStyleInheritance",
           "kind": "value",
-          "line": 98
+          "line": 99
         }
       ]
     },
@@ -7279,7 +7301,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "inheritedTextStyle",
           "kind": "value",
-          "line": 52
+          "line": 53
         }
       ]
     },
@@ -7290,7 +7312,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "isNativeTextStyleProperty",
           "kind": "value",
-          "line": 49
+          "line": 50
         }
       ]
     },
@@ -7389,7 +7411,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeRootStyleResult",
           "kind": "type",
-          "line": 834
+          "line": 909
         }
       ]
     },
@@ -7400,7 +7422,29 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeStyle",
           "kind": "type",
-          "line": 34
+          "line": 41
+        }
+      ]
+    },
+    {
+      "name": "nativeStyleBorderDeclarations",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/borders.ts",
+          "name": "nativeStyleBorderDeclarations",
+          "kind": "value",
+          "line": 73
+        }
+      ]
+    },
+    {
+      "name": "nativeStyleBorderStyle",
+      "origins": [
+        {
+          "module": "@altroo/mui-native-system:src/borders.ts",
+          "name": "nativeStyleBorderStyle",
+          "kind": "value",
+          "line": 120
         }
       ]
     },
@@ -7411,7 +7455,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeStyleTarget",
           "kind": "type",
-          "line": 35
+          "line": 42
         }
       ]
     },
@@ -7422,7 +7466,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "nativeStyleTextMetrics",
           "kind": "value",
-          "line": 62
+          "line": 63
         }
       ]
     },
@@ -7433,7 +7477,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "nativeTextAlignmentStyle",
           "kind": "value",
-          "line": 128
+          "line": 129
         }
       ]
     },
@@ -7444,7 +7488,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "nativeTextParagraphDirection",
           "kind": "value",
-          "line": 114
+          "line": 115
         }
       ]
     },
@@ -7455,7 +7499,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "NativeTextScope",
           "kind": "value",
-          "line": 175
+          "line": 184
         }
       ]
     },
@@ -7466,7 +7510,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "NativeTextScopeProps",
           "kind": "type",
-          "line": 160
+          "line": 169
         }
       ]
     },
@@ -7488,7 +7532,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "NativeTextScopeValue",
           "kind": "type",
-          "line": 31
+          "line": 36
         }
       ]
     },
@@ -7499,7 +7543,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "nativeTextStyleContext",
           "kind": "value",
-          "line": 45
+          "line": 50
         }
       ]
     },
@@ -7510,7 +7554,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "NativeTextStyleContext",
           "kind": "value",
-          "line": 43
+          "line": 48
         }
       ]
     },
@@ -7521,7 +7565,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "Palette",
           "kind": "type",
-          "line": 107
+          "line": 108
         }
       ]
     },
@@ -7532,7 +7576,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "PaletteAugmentColorOptions",
           "kind": "type",
-          "line": 100
+          "line": 101
         }
       ]
     },
@@ -7543,7 +7587,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "PaletteColor",
           "kind": "type",
-          "line": 93
+          "line": 94
         }
       ]
     },
@@ -7554,7 +7598,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "PaletteColorOptions",
           "kind": "type",
-          "line": 92
+          "line": 93
         }
       ]
     },
@@ -7565,7 +7609,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "PaletteMode",
           "kind": "type",
-          "line": 41
+          "line": 42
         }
       ]
     },
@@ -7576,7 +7620,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "PaletteOptions",
           "kind": "type",
-          "line": 126
+          "line": 127
         }
       ]
     },
@@ -7587,7 +7631,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "PaletteTonalOffset",
           "kind": "type",
-          "line": 99
+          "line": 100
         }
       ]
     },
@@ -7609,7 +7653,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "renderNativeTextChildren",
           "kind": "value",
-          "line": 212
+          "line": 221
         }
       ]
     },
@@ -7631,7 +7675,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "resolveSx",
           "kind": "value",
-          "line": 657
+          "line": 690
         }
       ]
     },
@@ -7686,7 +7730,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "SimplePaletteColorOptions",
           "kind": "type",
-          "line": 86
+          "line": 87
         }
       ]
     },
@@ -7719,7 +7763,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "StyleContext",
           "kind": "type",
-          "line": 40
+          "line": 47
         }
       ]
     },
@@ -7730,7 +7774,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "SxObject",
           "kind": "type",
-          "line": 28
+          "line": 35
         }
       ]
     },
@@ -7763,7 +7807,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "TypeAction",
           "kind": "type",
-          "line": 73
+          "line": 74
         }
       ]
     },
@@ -7774,7 +7818,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "TypeBackground",
           "kind": "type",
-          "line": 68
+          "line": 69
         }
       ]
     },
@@ -7785,7 +7829,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "TypeDivider",
           "kind": "type",
-          "line": 72
+          "line": 73
         }
       ]
     },
@@ -7796,7 +7840,7 @@
           "module": "@altroo/mui-native-system:src/theme.ts",
           "name": "TypeText",
           "kind": "type",
-          "line": 63
+          "line": 64
         }
       ]
     },
@@ -7939,7 +7983,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "useNativeTextContext",
           "kind": "value",
-          "line": 44
+          "line": 49
         }
       ]
     },
@@ -9188,7 +9232,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -9507,7 +9551,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -12999,7 +13043,7 @@
         {
           "name": "ThemeOptions",
           "file": "src/theme.ts",
-          "line": 188,
+          "line": 189,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -13229,7 +13273,7 @@
         {
           "name": "Theme",
           "file": "src/theme.ts",
-          "line": 173,
+          "line": 174,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -13489,7 +13533,7 @@
         {
           "name": "ThemeOptions",
           "file": "src/theme.ts",
-          "line": 188,
+          "line": 189,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -13719,7 +13763,7 @@
         {
           "name": "Theme",
           "file": "src/theme.ts",
-          "line": 173,
+          "line": 174,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -14527,7 +14571,7 @@
         {
           "name": "Theme",
           "file": "src/theme.ts",
-          "line": 173,
+          "line": 174,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -14587,7 +14631,7 @@
         {
           "name": "Theme",
           "file": "src/theme.ts",
-          "line": 173,
+          "line": 174,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -15463,7 +15507,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -15497,7 +15541,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -17019,7 +17063,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -17164,7 +17208,7 @@
         {
           "name": "SxProps",
           "file": "src/sx.ts",
-          "line": 29,
+          "line": 36,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -17237,7 +17281,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -17382,7 +17426,7 @@
         {
           "name": "SxProps",
           "file": "src/sx.ts",
-          "line": 29,
+          "line": 36,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -17686,6 +17730,100 @@
     }
   ],
   "nativeContracts": [
+    {
+      "name": "OwnedNativeStyle",
+      "file": "src/borders.ts",
+      "line": 8,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativeStyle",
+        "Property"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "BorderStyle",
+      "file": "src/borders.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "BorderDeclaration",
+      "file": "src/borders.ts",
+      "line": 11,
+      "kind": "type",
+      "members": [
+        {
+          "name": "borderWidth",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "borderWidth: number | string;",
+          "line": 12,
+          "kind": "property",
+          "type": "number | string"
+        },
+        {
+          "name": "borderStyle",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "borderStyle: BorderStyle;",
+          "line": 13,
+          "kind": "property",
+          "type": "BorderStyle"
+        },
+        {
+          "name": "borderColor",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "borderColor: string;",
+          "line": 14,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "BorderStyle"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "CssNone",
+      "file": "src/borders.ts",
+      "line": 58,
+      "kind": "type",
+      "members": [
+        {
+          "name": "widths",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly widths?: Readonly<Record<string, unknown>>;",
+          "line": 60,
+          "kind": "property",
+          "type": "Readonly<Record<string, unknown>>"
+        }
+      ],
+      "references": [
+        "Readonly",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
     {
       "name": "BreakpointOverrides",
       "file": "src/breakpoints.ts",
@@ -18428,7 +18566,7 @@
     {
       "name": "NativeCssTextAlign",
       "file": "src/nativeText.ts",
-      "line": 7,
+      "line": 8,
       "kind": "type",
       "members": [],
       "references": [],
@@ -18438,7 +18576,7 @@
     {
       "name": "NativeTextContext",
       "file": "src/nativeText.ts",
-      "line": 8,
+      "line": 9,
       "kind": "type",
       "members": [
         {
@@ -18448,7 +18586,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentTextStyle?: TextStyle;",
-          "line": 9,
+          "line": 10,
           "kind": "property",
           "type": "TextStyle"
         },
@@ -18459,7 +18597,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentLineHeight?: number;",
-          "line": 10,
+          "line": 11,
           "kind": "property",
           "type": "number"
         },
@@ -18470,7 +18608,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection?: 'ltr' | 'rtl' | undefined;",
-          "line": 11,
+          "line": 12,
           "kind": "property",
           "type": "'ltr' | 'rtl' | undefined"
         },
@@ -18481,7 +18619,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentTextAlign?: NativeCssTextAlign | undefined;",
-          "line": 12,
+          "line": 13,
           "kind": "property",
           "type": "NativeCssTextAlign | undefined"
         },
@@ -18492,7 +18630,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeTextMetrics?: Record<string, unknown>;",
-          "line": 13,
+          "line": 14,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -18503,7 +18641,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inheritOnly?: boolean;",
-          "line": 14,
+          "line": 15,
           "kind": "property",
           "type": "boolean"
         },
@@ -18514,7 +18652,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeStyle?: TextStyle;",
-          "line": 15,
+          "line": 16,
           "kind": "property",
           "type": "TextStyle"
         }
@@ -18870,7 +19008,7 @@
     {
       "name": "ResponsiveStyleValue",
       "file": "src/sx.ts",
-      "line": 12,
+      "line": 18,
       "kind": "type",
       "members": [
         {
@@ -18880,7 +19018,7 @@
           "computed": false,
           "memberKind": "TSIndexSignature",
           "declaration": "[key: string]: T | null",
-          "line": 12,
+          "line": 18,
           "kind": "signature",
           "type": "[key: string]: T | null"
         }
@@ -18894,7 +19032,7 @@
     {
       "name": "SxObject",
       "file": "src/sx.ts",
-      "line": 28,
+      "line": 35,
       "kind": "type",
       "members": [
         {
@@ -18904,7 +19042,7 @@
           "computed": false,
           "memberKind": "TSIndexSignature",
           "declaration": "[key: string]: unknown",
-          "line": 28,
+          "line": 35,
           "kind": "signature",
           "type": "[key: string]: unknown"
         }
@@ -18916,7 +19054,7 @@
     {
       "name": "SxProps",
       "file": "src/sx.ts",
-      "line": 29,
+      "line": 36,
       "kind": "type",
       "members": [],
       "references": [
@@ -18930,7 +19068,7 @@
     {
       "name": "NativeStyle",
       "file": "src/sx.ts",
-      "line": 34,
+      "line": 41,
       "kind": "type",
       "members": [],
       "references": [
@@ -18943,7 +19081,7 @@
     {
       "name": "NativeStyleTarget",
       "file": "src/sx.ts",
-      "line": 35,
+      "line": 42,
       "kind": "type",
       "members": [
         {
@@ -18953,7 +19091,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly classes: readonly string[];",
-          "line": 36,
+          "line": 43,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -18964,7 +19102,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly tag?: string | undefined;",
-          "line": 37,
+          "line": 44,
           "kind": "property",
           "type": "string | undefined"
         }
@@ -18976,7 +19114,7 @@
     {
       "name": "StyleContext",
       "file": "src/sx.ts",
-      "line": 40,
+      "line": 47,
       "kind": "type",
       "members": [
         {
@@ -18986,7 +19124,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "baseStyle?: SxProps;",
-          "line": 41,
+          "line": 48,
           "kind": "property",
           "type": "SxProps"
         },
@@ -18997,7 +19135,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideKeys?: readonly string[];",
-          "line": 42,
+          "line": 49,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -19008,7 +19146,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "width?: number;",
-          "line": 43,
+          "line": 50,
           "kind": "property",
           "type": "number"
         },
@@ -19019,7 +19157,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "states?: readonly string[];",
-          "line": 44,
+          "line": 51,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -19030,7 +19168,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slot?: string;",
-          "line": 45,
+          "line": 52,
           "kind": "slot",
           "type": "string"
         },
@@ -19041,7 +19179,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootSlot?: string;",
-          "line": 46,
+          "line": 53,
           "kind": "slot",
           "type": "string"
         },
@@ -19052,7 +19190,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "skipVariants?: boolean;",
-          "line": 47,
+          "line": 54,
           "kind": "property",
           "type": "boolean"
         },
@@ -19063,7 +19201,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "svg?: boolean;",
-          "line": 49,
+          "line": 56,
           "kind": "property",
           "type": "boolean"
         },
@@ -19074,7 +19212,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootProps?: Record<string, unknown>;",
-          "line": 51,
+          "line": 58,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -19085,7 +19223,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantClasses?: readonly string[];",
-          "line": 53,
+          "line": 60,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -19096,7 +19234,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantPath?: readonly NativeStyleTarget[];",
-          "line": 55,
+          "line": 62,
           "kind": "property",
           "type": "readonly NativeStyleTarget[]"
         },
@@ -19107,7 +19245,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantOnly?: boolean;",
-          "line": 57,
+          "line": 64,
           "kind": "property",
           "type": "boolean"
         },
@@ -19118,7 +19256,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "protectPhysicalGeometry?: boolean | undefined;",
-          "line": 59,
+          "line": 66,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -19129,7 +19267,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: readonly string[];",
-          "line": 61,
+          "line": 68,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -19140,7 +19278,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ancestors?: readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n    /** @internal Recollect retained CSS without rerunning owning callbacks. */\n    prepared?: import('./nativeStyledMetadata').NativePreparedStyle;\n    /** @internal A composed implementation sheet shares this physical root. */\n    sameRoot?: boolean;\n  }[];",
-          "line": 63,
+          "line": 70,
           "kind": "property",
           "type": "readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n    /** @internal Recollect retained CSS without rerunning owning callbacks. */\n    prepared?: import('./nativeStyledMetadata').NativePreparedStyle;\n    /** @internal A composed implementation sheet shares this physical root. */\n    sameRoot?: boolean;\n  }[]"
         },
@@ -19151,7 +19289,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };",
-          "line": 74,
+          "line": 81,
           "kind": "property",
           "type": "{ parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' }"
         },
@@ -19162,7 +19300,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection: 'ltr' | 'rtl';",
-          "line": 74,
+          "line": 81,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -19173,7 +19311,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | 'inherit'",
-          "line": 74,
+          "line": 81,
           "kind": "property",
           "type": "'ltr' | 'rtl' | 'inherit'"
         },
@@ -19184,7 +19322,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode?: 'sx' | 'css';",
-          "line": 75,
+          "line": 82,
           "kind": "property",
           "type": "'sx' | 'css'"
         }
@@ -19204,7 +19342,7 @@
     {
       "name": "StyleRule",
       "file": "src/sx.ts",
-      "line": 186,
+      "line": 193,
       "kind": "type",
       "members": [
         {
@@ -19214,7 +19352,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style: Readonly<Record<string, unknown>>;",
-          "line": 187,
+          "line": 194,
           "kind": "property",
           "type": "Readonly<Record<string, unknown>>"
         },
@@ -19225,7 +19363,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "specificity: number;",
-          "line": 188,
+          "line": 195,
           "kind": "property",
           "type": "number"
         },
@@ -19236,7 +19374,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "typeSpecificity?: number;",
-          "line": 189,
+          "line": 196,
           "kind": "property",
           "type": "number"
         },
@@ -19247,7 +19385,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "protectPhysicalGeometry?: boolean;",
-          "line": 190,
+          "line": 197,
           "kind": "property",
           "type": "boolean"
         }
@@ -19262,7 +19400,7 @@
     {
       "name": "StyleNode",
       "file": "src/sx.ts",
-      "line": 192,
+      "line": 199,
       "kind": "type",
       "members": [
         {
@@ -19272,7 +19410,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "base: Record<string, unknown>;",
-          "line": 193,
+          "line": 200,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -19283,7 +19421,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "conditions?: Map<string, StyleNode[] | undefined>;",
-          "line": 194,
+          "line": 201,
           "kind": "property",
           "type": "Map<string, StyleNode[] | undefined>"
         }
@@ -19299,7 +19437,7 @@
     {
       "name": "SelectorAtom",
       "file": "src/sx.ts",
-      "line": 381,
+      "line": 394,
       "kind": "type",
       "members": [
         {
@@ -19309,7 +19447,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes: string[];",
-          "line": 381,
+          "line": 394,
           "kind": "property",
           "type": "string[]"
         },
@@ -19320,7 +19458,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "tag?: string",
-          "line": 381,
+          "line": 394,
           "kind": "property",
           "type": "string"
         }
@@ -19332,7 +19470,7 @@
     {
       "name": "NativeRootStyleResult",
       "file": "src/sx.ts",
-      "line": 834,
+      "line": 909,
       "kind": "type",
       "members": [
         {
@@ -19342,7 +19480,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 835,
+          "line": 910,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -19353,7 +19491,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 836,
+          "line": 911,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -19364,7 +19502,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 838,
+          "line": 913,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         }
@@ -19379,7 +19517,7 @@
     {
       "name": "NativeTextScopeValue",
       "file": "src/textScope.tsx",
-      "line": 31,
+      "line": 36,
       "kind": "type",
       "members": [
         {
@@ -19389,7 +19527,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style: TextStyle;",
-          "line": 32,
+          "line": 37,
           "kind": "property",
           "type": "TextStyle"
         },
@@ -19400,7 +19538,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "literalStyle?: TextStyle;",
-          "line": 33,
+          "line": 38,
           "kind": "property",
           "type": "TextStyle"
         },
@@ -19411,7 +19549,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "lineHeight?: number;",
-          "line": 34,
+          "line": 39,
           "kind": "property",
           "type": "number"
         },
@@ -19422,7 +19560,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | undefined;",
-          "line": 36,
+          "line": 41,
           "kind": "property",
           "type": "'ltr' | 'rtl' | undefined"
         },
@@ -19433,7 +19571,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "textAlign?: NativeCssTextAlign | undefined;",
-          "line": 38,
+          "line": 43,
           "kind": "property",
           "type": "NativeCssTextAlign | undefined"
         },
@@ -19444,7 +19582,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "paragraphDirection?: 'ltr' | 'rtl' | undefined;",
-          "line": 40,
+          "line": 45,
           "kind": "property",
           "type": "'ltr' | 'rtl' | undefined"
         },
@@ -19455,7 +19593,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeText: boolean;",
-          "line": 41,
+          "line": 46,
           "kind": "property",
           "type": "boolean"
         }
@@ -19470,7 +19608,7 @@
     {
       "name": "NativeTextScopeProps",
       "file": "src/textScope.tsx",
-      "line": 160,
+      "line": 169,
       "kind": "type",
       "members": [
         {
@@ -19480,7 +19618,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme: Theme;",
-          "line": 161,
+          "line": 170,
           "kind": "property",
           "type": "Theme"
         },
@@ -19491,7 +19629,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle>;",
-          "line": 162,
+          "line": 171,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -19502,7 +19640,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "kind?: 'view' | 'text';",
-          "line": 163,
+          "line": 172,
           "kind": "property",
           "type": "'view' | 'text'"
         },
@@ -19513,7 +19651,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "reset?: boolean;",
-          "line": 164,
+          "line": 173,
           "kind": "property",
           "type": "boolean"
         },
@@ -19524,7 +19662,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootRef?: React.RefObject<object | null>;",
-          "line": 166,
+          "line": 175,
           "kind": "property",
           "type": "React.RefObject<object | null>"
         },
@@ -19535,7 +19673,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "content?: React.ReactNode;",
-          "line": 167,
+          "line": 176,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -19546,7 +19684,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: (\n    style: NativeStyle,\n    content: React.ReactNode,\n    scope: NativeTextScopeValue,\n  ) => React.ReactNode;",
-          "line": 168,
+          "line": 177,
           "kind": "property",
           "type": "(\n    style: NativeStyle,\n    content: React.ReactNode,\n    scope: NativeTextScopeValue,\n  ) => React.ReactNode"
         }
@@ -19565,7 +19703,7 @@
     {
       "name": "PaletteMode",
       "file": "src/theme.ts",
-      "line": 41,
+      "line": 42,
       "kind": "type",
       "members": [],
       "references": [],
@@ -19575,7 +19713,7 @@
     {
       "name": "Color",
       "file": "src/theme.ts",
-      "line": 42,
+      "line": 43,
       "kind": "type",
       "members": [
         {
@@ -19585,7 +19723,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "50: string;",
-          "line": 43,
+          "line": 44,
           "kind": "property",
           "type": "string"
         },
@@ -19596,7 +19734,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "100: string;",
-          "line": 44,
+          "line": 45,
           "kind": "property",
           "type": "string"
         },
@@ -19607,7 +19745,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "200: string;",
-          "line": 45,
+          "line": 46,
           "kind": "property",
           "type": "string"
         },
@@ -19618,7 +19756,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "300: string;",
-          "line": 46,
+          "line": 47,
           "kind": "property",
           "type": "string"
         },
@@ -19629,7 +19767,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "400: string;",
-          "line": 47,
+          "line": 48,
           "kind": "property",
           "type": "string"
         },
@@ -19640,7 +19778,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "500: string;",
-          "line": 48,
+          "line": 49,
           "kind": "property",
           "type": "string"
         },
@@ -19651,7 +19789,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "600: string;",
-          "line": 49,
+          "line": 50,
           "kind": "property",
           "type": "string"
         },
@@ -19662,7 +19800,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "700: string;",
-          "line": 50,
+          "line": 51,
           "kind": "property",
           "type": "string"
         },
@@ -19673,7 +19811,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "800: string;",
-          "line": 51,
+          "line": 52,
           "kind": "property",
           "type": "string"
         },
@@ -19684,7 +19822,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "900: string;",
-          "line": 52,
+          "line": 53,
           "kind": "property",
           "type": "string"
         },
@@ -19695,7 +19833,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "A100: string;",
-          "line": 53,
+          "line": 54,
           "kind": "property",
           "type": "string"
         },
@@ -19706,7 +19844,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "A200: string;",
-          "line": 54,
+          "line": 55,
           "kind": "property",
           "type": "string"
         },
@@ -19717,7 +19855,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "A400: string;",
-          "line": 55,
+          "line": 56,
           "kind": "property",
           "type": "string"
         },
@@ -19728,7 +19866,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "A700: string;",
-          "line": 56,
+          "line": 57,
           "kind": "property",
           "type": "string"
         }
@@ -19740,7 +19878,7 @@
     {
       "name": "ColorPartial",
       "file": "src/theme.ts",
-      "line": 58,
+      "line": 59,
       "kind": "type",
       "members": [],
       "references": [
@@ -19753,7 +19891,7 @@
     {
       "name": "CommonColors",
       "file": "src/theme.ts",
-      "line": 59,
+      "line": 60,
       "kind": "type",
       "members": [
         {
@@ -19763,7 +19901,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "black: string;",
-          "line": 60,
+          "line": 61,
           "kind": "property",
           "type": "string"
         },
@@ -19774,7 +19912,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "white: string;",
-          "line": 61,
+          "line": 62,
           "kind": "property",
           "type": "string"
         }
@@ -19786,7 +19924,7 @@
     {
       "name": "TypeText",
       "file": "src/theme.ts",
-      "line": 63,
+      "line": 64,
       "kind": "type",
       "members": [
         {
@@ -19796,7 +19934,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "primary: string;",
-          "line": 64,
+          "line": 65,
           "kind": "property",
           "type": "string"
         },
@@ -19807,7 +19945,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "secondary: string;",
-          "line": 65,
+          "line": 66,
           "kind": "property",
           "type": "string"
         },
@@ -19818,7 +19956,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: string;",
-          "line": 66,
+          "line": 67,
           "kind": "property",
           "type": "string"
         }
@@ -19830,7 +19968,7 @@
     {
       "name": "TypeBackground",
       "file": "src/theme.ts",
-      "line": 68,
+      "line": 69,
       "kind": "type",
       "members": [
         {
@@ -19840,7 +19978,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "default: string;",
-          "line": 69,
+          "line": 70,
           "kind": "property",
           "type": "string"
         },
@@ -19851,7 +19989,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "paper: string;",
-          "line": 70,
+          "line": 71,
           "kind": "property",
           "type": "string"
         }
@@ -19863,7 +20001,7 @@
     {
       "name": "TypeDivider",
       "file": "src/theme.ts",
-      "line": 72,
+      "line": 73,
       "kind": "type",
       "members": [],
       "references": [],
@@ -19873,7 +20011,7 @@
     {
       "name": "TypeAction",
       "file": "src/theme.ts",
-      "line": 73,
+      "line": 74,
       "kind": "type",
       "members": [
         {
@@ -19883,7 +20021,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "active: string;",
-          "line": 74,
+          "line": 75,
           "kind": "property",
           "type": "string"
         },
@@ -19894,7 +20032,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "hover: string;",
-          "line": 75,
+          "line": 76,
           "kind": "property",
           "type": "string"
         },
@@ -19905,7 +20043,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "hoverOpacity: number;",
-          "line": 76,
+          "line": 77,
           "kind": "property",
           "type": "number"
         },
@@ -19916,7 +20054,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "selected: string;",
-          "line": 77,
+          "line": 78,
           "kind": "property",
           "type": "string"
         },
@@ -19927,7 +20065,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "selectedOpacity: number;",
-          "line": 78,
+          "line": 79,
           "kind": "property",
           "type": "number"
         },
@@ -19938,7 +20076,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: string;",
-          "line": 79,
+          "line": 80,
           "kind": "property",
           "type": "string"
         },
@@ -19949,7 +20087,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabledOpacity: number;",
-          "line": 80,
+          "line": 81,
           "kind": "property",
           "type": "number"
         },
@@ -19960,7 +20098,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabledBackground: string;",
-          "line": 81,
+          "line": 82,
           "kind": "property",
           "type": "string"
         },
@@ -19971,7 +20109,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focus: string;",
-          "line": 82,
+          "line": 83,
           "kind": "property",
           "type": "string"
         },
@@ -19982,7 +20120,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusOpacity: number;",
-          "line": 83,
+          "line": 84,
           "kind": "property",
           "type": "number"
         },
@@ -19993,7 +20131,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "activatedOpacity: number;",
-          "line": 84,
+          "line": 85,
           "kind": "property",
           "type": "number"
         }
@@ -20005,7 +20143,7 @@
     {
       "name": "SimplePaletteColorOptions",
       "file": "src/theme.ts",
-      "line": 86,
+      "line": 87,
       "kind": "type",
       "members": [
         {
@@ -20015,7 +20153,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "main: string;",
-          "line": 87,
+          "line": 88,
           "kind": "property",
           "type": "string"
         },
@@ -20026,7 +20164,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "light?: string;",
-          "line": 88,
+          "line": 89,
           "kind": "property",
           "type": "string"
         },
@@ -20037,7 +20175,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "dark?: string;",
-          "line": 89,
+          "line": 90,
           "kind": "property",
           "type": "string"
         },
@@ -20048,7 +20186,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "contrastText?: string;",
-          "line": 90,
+          "line": 91,
           "kind": "property",
           "type": "string"
         }
@@ -20060,7 +20198,7 @@
     {
       "name": "PaletteColorOptions",
       "file": "src/theme.ts",
-      "line": 92,
+      "line": 93,
       "kind": "type",
       "members": [],
       "references": [
@@ -20073,7 +20211,7 @@
     {
       "name": "PaletteColor",
       "file": "src/theme.ts",
-      "line": 93,
+      "line": 94,
       "kind": "type",
       "members": [
         {
@@ -20083,7 +20221,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "main: string;",
-          "line": 94,
+          "line": 95,
           "kind": "property",
           "type": "string"
         },
@@ -20094,7 +20232,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "light: string;",
-          "line": 95,
+          "line": 96,
           "kind": "property",
           "type": "string"
         },
@@ -20105,7 +20243,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "dark: string;",
-          "line": 96,
+          "line": 97,
           "kind": "property",
           "type": "string"
         },
@@ -20116,7 +20254,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "contrastText: string;",
-          "line": 97,
+          "line": 98,
           "kind": "property",
           "type": "string"
         }
@@ -20128,7 +20266,7 @@
     {
       "name": "PaletteTonalOffset",
       "file": "src/theme.ts",
-      "line": 99,
+      "line": 100,
       "kind": "type",
       "members": [
         {
@@ -20138,7 +20276,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "light: number;",
-          "line": 99,
+          "line": 100,
           "kind": "property",
           "type": "number"
         },
@@ -20149,7 +20287,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "dark: number",
-          "line": 99,
+          "line": 100,
           "kind": "property",
           "type": "number"
         }
@@ -20161,7 +20299,7 @@
     {
       "name": "PaletteAugmentColorOptions",
       "file": "src/theme.ts",
-      "line": 100,
+      "line": 101,
       "kind": "type",
       "members": [
         {
@@ -20171,7 +20309,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color: PaletteColorOptions;",
-          "line": 101,
+          "line": 102,
           "kind": "property",
           "type": "PaletteColorOptions"
         },
@@ -20182,7 +20320,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: number | string;",
-          "line": 102,
+          "line": 103,
           "kind": "property",
           "type": "number | string"
         },
@@ -20193,7 +20331,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mainShade?: number | string;",
-          "line": 103,
+          "line": 104,
           "kind": "property",
           "type": "number | string"
         },
@@ -20204,7 +20342,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "lightShade?: number | string;",
-          "line": 104,
+          "line": 105,
           "kind": "property",
           "type": "number | string"
         },
@@ -20215,7 +20353,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "darkShade?: number | string;",
-          "line": 105,
+          "line": 106,
           "kind": "property",
           "type": "number | string"
         }
@@ -20229,7 +20367,7 @@
     {
       "name": "Palette",
       "file": "src/theme.ts",
-      "line": 107,
+      "line": 108,
       "kind": "type",
       "members": [
         {
@@ -20239,7 +20377,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode: PaletteMode;",
-          "line": 108,
+          "line": 109,
           "kind": "property",
           "type": "PaletteMode"
         },
@@ -20250,7 +20388,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "common: CommonColors;",
-          "line": 109,
+          "line": 110,
           "kind": "property",
           "type": "CommonColors"
         },
@@ -20261,7 +20399,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "grey: Color;",
-          "line": 110,
+          "line": 111,
           "kind": "property",
           "type": "Color"
         },
@@ -20272,7 +20410,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "contrastThreshold: number;",
-          "line": 111,
+          "line": 112,
           "kind": "property",
           "type": "number"
         },
@@ -20283,7 +20421,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "tonalOffset: PaletteTonalOffset;",
-          "line": 112,
+          "line": 113,
           "kind": "property",
           "type": "PaletteTonalOffset"
         },
@@ -20294,7 +20432,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "primary: PaletteColor;",
-          "line": 113,
+          "line": 114,
           "kind": "property",
           "type": "PaletteColor"
         },
@@ -20305,7 +20443,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "secondary: PaletteColor;",
-          "line": 114,
+          "line": 115,
           "kind": "property",
           "type": "PaletteColor"
         },
@@ -20316,7 +20454,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "error: PaletteColor;",
-          "line": 115,
+          "line": 116,
           "kind": "property",
           "type": "PaletteColor"
         },
@@ -20327,7 +20465,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "warning: PaletteColor;",
-          "line": 116,
+          "line": 117,
           "kind": "property",
           "type": "PaletteColor"
         },
@@ -20338,7 +20476,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "info: PaletteColor;",
-          "line": 117,
+          "line": 118,
           "kind": "property",
           "type": "PaletteColor"
         },
@@ -20349,7 +20487,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "success: PaletteColor;",
-          "line": 118,
+          "line": 119,
           "kind": "property",
           "type": "PaletteColor"
         },
@@ -20360,7 +20498,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "text: TypeText;",
-          "line": 119,
+          "line": 120,
           "kind": "property",
           "type": "TypeText"
         },
@@ -20371,7 +20509,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "background: TypeBackground;",
-          "line": 120,
+          "line": 121,
           "kind": "property",
           "type": "TypeBackground"
         },
@@ -20382,7 +20520,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "divider: TypeDivider;",
-          "line": 121,
+          "line": 122,
           "kind": "property",
           "type": "TypeDivider"
         },
@@ -20393,7 +20531,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "action: TypeAction;",
-          "line": 122,
+          "line": 123,
           "kind": "property",
           "type": "TypeAction"
         },
@@ -20404,7 +20542,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "getContrastText: (background: string) => string;",
-          "line": 123,
+          "line": 124,
           "kind": "property",
           "type": "(background: string) => string"
         },
@@ -20415,7 +20553,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "augmentColor: (options: PaletteAugmentColorOptions) => PaletteColor;",
-          "line": 124,
+          "line": 125,
           "kind": "property",
           "type": "(options: PaletteAugmentColorOptions) => PaletteColor"
         }
@@ -20438,7 +20576,7 @@
     {
       "name": "PaletteOptions",
       "file": "src/theme.ts",
-      "line": 126,
+      "line": 127,
       "kind": "type",
       "members": [
         {
@@ -20448,7 +20586,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode?: PaletteMode;",
-          "line": 127,
+          "line": 128,
           "kind": "property",
           "type": "PaletteMode"
         },
@@ -20459,7 +20597,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "primary?: PaletteColorOptions;",
-          "line": 128,
+          "line": 129,
           "kind": "property",
           "type": "PaletteColorOptions"
         },
@@ -20470,7 +20608,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "secondary?: PaletteColorOptions;",
-          "line": 129,
+          "line": 130,
           "kind": "property",
           "type": "PaletteColorOptions"
         },
@@ -20481,7 +20619,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "error?: PaletteColorOptions;",
-          "line": 130,
+          "line": 131,
           "kind": "property",
           "type": "PaletteColorOptions"
         },
@@ -20492,7 +20630,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "warning?: PaletteColorOptions;",
-          "line": 131,
+          "line": 132,
           "kind": "property",
           "type": "PaletteColorOptions"
         },
@@ -20503,7 +20641,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "info?: PaletteColorOptions;",
-          "line": 132,
+          "line": 133,
           "kind": "property",
           "type": "PaletteColorOptions"
         },
@@ -20514,7 +20652,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "success?: PaletteColorOptions;",
-          "line": 133,
+          "line": 134,
           "kind": "property",
           "type": "PaletteColorOptions"
         },
@@ -20525,7 +20663,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "common?: Partial<CommonColors>;",
-          "line": 134,
+          "line": 135,
           "kind": "property",
           "type": "Partial<CommonColors>"
         },
@@ -20536,7 +20674,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "grey?: ColorPartial;",
-          "line": 135,
+          "line": 136,
           "kind": "property",
           "type": "ColorPartial"
         },
@@ -20547,7 +20685,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "contrastThreshold?: number;",
-          "line": 136,
+          "line": 137,
           "kind": "property",
           "type": "number"
         },
@@ -20558,7 +20696,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "tonalOffset?: PaletteTonalOffset;",
-          "line": 137,
+          "line": 138,
           "kind": "property",
           "type": "PaletteTonalOffset"
         },
@@ -20569,7 +20707,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "text?: Partial<TypeText>;",
-          "line": 138,
+          "line": 139,
           "kind": "property",
           "type": "Partial<TypeText>"
         },
@@ -20580,7 +20718,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "background?: Partial<TypeBackground>;",
-          "line": 139,
+          "line": 140,
           "kind": "property",
           "type": "Partial<TypeBackground>"
         },
@@ -20591,7 +20729,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "divider?: TypeDivider;",
-          "line": 140,
+          "line": 141,
           "kind": "property",
           "type": "TypeDivider"
         },
@@ -20602,7 +20740,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "action?: Partial<TypeAction>;",
-          "line": 141,
+          "line": 142,
           "kind": "property",
           "type": "Partial<TypeAction>"
         },
@@ -20613,7 +20751,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "getContrastText?: (background: string) => string;",
-          "line": 142,
+          "line": 143,
           "kind": "property",
           "type": "(background: string) => string"
         }
@@ -20636,7 +20774,7 @@
     {
       "name": "ComponentStyleArgs",
       "file": "src/theme.ts",
-      "line": 144,
+      "line": 145,
       "kind": "type",
       "members": [
         {
@@ -20646,7 +20784,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme: Theme;",
-          "line": 145,
+          "line": 146,
           "kind": "property",
           "type": "Theme"
         },
@@ -20657,7 +20795,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState: Record<string, unknown>;",
-          "line": 146,
+          "line": 147,
           "kind": "property",
           "type": "Record<string, unknown>"
         }
@@ -20672,7 +20810,7 @@
     {
       "name": "ComponentVariantArgs",
       "file": "src/theme.ts",
-      "line": 149,
+      "line": 150,
       "kind": "type",
       "members": [],
       "references": [
@@ -20685,7 +20823,7 @@
     {
       "name": "ComponentVariant",
       "file": "src/theme.ts",
-      "line": 150,
+      "line": 151,
       "kind": "type",
       "members": [
         {
@@ -20695,7 +20833,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "props: Record<string, unknown> | ((props: ComponentVariantArgs) => boolean);",
-          "line": 151,
+          "line": 152,
           "kind": "property",
           "type": "Record<string, unknown> | ((props: ComponentVariantArgs) => boolean)"
         },
@@ -20706,7 +20844,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style: ComponentStyleValue | ((args: ComponentVariantArgs) => ComponentStyle);",
-          "line": 152,
+          "line": 153,
           "kind": "property",
           "type": "ComponentStyleValue | ((args: ComponentVariantArgs) => ComponentStyle)"
         }
@@ -20723,7 +20861,7 @@
     {
       "name": "ComponentStyleObject",
       "file": "src/theme.ts",
-      "line": 154,
+      "line": 155,
       "kind": "type",
       "members": [
         {
@@ -20733,7 +20871,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variants?: readonly ComponentVariant[] | undefined;",
-          "line": 155,
+          "line": 156,
           "kind": "property",
           "type": "readonly ComponentVariant[] | undefined"
         }
@@ -20748,7 +20886,7 @@
     {
       "name": "ComponentStyleValue",
       "file": "src/theme.ts",
-      "line": 157,
+      "line": 158,
       "kind": "type",
       "members": [],
       "references": [
@@ -20761,7 +20899,7 @@
     {
       "name": "ComponentStyle",
       "file": "src/theme.ts",
-      "line": 163,
+      "line": 164,
       "kind": "type",
       "members": [],
       "references": [
@@ -20775,7 +20913,7 @@
     {
       "name": "ComponentConfig",
       "file": "src/theme.ts",
-      "line": 164,
+      "line": 165,
       "kind": "type",
       "members": [
         {
@@ -20785,7 +20923,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultProps?: Record<string, unknown>;",
-          "line": 165,
+          "line": 166,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -20796,7 +20934,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "styleOverrides?: Record<string, ComponentStyle>;",
-          "line": 166,
+          "line": 167,
           "kind": "property",
           "type": "Record<string, ComponentStyle>"
         },
@@ -20807,7 +20945,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variants?: readonly ComponentVariant[];",
-          "line": 167,
+          "line": 168,
           "kind": "property",
           "type": "readonly ComponentVariant[]"
         }
@@ -20823,7 +20961,7 @@
     {
       "name": "Components",
       "file": "src/theme.ts",
-      "line": 169,
+      "line": 170,
       "kind": "type",
       "members": [
         {
@@ -20833,7 +20971,7 @@
           "computed": false,
           "memberKind": "TSIndexSignature",
           "declaration": "[name: string]: ComponentConfig | boolean | undefined;",
-          "line": 170,
+          "line": 171,
           "kind": "signature",
           "type": "[name: string]: ComponentConfig | boolean | undefined;"
         },
@@ -20844,7 +20982,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mergeClassNameAndStyle?: boolean;",
-          "line": 171,
+          "line": 172,
           "kind": "property",
           "type": "boolean"
         }
@@ -20858,7 +20996,7 @@
     {
       "name": "Theme",
       "file": "src/theme.ts",
-      "line": 173,
+      "line": 174,
       "kind": "type",
       "members": [
         {
@@ -20868,7 +21006,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "palette: Palette;",
-          "line": 174,
+          "line": 175,
           "kind": "property",
           "type": "Palette"
         },
@@ -20879,7 +21017,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "spacing: Spacing;",
-          "line": 175,
+          "line": 176,
           "kind": "property",
           "type": "Spacing"
         },
@@ -20890,7 +21028,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "shape: { borderRadius: number | string };",
-          "line": 176,
+          "line": 177,
           "kind": "property",
           "type": "{ borderRadius: number | string }"
         },
@@ -20901,7 +21039,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "borderRadius: number | string",
-          "line": 176,
+          "line": 177,
           "kind": "property",
           "type": "number | string"
         },
@@ -20912,7 +21050,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction: 'ltr' | 'rtl';",
-          "line": 177,
+          "line": 178,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -20923,7 +21061,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "typography: TypographyVariants;",
-          "line": 178,
+          "line": 179,
           "kind": "property",
           "type": "TypographyVariants"
         },
@@ -20934,7 +21072,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "shadows: Shadows;",
-          "line": 179,
+          "line": 180,
           "kind": "property",
           "type": "Shadows"
         },
@@ -20945,7 +21083,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusVisible?: FocusVisible | false | undefined;",
-          "line": 180,
+          "line": 181,
           "kind": "property",
           "type": "FocusVisible | false | undefined"
         },
@@ -20956,7 +21094,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "cssRootFontSize?: number;",
-          "line": 182,
+          "line": 183,
           "kind": "property",
           "type": "number"
         },
@@ -20967,7 +21105,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "breakpoints: Breakpoints;",
-          "line": 183,
+          "line": 184,
           "kind": "property",
           "type": "Breakpoints"
         },
@@ -20978,7 +21116,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "components: Components;",
-          "line": 184,
+          "line": 185,
           "kind": "property",
           "type": "Components"
         },
@@ -20989,7 +21127,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transitions: Transitions;",
-          "line": 185,
+          "line": 186,
           "kind": "property",
           "type": "Transitions"
         },
@@ -21000,7 +21138,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "motion: Motion;",
-          "line": 186,
+          "line": 187,
           "kind": "property",
           "type": "Motion"
         }
@@ -21022,7 +21160,7 @@
     {
       "name": "ThemeOptions",
       "file": "src/theme.ts",
-      "line": 188,
+      "line": 189,
       "kind": "type",
       "members": [
         {
@@ -21032,7 +21170,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "palette?: PaletteOptions;",
-          "line": 189,
+          "line": 190,
           "kind": "property",
           "type": "PaletteOptions"
         },
@@ -21043,7 +21181,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "spacing?: SpacingOptions;",
-          "line": 190,
+          "line": 191,
           "kind": "property",
           "type": "SpacingOptions"
         },
@@ -21054,7 +21192,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "shape?: Partial<Theme['shape']>;",
-          "line": 191,
+          "line": 192,
           "kind": "property",
           "type": "Partial<Theme['shape']>"
         },
@@ -21065,7 +21203,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: Theme['direction'];",
-          "line": 192,
+          "line": 193,
           "kind": "property",
           "type": "Theme['direction']"
         },
@@ -21076,7 +21214,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "typography?: TypographyOptions;",
-          "line": 193,
+          "line": 194,
           "kind": "property",
           "type": "TypographyOptions"
         },
@@ -21087,7 +21225,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "shadows?: Shadows | undefined;",
-          "line": 194,
+          "line": 195,
           "kind": "property",
           "type": "Shadows | undefined"
         },
@@ -21098,7 +21236,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusVisible?: boolean | FocusVisible | undefined;",
-          "line": 195,
+          "line": 196,
           "kind": "property",
           "type": "boolean | FocusVisible | undefined"
         },
@@ -21109,7 +21247,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "cssRootFontSize?: number;",
-          "line": 196,
+          "line": 197,
           "kind": "property",
           "type": "number"
         },
@@ -21120,7 +21258,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "breakpoints?: BreakpointsOptions;",
-          "line": 197,
+          "line": 198,
           "kind": "property",
           "type": "BreakpointsOptions"
         },
@@ -21130,10 +21268,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "components?: Theme['components'];",
-          "line": 198,
+          "declaration": "components?: Theme['components'] | undefined;",
+          "line": 199,
           "kind": "property",
-          "type": "Theme['components']"
+          "type": "Theme['components'] | undefined"
         },
         {
           "name": "transitions",
@@ -21142,7 +21280,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transitions?: TransitionsOptions;",
-          "line": 199,
+          "line": 200,
           "kind": "property",
           "type": "TransitionsOptions"
         },
@@ -21153,7 +21291,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "motion?: MotionOptions;",
-          "line": 200,
+          "line": 201,
           "kind": "property",
           "type": "MotionOptions"
         }

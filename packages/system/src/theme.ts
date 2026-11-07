@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { merge } from './merge';
 export { merge } from './merge';
 import {
@@ -195,7 +196,7 @@ export interface ThemeOptions {
   focusVisible?: boolean | FocusVisible | undefined;
   cssRootFontSize?: number;
   breakpoints?: BreakpointsOptions;
-  components?: Theme['components'];
+  components?: Theme['components'] | undefined;
   transitions?: TransitionsOptions;
   motion?: MotionOptions;
 }
@@ -345,6 +346,9 @@ export function createTheme(options: ThemeOptions = {}, ...overrides: ThemeOptio
     ...rest
   } = options;
   const result = overrides.reduce<Theme>((theme, next) => merge(theme, next), merge(base, rest));
+  // Native style consumers require a dictionary. A final undefined clears all
+  // earlier component configuration; normalize after merging rather than restore it.
+  if (result.components === undefined) result.components = {};
   if (result.cssRootFontSize === undefined) result.cssRootFontSize = 16;
   if (
     typeof result.cssRootFontSize !== 'number' ||

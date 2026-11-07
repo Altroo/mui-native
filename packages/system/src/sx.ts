@@ -8,9 +8,16 @@ import {
   type TextStyle,
   type ViewStyle,
 } from 'react-native';
-import type { Theme, Breakpoint, ComponentVariant, ComponentVariantArgs } from './theme';
+import type {
+  Theme,
+  Breakpoint,
+  ComponentStyleArgs,
+  ComponentVariant,
+  ComponentVariantArgs,
+} from './theme';
 export type ResponsiveStyleValue<T> = T | readonly (T | null)[] | { [key: string]: T | null };
 import { diagnostic } from './diagnostics';
+import { cssBorder, finishCssBorderStyle } from './borders';
 import {
   normalizeTextStyle,
   textMetricKeys,
@@ -218,12 +225,18 @@ function prepareStyle(
       if (shadow) setStyle(target, 'boxShadow', shadow);
       return;
     }
-    if (key === 'border' && typeof value === 'number') {
-      setStyle(target, 'border', {
-        borderWidth: value,
-        borderStyle: 'solid',
-        borderColor: 'currentColor',
-      });
+    if (key === 'border') {
+      const declaration = cssBorder(value);
+      if (!declaration) diagnostic('border', `Unsupported CSS border: ${String(value)}`);
+      else {
+        const border: StyleNode = { base: {} };
+        assign(border, 'borderWidth', declaration.borderWidth, 'css');
+        assign(border, 'borderStyle', declaration.borderStyle, 'css');
+        // A shorthand color is literal CSS, not a palette token. In particular,
+        // keep currentColor deferred even if a custom palette shares its name.
+        border.base.borderColor = declaration.borderColor;
+        setStyle(target, 'border', border.base);
+      }
       return;
     }
     for (const nativeKey of aliases[key] ?? [key]) {
@@ -528,21 +541,26 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
   if (context.logicalInsets || protectGeometry)
     for (const rule of ordered)
       if (rule.style.direction != null) cssDirection = rule.style.direction;
-  const direction =
-    context.logicalInsets?.direction ??
-    (protectGeometry ? context.nativeStyle?.direction : undefined) ??
-    cssDirection;
+  // An authored nullish direction resets Yoga to its inherited direction.
+  // Absence keeps the computed CSS direction; optional logicalInsets hints
+  // retain their established non-nullish caller priority.
+  const nativeDirection =
+    protectGeometry && Object.hasOwn(context.nativeStyle ?? {}, 'direction')
+      ? (context.nativeStyle?.direction ?? 'inherit')
+      : undefined;
+  const direction = context.logicalInsets?.direction ?? nativeDirection ?? cssDirection;
   const rtl =
     (direction === 'inherit' || direction == null ? inheritedDirection : direction) === 'rtl';
   for (const rule of ordered) {
     for (const [rawKey, value] of Object.entries(rule.style)) {
       let key = rawKey;
-      const logical = context.logicalInsets
-        ? key.match(/^(margin|padding)(Start|End)$/)
-        : protectGeometry
-          ? key.match(/^(margin)(Start|End)$/)
+      const logical =
+        context.logicalInsets || protectGeometry
+          ? key.match(/^(margin|padding)(Start|End)$/)
           : null;
       if (logical) key = logical[1] + ((logical[2] === 'Start') !== rtl ? 'Left' : 'Right');
+      if (protectGeometry && (key === 'start' || key === 'end'))
+        key = (key === 'start') !== rtl ? 'left' : 'right';
       if (value == null) continue;
       if (key === 'boxShadow' || key === 'border') {
         if (key === 'border')
@@ -590,8 +608,12 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
   });
   // CSS border shorthands reset paint to currentColor. Bind after the complete
   // cascade and authored native foreground, never while a parent rule is built.
+  // An owned native reset clears CSS foreground and inherits the text scope's
+  // parent/default color. An absent native color keeps the computed CSS color.
   const foreground =
-    context.nativeStyle?.color ?? normalized.color ?? context.parentTextStyle?.color;
+    context.nativeStyle && Object.hasOwn(context.nativeStyle, 'color')
+      ? (context.nativeStyle.color ?? context.parentTextStyle?.color)
+      : (normalized.color ?? context.parentTextStyle?.color);
   const borderPaint =
     foreground == null || ['inherit', 'unset', 'currentColor'].includes(String(foreground))
       ? theme.palette.text.primary
@@ -622,7 +644,7 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
   if (protectGeometry && paintSwap) {
     // Fabric logicalizes physical paint for a globally RTL app. Android also
     // mirrors physical border fallbacks for a locally RTL view, independently
-    // of the app direction. Resolve Group CSS only after its complete cascade,
+    // of the app direction. Resolve protected CSS after its complete cascade,
     // using the final child direction; native inline styles retain RN semantics.
     const start = rtl ? 'Right' : 'Left';
     const end = rtl ? 'Left' : 'Right';
@@ -644,15 +666,26 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
           delete normalized[key];
         }
       }
-      // Margins are Yoga layout values, with only the global Fabric swap.
-      const margin = `margin${physical}`;
-      if (globalSwap && Object.hasOwn(normalized, margin)) {
-        normalized[`margin${logical}`] = normalized[margin];
-        delete normalized[margin];
+      // Yoga logicalizes physical layout fields only for the global Fabric
+      // swap. A locally RTL Android border-paint swap must not affect them.
+      // See the pinned YogaLayoutableShadowNode.cpp swapStyleLeftAndRight.
+      if (globalSwap) {
+        for (const kind of ['margin', 'padding']) {
+          const key = `${kind}${physical}`;
+          if (Object.hasOwn(normalized, key)) {
+            normalized[`${kind}${logical}`] = normalized[key];
+            delete normalized[key];
+          }
+        }
+        const position = physical.toLowerCase();
+        if (Object.hasOwn(normalized, position)) {
+          normalized[logical.toLowerCase()] = normalized[position];
+          delete normalized[position];
+        }
       }
     }
   }
-  return normalized as NativeStyle;
+  return finishCssBorderStyle(normalized as NativeStyle);
 }
 export function resolveSx(
   input: SxProps | undefined,
@@ -683,61 +716,103 @@ function componentSheets(
       },
     },
   ];
-  const entry = theme.components[name];
-  const config = entry && typeof entry === 'object' ? entry : undefined;
-  // Source callbacks receive merged props, ownerState and theme. Keep theme
-  // fields available directly for the existing native style callback extension.
-  const createVariantState = (): ComponentVariantArgs => ({
-    ...theme,
-    ...context.rootProps,
-    ...props,
-    theme,
-    ownerState: props,
-  });
+  type ResolvedLayer = {
+    input: unknown;
+    // Native callback members of variant arrays are an existing extension.
+    // Keep them deferred until selected, with their original merged arguments.
+    variantState?: () => ComponentVariantArgs;
+  };
   const variantStyleRules = (
     input: unknown,
-    callbackProps: ComponentVariantArgs,
+    variantState: () => ComponentVariantArgs,
   ): PreparedSheet[] => {
-    if (typeof input === 'function') return variantStyleRules(input(callbackProps), callbackProps);
+    if (typeof input === 'function') return variantStyleRules(input(variantState()), variantState);
     if (Array.isArray(input))
-      return input.flatMap((style) => variantStyleRules(style, callbackProps));
+      return input.flatMap((style) => variantStyleRules(style, variantState));
     return prepare(input as SxProps, { ...context, mode: 'css' });
   };
-  const variants = (entries: readonly ComponentVariant[]) => {
+  const prepareLayers = (layers: readonly ResolvedLayer[]): PreparedSheet[] =>
+    layers.flatMap(({ input, variantState }) =>
+      variantState
+        ? variantStyleRules(input, variantState)
+        : prepare(input as SxProps, { ...context, mode: 'css' }),
+    );
+  // Adapted from MIT System 9.5.0 processStyleVariants. Resolution must finish
+  // for every override slot before the selected output is prepared as CSS.
+  const variants = (
+    entries: readonly ComponentVariant[],
+    callbackProps: ComponentStyleArgs,
+    results: ResolvedLayer[] = [],
+  ): ResolvedLayer[] => {
     let mergedVariantState: ComponentVariantArgs | undefined;
-    const variantState = () => (mergedVariantState ??= createVariantState());
-    return entries.flatMap((variant) => {
-      const matches =
-        typeof variant.props === 'function'
-          ? variant.props(variantState())
-          : Object.entries(variant.props).every(
-              ([key, value]) => props[key] === value || context.rootProps?.[key] === value,
-            );
-      return matches ? variantStyleRules(variant.style, variantState()) : [];
-    });
+    const variantState = () =>
+      (mergedVariantState ??= {
+        // Retain direct theme fields for the existing native callback extension.
+        ...theme,
+        ...callbackProps,
+        ...callbackProps.ownerState,
+        ownerState: callbackProps.ownerState,
+      });
+    variantLoop: for (let i = 0; i < entries.length; i += 1) {
+      const variant = entries[i];
+      if (typeof variant.props === 'function') {
+        if (!variant.props(variantState())) continue;
+      } else {
+        for (const key in variant.props)
+          if (
+            callbackProps[key] !== variant.props[key] &&
+            callbackProps.ownerState?.[key] !== variant.props[key]
+          )
+            continue variantLoop;
+      }
+      // Preserve the source getter reads and variant method receiver. Do not
+      // recursively process an array returned by a variant before selection.
+      results.push({
+        input: typeof variant.style === 'function' ? variant.style(variantState()) : variant.style,
+        variantState,
+      });
+    }
+    return results;
   };
-  // Adapted from MIT System 9.5.0 createStyled processStyle/processStyleVariants.
-  // An embedded variant belongs to its style layer, even on a non-root slot;
-  // skipVariants applies only to the component-level variants resolver.
-  const processStyle = (input: unknown, callbackProps: object): PreparedSheet[] => {
+  // Source processStyle resolves functions/arrays and embedded variants. It
+  // does not traverse ordinary CSS objects until its resolver selects them.
+  const processStyle = (input: unknown, callbackProps: ComponentStyleArgs): ResolvedLayer[] => {
     const resolved = typeof input === 'function' ? input(callbackProps) : input;
     if (Array.isArray(resolved))
       return resolved.flatMap((style) => processStyle(style, callbackProps));
-    if (resolved && typeof resolved === 'object' && Array.isArray(resolved.variants)) {
-      const { variants: embedded, ...style } = resolved;
-      return [...prepare(style, { ...context, mode: 'css' }), ...variants(embedded)];
+    if (Array.isArray(resolved?.variants)) {
+      let rootStyle;
+      if (resolved.isProcessed) rootStyle = resolved.style;
+      else {
+        const { variants: _variants, ...otherStyles } = resolved;
+        rootStyle = otherStyles;
+      }
+      return variants(resolved.variants, callbackProps, [{ input: rootStyle }]);
     }
-    return prepare(resolved as SxProps, { ...context, mode: 'css' });
+    return [{ input: resolved?.isProcessed ? resolved.style : resolved }];
   };
   const overrideProps = { ...context.rootProps, theme, ownerState: props };
-  const baseRules = processStyle(context.baseStyle, { ...theme, ...overrideProps });
+  const baseRules = prepareLayers(processStyle(context.baseStyle, { ...theme, ...overrideProps }));
+  const componentConfig = () => {
+    const entry = theme.components[name];
+    return entry && typeof entry === 'object' ? entry : undefined;
+  };
+  const styleOverrides = componentConfig()?.styleOverrides;
+  const resolvedOverrides = new Map<string, ResolvedLayer[]>();
+  if (styleOverrides) {
+    // for-in is intentional: the original includes inherited enumerable slots
+    // and interleaves each slot getter with its callback/variant resolution.
+    for (const key in styleOverrides)
+      resolvedOverrides.set(key, processStyle(styleOverrides[key], overrideProps));
+  }
   const bases = [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].flatMap((key) =>
-    processStyle(config?.styleOverrides?.[key], overrideProps),
+    prepareLayers(resolvedOverrides.get(key) ?? []),
   );
+  const componentVariants = context.skipVariants ? [] : (componentConfig()?.variants ?? []);
   return [
     ...baseRules,
     ...bases,
-    ...variants(context.skipVariants ? [] : (config?.variants ?? [])),
+    ...prepareLayers(variants(componentVariants, overrideProps)),
     ...prepare(sx, context),
   ];
 }
