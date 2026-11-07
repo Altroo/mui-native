@@ -9,6 +9,7 @@ import type { SvgIconProps } from '../svgIconTypes';
 import type { SelectProps } from '../select';
 import type { TextFieldProps } from '../forms';
 import type { PopperProps } from '../popper';
+import type { DividerProps } from '../dividerTypes';
 
 type MaterialExports = typeof import('../index');
 // Only existing native exports from the pinned ComponentsPropsList participate.
@@ -88,6 +89,7 @@ interface GenericComponentProps {
   MuiSelect: SelectProps;
   MuiTextField: TextFieldProps;
   MuiPopper: PopperProps;
+  MuiDivider: DividerProps;
 }
 export interface ComponentsPropsList
   extends Omit<ExistingComponentProps, keyof GenericComponentProps>,
