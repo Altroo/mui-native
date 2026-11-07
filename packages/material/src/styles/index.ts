@@ -14,3 +14,6 @@ export {
 export type { ThemeProviderProps } from '../themeProvider';
 
 export type { ThemeWithProps, ThemedProps } from '../themeProvider';
+
+export { createTheme } from './createTheme';
+export type { Components, ThemeOptions } from './createTheme';

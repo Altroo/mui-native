@@ -150,36 +150,7 @@ export const CardActions: React.ForwardRefExoticComponent<
     />
   );
 });
-export interface DividerProps extends BoxProps {
-  orientation?: 'horizontal' | 'vertical';
-  flexItem?: boolean;
-}
-export function Divider(inProps: DividerProps) {
-  const {
-    orientation = 'horizontal',
-    flexItem,
-    sx,
-    style,
-    ...props
-  } = useDefaultProps({ props: inProps, name: 'MuiDivider' });
-
-  const theme = useTheme();
-  return (
-    <Box
-      {...props}
-      sx={sx}
-      style={[
-        {
-          backgroundColor: theme.palette.divider,
-          ...(orientation === 'vertical'
-            ? { width: 1, alignSelf: flexItem ? 'stretch' : undefined }
-            : { height: 1, width: '100%' }),
-        },
-        style,
-      ]}
-    />
-  );
-}
+export * from './divider';
 export function DialogTitle(inProps: TypographyProps) {
   const props = useDefaultProps({ props: inProps, name: 'MuiDialogTitle' });
 
