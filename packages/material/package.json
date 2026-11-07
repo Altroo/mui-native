@@ -178,6 +178,11 @@
       "react-native": "./src/styles/index.ts",
       "default": "./dist/styles/index.js"
     },
+    "./className": {
+      "types": "./dist/className/index.d.ts",
+      "react-native": "./src/className/index.ts",
+      "default": "./dist/className/index.js"
+    },
     "./DefaultPropsProvider": {
       "types": "./dist/DefaultPropsProvider/index.d.ts",
       "react-native": "./src/DefaultPropsProvider/index.ts",

@@ -24,6 +24,7 @@ import {
   type ViewStyle,
   type TextInputProps,
   type TextInputInstance,
+  type LayoutChangeEvent,
 } from 'react-native';
 import {
   useDefaultProps,
@@ -295,7 +296,7 @@ export const FormControl: React.ForwardRefExoticComponent<
         component={typeof component === 'string' ? View : component}
         ref={ref}
         sx={undefined}
-        onLayout={(event) => {
+        onLayout={(event: LayoutChangeEvent) => {
           setWidth(event.nativeEvent.layout.width);
           props.onLayout?.(event);
         }}

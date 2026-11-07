@@ -821,6 +821,8 @@ function componentSheets(
     ),
   );
   const componentConfig = () => {
+    // Anonymous styled roots (including Box) have no component theme contract.
+    if (!name) return undefined;
     const entry = theme.components[name];
     return entry && typeof entry === 'object' ? entry : undefined;
   };
