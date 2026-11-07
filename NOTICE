@@ -124,3 +124,14 @@ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
 COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Native structural observation
+-----------------------------
+
+Internal structural observation uses React Native 0.88.1 Fabric UIManager,
+ShadowNodeFamily and runtime-aware callback interfaces. The family-ancestry
+lookup follows the MIT-licensed React Native mutation observer implementation.
+Copyright (c) Meta Platforms, Inc. and affiliates. The React Native MIT license
+above applies. Exact ABI source hashes are retained in
+packages/native-host/structural-observation-baseline.json. No React Native
+feature flags or source files are modified.

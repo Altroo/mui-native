@@ -6,6 +6,7 @@ module.exports = {
       android: {
         sourceDir: './android',
         cmakeListsPath: '../android/CMakeLists.txt',
+        cxxModuleHeaderName: 'AltrooStructuralObserver',
         componentDescriptors: [
           'AltrooMUITextInputComponentDescriptor',
           'AltrooMUIInteractiveViewComponentDescriptor',

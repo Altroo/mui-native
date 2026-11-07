@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "reactNativeVersion": "0.88.1",
+  "role": "Internal Fabric structural-observation prototype ABI",
+  "files": {
+    "ReactCommon/react/renderer/uimanager/UIManager.h": "a791101424ac7b67235f6ac9d34af1ea0c07afb1fbfd384fe86d28fe36a2ab2e",
+    "ReactCommon/react/renderer/uimanager/UIManager.cpp": "451485ba0789965862f2101280bde58ad842c414657357ac8307244a23cdebee",
+    "ReactCommon/react/renderer/uimanager/UIManagerBinding.h": "f38d7d6d8848104b6f85d3e419809814d075546fac9f30f6e97dc3d7a875e484",
+    "ReactCommon/react/renderer/uimanager/UIManagerBinding.cpp": "1156db698677ef699c53300bc77c07e22b5682ef5f88e998fae963040ccb9450",
+    "ReactCommon/react/renderer/uimanager/UIManagerCommitHook.h": "84415562703f1fadeeb759bd25a06540d4406c7514df21ca8ae3993f4ec54ba4",
+    "ReactCommon/react/renderer/uimanager/UIManagerMountHook.h": "42827f5e673b9b6452b0d0cd341c56d8bdad5db76d1d901d0dba56c207d07226",
+    "ReactCommon/react/renderer/uimanager/consistency/ShadowTreeRevisionProvider.h": "b123a2f039e17cd16b70caff652bb03cf62b3493acbb5be9d3fe5a672efef9c8",
+    "ReactCommon/react/renderer/uimanager/consistency/LazyShadowTreeRevisionConsistencyManager.cpp": "83425c66194a0eb80c193e5c5374b31f00a026de28cc2b065ac7bc66f2146aa6",
+    "ReactCommon/react/renderer/mounting/ShadowTree.h": "a88f2e38b52e3042c6d7148a97ee7ae33d76ed3158e1dc7979e71cb049defbb6",
+    "ReactCommon/react/renderer/mounting/ShadowTree.cpp": "55d59cf5a7aabc0161bd5ec319cf61404e4df482006c021f8742a1e1eae76453",
+    "ReactCommon/react/renderer/mounting/ShadowTreeRegistry.h": "dbd360cb2dd7a624b76f84075ec35264121e621eafd9abcd314494af46ffb767",
+    "ReactCommon/react/renderer/core/ShadowNode.h": "979827eb3ffc5a67d9481ceaada3f0f5baa6bc12bf734261b68ae0e4797627f2",
+    "ReactCommon/react/renderer/core/ShadowNodeFamily.h": "9a5ffe7ed4971167b434a766c46a9bf1afbeb8c8a7caa2760bc00265610f8569",
+    "ReactCommon/react/renderer/core/ShadowNodeFamily.cpp": "d3ca6305181cfa9da60d16789377648386e8f4bca804c01d0f147a55eb853cd5",
+    "ReactCommon/react/bridging/Function.h": "d27bdd1728bcbc7b18cbf3b883dab53bda01d1f6edc54b21d47bf5390e54670c",
+    "ReactCommon/react/bridging/CallbackWrapper.h": "ddb4b0dcd58986ea051d8933c85abe6155e4a5bfb97c44d9f49039a1ec7640fa",
+    "ReactCommon/react/bridging/LongLivedObject.h": "f0718e1a56662a6fd9d80b2b9d15cf5520c239ebf5e986d05e779a75daaffb03",
+    "ReactCommon/react/renderer/observers/mutation/MutationObserver.cpp": "6de5a5920b58beaf8b15c04d8c6f09dccff3f3d1210d7406295ab915f2f6a0b3",
+    "ReactCommon/react/renderer/mounting/ShadowTreeRegistry.cpp": "1807c3f984c308382cd44236ea82a93653e275cbc91125d4613c77488709fdfa"
+  }
+}
