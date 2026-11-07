@@ -50,6 +50,7 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean layoutRootScenario;
   private boolean textAlignmentScenario;
   private boolean dividerScenario;
+  private boolean paperScenario;
   private String dividerFontProfile;
   private boolean readingGlobalRTL;
 
@@ -67,11 +68,13 @@ public final class PopperInstrumentation extends Instrumentation {
     textAlignmentScenario = "text-alignment".equals(arguments.getString("scenario"));
     readingGlobalRTL = "true".equals(arguments.getString("globalRTL"));
     dividerScenario = "divider".equals(arguments.getString("scenario"));
+    paperScenario = "paper".equals(arguments.getString("scenario"));
     dividerFontProfile = arguments.getString("fontProfile");
     start();
   }
 
   @Override public void onStart() {
+    if (paperScenario) { PaperScenario.run(this, dividerFontProfile); return; }
     if (textAlignmentScenario) { LayoutRootScenario.runTextAlignment(this); return; }
     if (dividerScenario) { DividerScenario.run(this, dividerFontProfile); return; }
     if (layoutRootScenario) { LayoutRootScenario.run(this); return; }
