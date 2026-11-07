@@ -256,3 +256,75 @@ test('emitted ESM imports preserve file and directory precedence and reject miss
     await rm(directory, { recursive: true, force: true });
   }
 });
+
+test('ESM batches preserve cross-batch imports, precedence, notices and shared module identity', async () => {
+  await mkdir('.cache', { recursive: true });
+  const directory = await mkdtemp(resolve('.cache/icons-esm-batches-'));
+  try {
+    const files = new Map([
+      [
+        'entry.ts',
+        `/*! Retained ESM fixture notice */
+        export { shared } from './late/shared';
+        export { same, early } from './late/second';
+        export { preferred } from './choice';`,
+      ],
+      ['early.ts', 'export const early = { kind: "early" };'],
+      ['choice/index.ts', 'export const preferred = "directory";'],
+    ]);
+    for (let index = 0; index < 1024; index++)
+      files.set(`filler-${index}.ts`, `export const value = ${index};`);
+    files.set('choice.ts', 'export const preferred = "file";');
+    files.set('late/shared.ts', 'export const shared = { kind: "shared" };');
+    files.set(
+      'late/second.ts',
+      `import { shared } from './shared';
+      export const same = shared;
+      export { early } from '../early';`,
+    );
+    const sources = [];
+    for (const [name, source] of files) {
+      const file = join(directory, 'src', name);
+      await mkdir(dirname(file), { recursive: true });
+      await writeFile(file, source);
+      sources.push(file);
+    }
+    await buildIconEsm(directory, sources);
+    const emitted = new Map();
+    for (const name of files.keys())
+      emitted.set(name, await readFile(join(directory, 'dist/esm', name.replace(/\.ts$/, '.mjs'))));
+    assert.match(emitted.get('entry.ts').toString(), /Retained ESM fixture notice/);
+    const entry = await import(pathToFileURL(join(directory, 'dist/esm/entry.mjs')).href);
+    const early = await import(pathToFileURL(join(directory, 'dist/esm/early.mjs')).href);
+    assert.equal(entry.preferred, 'file');
+    assert.strictEqual(entry.shared, entry.same);
+    assert.strictEqual(entry.early, early.early);
+    await buildIconEsm(directory, [...sources].reverse());
+    for (const [name, expected] of emitted)
+      assert.deepEqual(
+        await readFile(join(directory, 'dist/esm', name.replace(/\.ts$/, '.mjs'))),
+        expected,
+        name,
+      );
+    const collision = join(directory, 'src/collision.ts');
+    const collisionView = join(directory, 'src/collision.tsx');
+    await writeFile(collision, 'export const value = "same";');
+    await writeFile(collisionView, 'export const value = "same";');
+    await buildIconEsm(directory, [collision, ...sources, collisionView]);
+    const identical = await import(pathToFileURL(join(directory, 'dist/esm/collision.mjs')).href);
+    assert.equal(identical.value, 'same');
+    await writeFile(collisionView, 'export const value = "different";');
+    await assert.rejects(
+      buildIconEsm(directory, [collision, ...sources, collisionView]),
+      /same path but have different contents|Conflicting icon ESM output/,
+    );
+    const missing = join(directory, 'src/late/missing.ts');
+    await writeFile(missing, "export { value } from './not-found';");
+    await assert.rejects(
+      buildIconEsm(directory, [...sources, missing]),
+      /Unresolved icon ESM dependency: \.\/not-found/,
+    );
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
