@@ -11063,7 +11063,7 @@
       "packages/x-tree-view/src/index.ts": "ab22b3b9ae39b7c4ab4cd4fbabfeabba4c6f49624be7566810efc44adc1d4560",
       "packages/x-tree-view/src/RichTreeView.tsx": "3082d26cd7c55f248338dc2e4e81ef4764e733879082e2d601823359d2a49852",
       "packages/x-tree-view/src/RichTreeView/index.ts": "b4492fdbf2f10d6f6d2d368d9fc5932c5a784fb24b5cbd0e58604c5050eb0853",
-      "pnpm-lock.yaml": "dd578d0c35cbaea6c3ff21274509bcbb042ae6369942e8acbaf061873400b580",
+      "pnpm-lock.yaml": "d815779aa9e8262ecf6f5bbbd7e16ae9db2375af4a00d3e56f543140be1f5c40",
       "scripts/inventory/declarations.mjs": "7de3a26694ecbdabc9da1a1a6a855e45dbc8dcaad1a27783855d3cb0a30323f4",
       "scripts/inventory/declarations.test.mjs": "6ddc738a07e2b64cdb339de7e47cbfab1180719ab45e071daac38c5e21e3d16a",
       "scripts/inventory/freshness.mjs": "a170cbd4928d3bc22db5b4a535bbb125376202e1b8527829a796788a3a825734",
