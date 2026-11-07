@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "3b1497148278aa6f4842f91f82a721cc2acc350ffc32363c8d8197efab740f34",
+  "nativeSourceSha256": "3d95da323c2c4b7cd5ca1eb5649ba103bcfa2c588e199d510658d067e908c1c1",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -14816,7 +14816,7 @@
           "line": 29
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14835,7 +14835,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14854,7 +14854,7 @@
           "line": 27
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14873,7 +14873,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14911,7 +14911,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14930,7 +14930,7 @@
           "line": 48
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17400,7 +17400,7 @@
           "line": 28
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35405,7 +35405,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentRootStyle",
           "kind": "value",
-          "line": 872
+          "line": 920
         }
       ]
     },
@@ -35416,7 +35416,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 801
+          "line": 849
         }
       ]
     },
@@ -35537,7 +35537,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "createNativeStyledStyle",
           "kind": "value",
-          "line": 827
+          "line": 875
         }
       ]
     },
@@ -35604,6 +35604,17 @@
           "name": "Diagnostic",
           "kind": "type",
           "line": 1
+        }
+      ]
+    },
+    {
+      "name": "DividerVariant",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/dividerTypes.ts",
+          "name": "DividerVariant",
+          "kind": "type",
+          "line": 14
         }
       ]
     },
@@ -36268,6 +36279,28 @@
       ]
     },
     {
+      "name": "NativeDividerComponent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/dividerTypes.ts",
+          "name": "NativeDividerComponent",
+          "kind": "type",
+          "line": 87
+        }
+      ]
+    },
+    {
+      "name": "NativeDividerRootProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/dividerTypes.ts",
+          "name": "NativeDividerRootProps",
+          "kind": "type",
+          "line": 102
+        }
+      ]
+    },
+    {
       "name": "NativeFocusTarget",
       "origins": [
         {
@@ -36494,7 +36527,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeRootStyleResult",
           "kind": "type",
-          "line": 861
+          "line": 909
         }
       ]
     },
@@ -36637,7 +36670,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeStyle",
           "kind": "type",
-          "line": 35
+          "line": 41
         }
       ]
     },
@@ -36670,7 +36703,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeStyleTarget",
           "kind": "type",
-          "line": 36
+          "line": 42
         }
       ]
     },
@@ -37132,7 +37165,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "resolveSx",
           "kind": "value",
-          "line": 684
+          "line": 690
         }
       ]
     },
@@ -37143,7 +37176,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "ResponsiveStyleValue",
           "kind": "type",
-          "line": 12
+          "line": 18
         }
       ]
     },
@@ -37319,7 +37352,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "StyleContext",
           "kind": "type",
-          "line": 41
+          "line": 47
         }
       ]
     },
@@ -37352,7 +37385,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "SxObject",
           "kind": "type",
-          "line": 29
+          "line": 35
         }
       ]
     },
@@ -66847,7 +66880,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DividerPropsVariantOverrides",
+          "file": "src/dividerTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DividerOwnProps",
@@ -66865,7 +66905,7 @@
           "line": 13,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -66878,7 +66918,7 @@
           "line": 17,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -66891,7 +66931,7 @@
           "line": 21,
           "kind": "property",
           "type": "Partial<DividerClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -66930,7 +66970,7 @@
           "line": 36,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -66943,7 +66983,7 @@
           "line": 41,
           "kind": "property",
           "type": "'center' | 'right' | 'left' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -66956,7 +66996,7 @@
           "line": 46,
           "kind": "property",
           "type": "OverridableStringUnion<'fullWidth' | 'inset' | 'middle', DividerPropsVariantOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -66972,9 +67012,15 @@
       "inheritanceResolved": false,
       "nativeCandidates": [
         {
+          "name": "DividerOwnProps",
+          "file": "src/dividerTypes.ts",
+          "line": 18,
+          "package": "@altroo/mui-native"
+        },
+        {
           "name": "DividerProps",
-          "file": "src/layout.tsx",
-          "line": 153,
+          "file": "src/dividerTypes.ts",
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66995,7 +67041,7 @@
           "line": 49,
           "kind": "property",
           "type": "AdditionalProps & DividerOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67008,7 +67054,7 @@
           "line": 50,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -67019,7 +67065,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DividerTypeMap",
+          "file": "src/dividerTypes.ts",
+          "line": 57,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DividerProps",
@@ -67052,8 +67105,8 @@
       "nativeCandidates": [
         {
           "name": "DividerProps",
-          "file": "src/layout.tsx",
-          "line": 153,
+          "file": "src/dividerTypes.ts",
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -67066,7 +67119,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DividerPropsVariantOverrides",
+          "file": "src/dividerTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DividerOwnProps",
@@ -67084,7 +67144,7 @@
           "line": 13,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67097,7 +67157,7 @@
           "line": 17,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67110,7 +67170,7 @@
           "line": 21,
           "kind": "property",
           "type": "Partial<DividerClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67149,7 +67209,7 @@
           "line": 36,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67162,7 +67222,7 @@
           "line": 41,
           "kind": "property",
           "type": "'center' | 'right' | 'left' | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67175,7 +67235,7 @@
           "line": 46,
           "kind": "property",
           "type": "OverridableStringUnion<'fullWidth' | 'inset' | 'middle', DividerPropsVariantOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -67191,9 +67251,15 @@
       "inheritanceResolved": false,
       "nativeCandidates": [
         {
+          "name": "DividerOwnProps",
+          "file": "src/dividerTypes.ts",
+          "line": 18,
+          "package": "@altroo/mui-native"
+        },
+        {
           "name": "DividerProps",
-          "file": "src/layout.tsx",
-          "line": 153,
+          "file": "src/dividerTypes.ts",
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -67214,7 +67280,7 @@
           "line": 49,
           "kind": "property",
           "type": "AdditionalProps & DividerOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67227,7 +67293,7 @@
           "line": 50,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -67238,7 +67304,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DividerTypeMap",
+          "file": "src/dividerTypes.ts",
+          "line": 57,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DividerProps",
@@ -67271,8 +67344,8 @@
       "nativeCandidates": [
         {
           "name": "DividerProps",
-          "file": "src/layout.tsx",
-          "line": 153,
+          "file": "src/dividerTypes.ts",
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -67293,7 +67366,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67306,7 +67379,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67319,7 +67392,7 @@
           "line": 7,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67332,7 +67405,7 @@
           "line": 9,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67345,7 +67418,7 @@
           "line": 11,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67358,7 +67431,7 @@
           "line": 13,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67371,7 +67444,7 @@
           "line": 15,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67384,7 +67457,7 @@
           "line": 17,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67397,7 +67470,7 @@
           "line": 19,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67410,7 +67483,7 @@
           "line": 21,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67423,7 +67496,7 @@
           "line": 23,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67436,13 +67509,20 @@
           "line": 25,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DividerClasses",
+          "file": "src/dividerClasses.ts",
+          "line": 4,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DividerClassKey",
@@ -67454,7 +67534,14 @@
         "DividerClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DividerClassKey",
+          "file": "src/dividerClasses.ts",
+          "line": 18,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DividerClasses",
@@ -67472,7 +67559,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67485,7 +67572,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67498,7 +67585,7 @@
           "line": 7,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67511,7 +67598,7 @@
           "line": 9,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67524,7 +67611,7 @@
           "line": 11,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67537,7 +67624,7 @@
           "line": 13,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67550,7 +67637,7 @@
           "line": 15,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67563,7 +67650,7 @@
           "line": 17,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67576,7 +67663,7 @@
           "line": 19,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67589,7 +67676,7 @@
           "line": 21,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67602,7 +67689,7 @@
           "line": 23,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67615,13 +67702,20 @@
           "line": 25,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DividerClasses",
+          "file": "src/dividerClasses.ts",
+          "line": 4,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DividerClassKey",
@@ -67633,7 +67727,14 @@
         "DividerClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DividerClassKey",
+          "file": "src/dividerClasses.ts",
+          "line": 18,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DrawerRootSlotPropsOverrides",
@@ -73999,7 +74100,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -74305,7 +74406,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -98839,7 +98940,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -99121,7 +99222,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -99403,7 +99504,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -99577,7 +99678,7 @@
         {
           "name": "ResponsiveStyleValue",
           "file": "src/sx.ts",
-          "line": 12,
+          "line": 18,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -144768,7 +144869,7 @@
           "line": 165,
           "kind": "property",
           "type": "{\n    defaultProps?: ComponentsProps['MuiDivider'] | undefined;\n    styleOverrides?: ComponentsOverrides<Theme>['MuiDivider'] | undefined;\n    variants?: ComponentsVariants<Theme>['MuiDivider'] | undefined;\n  } | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -144781,7 +144882,7 @@
           "line": 166,
           "kind": "property",
           "type": "ComponentsProps['MuiDivider'] | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -149280,9 +149381,9 @@
       "nativeCandidates": [
         {
           "name": "Components",
-          "file": "src/theme.ts",
-          "line": 170,
-          "package": "@altroo/mui-native-system"
+          "file": "src/styles/createTheme.ts",
+          "line": 20,
+          "package": "@altroo/mui-native"
         }
       ]
     },
@@ -150927,7 +151028,7 @@
           "line": 165,
           "kind": "property",
           "type": "{\n    defaultProps?: ComponentsProps['MuiDivider'] | undefined;\n    styleOverrides?: ComponentsOverrides<Theme>['MuiDivider'] | undefined;\n    variants?: ComponentsVariants<Theme>['MuiDivider'] | undefined;\n  } | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -150940,7 +151041,7 @@
           "line": 166,
           "kind": "property",
           "type": "ComponentsProps['MuiDivider'] | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -155439,9 +155540,9 @@
       "nativeCandidates": [
         {
           "name": "Components",
-          "file": "src/theme.ts",
-          "line": 170,
-          "package": "@altroo/mui-native-system"
+          "file": "src/styles/createTheme.ts",
+          "line": 20,
+          "package": "@altroo/mui-native"
         }
       ]
     },
@@ -158885,7 +158986,7 @@
           "line": 12,
           "kind": "property",
           "type": "PaletteOptions | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         }
       ],
@@ -158901,9 +159002,9 @@
       "nativeCandidates": [
         {
           "name": "ThemeOptions",
-          "file": "src/theme.ts",
-          "line": 189,
-          "package": "@altroo/mui-native-system"
+          "file": "src/styles/createTheme.ts",
+          "line": 32,
+          "package": "@altroo/mui-native"
         }
       ]
     },
@@ -158959,7 +159060,7 @@
           "line": 12,
           "kind": "property",
           "type": "PaletteOptions | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         }
       ],
@@ -158975,9 +159076,9 @@
       "nativeCandidates": [
         {
           "name": "ThemeOptions",
-          "file": "src/theme.ts",
-          "line": 189,
-          "package": "@altroo/mui-native-system"
+          "file": "src/styles/createTheme.ts",
+          "line": 32,
+          "package": "@altroo/mui-native"
         }
       ]
     },
@@ -164651,7 +164752,7 @@
           "line": 37,
           "kind": "property",
           "type": "MotionOptions | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -164664,7 +164765,7 @@
           "line": 38,
           "kind": "property",
           "type": "PaletteOptions | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -164677,7 +164778,7 @@
           "line": 39,
           "kind": "property",
           "type": "Shadows | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -164690,7 +164791,7 @@
           "line": 40,
           "kind": "property",
           "type": "ShapeOptions | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -164703,7 +164804,7 @@
           "line": 41,
           "kind": "property",
           "type": "TransitionsOptions | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -164716,7 +164817,7 @@
           "line": 42,
           "kind": "property",
           "type": "TypographyVariantsOptions | ((palette: Palette) => TypographyVariantsOptions) | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -164742,7 +164843,7 @@
           "line": 44,
           "kind": "property",
           "type": "boolean | FocusVisible | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -164807,9 +164908,9 @@
       "nativeCandidates": [
         {
           "name": "ThemeOptions",
-          "file": "src/theme.ts",
-          "line": 189,
-          "package": "@altroo/mui-native-system"
+          "file": "src/styles/createTheme.ts",
+          "line": 32,
+          "package": "@altroo/mui-native"
         }
       ]
     },
@@ -165198,7 +165299,7 @@
           "line": 37,
           "kind": "property",
           "type": "MotionOptions | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -165211,7 +165312,7 @@
           "line": 38,
           "kind": "property",
           "type": "PaletteOptions | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -165224,7 +165325,7 @@
           "line": 39,
           "kind": "property",
           "type": "Shadows | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -165237,7 +165338,7 @@
           "line": 40,
           "kind": "property",
           "type": "ShapeOptions | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -165250,7 +165351,7 @@
           "line": 41,
           "kind": "property",
           "type": "TransitionsOptions | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -165263,7 +165364,7 @@
           "line": 42,
           "kind": "property",
           "type": "TypographyVariantsOptions | ((palette: Palette) => TypographyVariantsOptions) | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -165289,7 +165390,7 @@
           "line": 44,
           "kind": "property",
           "type": "boolean | FocusVisible | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         },
         {
@@ -165354,9 +165455,9 @@
       "nativeCandidates": [
         {
           "name": "ThemeOptions",
-          "file": "src/theme.ts",
-          "line": 189,
-          "package": "@altroo/mui-native-system"
+          "file": "src/styles/createTheme.ts",
+          "line": 32,
+          "package": "@altroo/mui-native"
         }
       ]
     },
@@ -171367,7 +171468,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 95,
+          "line": 97,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173052,7 +173153,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 92,
+          "line": 94,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173073,7 +173174,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 95,
+          "line": 97,
           "package": "@altroo/mui-native"
         }
       ]
@@ -174758,7 +174859,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 92,
+          "line": 94,
           "package": "@altroo/mui-native"
         }
       ]
@@ -190707,6 +190808,597 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "DividerClasses",
+      "file": "src/dividerClasses.ts",
+      "line": 4,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: string;",
+          "line": 5,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "absolute",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "absolute: string;",
+          "line": 6,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "fullWidth",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "fullWidth: string;",
+          "line": 7,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "inset",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "inset: string;",
+          "line": 8,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "middle",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "middle: string;",
+          "line": 9,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "flexItem",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "flexItem: string;",
+          "line": 10,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "vertical",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "vertical: string;",
+          "line": 11,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "withChildren",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "withChildren: string;",
+          "line": 12,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "textAlignRight",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "textAlignRight: string;",
+          "line": 13,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "textAlignLeft",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "textAlignLeft: string;",
+          "line": 14,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "wrapper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "wrapper: string;",
+          "line": 15,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "wrapperVertical",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "wrapperVertical: string;",
+          "line": 16,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DividerClassKey",
+      "file": "src/dividerClasses.ts",
+      "line": 18,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "DividerClasses"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DividerPropsVariantOverrides",
+      "file": "src/dividerTypes.ts",
+      "line": 8,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "VariantFlags",
+      "file": "src/dividerTypes.ts",
+      "line": 9,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "DividerPropsVariantOverrides",
+        "Omit",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DividerVariant",
+      "file": "src/dividerTypes.ts",
+      "line": 14,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Extract",
+        "K",
+        "VariantFlags"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DividerOwnProps",
+      "file": "src/dividerTypes.ts",
+      "line": 18,
+      "kind": "type",
+      "members": [
+        {
+          "name": "absolute",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "absolute?: boolean | undefined;",
+          "line": 19,
+          "kind": "property",
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 20,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<DividerClasses> | undefined;",
+          "line": 21,
+          "kind": "property",
+          "type": "Partial<DividerClasses> | undefined"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string | undefined;",
+          "line": 22,
+          "kind": "property",
+          "type": "string | undefined"
+        },
+        {
+          "name": "flexItem",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "flexItem?: boolean | undefined;",
+          "line": 23,
+          "kind": "property",
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "orientation",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "orientation?: 'horizontal' | 'vertical' | undefined;",
+          "line": 24,
+          "kind": "property",
+          "type": "'horizontal' | 'vertical' | undefined"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps | undefined;",
+          "line": 25,
+          "kind": "property",
+          "type": "SxProps | undefined"
+        },
+        {
+          "name": "textAlign",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "textAlign?: 'center' | 'left' | 'right' | undefined;",
+          "line": 26,
+          "kind": "property",
+          "type": "'center' | 'left' | 'right' | undefined"
+        },
+        {
+          "name": "variant",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant?: DividerVariant | undefined;",
+          "line": 27,
+          "kind": "property",
+          "type": "DividerVariant | undefined"
+        },
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: StyleProp<NativeStyle> | undefined;",
+          "line": 28,
+          "kind": "property",
+          "type": "StyleProp<NativeStyle> | undefined"
+        }
+      ],
+      "references": [
+        "DividerClasses",
+        "DividerVariant",
+        "NativeStyle",
+        "Partial",
+        "React.ReactNode",
+        "StyleProp",
+        "SxProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Root",
+      "file": "src/dividerTypes.ts",
+      "line": 30,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeRoot",
+      "file": "src/dividerTypes.ts",
+      "line": 33,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "R",
+        "React.ComponentRef",
+        "React.ComponentType",
+        "Root",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ConfiguredRoot",
+      "file": "src/dividerTypes.ts",
+      "line": 46,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ReactNode",
+        "React.RefAttributes",
+        "ViewInstance",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DistributiveOmit",
+      "file": "src/dividerTypes.ts",
+      "line": 51,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "K",
+        "Omit",
+        "PropertyKey",
+        "T"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RootProps",
+      "file": "src/dividerTypes.ts",
+      "line": 52,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "R",
+        "React.ComponentPropsWithRef",
+        "React.ComponentType",
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DividerTypeMap",
+      "file": "src/dividerTypes.ts",
+      "line": 57,
+      "kind": "type",
+      "members": [
+        {
+          "name": "props",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "props: AdditionalProps & DividerOwnProps;",
+          "line": 58,
+          "kind": "property",
+          "type": "AdditionalProps & DividerOwnProps"
+        },
+        {
+          "name": "defaultComponent",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultComponent: NativeRoot<RootComponent>;",
+          "line": 59,
+          "kind": "property",
+          "type": "NativeRoot<RootComponent>"
+        }
+      ],
+      "references": [
+        "AdditionalProps",
+        "DividerOwnProps",
+        "NativeRoot",
+        "Root",
+        "RootComponent"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DividerProps",
+      "file": "src/dividerTypes.ts",
+      "line": 61,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AdditionalProps",
+        "ConfiguredRoot",
+        "DistributiveOmit",
+        "DividerOwnProps",
+        "NativeRoot",
+        "R",
+        "Root",
+        "RootProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Keys",
+      "file": "src/dividerTypes.ts",
+      "line": 73,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "T"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "InferredDividerProps",
+      "file": "src/dividerTypes.ts",
+      "line": 76,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "DividerProps",
+        "NonNullable",
+        "P",
+        "R",
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "InferredDividerKeys",
+      "file": "src/dividerTypes.ts",
+      "line": 84,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "DividerProps",
+        "InferredDividerProps",
+        "Keys",
+        "P"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeDividerComponent",
+      "file": "src/dividerTypes.ts",
+      "line": 87,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<R extends Root>(\n    props: DividerProps<R> & { component: R & NativeRoot<NoInfer<R>> },\n  ): React.JSX.Element;",
+          "line": 88,
+          "kind": "signature",
+          "type": "<R extends Root>(\n    props: DividerProps<R> & { component: R & NativeRoot<NoInfer<R>> },\n  ): React.JSX.Element;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: Omit<DividerProps, 'component'> & { component?: undefined }): React.JSX.Element;",
+          "line": 91,
+          "kind": "signature",
+          "type": "(props: Omit<DividerProps, 'component'> & { component?: undefined }): React.JSX.Element;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<P extends DividerProps>(\n    props: P &\n      NoInfer<InferredDividerProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredDividerKeys<P>>>, never>,\n  ): React.JSX.Element;",
+          "line": 95,
+          "kind": "signature",
+          "type": "<P extends DividerProps>(\n    props: P &\n      NoInfer<InferredDividerProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredDividerKeys<P>>>, never>,\n  ): React.JSX.Element;"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string | undefined;",
+          "line": 100,
+          "kind": "property",
+          "type": "string | undefined"
+        }
+      ],
+      "references": [
+        "DividerProps",
+        "Exclude",
+        "InferredDividerKeys",
+        "InferredDividerProps",
+        "NativeRoot",
+        "NoInfer",
+        "Omit",
+        "P",
+        "R",
+        "React.JSX.Element",
+        "Record",
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeDividerRootProps",
+      "file": "src/dividerTypes.ts",
+      "line": 102,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: Root | undefined",
+          "line": 103,
+          "kind": "property",
+          "type": "Root | undefined"
+        }
+      ],
+      "references": [
+        "DividerOwnProps",
+        "Omit",
+        "Root",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "FadeProps",
       "file": "src/fade.tsx",
       "line": 11,
@@ -194187,41 +194879,6 @@
           "memberKind": "TSPropertySignature",
           "declaration": "square?: boolean;",
           "line": 78,
-          "kind": "property",
-          "type": "boolean"
-        }
-      ],
-      "references": [
-        "BoxProps"
-      ],
-      "inheritanceResolved": false,
-      "package": "@altroo/mui-native"
-    },
-    {
-      "name": "DividerProps",
-      "file": "src/layout.tsx",
-      "line": 153,
-      "kind": "type",
-      "members": [
-        {
-          "name": "orientation",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "orientation?: 'horizontal' | 'vertical';",
-          "line": 154,
-          "kind": "property",
-          "type": "'horizontal' | 'vertical'"
-        },
-        {
-          "name": "flexItem",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "flexItem?: boolean;",
-          "line": 155,
           "kind": "property",
           "type": "boolean"
         }
@@ -204965,9 +205622,99 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "ComponentOptions",
+      "file": "src/styles/createTheme.ts",
+      "line": 15,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ComponentConfig",
+        "Key"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Components",
+      "file": "src/styles/createTheme.ts",
+      "line": 20,
+      "kind": "type",
+      "members": [
+        {
+          "name": "mergeClassNameAndStyle",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "mergeClassNameAndStyle?: boolean | undefined;",
+          "line": 24,
+          "kind": "property",
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "MuiDivider",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiDivider?:\n    | (Omit<ComponentOptions, 'defaultProps'> & {\n        defaultProps?: Partial<DividerProps> | undefined;\n      })\n    | boolean\n    | undefined;",
+          "line": 25,
+          "kind": "property",
+          "type": "| (Omit<ComponentOptions, 'defaultProps'> & {\n        defaultProps?: Partial<DividerProps> | undefined;\n      })\n    | boolean\n    | undefined"
+        },
+        {
+          "name": "MuiDivider.defaultProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultProps?: Partial<DividerProps> | undefined;",
+          "line": 27,
+          "kind": "property",
+          "type": "Partial<DividerProps> | undefined"
+        }
+      ],
+      "references": [
+        "ComponentOptions",
+        "DividerProps",
+        "Omit",
+        "Partial",
+        "Record",
+        "SystemComponents"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ThemeOptions",
+      "file": "src/styles/createTheme.ts",
+      "line": 32,
+      "kind": "type",
+      "members": [
+        {
+          "name": "components",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "components?: Components | undefined;",
+          "line": 33,
+          "kind": "property",
+          "type": "Components | undefined"
+        }
+      ],
+      "references": [
+        "Components",
+        "Omit",
+        "SystemThemeOptions"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "MaterialExports",
       "file": "src/styles/props.ts",
-      "line": 13,
+      "line": 14,
       "kind": "type",
       "members": [],
       "references": [],
@@ -204977,7 +205724,7 @@
     {
       "name": "ComponentName",
       "file": "src/styles/props.ts",
-      "line": 15,
+      "line": 16,
       "kind": "type",
       "members": [],
       "references": [],
@@ -204987,7 +205734,7 @@
     {
       "name": "ExistingComponentProps",
       "file": "src/styles/props.ts",
-      "line": 76,
+      "line": 77,
       "kind": "type",
       "members": [],
       "references": [
@@ -205002,7 +205749,7 @@
     {
       "name": "GenericComponentProps",
       "file": "src/styles/props.ts",
-      "line": 81,
+      "line": 82,
       "kind": "type",
       "members": [
         {
@@ -205012,7 +205759,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiAutocomplete: AutocompleteProps<any, any, any, any, any, any>;",
-          "line": 82,
+          "line": 83,
           "kind": "property",
           "type": "AutocompleteProps<any, any, any, any, any, any>"
         },
@@ -205023,7 +205770,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButton: ButtonProps;",
-          "line": 83,
+          "line": 84,
           "kind": "property",
           "type": "ButtonProps"
         },
@@ -205034,7 +205781,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiIconButton: IconButtonProps;",
-          "line": 84,
+          "line": 85,
           "kind": "property",
           "type": "IconButtonProps"
         },
@@ -205045,7 +205792,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButtonGroup: ButtonGroupProps;",
-          "line": 85,
+          "line": 86,
           "kind": "property",
           "type": "ButtonGroupProps"
         },
@@ -205056,7 +205803,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiChip: ChipProps;",
-          "line": 86,
+          "line": 87,
           "kind": "property",
           "type": "ChipProps"
         },
@@ -205067,7 +205814,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSvgIcon: SvgIconProps;",
-          "line": 87,
+          "line": 88,
           "kind": "property",
           "type": "SvgIconProps"
         },
@@ -205078,7 +205825,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSelect: SelectProps;",
-          "line": 88,
+          "line": 89,
           "kind": "property",
           "type": "SelectProps"
         },
@@ -205089,7 +205836,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiTextField: TextFieldProps;",
-          "line": 89,
+          "line": 90,
           "kind": "property",
           "type": "TextFieldProps"
         },
@@ -205100,9 +205847,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPopper: PopperProps;",
-          "line": 90,
+          "line": 91,
           "kind": "property",
           "type": "PopperProps"
+        },
+        {
+          "name": "MuiDivider",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiDivider: DividerProps;",
+          "line": 92,
+          "kind": "property",
+          "type": "DividerProps"
         }
       ],
       "references": [
@@ -205110,6 +205868,7 @@
         "ButtonGroupProps",
         "ButtonProps",
         "ChipProps",
+        "DividerProps",
         "IconButtonProps",
         "PopperProps",
         "SelectProps",
@@ -205122,7 +205881,7 @@
     {
       "name": "ComponentsPropsList",
       "file": "src/styles/props.ts",
-      "line": 92,
+      "line": 94,
       "kind": "type",
       "members": [],
       "references": [
@@ -205136,7 +205895,7 @@
     {
       "name": "ComponentsProps",
       "file": "src/styles/props.ts",
-      "line": 95,
+      "line": 97,
       "kind": "type",
       "members": [],
       "references": [
@@ -209927,7 +210686,7 @@
     {
       "name": "ResponsiveStyleValue",
       "file": "src/sx.ts",
-      "line": 12,
+      "line": 18,
       "kind": "type",
       "members": [
         {
@@ -209937,7 +210696,7 @@
           "computed": false,
           "memberKind": "TSIndexSignature",
           "declaration": "[key: string]: T | null",
-          "line": 12,
+          "line": 18,
           "kind": "signature",
           "type": "[key: string]: T | null"
         }
@@ -209951,7 +210710,7 @@
     {
       "name": "SxObject",
       "file": "src/sx.ts",
-      "line": 29,
+      "line": 35,
       "kind": "type",
       "members": [
         {
@@ -209961,7 +210720,7 @@
           "computed": false,
           "memberKind": "TSIndexSignature",
           "declaration": "[key: string]: unknown",
-          "line": 29,
+          "line": 35,
           "kind": "signature",
           "type": "[key: string]: unknown"
         }
@@ -209973,7 +210732,7 @@
     {
       "name": "SxProps",
       "file": "src/sx.ts",
-      "line": 30,
+      "line": 36,
       "kind": "type",
       "members": [],
       "references": [
@@ -209987,7 +210746,7 @@
     {
       "name": "NativeStyle",
       "file": "src/sx.ts",
-      "line": 35,
+      "line": 41,
       "kind": "type",
       "members": [],
       "references": [
@@ -210000,7 +210759,7 @@
     {
       "name": "NativeStyleTarget",
       "file": "src/sx.ts",
-      "line": 36,
+      "line": 42,
       "kind": "type",
       "members": [
         {
@@ -210010,7 +210769,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly classes: readonly string[];",
-          "line": 37,
+          "line": 43,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -210021,7 +210780,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly tag?: string | undefined;",
-          "line": 38,
+          "line": 44,
           "kind": "property",
           "type": "string | undefined"
         }
@@ -210033,7 +210792,7 @@
     {
       "name": "StyleContext",
       "file": "src/sx.ts",
-      "line": 41,
+      "line": 47,
       "kind": "type",
       "members": [
         {
@@ -210043,7 +210802,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "baseStyle?: SxProps;",
-          "line": 42,
+          "line": 48,
           "kind": "property",
           "type": "SxProps"
         },
@@ -210054,7 +210813,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideKeys?: readonly string[];",
-          "line": 43,
+          "line": 49,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -210065,7 +210824,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "width?: number;",
-          "line": 44,
+          "line": 50,
           "kind": "property",
           "type": "number"
         },
@@ -210076,7 +210835,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "states?: readonly string[];",
-          "line": 45,
+          "line": 51,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -210087,7 +210846,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slot?: string;",
-          "line": 46,
+          "line": 52,
           "kind": "slot",
           "type": "string"
         },
@@ -210098,7 +210857,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootSlot?: string;",
-          "line": 47,
+          "line": 53,
           "kind": "slot",
           "type": "string"
         },
@@ -210109,7 +210868,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "skipVariants?: boolean;",
-          "line": 48,
+          "line": 54,
           "kind": "property",
           "type": "boolean"
         },
@@ -210120,7 +210879,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "svg?: boolean;",
-          "line": 50,
+          "line": 56,
           "kind": "property",
           "type": "boolean"
         },
@@ -210131,7 +210890,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootProps?: Record<string, unknown>;",
-          "line": 52,
+          "line": 58,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -210142,7 +210901,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantClasses?: readonly string[];",
-          "line": 54,
+          "line": 60,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -210153,7 +210912,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantPath?: readonly NativeStyleTarget[];",
-          "line": 56,
+          "line": 62,
           "kind": "property",
           "type": "readonly NativeStyleTarget[]"
         },
@@ -210164,7 +210923,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantOnly?: boolean;",
-          "line": 58,
+          "line": 64,
           "kind": "property",
           "type": "boolean"
         },
@@ -210175,7 +210934,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "protectPhysicalGeometry?: boolean | undefined;",
-          "line": 60,
+          "line": 66,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -210186,7 +210945,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: readonly string[];",
-          "line": 62,
+          "line": 68,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -210197,7 +210956,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ancestors?: readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n    /** @internal Recollect retained CSS without rerunning owning callbacks. */\n    prepared?: import('./nativeStyledMetadata').NativePreparedStyle;\n    /** @internal A composed implementation sheet shares this physical root. */\n    sameRoot?: boolean;\n  }[];",
-          "line": 64,
+          "line": 70,
           "kind": "property",
           "type": "readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n    /** @internal Recollect retained CSS without rerunning owning callbacks. */\n    prepared?: import('./nativeStyledMetadata').NativePreparedStyle;\n    /** @internal A composed implementation sheet shares this physical root. */\n    sameRoot?: boolean;\n  }[]"
         },
@@ -210208,7 +210967,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "logicalInsets?: { parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' };",
-          "line": 75,
+          "line": 81,
           "kind": "property",
           "type": "{ parentDirection: 'ltr' | 'rtl'; direction?: 'ltr' | 'rtl' | 'inherit' }"
         },
@@ -210219,7 +210978,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection: 'ltr' | 'rtl';",
-          "line": 75,
+          "line": 81,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -210230,7 +210989,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | 'inherit'",
-          "line": 75,
+          "line": 81,
           "kind": "property",
           "type": "'ltr' | 'rtl' | 'inherit'"
         },
@@ -210241,7 +211000,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode?: 'sx' | 'css';",
-          "line": 76,
+          "line": 82,
           "kind": "property",
           "type": "'sx' | 'css'"
         }
@@ -210261,7 +211020,7 @@
     {
       "name": "NativeRootStyleResult",
       "file": "src/sx.ts",
-      "line": 861,
+      "line": 909,
       "kind": "type",
       "members": [
         {
@@ -210271,7 +211030,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 862,
+          "line": 910,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -210282,7 +211041,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 863,
+          "line": 911,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -210293,7 +211052,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 865,
+          "line": 913,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         }
@@ -211750,41 +212509,6 @@
       "package": "@altroo/mui-native-system"
     },
     {
-      "name": "Components",
-      "file": "src/theme.ts",
-      "line": 170,
-      "kind": "type",
-      "members": [
-        {
-          "name": "[[index]]",
-          "optional": false,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSIndexSignature",
-          "declaration": "[name: string]: ComponentConfig | boolean | undefined;",
-          "line": 171,
-          "kind": "signature",
-          "type": "[name: string]: ComponentConfig | boolean | undefined;"
-        },
-        {
-          "name": "mergeClassNameAndStyle",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "mergeClassNameAndStyle?: boolean;",
-          "line": 172,
-          "kind": "property",
-          "type": "boolean"
-        }
-      ],
-      "references": [
-        "ComponentConfig"
-      ],
-      "inheritanceResolved": false,
-      "package": "@altroo/mui-native-system"
-    },
-    {
       "name": "Theme",
       "file": "src/theme.ts",
       "line": 174,
@@ -211944,160 +212668,6 @@
         "Spacing",
         "Transitions",
         "TypographyVariants"
-      ],
-      "inheritanceResolved": false,
-      "package": "@altroo/mui-native-system"
-    },
-    {
-      "name": "ThemeOptions",
-      "file": "src/theme.ts",
-      "line": 189,
-      "kind": "type",
-      "members": [
-        {
-          "name": "palette",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "palette?: PaletteOptions;",
-          "line": 190,
-          "kind": "property",
-          "type": "PaletteOptions"
-        },
-        {
-          "name": "spacing",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "spacing?: SpacingOptions;",
-          "line": 191,
-          "kind": "property",
-          "type": "SpacingOptions"
-        },
-        {
-          "name": "shape",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "shape?: Partial<Theme['shape']>;",
-          "line": 192,
-          "kind": "property",
-          "type": "Partial<Theme['shape']>"
-        },
-        {
-          "name": "direction",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "direction?: Theme['direction'];",
-          "line": 193,
-          "kind": "property",
-          "type": "Theme['direction']"
-        },
-        {
-          "name": "typography",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "typography?: TypographyOptions;",
-          "line": 194,
-          "kind": "property",
-          "type": "TypographyOptions"
-        },
-        {
-          "name": "shadows",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "shadows?: Shadows | undefined;",
-          "line": 195,
-          "kind": "property",
-          "type": "Shadows | undefined"
-        },
-        {
-          "name": "focusVisible",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "focusVisible?: boolean | FocusVisible | undefined;",
-          "line": 196,
-          "kind": "property",
-          "type": "boolean | FocusVisible | undefined"
-        },
-        {
-          "name": "cssRootFontSize",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "cssRootFontSize?: number;",
-          "line": 197,
-          "kind": "property",
-          "type": "number"
-        },
-        {
-          "name": "breakpoints",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "breakpoints?: BreakpointsOptions;",
-          "line": 198,
-          "kind": "property",
-          "type": "BreakpointsOptions"
-        },
-        {
-          "name": "components",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "components?: Theme['components'] | undefined;",
-          "line": 199,
-          "kind": "property",
-          "type": "Theme['components'] | undefined"
-        },
-        {
-          "name": "transitions",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "transitions?: TransitionsOptions;",
-          "line": 200,
-          "kind": "property",
-          "type": "TransitionsOptions"
-        },
-        {
-          "name": "motion",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "motion?: MotionOptions;",
-          "line": 201,
-          "kind": "property",
-          "type": "MotionOptions"
-        }
-      ],
-      "references": [
-        "BreakpointsOptions",
-        "FocusVisible",
-        "MotionOptions",
-        "PaletteOptions",
-        "Partial",
-        "Shadows",
-        "SpacingOptions",
-        "Theme",
-        "TransitionsOptions",
-        "TypographyOptions"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native-system"

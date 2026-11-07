@@ -17,6 +17,8 @@ import {
   inspectReadingReport,
   summarizeReadingReport,
 } from './android-button-group-reading-report.mjs';
+import { prepareDividerSource } from './android-divider-source.mjs';
+import { inspectDividerReport, summarizeDivider } from './android-divider-report.mjs';
 import { prepareLayoutRootSource } from './android-layout-root-source.mjs';
 import { inspectLayoutRootReport, summarizeLayoutRoots } from './android-layout-root-report.mjs';
 import { prepareSvgIconSource } from './android-svg-icon-source.mjs';
@@ -75,6 +77,7 @@ export async function prepare(project) {
   await prepareSvgIconSource(project);
   await prepareButtonGroupSource(project);
   await prepareLayoutRootSource(project);
+  await prepareDividerSource(project);
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, source);
   await writeFile(gradlePath, gradle);
@@ -197,11 +200,11 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots', globalRTL?: boolean}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'divider', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
-  { adb, serial, output, signal, scenario = 'popper', globalRTL = false },
+  { adb, serial, output, signal, scenario = 'popper', globalRTL = false, fontProfile },
   execute = executeFile,
 ) {
   if (
@@ -212,11 +215,18 @@ export async function run(
       'button-group',
       'button-group-reading',
       'layout-roots',
+      'divider',
     ].includes(scenario)
   )
     throw Error('Unknown catalog scenario');
   if (typeof globalRTL !== 'boolean' || (globalRTL && scenario !== 'button-group-reading'))
     throw Error('Global RTL profiles apply only to reading checks');
+  if (
+    scenario === 'divider'
+      ? !['normal', 'enlarged'].includes(fontProfile)
+      : fontProfile !== undefined
+  )
+    throw Error('Divider checks require an explicit normal/enlarged font profile');
   if (typeof serial !== 'string' || !serial.trim())
     throw Error('Choose one explicit --serial; devices are never selected automatically');
   signal?.throwIfAborted();
@@ -245,6 +255,7 @@ export async function run(
             '-w',
             '-r',
             ...(scenario === 'popper' ? [] : ['-e', 'scenario', scenario]),
+            ...(scenario === 'divider' ? ['-e', 'fontProfile', fontProfile] : []),
             ...(scenario === 'button-group-reading' ? ['-e', 'globalRTL', String(globalRTL)] : []),
             component,
           ],
@@ -261,17 +272,19 @@ export async function run(
     }
     await writeFile(join(output, 'instrumentation.txt'), text);
     report =
-      scenario === 'layout-roots'
-        ? inspectLayoutRootReport(text)
-        : scenario === 'accordion'
-          ? inspectAccordionReport(text)
-          : scenario === 'svg-icon'
-            ? inspectSvgIconReport(text)
-            : scenario === 'button-group-reading'
-              ? inspectReadingReport(text)
-              : scenario === 'button-group'
-                ? inspectButtonGroupReport(text)
-                : inspectReport(text);
+      scenario === 'divider'
+        ? inspectDividerReport(text)
+        : scenario === 'layout-roots'
+          ? inspectLayoutRootReport(text)
+          : scenario === 'accordion'
+            ? inspectAccordionReport(text)
+            : scenario === 'svg-icon'
+              ? inspectSvgIconReport(text)
+              : scenario === 'button-group-reading'
+                ? inspectReadingReport(text)
+                : scenario === 'button-group'
+                  ? inspectButtonGroupReport(text)
+                  : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -286,7 +299,8 @@ export async function run(
       await writeFile(join(output, file), bytes);
     }
     signal?.throwIfAborted();
-    if (scenario === 'layout-roots') summarizeLayoutRoots(text);
+    if (scenario === 'divider') summarizeDivider(text, { fontProfile });
+    else if (scenario === 'layout-roots') summarizeLayoutRoots(text);
     else if (scenario === 'accordion') summarizeAccordion(text);
     else if (scenario === 'svg-icon') summarizeSvgIcon(text);
     else if (scenario === 'button-group-reading') summarizeReadingReport(text, { globalRTL });
@@ -373,6 +387,7 @@ if (await isMainEntry()) {
       output: { type: 'string' },
       adb: { type: 'string' },
       scenario: { type: 'string' },
+      'font-profile': { type: 'string' },
       'global-rtl': { type: 'boolean', default: false },
     },
   });
@@ -411,6 +426,7 @@ if (await isMainEntry()) {
               signal: controller.signal,
               scenario: values.scenario,
               globalRTL: values['global-rtl'],
+              fontProfile: values['font-profile'],
             }),
           },
           null,

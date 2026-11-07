@@ -3043,7 +3043,8 @@
       },
       "adaptations": [
         "Native SVG root/owner-state variant matching and merged source callback arguments replace the styled DOM evaluation boundary. Existing native theme-field callback access is retained.",
-        "Typography inherit bypasses variant-object token lookup before native text inheritance, following the original sx exception."
+        "Typography inherit bypasses variant-object token lookup before native text inheritance, following the original sx exception.",
+        "Shared slot resolution follows the original for-in pass before selected CSS preparation, including inherited slots, getter/array/embedded-variant order, source root-first matching and unused throws. Ten actual original SSR observations are retained in upstream/style-overrides.json. Deferred selected variant-array callbacks and direct theme-field access remain native extensions; no general Emotion or native compatibility promotion."
       ]
     },
     {
@@ -3224,11 +3225,14 @@
         "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
         "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
         "sourceFiles": {
-          "styles/props.d.ts": "05084be14d8c1f9b14f83f357f57c8a3ee04f3ec936b72e2cb694cd7b3cb48ee"
+          "styles/props.d.ts": "05084be14d8c1f9b14f83f357f57c8a3ee04f3ec936b72e2cb694cd7b3cb48ee",
+          "styles/components.d.ts": "358dac701e57422878d7164f4ba31b1672e641dcf2c1378354da779400b0255f",
+          "styles/components.d.mts": "87ba2055d099224fa7e94ff0a504177fd0ba2f4a78150414699bdb3ef7d71454"
         }
       },
       "adaptations": [
-        "Component defaults describe the 60 existing native component props, preserving public generic defaults and augmentation; missing components have no invented stubs."
+        "Component defaults describe the 60 existing native component props, preserving public generic defaults and augmentation; missing components have no invented stubs.",
+        "Register finite native Divider default-prop and class/style override augmentation contracts."
       ]
     },
     {
@@ -3349,6 +3353,165 @@
       },
       "adaptations": [
         "Bounded all-edge string parsing and numeric border transform; CSS none declaration provenance and final native zero-width paint. See upstream/css-borders.json for explicit limits."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/divider.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Divider/Divider.js": "f1a279f004a67fa1d89371c3fda06aa5e7e6d1f795b08a5446b17cd752c9ca3d",
+          "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+          "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa",
+          "styles/slotShouldForwardProp.js": "94273fe410b5da39daf022f286c2d746538878d094694eab5307d0eb6bd3501c",
+          "zero-styled/index.js": "50f7cf89a8e3794b42b932af95d6720f21597bd4b9a296bcb92f87eab5789eb6",
+          "utils/memoTheme.js": "ba795253c43a4fd740281e725b4fe0b77a25bf0c1a26e3f12b5f89a790a8a497",
+          "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+        }
+      },
+      "adaptations": [
+        "Native View roots and owned line Views replace browser elements and pseudo-elements; refs, events and authored native style layers retain RN semantics."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/dividerTypes.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Divider/Divider.d.ts": "7d96139ce863c53e3e4994516b7a974c47349ff4963f743d21f6bf4211a96710",
+          "Divider/Divider.d.mts": "0e273eaa9e2693d507d57a1d16604de789d6872869da28f8fd9067e87ffe2e61"
+        }
+      },
+      "adaptations": [
+        "Native View-compatible polymorphic roots and exact optional props replace browser element refs and events; declared DOM refs are rejected."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/dividerClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Divider/dividerClasses.js": "eaad79a02843ae1b680ee7f89ca382187112a76ff2e5549bb978ab6edaa7aef2",
+          "Divider/dividerClasses.d.ts": "d4500753bcb1f002b5c2d7d9e8cac3e6ce75f0f39d68e6484228e849082a1c8b",
+          "Divider/dividerClasses.d.mts": "d4500753bcb1f002b5c2d7d9e8cac3e6ce75f0f39d68e6484228e849082a1c8b"
+        }
+      },
+      "adaptations": [
+        "Preserve Divider utility identifiers and class composition for the supported native style scope."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/dividerClasses.ts",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+          "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f"
+        }
+      },
+      "adaptations": [
+        "Use the existing native utility-class helpers with the pinned Divider slot and global-state identifiers."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/Divider/index.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Divider/index.js": "ee4b8d0ff835db85a0f19fb5d3ac8622b21410f01fa98f7fb035555a9f8799bf",
+          "Divider/index.d.ts": "242258092f0ed6960f328b9d7a455c6559c7253c6b57b08883a2fb859c4cfdbb",
+          "Divider/index.d.mts": "e1975c70583ce8ce129b0fc411eac1743739f88c1e05f00f6626ee60b29246ca"
+        }
+      },
+      "adaptations": [
+        "Preserve canonical default, class-helper and type exports while keeping existing additive native exports."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/styles/createTheme.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc",
+          "styles/createThemeNoVars.d.ts": "65a184175a5305cdedf83c628eca71f4cb44f6d997f8c55733974b228b30a037",
+          "styles/createThemeNoVars.d.mts": "bb6e81cd507b319efcc3b1843b321a038cf00c1b72ce32f92f16b3ff6125bbed"
+        }
+      },
+      "adaptations": [
+        "An input-only Material facade accepts the supported component defaults and overrides while returning the existing System theme runtime; complete CSS-variable and upstream theme contracts remain open."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/index.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "index.js": "3ef26e6ff602e27a6a3a8bd34a95cc3f9b1f903ab5ba90aa7bb3cf41217deafd",
+          "index.d.ts": "88f12707de0dd1b6a15db521a6b7d1308b3a88aef114b0bc2964ece74d007d5e"
+        }
+      },
+      "adaptations": [
+        "Expose canonical native Divider component, utility helpers and native types through the Material root."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/divider.tsx",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+        }
+      },
+      "adaptations": [
+        "Reuse the existing native named-slot styling path; arbitrary pseudo/sibling selectors and unused-slot callback side effects remain documented gaps."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/divider.tsx",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
+        }
+      },
+      "adaptations": [
+        "The owned native class composition preserves the original active-slot order and two reads of custom class accessors."
       ]
     }
   ]

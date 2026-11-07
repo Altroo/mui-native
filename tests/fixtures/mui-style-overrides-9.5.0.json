@@ -1,0 +1,94 @@
+{
+  "reference": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+    }
+  },
+  "boundary": "Actual pinned createStyled rendering with native CSS conversion excluded; no modular CSS layers or general Emotion serialization parity is claimed.",
+  "observations": [
+    {
+      "name": "inherited slots and callback arrays resolve before selection",
+      "trace": [
+        "get-root",
+        ["root", "root", 3, true, "8px"],
+        "get-unused",
+        "array-one",
+        "array-two",
+        ["inherited", "root", 3, true, "8px"],
+        "select"
+      ],
+      "error": null
+    },
+    {
+      "name": "unused ordinary CSS and nested variant array callbacks stay deferred",
+      "trace": [
+        ["predicate", "owner", 3, true, "8px"],
+        ["style", "owner", 3, true, "8px"],
+        "select"
+      ],
+      "error": null
+    },
+    {
+      "name": "unused embedded spread getters and variant accessors resolve in order",
+      "trace": [
+        "get-variants",
+        "get-variants",
+        "spread-padding",
+        "get-variants",
+        "get-props",
+        "get-props",
+        "get-props",
+        "get-style",
+        "get-style",
+        ["style-call", true, "owner", 3, true, "8px"],
+        "select"
+      ],
+      "error": null
+    },
+    {
+      "name": "inherited variant props and root-first matching reject mismatch",
+      "trace": ["root-match", "select"],
+      "error": null
+    },
+    {
+      "name": "unused throw stops later slots and component variants",
+      "trace": ["root", "unused"],
+      "error": "unused-slot"
+    },
+    {
+      "name": "selected callback is resolved once for repeated keys",
+      "trace": ["root", "unused", "select", "component"],
+      "error": null
+    },
+    {
+      "name": "selected CSS preparation follows all slots and precedes component variants",
+      "trace": ["root", "unused", "select", "selected-css"],
+      "error": "selected-css"
+    },
+    {
+      "name": "non-enumerable selected slots are not resolved",
+      "trace": ["unused", "select"],
+      "error": null
+    },
+    {
+      "name": "static root match does not read owner-state fallback",
+      "trace": ["select"],
+      "error": null
+    },
+    {
+      "name": "one slot callback mutation reaches later slot variants",
+      "trace": [
+        "root",
+        ["predicate", "owner", 7, true, "8px"],
+        ["style", "owner", 7, true, "8px"],
+        "select"
+      ],
+      "error": null
+    }
+  ]
+}
