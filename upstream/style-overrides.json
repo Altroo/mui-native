@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "description": "Finite shared style-override resolution contract. No native rendering or general CSS certification.",
+  "reference": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+    }
+  },
+  "fixture": {
+    "path": "tests/fixtures/mui-style-overrides-9.5.0.json",
+    "sha256": "2e061071e89d82d1e7b122a8d49f347f7ed255da482cdbb75f38ec538b34195e",
+    "observations": 10,
+    "renderer": "Actual pinned React DOM SSR using original createStyled and a slot-selecting overridesResolver."
+  },
+  "localFiles": ["packages/system/src/sx.ts"],
+  "adaptations": [
+    "Resolve every enumerable override slot before preparing selected native CSS. Preserve callback arrays, embedded variants, source getter/matching/throw order and callback receiver/arguments.",
+    "Prepared native sheets retain resolved styles for descendant recollection without new callback invocations.",
+    "Direct theme fields and deferred callback members of selected variant-style arrays remain native extensions. General Emotion serialization, processed Emotion CSS, modular CSS layers, arbitrary selectors and renderer-wide invocation counts are not certified."
+  ]
+}

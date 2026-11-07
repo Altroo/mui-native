@@ -3043,7 +3043,8 @@
       },
       "adaptations": [
         "Native SVG root/owner-state variant matching and merged source callback arguments replace the styled DOM evaluation boundary. Existing native theme-field callback access is retained.",
-        "Typography inherit bypasses variant-object token lookup before native text inheritance, following the original sx exception."
+        "Typography inherit bypasses variant-object token lookup before native text inheritance, following the original sx exception.",
+        "Shared slot resolution follows the original for-in pass before selected CSS preparation, including inherited slots, getter/array/embedded-variant order, source root-first matching and unused throws. Ten actual original SSR observations are retained in upstream/style-overrides.json. Deferred selected variant-array callbacks and direct theme-field access remain native extensions; no general Emotion or native compatibility promotion."
       ]
     },
     {

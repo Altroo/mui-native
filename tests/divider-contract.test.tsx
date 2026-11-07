@@ -271,14 +271,10 @@ test('root and wrapper theme callbacks receive source owner/root args and scoped
       </Divider>
     </ThemeProvider>,
   );
-  expect(calls.map((call) => call.slot)).toEqual(['root', 'wrapper']);
   const sample = original.themed[1].calls;
-  for (const { slot, args } of calls) {
-    const expected = sample.find(
-      (call) =>
-        call.slot === slot &&
-        call.className?.includes(slot === 'root' ? 'MuiDivider-root' : 'MuiDivider-wrapper'),
-    )!;
+  expect(calls.map((call) => call.slot)).toEqual(sample.map((call) => call.slot));
+  for (const [index, { args }] of calls.entries()) {
+    const expected = sample[index];
     expect(args.className).toBe(expected.className);
     for (const key of [
       'absolute',
@@ -514,24 +510,32 @@ test('callback ref cleanups are retained without a native host replacement on su
   tree.unmount();
   expect(released).toHaveBeenCalledTimes(1);
 });
-test('unused slot callback side effects/throws remain an explicit shared engine boundary', () => {
-  expect(original.unrelatedSlotErrors).toEqual([
-    { configuredSlot: 'wrapper', renderedSlot: 'root', error: 'unused-wrapper-slot' },
-    { configuredSlot: 'root', renderedSlot: 'wrapper', error: 'unused-root-slot' },
-  ]);
-  const unused = jest.fn(() => {
-    throw new Error('unused-wrapper-slot');
-  });
-  const tree = render(
-    <ThemeProvider
-      theme={createTheme({ components: { MuiDivider: { styleOverrides: { wrapper: unused } } } })}
-    >
-      <Divider testID="root" />
-    </ThemeProvider>,
-  );
-  expect(tree.getByTestId('root')).toBeTruthy();
-  expect(unused).not.toHaveBeenCalled();
-});
+test.each(original.unrelatedSlotErrors)(
+  'unused $configuredSlot callback throws while rendering $renderedSlot like the source',
+  ({ configuredSlot, error }) => {
+    const unused = jest.fn((args: ComponentStyleArgs) => {
+      if (configuredSlot === 'wrapper' || String(args.className).startsWith('MuiDivider-wrapper'))
+        throw new Error(error);
+      return {};
+    });
+    expect(() =>
+      render(
+        <ThemeProvider
+          theme={createTheme({
+            components: {
+              MuiDivider: {
+                styleOverrides: { [configuredSlot]: unused },
+              },
+            },
+          })}
+        >
+          <Divider>{configuredSlot === 'root' ? 'Notes' : undefined}</Divider>
+        </ThemeProvider>,
+      ),
+    ).toThrow(error);
+    expect(unused).toHaveBeenCalled();
+  },
+);
 
 const borderOrientations = ['horizontal', 'vertical'] as const;
 function expectDecorativePaint(

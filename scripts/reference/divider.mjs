@@ -315,7 +315,7 @@ const provenance = {
     'Literal text keeps one line; authored child elements keep native policy and identity. Native separator role is supported; DOM aria-orientation is not certified as a native AT property.',
     'Source physical CSS margins/borders use existing native physical-geometry protection. DOM direction, theme/RTL context and web RTL stylesheet transforms remain separate inputs.',
     'Arbitrary pseudo-element selectors and adjacent-sibling MenuItem selectors remain diagnosed unsupported software exits. No general CSS grammar expansion.',
-    'Original createStyled evaluates unused slot callbacks too; native evaluates selected slots once. Unrelated-slot side effects/throws and exact invocation-count parity remain an explicit shared styling software gap.',
+    'Shared override resolution now evaluates every enumerable slot before selecting native CSS, including the retained unused root/wrapper throws and four-call root/wrapper source trace. General Emotion serialization and renderer-wide invocation counts remain separate boundaries.',
     'Development propTypes, RSC/web metadata, browser wrapping equivalence, renderer/device/physical AT and calibrated performance gates remain open.',
   ],
 };

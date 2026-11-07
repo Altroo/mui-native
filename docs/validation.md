@@ -777,3 +777,9 @@ Integrated local validation passes **2,637 Jest tests in 83 suites and 171 Node 
 The final direct WebStorm Own Code / Project Default inspection reports **514 findings**: 223 warnings, 277 weak warnings and 14 style suggestions, with zero errors. One IDE-flagged unused import is an empty type-only import required to load the augmentation target. Removing it reproduces six strict compiler errors; restoring it passes the installed helper fixture. All findings have individual source-hashed review dispositions, with no unresolved actionable source issue. The same explicit dependency/generated/cache exclusions remain, and no inspection rules were disabled for this change.
 
 Broader responsive sx/layout, geometry, font/RTL/accessibility/device and calibrated performance gates remain open; the existing combined spacing/breakpoint progress estimate is not promoted by this pure-helper correction. No package version, tag, publication or release changes accompany it.
+
+## 2026-11-07 shared override-slot resolution
+
+Development after `0.0.7-prealpha.0` resolves every enumerable component override slot before selecting native CSS. Ten integrity/source/license-checked System 9.5.0 `createStyled` SSR observations retain inherited slot and variant matching, getter/callback/array order, unused throws, selected CSS phase order and shared callback arguments. Divider's retained four-call root/wrapper trace and both unused-slot throw cases now have native software regressions. Unused ordinary CSS and deferred variant-array callback members are not prepared or diagnosed; retained ancestor sheets do not add callback invocations.
+
+This is a shared software correction. General Emotion serialization, modular CSS layers, renderer-wide invocation counts, native integration and full component compatibility remain separate gates. Existing native QA evidence is not a rerun of this source change. There is no package version or publication change.
