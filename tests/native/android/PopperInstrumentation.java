@@ -48,6 +48,8 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean buttonGroupScenario;
   private boolean buttonGroupReadingScenario;
   private boolean layoutRootScenario;
+  private boolean dividerScenario;
+  private String dividerFontProfile;
   private boolean readingGlobalRTL;
 
   @Override public void onCreate(Bundle arguments) {
@@ -62,10 +64,13 @@ public final class PopperInstrumentation extends Instrumentation {
     buttonGroupReadingScenario = "button-group-reading".equals(arguments.getString("scenario"));
     layoutRootScenario = "layout-roots".equals(arguments.getString("scenario"));
     readingGlobalRTL = "true".equals(arguments.getString("globalRTL"));
+    dividerScenario = "divider".equals(arguments.getString("scenario"));
+    dividerFontProfile = arguments.getString("fontProfile");
     start();
   }
 
   @Override public void onStart() {
+    if (dividerScenario) { DividerScenario.run(this, dividerFontProfile); return; }
     if (layoutRootScenario) { LayoutRootScenario.run(this); return; }
     if (keyboardScenario) { KeyboardScenario.run(this); return; }
     if (autocompleteScenario) { AutocompleteScenario.run(this); return; }
