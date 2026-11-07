@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "3d95da323c2c4b7cd5ca1eb5649ba103bcfa2c588e199d510658d067e908c1c1",
+  "nativeSourceSha256": "2f200f1c1f7844cd6354c0d3e1b79257344c75510dc3425622a1faafa6cc09a5",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -18217,7 +18217,7 @@
           "line": 62
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -24772,7 +24772,7 @@
           "line": 63
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -24791,7 +24791,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -24810,7 +24810,7 @@
           "line": 61
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -24829,7 +24829,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -24867,7 +24867,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -24886,7 +24886,7 @@
           "line": 38
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35405,7 +35405,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentRootStyle",
           "kind": "value",
-          "line": 920
+          "line": 947
         }
       ]
     },
@@ -35416,7 +35416,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 849
+          "line": 876
         }
       ]
     },
@@ -35537,7 +35537,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "createNativeStyledStyle",
           "kind": "value",
-          "line": 875
+          "line": 902
         }
       ]
     },
@@ -36367,6 +36367,28 @@
       ]
     },
     {
+      "name": "NativePaperComponent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/paperTypes.ts",
+          "name": "NativePaperComponent",
+          "kind": "type",
+          "line": 78
+        }
+      ]
+    },
+    {
+      "name": "NativePaperRootProps",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/paperTypes.ts",
+          "name": "NativePaperRootProps",
+          "kind": "type",
+          "line": 93
+        }
+      ]
+    },
+    {
       "name": "NativePopoverAnchor",
       "origins": [
         {
@@ -36527,7 +36549,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeRootStyleResult",
           "kind": "type",
-          "line": 909
+          "line": 936
         }
       ]
     },
@@ -36928,6 +36950,17 @@
       ]
     },
     {
+      "name": "PaperVariant",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/paperTypes.ts",
+          "name": "PaperVariant",
+          "kind": "type",
+          "line": 11
+        }
+      ]
+    },
+    {
       "name": "PopoverPaperProps",
       "origins": [
         {
@@ -37165,7 +37198,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "resolveSx",
           "kind": "value",
-          "line": 690
+          "line": 698
         }
       ]
     },
@@ -50523,7 +50556,7 @@
         {
           "name": "BoxProps",
           "file": "src/layout.tsx",
-          "line": 17,
+          "line": 20,
           "package": "@altroo/mui-native"
         }
       ]
@@ -50561,7 +50594,7 @@
         {
           "name": "BoxProps",
           "file": "src/layout.tsx",
-          "line": 17,
+          "line": 20,
           "package": "@altroo/mui-native"
         }
       ]
@@ -97324,7 +97357,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PaperPropsVariantOverrides",
+          "file": "src/paperTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PaperOwnProps",
@@ -97342,7 +97382,7 @@
           "line": 12,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97355,7 +97395,7 @@
           "line": 16,
           "kind": "property",
           "type": "Partial<PaperClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97394,7 +97434,7 @@
           "line": 31,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97423,9 +97463,15 @@
       "inheritanceResolved": false,
       "nativeCandidates": [
         {
+          "name": "PaperOwnProps",
+          "file": "src/paperTypes.ts",
+          "line": 15,
+          "package": "@altroo/mui-native"
+        },
+        {
           "name": "PaperProps",
-          "file": "src/layout.tsx",
-          "line": 75,
+          "file": "src/paperTypes.ts",
+          "line": 55,
           "package": "@altroo/mui-native"
         }
       ]
@@ -97446,7 +97492,7 @@
           "line": 39,
           "kind": "property",
           "type": "AdditionalProps & PaperOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97459,7 +97505,7 @@
           "line": 40,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -97470,7 +97516,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PaperTypeMap",
+          "file": "src/paperTypes.ts",
+          "line": 51,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ExtendPaperTypeMap",
@@ -97546,8 +97599,8 @@
       "nativeCandidates": [
         {
           "name": "PaperProps",
-          "file": "src/layout.tsx",
-          "line": 75,
+          "file": "src/paperTypes.ts",
+          "line": 55,
           "package": "@altroo/mui-native"
         }
       ]
@@ -97560,7 +97613,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PaperPropsVariantOverrides",
+          "file": "src/paperTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PaperOwnProps",
@@ -97578,7 +97638,7 @@
           "line": 12,
           "kind": "property",
           "type": "React.ReactNode",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97591,7 +97651,7 @@
           "line": 16,
           "kind": "property",
           "type": "Partial<PaperClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97630,7 +97690,7 @@
           "line": 31,
           "kind": "property",
           "type": "SxProps<Theme> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97659,9 +97719,15 @@
       "inheritanceResolved": false,
       "nativeCandidates": [
         {
+          "name": "PaperOwnProps",
+          "file": "src/paperTypes.ts",
+          "line": 15,
+          "package": "@altroo/mui-native"
+        },
+        {
           "name": "PaperProps",
-          "file": "src/layout.tsx",
-          "line": 75,
+          "file": "src/paperTypes.ts",
+          "line": 55,
           "package": "@altroo/mui-native"
         }
       ]
@@ -97682,7 +97748,7 @@
           "line": 39,
           "kind": "property",
           "type": "AdditionalProps & PaperOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97695,7 +97761,7 @@
           "line": 40,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -97706,7 +97772,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PaperTypeMap",
+          "file": "src/paperTypes.ts",
+          "line": 51,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ExtendPaperTypeMap",
@@ -97782,8 +97855,8 @@
       "nativeCandidates": [
         {
           "name": "PaperProps",
-          "file": "src/layout.tsx",
-          "line": 75,
+          "file": "src/paperTypes.ts",
+          "line": 55,
           "package": "@altroo/mui-native"
         }
       ]
@@ -97804,7 +97877,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97817,7 +97890,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97830,7 +97903,7 @@
           "line": 7,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97843,7 +97916,7 @@
           "line": 9,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97856,7 +97929,7 @@
           "line": 11,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97869,7 +97942,7 @@
           "line": 13,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97882,7 +97955,7 @@
           "line": 15,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97895,7 +97968,7 @@
           "line": 17,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97908,7 +97981,7 @@
           "line": 19,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97921,7 +97994,7 @@
           "line": 21,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97934,7 +98007,7 @@
           "line": 23,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97947,7 +98020,7 @@
           "line": 25,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97960,7 +98033,7 @@
           "line": 27,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97973,7 +98046,7 @@
           "line": 29,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97986,7 +98059,7 @@
           "line": 31,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -97999,7 +98072,7 @@
           "line": 33,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98012,7 +98085,7 @@
           "line": 35,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98025,7 +98098,7 @@
           "line": 37,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98038,7 +98111,7 @@
           "line": 39,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98051,7 +98124,7 @@
           "line": 41,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98064,7 +98137,7 @@
           "line": 43,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98077,7 +98150,7 @@
           "line": 45,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98090,7 +98163,7 @@
           "line": 47,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98103,7 +98176,7 @@
           "line": 49,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98116,7 +98189,7 @@
           "line": 51,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98129,7 +98202,7 @@
           "line": 53,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98142,7 +98215,7 @@
           "line": 55,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98155,7 +98228,7 @@
           "line": 57,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98168,13 +98241,20 @@
           "line": 59,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PaperClasses",
+          "file": "src/paperClasses.ts",
+          "line": 4,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PaperClassKey",
@@ -98186,7 +98266,14 @@
         "PaperClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PaperClassKey",
+          "file": "src/paperClasses.ts",
+          "line": 35,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PaperClasses",
@@ -98204,7 +98291,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98217,7 +98304,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98230,7 +98317,7 @@
           "line": 7,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98243,7 +98330,7 @@
           "line": 9,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98256,7 +98343,7 @@
           "line": 11,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98269,7 +98356,7 @@
           "line": 13,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98282,7 +98369,7 @@
           "line": 15,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98295,7 +98382,7 @@
           "line": 17,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98308,7 +98395,7 @@
           "line": 19,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98321,7 +98408,7 @@
           "line": 21,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98334,7 +98421,7 @@
           "line": 23,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98347,7 +98434,7 @@
           "line": 25,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98360,7 +98447,7 @@
           "line": 27,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98373,7 +98460,7 @@
           "line": 29,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98386,7 +98473,7 @@
           "line": 31,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98399,7 +98486,7 @@
           "line": 33,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98412,7 +98499,7 @@
           "line": 35,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98425,7 +98512,7 @@
           "line": 37,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98438,7 +98525,7 @@
           "line": 39,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98451,7 +98538,7 @@
           "line": 41,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98464,7 +98551,7 @@
           "line": 43,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98477,7 +98564,7 @@
           "line": 45,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98490,7 +98577,7 @@
           "line": 47,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98503,7 +98590,7 @@
           "line": 49,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98516,7 +98603,7 @@
           "line": 51,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98529,7 +98616,7 @@
           "line": 53,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98542,7 +98629,7 @@
           "line": 55,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98555,7 +98642,7 @@
           "line": 57,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -98568,13 +98655,20 @@
           "line": 59,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PaperClasses",
+          "file": "src/paperClasses.ts",
+          "line": 4,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PaperClassKey",
@@ -98586,7 +98680,14 @@
         "PaperClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "PaperClassKey",
+          "file": "src/paperClasses.ts",
+          "line": 35,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "PigmentContainerOwnProps",
@@ -117270,7 +117371,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 42,
+          "line": 45,
           "package": "@altroo/mui-native"
         }
       ]
@@ -117349,7 +117450,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 42,
+          "line": 45,
           "package": "@altroo/mui-native"
         }
       ]
@@ -117450,7 +117551,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 42,
+          "line": 45,
           "package": "@altroo/mui-native"
         }
       ]
@@ -117529,7 +117630,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 42,
+          "line": 45,
           "package": "@altroo/mui-native"
         }
       ]
@@ -147053,7 +147154,7 @@
           "line": 375,
           "kind": "property",
           "type": "{\n    defaultProps?: ComponentsProps['MuiPaper'] | undefined;\n    styleOverrides?: ComponentsOverrides<Theme>['MuiPaper'] | undefined;\n    variants?: ComponentsVariants<Theme>['MuiPaper'] | undefined;\n  } | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -147066,7 +147167,7 @@
           "line": 376,
           "kind": "property",
           "type": "ComponentsProps['MuiPaper'] | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -149382,7 +149483,7 @@
         {
           "name": "Components",
           "file": "src/styles/createTheme.ts",
-          "line": 20,
+          "line": 21,
           "package": "@altroo/mui-native"
         }
       ]
@@ -153212,7 +153313,7 @@
           "line": 375,
           "kind": "property",
           "type": "{\n    defaultProps?: ComponentsProps['MuiPaper'] | undefined;\n    styleOverrides?: ComponentsOverrides<Theme>['MuiPaper'] | undefined;\n    variants?: ComponentsVariants<Theme>['MuiPaper'] | undefined;\n  } | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -153225,7 +153326,7 @@
           "line": 376,
           "kind": "property",
           "type": "ComponentsProps['MuiPaper'] | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -155541,7 +155642,7 @@
         {
           "name": "Components",
           "file": "src/styles/createTheme.ts",
-          "line": 20,
+          "line": 21,
           "package": "@altroo/mui-native"
         }
       ]
@@ -159003,7 +159104,7 @@
         {
           "name": "ThemeOptions",
           "file": "src/styles/createTheme.ts",
-          "line": 32,
+          "line": 37,
           "package": "@altroo/mui-native"
         }
       ]
@@ -159077,7 +159178,7 @@
         {
           "name": "ThemeOptions",
           "file": "src/styles/createTheme.ts",
-          "line": 32,
+          "line": 37,
           "package": "@altroo/mui-native"
         }
       ]
@@ -164909,7 +165010,7 @@
         {
           "name": "ThemeOptions",
           "file": "src/styles/createTheme.ts",
-          "line": 32,
+          "line": 37,
           "package": "@altroo/mui-native"
         }
       ]
@@ -165456,7 +165557,7 @@
         {
           "name": "ThemeOptions",
           "file": "src/styles/createTheme.ts",
-          "line": 32,
+          "line": 37,
           "package": "@altroo/mui-native"
         }
       ]
@@ -171468,7 +171569,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 97,
+          "line": 99,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173153,7 +173254,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 94,
+          "line": 96,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173174,7 +173275,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 97,
+          "line": 99,
           "package": "@altroo/mui-native"
         }
       ]
@@ -174859,7 +174960,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 94,
+          "line": 96,
           "package": "@altroo/mui-native"
         }
       ]
@@ -181797,7 +181898,7 @@
     {
       "name": "ExpansionContext",
       "file": "src/accordion.tsx",
-      "line": 43,
+      "line": 44,
       "kind": "type",
       "members": [
         {
@@ -181807,7 +181908,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "expanded: boolean;",
-          "line": 44,
+          "line": 45,
           "kind": "property",
           "type": "boolean"
         },
@@ -181818,7 +181919,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 45,
+          "line": 46,
           "kind": "property",
           "type": "boolean"
         },
@@ -181829,7 +181930,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableGutters: boolean;",
-          "line": 46,
+          "line": 47,
           "kind": "property",
           "type": "boolean"
         },
@@ -181840,7 +181941,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "toggle: (event: ButtonBaseActivationEvent) => void;",
-          "line": 47,
+          "line": 48,
           "kind": "property",
           "type": "(event: ButtonBaseActivationEvent) => void"
         }
@@ -181854,7 +181955,7 @@
     {
       "name": "FrameProps",
       "file": "src/accordion.tsx",
-      "line": 58,
+      "line": 59,
       "kind": "type",
       "members": [
         {
@@ -181864,7 +181965,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name: string;",
-          "line": 59,
+          "line": 60,
           "kind": "property",
           "type": "string"
         },
@@ -181875,7 +181976,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slot?: string;",
-          "line": 60,
+          "line": 61,
           "kind": "slot",
           "type": "string"
         },
@@ -181886,7 +181987,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "owner: object;",
-          "line": 61,
+          "line": 62,
           "kind": "property",
           "type": "object"
         },
@@ -181897,7 +181998,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "resolved?: NativeAccordionSlotProps<any>;",
-          "line": 62,
+          "line": 63,
           "kind": "property",
           "type": "NativeAccordionSlotProps<any>"
         },
@@ -181908,7 +182009,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<any>;",
-          "line": 63,
+          "line": 64,
           "kind": "property",
           "type": "React.ComponentType<any>"
         },
@@ -181919,7 +182020,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "base?: SxProps;",
-          "line": 64,
+          "line": 65,
           "kind": "property",
           "type": "SxProps"
         },
@@ -181930,7 +182031,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "states?: string[];",
-          "line": 65,
+          "line": 66,
           "kind": "property",
           "type": "string[]"
         },
@@ -181941,7 +182042,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideKeys?: string[];",
-          "line": 66,
+          "line": 67,
           "kind": "property",
           "type": "string[]"
         },
@@ -181952,7 +182053,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 67,
+          "line": 68,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -181969,7 +182070,7 @@
     {
       "name": "NativeAccordionDetailsComponent",
       "file": "src/accordion.tsx",
-      "line": 414,
+      "line": 417,
       "kind": "type",
       "members": [
         {
@@ -181979,7 +182080,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;",
-          "line": 421,
+          "line": 424,
           "kind": "signature",
           "type": "(props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;"
         }
@@ -194744,7 +194845,7 @@
     {
       "name": "BoxProps",
       "file": "src/layout.tsx",
-      "line": 17,
+      "line": 20,
       "kind": "type",
       "members": [
         {
@@ -194754,7 +194855,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle>;",
-          "line": 18,
+          "line": 21,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -194765,7 +194866,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 19,
+          "line": 22,
           "kind": "property",
           "type": "SxProps"
         },
@@ -194776,7 +194877,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>;",
-          "line": 20,
+          "line": 23,
           "kind": "property",
           "type": "React.ComponentType<ViewProps & React.RefAttributes<ViewInstance>>"
         }
@@ -194797,7 +194898,7 @@
     {
       "name": "StackProps",
       "file": "src/layout.tsx",
-      "line": 42,
+      "line": 45,
       "kind": "type",
       "members": [
         {
@@ -194807,7 +194908,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';",
-          "line": 43,
+          "line": 46,
           "kind": "property",
           "type": "'row' | 'column' | 'row-reverse' | 'column-reverse'"
         },
@@ -194818,7 +194919,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "spacing?: ResponsiveStyleValue<SpacingArgument>;",
-          "line": 44,
+          "line": 47,
           "kind": "property",
           "type": "ResponsiveStyleValue<SpacingArgument>"
         },
@@ -194829,7 +194930,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "divider?: React.ReactNode;",
-          "line": 45,
+          "line": 48,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -194839,52 +194940,6 @@
         "React.ReactNode",
         "ResponsiveStyleValue",
         "SpacingArgument"
-      ],
-      "inheritanceResolved": false,
-      "package": "@altroo/mui-native"
-    },
-    {
-      "name": "PaperProps",
-      "file": "src/layout.tsx",
-      "line": 75,
-      "kind": "type",
-      "members": [
-        {
-          "name": "elevation",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "elevation?: number;",
-          "line": 76,
-          "kind": "property",
-          "type": "number"
-        },
-        {
-          "name": "variant",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "variant?: 'elevation' | 'outlined';",
-          "line": 77,
-          "kind": "property",
-          "type": "'elevation' | 'outlined'"
-        },
-        {
-          "name": "square",
-          "optional": true,
-          "readonly": false,
-          "computed": false,
-          "memberKind": "TSPropertySignature",
-          "declaration": "square?: boolean;",
-          "line": 78,
-          "kind": "property",
-          "type": "boolean"
-        }
-      ],
-      "references": [
-        "BoxProps"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -201819,6 +201874,762 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "PaperClasses",
+      "file": "src/paperClasses.ts",
+      "line": 4,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: string;",
+          "line": 5,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "rounded",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "rounded: string;",
+          "line": 6,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "outlined",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "outlined: string;",
+          "line": 7,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation: string;",
+          "line": 8,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation0",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation0: string;",
+          "line": 9,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation1",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation1: string;",
+          "line": 10,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation2",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation2: string;",
+          "line": 11,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation3",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation3: string;",
+          "line": 12,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation4",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation4: string;",
+          "line": 13,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation5",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation5: string;",
+          "line": 14,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation6",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation6: string;",
+          "line": 15,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation7",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation7: string;",
+          "line": 16,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation8",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation8: string;",
+          "line": 17,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation9",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation9: string;",
+          "line": 18,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation10",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation10: string;",
+          "line": 19,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation11",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation11: string;",
+          "line": 20,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation12",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation12: string;",
+          "line": 21,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation13",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation13: string;",
+          "line": 22,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation14",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation14: string;",
+          "line": 23,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation15",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation15: string;",
+          "line": 24,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation16",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation16: string;",
+          "line": 25,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation17",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation17: string;",
+          "line": 26,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation18",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation18: string;",
+          "line": 27,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation19",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation19: string;",
+          "line": 28,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation20",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation20: string;",
+          "line": 29,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation21",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation21: string;",
+          "line": 30,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation22",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation22: string;",
+          "line": 31,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation23",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation23: string;",
+          "line": 32,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation24",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation24: string;",
+          "line": 33,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PaperClassKey",
+      "file": "src/paperClasses.ts",
+      "line": 35,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "PaperClasses"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PaperPropsVariantOverrides",
+      "file": "src/paperTypes.ts",
+      "line": 8,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "VariantFlags",
+      "file": "src/paperTypes.ts",
+      "line": 9,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Omit",
+        "PaperPropsVariantOverrides",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PaperVariant",
+      "file": "src/paperTypes.ts",
+      "line": 11,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Extract",
+        "K",
+        "VariantFlags"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PaperOwnProps",
+      "file": "src/paperTypes.ts",
+      "line": 15,
+      "kind": "type",
+      "members": [
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 16,
+          "kind": "property",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<PaperClasses> | undefined;",
+          "line": 17,
+          "kind": "property",
+          "type": "Partial<PaperClasses> | undefined"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string | undefined;",
+          "line": 18,
+          "kind": "property",
+          "type": "string | undefined"
+        },
+        {
+          "name": "elevation",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation?: number | undefined;",
+          "line": 19,
+          "kind": "property",
+          "type": "number | undefined"
+        },
+        {
+          "name": "square",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "square?: boolean | undefined;",
+          "line": 20,
+          "kind": "property",
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "sx",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sx?: SxProps | undefined;",
+          "line": 21,
+          "kind": "property",
+          "type": "SxProps | undefined"
+        },
+        {
+          "name": "variant",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant?: PaperVariant | undefined;",
+          "line": 22,
+          "kind": "property",
+          "type": "PaperVariant | undefined"
+        },
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: StyleProp<NativeStyle> | undefined;",
+          "line": 23,
+          "kind": "property",
+          "type": "StyleProp<NativeStyle> | undefined"
+        }
+      ],
+      "references": [
+        "NativeStyle",
+        "PaperClasses",
+        "PaperVariant",
+        "Partial",
+        "React.ReactNode",
+        "StyleProp",
+        "SxProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Root",
+      "file": "src/paperTypes.ts",
+      "line": 25,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeRoot",
+      "file": "src/paperTypes.ts",
+      "line": 28,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "R",
+        "React.ComponentRef",
+        "React.ComponentType",
+        "Root",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ConfiguredRoot",
+      "file": "src/paperTypes.ts",
+      "line": 41,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ReactNode",
+        "React.RefAttributes",
+        "ViewInstance",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DistributiveOmit",
+      "file": "src/paperTypes.ts",
+      "line": 45,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "K",
+        "Omit",
+        "PropertyKey",
+        "T"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RootProps",
+      "file": "src/paperTypes.ts",
+      "line": 46,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "R",
+        "React.ComponentPropsWithRef",
+        "React.ComponentType",
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PaperTypeMap",
+      "file": "src/paperTypes.ts",
+      "line": 51,
+      "kind": "type",
+      "members": [
+        {
+          "name": "props",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "props: AdditionalProps & PaperOwnProps;",
+          "line": 52,
+          "kind": "property",
+          "type": "AdditionalProps & PaperOwnProps"
+        },
+        {
+          "name": "defaultComponent",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultComponent: NativeRoot<RootComponent>;",
+          "line": 53,
+          "kind": "property",
+          "type": "NativeRoot<RootComponent>"
+        }
+      ],
+      "references": [
+        "AdditionalProps",
+        "NativeRoot",
+        "PaperOwnProps",
+        "Root",
+        "RootComponent"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PaperProps",
+      "file": "src/paperTypes.ts",
+      "line": 55,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AdditionalProps",
+        "ConfiguredRoot",
+        "DistributiveOmit",
+        "NativeRoot",
+        "PaperOwnProps",
+        "R",
+        "Root",
+        "RootProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Keys",
+      "file": "src/paperTypes.ts",
+      "line": 64,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "T"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "InferredPaperProps",
+      "file": "src/paperTypes.ts",
+      "line": 67,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NonNullable",
+        "P",
+        "PaperProps",
+        "R",
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "InferredPaperKeys",
+      "file": "src/paperTypes.ts",
+      "line": 75,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "InferredPaperProps",
+        "Keys",
+        "P",
+        "PaperProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePaperComponent",
+      "file": "src/paperTypes.ts",
+      "line": 78,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<R extends Root>(\n    props: PaperProps<R> & { component: R & NativeRoot<NoInfer<R>> },\n  ): React.JSX.Element;",
+          "line": 79,
+          "kind": "signature",
+          "type": "<R extends Root>(\n    props: PaperProps<R> & { component: R & NativeRoot<NoInfer<R>> },\n  ): React.JSX.Element;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: Omit<PaperProps, 'component'> & { component?: undefined }): React.JSX.Element;",
+          "line": 82,
+          "kind": "signature",
+          "type": "(props: Omit<PaperProps, 'component'> & { component?: undefined }): React.JSX.Element;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<P extends PaperProps>(\n    props: P &\n      NoInfer<InferredPaperProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredPaperKeys<P>>>, never>,\n  ): React.JSX.Element;",
+          "line": 86,
+          "kind": "signature",
+          "type": "<P extends PaperProps>(\n    props: P &\n      NoInfer<InferredPaperProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredPaperKeys<P>>>, never>,\n  ): React.JSX.Element;"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string | undefined;",
+          "line": 91,
+          "kind": "property",
+          "type": "string | undefined"
+        }
+      ],
+      "references": [
+        "Exclude",
+        "InferredPaperKeys",
+        "InferredPaperProps",
+        "NativeRoot",
+        "NoInfer",
+        "Omit",
+        "P",
+        "PaperProps",
+        "R",
+        "React.JSX.Element",
+        "Record",
+        "Root"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativePaperRootProps",
+      "file": "src/paperTypes.ts",
+      "line": 93,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: Root | undefined",
+          "line": 94,
+          "kind": "property",
+          "type": "Root | undefined"
+        }
+      ],
+      "references": [
+        "Omit",
+        "PaperOwnProps",
+        "Root",
+        "ViewProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "PopoverRootSlotPropsOverrides",
       "file": "src/popover.tsx",
       "line": 35,
@@ -205624,7 +206435,7 @@
     {
       "name": "ComponentOptions",
       "file": "src/styles/createTheme.ts",
-      "line": 15,
+      "line": 16,
       "kind": "type",
       "members": [],
       "references": [
@@ -205637,7 +206448,7 @@
     {
       "name": "Components",
       "file": "src/styles/createTheme.ts",
-      "line": 20,
+      "line": 21,
       "kind": "type",
       "members": [
         {
@@ -205647,9 +206458,31 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mergeClassNameAndStyle?: boolean | undefined;",
-          "line": 24,
+          "line": 25,
           "kind": "property",
           "type": "boolean | undefined"
+        },
+        {
+          "name": "MuiPaper",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiPaper?:\n    | (Omit<ComponentOptions, 'defaultProps'> & { defaultProps?: Partial<PaperProps> | undefined })\n    | boolean\n    | undefined;",
+          "line": 26,
+          "kind": "property",
+          "type": "| (Omit<ComponentOptions, 'defaultProps'> & { defaultProps?: Partial<PaperProps> | undefined })\n    | boolean\n    | undefined"
+        },
+        {
+          "name": "MuiPaper.defaultProps",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultProps?: Partial<PaperProps> | undefined",
+          "line": 27,
+          "kind": "property",
+          "type": "Partial<PaperProps> | undefined"
         },
         {
           "name": "MuiDivider",
@@ -205658,7 +206491,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDivider?:\n    | (Omit<ComponentOptions, 'defaultProps'> & {\n        defaultProps?: Partial<DividerProps> | undefined;\n      })\n    | boolean\n    | undefined;",
-          "line": 25,
+          "line": 30,
           "kind": "property",
           "type": "| (Omit<ComponentOptions, 'defaultProps'> & {\n        defaultProps?: Partial<DividerProps> | undefined;\n      })\n    | boolean\n    | undefined"
         },
@@ -205669,7 +206502,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultProps?: Partial<DividerProps> | undefined;",
-          "line": 27,
+          "line": 32,
           "kind": "property",
           "type": "Partial<DividerProps> | undefined"
         }
@@ -205678,6 +206511,7 @@
         "ComponentOptions",
         "DividerProps",
         "Omit",
+        "PaperProps",
         "Partial",
         "Record",
         "SystemComponents"
@@ -205688,7 +206522,7 @@
     {
       "name": "ThemeOptions",
       "file": "src/styles/createTheme.ts",
-      "line": 32,
+      "line": 37,
       "kind": "type",
       "members": [
         {
@@ -205698,7 +206532,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "components?: Components | undefined;",
-          "line": 33,
+          "line": 38,
           "kind": "property",
           "type": "Components | undefined"
         }
@@ -205714,7 +206548,7 @@
     {
       "name": "MaterialExports",
       "file": "src/styles/props.ts",
-      "line": 14,
+      "line": 15,
       "kind": "type",
       "members": [],
       "references": [],
@@ -205724,7 +206558,7 @@
     {
       "name": "ComponentName",
       "file": "src/styles/props.ts",
-      "line": 16,
+      "line": 17,
       "kind": "type",
       "members": [],
       "references": [],
@@ -205734,7 +206568,7 @@
     {
       "name": "ExistingComponentProps",
       "file": "src/styles/props.ts",
-      "line": 77,
+      "line": 78,
       "kind": "type",
       "members": [],
       "references": [
@@ -205749,7 +206583,7 @@
     {
       "name": "GenericComponentProps",
       "file": "src/styles/props.ts",
-      "line": 82,
+      "line": 83,
       "kind": "type",
       "members": [
         {
@@ -205759,7 +206593,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiAutocomplete: AutocompleteProps<any, any, any, any, any, any>;",
-          "line": 83,
+          "line": 84,
           "kind": "property",
           "type": "AutocompleteProps<any, any, any, any, any, any>"
         },
@@ -205770,7 +206604,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButton: ButtonProps;",
-          "line": 84,
+          "line": 85,
           "kind": "property",
           "type": "ButtonProps"
         },
@@ -205781,7 +206615,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiIconButton: IconButtonProps;",
-          "line": 85,
+          "line": 86,
           "kind": "property",
           "type": "IconButtonProps"
         },
@@ -205792,7 +206626,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButtonGroup: ButtonGroupProps;",
-          "line": 86,
+          "line": 87,
           "kind": "property",
           "type": "ButtonGroupProps"
         },
@@ -205803,7 +206637,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiChip: ChipProps;",
-          "line": 87,
+          "line": 88,
           "kind": "property",
           "type": "ChipProps"
         },
@@ -205814,7 +206648,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSvgIcon: SvgIconProps;",
-          "line": 88,
+          "line": 89,
           "kind": "property",
           "type": "SvgIconProps"
         },
@@ -205825,7 +206659,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSelect: SelectProps;",
-          "line": 89,
+          "line": 90,
           "kind": "property",
           "type": "SelectProps"
         },
@@ -205836,7 +206670,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiTextField: TextFieldProps;",
-          "line": 90,
+          "line": 91,
           "kind": "property",
           "type": "TextFieldProps"
         },
@@ -205847,7 +206681,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPopper: PopperProps;",
-          "line": 91,
+          "line": 92,
           "kind": "property",
           "type": "PopperProps"
         },
@@ -205858,9 +206692,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDivider: DividerProps;",
-          "line": 92,
+          "line": 93,
           "kind": "property",
           "type": "DividerProps"
+        },
+        {
+          "name": "MuiPaper",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiPaper: PaperProps;",
+          "line": 94,
+          "kind": "property",
+          "type": "PaperProps"
         }
       ],
       "references": [
@@ -205870,6 +206715,7 @@
         "ChipProps",
         "DividerProps",
         "IconButtonProps",
+        "PaperProps",
         "PopperProps",
         "SelectProps",
         "SvgIconProps",
@@ -205881,7 +206727,7 @@
     {
       "name": "ComponentsPropsList",
       "file": "src/styles/props.ts",
-      "line": 94,
+      "line": 96,
       "kind": "type",
       "members": [],
       "references": [
@@ -205895,7 +206741,7 @@
     {
       "name": "ComponentsProps",
       "file": "src/styles/props.ts",
-      "line": 97,
+      "line": 99,
       "kind": "type",
       "members": [],
       "references": [
@@ -211020,7 +211866,7 @@
     {
       "name": "NativeRootStyleResult",
       "file": "src/sx.ts",
-      "line": 909,
+      "line": 936,
       "kind": "type",
       "members": [
         {
@@ -211030,7 +211876,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 910,
+          "line": 937,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -211041,7 +211887,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 911,
+          "line": 938,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -211052,7 +211898,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 913,
+          "line": 940,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         }

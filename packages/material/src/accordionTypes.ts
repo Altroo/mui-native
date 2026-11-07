@@ -67,7 +67,7 @@ export interface AccordionOwnProps extends AccordionSlotsAndSlotProps {
   onChange?: (event: ButtonBaseActivationEvent, expanded: boolean) => void;
 }
 export interface AccordionProps
-  extends Omit<PaperProps, 'children' | 'onChange' | 'component'>,
+  extends Omit<PaperProps, 'children' | 'onChange' | 'component' | 'classes'>,
     AccordionOwnProps {
   component?: React.ComponentType<any>;
 }

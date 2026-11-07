@@ -10,11 +10,20 @@ import { AccordionDetailsContractExample } from './AccordionDetailsContractExamp
 import { MenuIconCascadeExample } from './MenuIconCascadeExample';
 import { TypographyContractExample } from './TypographyContractExample';
 import { DividerContractExample } from './DividerContractExample';
+import { PaperContractExample } from './PaperContractExample';
 
 /** Keep each measured example mounted while its own controls update the root. */
 export function RootLayoutExamples() {
   const [example, setExample] = useState<
-    'group' | 'avatar' | 'icon' | 'details' | 'menu-styles' | 'typography' | 'divider' | 'benchmark'
+    | 'group'
+    | 'avatar'
+    | 'icon'
+    | 'details'
+    | 'menu-styles'
+    | 'typography'
+    | 'divider'
+    | 'paper'
+    | 'benchmark'
   >('group');
   return (
     <View style={{ flex: 1 }}>
@@ -82,6 +91,13 @@ export function RootLayoutExamples() {
           Divider
         </Button>
         <Button
+          testID="root-layout-paper"
+          variant={example === 'paper' ? 'contained' : 'outlined'}
+          onClick={() => setExample('paper')}
+        >
+          Paper
+        </Button>
+        <Button
           style={{ maxWidth: '100%' }}
           testID="root-layout-benchmark"
           variant={example === 'benchmark' ? 'contained' : 'outlined'}
@@ -108,6 +124,8 @@ export function RootLayoutExamples() {
             <AccordionDetailsContractExample />
           ) : example === 'divider' ? (
             <DividerContractExample />
+          ) : example === 'paper' ? (
+            <PaperContractExample />
           ) : example === 'typography' ? (
             <TypographyContractExample />
           ) : (

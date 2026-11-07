@@ -266,6 +266,7 @@ test('layout, label and control families consume their own default configuration
     <ThemeProvider theme={theme}>
       <Stack testID="stack" />
       <Card testID="card" />
+      <Card testID="rounded-card" square={false} />
       <DialogTitle>Title</DialogTitle>
       <FormControl>
         <FormLabel>Name</FormLabel>
@@ -280,7 +281,11 @@ test('layout, label and control families consume their own default configuration
     </ThemeProvider>,
   );
   expect(screen.getByTestId('stack')).toHaveStyle({ flexDirection: 'row', gap: 16 });
-  expect(screen.getByTestId('card')).toHaveStyle({ borderRadius: 0 });
+  // Square Paper uses the native zero-radius default instead of an explicit style.
+  expect(StyleSheet.flatten(screen.getByTestId('card').props.style).borderRadius ?? 0).toBe(0);
+  expect(screen.getByTestId('rounded-card')).toHaveStyle({
+    borderRadius: theme.shape.borderRadius,
+  });
   expect(screen.getByText('Title')).toHaveStyle({ fontSize: 34 });
   expect(screen.getByText('Name *')).toHaveStyle({ color: theme.palette.primary.main });
   expect(screen.getByTestId('input-label')).toHaveTextContent('Input *');

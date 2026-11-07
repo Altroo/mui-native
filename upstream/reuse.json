@@ -3513,6 +3513,57 @@
       "adaptations": [
         "The owned native class composition preserves the original active-slot order and two reads of custom class accessors."
       ]
+    },
+    {
+      "localFile": "packages/material/src/paper.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+          "styles/getOverlayAlpha.js": "2703a5cb9333ba13b957c0f9aba760e5706f94ddf598260082c1d89fa27b5ca4"
+        }
+      },
+      "adaptations": [
+        "Paper native adaptation and finite source observations are recorded in upstream/paper.json. No browser, native paint or full compatibility certification."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/paperClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Paper/paperClasses.js": "a1018d4c7cdc4390e25ef889da1889eb7c13d19111d3465f25320dc1f5550f01",
+          "Paper/paperClasses.d.ts": "c9bfc8572556f746686beb2ac476f999356253c4b3fcba189327b25b30c47801"
+        }
+      },
+      "adaptations": [
+        "Paper native adaptation and finite source observations are recorded in upstream/paper.json. No browser, native paint or full compatibility certification."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/paperTypes.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Paper/Paper.d.ts": "c2c81483f868985bb08311eebf892228be4dd61523a693097c4d7224b06e011a",
+          "Paper/index.d.ts": "6af214e64dbf7c599257f7f0851cb57b267c6eef97dbca04b1f2d204ac571fdb"
+        }
+      },
+      "adaptations": [
+        "Paper native adaptation and finite source observations are recorded in upstream/paper.json. No browser, native paint or full compatibility certification."
+      ]
     }
   ]
 }

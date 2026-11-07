@@ -1,5 +1,14 @@
+import originalPaper from './fixtures/mui-paper-9.5.0.json';
 import { Platform, PlatformColor } from 'react-native';
-import { configureDiagnostics, createTheme, resolveSx, type Shadows } from '../packages/system/src';
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import {
+  componentStyle,
+  configureDiagnostics,
+  createTheme,
+  resolveSx,
+  type Shadows,
+  type Theme,
+} from '../packages/system/src';
 
 afterEach(() => jest.restoreAllMocks());
 
@@ -229,5 +238,155 @@ test('omitted shadow paint inherits the final foreground including native semant
   const color = PlatformColor('labelColor');
   expect(resolveSx({ boxShadow: '0 0 4px' }, theme, { nativeStyle: { color } })).toEqual({
     boxShadow: [{ offsetX: 0, offsetY: 0, blurRadius: 4, spreadDistance: 0, color, inset: false }],
+  });
+});
+
+test.each(
+  originalPaper.systemShadowAccess.filter(
+    ({ path, value }) => path === 'sx' || (typeof value !== 'number' && value !== '1'),
+  ),
+)('source $path shadow-table access $value/throwing=$throwing', (expected) => {
+  const theme = createTheme(),
+    shadows = [...theme.shadows];
+  shadows[1] = '0 0 8px blue';
+  let reads = 0;
+  Object.defineProperty(theme, 'shadows', {
+    get() {
+      reads++;
+      if (expected.throwing) throw Error('unused-shadow-table');
+      return shadows;
+    },
+  });
+  // Undefined mode is the public resolveSx default and must retain sx lookup.
+  for (const mode of expected.path === 'sx' ? ([undefined, 'sx'] as const) : (['css'] as const)) {
+    reads = 0;
+    let output: unknown = null,
+      error: string | null = null;
+    try {
+      output = resolveSx({ boxShadow: expected.value }, theme, { mode }).boxShadow ?? null;
+    } catch (caught) {
+      error = (caught as Error).message;
+    }
+    expect({ reads, error, output }).toEqual({
+      reads: expected.reads,
+      error: expected.error,
+      output: expected.output,
+    });
+  }
+});
+test.each([1, '1'])('numeric CSS extension still reads shadow tokens for %s', (value) => {
+  const theme = createTheme(),
+    shadows = [...theme.shadows];
+  shadows[1] = '0 0 8px blue';
+  const lookup = jest.fn(() => shadows);
+  Object.defineProperty(theme, 'shadows', { get: lookup });
+  expect(resolveSx({ boxShadow: value }, theme, { mode: 'css' })).toEqual({
+    boxShadow: '0 0 8px blue',
+  });
+  expect(lookup).toHaveBeenCalledTimes(1);
+});
+test.each([undefined, null, { opacity: 0.4 }])(
+  'static base style avoids unrelated theme getters: %s',
+  (baseStyle) => {
+    const theme = createTheme();
+    Object.defineProperty(theme, 'shadows', {
+      get() {
+        throw Error('unused-static-theme-field');
+      },
+    });
+    expect(componentStyle(theme, 'MuiProbe', {}, undefined, { baseStyle })).toEqual(
+      baseStyle ?? {},
+    );
+  },
+);
+test.each(['function', 'array', 'variants'])(
+  'base %s retains the native direct-theme callback extension',
+  (kind) => {
+    const theme = createTheme(),
+      shadows = theme.shadows,
+      events: string[] = [];
+    Object.defineProperty(theme, 'shadows', {
+      get() {
+        events.push('theme');
+        return shadows;
+      },
+    });
+    const callback = (args: Theme) => {
+      events.push('callback');
+      expect(args.shadows).toBe(shadows);
+      return { opacity: 0.4 };
+    };
+    const baseStyle =
+      kind === 'function'
+        ? callback
+        : kind === 'array'
+          ? [callback]
+          : {
+              get variants() {
+                events.push('variants');
+                return [{ props: {}, style: callback }];
+              },
+            };
+    expect(componentStyle(theme, 'MuiProbe', {}, undefined, { baseStyle })).toEqual({
+      opacity: 0.4,
+    });
+    expect(events).toEqual(
+      kind === 'variants'
+        ? ['variants', 'theme', 'variants', 'variants', 'theme', 'callback']
+        : ['theme', 'callback'],
+    );
+  },
+);
+
+test('static Proxy base uses existing style reads without an added presence trap', () => {
+  const has: string[] = [];
+  const baseStyle = new Proxy(
+    { padding: 1 },
+    {
+      has(target, key) {
+        has.push(String(key));
+        if (key === 'variants') throw Error('unexpected-variants-has');
+        return Reflect.has(target, key);
+      },
+    },
+  );
+  const theme = createTheme();
+  Object.defineProperty(theme, 'shadows', {
+    get() {
+      throw Error('unused-static-theme-field');
+    },
+  });
+  expect(originalPaper.staticProxyAccess.error).toBeNull();
+  expect(originalPaper.staticProxyAccess.padding).toBe('1px');
+  expect(componentStyle(theme, 'MuiProbe', {}, undefined, { baseStyle })).toEqual({ padding: 1 });
+  expect(has).toEqual([]);
+});
+test('static variants resolve the native direct-theme snapshot after their first existing getter', () => {
+  const theme = createTheme({ direction: 'ltr' });
+  let reads = 0,
+    directDirection: unknown,
+    nestedDirection: unknown;
+  const baseStyle = {
+    get variants() {
+      reads++;
+      theme.direction = 'rtl';
+      return [
+        {
+          props: {},
+          style: (args: Theme) => {
+            directDirection = args.direction;
+            expect(args).toEqual(expect.objectContaining({ theme }));
+            nestedDirection = theme.direction;
+            return { opacity: 0.4 };
+          },
+        },
+      ];
+    },
+  };
+  expect(componentStyle(theme, 'MuiProbe', {}, undefined, { baseStyle })).toEqual({ opacity: 0.4 });
+  expect({ reads, directDirection, nestedDirection }).toEqual({
+    reads: 3,
+    directDirection: 'rtl',
+    nestedDirection: 'rtl',
   });
 });

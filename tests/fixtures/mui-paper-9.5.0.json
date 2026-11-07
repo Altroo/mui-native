@@ -1,0 +1,1203 @@
+{
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+        "Paper/Paper.d.ts": "c2c81483f868985bb08311eebf892228be4dd61523a693097c4d7224b06e011a",
+        "Paper/Paper.d.mts": "aff9a3a90d1ed6e423774e979673cb3f3a05c400105ad45d1ebd556b4484063b",
+        "Paper/paperClasses.js": "a1018d4c7cdc4390e25ef889da1889eb7c13d19111d3465f25320dc1f5550f01",
+        "Paper/paperClasses.d.ts": "c9bfc8572556f746686beb2ac476f999356253c4b3fcba189327b25b30c47801",
+        "Paper/paperClasses.d.mts": "c9bfc8572556f746686beb2ac476f999356253c4b3fcba189327b25b30c47801",
+        "Paper/index.js": "9e8e26f6ce3a42e8e4946b95436d1608c9acc963ecd72277a9e7a87512158fb8",
+        "Paper/index.d.ts": "6af214e64dbf7c599257f7f0851cb57b267c6eef97dbca04b1f2d204ac571fdb",
+        "Paper/index.d.mts": "9de62af019a1c0bebb52b911dc14e89abab301b26c90a45845288067ea972a44",
+        "styles/getOverlayAlpha.js": "2703a5cb9333ba13b957c0f9aba760e5706f94ddf598260082c1d89fa27b5ca4",
+        "styles/getOverlayAlpha.d.ts": "c326bb72f933aa18f366a29a27dfd4193749c4c077b0464bb31054134a84aa8b",
+        "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+        "styles/components.d.ts": "358dac701e57422878d7164f4ba31b1672e641dcf2c1378354da779400b0255f",
+        "styles/props.d.ts": "05084be14d8c1f9b14f83f357f57c8a3ee04f3ec936b72e2cb694cd7b3cb48ee",
+        "styles/overrides.d.ts": "0c134aee37b4efcabad2e3c8e96a54178099d87ea10d91e469081aca1c51c8ae",
+        "Accordion/Accordion.d.ts": "95ae93fbf86e3c7a210b2d5fe0b3043cf3115f9161e3a6e181b94ec33ec44123",
+        "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7",
+        "zero-styled/index.js": "50f7cf89a8e3794b42b932af95d6720f21597bd4b9a296bcb92f87eab5789eb6",
+        "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+        "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa",
+        "utils/memoTheme.js": "ba795253c43a4fd740281e725b4fe0b77a25bf0c1a26e3f12b5f89a790a8a497",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+        "styleFunctionSx/styleFunctionSx.js": "8b529d73316fc89027b08b4982e2c8555e3cb40fa0c370cb07ca3db4ae63b2bf",
+        "styleFunctionSx/defaultSxConfig.js": "d8efd9936072efe65f1faaec85230f59e22eac85c29579df0e32492321e8e706",
+        "style/style.js": "ae36c11e3fe1e5f23cc3485e64281bab51665780d1ec2e788742586eef9ba8d9"
+      }
+    }
+  ],
+  "classes": {
+    "root": "MuiPaper-root",
+    "rounded": "MuiPaper-rounded",
+    "outlined": "MuiPaper-outlined",
+    "elevation": "MuiPaper-elevation",
+    "elevation0": "MuiPaper-elevation0",
+    "elevation1": "MuiPaper-elevation1",
+    "elevation2": "MuiPaper-elevation2",
+    "elevation3": "MuiPaper-elevation3",
+    "elevation4": "MuiPaper-elevation4",
+    "elevation5": "MuiPaper-elevation5",
+    "elevation6": "MuiPaper-elevation6",
+    "elevation7": "MuiPaper-elevation7",
+    "elevation8": "MuiPaper-elevation8",
+    "elevation9": "MuiPaper-elevation9",
+    "elevation10": "MuiPaper-elevation10",
+    "elevation11": "MuiPaper-elevation11",
+    "elevation12": "MuiPaper-elevation12",
+    "elevation13": "MuiPaper-elevation13",
+    "elevation14": "MuiPaper-elevation14",
+    "elevation15": "MuiPaper-elevation15",
+    "elevation16": "MuiPaper-elevation16",
+    "elevation17": "MuiPaper-elevation17",
+    "elevation18": "MuiPaper-elevation18",
+    "elevation19": "MuiPaper-elevation19",
+    "elevation20": "MuiPaper-elevation20",
+    "elevation21": "MuiPaper-elevation21",
+    "elevation22": "MuiPaper-elevation22",
+    "elevation23": "MuiPaper-elevation23",
+    "elevation24": "MuiPaper-elevation24"
+  },
+  "utilities": {
+    "root": "MuiPaper-root",
+    "rounded": "MuiPaper-rounded",
+    "outlined": "MuiPaper-outlined",
+    "elevation": "MuiPaper-elevation",
+    "elevation0": "MuiPaper-elevation0",
+    "elevation1": "MuiPaper-elevation1",
+    "elevation2": "MuiPaper-elevation2",
+    "elevation3": "MuiPaper-elevation3",
+    "elevation4": "MuiPaper-elevation4",
+    "elevation5": "MuiPaper-elevation5",
+    "elevation6": "MuiPaper-elevation6",
+    "elevation7": "MuiPaper-elevation7",
+    "elevation8": "MuiPaper-elevation8",
+    "elevation9": "MuiPaper-elevation9",
+    "elevation10": "MuiPaper-elevation10",
+    "elevation11": "MuiPaper-elevation11",
+    "elevation12": "MuiPaper-elevation12",
+    "elevation13": "MuiPaper-elevation13",
+    "elevation14": "MuiPaper-elevation14",
+    "elevation15": "MuiPaper-elevation15",
+    "elevation16": "MuiPaper-elevation16",
+    "elevation17": "MuiPaper-elevation17",
+    "elevation18": "MuiPaper-elevation18",
+    "elevation19": "MuiPaper-elevation19",
+    "elevation20": "MuiPaper-elevation20",
+    "elevation21": "MuiPaper-elevation21",
+    "elevation22": "MuiPaper-elevation22",
+    "elevation23": "MuiPaper-elevation23",
+    "elevation24": "MuiPaper-elevation24",
+    "disabled": "Mui-disabled",
+    "selected": "Mui-selected",
+    "": "MuiPaper-",
+    "custom": "MuiPaper-custom",
+    "__proto__": "Mui-[object Object]",
+    "constructor": "Mui-function Object() { [native code] }",
+    "toString": "Mui-function toString() { [native code] }",
+    "hasOwnProperty": "Mui-function hasOwnProperty() { [native code] }"
+  },
+  "fixtures": [
+    {
+      "name": "default",
+      "input": {},
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "outlined",
+      "input": { "variant": "outlined" },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-outlined MuiPaper-rounded",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;border:1px solid rgba(0, 0, 0, 0.12);",
+      "style": null,
+      "shadow": null
+    },
+    {
+      "name": "square",
+      "input": { "square": true },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-elevation1",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "outlined-square",
+      "input": { "variant": "outlined", "square": true },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-outlined",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border:1px solid rgba(0, 0, 0, 0.12);",
+      "style": null,
+      "shadow": null
+    },
+    {
+      "name": "custom-variant",
+      "input": { "variant": "glass" },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-glass MuiPaper-rounded",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;",
+      "style": null,
+      "shadow": null
+    },
+    {
+      "name": "empty-variant",
+      "input": { "variant": "" },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-rounded",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;",
+      "style": null,
+      "shadow": null
+    },
+    {
+      "name": "classes",
+      "input": {
+        "elevation": 3,
+        "className": "authored",
+        "classes": {
+          "root": "chosen",
+          "rounded": "round",
+          "elevation": "depth",
+          "elevation3": "three"
+        }
+      },
+      "tag": "div",
+      "className": "MuiPaper-root chosen MuiPaper-elevation depth MuiPaper-rounded round MuiPaper-elevation3 three authored",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation0",
+      "input": { "elevation": 0 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:none",
+      "shadow": "none"
+    },
+    {
+      "name": "elevation1",
+      "input": { "elevation": 1 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation2",
+      "input": { "elevation": 2 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation3",
+      "input": { "elevation": 3 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation4",
+      "input": { "elevation": 4 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation4",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation5",
+      "input": { "elevation": 5 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation6",
+      "input": { "elevation": 6 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation7",
+      "input": { "elevation": 7 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation7",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12)",
+      "shadow": "0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation8",
+      "input": { "elevation": 8 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+      "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation9",
+      "input": { "elevation": 9 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation9",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12)",
+      "shadow": "0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation10",
+      "input": { "elevation": 10 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation10",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12)",
+      "shadow": "0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation11",
+      "input": { "elevation": 11 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation11",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12)",
+      "shadow": "0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation12",
+      "input": { "elevation": 12 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation12",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12)",
+      "shadow": "0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation13",
+      "input": { "elevation": 13 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation13",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12)",
+      "shadow": "0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation14",
+      "input": { "elevation": 14 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation14",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12)",
+      "shadow": "0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation15",
+      "input": { "elevation": 15 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation15",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12)",
+      "shadow": "0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation16",
+      "input": { "elevation": 16 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation16",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12)",
+      "shadow": "0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation17",
+      "input": { "elevation": 17 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation17",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12)",
+      "shadow": "0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation18",
+      "input": { "elevation": 18 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation18",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12)",
+      "shadow": "0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation19",
+      "input": { "elevation": 19 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation19",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12)",
+      "shadow": "0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation20",
+      "input": { "elevation": 20 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation20",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12)",
+      "shadow": "0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation21",
+      "input": { "elevation": 21 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation21",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12)",
+      "shadow": "0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation22",
+      "input": { "elevation": 22 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation22",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)",
+      "shadow": "0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation23",
+      "input": { "elevation": 23 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation23",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)",
+      "shadow": "0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)"
+    },
+    {
+      "name": "elevation24",
+      "input": { "elevation": 24 },
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)",
+      "shadow": "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)"
+    }
+  ],
+  "dark": [
+    {
+      "elevation": 0,
+      "alpha": 0,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:none;--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0))",
+      "shadow": "none"
+    },
+    {
+      "elevation": 1,
+      "alpha": 0.051,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.051), rgba(255, 255, 255, 0.051))",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 2,
+      "alpha": 0.069,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation2",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.069), rgba(255, 255, 255, 0.069))",
+      "shadow": "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 3,
+      "alpha": 0.082,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.082), rgba(255, 255, 255, 0.082))",
+      "shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 4,
+      "alpha": 0.092,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation4",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.092), rgba(255, 255, 255, 0.092))",
+      "shadow": "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 5,
+      "alpha": 0.101,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.101), rgba(255, 255, 255, 0.101))",
+      "shadow": "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 6,
+      "alpha": 0.108,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation6",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.108), rgba(255, 255, 255, 0.108))",
+      "shadow": "0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 7,
+      "alpha": 0.114,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation7",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.114), rgba(255, 255, 255, 0.114))",
+      "shadow": "0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 8,
+      "alpha": 0.119,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.119), rgba(255, 255, 255, 0.119))",
+      "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 9,
+      "alpha": 0.124,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation9",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.124), rgba(255, 255, 255, 0.124))",
+      "shadow": "0px 5px 6px -3px rgba(0,0,0,0.2),0px 9px 12px 1px rgba(0,0,0,0.14),0px 3px 16px 2px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 10,
+      "alpha": 0.128,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation10",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.128), rgba(255, 255, 255, 0.128))",
+      "shadow": "0px 6px 6px -3px rgba(0,0,0,0.2),0px 10px 14px 1px rgba(0,0,0,0.14),0px 4px 18px 3px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 11,
+      "alpha": 0.132,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation11",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.132), rgba(255, 255, 255, 0.132))",
+      "shadow": "0px 6px 7px -4px rgba(0,0,0,0.2),0px 11px 15px 1px rgba(0,0,0,0.14),0px 4px 20px 3px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 12,
+      "alpha": 0.135,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation12",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.135), rgba(255, 255, 255, 0.135))",
+      "shadow": "0px 7px 8px -4px rgba(0,0,0,0.2),0px 12px 17px 2px rgba(0,0,0,0.14),0px 5px 22px 4px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 13,
+      "alpha": 0.139,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation13",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.139), rgba(255, 255, 255, 0.139))",
+      "shadow": "0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 14,
+      "alpha": 0.142,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation14",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.142), rgba(255, 255, 255, 0.142))",
+      "shadow": "0px 7px 9px -4px rgba(0,0,0,0.2),0px 14px 21px 2px rgba(0,0,0,0.14),0px 5px 26px 4px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 15,
+      "alpha": 0.145,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation15",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.145), rgba(255, 255, 255, 0.145))",
+      "shadow": "0px 8px 9px -5px rgba(0,0,0,0.2),0px 15px 22px 2px rgba(0,0,0,0.14),0px 6px 28px 5px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 16,
+      "alpha": 0.147,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation16",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.147), rgba(255, 255, 255, 0.147))",
+      "shadow": "0px 8px 10px -5px rgba(0,0,0,0.2),0px 16px 24px 2px rgba(0,0,0,0.14),0px 6px 30px 5px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 17,
+      "alpha": 0.15,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation17",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15))",
+      "shadow": "0px 8px 11px -5px rgba(0,0,0,0.2),0px 17px 26px 2px rgba(0,0,0,0.14),0px 6px 32px 5px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 18,
+      "alpha": 0.152,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation18",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.152), rgba(255, 255, 255, 0.152))",
+      "shadow": "0px 9px 11px -5px rgba(0,0,0,0.2),0px 18px 28px 2px rgba(0,0,0,0.14),0px 7px 34px 6px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 19,
+      "alpha": 0.155,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation19",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.155), rgba(255, 255, 255, 0.155))",
+      "shadow": "0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 20,
+      "alpha": 0.157,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation20",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.157), rgba(255, 255, 255, 0.157))",
+      "shadow": "0px 10px 13px -6px rgba(0,0,0,0.2),0px 20px 31px 3px rgba(0,0,0,0.14),0px 8px 38px 7px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 21,
+      "alpha": 0.159,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation21",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.159), rgba(255, 255, 255, 0.159))",
+      "shadow": "0px 10px 13px -6px rgba(0,0,0,0.2),0px 21px 33px 3px rgba(0,0,0,0.14),0px 8px 40px 7px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 22,
+      "alpha": 0.161,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation22",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.161), rgba(255, 255, 255, 0.161))",
+      "shadow": "0px 10px 14px -6px rgba(0,0,0,0.2),0px 22px 35px 3px rgba(0,0,0,0.14),0px 8px 42px 7px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 23,
+      "alpha": 0.163,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation23",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.163), rgba(255, 255, 255, 0.163))",
+      "shadow": "0px 11px 14px -7px rgba(0,0,0,0.2),0px 23px 36px 3px rgba(0,0,0,0.14),0px 9px 44px 8px rgba(0,0,0,0.12)"
+    },
+    {
+      "elevation": 24,
+      "alpha": 0.165,
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24",
+      "css": "background-color:#121212;color:#fff;-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);",
+      "style": "--Paper-shadow:0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12);--Paper-overlay:linear-gradient(rgba(255, 255, 255, 0.165), rgba(255, 255, 255, 0.165))",
+      "shadow": "0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12)"
+    }
+  ],
+  "themed": [
+    {
+      "input": {},
+      "calls": [
+        {
+          "slot": "root",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1",
+            "component": "div",
+            "elevation": 1,
+            "square": false,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+            },
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "rounded",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1",
+            "component": "div",
+            "elevation": 1,
+            "square": false,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+            },
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "elevation",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1",
+            "component": "div",
+            "elevation": 1,
+            "square": false,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+            },
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "outlined",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1",
+            "component": "div",
+            "elevation": 1,
+            "square": false,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+            },
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "elevation3",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1",
+            "component": "div",
+            "elevation": 1,
+            "square": false,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+            },
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        }
+      ],
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);opacity:0.1;opacity:0.3;opacity:0.2;",
+      "style": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "input": { "square": true },
+      "calls": [
+        {
+          "slot": "root",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-elevation1",
+            "component": "div",
+            "elevation": 1,
+            "square": true,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+            },
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "rounded",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-elevation1",
+            "component": "div",
+            "elevation": 1,
+            "square": true,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+            },
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "elevation",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-elevation1",
+            "component": "div",
+            "elevation": 1,
+            "square": true,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+            },
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "outlined",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-elevation1",
+            "component": "div",
+            "elevation": 1,
+            "square": true,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+            },
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "elevation3",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-elevation1",
+            "component": "div",
+            "elevation": 1,
+            "square": true,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+            },
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        }
+      ],
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-elevation1",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);opacity:0.1;opacity:0.3;",
+      "style": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)"
+    },
+    {
+      "input": { "variant": "outlined", "elevation": 3 },
+      "calls": [
+        {
+          "slot": "root",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-outlined MuiPaper-rounded",
+            "component": "div",
+            "elevation": 3,
+            "square": false,
+            "variant": "outlined",
+            "rootStyle": {},
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "rounded",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-outlined MuiPaper-rounded",
+            "component": "div",
+            "elevation": 3,
+            "square": false,
+            "variant": "outlined",
+            "rootStyle": {},
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "elevation",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-outlined MuiPaper-rounded",
+            "component": "div",
+            "elevation": 3,
+            "square": false,
+            "variant": "outlined",
+            "rootStyle": {},
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "outlined",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-outlined MuiPaper-rounded",
+            "component": "div",
+            "elevation": 3,
+            "square": false,
+            "variant": "outlined",
+            "rootStyle": {},
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "elevation3",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-outlined MuiPaper-rounded",
+            "component": "div",
+            "elevation": 3,
+            "square": false,
+            "variant": "outlined",
+            "rootStyle": {},
+            "ownerStyle": null,
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        }
+      ],
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-outlined MuiPaper-rounded",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;border:1px solid rgba(0, 0, 0, 0.12);opacity:0.1;opacity:0.4;opacity:0.2;padding:7px;",
+      "style": null,
+      "shadow": null
+    },
+    {
+      "input": { "elevation": 3, "style": { "padding": 0 } },
+      "calls": [
+        {
+          "slot": "root",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3",
+            "component": "div",
+            "elevation": 3,
+            "square": false,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+              "padding": 0
+            },
+            "ownerStyle": { "padding": 0 },
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "rounded",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3",
+            "component": "div",
+            "elevation": 3,
+            "square": false,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+              "padding": 0
+            },
+            "ownerStyle": { "padding": 0 },
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "elevation",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3",
+            "component": "div",
+            "elevation": 3,
+            "square": false,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+              "padding": 0
+            },
+            "ownerStyle": { "padding": 0 },
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "outlined",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3",
+            "component": "div",
+            "elevation": 3,
+            "square": false,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+              "padding": 0
+            },
+            "ownerStyle": { "padding": 0 },
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        },
+        {
+          "slot": "elevation3",
+          "args": {
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3",
+            "component": "div",
+            "elevation": 3,
+            "square": false,
+            "variant": "elevation",
+            "rootStyle": {
+              "--Paper-shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+              "padding": 0
+            },
+            "ownerStyle": { "padding": 0 },
+            "rootHasElevation": false,
+            "as": "div"
+          }
+        }
+      ],
+      "tag": "div",
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3",
+      "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);opacity:0.1;opacity:0.3;opacity:0.2;opacity:0.5;padding:7px;",
+      "style": "--Paper-shadow:0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12);padding:0",
+      "shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)"
+    }
+  ],
+  "defaults": {
+    "tag": "div",
+    "className": "MuiPaper-root default-root MuiPaper-outlined",
+    "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border:1px solid rgba(0, 0, 0, 0.12);",
+    "style": null,
+    "shadow": null
+  },
+  "styledFixture": {
+    "tag": "div",
+    "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3",
+    "css": "background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);opacity:0.2;opacity:0.8;",
+    "style": "--Paper-shadow:0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12);opacity:0.9",
+    "shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)"
+  },
+  "customRoot": {
+    "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3",
+    "style": {
+      "--Paper-shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+      "padding": 0
+    },
+    "refSame": true,
+    "hasOwnerState": false,
+    "hasSx": false,
+    "hasClasses": false
+  },
+  "shadowAccess": [
+    {
+      "mode": "production",
+      "variant": "outlined",
+      "behavior": "throw-first",
+      "reads": 0,
+      "error": null,
+      "metadata": null,
+      "inlineShadow": null
+    },
+    {
+      "mode": "production",
+      "variant": "glass",
+      "behavior": "throw-first",
+      "reads": 0,
+      "error": null,
+      "metadata": null,
+      "inlineShadow": null
+    },
+    {
+      "mode": "production",
+      "variant": "elevation",
+      "behavior": "change",
+      "reads": 1,
+      "error": null,
+      "metadata": "0 0 4px red",
+      "inlineShadow": "0 0 4px red"
+    },
+    {
+      "mode": "production",
+      "variant": "elevation",
+      "behavior": "throw-second",
+      "reads": 1,
+      "error": null,
+      "metadata": "0 0 4px red",
+      "inlineShadow": "0 0 4px red"
+    },
+    {
+      "mode": "development",
+      "variant": "outlined",
+      "behavior": "throw-first",
+      "reads": 1,
+      "error": "unused-shadow",
+      "metadata": null,
+      "inlineShadow": null
+    },
+    {
+      "mode": "development",
+      "variant": "glass",
+      "behavior": "throw-first",
+      "reads": 1,
+      "error": "unused-shadow",
+      "metadata": null,
+      "inlineShadow": null
+    },
+    {
+      "mode": "development",
+      "variant": "elevation",
+      "behavior": "change",
+      "reads": 2,
+      "error": null,
+      "metadata": "0 0 8px blue",
+      "inlineShadow": "0 0 8px blue"
+    },
+    {
+      "mode": "development",
+      "variant": "elevation",
+      "behavior": "throw-second",
+      "reads": 2,
+      "error": "shadow-read-again",
+      "metadata": null,
+      "inlineShadow": null
+    }
+  ],
+  "shadowTableAccess": [
+    {
+      "mode": "production",
+      "reads": 1,
+      "error": null,
+      "metadata": "0 0 4px red",
+      "inlineShadow": "0 0 4px red"
+    },
+    {
+      "mode": "development",
+      "reads": 2,
+      "error": null,
+      "metadata": "0 0 4px red",
+      "inlineShadow": "0 0 4px red"
+    }
+  ],
+  "systemShadowAccess": [
+    {
+      "path": "css",
+      "value": "0 0 4px red",
+      "throwing": false,
+      "reads": 0,
+      "error": null,
+      "output": "0 0 4px red"
+    },
+    {
+      "path": "css",
+      "value": "0 0 4px red",
+      "throwing": true,
+      "reads": 0,
+      "error": null,
+      "output": "0 0 4px red"
+    },
+    { "path": "css", "value": 1, "throwing": false, "reads": 0, "error": null, "output": "1px" },
+    { "path": "css", "value": 1, "throwing": true, "reads": 0, "error": null, "output": "1px" },
+    { "path": "css", "value": "1", "throwing": false, "reads": 0, "error": null, "output": "1" },
+    { "path": "css", "value": "1", "throwing": true, "reads": 0, "error": null, "output": "1" },
+    {
+      "path": "sx",
+      "value": "0 0 4px red",
+      "throwing": false,
+      "reads": 1,
+      "error": null,
+      "output": "0 0 4px red"
+    },
+    {
+      "path": "sx",
+      "value": "0 0 4px red",
+      "throwing": true,
+      "reads": 1,
+      "error": "unused-shadow-table",
+      "output": null
+    },
+    {
+      "path": "sx",
+      "value": 1,
+      "throwing": false,
+      "reads": 1,
+      "error": null,
+      "output": "0 0 8px blue"
+    },
+    {
+      "path": "sx",
+      "value": 1,
+      "throwing": true,
+      "reads": 1,
+      "error": "unused-shadow-table",
+      "output": null
+    },
+    {
+      "path": "sx",
+      "value": "1",
+      "throwing": false,
+      "reads": 1,
+      "error": null,
+      "output": "0 0 8px blue"
+    },
+    {
+      "path": "sx",
+      "value": "1",
+      "throwing": true,
+      "reads": 1,
+      "error": "unused-shadow-table",
+      "output": null
+    }
+  ],
+  "staticProxyAccess": {
+    "has": ["Symbol(Symbol.toStringTag)", "Symbol(Symbol.iterator)"],
+    "error": null,
+    "padding": "1px"
+  }
+}

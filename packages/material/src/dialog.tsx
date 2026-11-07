@@ -189,7 +189,9 @@ export const Dialog: React.ForwardRefExoticComponent<
   const Root = slots.root ?? Modal,
     Container = slots.container ?? KeyboardAvoidingView,
     Transition = slots.transition ?? Fade,
-    PaperSlot = slots.paper ?? Paper;
+    // A resolved slot has its declared slot props rather than a public generic
+    // overload; conditional ownerState stays limited to authored custom slots.
+    PaperSlot = slots.paper ?? (Paper as React.ComponentType<PaperSlotProps>);
   const { sx: containerSx, style: containerNativeStyle, ...containerRest } = containerProps;
   const { style: paperSlotStyle, ...paperRest } = paperProps;
   return (

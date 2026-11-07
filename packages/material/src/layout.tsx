@@ -1,7 +1,10 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { useTheme, useSx, useComponentStyle } from './themeProvider';
 import React, { forwardRef } from 'react';
 import { Typography, type TypographyProps } from './typography';
 export * from './typography';
+import { Paper, type PaperProps } from './paper';
+export * from './paper';
 import { View, type ViewInstance, type ViewProps, type StyleProp } from 'react-native';
 import {
   useDefaultProps,
@@ -70,48 +73,6 @@ export const Stack: React.ForwardRefExoticComponent<
         </React.Fragment>
       ))}
     </Box>
-  );
-});
-export interface PaperProps extends BoxProps {
-  elevation?: number;
-  variant?: 'elevation' | 'outlined';
-  square?: boolean;
-}
-export const Paper: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<PaperProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, PaperProps>(function Paper(inProps, ref) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiPaper' });
-  const {
-    elevation = 1,
-    variant = 'elevation',
-    square = false,
-    sx,
-    style,
-    component: Component = View,
-    children,
-    ...rest
-  } = props;
-  const { root, ref: rootRef } = useNativeTextRootRef(ref);
-  const theme = useTheme();
-  const parent = useNativeTextContext();
-  const resolved = useComponentStyle('MuiPaper', { ...props, elevation, variant, square }, sx, {
-    ...nativeTextStyleContext(parent, style, theme),
-    baseStyle: {
-      color: theme.palette.text.primary,
-      backgroundColor: theme.palette.background.paper,
-      borderRadius: square ? 0 : theme.shape.borderRadius,
-      boxShadow: variant === 'elevation' ? elevation : 0,
-      ...(variant === 'outlined' ? { borderWidth: 1, borderColor: theme.palette.divider } : {}),
-    },
-  });
-  return (
-    <NativeTextScope rootRef={root} theme={theme} content={children} style={[resolved, style]}>
-      {(native, content) => (
-        <Component {...rest} ref={rootRef} style={native}>
-          {content}
-        </Component>
-      )}
-    </NativeTextScope>
   );
 });
 export const Card: React.ForwardRefExoticComponent<
