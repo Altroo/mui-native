@@ -3,6 +3,7 @@ import { mkdir, readFile, readdir, writeFile, cp, rm, access } from 'node:fs/pro
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
+import { isDeepStrictEqual } from 'node:util';
 import { assertSystemDeclarationIsolation } from './system-declarations.mjs';
 const require = createRequire(import.meta.url);
 const consumer = resolve('.cache/consumer');
@@ -69,6 +70,35 @@ assertSystemDeclarationIsolation(
 console.log('Installed System declarations remain independent of Material.');
 // A published native package must retain source/config needed by autolinking and codegen.
 const nativeHost = `${consumer}/node_modules/@altroo/mui-native-host`;
+const structuralFiles = [
+  'AltrooMuiNativeHost.podspec',
+  'android/CMakeLists.txt',
+  'android/build.gradle',
+  'react-native.config.js',
+  'native-input-baseline.json',
+  'scripts/verify-native-input.cjs',
+  'structural-observation-baseline.json',
+  'scripts/verify-structural-input.cjs',
+  'src/NativeAltrooStructuralObserver.ts',
+  'src/structuralObserverClient.ts',
+  'dist/NativeAltrooStructuralObserver.js',
+  'dist/NativeAltrooStructuralObserver.d.ts',
+  'dist/structuralObserverClient.js',
+  'dist/structuralObserverClient.d.ts',
+  'common/cpp/AltrooStructuralObserver.h',
+  'common/cpp/AltrooStructuralObserver.cpp',
+  'common/cpp/StructuralObservationState.h',
+  'ios/AltrooStructuralObserverProvider.h',
+  'ios/AltrooStructuralObserverProvider.mm',
+];
+// Compare real archive bytes, so a stale source/provider cannot pass by name.
+for (const file of structuralFiles) {
+  const [source, installed] = await Promise.all([
+    readFile(`packages/native-host/${file}`),
+    readFile(`${nativeHost}/${file}`),
+  ]);
+  if (!source.equals(installed)) throw new Error(`Installed structural input differs: ${file}`);
+}
 for (const file of [
   'react-native.config.js',
   'native-input-baseline.json',
@@ -138,8 +168,13 @@ for (const directory of ['build', '.cxx', '.gradle']) {
   }
   throw new Error(`Native host archive includes Android build output: ${directory}`);
 }
-/** @type {{codegenConfig: {ios: {componentProvider: Record<string, string>}}}} */
+/** @type {{codegenConfig: {type: string, ios: {componentProvider: Record<string, string>, modulesProvider: Record<string, string>}}}} */
 const hostManifest = JSON.parse(await readFile(`${nativeHost}/package.json`, { encoding: 'utf8' }));
+const sourceCodegen = JSON.parse(
+  await readFile('packages/native-host/package.json', 'utf8'),
+).codegenConfig;
+if (!isDeepStrictEqual(hostManifest.codegenConfig, sourceCodegen))
+  throw new Error('Installed native codegen configuration differs from source');
 if (
   hostManifest.codegenConfig.ios.componentProvider.AltrooMUIInteractiveView !==
   'AltrooMUIInteractiveViewComponentView'
@@ -160,6 +195,19 @@ if (
 )
   throw new Error('Missing native editor Fabric registration');
 execFileSync(process.execPath, [resolve(nativeHost, 'scripts/verify-native-input.cjs')], {
+  cwd: consumer,
+  stdio: 'inherit',
+});
+if (
+  hostManifest.codegenConfig.type !== 'all' ||
+  hostManifest.codegenConfig.ios.modulesProvider?.AltrooStructuralObserver !==
+    'AltrooStructuralObserverProvider'
+)
+  throw new Error('Missing structural C++ module codegen registration');
+const hostConfig = require(resolve(nativeHost, 'react-native.config.js'));
+if (hostConfig.dependency?.platforms?.android?.cxxModuleHeaderName !== 'AltrooStructuralObserver')
+  throw new Error('Missing installed Android structural C++ provider');
+execFileSync(process.execPath, [resolve(nativeHost, 'scripts/verify-structural-input.cjs')], {
   cwd: consumer,
   stdio: 'inherit',
 });
