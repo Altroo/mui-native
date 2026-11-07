@@ -240,6 +240,7 @@ for (const [contract, fixture] of [
   ['typography', 'native.tsx'],
   ['paper', 'native.tsx'],
   ['box', 'native.tsx'],
+  ['card', 'native.tsx'],
 ]) {
   await cp(`fixtures/${contract}-consumer/${fixture}`, `${consumer}/${contract}.tsx`);
   const config = `tsconfig.${contract}.native.json`;
@@ -261,7 +262,7 @@ for (const [contract, fixture] of [
   });
 }
 console.log(
-  'Installed strict FormGroup, Avatar, Icon, AccordionDetails, Typography, Paper and Box contracts passed independently.',
+  'Installed strict FormGroup, Avatar, Icon, AccordionDetails, Typography, Paper, Box and Card contracts passed independently.',
 );
 execFileSync(process.execPath, ['scripts/check-consumer-default-props.cjs', consumer], {
   stdio: 'inherit',
