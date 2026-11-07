@@ -3,6 +3,105 @@
   "description": "Implementation reuse after the immutable initial baseline. This record does not advance verified package support.",
   "entries": [
     {
+      "localFile": "packages/material/src/card.tsx",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Card/Card.js": "bd108c032608fc862d09fc4e9cfb90652e828fc6734999d4ebdc5ba4b48caec8",
+          "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32"
+        }
+      },
+      "adaptations": [
+        "Card source/software adaptation is recorded in upstream/card.json. Native execution and full compatibility remain separate gates."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/cardTypes.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Card/Card.d.ts": "71748069e3823c2c09f87fd64f2078d2ac74d80c19bb2d44e3d61e9d5342a23a",
+          "Paper/Paper.d.ts": "c2c81483f868985bb08311eebf892228be4dd61523a693097c4d7224b06e011a"
+        }
+      },
+      "adaptations": [
+        "Card source/software adaptation is recorded in upstream/card.json. Native execution and full compatibility remain separate gates."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/cardClasses.ts",
+      "reference": {
+        "name": "@mui/material",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "Card/cardClasses.js": "4a93a8211ad205fec8484c529b8f227366356aa71a55d214b71271eceee3896e",
+          "Card/cardClasses.d.ts": "4053a0866f10634083ba91f2166420b1c29a2509b64803bd192f50baeb221265"
+        }
+      },
+      "adaptations": [
+        "Card source/software adaptation is recorded in upstream/card.json. Native execution and full compatibility remain separate gates."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/card.tsx",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
+        }
+      },
+      "adaptations": [
+        "Card source/software adaptation is recorded in upstream/card.json. Native execution and full compatibility remain separate gates."
+      ]
+    },
+    {
+      "localFile": "packages/material/src/cardClasses.ts",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574"
+        }
+      },
+      "adaptations": [
+        "Card source/software adaptation is recorded in upstream/card.json. Native execution and full compatibility remain separate gates."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/sx.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+        }
+      },
+      "adaptations": [
+        "Card source/software adaptation is recorded in upstream/card.json. Native execution and full compatibility remain separate gates."
+      ]
+    },
+    {
       "localFile": "packages/system/src/theme.ts",
       "reference": {
         "name": "@mui/material",

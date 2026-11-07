@@ -6,6 +6,7 @@ import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import * as prettier from 'prettier';
 import { loadReference } from './load.mjs';
+import { replaceUniqueLocalFileEntries } from '../upstream/reuse.mjs';
 const jsonFormat = {
   ...(await prettier.resolveConfig('tests/fixtures/mui-paper-9.5.0.json')),
   parser: 'json',
@@ -466,19 +467,17 @@ const localReferences = [
     ['Paper/Paper.d.ts', 'Paper/index.d.ts'],
   ],
 ];
-const paths = new Set(localReferences.map(([path]) => path));
-reuse.entries = reuse.entries.filter((entry) => !paths.has(entry.localFile));
-for (const [localFile, reference, files] of localReferences)
-  reuse.entries.push({
-    localFile,
-    reference: {
-      ...reference,
-      sourceFiles: Object.fromEntries(files.map((file) => [file, reference.sourceFiles[file]])),
-    },
-    adaptations: [
-      'Paper native adaptation and finite source observations are recorded in upstream/paper.json. No browser, native paint or full compatibility certification.',
-    ],
-  });
+const replacements = localReferences.map(([localFile, reference, files]) => ({
+  localFile,
+  reference: {
+    ...reference,
+    sourceFiles: Object.fromEntries(files.map((file) => [file, reference.sourceFiles[file]])),
+  },
+  adaptations: [
+    'Paper native adaptation and finite source observations are recorded in upstream/paper.json. No browser, native paint or full compatibility certification.',
+  ],
+}));
+reuse.entries = replaceUniqueLocalFileEntries(reuse.entries, replacements);
 for (const [file, value] of [
   [fixture, bytes],
   ['upstream/paper.json', await prettier.format(JSON.stringify(provenance), jsonFormat)],

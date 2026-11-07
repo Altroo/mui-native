@@ -1,9 +1,7 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
-import { useComponentStyle } from './themeProvider';
 import React, { forwardRef } from 'react';
 import { Typography, type TypographyProps } from './typography';
 export * from './typography';
-import { Paper, type PaperProps } from './paper';
 export * from './paper';
 import type { ViewInstance } from 'react-native';
 import { Box, type BoxProps } from './nativeBox';
@@ -46,21 +44,7 @@ export const Stack: React.ForwardRefExoticComponent<
     </Box>
   );
 });
-export const Card: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<PaperProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, PaperProps>(function Card(inProps, ref) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiCard' });
-
-  const resolved = useComponentStyle('MuiCard', props, props.sx);
-  return (
-    <Paper
-      {...props}
-      ref={ref}
-      sx={undefined}
-      style={[{ overflow: 'hidden' }, resolved, props.style]}
-    />
-  );
-});
+export * from './card';
 export const CardContent: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<BoxProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, BoxProps>(function CardContent(inProps, ref) {

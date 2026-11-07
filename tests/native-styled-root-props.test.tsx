@@ -369,3 +369,93 @@ test('only prepared CSS plus a default callback creates a deferred carrier, eval
   expect(second.computed.opacity).toBe(0.7);
   expect(callback).toHaveBeenCalledTimes(1);
 });
+test.each([undefined, true, false])(
+  'an optional supplied-style override %p retains the old expression order only when omitted',
+  (supplied) => {
+    const order: string[] = [];
+    const props = new Proxy(
+      { style: undefined },
+      {
+        getOwnPropertyDescriptor(target, key) {
+          order.push('own:' + String(key));
+          return Reflect.getOwnPropertyDescriptor(target, key);
+        },
+      },
+    );
+    const theme = createTheme();
+    const prepared = createNativeStyledStyle(
+      theme,
+      '',
+      props,
+      undefined,
+      {
+        baseStyle: () => {
+          order.push('base');
+          return { opacity: 0.7 };
+        },
+      },
+      undefined,
+      supplied,
+    );
+    expect(order).toEqual(supplied === undefined ? ['base', 'own:style'] : ['base']);
+    const split = separateNativeRootProps({ style: prepared });
+    expect(Object.hasOwn(split.props, 'style')).toBe(supplied !== false);
+    if (supplied !== false) expect(split.props.style).toBeUndefined();
+  },
+);
+test.each([null, undefined])(
+  'selected callback state %p can preserve independent genuine style presence',
+  (ownerState) => {
+    const theme = createTheme(),
+      observed: unknown[] = [];
+    const configured = createTheme({
+      components: {
+        MuiProbe: {
+          styleOverrides: {
+            root: (a) => {
+              observed.push(a.ownerState);
+              return { opacity: 0.7 };
+            },
+          },
+        },
+      },
+    });
+    const prepared = createNativeStyledStyle(
+      configured,
+      'MuiProbe',
+      ownerState as unknown as Record<string, unknown>,
+      undefined,
+      {},
+      undefined,
+      true,
+    );
+    expect(observed).toEqual([ownerState]);
+    const split = separateNativeRootProps({ style: prepared });
+    expect(Object.hasOwn(split.props, 'style')).toBe(true);
+    expect(split.props.style).toBeUndefined();
+    expect(
+      componentRootStyle(theme, '', {}, undefined, restoreNativeRootStyle(split, split.props))
+        .computed.opacity,
+    ).toBe(0.7);
+  },
+);
+test('an explicit false style-presence flag neither falls back nor observes the callback-state descriptor', () => {
+  const state = new Proxy(
+    { style: undefined },
+    {
+      getOwnPropertyDescriptor() {
+        throw new Error('unused state descriptor');
+      },
+    },
+  );
+  const prepared = createNativeStyledStyle(
+    createTheme(),
+    '',
+    state,
+    undefined,
+    {},
+    undefined,
+    false,
+  );
+  expect(Object.hasOwn(separateNativeRootProps({ style: prepared }).props, 'style')).toBe(false);
+});

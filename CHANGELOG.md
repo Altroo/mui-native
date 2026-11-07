@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Replace the native Card surface prototype with pinned 9.5.0 props/classes, raised/default ordering, native custom roots and reserved styled inputs. Add strict installed Card imports and thirteen-state iOS/Android checks at both text profiles. CardContent/Actions and wider native, physical accessibility, GPU and performance gates remain separate.
+
 - Align Material Box with its pinned 9.5.0 props, classes, native roots, selected themes and style priority. Add canonical className routing, exact-optional installed consumers and eleven-state iOS/Android checks at normal/enlarged text sizes. Browser themes, wider native matrices, physical accessibility and optimized Box performance remain separate gates.
 - Add shared native SvgIcon, React-node factories, original root/deep imports, source-ordered theme/paint priority, refs and typed native roots. The full pinned Material Icons artwork/import catalog is implemented; shared SvgIcon rendering gates remain separate. The next Material package requires `react-native-svg` directly in the app.
 - Separate native CSS rem root sizing (`cssRootFontSize`, default 16) from MUI's `htmlFontSize` pxToRem calibration. Correct SVG text font binding and authored gradient inline-paint priority, with scoped iOS/Android checks.

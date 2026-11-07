@@ -42,3 +42,33 @@ export function compareReusedFiles(expected, actual) {
       localFiles: file.localFiles,
     }));
 }
+
+// Producers own one record per upstream/local-file pair. Preserve foreign
+// origins and existing row positions; ambiguous owned duplicates must fail
+// before a producer can write its regenerated records.
+export function replaceUniqueLocalFileEntries(entries, replacements) {
+  const identity = (entry) => JSON.stringify([entry.reference?.name, entry.localFile]);
+  const updates = new Map();
+  for (const entry of replacements) {
+    const key = identity(entry);
+    if (
+      typeof entry.localFile !== 'string' ||
+      !entry.localFile ||
+      typeof entry.reference?.name !== 'string' ||
+      !entry.reference.name ||
+      updates.has(key)
+    )
+      throw new Error('Expected one replacement per unique upstream/local file');
+    updates.set(key, entry);
+  }
+  const seen = new Set();
+  const result = entries.map((entry) => {
+    const key = identity(entry);
+    if (!updates.has(key)) return entry;
+    if (seen.has(key)) throw new Error('Ambiguous duplicate owned reuse record');
+    seen.add(key);
+    return updates.get(key);
+  });
+  for (const [key, entry] of updates) if (!seen.has(key)) result.push(entry);
+  return result;
+}

@@ -44,7 +44,7 @@ Theme/class augmentation is checked through the public declaration entrypoints i
 
 Box exports boxClasses, BoxClasses and BoxClassKey. The pinned runtime vocabulary contains root only; declaration augmentation does not create runtime slots. The caller class precedes the generated root class, and generated tokens bind the native style scope. Native View receives native props; custom roots receive the public class metadata.
 
-The canonical `@mui/material/className` facade exposes unstable_ClassNameGenerator.configure/generate/reset. Configuration currently participates in Box roots, including existing native wrappers that delegate to Box. Other families' utility generators remain separate integration work. This is not a claim of global class-name configuration parity.
+The canonical `@mui/material/className` facade exposes unstable_ClassNameGenerator.configure/generate/reset. Configuration participates in Box and Card roots, including existing native wrappers that delegate to Box. Other families' utility generators remain separate integration work. This is not a claim of global class-name configuration parity.
 
 As upstream, boxClasses and the default root vocabulary capture module-load values, and Box captures the generator method once. Configure/reset changes that method's active transform; replacing the object method or mutating boxClasses later does not reconstruct an imported Box. Configure before component-module loading using a separate setup module when an application needs that lifecycle. Prefer idempotent transformations; the utility vocabulary and rendered default root name each pass through the upstream generator path.
 

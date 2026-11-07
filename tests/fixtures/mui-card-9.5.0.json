@@ -1,0 +1,1594 @@
+{
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "Card/Card.js": "bd108c032608fc862d09fc4e9cfb90652e828fc6734999d4ebdc5ba4b48caec8",
+        "Card/Card.d.ts": "71748069e3823c2c09f87fd64f2078d2ac74d80c19bb2d44e3d61e9d5342a23a",
+        "Card/Card.d.mts": "1bd3fdddc63a3acdaab197edbfadb578c992ec4edcb817b08ca20a35b9c8d5c3",
+        "Card/cardClasses.js": "4a93a8211ad205fec8484c529b8f227366356aa71a55d214b71271eceee3896e",
+        "Card/cardClasses.d.ts": "4053a0866f10634083ba91f2166420b1c29a2509b64803bd192f50baeb221265",
+        "Card/cardClasses.d.mts": "4053a0866f10634083ba91f2166420b1c29a2509b64803bd192f50baeb221265",
+        "Card/index.js": "647486b4ecedda140f61bf1fae037cf388d65e59c63093eaddf5666589ed0dd8",
+        "Card/index.d.ts": "8b5762f3138b2894db972d51cb539f1ff2bf6b231129667cb89962d4711f9c70",
+        "Card/index.d.mts": "c06143272cde1ff37484b0439ba2c903fcd6a9df3e41e1726910bb01a5c6f114",
+        "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+        "Paper/Paper.d.ts": "c2c81483f868985bb08311eebf892228be4dd61523a693097c4d7224b06e011a",
+        "styles/components.d.ts": "358dac701e57422878d7164f4ba31b1672e641dcf2c1378354da779400b0255f",
+        "styles/props.d.ts": "05084be14d8c1f9b14f83f357f57c8a3ee04f3ec936b72e2cb694cd7b3cb48ee",
+        "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa",
+        "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f",
+        "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "6234e618376c90c75eadd92dc0af9e078a946cf57d6adb15b473163932fbc739"
+      }
+    }
+  ],
+  "reserved": {
+    "development": [
+      {
+        "name": "explicit-theme",
+        "error": "Cannot assign to read only property 'theme' of object '#<Object>'",
+        "calls": [],
+        "received": []
+      },
+      {
+        "name": "owner-object",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-1vyw3cd-MuiCard-root{overflow:hidden;opacity:0.2;}.css-1i7ctmq-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-object-undefined-style",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-1vyw3cd-MuiCard-root{overflow:hidden;opacity:0.2;}.css-1i7ctmq-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-object-null-style",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "css": ".css-1vyw3cd-MuiCard-root{overflow:hidden;opacity:0.2;}.css-1i7ctmq-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)"
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": null
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-style-only",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "css": ".css-1vyw3cd-MuiCard-root{overflow:hidden;opacity:0.2;}.css-1i7ctmq-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 7 }
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)"
+            },
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-undefined-style-no-default",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "css": ".css-1vyw3cd-MuiCard-root{overflow:hidden;opacity:0.2;}.css-1i7ctmq-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)"
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": null
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-null",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-1vyw3cd-MuiCard-root{overflow:hidden;opacity:0.2;}.css-1i7ctmq-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": true,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-undefined",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-1vyw3cd-MuiCard-root{overflow:hidden;opacity:0.2;}.css-1i7ctmq-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": true,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "as-native",
+        "className": "MuiCard-root",
+        "shadow": null,
+        "inline": "",
+        "css": ".css-1vyw3cd-MuiCard-root{overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": false,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          }
+        ],
+        "received": [
+          {
+            "kind": "alternate",
+            "className": "MuiCard-root",
+            "componentIsCustom": true,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "as-undefined",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+        "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-1vyw3cd-MuiCard-root{overflow:hidden;opacity:0.2;}.css-1i7ctmq-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": false,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "combined",
+        "error": "Cannot assign to read only property 'theme' of object '#<Object>'",
+        "calls": [],
+        "received": []
+      }
+    ],
+    "production": [
+      {
+        "name": "explicit-theme",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+        "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-qydi7v{overflow:hidden;opacity:0.7;}.css-11arh81{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.7;}",
+        "calls": [
+          {
+            "layer": "card-explicit",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": false,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-object",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-1ds30zq{overflow:hidden;opacity:0.2;}.css-1af92e{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-object-undefined-style",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-1ds30zq{overflow:hidden;opacity:0.2;}.css-1af92e{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-object-null-style",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "css": ".css-1ds30zq{overflow:hidden;opacity:0.2;}.css-1af92e{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)"
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": null
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-style-only",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "css": ".css-1ds30zq{overflow:hidden;opacity:0.2;}.css-1af92e{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 7 }
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)"
+            },
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-undefined-style-no-default",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "css": ".css-1ds30zq{overflow:hidden;opacity:0.2;}.css-1af92e{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)"
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": null
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-null",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-1ds30zq{overflow:hidden;opacity:0.2;}.css-1af92e{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": true,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "owner-undefined",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+        "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-1ds30zq{overflow:hidden;opacity:0.2;}.css-1af92e{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": true,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "as-native",
+        "className": "MuiCard-root",
+        "shadow": null,
+        "inline": "",
+        "css": ".css-1ds30zq{overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": false,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          }
+        ],
+        "received": [
+          {
+            "kind": "alternate",
+            "className": "MuiCard-root",
+            "componentIsCustom": true,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "as-undefined",
+        "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+        "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+        "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);padding-left:13px",
+        "css": ".css-1ds30zq{overflow:hidden;opacity:0.2;}.css-1af92e{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);background-color:#1565c0;overflow:hidden;opacity:0.2;}",
+        "calls": [
+          {
+            "layer": "card-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": false,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          },
+          {
+            "layer": "paper-provider",
+            "ownerIdentity": false,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": null,
+            "raised": null,
+            "rootHasStyle": true,
+            "rootStyle": {
+              "--Paper-shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+              "paddingLeft": 13
+            },
+            "ownerHasStyle": true,
+            "ownerStyle": { "paddingLeft": 13 }
+          }
+        ],
+        "received": [
+          {
+            "kind": "custom",
+            "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+            "componentIsCustom": false,
+            "elevation": null,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      },
+      {
+        "name": "combined",
+        "className": "MuiCard-root",
+        "shadow": null,
+        "inline": "",
+        "css": ".css-qydi7v{overflow:hidden;opacity:0.7;}",
+        "calls": [
+          {
+            "layer": "card-explicit",
+            "ownerIdentity": true,
+            "ownerNull": false,
+            "ownerUndefined": false,
+            "marker": "authored",
+            "raised": null,
+            "rootHasStyle": false,
+            "rootStyle": null,
+            "ownerHasStyle": false,
+            "ownerStyle": null
+          }
+        ],
+        "received": [
+          {
+            "kind": "alternate",
+            "className": "MuiCard-root",
+            "componentIsCustom": true,
+            "elevation": 8,
+            "hasOwnerState": false,
+            "hasTheme": false,
+            "hasAs": false,
+            "hasClasses": false
+          }
+        ]
+      }
+    ]
+  },
+  "classes": { "root": "MuiCard-root" },
+  "utilities": {
+    "root": "MuiCard-root",
+    "disabled": "Mui-disabled",
+    "focusVisible": "Mui-focusVisible",
+    "invented": "MuiCard-invented",
+    "constructor": "Mui-function Object() { [native code] }",
+    "toString": "Mui-function toString() { [native code] }"
+  },
+  "fixtures": [
+    {
+      "name": "defaults",
+      "input": {},
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    },
+    {
+      "name": "raised",
+      "input": { "raised": true },
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+      "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    },
+    {
+      "name": "raised explicit zero",
+      "input": { "raised": true, "elevation": 0 },
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiCard-root",
+      "shadow": "none",
+      "inline": "--Paper-shadow:none",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    },
+    {
+      "name": "raised explicit three",
+      "input": { "raised": true, "elevation": 3 },
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 MuiCard-root",
+      "shadow": "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    },
+    {
+      "name": "raised explicit undefined",
+      "input": { "raised": true, "elevation": "$undefined" },
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    },
+    {
+      "name": "outlined raised",
+      "input": { "raised": true, "variant": "outlined" },
+      "className": "MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root",
+      "shadow": null,
+      "inline": "",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-196bwzp-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;border:1px solid rgba(0, 0, 0, 0.12);overflow:hidden;}"
+    },
+    {
+      "name": "square",
+      "input": { "square": true },
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-elevation1 MuiCard-root",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1fcgr4r-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    },
+    {
+      "name": "custom variant",
+      "input": { "variant": "glass" },
+      "className": "MuiPaper-root MuiPaper-glass MuiPaper-rounded MuiCard-root",
+      "shadow": null,
+      "inline": "",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-zw3ym8-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;overflow:hidden;}"
+    },
+    {
+      "name": "classes",
+      "input": { "classes": { "root": "chosen" }, "className": "authored" },
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root chosen authored",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    },
+    {
+      "name": "sx then native inline",
+      "input": {
+        "sx": { "p": 2, "overflow": "scroll" },
+        "style": { "paddingLeft": 7, "overflow": "visible" }
+      },
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+      "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);padding-left:7px;overflow:visible",
+      "css": ".css-146bt4d-MuiCard-root{overflow:hidden;padding:16px;overflow:scroll;}.css-ko90p3-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;padding:16px;overflow:scroll;}"
+    }
+  ],
+  "themed": [
+    {
+      "input": { "raised": true },
+      "calls": [
+        {
+          "name": "card-root",
+          "className": "MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": 8,
+          "ownerRaised": true,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-unused",
+          "className": "MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": 8,
+          "ownerRaised": true,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-predicate",
+          "className": "MuiCard-root",
+          "rootHasRaised": true,
+          "rootElevation": 8,
+          "ownerRaised": true,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-variant",
+          "className": "MuiCard-root",
+          "rootHasRaised": true,
+          "rootElevation": 8,
+          "ownerRaised": true,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "paper-root",
+          "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": null,
+          "ownerHasElevation": true,
+          "ownerElevation": 8,
+          "ownerClassName": "MuiCard-root",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": {
+            "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)"
+          },
+          "direction": "ltr"
+        }
+      ],
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+      "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+      "css": ".css-1vbqz5m-MuiCard-root{overflow:hidden;padding:2px;margin-top:3px;}.css-ec9ec4-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);padding:1px;overflow:hidden;padding:2px;margin-top:3px;}"
+    },
+    {
+      "input": { "raised": true, "elevation": "$undefined" },
+      "calls": [
+        {
+          "name": "card-root",
+          "className": "MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": true,
+          "ownerHasElevation": true,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-unused",
+          "className": "MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": true,
+          "ownerHasElevation": true,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-predicate",
+          "className": "MuiCard-root",
+          "rootHasRaised": true,
+          "rootElevation": null,
+          "ownerRaised": true,
+          "ownerHasElevation": true,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-variant",
+          "className": "MuiCard-root",
+          "rootHasRaised": true,
+          "rootElevation": null,
+          "ownerRaised": true,
+          "ownerHasElevation": true,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "paper-root",
+          "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": null,
+          "ownerHasElevation": true,
+          "ownerElevation": 5,
+          "ownerClassName": "MuiCard-root",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": {
+            "--Paper-shadow": "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)"
+          },
+          "direction": "ltr"
+        }
+      ],
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 MuiCard-root",
+      "shadow": "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+      "css": ".css-1vbqz5m-MuiCard-root{overflow:hidden;padding:2px;margin-top:3px;}.css-ec9ec4-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);padding:1px;overflow:hidden;padding:2px;margin-top:3px;}"
+    },
+    {
+      "input": { "raised": true, "elevation": 0 },
+      "calls": [
+        {
+          "name": "card-root",
+          "className": "MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": 0,
+          "ownerRaised": true,
+          "ownerHasElevation": true,
+          "ownerElevation": 0,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-unused",
+          "className": "MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": 0,
+          "ownerRaised": true,
+          "ownerHasElevation": true,
+          "ownerElevation": 0,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-predicate",
+          "className": "MuiCard-root",
+          "rootHasRaised": true,
+          "rootElevation": 0,
+          "ownerRaised": true,
+          "ownerHasElevation": true,
+          "ownerElevation": 0,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-variant",
+          "className": "MuiCard-root",
+          "rootHasRaised": true,
+          "rootElevation": 0,
+          "ownerRaised": true,
+          "ownerHasElevation": true,
+          "ownerElevation": 0,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "paper-root",
+          "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": null,
+          "ownerHasElevation": true,
+          "ownerElevation": 0,
+          "ownerClassName": "MuiCard-root",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": { "--Paper-shadow": "none" },
+          "direction": "ltr"
+        }
+      ],
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiCard-root",
+      "shadow": "none",
+      "inline": "--Paper-shadow:none",
+      "css": ".css-1vbqz5m-MuiCard-root{overflow:hidden;padding:2px;margin-top:3px;}.css-ec9ec4-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);padding:1px;overflow:hidden;padding:2px;margin-top:3px;}"
+    },
+    {
+      "input": { "variant": "outlined" },
+      "calls": [
+        {
+          "name": "card-root",
+          "className": "MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": false,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-unused",
+          "className": "MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": false,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-predicate",
+          "className": "MuiCard-root",
+          "rootHasRaised": true,
+          "rootElevation": null,
+          "ownerRaised": false,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "paper-root",
+          "className": "MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": null,
+          "ownerHasElevation": true,
+          "ownerElevation": 5,
+          "ownerClassName": "MuiCard-root",
+          "ownerHasStyle": false,
+          "ownerStyle": null,
+          "rootStyle": {},
+          "direction": "ltr"
+        }
+      ],
+      "className": "MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root",
+      "shadow": null,
+      "inline": "",
+      "css": ".css-1tx8vt1-MuiCard-root{overflow:hidden;padding:2px;}.css-1saqzn1-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;border:1px solid rgba(0, 0, 0, 0.12);padding:1px;overflow:hidden;padding:2px;}"
+    },
+    {
+      "input": {
+        "raised": true,
+        "className": "authored",
+        "classes": { "root": "chosen" },
+        "style": { "paddingLeft": 7 }
+      },
+      "calls": [
+        {
+          "name": "card-root",
+          "className": "MuiCard-root chosen authored",
+          "rootHasRaised": false,
+          "rootElevation": 8,
+          "ownerRaised": true,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "authored",
+          "ownerHasStyle": true,
+          "ownerStyle": { "paddingLeft": 7 },
+          "rootStyle": { "paddingLeft": 7 },
+          "direction": "ltr"
+        },
+        {
+          "name": "card-unused",
+          "className": "MuiCard-root chosen authored",
+          "rootHasRaised": false,
+          "rootElevation": 8,
+          "ownerRaised": true,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "authored",
+          "ownerHasStyle": true,
+          "ownerStyle": { "paddingLeft": 7 },
+          "rootStyle": { "paddingLeft": 7 },
+          "direction": "ltr"
+        },
+        {
+          "name": "card-predicate",
+          "className": "authored",
+          "rootHasRaised": true,
+          "rootElevation": 8,
+          "ownerRaised": true,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "authored",
+          "ownerHasStyle": true,
+          "ownerStyle": { "paddingLeft": 7 },
+          "rootStyle": { "paddingLeft": 7 },
+          "direction": "ltr"
+        },
+        {
+          "name": "card-variant",
+          "className": "authored",
+          "rootHasRaised": true,
+          "rootElevation": 8,
+          "ownerRaised": true,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "authored",
+          "ownerHasStyle": true,
+          "ownerStyle": { "paddingLeft": 7 },
+          "rootStyle": { "paddingLeft": 7 },
+          "direction": "ltr"
+        },
+        {
+          "name": "paper-root",
+          "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root chosen authored",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": null,
+          "ownerHasElevation": true,
+          "ownerElevation": 8,
+          "ownerClassName": "MuiCard-root chosen authored",
+          "ownerHasStyle": true,
+          "ownerStyle": { "paddingLeft": 7 },
+          "rootStyle": {
+            "--Paper-shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+            "paddingLeft": 7
+          },
+          "direction": "ltr"
+        }
+      ],
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root chosen authored",
+      "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:7px",
+      "css": ".css-1vbqz5m-MuiCard-root{overflow:hidden;padding:2px;margin-top:3px;}.css-ec9ec4-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);padding:1px;overflow:hidden;padding:2px;margin-top:3px;}"
+    },
+    {
+      "input": { "raised": false, "style": "$undefined" },
+      "calls": [
+        {
+          "name": "card-root",
+          "className": "MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": false,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": true,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-unused",
+          "className": "MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": false,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": true,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "card-predicate",
+          "className": "MuiCard-root",
+          "rootHasRaised": true,
+          "rootElevation": null,
+          "ownerRaised": false,
+          "ownerHasElevation": false,
+          "ownerElevation": null,
+          "ownerClassName": "",
+          "ownerHasStyle": true,
+          "ownerStyle": null,
+          "rootStyle": null,
+          "direction": "ltr"
+        },
+        {
+          "name": "paper-root",
+          "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 MuiCard-root",
+          "rootHasRaised": false,
+          "rootElevation": null,
+          "ownerRaised": null,
+          "ownerHasElevation": true,
+          "ownerElevation": 5,
+          "ownerClassName": "MuiCard-root",
+          "ownerHasStyle": true,
+          "ownerStyle": null,
+          "rootStyle": {
+            "--Paper-shadow": "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)"
+          },
+          "direction": "ltr"
+        }
+      ],
+      "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 MuiCard-root",
+      "shadow": "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+      "css": ".css-1tx8vt1-MuiCard-root{overflow:hidden;padding:2px;}.css-1o2mmd-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);padding:1px;overflow:hidden;padding:2px;}"
+    }
+  ],
+  "defaults": [
+    {
+      "input": {},
+      "className": "MuiPaper-root paper-default MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root card-default",
+      "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:13px",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    },
+    {
+      "input": { "raised": true },
+      "className": "MuiPaper-root paper-default MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root card-default",
+      "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:13px",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    },
+    {
+      "input": { "raised": true, "elevation": "$undefined" },
+      "className": "MuiPaper-root paper-default MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation5 MuiCard-root card-default",
+      "shadow": "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
+      "inline": "--Paper-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12);padding-left:13px",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    },
+    {
+      "input": { "raised": false, "elevation": 0 },
+      "className": "MuiPaper-root paper-default MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 MuiCard-root card-default",
+      "shadow": "none",
+      "inline": "--Paper-shadow:none;padding-left:13px",
+      "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}"
+    }
+  ],
+  "priority": {
+    "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+    "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+    "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+    "css": ".css-1fnrg1l-MuiCard-root{overflow:hidden;padding:3px;padding:16px;}.css-ql0vin-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);padding:1px;padding:32px;overflow:hidden;padding:3px;padding:16px;}",
+    "calls": ["card-root", "card-sx", "paper-root", "paper-sx"]
+  },
+  "styledFixture": {
+    "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation8 MuiCard-root",
+    "shadow": "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
+    "inline": "--Paper-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);padding-left:9px",
+    "css": ".css-1ph78xu{padding:4px;}.css-1ph78xu.MuiCard-root{min-height:66px;}.css-par6ay-MuiCard-root{overflow:hidden;padding:4px;}.css-par6ay-MuiCard-root.MuiCard-root{min-height:66px;}.css-syr0dp-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;padding:4px;}.css-syr0dp-MuiPaper-root-MuiCard-root.MuiCard-root{min-height:66px;}",
+    "calls": [{ "raised": true, "hasStyle": false }]
+  },
+  "layeredFixture": {
+    "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root",
+    "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+    "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+    "css": ".css-1emrmvg{padding:4px;overflow:scroll;}.css-1wl2obr-MuiCard-root{overflow:hidden;padding:3px;overflow:visible;padding:16px;padding:4px;overflow:scroll;}.css-cf17m2-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);padding:1px;overflow:visible;padding:32px;overflow:hidden;padding:3px;overflow:visible;padding:16px;padding:4px;overflow:scroll;}"
+  },
+  "getter": {
+    "className": "MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root getter",
+    "shadow": "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+    "inline": "--Paper-shadow:0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+    "css": ".css-1cmu2or-MuiCard-root{overflow:hidden;}.css-1j74uew-MuiPaper-root-MuiCard-root{background-color:#fff;color:rgba(0, 0, 0, 0.87);-webkit-transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;border-radius:4px;box-shadow:var(--Paper-shadow);background-image:var(--Paper-overlay);overflow:hidden;}",
+    "reads": 2
+  },
+  "unusedThrow": "unused-card-slot"
+}

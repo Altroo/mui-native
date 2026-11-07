@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "description": "Finite Card source/software contract; Paper inheritance is reused. No native paint, device, browser or full compatibility certification.",
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "Card/Card.js": "bd108c032608fc862d09fc4e9cfb90652e828fc6734999d4ebdc5ba4b48caec8",
+        "Card/Card.d.ts": "71748069e3823c2c09f87fd64f2078d2ac74d80c19bb2d44e3d61e9d5342a23a",
+        "Card/Card.d.mts": "1bd3fdddc63a3acdaab197edbfadb578c992ec4edcb817b08ca20a35b9c8d5c3",
+        "Card/cardClasses.js": "4a93a8211ad205fec8484c529b8f227366356aa71a55d214b71271eceee3896e",
+        "Card/cardClasses.d.ts": "4053a0866f10634083ba91f2166420b1c29a2509b64803bd192f50baeb221265",
+        "Card/cardClasses.d.mts": "4053a0866f10634083ba91f2166420b1c29a2509b64803bd192f50baeb221265",
+        "Card/index.js": "647486b4ecedda140f61bf1fae037cf388d65e59c63093eaddf5666589ed0dd8",
+        "Card/index.d.ts": "8b5762f3138b2894db972d51cb539f1ff2bf6b231129667cb89962d4711f9c70",
+        "Card/index.d.mts": "c06143272cde1ff37484b0439ba2c903fcd6a9df3e41e1726910bb01a5c6f114",
+        "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+        "Paper/Paper.d.ts": "c2c81483f868985bb08311eebf892228be4dd61523a693097c4d7224b06e011a",
+        "styles/components.d.ts": "358dac701e57422878d7164f4ba31b1672e641dcf2c1378354da779400b0255f",
+        "styles/props.d.ts": "05084be14d8c1f9b14f83f357f57c8a3ee04f3ec936b72e2cb694cd7b3cb48ee",
+        "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa",
+        "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f",
+        "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "6234e618376c90c75eadd92dc0af9e078a946cf57d6adb15b473163932fbc739"
+      }
+    }
+  ],
+  "fixture": {
+    "path": "tests/fixtures/mui-card-9.5.0.json",
+    "sha256": "98ef7416c912faeedfee90536eabcef09a54066aec504639010a9a9268af0d6a",
+    "rootCases": 10,
+    "themedCases": 6,
+    "reservedCasesPerMode": 11
+  },
+  "localFiles": [
+    "packages/material/src/card.tsx",
+    "packages/material/src/cardTypes.ts",
+    "packages/material/src/cardClasses.ts",
+    "packages/system/src/sx.ts"
+  ],
+  "adaptations": [
+    "Native View/div-alias and custom native roots reuse the existing Paper ref/text/style boundary. CardContent/CardActions are unchanged and their structural semantics remain separate.",
+    "The source spread order retains explicit elevation, including undefined, after the raised default. Card CSS is prepared privately before Paper and applied after Paper CSS; genuine native inline styles remain last.",
+    "Native types adapt the original Card/Paper polymorphic surface to native refs/events/styles; CardPropsColorOverrides remains the source unused augmentation interface. Ordinary conditional spreads retain the original structural assignment boundary. Native View has no deprecated HTML color attribute.",
+    "Explicit complete native themes style only the Card layer; Paper retains its provider theme. Exact authored ownerState, including null/own undefined, replaces CardRoot callback state. Native-compatible as replaces the styled base and bypasses Paper through existing native scopes.",
+    "The existing private styled metadata helper accepts an optional supplied-style flag at its original body site. Omission preserves the old descriptor-read expression and order; explicit false does not fall back. Card uses it to separate authored style presence from selected owner state without cloning/mutation.",
+    "Original explicit-theme observations are captured in separate production/development processes: production styles successfully, while React development frozen props throw. Native does not imitate that development-only original crash.",
+    "The existing shared native System style vocabulary and Paper platform limitations remain unchanged; this records no browser-CSS, arbitrary selector, native paint or performance completion."
+  ]
+}
