@@ -1,8 +1,18 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { createHash } from 'node:crypto';
-import { assertSourceEligible, referenceDependencies } from './config.mjs';
+import { setTimeout as wait } from 'node:timers/promises';
+import { assertSourceEligible } from './config.mjs';
 import { request, pages } from './http.mjs';
+import {
+  trackingBranch,
+  trackingPath,
+  stateHash,
+  readTracking,
+  withTracking,
+  trackingFromState,
+  reviewedStateHash,
+} from './tracking.mjs';
 export async function publishReport({
   report,
   repository = process.env.GITHUB_REPOSITORY,
@@ -10,7 +20,9 @@ export async function publishReport({
   prepareDrafts = false,
 }) {
   if (!repository || !token) throw new Error('Repository and token required');
-  if (!report.complete)
+  if (prepareDrafts)
+    throw new Error('Automatic draft preparation is disabled for detection-only telemetry');
+  if (report.complete !== true)
     throw new Error('Partial reports cannot prepare candidates or advance state');
   const root = `https://api.github.com/repos/${repository}`;
   const api = (path, method = 'GET', body) =>
@@ -19,30 +31,89 @@ export async function publishReport({
     try {
       return await api(path);
     } catch (error) {
-      if (error.message.startsWith('HTTP 404 ')) return null;
+      if (error.status === 404) return null;
       throw error;
     }
   }
-  async function putFile(path, content, branch, expectedSha) {
-    const old = await maybe(`/contents/${path}?ref=${encodeURIComponent(branch)}`);
-    if (expectedSha && old?.sha !== expectedSha)
-      throw new Error(
-        'State changed while preparing candidates; rerun without overwriting reviewed support',
-      );
-    if (old && Buffer.from(old.content, 'base64').toString() === content) return;
-    await api(`/contents/${path}`, 'PUT', {
-      message: `chore(upstream): refresh ${path}`,
-      content: Buffer.from(content).toString('base64'),
-      branch,
-      ...(old ? { sha: old.sha } : {}),
-    });
-  }
+  const transient = (error) =>
+    (error.status >= 500 && error.status <= 599) ||
+    ['TimeoutError', 'AbortError'].includes(error.name) ||
+    error instanceof TypeError;
   const repo = await api('');
   const main = repo.default_branch;
-  const before = await api(`/contents/upstream/state.json?ref=${main}`);
-  const state = JSON.parse(Buffer.from(before.content, 'base64').toString());
-  if (createHash('sha256').update(JSON.stringify(state)).digest('hex') !== report.baseStateHash)
+  if (main === trackingBranch) throw new Error('Detection branch must not be the default branch');
+  const mainPath = `/contents/upstream/state.json?ref=${encodeURIComponent(main)}`;
+  const before = await api(mainPath);
+  const mainState = JSON.parse(Buffer.from(before.content, 'base64').toString());
+  if (stateHash(mainState) !== report.baseStateHash)
     throw new Error('Baseline changed during detection; rerun without advancing state');
+  const previousTracking = await readTracking({ repository, token });
+  const state = withTracking(
+    mainState,
+    previousTracking.content === null ? null : JSON.parse(previousTracking.content),
+  );
+  if (
+    previousTracking.sha !== report.baseTrackingSha ||
+    stateHash(state) !== report.baseDetectionHash
+  )
+    throw new Error('Detection telemetry changed; rerun without overwriting its cursor');
+  if (reviewedStateHash(report.nextState) !== reviewedStateHash(mainState))
+    throw new Error('Detection report changes reviewed support; rerun without advancing state');
+  const nextTelemetry = trackingFromState(report.nextState);
+  const nextState = withTracking(mainState, nextTelemetry);
+
+  async function ensureTrackingBranch() {
+    const refPath = `/git/ref/heads/${trackingBranch}`;
+    if (await maybe(refPath)) return;
+    const base = await api(`/git/ref/heads/${main}`);
+    try {
+      await api('/git/refs', 'POST', { ref: `refs/heads/${trackingBranch}`, sha: base.object.sha });
+    } catch (error) {
+      // A completed ref creation can have a failed response, or another writer
+      // can win creation. Never force/reset a pre-existing automation branch.
+      if (!(transient(error) || error.status === 422) || !(await maybe(refPath))) throw error;
+    }
+  }
+  async function writeTracking() {
+    const content = JSON.stringify(nextTelemetry, null, 2) + '\n';
+    await ensureTrackingBranch();
+    let current = await readTracking({ repository, token });
+    if (current.sha !== previousTracking.sha)
+      throw new Error(
+        'Detection telemetry changed before writing; rerun without overwriting its cursor',
+      );
+    for (let attempt = 0; attempt < 3; attempt++) {
+      // Main's reviewed state remains authoritative even if it changes after
+      // detection or while the update issues are being prepared.
+      if ((await api(mainPath)).sha !== before.sha)
+        throw new Error(
+          'State changed while preparing updates; rerun without overwriting reviewed support',
+        );
+      if (current.content === content) return;
+      try {
+        await api(`/contents/${trackingPath}`, 'PUT', {
+          message: 'chore(upstream): refresh detection telemetry',
+          content: Buffer.from(content).toString('base64'),
+          branch: trackingBranch,
+          ...(previousTracking.sha === null ? {} : { sha: previousTracking.sha }),
+        });
+        return;
+      } catch (error) {
+        if (!transient(error)) throw error;
+        // A failed PUT response does not prove the commit failed. Read back
+        // before retrying the same conditional write, never a blind overwrite.
+        current = await readTracking({ repository, token });
+        if (current.content === content) return;
+        if (current.sha !== previousTracking.sha)
+          throw new Error(
+            'Detection telemetry changed after a failed write; rerun without overwriting its cursor',
+            { cause: error },
+          );
+        if (attempt === 2) throw error;
+        await wait(250 * 2 ** attempt);
+      }
+    }
+  }
   for (const change of report.changes) assertSourceEligible(change.name);
   // Search all issue states, including closed ones, to avoid duplicate release issues after outages.
   const issues = (await pages(root + '/issues?state=all', { token })).filter(
@@ -90,9 +161,7 @@ export async function publishReport({
               : ''),
         )
         .join('\n') +
-        (prepareDrafts
-          ? ''
-          : '\n\nAutomatic draft PR creation is disabled. Review the upstream-report workflow artifact and create candidate PRs manually.') +
+        '\n\nAutomatic draft PR creation is disabled. Review the upstream-report workflow artifact and create candidate PRs manually.' +
         '\n\n- [ ] Review licensing and API changes\n- [ ] Implement eligible native changes\n- [ ] Validate native and web contracts\n- [ ] Update verified compatibility after review',
       [
         'upstream-update',
@@ -109,71 +178,12 @@ export async function publishReport({
       ['upstream-update', 'security'],
     );
   }
-  if (prepareDrafts) {
-    const groups = new Map();
-    const sourceOnly = new Set(referenceDependencies.map((config) => config.name));
-    for (const change of report.changes.filter((c) => !c.blocked && !sourceOnly.has(c.name))) {
-      const key = `${change.family}/${change.channel}/v${change.version.split('.')[0]}`;
-      groups.set(key, [...(groups.get(key) ?? []), change]);
-    }
-    const prs = await pages(root + '/pulls?state=open', { token });
-    for (const [key, changes] of groups) {
-      const branch = `upstream/${key}`;
-      const ref = await maybe(`/git/ref/heads/${branch}`);
-      if (!ref) {
-        const base = await api(`/git/ref/heads/${main}`);
-        await api('/git/refs', 'POST', { ref: `refs/heads/${branch}`, sha: base.object.sha });
-      }
-      const candidatePath = `upstream/candidates/${key.replaceAll('/', '-')}.json`;
-      const old = await maybe(`/contents/${candidatePath}?ref=${encodeURIComponent(branch)}`);
-      const previous = old
-        ? JSON.parse(Buffer.from(old.content, 'base64').toString())
-        : { changes: [] };
-      const cumulative = [
-        ...new Map(
-          [...previous.changes, ...changes].map((c) => [`${c.name}@${c.version}`, c]),
-        ).values(),
-      ];
-      const candidate = {
-        schemaVersion: 1,
-        preparedAt: report.checkedAt,
-        status: 'needs-native-port-and-review',
-        changes: cumulative,
-      };
-      await putFile(candidatePath, JSON.stringify(candidate, null, 2) + '\n', branch);
-      let pr = prs.find((p) => p.head.ref === branch);
-      if (!pr)
-        pr = await api('/pulls', 'POST', {
-          title: `Upstream candidate: ${key}`,
-          head: branch,
-          base: main,
-          draft: true,
-          body: `Generated upstream source, license, and API impact report: \`${candidatePath}\`.\n\nThis draft does not claim native support.\n\n- [ ] Review API snapshots and source changes\n- [ ] Implement native changes and comparison fixtures\n- [ ] Validate iOS, Android, types, and original MUI web behavior\n- [ ] Approve licensing and compatibility status\n\nNo automatic merging or publishing.`,
-        });
-      // GITHUB_TOKEN writes do not reliably trigger pull_request CI. Dispatch explicitly.
-      await api('/actions/workflows/ci.yml/dispatches', 'POST', {
-        ref: main,
-        inputs: { ref: branch },
-      });
-      for (const change of changes)
-        report.nextState.packages[change.name].candidate = {
-          version: change.version,
-          branch,
-          pullRequest: pr.html_url,
-        };
-    }
-  }
   // All side effects above must succeed before advancing detection state.
-  await putFile(
-    'upstream/state.json',
-    JSON.stringify(report.nextState, null, 2) + '\n',
-    main,
-    before.sha,
-  );
+  await writeTracking();
   const table = [
     '| Package | Latest detected | Candidate | Ported and verified | Released support |',
     '| --- | --- | --- | --- | --- |',
-    ...Object.entries(report.nextState.packages).map(
+    ...Object.entries(nextState.packages).map(
       ([name, p]) =>
         `| ${name} | ${p.latestDetected} | ${p.candidate?.version ?? 'None'} | ${p.portedAndVerified ?? 'None'} | ${p.releasedSupport ?? 'None'} |`,
     ),
@@ -182,7 +192,7 @@ export async function publishReport({
     'upstream-dashboard',
   ]);
   await api(`/issues/${dashboard.number}`, 'PATCH', {
-    body: `<!-- upstream-dashboard -->\nLast successful check: ${report.checkedAt}\n\n${table}\n\n${prepareDrafts ? 'Detection and draft preparation' : 'Detection and update issues; candidate PRs are created manually'} only. Human review is required before support advances. See Actions for failed checks and manual reruns.`,
+    body: `<!-- upstream-dashboard -->\nLast successful check: ${report.checkedAt}\n\n${table}\n\nDetection and update issues; candidate PRs are created manually. Human review is required before support advances. See Actions for failed checks and manual reruns.`,
   });
   if (!dashboard.pinned) {
     try {
