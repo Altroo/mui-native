@@ -11,7 +11,7 @@ Updated: 2026-11-04. Priority: maximum compatibility with existing MUI app code,
 - Independent project and branding. Upstream collaboration does not imply acceptance or endorsement.
 - Material UI plus MIT-licensed MUI X Community only. Exclude Pro/Premium source and paid-only feature parity.
 - Native iOS/Android renderers, original MUI on web. No WebView substitute.
-- Detect and prepare upstream updates twice daily. No automatic merging, support promotion, or publishing.
+- Detect upstream updates twice daily and prepare review issues. No automatic candidate PRs, merging, support promotion, or publishing.
 
 ## Feature completion workflow
 
@@ -24,8 +24,9 @@ Each feature needs appropriate local checks and independent review of hidden bug
 - [x] Upgrade the development and consumer baseline to SDK 58 / RN 0.88.1, including strict native refs/events and a separately validated SDK snapshot. Tracked in [issue #6](https://github.com/Altroo/mui-native/issues/6).
 - [x] Verify npm package versions, package integrity, immutable source commits, and public API declaration hashes.
 - [x] Preserve available MIT notices and flag missing license text.
-- [x] Implement release detection, deduplication, candidate preparation, explicit candidate CI dispatch, and support-state separation.
-- [x] Observe successful scheduled upstream detection/preparation and its report artifact on GitHub. See [validation](docs/validation.md); detected releases still require separate native review.
+- [x] Implement release detection, deduplication, detection-only telemetry, manual candidate review, and support-state separation.
+- [x] Record the earlier successful scheduled upstream detection/preparation and its report artifact on GitHub. See [validation](docs/validation.md); detected releases still require separate native review.
+- [ ] Verify protected-main telemetry persistence on a scheduled run after integration, retaining its timestamp and any error receipts.
 - [x] Generate an integrity-checked declaration inventory with import targets, export origins, direct props/events/slots and native declaration candidates. See [coverage](docs/coverage.md); this is not a compatibility claim.
 - [ ] Resolve external re-exports and inherited/generic contracts, attach behavior evidence, and complete the transitive dependency/license audit.
 

@@ -1,23 +1,32 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
+import { trackingBranch, trackingPath, withTracking } from '../tracking.mjs';
 
 export const hash = (value) => createHash('sha256').update(value).digest('hex');
-export function simulatedGitHub(state) {
+const file = (content) => ({
+  content: Buffer.from(content).toString('base64'),
+  sha: hash(content),
+});
+export function simulatedGitHub(state, { telemetry = null, telemetrySha } = {}) {
   const repository = 'simulation/mui-native';
   const root = `/repos/${repository}`;
-  const file = (content) => ({
-    content: Buffer.from(content).toString('base64'),
-    sha: hash(content),
-  });
   const branches = new Map([
     ['main', new Map([['upstream/state.json', file(JSON.stringify(state))]])],
   ]);
-  const issues = [];
-  const pulls = [];
-  const labels = [];
-  const dispatches = [];
-  const calls = [];
-  let failure;
+  if (telemetry !== null) {
+    branches.set(trackingBranch, structuredClone(branches.get('main')));
+    const value = file(JSON.stringify(telemetry, null, 2) + '\n');
+    if (telemetrySha) value.sha = telemetrySha;
+    branches.get(trackingBranch).set(trackingPath, value);
+  }
+  const issues = [],
+    pulls = [],
+    labels = [],
+    dispatches = [],
+    calls = [],
+    failures = [];
+  const decoded = (value) => JSON.parse(Buffer.from(value.content, 'base64').toString());
   const remote = {
     repository,
     branches,
@@ -26,17 +35,22 @@ export function simulatedGitHub(state) {
     labels,
     dispatches,
     calls,
-    failNext(predicate, status = 403) {
-      failure = { predicate, status };
+    failNext(predicate, status = 403, { committed = false } = {}) {
+      failures.push({ predicate, status, committed });
     },
     state() {
-      return JSON.parse(
-        Buffer.from(branches.get('main').get('upstream/state.json').content, 'base64').toString(),
-      );
+      return decoded(branches.get('main').get('upstream/state.json'));
+    },
+    tracking() {
+      const value = branches.get(trackingBranch)?.get(trackingPath);
+      return value ? decoded(value) : null;
+    },
+    effectiveState() {
+      return withTracking(remote.state(), remote.tracking());
     },
     async fetch(input, options = {}) {
-      const url = new URL(input);
-      const method = options.method ?? 'GET';
+      const url = new URL(input),
+        method = options.method ?? 'GET';
       const body = options.body ? JSON.parse(options.body) : undefined;
       assert.equal(
         url.origin,
@@ -46,10 +60,17 @@ export function simulatedGitHub(state) {
       assert.equal(new Headers(options.headers).get('authorization'), 'Bearer simulation-token');
       const call = { path: url.pathname, method, body };
       calls.push(call);
+      let failedStatus;
+      const failure = failures[0];
       if (failure?.predicate(call)) {
-        const status = failure.status;
-        failure = undefined;
-        return Response.json({ message: 'Simulated failure' }, { status });
+        failures.shift();
+        if (!failure.committed)
+          return Response.json({ message: 'Simulated failure' }, { status: failure.status });
+        assert.ok(
+          method === 'PUT' || url.pathname.endsWith('/git/refs'),
+          'Committed failures simulate conditional content writes or ref creation only',
+        );
+        failedStatus = failure.status;
       }
       const path = url.pathname.slice(root.length);
       if (url.pathname === '/graphql' && method === 'POST') {
@@ -65,14 +86,18 @@ export function simulatedGitHub(state) {
         const name = decodeURIComponent(path.slice('/contents/'.length));
         const branch = method === 'GET' ? url.searchParams.get('ref') : body.branch;
         const files = branches.get(branch);
-        assert.ok(files, `Missing simulated branch ${branch}`);
+        if (!files) return Response.json({}, { status: 404 });
         const old = files.get(name);
         if (method === 'GET') return Response.json(old ?? {}, { status: old ? 200 : 404 });
         if (method === 'PUT') {
+          // A protected main can never be an automation persistence fallback.
+          if (branch === 'main') return Response.json({}, { status: 403 });
+          assert.equal(branch, trackingBranch);
+          assert.equal(name, trackingPath);
           if (old?.sha !== body.sha) return Response.json({}, { status: 409 });
           const next = file(Buffer.from(body.content, 'base64').toString());
           files.set(name, next);
-          return Response.json({ content: next });
+          return Response.json({ content: next }, { status: failedStatus ?? 200 });
         }
       }
       if (path.startsWith('/git/ref/heads/') && method === 'GET') {
@@ -84,10 +109,10 @@ export function simulatedGitHub(state) {
       }
       if (path === '/git/refs' && method === 'POST') {
         assert.equal(body.sha, hash('main'));
-        const branch = body.ref.replace('refs/heads/', '');
-        assert.ok(!branches.has(branch));
-        branches.set(branch, structuredClone(branches.get('main')));
-        return Response.json({ ref: body.ref }, { status: 201 });
+        assert.equal(body.ref, `refs/heads/${trackingBranch}`);
+        if (branches.has(trackingBranch)) return Response.json({}, { status: 422 });
+        branches.set(trackingBranch, structuredClone(branches.get('main')));
+        return Response.json({ ref: body.ref }, { status: failedStatus ?? 201 });
       }
       if (path === '/labels') {
         if (method === 'GET') return Response.json(labels);
@@ -116,28 +141,6 @@ export function simulatedGitHub(state) {
         assert.ok(issue);
         Object.assign(issue, body);
         return Response.json(issue);
-      }
-      if (path === '/pulls') {
-        if (method === 'GET') return Response.json(pulls.filter((item) => item.state === 'open'));
-        if (method === 'POST') {
-          assert.equal(body.draft, true);
-          assert.equal(body.base, 'main');
-          assert.ok(branches.has(body.head));
-          const pr = {
-            ...body,
-            state: 'open',
-            head: { ref: body.head },
-            html_url: `https://github.com/${repository}/pull/${pulls.length + 1}`,
-          };
-          pulls.push(pr);
-          return Response.json(pr, { status: 201 });
-        }
-      }
-      if (path === '/actions/workflows/ci.yml/dispatches' && method === 'POST') {
-        assert.equal(body.ref, 'main');
-        assert.ok(branches.has(body.inputs.ref));
-        dispatches.push(body);
-        return new Response(null, { status: 204 });
       }
       throw new Error(`Unexpected simulated operation: ${method} ${url.pathname}`);
     },
