@@ -26,6 +26,7 @@ for (const directory of await readdir('packages')) {
   const entries = Object.keys(pkg.exports)
     .filter((key) => key !== './package.json')
     .map((key) => (key === '.' ? 'index' : key.slice(2) + '/index'));
+  console.log(`Building ${pkg.name}: CommonJS`);
   await build({
     entryPoints: await runtimeSources(`${folder}/src`),
     outbase: `${folder}/src`,
@@ -36,7 +37,10 @@ for (const directory of await readdir('packages')) {
     bundle: false,
     sourcemap: true,
   });
-  if (directory === 'icons') await buildIconEsm(folder, await runtimeSources(`${folder}/src`));
+  if (directory === 'icons') {
+    console.log(`Building ${pkg.name}: ESM`);
+    await buildIconEsm(folder, await runtimeSources(`${folder}/src`));
+  }
   await cp(`.cache/types/${directory}/src`, `${folder}/dist`, { recursive: true });
   for (const file of ['LICENSE', 'NOTICE']) await cp(file, path.join(folder, file));
   console.log(`Built ${pkg.name}: ${entries.length} entry points`);
