@@ -105,6 +105,12 @@ At normal fontScale 1, the collector checks all thirteen standard variants plus 
 
 Both profiles check genuine inline resets, supported MenuItem ancestor colors, rendered RTL paragraph and opposing virtual-span alignment, a real nested counter press, public Text press events and measurements through five stable forwarded refs. Actual screenshots establish glyph placement independently of cached `onTextLayout` x positions. The scenario retains the counter and host/ref identities through theme, inline and direction changes. Independent review covers all sixteen normal captures and six largest-profile captures with their paired native receipts.
 
+### Observed Android coverage and truncation gap
+
+A normal-text run on Android API 37 / React Native 0.88.1 passed all thirteen standard variants plus `inherit`, including actual rendered weights of 300, 400 and 500 after the Android default-font fix. The [partial native record](../compatibility/evidence/typography-android-partial-2026-11-07.json) retains the scoped measurements and source hashes. This run failed at truncation; it does not establish a complete Android component pass.
+
+With `selectable` and `noWrap` enabled together, the tested native TextView clips overflowing text without painting the trailing ellipsis. Device diagnostics show `maxLines=1` and tail ellipsizing configured, but Android's selectable `DynamicLayout` contains three lines with zero ellipsis characters. This combination remains an open native compatibility gap. Wrapping selectable text avoids relying on this unsupported truncation combination. The subsequent style, RTL and press stages have not passed in this run.
+
 ### Remaining native gates
 
 - Android component geometry, truncation, mixed virtual text and RTL paint; custom fonts and broader multiline/mixed-script layouts on both platforms.
