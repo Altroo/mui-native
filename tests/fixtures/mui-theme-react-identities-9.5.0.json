@@ -1,0 +1,212 @@
+{
+  "reference": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "deepmerge/deepmerge.js": "e0b2e6bfbe587a6da60a7f95954ff1cb2a7a5a3fb1a2af01524d2ae4281cef9e"
+    }
+  },
+  "cases": [
+    { "name": "forwardRef", "same": true },
+    { "name": "memo", "same": true },
+    { "name": "lazy", "same": true },
+    { "name": "element", "same": true },
+    { "name": "context", "same": true },
+    { "name": "consumer", "same": true },
+    { "name": "client", "same": true },
+    { "name": "module", "same": true }
+  ],
+  "lazyCalls": 0,
+  "accessors": [
+    {
+      "symbols": ["react.forward_ref"],
+      "same": true,
+      "trace": ["tag", "tag", "tag", "tag", "tag", "tag"]
+    },
+    { "symbols": ["react.lazy"], "same": true, "trace": ["tag", "tag"] },
+    {
+      "symbols": ["not-react", "not-react", "react.memo"],
+      "same": true,
+      "trace": ["tag", "tag", "tag"]
+    },
+    {
+      "symbols": ["not-react"],
+      "same": false,
+      "trace": [
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "module",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "tag",
+        "module"
+      ]
+    }
+  ],
+  "materialReference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "styles/createTheme.js": "0731f7ced26101043cd362683c1b364a00af1720a20ef89e071590a2b3a2745d",
+      "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc"
+    }
+  },
+  "nonplainRows": [
+    {
+      "name": "date",
+      "mergeSame": true,
+      "themeSame": true,
+      "replacesPlain": true,
+      "mergedValue": 1794139200000,
+      "themedValue": 1794139200000
+    },
+    {
+      "name": "map",
+      "mergeSame": true,
+      "themeSame": true,
+      "replacesPlain": true,
+      "mergedValue": [["k", 3]],
+      "themedValue": [["k", 3]]
+    },
+    {
+      "name": "set",
+      "mergeSame": true,
+      "themeSame": true,
+      "replacesPlain": true,
+      "mergedValue": [3],
+      "themedValue": [3]
+    },
+    {
+      "name": "regexp",
+      "mergeSame": true,
+      "themeSame": true,
+      "replacesPlain": true,
+      "mergedValue": { "source": "x", "flags": "gi", "lastIndex": 2 },
+      "themedValue": { "source": "x", "flags": "gi", "lastIndex": 2 }
+    },
+    {
+      "name": "typed",
+      "mergeSame": true,
+      "themeSame": true,
+      "replacesPlain": true,
+      "mergedValue": [2, 4],
+      "themedValue": [2, 4]
+    },
+    {
+      "name": "token",
+      "mergeSame": true,
+      "themeSame": true,
+      "replacesPlain": true,
+      "mergedValue": 7,
+      "themedValue": 7
+    },
+    {
+      "name": "foreignDate",
+      "mergeSame": true,
+      "themeSame": true,
+      "replacesPlain": true,
+      "mergedValue": 1794139200000,
+      "themedValue": 1794139200000
+    },
+    {
+      "name": "foreignToken",
+      "mergeSame": true,
+      "themeSame": true,
+      "replacesPlain": true,
+      "mergedValue": 9,
+      "themedValue": 9
+    }
+  ],
+  "plainRows": [
+    {
+      "name": "plain",
+      "mergeSame": false,
+      "themeSame": false,
+      "mergedKeys": ["own"],
+      "themedKeys": ["own"],
+      "mergedOwn": 2,
+      "themedOwn": 2,
+      "withBase": { "keep": 1, "own": 2 }
+    },
+    {
+      "name": "nullPlain",
+      "mergeSame": false,
+      "themeSame": false,
+      "mergedKeys": ["own"],
+      "themedKeys": ["own"],
+      "mergedOwn": 2,
+      "themedOwn": 2,
+      "withBase": { "keep": 1, "own": 2 }
+    },
+    {
+      "name": "foreignPlain",
+      "mergeSame": false,
+      "themeSame": false,
+      "mergedKeys": ["own"],
+      "themedKeys": ["own"],
+      "mergedOwn": 2,
+      "themedOwn": 2,
+      "withBase": { "keep": 1, "own": 2 }
+    },
+    {
+      "name": "foreignNullPlain",
+      "mergeSame": false,
+      "themeSame": false,
+      "mergedKeys": ["own"],
+      "themedKeys": ["own"],
+      "mergedOwn": 2,
+      "themedOwn": 2,
+      "withBase": { "keep": 1, "own": 2 }
+    },
+    {
+      "name": "nullAncestor",
+      "mergeSame": false,
+      "themeSame": false,
+      "mergedKeys": ["own"],
+      "themedKeys": ["own"],
+      "mergedOwn": 2,
+      "themedOwn": 2,
+      "withBase": { "keep": 1, "own": 2 }
+    }
+  ],
+  "rejectedRows": [
+    { "name": "customPrototype", "mergeSame": true, "themeSame": true },
+    { "name": "tagUndefined", "mergeSame": true, "themeSame": true },
+    { "name": "iteratorUndefined", "mergeSame": true, "themeSame": true },
+    { "name": "inheritedIterator", "mergeSame": true, "themeSame": true }
+  ],
+  "replacements": [
+    { "name": "date", "result": { "fresh": 4 }, "originalSame": true },
+    { "name": "map", "result": { "fresh": 4 }, "originalSame": true },
+    { "name": "set", "result": { "fresh": 4 }, "originalSame": true },
+    { "name": "regexp", "result": { "fresh": 4 }, "originalSame": true },
+    { "name": "typed", "result": { "fresh": 4 }, "originalSame": true },
+    { "name": "token", "result": { "fresh": 4 }, "originalSame": true },
+    { "name": "foreignDate", "result": { "fresh": 4 }, "originalSame": true },
+    { "name": "foreignToken", "result": { "fresh": 4 }, "originalSame": true },
+    { "name": "array", "result": { "fresh": 4 }, "originalSame": true }
+  ],
+  "getterControls": [
+    { "name": "tag", "mergeSame": true, "themeSame": true, "reads": 0 },
+    { "name": "iterator", "mergeSame": true, "themeSame": true, "reads": 0 }
+  ],
+  "guardErrors": [
+    { "kind": "prototype", "message": "prototype guard", "payloadReads": 0 },
+    { "kind": "symbol", "message": "symbol guard", "payloadReads": 0 }
+  ]
+}

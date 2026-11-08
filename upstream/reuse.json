@@ -3798,6 +3798,22 @@
       "adaptations": [
         "Box source/software contract: finite native root/classes/filtering/type behavior is recorded in upstream/box.json. Anonymous roots skip component configuration; named-root ordering is unchanged. No native device, DOM or full compatibility certification."
       ]
+    },
+    {
+      "localFile": "packages/system/src/merge.ts",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "deepmerge/deepmerge.js": "e0b2e6bfbe587a6da60a7f95954ff1cb2a7a5a3fb1a2af01524d2ae4281cef9e"
+        }
+      },
+      "adaptations": [
+        "Nested React and nonplain Theme identity handling is recorded in upstream/theme-react-identities.json. Pinned plain-object eligibility is applied only to nested recursion; existing native top-level/array/undefined/key-filter policy remains. No public API or support-status change."
+      ]
     }
   ]
 }
