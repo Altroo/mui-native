@@ -34,7 +34,9 @@
     "common",
     "README.md",
     "scripts/verify-native-input.cjs",
-    "native-input-baseline.json"
+    "native-input-baseline.json",
+    "structural-observation-baseline.json",
+    "scripts/verify-structural-input.cjs"
   ],
   "exports": {
     ".": {
@@ -51,7 +53,7 @@
   },
   "codegenConfig": {
     "name": "AltrooMuiNativeHostSpec",
-    "type": "components",
+    "type": "all",
     "jsSrcsDir": "src",
     "android": {
       "javaPackageName": "com.altroo.muinativehost"
@@ -63,6 +65,9 @@
         "AltrooMUIPortalHost": "AltrooMUIPortalHostComponentView",
         "AltrooMUIPortalCanvas": "AltrooMUIPortalCanvasComponentView",
         "AltrooMUITextInput": "AltrooMUITextInputComponentView"
+      },
+      "modulesProvider": {
+        "AltrooStructuralObserver": "AltrooStructuralObserverProvider"
       }
     }
   },

@@ -12,6 +12,7 @@ import { TypographyContractExample } from './TypographyContractExample';
 import { DividerContractExample } from './DividerContractExample';
 import { PaperContractExample } from './PaperContractExample';
 import { CardContractExample } from './CardContractExample';
+import { StructuralObservationProbeEntry } from './StructuralObservationProbeEntry';
 import { BoxContractExample } from './BoxContractExample';
 import { PaperBenchmarkExample } from './PaperBenchmarkExample';
 
@@ -27,6 +28,7 @@ export function RootLayoutExamples() {
     | 'divider'
     | 'paper'
     | 'card'
+    | 'structure'
     | 'box'
     | 'benchmark'
     | 'paper-benchmark'
@@ -111,6 +113,13 @@ export function RootLayoutExamples() {
           Card
         </Button>
         <Button
+          testID="root-layout-structure"
+          variant={example === 'structure' ? 'contained' : 'outlined'}
+          onClick={() => setExample('structure')}
+        >
+          Structure
+        </Button>
+        <Button
           testID="root-layout-box"
           variant={example === 'box' ? 'contained' : 'outlined'}
           onClick={() => setExample('box')}
@@ -157,6 +166,8 @@ export function RootLayoutExamples() {
             <PaperContractExample />
           ) : example === 'card' ? (
             <CardContractExample />
+          ) : example === 'structure' ? (
+            <StructuralObservationProbeEntry />
           ) : example === 'box' ? (
             <BoxContractExample />
           ) : example === 'typography' ? (

@@ -1,5 +1,5 @@
 require "json"
-react_native_root = Pod::Executable.execute_command("node", [File.join(__dir__, "scripts/verify-native-input.cjs"), "--root"]).strip
+react_native_root = Pod::Executable.execute_command("node", [File.join(__dir__, "scripts/verify-structural-input.cjs"), "--root"]).strip
 package = JSON.parse(File.read(File.join(__dir__, "package.json")))
 Pod::Spec.new do |s|
   s.name = "AltrooMuiNativeHost"
@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
     :script => <<-SCRIPT
 set -e
 . "${REACT_NATIVE_PATH}/scripts/xcode/with-environment.sh"
-"${NODE_BINARY}" "${PODS_TARGET_SRCROOT}/scripts/verify-native-input.cjs" --native-root "${REACT_NATIVE_PATH}"
+"${NODE_BINARY}" "${PODS_TARGET_SRCROOT}/scripts/verify-structural-input.cjs" --native-root "${REACT_NATIVE_PATH}"
     SCRIPT
   }
   install_modules_dependencies(s)
