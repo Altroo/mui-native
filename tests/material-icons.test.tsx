@@ -123,8 +123,10 @@ test('fragment and ellipse icons inherit scoped native color and font metrics', 
 test.each(factoryReference.cases)(
   'factory source contract: $mode, authored=$authored',
   ({ mode, authored, observation }) => {
-    const restore = process.env.NODE_ENV;
-    process.env.NODE_ENV = mode;
+    // Use Node's runtime map so an absent NODE_ENV can be restored as absent.
+    const environment: Record<string, string | undefined> = process.env;
+    const restore = environment.NODE_ENV;
+    environment.NODE_ENV = mode;
     try {
       const path = <Path d="M0 0h4v4z" />,
         ref = createRef<SvgIconHandle>();
@@ -172,7 +174,8 @@ test.each(factoryReference.cases)(
         viewBox: element.props.viewBox ?? null,
       }).toEqual(observation);
     } finally {
-      process.env.NODE_ENV = restore;
+      if (restore === undefined) delete environment.NODE_ENV;
+      else environment.NODE_ENV = restore;
     }
   },
 );

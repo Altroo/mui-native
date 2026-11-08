@@ -420,8 +420,10 @@ test.each(original.shadowAccess)('source shadow capture $mode/$variant/$behavior
       </Paper>
     );
   }
-  const previous = process.env.NODE_ENV;
-  process.env.NODE_ENV = expected.mode;
+  // Keep Node's optional runtime environment semantics under Expo's ambient types.
+  const environment: Record<string, string | undefined> = process.env;
+  const previous = environment.NODE_ENV;
+  environment.NODE_ENV = expected.mode;
   try {
     const tree = render(
       <ThemeProvider theme={createTheme()}>
@@ -432,8 +434,8 @@ test.each(original.shadowAccess)('source shadow capture $mode/$variant/$behavior
   } catch (caught) {
     error = (caught as Error).message;
   } finally {
-    if (previous === undefined) delete process.env.NODE_ENV;
-    else process.env.NODE_ENV = previous;
+    if (previous === undefined) delete environment.NODE_ENV;
+    else environment.NODE_ENV = previous;
     cleanup();
   }
   expect({ error, metadata, paint }).toEqual({
@@ -484,8 +486,10 @@ test.each(['production', 'development'])(
       };
       return <Paper testID="captured" />;
     }
-    const previous = process.env.NODE_ENV;
-    process.env.NODE_ENV = mode;
+    // Keep Node's optional runtime environment semantics under Expo's ambient types.
+    const environment: Record<string, string | undefined> = process.env;
+    const previous = environment.NODE_ENV;
+    environment.NODE_ENV = mode;
     try {
       const tree = render(
         <ThemeProvider theme={createTheme()}>
@@ -504,8 +508,8 @@ test.each(['production', 'development'])(
         expect.objectContaining({ code: 'box-shadow-platform' }),
       );
     } finally {
-      if (previous === undefined) delete process.env.NODE_ENV;
-      else process.env.NODE_ENV = previous;
+      if (previous === undefined) delete environment.NODE_ENV;
+      else environment.NODE_ENV = previous;
       cleanup();
       restore();
     }
@@ -564,8 +568,10 @@ test.each(original.shadowTableAccess)('source shadow table access $mode', (expec
     };
     return <Paper testID="table-shadow">Body</Paper>;
   }
-  const previous = process.env.NODE_ENV;
-  process.env.NODE_ENV = expected.mode;
+  // Keep Node's optional runtime environment semantics under Expo's ambient types.
+  const environment: Record<string, string | undefined> = process.env;
+  const previous = environment.NODE_ENV;
+  environment.NODE_ENV = expected.mode;
   try {
     const tree = render(
       <ThemeProvider theme={createTheme()}>
@@ -578,8 +584,8 @@ test.each(original.shadowTableAccess)('source shadow table access $mode', (expec
     );
     expect(reads).toBe(expected.reads);
   } finally {
-    if (previous === undefined) delete process.env.NODE_ENV;
-    else process.env.NODE_ENV = previous;
+    if (previous === undefined) delete environment.NODE_ENV;
+    else environment.NODE_ENV = previous;
     cleanup();
   }
 });
