@@ -11034,14 +11034,14 @@
       "packages/system/src/iconContext.ts": "c5687b1f3ff1673cfb7ada68c013c56f114a123224f248861a3df62611b264bf",
       "packages/system/src/index.ts": "c3052fc9969cb95fa51abb7a5e42f3cc27fdb932b15f666aea53b03f8f6a303d",
       "packages/system/src/merge.ts": "aaa8c24fac35a4abdeacb8e3ca8ab84dbeecab8634034328b4517dbf24f949ea",
-      "packages/system/src/nativeStyledMetadata.ts": "84ba4e7cd4febadd3bc23a33ea4063fbee67e665179d1fe0d668a6e909baa10c",
+      "packages/system/src/nativeStyledMetadata.ts": "44ff1a67820aa0581f73d26825639a1643253260e722c0ecf8254a5329d2a00f",
       "packages/system/src/nativeText.ts": "82439e9f1f7326ae1ff0aaff093c4cccc1d15589dbc3d9acc5b27bc1e6d9be17",
       "packages/system/src/nativeTextRegistry.ts": "c536ccead134058c42a1187c2d5e744fc1196042d10ec861006356895f2d3d8c",
       "packages/system/src/provider.tsx": "1c4ed4b4e36fafba988545850b923c32ed9e15ebd857416f3b71bff5ae7b07ef",
       "packages/system/src/RtlProvider/index.tsx": "b69eb42a9148e815c75cb9c53d7d233ac80c2bef973cde0bd1d4f690fa8cbc62",
       "packages/system/src/shadows.ts": "87e93f86773fb40cfad65d0a4c5a6cabbb0a5813a2b2568b67324543a88abb96",
       "packages/system/src/spacing.ts": "e4751abd448354e69a065d9115834b7a2de9e7bf183c99b63785e623fd611b31",
-      "packages/system/src/sx.ts": "5b22c73baa711132c7ff7210f3273940bc47f2be443080dd3a30e78bac157e5e",
+      "packages/system/src/sx.ts": "53a82f8154dad6f8679af8896753fc61b7747f2194b59a749795858bf5ba1b13",
       "packages/system/src/textScope.tsx": "e3f6402a34a9302e48ae4baf8b6611890ee8f6327d815a4d00f9c9771e9cf5c1",
       "packages/system/src/theme.ts": "6857ac1b7a033d05864e4b97dcd839a07e9f6dfdaee071093b7ff23070198457",
       "packages/system/src/ThemeProvider/index.ts": "ab3008c2fe41aee2a32d75c3d7b9d353f41d7f922e286275f428b24ff8257c2b",
@@ -11157,7 +11157,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "492f392f0ef3d8c83e889520775362f2d3e2cb745fba6ff80c5282a63542e6a5"
+      "sha256": "5183d37c61ff200beacf7980edd3f06039ae6038a885445b57fcd8b6f505e3d9"
     },
     {
       "package": "@mui/system",
@@ -11167,7 +11167,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "1c7e656a84f33842a73cbcea0b1e13c5bdd1db634fe596512551aca7c1106967",
+      "nativeSourceSha256": "60c183ff606bcac0b677d9c836b9354050b853c4a880b72f8f5ac7112c50327e",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -11179,7 +11179,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "8e978d42ec0edeaa31eba2ffe71d37a4ec4f650c3040560f095cf36145974583"
+      "sha256": "769b777e677793880823c7164e140bc71ef7026c49b150a7e9ebbc1dba28b28b"
     },
     {
       "package": "@mui/icons-material",
