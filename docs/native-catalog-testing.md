@@ -308,3 +308,7 @@ For iOS, add [CardCatalogUITests.swift](../tests/native/ios/CardCatalogUITests.s
 The iOS collector uses current native accessibility frames, composited surface/edge samples and an independent UIKit glyph raster. The alternate host must exist while the original host is absent; its dimensions also reject a Paper default-style leak. The translucent theme probe is compared against its observed white-frame composite, while Android's raw draw is compared against the uncomposited source color. These observations must not be interchanged.
 
 Both collectors check zero-border transitions near the actual outer edge. Source declarations alone do not establish calibrated shadows, clipping of every descendant, arbitrary font shaping, physical screen-reader usability, wider platform matrices or optimized performance. Retain failed and successful evidence and the exact source/binary identities. This scene covers the Card surface; CardContent, CardActions, CardHeader, CardMedia and CardActionArea have separate acceptance gates. See the [Card contract](card.md).
+
+## Ordered native structure
+
+The [internal structure observer guide](native-structure-observation.md) describes the Wrappers > Structure scene, seven-state iOS/Android checks, required development rebuild and remaining CSS/Portal/timing gates. This probe does not promote CardContent or CardActions compatibility.

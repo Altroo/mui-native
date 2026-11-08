@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add an internal ordered Fabric observer with lease-safe cleanup, guarded iOS/Android providers, native structure probes and installed-archive input checks. Structural CSS, initial paint and Portal sibling semantics remain separate implementation gates; CardContent/Actions status is unchanged.
+
 - Replace the native Card surface prototype with pinned 9.5.0 props/classes, raised/default ordering, native custom roots and reserved styled inputs. Add strict installed Card imports and thirteen-state iOS/Android checks at both text profiles. CardContent/Actions and wider native, physical accessibility, GPU and performance gates remain separate.
 
 - Align Material Box with its pinned 9.5.0 props, classes, native roots, selected themes and style priority. Add canonical className routing, exact-optional installed consumers and eleven-state iOS/Android checks at normal/enlarged text sizes. Browser themes, wider native matrices, physical accessibility and optimized Box performance remain separate gates.
