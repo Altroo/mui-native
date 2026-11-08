@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "description": "Nested React and nonplain identity preservation for native Theme merge; no public API, dependency version or compatibility-status change.",
+  "localFiles": [
+    "packages/system/src/merge.ts",
+    "tests/theme-react-identities.test.tsx",
+    "tests/theme-object-boundaries.test.ts"
+  ],
+  "reference": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "deepmerge/deepmerge.js": "e0b2e6bfbe587a6da60a7f95954ff1cb2a7a5a3fb1a2af01524d2ae4281cef9e"
+    }
+  },
+  "reactObjectTypes": {
+    "name": "react-is",
+    "version": "19.3.0",
+    "dependencyIntegrity": "sha512-UpMYezM4v5/18F28aC66AEsjXIgE02kyEMH6yLdgLXu/UTfa1Ntwck/nNLrbqJsEXW7gPb0coNO9FQse9WTovA==",
+    "sourceFile": "cjs/react-is.development.js",
+    "sourceSha256": "0bd0ece0db7d059a422b2e3553a30f99e04f7b26cc9ee1b7536387e49261a212",
+    "license": "MIT",
+    "notice": "Copyright (c) Meta Platforms, Inc. and affiliates. Exact license retained in existing NOTICE and packages/system/NOTICE."
+  },
+  "adaptations": [
+    "Nested React element/type leaves remain identity values before classification. The exact pinned plain-object predicate selects incoming recursion, preserving Date/Map/Set/RegExp/typed-array/class instances and excluded tagged/iterable records.",
+    "Existing nested values are merged only when they are owned plain records; otherwise incoming plain data is cloned into a fresh record. Top-level native behavior, incoming-array replacement, eager Object.entries snapshots, undefined policy and dangerous-key filtering remain unchanged.",
+    "The React guard remains before prototype/symbol classification. Symbol presence tests never invoke symbol getters. Cross-realm/null-prototype and exception-phase controls execute against the actual pinned MUI source. Rejected ordinary-object guard repetition remains native-specific rather than a wholesale MUI deepmerge port.",
+    "No component callback, memo comparison or lazy loader executes during merge. Existing public Card state/ref regression verifies equivalent reconstructed themes preserve the configured root."
+  ],
+  "defaultPropsObservationReference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "styles/createTheme.js": "0731f7ced26101043cd362683c1b364a00af1720a20ef89e071590a2b3a2745d",
+      "styles/createThemeNoVars.js": "d4fa043174a1da70aca90e7de6fef337a058356e65ff1746e4076d9718f03afc"
+    }
+  }
+}

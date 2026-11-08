@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Preserve nested React and nonplain Theme defaults so equivalent theme reconstruction retains custom-root state and refs, while Date, Map, Set and class values retain their identity and methods. Add pinned original-source, getter and replacement regression coverage.
+
 - Add an internal ordered Fabric observer with lease-safe cleanup, guarded iOS/Android providers, native structure probes and installed-archive input checks. Structural CSS, initial paint and Portal sibling semantics remain separate implementation gates; CardContent/Actions status is unchanged.
 
 - Replace the native Card surface prototype with pinned 9.5.0 props/classes, raised/default ordering, native custom roots and reserved styled inputs. Add strict installed Card imports and thirteen-state iOS/Android checks at both text profiles. CardContent/Actions and wider native, physical accessibility, GPU and performance gates remain separate.
