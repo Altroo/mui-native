@@ -9,6 +9,7 @@ export type NativePreparedNode = {
 export type NativeSelectorContext = Pick<
   StyleContext,
   | 'classes'
+  | 'lastChild'
   | 'states'
   | 'descendantClasses'
   | 'descendantPath'
