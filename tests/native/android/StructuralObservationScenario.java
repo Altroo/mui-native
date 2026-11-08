@@ -40,6 +40,7 @@ public final class StructuralObservationScenario {
       {"b", "a", "c", "target"}, {"b", "a", "c", "target"},
       {"target", "a", "b"}};
   private final Instrumentation driver;
+  private final String watchMode;
   private Activity activity;
   private UiAutomation automation;
   private int tagId;
@@ -52,17 +53,22 @@ public final class StructuralObservationScenario {
       previousLayouts, baselineAttached, baselineCleaned, subscriptionId,
       previousRevision;
   private JSONArray previousEvents = new JSONArray();
-  private StructuralObservationScenario(Instrumentation driver) {
+  private StructuralObservationScenario(Instrumentation driver,
+                                        String watchMode) {
     this.driver = driver;
+    this.watchMode = watchMode;
   }
-  public static void run(Instrumentation driver) {
-    new StructuralObservationScenario(driver).run();
+  public static void run(Instrumentation driver) { run(driver, "siblings"); }
+  public static void run(Instrumentation driver, String watchMode) {
+    new StructuralObservationScenario(driver, watchMode).run();
   }
   private void run() {
     Bundle result = new Bundle();
     JSONObject report = new JSONObject();
     boolean passed = false;
     try {
+      require("siblings".equals(watchMode) || "children".equals(watchMode),
+              "Choose a finite structural watch mode");
       require(Build.VERSION.SDK_INT >= 29,
               "Frame-commit observation requires Android29+");
       directory = new File(driver.getTargetContext().getCacheDir(),
@@ -70,6 +76,7 @@ public final class StructuralObservationScenario {
       require(directory.mkdir(), "Preserve existing structure evidence");
       report.put("schemaVersion", 1)
           .put("scenario", "structure-native-observation-v1")
+          .put("watchMode", watchMode)
           .put("driver", "native Instrumentation and UiAutomation")
           .put("artifactDirectory", "cache/" + directory.getName())
           .put("device", new JSONObject()
@@ -84,10 +91,12 @@ public final class StructuralObservationScenario {
                                                    .getResources()
                                                    .getConfiguration()
                                                    .fontScale))
-          .put("limits",
-               "Current public logical-ref metadata plus independently " +
-               "sampled native target frames; not atomic cross-thread, CSS, " +
-               "first-paint, Portal or performance evidence");
+          .put(
+              "limits",
+              "Current public logical-ref metadata plus independently "
+                  +
+                  "sampled native target frames; not atomic cross-thread, CSS, "
+                  + "first-paint, Portal or performance evidence");
       automation = driver.getUiAutomation(
           UiAutomation.FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES);
       Intent launch = driver.getTargetContext()
@@ -102,6 +111,22 @@ public final class StructuralObservationScenario {
       require(tagId != 0, "Native test-id resource missing");
       navigate("catalog-tab-Wrappers", "root-layout-structure", false);
       navigate("root-layout-structure", "structure-probe-receipt", true);
+      await(()
+                -> ui(()
+                          -> "siblings".equals(
+                                 metadata().optString("watchMode")) &&
+                                 metadata().optInt("stage", -1) == 0),
+            "Fresh scene starts in siblings mode");
+      if ("children".equals(watchMode)) {
+        tap("structure-probe-mode");
+        await(()
+                  -> ui(()
+                            -> "children".equals(
+                                   metadata().optString("watchMode")) &&
+                                   metadata().optInt("stage", -1) == 0 &&
+                                   !metadata().optBoolean("active", true)),
+              "Choose the remounted children session before starting");
+      }
       settle(0, -1);
       JSONObject idle = fresh(0);
       diagnostics(idle, false);
@@ -227,10 +252,13 @@ public final class StructuralObservationScenario {
               -> ui(() -> {
             JSONObject m = metadata();
             return !m.has("error") && m.optInt("stage", -1) == stage &&
+                watchMode.equals(m.optString("watchMode")) &&
                 m.optLong("request", -1) > before;
           }),
           "Explicit current-stage public-ref capture must answer");
     JSONObject data = ui(this::metadata);
+    require(watchMode.equals(data.optString("watchMode")),
+            "Captured watch mode must match the requested scenario");
     require(data.getLong("request") > lastRequest,
             "Capture request must increase across samples");
     lastRequest = data.getLong("request");
@@ -241,6 +269,7 @@ public final class StructuralObservationScenario {
               -> ui(() -> {
             JSONObject m = metadata();
             if (m.optInt("stage", -1) != stage ||
+                !watchMode.equals(m.optString("watchMode")) ||
                 m.optLong("targetLayouts", -1) < 1 ||
                 previous >= 0 && m.getLong("targetLayouts") <= previous)
               return false;
@@ -282,6 +311,9 @@ public final class StructuralObservationScenario {
   private JSONObject checkedSample(int stage, JSONObject data)
       throws Exception {
     JSONObject current = metadata();
+    require(watchMode.equals(data.optString("watchMode")) &&
+                watchMode.equals(current.optString("watchMode")),
+            "Native frame and receipt must belong to the selected mode");
     require(current.getLong("request") >= data.getLong("request") &&
                 current.getInt("stage") == stage,
             "Stage must remain current while native frame is sampled");

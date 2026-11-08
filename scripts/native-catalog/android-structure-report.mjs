@@ -48,12 +48,13 @@ function diagnostics(metadata, active) {
     'owned subscription/pending diagnostics',
   );
 }
-function metadata(value, stage, active) {
+function metadata(value, stage, active, watchMode) {
   const expected = structureInputs[stage];
   ensure(
     record(value) &&
       value.schemaVersion === 1 &&
       value.scenario === 'native-structure-observation-probe-v1' &&
+      value.watchMode === watchMode &&
       value.stage === stage &&
       integer(value.request, 1) &&
       integer(value.targetLayouts, 1),
@@ -131,7 +132,8 @@ function frame(value, stage, density, baseline) {
   near(value.targetFrame.y, value.parentFrame.y);
 }
 /** Failed reports may supply safe diagnostics, but do not gain a pass here. */
-export function inspectStructureReport(output) {
+export function inspectStructureReport(output, { watchMode = 'siblings' } = {}) {
+  ensure(['siblings', 'children'].includes(watchMode), 'requested watch mode');
   ensure(typeof output === 'string', 'instrumentation output');
   const packets = [...output.matchAll(/^INSTRUMENTATION_RESULT: structureReport=([^\r\n]+)\r?$/gm)];
   ensure(packets.length === 1, 'one unambiguous report');
@@ -140,6 +142,7 @@ export function inspectStructureReport(output) {
     record(value) &&
       value.schemaVersion === 1 &&
       value.scenario === 'structure-native-observation-v1' &&
+      value.watchMode === watchMode &&
       value.driver === 'native Instrumentation and UiAutomation' &&
       ['passed', 'failed'].includes(value.status),
     'report identity',
@@ -173,8 +176,8 @@ export function inspectStructureReport(output) {
   return value;
 }
 /** Logical ref order and independently sampled native frames, not a CSS/paint proof. */
-export function summarizeStructure(output) {
-  const value = inspectStructureReport(output);
+export function summarizeStructure(output, { watchMode = 'siblings' } = {}) {
+  const value = inspectStructureReport(output, { watchMode });
   ensure(
     [...output.matchAll(/^INSTRUMENTATION_CODE:\s*(-?\d+)\s*$/gm)].length === 1 &&
       /^INSTRUMENTATION_CODE:\s*-1\s*$/m.test(output) &&
@@ -194,7 +197,7 @@ export function summarizeStructure(output) {
       isDeepStrictEqual(value.screenshots, structurePictures),
     'complete finite stages/pictures',
   );
-  metadata(value.idle, 0, false);
+  metadata(value.idle, 0, false, watchMode);
   ensure(value.idle.events.length === 0, 'idle has no notifications');
   let request = value.idle.request,
     previous,
@@ -205,7 +208,7 @@ export function summarizeStructure(output) {
       expected = structureInputs[stage];
     ensure(record(sample) && sample.name === expected.name, 'stage name');
     const m = sample.metadata,
-      checked = metadata(m, stage, true);
+      checked = metadata(m, stage, true, watchMode);
     ensure(m.request > request, 'fresh explicit request');
     request = m.request;
     frame(sample.native, stage, value.device.density, baselineFrame);
@@ -252,7 +255,7 @@ export function summarizeStructure(output) {
     previous = m;
   }
   for (const stopped of [value.stopped, value.finalStopped?.metadata]) {
-    metadata(stopped, 6, false);
+    metadata(stopped, 6, false, watchMode);
     ensure(stopped.request > request, 'fresh stopped request');
     request = stopped.request;
     ensure(

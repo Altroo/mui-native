@@ -15,7 +15,7 @@ import { prepareStructureSource } from './android-structure-source.mjs';
 import { run } from './android-popper.mjs';
 const require = createRequire(import.meta.url);
 const { parseSync: parse } = require('@babel/core');
-function fixture() {
+function fixture(watchMode = 'siblings') {
   let events = [],
     revision = 0;
   const diagnostics = (active) => ({
@@ -30,6 +30,7 @@ function fixture() {
   const metadata = (stage, request, active, layouts) => ({
     schemaVersion: 1,
     scenario: 'native-structure-observation-probe-v1',
+    watchMode,
     stage,
     request,
     authored: structuredClone(structureInputs[stage]),
@@ -74,6 +75,7 @@ function fixture() {
   return {
     schemaVersion: 1,
     scenario: 'structure-native-observation-v1',
+    watchMode,
     driver: 'native Instrumentation and UiAutomation',
     status: 'passed',
     artifactDirectory: 'cache/mui-structure-1234',
@@ -288,3 +290,138 @@ test('compiled Java finite names/order match the independent scene protocol', as
     structureInputs.map((input) => input.order),
   );
 });
+
+// Requested scenario is authoritative; a report cannot relabel a siblings run.
+test('children report is accepted only with explicit requested children mode', () => {
+  const report = fixture('children');
+  assert.equal(summarizeStructure(output(report), { watchMode: 'children' }).watchMode, 'children');
+  assert.throws(() => summarizeStructure(output(report)));
+  assert.throws(() => summarizeStructure(output(fixture()), { watchMode: 'children' }));
+});
+for (const [name, mutate] of [
+  [
+    'top',
+    (r) => {
+      r.watchMode = 'siblings';
+    },
+  ],
+  [
+    'idle',
+    (r) => {
+      r.idle.watchMode = 'siblings';
+    },
+  ],
+  [
+    'initial',
+    (r) => {
+      r.states[0].metadata.watchMode = 'siblings';
+    },
+  ],
+  [
+    'layout-only',
+    (r) => {
+      r.states[5].metadata.watchMode = 'siblings';
+    },
+  ],
+  [
+    'restored',
+    (r) => {
+      r.states[6].metadata.watchMode = 'siblings';
+    },
+  ],
+  [
+    'stopped',
+    (r) => {
+      r.stopped.watchMode = 'siblings';
+    },
+  ],
+  [
+    'final',
+    (r) => {
+      r.finalStopped.metadata.watchMode = 'siblings';
+    },
+  ],
+  [
+    'missing',
+    (r) => {
+      delete r.states[2].metadata.watchMode;
+    },
+  ],
+  [
+    'invalid',
+    (r) => {
+      r.states[2].metadata.watchMode = 'subtree';
+    },
+  ],
+])
+  test('children reader rejects stale or missing selected mode: ' + name, () => {
+    const report = fixture('children');
+    mutate(report);
+    assert.throws(() => summarizeStructure(output(report), { watchMode: 'children' }));
+  });
+for (const watchMode of [null, true, 'subtree', 'children\n'])
+  test(
+    'invalid requested watch mode rejects before granting evidence: ' + JSON.stringify(watchMode),
+    () => {
+      assert.throws(() => summarizeStructure(output(fixture()), { watchMode }));
+    },
+  );
+test('existing siblings scenario rejects a children top-level relabel with stale metadata', () => {
+  const report = fixture();
+  report.watchMode = 'children';
+  assert.throws(() => summarizeStructure(output(report)));
+  assert.throws(() => summarizeStructure(output(report), { watchMode: 'children' }));
+});
+test('children driver sends alternate scenario without adding a mode or font CLI argument', async (t) => {
+  const destination = await directory(t),
+    calls = [],
+    text = output(fixture('children'));
+  const execute = async (_file, args) => {
+    calls.push(args);
+    if (args.includes('get-state')) return 'device';
+    if (args.includes('instrument')) return text;
+    return 'synthetic';
+  };
+  const report = await run(
+    {
+      adb: 'synthetic-adb',
+      serial: 'emulator-5554',
+      output: destination,
+      scenario: 'structure-children',
+    },
+    execute,
+  );
+  assert.equal(report.watchMode, 'children');
+  assert(calls.some((args) => args.includes('instrument') && args.includes('structure-children')));
+  assert(
+    !calls.some(
+      (args) =>
+        args.includes('watchMode') || args.includes('fontProfile') || args.includes('force-stop'),
+    ),
+  );
+  assert.equal(calls.filter((args) => args.includes('exec-out')).length, 8);
+});
+for (const [scenario, actual] of [
+  ['structure-children', 'siblings'],
+  ['structure', 'children'],
+])
+  test('driver rejects mode from the wrong requested scenario: ' + scenario, async (t) => {
+    const destination = await directory(t),
+      calls = [];
+    const execute = async (_file, args) => {
+      calls.push(args);
+      if (args.includes('get-state')) return 'device';
+      if (args.includes('instrument')) return output(fixture(actual));
+      if (args.includes('pidof')) return '';
+      return 'synthetic';
+    };
+    await assert.rejects(
+      run(
+        { adb: 'synthetic-adb', serial: 'emulator-5554', output: destination, scenario },
+        execute,
+      ),
+      /Invalid native structure evidence/,
+    );
+    assert(!calls.some((args) => args.includes('exec-out')));
+    assert(calls.some((args) => args.includes('force-stop')));
+  });

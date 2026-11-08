@@ -1,15 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Private native dependency probe. No CardContent/CSS/timing completion claim.
-import {
-  forwardRef,
-  memo,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, memo, useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, Text, View, findNodeHandle, type ViewInstance } from 'react-native';
 
 type Change = Readonly<{
@@ -66,7 +57,31 @@ const Target = memo(
 );
 
 /** Receipts are observations, not a computed-style oracle or native hook count. */
-export function StructuralObservationProbe({ createClient, diagnostics }: Props) {
+export function StructuralObservationProbe(props: Props) {
+  const [watchMode, setWatchMode] = useState<'siblings' | 'children'>('siblings');
+  return (
+    <View>
+      <Pressable
+        testID="structure-probe-mode"
+        accessibilityRole="button"
+        accessibilityLabel={'Observation mode: ' + watchMode + '. Switch mode'}
+        onPress={() => setWatchMode((value) => (value === 'siblings' ? 'children' : 'siblings'))}
+        style={{ minHeight: 44, padding: 12, marginHorizontal: 12 }}
+      >
+        <Text>Observe {watchMode}</Text>
+      </Pressable>
+      <StructuralObservationSession key={watchMode} {...props} watchMode={watchMode} />
+    </View>
+  );
+}
+
+// Changing the test mode remounts this session. Layout cleanup releases its
+// native owner before another session can start on the same private module.
+function StructuralObservationSession({
+  createClient,
+  diagnostics,
+  watchMode,
+}: Props & { watchMode: 'siblings' | 'children' }) {
   const [stage, setStage] = useState(0),
     [receipt, setReceipt] = useState('{}');
   const parent = useRef<ViewInstance | null>(null);
@@ -133,6 +148,7 @@ export function StructuralObservationProbe({ createClient, diagnostics }: Props)
       const value = {
         schemaVersion: 1,
         scenario: 'native-structure-observation-probe-v1',
+        watchMode,
         request: ++requests.current,
         stage: committedStage.current,
         authored: stages[committedStage.current],
@@ -158,11 +174,12 @@ export function StructuralObservationProbe({ createClient, diagnostics }: Props)
       setReceipt(
         JSON.stringify({
           scenario: 'native-structure-observation-probe-v1',
+          watchMode,
           error: String(error),
         }),
       );
     }
-  }, []);
+  }, [watchMode]);
   const layout = useCallback(() => {
     targetLayouts.current++;
     capture();
@@ -189,7 +206,7 @@ export function StructuralObservationProbe({ createClient, diagnostics }: Props)
     }
     return failures;
   }, []);
-  useEffect(() => {
+  useLayoutEffect(() => {
     alive.current = true;
     capture();
     return () => {
@@ -201,13 +218,13 @@ export function StructuralObservationProbe({ createClient, diagnostics }: Props)
   const start = () => {
     if (release.current) return;
     try {
-      const node = refs.current.get('target'),
+      const node = watchMode === 'children' ? parent.current : refs.current.get('target'),
         tag = node ? findNodeHandle(node) : null;
       if (!tag) throw Error('Mount the target before starting the structural probe');
       const next = factory.current();
       client.current = next;
       const lease = 'structure-probe:' + ++epoch.current;
-      release.current = next.watch(tag, lease, 'siblings', (change) => {
+      release.current = next.watch(tag, lease, watchMode, (change) => {
         if (!alive.current || client.current !== next || change.lease !== lease) return;
         if (events.current.length >= 128) throw Error('Unexpected structural notification flood');
         events.current.push({

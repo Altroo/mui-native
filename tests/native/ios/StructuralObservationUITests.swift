@@ -5,6 +5,7 @@ import XCTest
 /// First logical-tree/notification probe; no CSS or initial-paint parity claim.
 @MainActor final class StructuralObservationUITests: XCTestCase {
   private let app = XCUIApplication(bundleIdentifier: "dev.altroo.muinative.catalog")
+  private var expectedWatchMode = "siblings"
   private func node(_ id: String) -> XCUIElement {
     app.descendants(matching: .any).matching(identifier: id).firstMatch
   }
@@ -47,7 +48,7 @@ import XCTest
       if visible(target, inside: viewport) && (!hit || target.isHittable) { return target }
       XCTAssertGreaterThan(viewport.height, 48)
       let known = target.exists && !target.frame.isEmpty
-      let top = ["structure-probe-start", "structure-probe-next", "structure-probe-measure", "structure-probe-stop"].contains(id)
+      let top = ["structure-probe-start", "structure-probe-next", "structure-probe-measure", "structure-probe-stop", "structure-probe-mode"].contains(id)
       let unknown: CGFloat = top || attempt >= 12 ? -viewport.height : viewport.height
       let delta = known ? target.frame.midY - viewport.midY : unknown
       let distance = min(max(abs(delta), 24), viewport.height * 0.35)
@@ -122,6 +123,7 @@ import XCTest
     if let result = testRun, result.failureCount > 0 { capture("structure-ios-failure") }
   }
   private func diagnostics(_ data: [String: Any], active: Bool) throws {
+    XCTAssertEqual(data["watchMode"] as? String, expectedWatchMode)
     let native = try XCTUnwrap(data["nativeDiagnostics"] as? [String: Any])
     for key in ["connected", "commitHookRegistered", "mountHookRegistered"] {
       XCTAssertEqual(native[key] as? Bool, active, key)
@@ -144,6 +146,38 @@ import XCTest
     return try XCTUnwrap(metadata())
   }
   func testSevenStagesWithRetainedNativeTarget() throws {
+    try runSevenStages(watchMode: "siblings")
+  }
+  func testSevenStagesWithDirectChildren() throws {
+    try runSevenStages(watchMode: "children")
+  }
+  private func runSevenStages(watchMode: String) throws {
+    expectedWatchMode = watchMode
+    if watchMode == "children" {
+      let mode = node("structure-probe-mode")
+      XCTAssertTrue(mode.waitForExistence(timeout: 12))
+      let viewport = node("root-layout-scroll").frame.intersection(app.frame)
+      let frame = mode.frame
+      let details: [String: Any] = [
+        "controlFrame": NSCoder.string(for: frame),
+        "viewport": NSCoder.string(for: viewport),
+        "hittable": mode.isHittable,
+        "description": mode.debugDescription,
+      ]
+      let bytes = try JSONSerialization.data(withJSONObject: details, options: [.sortedKeys])
+      let attachment = XCTAttachment(data: bytes, uniformTypeIdentifier: "public.json")
+      attachment.name = "structure-ios-mode-control"; attachment.lifetime = .keepAlways; add(attachment)
+      print("STRUCTURE_MODE_CONTROL " + String(data: bytes, encoding: .utf8)!)
+      XCTAssertTrue(mode.isHittable, "Mode control must accept a real native tap")
+      XCTAssertFalse(frame.isEmpty)
+      XCTAssertTrue(viewport.contains(CGPoint(x: frame.midX, y: frame.midY)),
+                    "Mode control tap point must be inside the current native viewport")
+      mode.tap()
+    }
+    waitFor("The current session must use the explicitly selected observation mode") {
+      self.metadata()?["watchMode"] as? String == watchMode
+        && self.metadata()?["stage"] as? Int == 0
+    }
     settleFrame(0)
     let idle = try fresh(0)
     try diagnostics(idle, active: false)

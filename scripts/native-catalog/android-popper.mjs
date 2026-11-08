@@ -216,7 +216,7 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'text-alignment' | 'divider' | 'paper' | 'box' | 'card' | 'structure', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'text-alignment' | 'divider' | 'paper' | 'box' | 'card' | 'structure' | 'structure-children', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
@@ -237,6 +237,7 @@ export async function run(
       'box',
       'card',
       'structure',
+      'structure-children',
     ].includes(scenario)
   )
     throw Error('Unknown catalog scenario');
@@ -304,30 +305,31 @@ export async function run(
       );
     }
     await writeFile(join(output, 'instrumentation.txt'), text);
-    report =
-      scenario === 'structure'
-        ? inspectStructureReport(text)
-        : scenario === 'card'
-          ? inspectCardReport(text)
-          : scenario === 'box'
-            ? inspectBoxReport(text)
-            : scenario === 'paper'
-              ? inspectPaperReport(text)
-              : scenario === 'text-alignment'
-                ? inspectTextAlignmentReport(text)
-                : scenario === 'divider'
-                  ? inspectDividerReport(text)
-                  : scenario === 'layout-roots'
-                    ? inspectLayoutRootReport(text)
-                    : scenario === 'accordion'
-                      ? inspectAccordionReport(text)
-                      : scenario === 'svg-icon'
-                        ? inspectSvgIconReport(text)
-                        : scenario === 'button-group-reading'
-                          ? inspectReadingReport(text)
-                          : scenario === 'button-group'
-                            ? inspectButtonGroupReport(text)
-                            : inspectReport(text);
+    report = ['structure', 'structure-children'].includes(scenario)
+      ? inspectStructureReport(text, {
+          watchMode: scenario === 'structure-children' ? 'children' : 'siblings',
+        })
+      : scenario === 'card'
+        ? inspectCardReport(text)
+        : scenario === 'box'
+          ? inspectBoxReport(text)
+          : scenario === 'paper'
+            ? inspectPaperReport(text)
+            : scenario === 'text-alignment'
+              ? inspectTextAlignmentReport(text)
+              : scenario === 'divider'
+                ? inspectDividerReport(text)
+                : scenario === 'layout-roots'
+                  ? inspectLayoutRootReport(text)
+                  : scenario === 'accordion'
+                    ? inspectAccordionReport(text)
+                    : scenario === 'svg-icon'
+                      ? inspectSvgIconReport(text)
+                      : scenario === 'button-group-reading'
+                        ? inspectReadingReport(text)
+                        : scenario === 'button-group'
+                          ? inspectButtonGroupReport(text)
+                          : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -342,7 +344,10 @@ export async function run(
       await writeFile(join(output, file), bytes);
     }
     signal?.throwIfAborted();
-    if (scenario === 'structure') summarizeStructure(text);
+    if (['structure', 'structure-children'].includes(scenario))
+      summarizeStructure(text, {
+        watchMode: scenario === 'structure-children' ? 'children' : 'siblings',
+      });
     else if (scenario === 'card') summarizeCard(text, { fontProfile });
     else if (scenario === 'box') summarizeBox(text, { fontProfile });
     else if (scenario === 'paper') summarizePaper(text, { fontProfile });
