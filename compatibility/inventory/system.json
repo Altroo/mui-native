@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "60c183ff606bcac0b677d9c836b9354050b853c4a880b72f8f5ac7112c50327e",
+  "nativeSourceSha256": "737357bc89538a21b7ac08354091ec6244f1337a3123cd33762a2fbe8e964c22",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7334,7 +7334,7 @@
           "module": "@altroo/mui-native-system:src/merge.ts",
           "name": "merge",
           "kind": "value",
-          "line": 8
+          "line": 43
         }
       ]
     },
