@@ -13,6 +13,8 @@
 
 namespace facebook::react {
 class UIManagerBinding;
+class AltrooPrelayoutProbe;
+class AltrooStructuralStyleRuntime;
 using AltrooStructuralChange =
     NativeAltrooStructuralObserverStructuralChange<double, std::string, double,
                                                    bool>;
@@ -47,8 +49,22 @@ public:
   std::vector<AltrooStructuralChange> takeRecords(jsi::Runtime &runtime);
   void disconnect(jsi::Runtime &runtime);
   AltrooStructuralDiagnostics getDiagnostics(jsi::Runtime &runtime);
+  void enablePrelayoutProbe(jsi::Runtime &runtime);
+  void disablePrelayoutProbe(jsi::Runtime &runtime);
+  std::string getPrelayoutReport(jsi::Runtime &runtime);
+  void enableStructuralStyleRuntime(jsi::Runtime &runtime, std::string owner,
+                                    std::string generation, AsyncCallback<> notify);
+  bool disableStructuralStyleRuntime(jsi::Runtime &runtime, std::string owner,
+                                     std::string generation);
+  std::string getStructuralStyleRuntimeStatus(jsi::Runtime &runtime);
+  std::string getStructuralStyleMetadata(jsi::Runtime &runtime);
 
 private:
+  // Lazy and separate ownership: disconnect stops observation, not this probe.
+  std::unique_ptr<AltrooPrelayoutProbe> prelayout_;
+  AltrooPrelayoutProbe &prelayoutProbe();
+  std::unique_ptr<AltrooStructuralStyleRuntime> styleRuntime_;
+  AltrooStructuralStyleRuntime &styleRuntime();
   struct Shared;
   std::shared_ptr<Shared> shared_;
   // The binding owns UIManager. Keep it alive until both hooks are removed;

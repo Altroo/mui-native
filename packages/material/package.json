@@ -557,6 +557,11 @@
       "types": "./dist/ButtonGroup/ButtonGroupButtonContext/index.d.ts",
       "react-native": "./src/ButtonGroup/ButtonGroupButtonContext/index.ts",
       "default": "./dist/ButtonGroup/ButtonGroupButtonContext/index.js"
+    },
+    "./internal/card-content": {
+      "types": "./dist/internal/card-content/index.d.ts",
+      "react-native": "./src/internal/card-content/index.ts",
+      "default": "./dist/internal/card-content/index.js"
     }
   },
   "dependencies": {

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // This native editor reuses a reviewed React Native ABI; validate before autolinking.
 require('./scripts/verify-native-input.cjs').verifyNativeInput();
 module.exports = {
@@ -13,6 +14,7 @@ module.exports = {
           'AltrooMUINativePickerComponentDescriptor',
           'AltrooPortalHostComponentDescriptor',
           'AltrooPortalCanvasComponentDescriptor',
+          'AltrooStructuralViewComponentDescriptor',
         ],
         packageImportPath: 'import com.altroo.muinativehost.AltrooMuiNativeHostPackage;',
         packageInstance: 'new AltrooMuiNativeHostPackage()',

@@ -451,6 +451,8 @@ GitHub Actions checks upstream at 07:17 and 19:17 UTC and on manual dispatch. It
 
 ## Development and release
 
+See [native structural style internals](docs/native-structural-style.md) for the current native backend scope and remaining compatibility boundaries.
+
 This project uses AI-assisted tools to accelerate development, review, and documentation, with testing and compatibility checks required before release.
 
 - [Roadmap and milestone gates](ROADMAP.md)

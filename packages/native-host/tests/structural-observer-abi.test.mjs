@@ -13,7 +13,8 @@ const structure = JSON.parse(
   await readFile(join(host, 'structural-observation-baseline.json'), 'utf8'),
 );
 async function fixture(t) {
-  const folder = await mkdtemp(join(tmpdir(), 'mui-structural-abi-'));
+  // Node resolves module roots through real paths, including macOS /var aliases.
+  const folder = await realpath(await mkdtemp(join(tmpdir(), 'mui-structural-abi-')));
   t.after(() => rm(folder, { recursive: true, force: true }));
   const nativeRoot = join(folder, 'node_modules/react-native'),
     copy = join(folder, 'host');
@@ -59,7 +60,7 @@ test('actual source guard preserves the editor baseline and adds the structural 
   const f = await fixture(t),
     r = f.run('--native-root', f.nativeRoot, '--android-autolinking', f.cache, '--root');
   assert.equal(r.status, 0, r.stderr);
-  assert.equal(r.stdout, await realpath(f.nativeRoot));
+  assert.equal(r.stdout, f.nativeRoot);
 });
 test('changed private Fabric hook source fails before native compilation', async (t) => {
   const f = await fixture(t),
@@ -115,5 +116,27 @@ for (const args of [['--native-root'], ['--native-root', '--root'], ['--android-
       r = f.run(...args);
     assert.notEqual(r.status, 0);
     assert.match(r.stderr, /requires a path/);
+  });
+}
+
+// The native host-element predicate depends on these trait/boundary contracts.
+for (const path of [
+  'ReactCommon/react/renderer/core/ShadowNodeTraits.h',
+  'ReactCommon/react/renderer/components/text/TextShadowNode.h',
+  'ReactCommon/react/renderer/components/virtualview/VirtualViewShadowNode.h',
+  'ReactCommon/react/renderer/components/root/RootShadowNode.h',
+  'ReactCommon/react/renderer/components/modal/ModalHostViewShadowNode.h',
+  'ReactCommon/react/renderer/components/inputaccessory/InputAccessoryShadowNode.h',
+]) {
+  test('changed host-element boundary source rejects before compilation: ' + path, async (t) => {
+    const f = await fixture(t);
+    await writeFile(
+      join(f.nativeRoot, path),
+      (await readFile(join(f.nativeRoot, path), 'utf8')) + '\n// changed host boundary\n',
+    );
+    const r = f.run();
+    assert.notEqual(r.status, 0);
+    assert.match(r.stderr, /Structural observation peer source changed/);
+    assert.ok(r.stderr.includes(path));
   });
 }

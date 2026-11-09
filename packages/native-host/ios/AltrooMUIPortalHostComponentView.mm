@@ -2,6 +2,7 @@
  * Copyright (c) Meta Platforms, Inc. and affiliates. See NOTICE and provenance. */
 #import "AltrooMUIPortalHostComponentView.h"
 #import "AltrooMUIInteractiveViewComponentView.h"
+#import "AltrooMUIStructuralViewComponentView.h"
 #import "AltrooMUIPortalCanvasComponentView.h"
 #import "AltrooPortalLogicalParent.h"
 #import "AltrooPortalClipping.h"
@@ -273,7 +274,12 @@ static AltrooPortalMatrix AltrooWindowMatrix(UIView *view) {
     // by identity while retaining the window check for application-supplied views.
     BOOL sameWindow = AltrooObservationWindow(target) == self.window;
     BOOL cycle = target == self || [target isDescendantOfView:_root];
-    BOOL regular = target && ([target class] == RCTViewComponentView.class || [target isKindOfClass:AltrooMUIInteractiveViewComponentView.class] || [target isKindOfClass:AltrooMUIPortalCanvasComponentView.class]);
+    // The owned structural root inherits the ordinary native View content surface.
+    BOOL regular = target &&
+      ([target class] == RCTViewComponentView.class ||
+       [target isKindOfClass:AltrooMUIInteractiveViewComponentView.class] ||
+       [target isKindOfClass:AltrooMUIPortalCanvasComponentView.class] ||
+       [target isKindOfClass:AltrooMUIStructuralViewComponentView.class]);
     BOOL supported = regular && AltrooPortalSupportsContainer((RCTViewComponentView *)target) && !AltrooPortalClipsSubviews((RCTViewComponentView *)target);
     UIView *surface = _containerTag == 0 ? target : supported && [target respondsToSelector:@selector(currentContainerView)] ? [(RCTViewComponentView *)target currentContainerView] : nil;
     UIView *dispatchRoot = _containerTag == 0 ? _root : AltrooDispatchRoot(surface);

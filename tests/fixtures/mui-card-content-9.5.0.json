@@ -1,0 +1,431 @@
+{
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "CardContent/CardContent.js": "7e29324188dab96cd1c8872d841e931d1ae6eecff7677b37f9696aa9c0262919",
+        "CardContent/CardContent.d.ts": "8bf2591f190490dc2bd3425f53b56b941cf05d0d4e7c69beb67f473a19d1d87b",
+        "CardContent/CardContent.d.mts": "7b8f2f3c0c131a2f57f3b0c9e521958ac7f81aa5a096b5328166bacc2d223f72",
+        "CardContent/cardContentClasses.js": "c8ab4714900e98177926c1bd0f948c64085387714cf47295b300c35a26f97fd9",
+        "CardContent/cardContentClasses.d.ts": "a28d089808860737ef08c33c36db5e3db57ec5c5fd41acdbeb0f0d1d8f7a1519",
+        "CardContent/cardContentClasses.d.mts": "a28d089808860737ef08c33c36db5e3db57ec5c5fd41acdbeb0f0d1d8f7a1519",
+        "CardContent/index.js": "80112f98f043c3f67725246b841fad11c90918dec321a847386e5865a1c76300",
+        "CardContent/index.d.ts": "51b1dce48fa5bde70b49e5586d0bf7ba3371e172df994fd6401bba8b436fb852",
+        "CardContent/index.d.mts": "18cc33a09385d73a3ec473d56648b1e7247cafb191222511e683dd89ecba98f9",
+        "styles/components.d.ts": "358dac701e57422878d7164f4ba31b1672e641dcf2c1378354da779400b0255f",
+        "styles/props.d.ts": "05084be14d8c1f9b14f83f357f57c8a3ee04f3ec936b72e2cb694cd7b3cb48ee",
+        "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "71257c2f99ee841b9a4beabf5d70c312a7d87a7ac9de7bd9389f13c9170dccd5"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f",
+        "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+        "DefaultPropsProvider/DefaultPropsProvider.js": "6234e618376c90c75eadd92dc0af9e078a946cf57d6adb15b473163932fbc739"
+      }
+    }
+  ],
+  "classes": { "root": "MuiCardContent-root" },
+  "utilities": {
+    "root": "MuiCardContent-root",
+    "disabled": "Mui-disabled",
+    "focusVisible": "Mui-focusVisible",
+    "invented": "MuiCardContent-invented",
+    "constructor": "Mui-function Object() { [native code] }",
+    "toString": "Mui-function toString() { [native code] }"
+  },
+  "fixtures": [
+    {
+      "name": "default",
+      "props": {},
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1lt5qva-MuiCardContent-root{padding:16px;}.css-1lt5qva-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "caller-class",
+      "props": { "className": "consumer" },
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root consumer",
+        "inline": "",
+        "css": ".css-1lt5qva-MuiCardContent-root{padding:16px;}.css-1lt5qva-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "root-class",
+      "props": { "classes": { "root": "root-override" }, "className": "consumer" },
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root root-override consumer",
+        "inline": "",
+        "css": ".css-1lt5qva-MuiCardContent-root{padding:16px;}.css-1lt5qva-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "component-section",
+      "props": { "component": "section" },
+      "result": {
+        "tag": "section",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1lt5qva-MuiCardContent-root{padding:16px;}.css-1lt5qva-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "as-article",
+      "props": { "as": "article" },
+      "result": {
+        "tag": "article",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1lt5qva-MuiCardContent-root{padding:16px;}.css-1lt5qva-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "component-then-as",
+      "props": { "component": "section", "as": "article" },
+      "result": {
+        "tag": "article",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1lt5qva-MuiCardContent-root{padding:16px;}.css-1lt5qva-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "own-undefined-component",
+      "props": { "component": "$undefined" },
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1lt5qva-MuiCardContent-root{padding:16px;}.css-1lt5qva-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "null-component-js",
+      "props": { "component": null },
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1lt5qva-MuiCardContent-root{padding:16px;}.css-1lt5qva-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "sx-root-padding",
+      "props": { "sx": { "p": 0 } },
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-127evc8-MuiCardContent-root{padding:16px;padding:0px;}.css-127evc8-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "sx-root-bottom",
+      "props": { "sx": { "paddingBottom": 5 } },
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1yduhf-MuiCardContent-root{padding:16px;padding-bottom:40px;}.css-1yduhf-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "sx-last-child-bottom",
+      "props": { "sx": { "&:last-child": { "paddingBottom": 5 } } },
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1144c3v-MuiCardContent-root{padding:16px;}.css-1144c3v-MuiCardContent-root:last-child{padding-bottom:24px;}.css-1144c3v-MuiCardContent-root:last-child{padding-bottom:40px;}"
+      }
+    },
+    {
+      "name": "inline-bottom",
+      "props": { "style": { "paddingBottom": 4 } },
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "padding-bottom:4px",
+        "css": ".css-1lt5qva-MuiCardContent-root{padding:16px;}.css-1lt5qva-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "inline-and-sx",
+      "props": {
+        "sx": { "p": 0, "&:last-child": { "paddingBottom": 3 } },
+        "style": { "paddingBottom": 4 }
+      },
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "padding-bottom:4px",
+        "css": ".css-1vvzq4m-MuiCardContent-root{padding:16px;padding:0px;}.css-1vvzq4m-MuiCardContent-root:last-child{padding-bottom:24px;}.css-1vvzq4m-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    }
+  ],
+  "spacing": {
+    "base": {
+      "tag": "div",
+      "className": "MuiCardContent-root",
+      "inline": "",
+      "css": ".css-1lt5qva-MuiCardContent-root{padding:16px;}.css-1lt5qva-MuiCardContent-root:last-child{padding-bottom:24px;}"
+    },
+    "sx": {
+      "tag": "div",
+      "className": "MuiCardContent-root",
+      "inline": "",
+      "css": ".css-3ofqzi-MuiCardContent-root{padding:16px;padding:22px;}.css-3ofqzi-MuiCardContent-root:last-child{padding-bottom:24px;}"
+    },
+    "sxArray": {
+      "tag": "div",
+      "className": "MuiCardContent-root",
+      "inline": "",
+      "css": ".css-17aidmg-MuiCardContent-root{padding:16px;padding:11px;margin-top:22px;}.css-17aidmg-MuiCardContent-root:last-child{padding-bottom:24px;}"
+    }
+  },
+  "defaults": [
+    {
+      "name": "theme-defaults",
+      "result": {
+        "tag": "section",
+        "className": "MuiCardContent-root theme-root theme-default",
+        "inline": "",
+        "css": ".css-kacebu-MuiCardContent-root{padding:16px;padding:16px;}.css-kacebu-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "own-undefined",
+      "result": {
+        "tag": "section",
+        "className": "MuiCardContent-root theme-root theme-default",
+        "inline": "",
+        "css": ".css-kacebu-MuiCardContent-root{padding:16px;padding:16px;}.css-kacebu-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    },
+    {
+      "name": "explicit",
+      "result": {
+        "tag": "article",
+        "className": "MuiCardContent-root theme-root caller",
+        "inline": "",
+        "css": ".css-1994y9o-MuiCardContent-root{padding:16px;padding:8px;}.css-1994y9o-MuiCardContent-root:last-child{padding-bottom:24px;}"
+      }
+    }
+  ],
+  "themed": [
+    {
+      "name": "default-state",
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1leuwts-MuiCardContent-root{padding:16px;padding:3px;}.css-1leuwts-MuiCardContent-root:last-child{padding-bottom:24px;}.css-1leuwts-MuiCardContent-root:last-child{padding-bottom:5px;}"
+      },
+      "trace": [
+        {
+          "slot": "root",
+          "keys": ["children", "component", "id"],
+          "component": "div",
+          "hasComponent": true,
+          "density": null
+        },
+        {
+          "slot": "unused",
+          "keys": ["children", "component", "id"],
+          "component": "div",
+          "hasComponent": true,
+          "density": null
+        }
+      ]
+    },
+    {
+      "name": "selected-component",
+      "result": {
+        "tag": "section",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1leuwts-MuiCardContent-root{padding:16px;padding:3px;}.css-1leuwts-MuiCardContent-root:last-child{padding-bottom:24px;}.css-1leuwts-MuiCardContent-root:last-child{padding-bottom:5px;}"
+      },
+      "trace": [
+        {
+          "slot": "root",
+          "keys": ["children", "component", "id"],
+          "component": "section",
+          "hasComponent": true,
+          "density": null
+        },
+        {
+          "slot": "unused",
+          "keys": ["children", "component", "id"],
+          "component": "section",
+          "hasComponent": true,
+          "density": null
+        }
+      ]
+    },
+    {
+      "name": "authored-state",
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-1leuwts-MuiCardContent-root{padding:16px;padding:3px;}.css-1leuwts-MuiCardContent-root:last-child{padding-bottom:24px;}.css-1leuwts-MuiCardContent-root:last-child{padding-bottom:5px;}"
+      },
+      "trace": [
+        {
+          "slot": "root",
+          "keys": ["data-density"],
+          "component": null,
+          "hasComponent": false,
+          "density": "compact"
+        },
+        {
+          "slot": "unused",
+          "keys": ["data-density"],
+          "component": null,
+          "hasComponent": false,
+          "density": "compact"
+        }
+      ]
+    },
+    {
+      "name": "sx-after-root",
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-c8i2mi-MuiCardContent-root{padding:16px;padding:3px;padding:0px;}.css-c8i2mi-MuiCardContent-root:last-child{padding-bottom:24px;}.css-c8i2mi-MuiCardContent-root:last-child{padding-bottom:5px;}"
+      },
+      "trace": [
+        {
+          "slot": "root",
+          "keys": ["children", "component", "id", "sx"],
+          "component": "div",
+          "hasComponent": true,
+          "density": null
+        },
+        {
+          "slot": "unused",
+          "keys": ["children", "component", "id", "sx"],
+          "component": "div",
+          "hasComponent": true,
+          "density": null
+        }
+      ]
+    },
+    {
+      "name": "sx-after-pseudo",
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "",
+        "css": ".css-5c2qzt-MuiCardContent-root{padding:16px;padding:3px;}.css-5c2qzt-MuiCardContent-root:last-child{padding-bottom:24px;}.css-5c2qzt-MuiCardContent-root:last-child{padding-bottom:5px;}.css-5c2qzt-MuiCardContent-root:last-child{padding-bottom:16px;}"
+      },
+      "trace": [
+        {
+          "slot": "root",
+          "keys": ["children", "component", "id", "sx"],
+          "component": "div",
+          "hasComponent": true,
+          "density": null
+        },
+        {
+          "slot": "unused",
+          "keys": ["children", "component", "id", "sx"],
+          "component": "div",
+          "hasComponent": true,
+          "density": null
+        }
+      ]
+    },
+    {
+      "name": "inline-after-pseudo",
+      "result": {
+        "tag": "div",
+        "className": "MuiCardContent-root",
+        "inline": "padding-bottom:4px",
+        "css": ".css-1leuwts-MuiCardContent-root{padding:16px;padding:3px;}.css-1leuwts-MuiCardContent-root:last-child{padding-bottom:24px;}.css-1leuwts-MuiCardContent-root:last-child{padding-bottom:5px;}"
+      },
+      "trace": [
+        {
+          "slot": "root",
+          "keys": ["children", "component", "id", "style"],
+          "component": "div",
+          "hasComponent": true,
+          "density": null
+        },
+        {
+          "slot": "unused",
+          "keys": ["children", "component", "id", "style"],
+          "component": "div",
+          "hasComponent": true,
+          "density": null
+        }
+      ]
+    }
+  ],
+  "variants": [
+    {
+      "tag": "div",
+      "className": "MuiCardContent-root",
+      "inline": "",
+      "css": ".css-hrmnqu-MuiCardContent-root{padding:16px;padding:3px;padding:5px;}.css-hrmnqu-MuiCardContent-root:last-child{padding-bottom:24px;}.css-hrmnqu-MuiCardContent-root:last-child{padding-bottom:7px;}"
+    },
+    {
+      "tag": "div",
+      "className": "MuiCardContent-root",
+      "inline": "",
+      "css": ".css-hzwt89-MuiCardContent-root{padding:16px;padding:3px;padding:5px;padding:0px;}.css-hzwt89-MuiCardContent-root:last-child{padding-bottom:24px;}.css-hzwt89-MuiCardContent-root:last-child{padding-bottom:7px;}"
+    },
+    {
+      "tag": "div",
+      "className": "MuiCardContent-root",
+      "inline": "",
+      "css": ".css-1ws0173-MuiCardContent-root{padding:16px;padding:3px;padding:5px;}.css-1ws0173-MuiCardContent-root:last-child{padding-bottom:24px;}.css-1ws0173-MuiCardContent-root:last-child{padding-bottom:7px;}.css-1ws0173-MuiCardContent-root:last-child{padding-bottom:16px;}"
+    }
+  ],
+  "wrapped": {
+    "tag": "div",
+    "className": "MuiCardContent-root",
+    "inline": "",
+    "css": ".css-he6m6e{padding:9px;padding:0px;}.css-he6m6e:last-child{padding-bottom:11px;}.css-pq3ha-MuiCardContent-root{padding:16px;padding:9px;padding:0px;}.css-pq3ha-MuiCardContent-root:last-child{padding-bottom:24px;}.css-pq3ha-MuiCardContent-root:last-child{padding-bottom:11px;}"
+  },
+  "unusedThrow": "unused-card-content-slot",
+  "getter": {
+    "result": {
+      "tag": "div",
+      "className": "MuiCardContent-root",
+      "inline": "",
+      "css": ".css-1im1lho-MuiCardContent-root{padding:16px;margin-top:2px;}.css-1im1lho-MuiCardContent-root:last-child{padding-bottom:24px;}"
+    },
+    "trace": ["get:root", "call:root", "get:unused", "call:unused"]
+  }
+}

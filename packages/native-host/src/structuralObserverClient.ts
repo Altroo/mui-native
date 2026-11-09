@@ -1,6 +1,11 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import type { Spec, StructuralChange } from './NativeAltrooStructuralObserver';
 
+// Observation-only injections retain their original transport contract.
+type ObservationModule = Pick<
+  Spec,
+  'connect' | 'observe' | 'unobserve' | 'takeRecords' | 'disconnect' | 'getDiagnostics'
+>;
 type Mode = 'siblings' | 'children';
 type Listener = (change: StructuralChange) => void;
 type Entry = { id: number; lease: string; revision: number; listener: Listener; released: boolean };
@@ -21,7 +26,7 @@ const validChange = (value: unknown): value is StructuralChange => {
 
 /** Private transport only. A dirty hint is not a sibling/CSS/paint snapshot.
  * The caller owns one shared client per native module and reads actual refs. */
-export function createStructuralObserverClient(injected?: Spec) {
+export function createStructuralObserverClient(injected?: ObservationModule) {
   let native = injected;
   const entries = new Map<number, Entry>();
   let connected = false,
@@ -29,7 +34,7 @@ export function createStructuralObserverClient(injected?: Spec) {
     draining = false,
     drainAgain = false;
   const module = () => {
-    native ??= require('./NativeAltrooStructuralObserver').default as Spec | undefined;
+    native ??= require('./NativeAltrooStructuralObserver').default as ObservationModule | undefined;
     if (!native)
       throw Error('Structural observation requires the matching native development build');
     return native;

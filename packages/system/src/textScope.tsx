@@ -1,8 +1,9 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
-import React, { createContext, useContext, useMemo, useRef } from 'react';
+import React, { createContext, useContext, useId, useMemo, useRef } from 'react';
 import {
   Text,
   View,
+  Platform,
   StyleSheet,
   unstable_TextAncestorContext as TextAncestorContext,
   type StyleProp,
@@ -16,6 +17,7 @@ import {
   type NativeTextChildRootTracker,
 } from './nativeTextRegistry';
 import type { Theme } from './theme';
+import { GENERATED_TEXT_ORIGIN_CONTRACT } from './generatedParagraphOrigin';
 import {
   nativeStyleBorderDeclarations,
   applyNativeBorderStyle,
@@ -218,6 +220,28 @@ export function NativeTextScope({
     </NativeTextStyleContext.Provider>
   );
 }
+// Only library-created literal runs use this wrapper. Explicit consumer Text
+// keeps its own nativeID/id, refs and props. The namespace identifies origin;
+// it does not authenticate callers or add another native host.
+function GeneratedParagraph({
+  children,
+  style,
+}: {
+  children: string;
+  style: StyleProp<TextStyle>;
+}) {
+  // An unconditional hook keeps identity stable across updates and StrictMode.
+  const id = useId();
+  const mobile = Platform.OS === 'ios' || Platform.OS === 'android';
+  return (
+    <Text
+      style={style}
+      {...(mobile ? { nativeID: GENERATED_TEXT_ORIGIN_CONTRACT.nativeIDPrefix + id } : {})}
+    >
+      {children}
+    </Text>
+  );
+}
 export function renderNativeTextChildren(
   content: React.ReactNode,
   theme: Theme,
@@ -231,7 +255,7 @@ export function renderNativeTextChildren(
   const flush = () => {
     if (run.length) {
       result.push(
-        <Text
+        <GeneratedParagraph
           key={'native-text:' + result.length}
           style={nativeTextAlignmentStyle(
             scope.literalStyle ?? scope.style,
@@ -242,7 +266,7 @@ export function renderNativeTextChildren(
           )}
         >
           {run.join('')}
-        </Text>,
+        </GeneratedParagraph>,
       );
       run = [];
     }

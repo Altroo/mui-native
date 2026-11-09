@@ -26,6 +26,16 @@ export interface Spec extends TurboModule {
   takeRecords(): ReadonlyArray<StructuralChange>;
   disconnect(): void;
   getDiagnostics(): StructuralDiagnostics;
+  // Private controlled prelayout mechanics; owns a separate opt-in hook.
+  enablePrelayoutProbe(): void;
+  disablePrelayoutProbe(): void;
+  getPrelayoutReport(): string;
+  // Immutable preparse readiness. No runtime activation or mutable status.
+  getStructuralStyleMetadata(): string;
+  // Long-lived controlled style selection, separate from private diagnostics.
+  enableStructuralStyleRuntime(owner: string, generation: string, notify: () => void): void;
+  disableStructuralStyleRuntime(owner: string, generation: string): boolean;
+  getStructuralStyleRuntimeStatus(): string;
 }
 
 export default TurboModuleRegistry.get<Spec>('AltrooStructuralObserver');
