@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "737357bc89538a21b7ac08354091ec6244f1337a3123cd33762a2fbe8e964c22",
+  "nativeSourceSha256": "7bc1319677f2120980f7f9c4a8993aaee106ff53a6c18d624304ba27b3332cad",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7015,7 +7015,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentRootStyle",
           "kind": "value",
-          "line": 1050
+          "line": 1052
         }
       ]
     },
@@ -7499,7 +7499,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "NativeTextScope",
           "kind": "value",
-          "line": 184
+          "line": 186
         }
       ]
     },
@@ -7510,7 +7510,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "NativeTextScopeProps",
           "kind": "type",
-          "line": 169
+          "line": 171
         }
       ]
     },
@@ -7532,7 +7532,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "NativeTextScopeValue",
           "kind": "type",
-          "line": 36
+          "line": 38
         }
       ]
     },
@@ -7543,7 +7543,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "nativeTextStyleContext",
           "kind": "value",
-          "line": 50
+          "line": 52
         }
       ]
     },
@@ -7554,7 +7554,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "NativeTextStyleContext",
           "kind": "value",
-          "line": 48
+          "line": 50
         }
       ]
     },
@@ -7653,7 +7653,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "renderNativeTextChildren",
           "kind": "value",
-          "line": 221
+          "line": 245
         }
       ]
     },
@@ -7928,7 +7928,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentRootStyle",
           "kind": "value",
-          "line": 104
+          "line": 112
         }
       ]
     },
@@ -7939,7 +7939,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentStyle",
           "kind": "value",
-          "line": 92
+          "line": 97
         }
       ]
     },
@@ -7961,7 +7961,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useNativeRootProps",
           "kind": "value",
-          "line": 124
+          "line": 132
         }
       ]
     },
@@ -7983,7 +7983,7 @@
           "module": "@altroo/mui-native-system:src/textScope.tsx",
           "name": "useNativeTextContext",
           "kind": "value",
-          "line": 49
+          "line": 51
         }
       ]
     },
@@ -8016,7 +8016,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useSx",
           "kind": "value",
-          "line": 87
+          "line": 92
         }
       ]
     }
@@ -11263,7 +11263,7 @@
         {
           "name": "ThemeProviderProps",
           "file": "src/provider.tsx",
-          "line": 30,
+          "line": 35,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -11325,7 +11325,7 @@
         {
           "name": "ThemeProviderProps",
           "file": "src/provider.tsx",
-          "line": 30,
+          "line": 35,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -18238,6 +18238,72 @@
       "package": "@altroo/mui-native-system"
     },
     {
+      "name": "NativeRootPreparation",
+      "file": "src/nativeRootHandoff.tsx",
+      "line": 8,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativePreparedStyle",
+        "NativeStyle",
+        "Readonly"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "NativeRootStyleInput",
+      "file": "src/nativeRootHandoff.tsx",
+      "line": 14,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativeStyle",
+        "Readonly",
+        "StyleContext",
+        "StyleProp",
+        "Theme"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "NativeRootOutput",
+      "file": "src/nativeRootHandoff.tsx",
+      "line": 20,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativeRootPreparation",
+        "NativeStyle",
+        "ReactNode",
+        "Readonly",
+        "Record",
+        "Ref",
+        "StyleProp",
+        "Theme",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "NativeRootHandoff",
+      "file": "src/nativeRootHandoff.tsx",
+      "line": 29,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "NativeRootOutput",
+        "NativeRootPreparation",
+        "NativeRootStyleInput",
+        "ReactNode",
+        "Readonly"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
       "name": "NativePreparedNode",
       "file": "src/nativeStyledMetadata.ts",
       "line": 5,
@@ -18761,7 +18827,7 @@
     {
       "name": "ThemeProviderProps",
       "file": "src/provider.tsx",
-      "line": 30,
+      "line": 35,
       "kind": "type",
       "members": [
         {
@@ -18771,7 +18837,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme: Partial<T> | ((outer: T) => T);",
-          "line": 31,
+          "line": 36,
           "kind": "property",
           "type": "Partial<T> | ((outer: T) => T)"
         },
@@ -18782,7 +18848,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "themeId?: string;",
-          "line": 32,
+          "line": 37,
           "kind": "property",
           "type": "string"
         },
@@ -18793,7 +18859,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 33,
+          "line": 38,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -18810,7 +18876,7 @@
     {
       "name": "NativeStyledRef",
       "file": "src/provider.tsx",
-      "line": 135,
+      "line": 143,
       "kind": "type",
       "members": [],
       "references": [
@@ -19577,13 +19643,24 @@
       "kind": "type",
       "members": [
         {
+          "name": "programme",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "programme?: StyleProp<NativeStyle>;",
+          "line": 1041,
+          "kind": "property",
+          "type": "StyleProp<NativeStyle>"
+        },
+        {
           "name": "computed",
           "optional": false,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 1040,
+          "line": 1042,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -19594,7 +19671,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 1041,
+          "line": 1043,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -19605,7 +19682,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 1043,
+          "line": 1045,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         }
@@ -19620,7 +19697,7 @@
     {
       "name": "NativeTextScopeValue",
       "file": "src/textScope.tsx",
-      "line": 36,
+      "line": 38,
       "kind": "type",
       "members": [
         {
@@ -19630,7 +19707,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style: TextStyle;",
-          "line": 37,
+          "line": 39,
           "kind": "property",
           "type": "TextStyle"
         },
@@ -19641,7 +19718,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "literalStyle?: TextStyle;",
-          "line": 38,
+          "line": 40,
           "kind": "property",
           "type": "TextStyle"
         },
@@ -19652,7 +19729,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "lineHeight?: number;",
-          "line": 39,
+          "line": 41,
           "kind": "property",
           "type": "number"
         },
@@ -19663,7 +19740,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | undefined;",
-          "line": 41,
+          "line": 43,
           "kind": "property",
           "type": "'ltr' | 'rtl' | undefined"
         },
@@ -19674,7 +19751,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "textAlign?: NativeCssTextAlign | undefined;",
-          "line": 43,
+          "line": 45,
           "kind": "property",
           "type": "NativeCssTextAlign | undefined"
         },
@@ -19685,7 +19762,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "paragraphDirection?: 'ltr' | 'rtl' | undefined;",
-          "line": 45,
+          "line": 47,
           "kind": "property",
           "type": "'ltr' | 'rtl' | undefined"
         },
@@ -19696,7 +19773,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeText: boolean;",
-          "line": 46,
+          "line": 48,
           "kind": "property",
           "type": "boolean"
         }
@@ -19711,7 +19788,7 @@
     {
       "name": "NativeTextScopeProps",
       "file": "src/textScope.tsx",
-      "line": 169,
+      "line": 171,
       "kind": "type",
       "members": [
         {
@@ -19721,7 +19798,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme: Theme;",
-          "line": 170,
+          "line": 172,
           "kind": "property",
           "type": "Theme"
         },
@@ -19732,7 +19809,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle>;",
-          "line": 171,
+          "line": 173,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -19743,7 +19820,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "kind?: 'view' | 'text';",
-          "line": 172,
+          "line": 174,
           "kind": "property",
           "type": "'view' | 'text'"
         },
@@ -19754,7 +19831,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "reset?: boolean;",
-          "line": 173,
+          "line": 175,
           "kind": "property",
           "type": "boolean"
         },
@@ -19765,7 +19842,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootRef?: React.RefObject<object | null>;",
-          "line": 175,
+          "line": 177,
           "kind": "property",
           "type": "React.RefObject<object | null>"
         },
@@ -19776,7 +19853,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "content?: React.ReactNode;",
-          "line": 176,
+          "line": 178,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -19787,7 +19864,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: (\n    style: NativeStyle,\n    content: React.ReactNode,\n    scope: NativeTextScopeValue,\n  ) => React.ReactNode;",
-          "line": 177,
+          "line": 179,
           "kind": "property",
           "type": "(\n    style: NativeStyle,\n    content: React.ReactNode,\n    scope: NativeTextScopeValue,\n  ) => React.ReactNode"
         }
