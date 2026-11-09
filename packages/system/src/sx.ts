@@ -1037,6 +1037,8 @@ export function createNativeStyledStyle(
 }
 /** @internal The genuine native layers remain separate from the complete CSS cascade. */
 export interface NativeRootStyleResult {
+  /** @internal Retained full programme from this single resolution. */
+  programme?: StyleProp<NativeStyle>;
   computed: NativeStyle;
   authored: StyleProp<NativeStyle>;
   /** @internal Only this physical root's CSS, without inherited sheets. */
@@ -1054,6 +1056,7 @@ export function componentRootStyle(
   sx: SxProps | undefined,
   authored: StyleProp<NativeStyle>,
   context: StyleContext = {},
+  retainProgramme = false,
 ): NativeRootStyleResult {
   const wrappers: PreparedSheet[] = [];
   const native: StyleProp<NativeStyle>[] = [];
@@ -1095,9 +1098,20 @@ export function componentRootStyle(
   const sheets = [...prepareComponent(theme, name, props, sx, finalContext), ...wrappers];
   const ownSheets = sheets.filter((sheet) => !sheet.ancestor);
   for (const sheet of ownSheets) retainPreparedNodes(sheet.nodes);
-  return {
+  const result: NativeRootStyleResult = {
     computed: finishRules(collectSheets(sheets), theme, finalContext),
     authored: native,
     prepared: Object.freeze({ sheets: Object.freeze(ownSheets) }),
   };
+  if (!retainProgramme) return result;
+  const programme = [result.computed, ...native];
+  nativeStyledStyles.set(
+    programme,
+    Object.freeze({
+      sheets: Object.freeze([...sheets]),
+      authored: native,
+      hasAuthoredStyle: native.length > 0,
+    }),
+  );
+  return { ...result, programme };
 }

@@ -73,6 +73,16 @@
       "types": "./dist/createBreakpoints/index.d.ts",
       "react-native": "./src/createBreakpoints/index.ts",
       "default": "./dist/createBreakpoints/index.js"
+    },
+    "./internal/prepared-style": {
+      "types": "./dist/internal/prepared-style/index.d.ts",
+      "react-native": "./src/internal/prepared-style/index.ts",
+      "default": "./dist/internal/prepared-style/index.js"
+    },
+    "./internal/generated-paragraph": {
+      "types": "./dist/internal/generated-paragraph/index.d.ts",
+      "react-native": "./src/internal/generated-paragraph/index.ts",
+      "default": "./dist/internal/generated-paragraph/index.js"
     }
   },
   "dependencies": {},

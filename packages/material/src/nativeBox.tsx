@@ -18,6 +18,11 @@ import {
   applyNativeTextMetrics,
   type Theme,
 } from '@altroo/mui-native-system';
+import {
+  NativeRootHandoffContext,
+  registerNativeRoot,
+  useNativeRootHandoff,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { THEME_ID } from './themeProvider';
 import { mergeNativeRootStyle } from './nativeControlStyles';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
@@ -39,6 +44,7 @@ const defaultClassName = boxClasses.root;
 const generateClassName = unstable_ClassNameGenerator.generate;
 export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootProps>(
   function Box(inProps, forwarded) {
+    const handoff = useNativeRootHandoff(boxRoot);
     const { root, ref } = useNativeTextRootRef(forwarded),
       nativeRef = useNativeStyleRef(root, ref);
     // Box is anonymous to styled/theme defaults: it must never resolve MuiBox.
@@ -78,7 +84,7 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
       rules = useContext(NativeButtonGroupRules),
       { width } = useWindowDimensions();
     const authoredStyle = restoreNativeRootStyle(input, props);
-    const { computed, authored, prepared } = componentRootStyle(
+    const { computed, authored, prepared, programme } = componentRootStyle(
       theme,
       '',
       props as Record<string, unknown>,
@@ -91,11 +97,49 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
         ancestors: nativeStyleAncestors(rules, { classes }),
         protectPhysicalGeometry: true,
       },
+      handoff !== null,
     );
     const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, computed, authored);
     const finalStyle =
       applyNativeTextMetrics(merged, computed, nativeStyleTextMetrics([computed, authored])) ??
       merged;
+    if (handoff) {
+      if (chosen !== View && chosen !== 'div') throw Error('Cooperating Box requires View/div');
+      const context = {
+        ...nativeTextStyleContext(parent, style, theme),
+        width,
+        classes,
+        protectPhysicalGeometry: true,
+      };
+      const preparation = handoff.prepare({
+        theme,
+        programme,
+        context,
+        parentDirection: parent?.direction ?? theme.direction,
+      });
+      return (
+        <NativeTextScope
+          rootRef={root}
+          theme={theme}
+          style={preparation.presentation}
+          content={children}
+        >
+          {(presentation, content) => (
+            <NativeRootHandoffContext.Provider value={null}>
+              {handoff.render({
+                preparation,
+                hostProps: native,
+                nativeRef,
+                children: content,
+                presentation,
+                theme,
+                classes,
+              })}
+            </NativeRootHandoffContext.Provider>
+          )}
+        </NativeTextScope>
+      );
+    }
     return (
       <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
         <NativeTextScope rootRef={root} theme={theme} style={finalStyle} content={children}>
@@ -114,3 +158,6 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
     );
   },
 ) as NativeBoxComponent;
+
+const boxRoot = Box;
+registerNativeRoot(boxRoot);

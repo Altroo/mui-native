@@ -12,6 +12,11 @@ import {
   type NativeRootStyleInput,
 } from './nativeStyledMetadata';
 import { useNativeTextRootRef } from './nativeTextRegistry';
+import {
+  NativeRootHandoffContext,
+  registerNativeRoot,
+  useNativeRootHandoff,
+} from './nativeRootHandoff';
 import { NativeTextScope, useNativeTextContext, nativeTextStyleContext } from './textScope';
 import {
   componentStyle,
@@ -98,7 +103,10 @@ export function useComponentStyle(
 ) {
   const theme = scopedTheme(useTheme(), themeId);
   const { width } = useWindowDimensions();
-  return componentStyle(theme, name, props as Record<string, unknown>, sx, { width, ...context });
+  return componentStyle(theme, name, props as Record<string, unknown>, sx, {
+    width,
+    ...context,
+  });
 }
 /** @internal Root-local counterpart to useComponentStyle for native library components. */
 export function useComponentRootStyle(
@@ -139,13 +147,22 @@ type NativeStyledRef<Props> = 'ref' extends keyof Props
   : unknown;
 export function styled<P extends object>(
   Component: React.ComponentType<P>,
-  options: { name?: string; shouldForwardProp?: (prop: string) => boolean; themeId?: string } = {},
+  options: {
+    name?: string;
+    shouldForwardProp?: (prop: string) => boolean;
+    themeId?: string;
+  } = {},
 ) {
-  return (styles: SxObject | ((props: P & { theme: Theme; ownerState?: unknown }) => SxProps)) =>
-    forwardRef<
+  return (styles: SxObject | ((props: P & { theme: Theme; ownerState?: unknown }) => SxProps)) => {
+    const Styled = forwardRef<
       NativeStyledRef<P>,
-      P & { sx?: SxProps | undefined; style?: StyleProp<NativeStyle>; ownerState?: unknown }
+      P & {
+        sx?: SxProps | undefined;
+        style?: StyleProp<NativeStyle>;
+        ownerState?: unknown;
+      }
     >((props, ref) => {
+      const handoff = useNativeRootHandoff(Styled);
       const { root, ref: rootRef } = useNativeTextRootRef(ref);
       const theme = scopedTheme(useTheme(), options.themeId);
       const parent = useNativeTextContext();
@@ -153,7 +170,10 @@ export function styled<P extends object>(
       const { sx, style, ownerState, ...rest } = props;
       const resolved =
         typeof styles === 'function'
-          ? styles({ ...props, theme } as P & { theme: Theme; ownerState?: unknown })
+          ? styles({ ...props, theme } as P & {
+              theme: Theme;
+              ownerState?: unknown;
+            })
           : styles;
       const filtered = Object.fromEntries(
         Object.entries(rest).filter(([key]) => options.shouldForwardProp?.(key) ?? true),
@@ -170,6 +190,47 @@ export function styled<P extends object>(
         },
         style,
       );
+      if (handoff) {
+        if (Component !== (View as unknown)) throw Error('Only styled(View) can cooperate');
+        const classes =
+          typeof filtered.className === 'string'
+            ? filtered.className.split(/\s+/).filter(Boolean)
+            : [];
+        const context = {
+          ...nativeTextStyleContext(parent, style, theme),
+          width,
+          classes,
+          protectPhysicalGeometry: true,
+        };
+        const preparation = handoff.prepare({
+          theme,
+          programme: finalStyle,
+          context,
+          parentDirection: parent?.direction ?? theme.direction,
+        });
+        return (
+          <NativeTextScope
+            rootRef={root as React.RefObject<object | null>}
+            theme={theme}
+            style={preparation.presentation}
+            content={(filtered as { children?: React.ReactNode }).children}
+          >
+            {(presentation, children) => (
+              <NativeRootHandoffContext.Provider value={null}>
+                {handoff.render({
+                  preparation,
+                  hostProps: filtered,
+                  nativeRef: rootRef as React.Ref<import('react-native').ViewInstance>,
+                  children,
+                  presentation,
+                  theme,
+                  classes,
+                })}
+              </NativeRootHandoffContext.Provider>
+            )}
+          </NativeTextScope>
+        );
+      }
       if (Component === (View as unknown) || Component === (Text as unknown)) {
         return (
           <NativeTextScope
@@ -196,4 +257,7 @@ export function styled<P extends object>(
         style: finalStyle,
       } as unknown as P);
     });
+    if (Component === (View as unknown)) registerNativeRoot(Styled);
+    return Styled;
+  };
 }

@@ -22,11 +22,20 @@
       "@mui/material": ["./packages/material/src/index.ts"],
       "@mui/x-data-grid": ["./packages/x-data-grid/src/index.ts"],
       "@altroo/mui-native-host": ["./packages/native-host/src/index.tsx"],
+      "@altroo/mui-native-host/internal/owned-view": [
+        "./packages/native-host/src/internal/owned-view/index.ts"
+      ],
+      "@altroo/mui-native-system/internal/prepared-style": [
+        "./packages/system/src/internal/prepared-style/index.ts"
+      ],
       "@altroo/mui-native-system/DefaultPropsProvider": [
         "./packages/system/src/DefaultPropsProvider/index.ts"
       ],
       "@mui/icons-material/*": ["./packages/icons/src/*"],
-      "@altroo/mui-native-icons/*": ["./packages/icons/src/*"]
+      "@altroo/mui-native-icons/*": ["./packages/icons/src/*"],
+      "@altroo/mui-native-system/internal/generated-paragraph": [
+        "./packages/system/src/internal/generated-paragraph/index.ts"
+      ]
     },
     "customConditions": ["react-native"],
     "noUnusedLocals": true,
