@@ -1009,8 +1009,30 @@ export function createNativeStyledStyle(
   authored: StyleProp<NativeStyle>,
   // A selected owner state may differ from the original prop style presence.
   suppliedStyle?: boolean,
+  // First-party construction recipes and prepared CSS only. Ordinary calls keep
+  // their original preparation path and one metadata registration.
+  composition?: Readonly<{
+    layers?: readonly (() => Readonly<{
+      theme: Theme;
+      name: string;
+      props: Record<string, unknown>;
+      sx: SxProps | undefined;
+      context: StyleContext;
+    }>)[];
+    forwarded?: StyleProp<NativeStyle>;
+  }>,
 ): StyleProp<NativeStyle> {
-  const sheets = prepareComponent(theme, name, props, sx, context);
+  const sheets = composition?.layers
+    ? composition.layers.flatMap((prepare) => {
+        const layer = prepare();
+        return prepareComponent(layer.theme, layer.name, layer.props, layer.sx, layer.context);
+      })
+    : prepareComponent(theme, name, props, sx, context);
+  if (composition?.forwarded) {
+    const forwarded = nativeStyledStyles.get(composition.forwarded as object);
+    if (!forwarded) throw Error('Expected first-party prepared root CSS');
+    sheets.push(...forwarded.sheets);
+  }
   for (const sheet of sheets) {
     retainPreparedNodes(sheet.nodes);
     Object.freeze(sheet.context.classes);

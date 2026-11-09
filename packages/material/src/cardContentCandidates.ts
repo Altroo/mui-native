@@ -117,7 +117,9 @@ export function compileCandidates(input: CardContentBackendInput) {
 
 /** Compile one terminal cooperating root; all callbacks were already prepared once. */
 export function compileCooperatingCandidates(
-  input: CardContentBackendInput,
+  input: Pick<CardContentBackendInput, 'styleProgram'> & {
+    styleContext: Pick<CardContentBackendInput['styleContext'], 'classes'>;
+  },
   root: NativeRootStyleInput,
 ): NativeRootPreparation {
   const cardSheets: NativePreparedSheet[] = [],
@@ -136,8 +138,12 @@ export function compileCooperatingCandidates(
     } else if (Array.isArray(style)) for (const value of style) visit(value, sheets, keepNative);
     else if (style && keepNative) native.push(style);
   };
-  visit(input.styleProgram, cardSheets, true);
-  visit(root.programme, rootSheets, false);
+  // The actual selected root may have applied defaults to its genuine inline
+  // style. Its retained authored channel is authoritative; never replay eager
+  // fallback maps as inline. The undefined programme case remains useful for
+  // isolated callers which have only Card's original channel.
+  visit(input.styleProgram, cardSheets, root.programme === undefined);
+  visit(root.programme, rootSheets, true);
   const classes = Array.from(
     new Set([...(input.styleContext.classes ?? []), ...(root.context.classes ?? [])]),
   );

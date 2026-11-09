@@ -20,6 +20,9 @@ import {
 } from '@altroo/mui-native-system';
 import {
   NativeRootHandoffContext,
+  useNativeRootStyleForward,
+  clearNativeRootStyleForward,
+  retainNativeRootCss,
   registerNativeRoot,
   useNativeRootHandoff,
 } from '@altroo/mui-native-system/internal/prepared-style';
@@ -44,7 +47,8 @@ const defaultClassName = boxClasses.root;
 const generateClassName = unstable_ClassNameGenerator.generate;
 export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootProps>(
   function Box(inProps, forwarded) {
-    const handoff = useNativeRootHandoff(boxRoot);
+    const handoff = useNativeRootHandoff(boxRoot, inProps.className);
+    const forwardedStyle = useNativeRootStyleForward(boxRoot, inProps.className);
     const { root, ref } = useNativeTextRootRef(forwarded),
       nativeRef = useNativeStyleRef(root, ref);
     // Box is anonymous to styled/theme defaults: it must never resolve MuiBox.
@@ -83,7 +87,10 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
     const parent = useNativeTextContext(),
       rules = useContext(NativeButtonGroupRules),
       { width } = useWindowDimensions();
-    const authoredStyle = restoreNativeRootStyle(input, props);
+    const restoredStyle = restoreNativeRootStyle(input, props);
+    const authoredStyle = forwardedStyle
+      ? retainNativeRootCss(restoredStyle, forwardedStyle.programme, Object.hasOwn(props, 'style'))
+      : restoredStyle;
     const { computed, authored, prepared, programme } = componentRootStyle(
       theme,
       '',
@@ -117,7 +124,8 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
         context,
         parentDirection: parent?.direction ?? theme.direction,
       });
-      return (
+      return clearNativeRootStyleForward(
+        forwardedStyle,
         <NativeTextScope
           rootRef={root}
           theme={theme}
@@ -137,10 +145,12 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
               })}
             </NativeRootHandoffContext.Provider>
           )}
-        </NativeTextScope>
+        </NativeTextScope>,
+        handoff?.retained,
       );
     }
-    return (
+    return clearNativeRootStyleForward(
+      forwardedStyle,
       <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
         <NativeTextScope rootRef={root} theme={theme} style={finalStyle} content={children}>
           {(style, content) => (
@@ -154,7 +164,7 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
             </Root>
           )}
         </NativeTextScope>
-      </NativeStyleScope>
+      </NativeStyleScope>,
     );
   },
 ) as NativeBoxComponent;

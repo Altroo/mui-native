@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "d5fe443ba0875d439af5520ec3ade431cb643b1f8f9d8bd67139234d32df3e0a",
+  "nativeSourceSha256": "8afa0de68bba9561f36d5d7e0d1f609310a2d2591bcaef78b16e0e309771d88e",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -35427,7 +35427,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentRootStyle",
           "kind": "value",
-          "line": 1052
+          "line": 1074
         }
       ]
     },
@@ -36593,7 +36593,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeRootStyleResult",
           "kind": "type",
-          "line": 1039
+          "line": 1061
         }
       ]
     },
@@ -37473,7 +37473,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "systemDefaultTheme",
           "kind": "value",
-          "line": 32
+          "line": 45
         }
       ]
     },
@@ -37671,7 +37671,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentRootStyle",
           "kind": "value",
-          "line": 112
+          "line": 125
         }
       ]
     },
@@ -37704,7 +37704,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useNativeRootProps",
           "kind": "value",
-          "line": 132
+          "line": 145
         }
       ]
     },
@@ -37781,7 +37781,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useThemeWithoutDefault",
           "kind": "value",
-          "line": 66
+          "line": 79
         }
       ]
     }
@@ -187847,7 +187847,7 @@
     {
       "name": "RuntimeStatus",
       "file": "src/cardContentRuntimeBackend.tsx",
-      "line": 27,
+      "line": 35,
       "kind": "type",
       "members": [],
       "references": [
@@ -187861,7 +187861,7 @@
     {
       "name": "PreparedRuntimeCardContent",
       "file": "src/cardContentRuntimeBackend.tsx",
-      "line": 217,
+      "line": 256,
       "kind": "type",
       "members": [],
       "references": [
@@ -213750,7 +213750,7 @@
     {
       "name": "NativeRootStyleResult",
       "file": "src/sx.ts",
-      "line": 1039,
+      "line": 1061,
       "kind": "type",
       "members": [
         {
@@ -213760,7 +213760,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "programme?: StyleProp<NativeStyle>;",
-          "line": 1041,
+          "line": 1063,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -213771,7 +213771,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 1042,
+          "line": 1064,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -213782,7 +213782,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 1043,
+          "line": 1065,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -213793,7 +213793,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 1045,
+          "line": 1067,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         }

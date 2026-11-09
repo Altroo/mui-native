@@ -85,7 +85,9 @@
       "default": "./dist/internal/generated-paragraph/index.js"
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-is": "19.3.0"
+  },
   "peerDependencies": {
     "react": ">=19.3.0 <20",
     "react-native": ">=0.88.1 <0.89"
