@@ -506,7 +506,10 @@ template<class S>void ordinarySiblingControls(){
  }
 }
 int main(){try{
- if(preservedGeneratedControls()!=0)return 1;const int before=assertions;
+ if(preservedGeneratedControls()!=0) {
+  return 1;
+ }
+ const int before=assertions;
  ordinarySiblingControls<ImageShadowNode>();ordinarySiblingControls<ScrollViewShadowNode>();ordinarySiblingControls<PlatformInput>();
  ordinarySiblingControls<InteractiveHost>();ordinarySiblingControls<PickerHost>();ordinarySiblingControls<EditorHost>();ordinarySiblingControls<SvgHost>();ordinarySiblingControls<SvgAndroidHost>();ordinarySiblingControls<ArbitraryViewKindShadowNode>();
  ordinarySiblingControls<ImageLookalike>();ordinarySiblingControls<OtherPlatformInput>();
