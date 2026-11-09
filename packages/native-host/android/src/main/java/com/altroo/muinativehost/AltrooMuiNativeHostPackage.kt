@@ -14,5 +14,5 @@ class AltrooMuiNativeHostPackage : ReactPackage {
       fontManager.addCustomFont(SystemFontRegistration.FAMILY, Typeface.DEFAULT)
     }
   }
-  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> = listOf(AltrooMUITextInputManager(), AltrooMUIInteractiveViewManager(), AltrooMUINativePickerManager(), AltrooMUIPortalHostManager(), AltrooMUIPortalCanvasManager())
+  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> = listOf(AltrooMUITextInputManager(), AltrooMUIInteractiveViewManager(), AltrooMUINativePickerManager(), AltrooMUIPortalHostManager(), AltrooMUIPortalCanvasManager(), AltrooMUIStructuralViewManager())
 }

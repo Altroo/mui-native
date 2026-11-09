@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile, access, mkdtemp, rm } from 'node:fs/promises';
@@ -63,7 +64,7 @@ test(
   },
 );
 
-test('Android System font registration precedes lazy view-manager creation without adding native APIs', async () => {
+test('Android System font registration precedes all registered lazy view managers', async () => {
   const source = await readFile(
     'packages/native-host/android/src/main/java/com/altroo/muinativehost/AltrooMuiNativeHostPackage.kt',
     { encoding: 'utf8' },
@@ -93,6 +94,7 @@ test('Android System font registration precedes lazy view-manager creation witho
       'AltrooMUINativePickerManager',
       'AltrooMUIPortalHostManager',
       'AltrooMUIPortalCanvasManager',
+      'AltrooMUIStructuralViewManager',
     ],
   );
 });

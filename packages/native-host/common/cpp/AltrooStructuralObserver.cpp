@@ -1,6 +1,9 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 #include "AltrooStructuralObserver.h"
+#include "AltrooPrelayoutProbe.h"
+#include "AltrooStructuralStyleRuntime.h"
 #include "StructuralObservationState.h"
+#include "OwnedStyleMetadata.h"
 #include <cmath>
 #include <cstdint>
 #include <map>
@@ -88,6 +91,46 @@ AltrooStructuralObserver::AltrooStructuralObserver(
       shared_(std::make_shared<Shared>()) {}
 
 AltrooStructuralObserver::~AltrooStructuralObserver() { stop(); }
+
+AltrooPrelayoutProbe &AltrooStructuralObserver::prelayoutProbe() {
+  if (!prelayout_)
+    prelayout_ = std::make_unique<AltrooPrelayoutProbe>(jsInvoker_);
+  return *prelayout_;
+}
+void AltrooStructuralObserver::enablePrelayoutProbe(jsi::Runtime &runtime) {
+  prelayoutProbe().enable(runtime);
+}
+void AltrooStructuralObserver::disablePrelayoutProbe(jsi::Runtime &runtime) {
+  if (prelayout_)
+    prelayout_->disable(runtime);
+}
+std::string AltrooStructuralObserver::getPrelayoutReport(jsi::Runtime &runtime) {
+  return prelayoutProbe().getReport(runtime);
+}
+
+AltrooStructuralStyleRuntime &AltrooStructuralObserver::styleRuntime() {
+  if (!styleRuntime_)
+    styleRuntime_ = std::make_unique<AltrooStructuralStyleRuntime>();
+  return *styleRuntime_;
+}
+void AltrooStructuralObserver::enableStructuralStyleRuntime(
+    jsi::Runtime &runtime, std::string owner, std::string generation,
+    AsyncCallback<> notify) {
+  styleRuntime().enable(runtime, owner, generation, std::move(notify));
+}
+bool AltrooStructuralObserver::disableStructuralStyleRuntime(
+    jsi::Runtime &, std::string owner, std::string generation) {
+  return styleRuntime_ ? styleRuntime_->disable(owner, generation) : false;
+}
+std::string
+AltrooStructuralObserver::getStructuralStyleRuntimeStatus(jsi::Runtime &) {
+  return styleRuntime().getStatus();
+}
+
+std::string
+AltrooStructuralObserver::getStructuralStyleMetadata(jsi::Runtime &) {
+  return altroo::owned_channel::structuralStyleMetadata();
+}
 
 void AltrooStructuralObserver::connect(jsi::Runtime &runtime,
                                        AsyncCallback<> notify) {

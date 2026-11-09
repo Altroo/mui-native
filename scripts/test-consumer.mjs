@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
-import { mkdir, readFile, readdir, writeFile, cp, rm, access } from 'node:fs/promises';
+import { mkdir, readFile, readdir, writeFile, cp, rm, access, lstat } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
@@ -70,6 +70,39 @@ assertSystemDeclarationIsolation(
 console.log('Installed System declarations remain independent of Material.');
 // A published native package must retain source/config needed by autolinking and codegen.
 const nativeHost = `${consumer}/node_modules/@altroo/mui-native-host`;
+// BEGIN RETIRED RAWTEXT ARCHIVE GUARD
+async function assertNoRetiredRawText(host) {
+  for (const file of [
+    'common/cpp/AltrooLiteralRawTextShadowNode.cpp',
+    'common/cpp/AltrooLiteralRawTextShadowNode.h',
+    'common/cpp/AltrooLiteralRawTextComponentDescriptor.h',
+    'common/cpp/LiteralRttiBindingDiagnostic.h',
+    'src/generatedLiteralRun.tsx',
+    'dist/generatedLiteralRun.js',
+    'dist/generatedLiteralRun.js.map',
+    'dist/generatedLiteralRun.d.ts',
+  ]) {
+    try {
+      await lstat(`${host}/${file}`);
+    } catch (error) {
+      if (error.code === 'ENOENT') continue;
+      throw error;
+    }
+    throw Error('Retired own RawText experiment remains packaged: ' + file);
+  }
+  const manifest = JSON.parse(await readFile(`${host}/package.json`, 'utf8'));
+  if (Object.hasOwn(manifest.codegenConfig.ios.componentProvider, 'AltrooMUILiteralRawText'))
+    throw Error('Retired own RawText iOS provider remains packaged');
+  if (
+    (await readFile(`${host}/react-native.config.js`, 'utf8')).includes(
+      'AltrooLiteralRawTextComponentDescriptor',
+    )
+  )
+    throw Error('Retired own RawText Android descriptor remains packaged');
+}
+await assertNoRetiredRawText(nativeHost);
+// END RETIRED RAWTEXT ARCHIVE GUARD
+
 const structuralFiles = [
   'AltrooMuiNativeHost.podspec',
   'android/CMakeLists.txt',
@@ -90,6 +123,66 @@ const structuralFiles = [
   'common/cpp/StructuralObservationState.h',
   'ios/AltrooStructuralObserverProvider.h',
   'ios/AltrooStructuralObserverProvider.mm',
+  'android/src/main/java/com/altroo/muinativehost/AltrooMUIStructuralViewManager.java',
+  'android/src/main/java/com/altroo/muinativehost/AltrooMuiNativeHostPackage.kt',
+  'common/cpp/AltrooPrelayoutProbe.cpp',
+  'common/cpp/AltrooPrelayoutProbe.h',
+  'common/cpp/AltrooStructuralStyleRuntime.h',
+  'common/cpp/AltrooStructuralViewShadowNode.h',
+  'common/cpp/ChannelProbe.h',
+  'common/cpp/GeneratedConversion.h',
+  'common/cpp/GeneratedParagraphOrigin.h',
+  'common/cpp/OwnedBackgroundPayload.h',
+  'common/cpp/OwnedConversionProbe.h',
+  'common/cpp/OwnedProgramme.h',
+  'common/cpp/OwnedPropsTransport.h',
+  'common/cpp/OwnedStyleMetadata.h',
+  'common/cpp/PrelayoutJournal.h',
+  'common/cpp/PrelayoutResolver.h',
+  'common/cpp/PreparedOwnedCandidates.h',
+  'common/cpp/StructuralComponentName.h',
+  'common/cpp/StructuralStyleErrorNotification.h',
+  'common/cpp/StructuralStyleRuntimeState.h',
+  'common/cpp/react/renderer/components/AltrooMuiNativeHostSpec/ComponentDescriptors.h',
+  'dist/AltrooMUIStructuralViewNativeComponent.d.ts',
+  'dist/AltrooMUIStructuralViewNativeComponent.js',
+  'dist/AndroidPrelayoutController.d.ts',
+  'dist/AndroidPrelayoutController.js',
+  'dist/NativeAltrooPrelayoutProbe.d.ts',
+  'dist/NativeAltrooPrelayoutProbe.js',
+  'dist/internal/owned-view/index.d.ts',
+  'dist/internal/owned-view/index.js',
+  'dist/ownedStructuralHost.d.ts',
+  'dist/ownedStructuralHost.js',
+  'dist/ownedStyleBootstrap.d.ts',
+  'dist/ownedStyleBootstrap.js',
+  'dist/ownedStyleEncoding.d.ts',
+  'dist/ownedStyleEncoding.js',
+  'dist/ownedStyleMetadata.d.ts',
+  'dist/ownedStyleMetadata.js',
+  'dist/ownedStyleTypes.d.ts',
+  'dist/ownedStyleTypes.js',
+  'dist/ownedStyleVocabulary.d.ts',
+  'dist/ownedStyleVocabulary.js',
+  'dist/structuralStyleActivation.d.ts',
+  'dist/structuralStyleActivation.js',
+  'ios/AltrooMUIPortalHostComponentView.mm',
+  'ios/AltrooMUIStructuralViewComponentView.h',
+  'ios/AltrooMUIStructuralViewComponentView.mm',
+  'ios/AltrooPrelayoutProbeProvider.h',
+  'ios/AltrooPrelayoutProbeProvider.mm',
+  'src/AltrooMUIStructuralViewNativeComponent.ts',
+  'src/AndroidPrelayoutController.ts',
+  'src/NativeAltrooPrelayoutProbe.ts',
+  'src/internal/owned-view/index.ts',
+  'src/ownedStructuralHost.tsx',
+  'src/ownedStyleBootstrap.ts',
+  'src/ownedStyleEncoding.ts',
+  'src/ownedStyleMetadata.ts',
+  'src/ownedStyleRNTypes.d.ts',
+  'src/ownedStyleTypes.ts',
+  'src/ownedStyleVocabulary.ts',
+  'src/structuralStyleActivation.ts',
 ];
 // Compare real archive bytes, so a stale source/provider cannot pass by name.
 for (const file of structuralFiles) {

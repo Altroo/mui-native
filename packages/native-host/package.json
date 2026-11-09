@@ -44,7 +44,12 @@
       "react-native": "./src/index.tsx",
       "default": "./dist/index.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./internal/owned-view": {
+      "types": "./dist/internal/owned-view/index.d.ts",
+      "react-native": "./src/internal/owned-view/index.ts",
+      "default": "./dist/internal/owned-view/index.js"
+    }
   },
   "dependencies": {},
   "peerDependencies": {
@@ -64,10 +69,12 @@
         "AltrooMUINativePicker": "AltrooMUINativePickerComponentView",
         "AltrooMUIPortalHost": "AltrooMUIPortalHostComponentView",
         "AltrooMUIPortalCanvas": "AltrooMUIPortalCanvasComponentView",
-        "AltrooMUITextInput": "AltrooMUITextInputComponentView"
+        "AltrooMUITextInput": "AltrooMUITextInputComponentView",
+        "AltrooMUIStructuralView": "AltrooMUIStructuralViewComponentView"
       },
       "modulesProvider": {
-        "AltrooStructuralObserver": "AltrooStructuralObserverProvider"
+        "AltrooStructuralObserver": "AltrooStructuralObserverProvider",
+        "AltrooPrelayoutProbe": "AltrooPrelayoutProbeProvider"
       }
     }
   },
