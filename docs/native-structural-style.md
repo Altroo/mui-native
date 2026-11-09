@@ -16,9 +16,15 @@ System-generated literal text uses stock React Native Text with a reserved, vers
 
 Ordinary View-kind siblings count regardless of zero size or hidden presentation. Root, virtual and owned Portal boundaries are excluded; Portal projection remains unsupported. Native checks on both platforms cover Image, vertical/horizontal ScrollView, single/multiline TextInput, actual SvgIcon and ButtonBase, along with reorder, zero/hidden states, removal and cleanup. Physical presence can differ by platform; a missing native lookup does not prove global registry absence.
 
+## Known styled and memo roots
+
+Prepared native roots preserve adjacent styled-layer ordering, selected-root defaults and genuine React.memo boundaries. A comparator that retains old props also retains their prepared styles; the transport does not call user comparators or substitute the latest parent input. Genuine accepted native inline styles remain authoritative.
+
+The internal transport uses generated className tokens beginning with `altroo-root-css-v1-` or `altroo-root-handoff-v1-`. Authored class text is preserved, but generated names do not promise Emotion hash equality. These prefixes are reserved interoperability conventions, not authentication. Instance-local weak tables and real emitted/returned element props retain pending and accepted style snapshots. This adds no public wrapper or native host and does not establish a measured speed or memory bound.
+
 ## Current boundaries
 
-The current cooperating-root channel covers direct View, styled(View) and Box ending in View/div. Nested styled/memo roots, Portal destination order, conditional text/ancestor facts and eligible opaque roots still need their own integration and acceptance work. No public prop contract is narrowed to hide those gaps.
+The source channel covers direct View, styled(View), Box ending in View/div and the finite known styled/memo forms above. Matching platform acceptance remains a separate gate for each form. Portal destination order, conditional text/ancestor facts and eligible opaque roots remain unfinished. No public prop contract is narrowed to hide those gaps.
 
 The native observations use normal text size and LTR fixtures. They do not establish first-containing-candidate chronology, first paint, GPU output, physical-device assistive technology or release performance. Runtime chronology and paint flags remain false. Two RN deep-import deprecations remain in the version-pinned native encoder.
 
