@@ -11,6 +11,7 @@ import { spawnSync } from 'node:child_process';
 const framework = String.raw`
 #pragma once
 #include <algorithm>
+#include <cstdint>
 #include <functional>
 #include <map>
 #include <memory>
@@ -19,6 +20,7 @@ const framework = String.raw`
 #include <stdexcept>
 #include <utility>
 #include <vector>
+namespace altroo::prelayout::probe { struct PassiveRuntimeSink; }
 namespace facebook::jsi { struct Runtime {}; struct Function { void call(Runtime&) {} }; }
 namespace facebook::react {
 using SurfaceId=int; using Tag=int; using HighResTimeStamp=double;
@@ -91,6 +93,11 @@ public:
  void enable(jsi::Runtime&){throw std::logic_error("Unexpected prelayout enable");}
  void disable(jsi::Runtime&){throw std::logic_error("Unexpected prelayout disable");}
  std::string getReport(jsi::Runtime&){throw std::logic_error("Unexpected prelayout report");}
+ void armPassiveWitness(jsi::Runtime&,std::int32_t,const std::string&){throw std::logic_error("Unexpected passive arm");}
+ void stopPassiveWitness(){throw std::logic_error("Unexpected passive stop");}
+ std::string passiveWitnessReport(){throw std::logic_error("Unexpected passive report");}
+ std::weak_ptr<altroo::prelayout::probe::PassiveRuntimeSink> passiveWitnessSink()const{throw std::logic_error("Unexpected passive sink");}
+ void expectPassiveGeneration(std::uint64_t){throw std::logic_error("Unexpected passive generation");}
 };
 class AltrooStructuralStyleRuntime {
 public:
@@ -98,12 +105,15 @@ public:
  void enable(jsi::Runtime&,const std::string&,const std::string&,AsyncCallback<>){throw std::logic_error("Unexpected style enable");}
  bool disable(const std::string&,const std::string&){throw std::logic_error("Unexpected style disable");}
  std::string getStatus(){throw std::logic_error("Unexpected style status");}
+ std::uint64_t installPassiveWitness(const std::weak_ptr<altroo::prelayout::probe::PassiveRuntimeSink>&){throw std::logic_error("Unexpected passive install");}
+ void clearPassiveWitness(const std::weak_ptr<altroo::prelayout::probe::PassiveRuntimeSink>&){throw std::logic_error("Unexpected passive clear");}
 };
 class AltrooStructuralObserver final:public NativeAltrooStructuralObserverCxxSpec<AltrooStructuralObserver>,private UIManagerCommitHook,private UIManagerMountHook{
 public:
  explicit AltrooStructuralObserver(std::shared_ptr<CallInvoker>);~AltrooStructuralObserver() override;
  void connect(jsi::Runtime&,AsyncCallback<>);double observe(jsi::Runtime&,double,std::string,std::string);bool unobserve(jsi::Runtime&,double,std::string);std::vector<AltrooStructuralChange>takeRecords(jsi::Runtime&);void disconnect(jsi::Runtime&);AltrooStructuralDiagnostics getDiagnostics(jsi::Runtime&);
  void enablePrelayoutProbe(jsi::Runtime&);void disablePrelayoutProbe(jsi::Runtime&);std::string getPrelayoutReport(jsi::Runtime&);
+ void armFirstOwnedCandidateWitness(jsi::Runtime&,double,std::string);void stopFirstOwnedCandidateWitness(jsi::Runtime&);std::string getFirstOwnedCandidateWitness(jsi::Runtime&);
  void enableStructuralStyleRuntime(jsi::Runtime&,std::string,std::string,AsyncCallback<>);bool disableStructuralStyleRuntime(jsi::Runtime&,std::string,std::string);std::string getStructuralStyleRuntimeStatus(jsi::Runtime&);std::string getStructuralStyleMetadata(jsi::Runtime&);
 private:
  std::unique_ptr<AltrooPrelayoutProbe>prelayout_;AltrooPrelayoutProbe& prelayoutProbe();std::unique_ptr<AltrooStructuralStyleRuntime>styleRuntime_;AltrooStructuralStyleRuntime& styleRuntime();

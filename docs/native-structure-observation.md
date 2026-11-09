@@ -12,6 +12,25 @@ The client registers hooks on demand and releases its private connection when it
 
 The adapter uses private React Native 0.88.1 Fabric interfaces. The [source baseline](../packages/native-host/structural-observation-baseline.json), existing native-input baseline and build-time checks require the reviewed peer sources. A new React Native version needs a reviewed adapter upgrade and rebuild. Do not bypass the checks or downgrade the runtime. The React Native attribution is retained in [NOTICE](../NOTICE).
 
+## Passive candidate witness
+
+The internal observer also provides a separate, opt-in passive witness for controlled owned-host tests. Arm it while the selected surface has no owned host, before mounting the host under test. It associates the actual runtime input and returned candidate with accepted native revisions, using the same owned family and full style programme. It observes selection without enabling the style runtime or changing its result.
+
+The journal is bounded and keeps weak candidate associations. Invalid, incomplete or unsettled observations return `INCONCLUSIVE`; only the checked finite association returns `OBSERVED_ASSOCIATION`. These records do not prove which candidate was chronologically first, that a view mounted or drew, or that pixels reached the screen. Native geometry, lifecycle cleanup and source/build/installed-binary identity require separate checks. This witness is not an application API and does not promote CardContent compatibility.
+
+## Generated module bindings
+
+After official application codegen and before a native build or test, check the actual generated module header for the selected platform:
+
+```sh
+node scripts/native-catalog/verify-observer-bindings.mjs --platform ios
+node scripts/native-catalog/verify-observer-bindings.mjs --platform android
+```
+
+The read-only preflight reuses the React Native peer-source guards and derives the current module schema with the installed matching-version codegen parser and header generator. It compares the complete expected header with the canonical generated application path. Missing or stale output fails the check. Regenerate the actual application bindings and rebuild; do not edit generated headers manually or bypass a failure.
+
+This gate requires generated native projects, so it is separate from clean-checkout JavaScript lint and tests. It checks source/codegen coherence, not the methods inside an installed binary. Keep build and installed-app provenance checks, and repeat the preflight immediately before native test execution. Imported helper use assumes the dependency graph stays unchanged; the commands above run a fresh CLI process.
+
 ## Development build and catalog
 
 Native changes require rebuilding the catalog development app. An older installed binary or Expo Go cannot supply this module. Both platform code generators must retain the existing component descriptors while adding the C++ module provider. Android also verifies its generated autolinking cache. If that check detects stale generated configuration, regenerate that cache and rebuild; changing JavaScript alone cannot link the module.

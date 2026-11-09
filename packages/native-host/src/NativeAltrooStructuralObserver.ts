@@ -30,6 +30,10 @@ export interface Spec extends TurboModule {
   enablePrelayoutProbe(): void;
   disablePrelayoutProbe(): void;
   getPrelayoutReport(): string;
+  // Passive finite witness only. It neither enables nor repairs style selection.
+  armFirstOwnedCandidateWitness(surface: number, programme: string): void;
+  stopFirstOwnedCandidateWitness(): void;
+  getFirstOwnedCandidateWitness(): string;
   // Immutable preparse readiness. No runtime activation or mutable status.
   getStructuralStyleMetadata(): string;
   // Long-lived controlled style selection, separate from private diagnostics.

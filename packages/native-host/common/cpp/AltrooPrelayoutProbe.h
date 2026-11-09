@@ -6,6 +6,8 @@
 #include <react/renderer/components/AltrooMuiNativeHostSpec/AltrooMuiNativeHostSpecJSI.h>
 #endif
 #include <memory>
+#include <mutex>
+#include "PrelayoutJournal.h"
 #include <react/renderer/uimanager/UIManagerCommitHook.h>
 #include <string>
 
@@ -20,6 +22,12 @@ public:
   void enable(jsi::Runtime &runtime);
   void disable(jsi::Runtime &runtime);
   std::string getReport(jsi::Runtime &runtime);
+  void armPassiveWitness(jsi::Runtime &runtime, std::int32_t surface,
+                         const std::string &programme);
+  void stopPassiveWitness() noexcept;
+  std::string passiveWitnessReport();
+  std::weak_ptr<altroo::prelayout::probe::PassiveRuntimeSink> passiveWitnessSink() const;
+  void expectPassiveGeneration(std::uint64_t generation) noexcept;
 
 private:
   struct Shared;
@@ -27,9 +35,11 @@ private:
   std::shared_ptr<UIManagerBinding> binding_;
   UIManager *manager_ = nullptr;
   bool registered_ = false;
+  mutable std::mutex control_;
   void stop() noexcept;
-  void commitHookWasRegistered(const UIManager &) noexcept override {}
-  void commitHookWasUnregistered(const UIManager &) noexcept override {}
+  void stopLocked() noexcept;
+  void commitHookWasRegistered(const UIManager &) noexcept override;
+  void commitHookWasUnregistered(const UIManager &) noexcept override;
   RootShadowNode::Unshared
   shadowTreeWillCommit(const ShadowTree &, const RootShadowNode::Shared &,
                        const RootShadowNode::Unshared &,
