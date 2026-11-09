@@ -52,6 +52,10 @@ public:
   void enablePrelayoutProbe(jsi::Runtime &runtime);
   void disablePrelayoutProbe(jsi::Runtime &runtime);
   std::string getPrelayoutReport(jsi::Runtime &runtime);
+  void armFirstOwnedCandidateWitness(jsi::Runtime &runtime, double surface,
+                                     std::string programme);
+  void stopFirstOwnedCandidateWitness(jsi::Runtime &runtime);
+  std::string getFirstOwnedCandidateWitness(jsi::Runtime &runtime);
   void enableStructuralStyleRuntime(jsi::Runtime &runtime, std::string owner,
                                     std::string generation, AsyncCallback<> notify);
   bool disableStructuralStyleRuntime(jsi::Runtime &runtime, std::string owner,

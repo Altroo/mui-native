@@ -2,6 +2,7 @@
 #pragma once
 #include "OwnedProgramme.h"
 #include "PrelayoutResolver.h"
+#include "PrelayoutJournal.h"
 #include "StructuralStyleRuntimeState.h"
 #include "StructuralStyleErrorNotification.h"
 #include <folly/json.h>
@@ -13,7 +14,8 @@
 
 namespace facebook::react {
 // Long-lived selection service for the existing controlled View resolver.
-// No private Journal, constructor probes, accepted history or JSI in hooks.
+// Optional weak passive taps never select props or alter runtime results/counters.
+// No constructor probes, retained trees or JSI in hooks.
 class AltrooStructuralStyleRuntime final : private UIManagerCommitHook {
 public:
   ~AltrooStructuralStyleRuntime() override { stop(); }
@@ -79,6 +81,22 @@ public:
     stopLocked();
     return true;
   }
+  std::uint64_t installPassiveWitness(
+      const std::weak_ptr<altroo::prelayout::probe::PassiveRuntimeSink> &sink) {
+    std::lock_guard lifecycle(control_);
+    std::lock_guard state(stateMutex_);
+    if (state_.active || state_.hookRegistered || registered_ || sink.expired() ||
+        !passiveWitness_.expired() || state_.generation == std::numeric_limits<std::uint64_t>::max())
+      throw std::logic_error("Passive witness requires an inactive real runtime");
+    passiveWitness_ = sink;
+    return state_.generation + 1;
+  }
+  void clearPassiveWitness(
+      const std::weak_ptr<altroo::prelayout::probe::PassiveRuntimeSink> &sink) noexcept {
+    std::lock_guard state(stateMutex_);
+    if (!passiveWitness_.owner_before(sink) && !sink.owner_before(passiveWitness_))
+      passiveWitness_.reset();
+  }
   std::string getStatus() const {
     altroo::style_runtime::Status snapshot;
     {
@@ -126,6 +144,7 @@ private:
   UIManager *manager_ = nullptr;
   bool registered_ = false;
   std::shared_ptr<altroo::style_runtime::ErrorNotification> notification_;
+  std::weak_ptr<altroo::prelayout::probe::PassiveRuntimeSink> passiveWitness_;
   void stopLocked() noexcept {
     std::shared_ptr<altroo::style_runtime::ErrorNotification> retired;
     {
@@ -154,14 +173,30 @@ private:
   shadowTreeWillCommit(const ShadowTree &, const RootShadowNode::Shared &,
                        const RootShadowNode::Unshared &candidate,
                        const ShadowTreeCommitOptions &) noexcept override {
-    std::uint64_t ticket;
+    std::uint64_t ticket, observedAttempt;
+    std::shared_ptr<altroo::prelayout::probe::PassiveRuntimeSink> passive;
     {
       std::lock_guard state(stateMutex_);
       if (!state_.active)
         return candidate;
       ticket = state_.generation;
       altroo::style_runtime::increment(state_.attempts);
+      observedAttempt = state_.attempts;
+      passive = passiveWitness_.lock();
     }
+    // Destruction follows inner state-lock destruction on every return path.
+    // No tap can throw into production selection, counters or notifications.
+    struct PassiveExit {
+      std::shared_ptr<altroo::prelayout::probe::PassiveRuntimeSink> sink;
+      RootShadowNode::Shared input, output;
+      std::uint64_t generation, attempt;
+      bool completed{false};
+      ~PassiveExit() noexcept {
+        if (sink) sink->runtimeReturn(input, output, generation, attempt, completed);
+      }
+    } tap{passive, passive ? candidate : nullptr, passive ? candidate : nullptr,
+          ticket, observedAttempt};
+    if (passive) passive->runtimeInput(candidate, ticket, observedAttempt);
     try {
       auto result = altroo::prelayout::resolve(candidate);
       if (!result.root)
@@ -179,6 +214,7 @@ private:
       state_.lastCounts = {c.scanned,        c.targets,
                            c.changedTargets, c.participatingParents,
                            c.siblingChecks,  c.requestedClones};
+      if (passive) { tap.output = result.root; tap.completed = true; }
       return result.root;
     } catch (const std::exception &exception) {
       recordFailure(ticket, exception.what());

@@ -108,6 +108,26 @@ std::string AltrooStructuralObserver::getPrelayoutReport(jsi::Runtime &runtime) 
   return prelayoutProbe().getReport(runtime);
 }
 
+
+void AltrooStructuralObserver::armFirstOwnedCandidateWitness(
+    jsi::Runtime &runtime, double surface, std::string programme) {
+  if (!std::isfinite(surface) || surface <= 0 || surface > INT32_MAX || std::floor(surface) != surface)
+    throw std::invalid_argument("Expected a positive int32 Fabric surface");
+  auto &probe = prelayoutProbe();
+  probe.armPassiveWitness(runtime, static_cast<std::int32_t>(surface), programme);
+  try {
+    probe.expectPassiveGeneration(styleRuntime().installPassiveWitness(probe.passiveWitnessSink()));
+  } catch (...) { probe.stopPassiveWitness(); throw; }
+}
+void AltrooStructuralObserver::stopFirstOwnedCandidateWitness(jsi::Runtime &) {
+  if (!prelayout_) return;
+  if (styleRuntime_) styleRuntime_->clearPassiveWitness(prelayout_->passiveWitnessSink());
+  prelayout_->stopPassiveWitness();
+}
+std::string AltrooStructuralObserver::getFirstOwnedCandidateWitness(jsi::Runtime &) {
+  return prelayoutProbe().passiveWitnessReport();
+}
+
 AltrooStructuralStyleRuntime &AltrooStructuralObserver::styleRuntime() {
   if (!styleRuntime_)
     styleRuntime_ = std::make_unique<AltrooStructuralStyleRuntime>();

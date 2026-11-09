@@ -11019,7 +11019,7 @@
       "packages/native-host/src/interactiveView.tsx": "ae071be128fc82101d55d14a0e29e41814ef6b20102fee59cc565c8f8385353f",
       "packages/native-host/src/internal/owned-view/index.ts": "c8de684aefa207ca567d8483d77f0b252e7b10e1ac5a7959810c45405d0c4c80",
       "packages/native-host/src/NativeAltrooPrelayoutProbe.ts": "3f22f400728c1361cc1df06afa14d5f7e9c0849d5db11f0ce2d1e8f14b60d683",
-      "packages/native-host/src/NativeAltrooStructuralObserver.ts": "a6b2549adc2c6000f8f588df9edc81bf9b3e5e8795f438e57b81ace4fa880929",
+      "packages/native-host/src/NativeAltrooStructuralObserver.ts": "45e95ae7bc7fa05c6c1a4aa21d3977539dd8adb1872767d120b1b86a7d3a78eb",
       "packages/native-host/src/nativeFocus.ts": "b592f2969d30bf119842488c770ed378c02dd521b9e35d79af58543ddff8e04d",
       "packages/native-host/src/nativeInputAssertions.ts": "f73c613c01d57f9a6a22fa52c1876d2856a54b6bb21c3b519e9e96001ad35bb3",
       "packages/native-host/src/nativeKeyboard.ts": "8b8f422ef81ad1b170de3a4da13a4f2003fb9180ef54fb2e90439c94a9d37e83",
