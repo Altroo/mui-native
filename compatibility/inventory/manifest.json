@@ -11065,7 +11065,7 @@
       "packages/system/src/RtlProvider/index.tsx": "b69eb42a9148e815c75cb9c53d7d233ac80c2bef973cde0bd1d4f690fa8cbc62",
       "packages/system/src/shadows.ts": "87e93f86773fb40cfad65d0a4c5a6cabbb0a5813a2b2568b67324543a88abb96",
       "packages/system/src/spacing.ts": "e4751abd448354e69a065d9115834b7a2de9e7bf183c99b63785e623fd611b31",
-      "packages/system/src/sx.ts": "57856f2522698cb8f283c68e3670d5f46c35b56cbcc7da876da44d81e60de998",
+      "packages/system/src/sx.ts": "9c851ab80eac5b7ffaef4c1fc9010270b414750eaa58e0c9b277d7762a6aa601",
       "packages/system/src/textScope.tsx": "1fffd9e176e826fd2c865dc5e97990e18c23ed2ac993a4fcabf467057d86280b",
       "packages/system/src/theme.ts": "6857ac1b7a033d05864e4b97dcd839a07e9f6dfdaee071093b7ff23070198457",
       "packages/system/src/ThemeProvider/index.ts": "ab3008c2fe41aee2a32d75c3d7b9d353f41d7f922e286275f428b24ff8257c2b",
@@ -11181,7 +11181,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "4a12d207b2937216e7fe3bf0fa7d2e667972efb82c05890c9b7617f2a7b15536"
+      "sha256": "953f205d17f5f5e72ad76518b9544f62b1255f665a12ce0e8f7586d99aaeddaf"
     },
     {
       "package": "@mui/system",
@@ -11191,7 +11191,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "818ae342727e676ac196c289bcab8cb319e7d77791ef879dc9fca7f4214c9175",
+      "nativeSourceSha256": "9184e9f33bdd5843fa993b4aeae413f3001e4bf550990bf32b117475557a7c10",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -11203,7 +11203,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "7cc6bfb5914ee7371fbaddc27c8e3df3dad272057c210e17658f0b64830bae88"
+      "sha256": "4e8f8aba5196a4f8074cae7f18913e7d2750ba9ac64287054b305d19815966f0"
     },
     {
       "package": "@mui/icons-material",

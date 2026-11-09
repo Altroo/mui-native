@@ -487,7 +487,10 @@ function parseSelectors(key: string) {
     : undefined;
 }
 function collectRules(nodes: readonly PreparedNode[], context: SelectorContext): StyleRule[] {
-  const rules: StyleRule[] = [];
+  // Physical path embeddings discover matches in a different order from CSS.
+  // Keep each prepared occurrence once, with its greatest matched specificity,
+  // then restore declaration order before the stable cascade sort.
+  const rules = new Map<string, { order: readonly number[]; rule: StyleRule }>();
   const path = context.descendantPath;
   const root = [
     ...(context.classes ?? []),
@@ -499,23 +502,39 @@ function collectRules(nodes: readonly PreparedNode[], context: SelectorContext):
     typeSpecificity: number,
     position = -1,
     descendant = false,
+    parentOrder: readonly number[] = [],
   ) => {
-    for (const node of nodes) {
+    for (const [nodeIndex, node] of nodes.entries()) {
+      const order = [...parentOrder, nodeIndex];
       const targetMatched = path
         ? path.length > 0 && position === path.length - 1
         : !context.descendantOnly || descendant;
-      if (Object.keys(node.base).length && targetMatched)
-        rules.push({
-          style: node.base,
-          specificity,
-          typeSpecificity,
-          protectPhysicalGeometry: context.protectPhysicalGeometry,
-        });
+      if (Object.keys(node.base).length && targetMatched) {
+        const key = order.join('.');
+        const previous = rules.get(key)?.rule;
+        if (
+          !previous ||
+          specificity > previous.specificity ||
+          (specificity === previous.specificity &&
+            typeSpecificity > (previous.typeSpecificity ?? 0))
+        )
+          rules.set(key, {
+            order,
+            rule: {
+              style: node.base,
+              specificity,
+              typeSpecificity,
+              protectPhysicalGeometry: context.protectPhysicalGeometry,
+            },
+          });
+      }
+      let conditionIndex = 0;
       for (const [key, branches] of node.conditions ?? []) {
+        const branchOrder = [...order, conditionIndex++];
         if (!branches) continue;
         if (key.startsWith('@media')) {
           if (matchesMedia(key, context.width ?? 0))
-            collect(branches, specificity, typeSpecificity, position, descendant);
+            collect(branches, specificity, typeSpecificity, position, descendant, branchOrder);
           continue;
         }
         const selectors = parseSelectors(key);
@@ -602,12 +621,21 @@ function collectRules(nodes: readonly PreparedNode[], context: SelectorContext):
             typeSpecificity + match.tags,
             index,
             descendant || index >= 0,
+            branchOrder,
           );
       }
     }
   };
   collect(nodes, 0, 0);
-  return rules;
+  return [...rules.values()]
+    .sort((a, b) => {
+      for (let index = 0; index < Math.min(a.order.length, b.order.length); index++) {
+        const difference = a.order[index] - b.order[index];
+        if (difference) return difference;
+      }
+      return a.order.length - b.order.length;
+    })
+    .map(({ rule }) => rule);
 }
 function resolveRules(input: SxProps | undefined, theme: Theme, context: StyleContext) {
   return collectRules(prepareStyle(input, theme, context), context);
