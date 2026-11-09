@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Version admission only. Processor doubles do not establish native layout.
 import test from 'node:test';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -55,7 +56,7 @@ function load(source, options = {}) {
             },
           };
         if (name === './ownedStyleVocabulary') return { ownedStyleVocabulary: vocabulary };
-        if (name === './style-vocabulary.json') return vocabulary;
+        if (name === './style-vocabulary.json') return options.catalogVocabulary ?? vocabulary;
         throw Error('Unexpected or deprecated runtime import: ' + name);
       },
     };
@@ -159,3 +160,59 @@ for (const [name, path] of [
     assert.equal(m.calls.length, 2);
   });
 }
+
+// Use real disk resolution here: the version-admission doubles above must not
+// hide a missing catalog asset or a vocabulary that differs from the library.
+const catalogEncoder = join(
+  root,
+  'apps/native-catalog/prelayoutOwnedStyle/dependencies/encodeStylePair.js',
+);
+test('catalog encoder resolves its real vocabulary and matches the library', async () => {
+  const actual = createRequire(catalogEncoder)('./style-vocabulary.json');
+  const module = { exports: {} };
+  vm.runInNewContext(
+    transformSync(
+      await readFile(join(root, 'packages/native-host/src/ownedStyleVocabulary.ts'), 'utf8'),
+      { loader: 'ts', format: 'cjs' },
+    ).code,
+    { module, exports: module.exports },
+  );
+  assert.deepEqual(
+    { keys: actual.keys, sha256: actual.sha256 },
+    JSON.parse(JSON.stringify(module.exports.ownedStyleVocabulary)),
+  );
+  assert.equal(
+    createHash('sha256')
+      .update(actual.keys.join('\n') + '\n')
+      .digest('hex'),
+    actual.sha256,
+  );
+  const m = load(await readFile(catalogEncoder, 'utf8'), { catalogVocabulary: actual });
+  const value = m.encode(
+    { ...profile(), styleKeys: actual.sha256 },
+    { width: 80 },
+    { opacity: 0.5 },
+  );
+  assert.deepEqual(JSON.parse(JSON.stringify(value)), {
+    normal: { width: 80, opacity: null },
+    last: { width: null, opacity: 0.5 },
+  });
+});
+test('catalog vocabulary retains package-relative verified React Native sources', async () => {
+  const actual = createRequire(catalogEncoder)('./style-vocabulary.json');
+  assert.equal(actual.sources.length, 5);
+  assert.equal(new Set(actual.sources.map((source) => source.path)).size, actual.sources.length);
+  const peer = join(require.resolve('react-native/package.json'), '..');
+  for (const source of actual.sources) {
+    assert.match(source.path, /^(Libraries|ReactCommon)\/[A-Za-z0-9_./-]+$/);
+    assert(!source.path.split('/').includes('..'));
+    assert.match(source.sha256, /^[a-f0-9]{64}$/);
+    assert.equal(
+      createHash('sha256')
+        .update(await readFile(join(peer, source.path)))
+        .digest('hex'),
+      source.sha256,
+      source.path,
+    );
+  }
+});
