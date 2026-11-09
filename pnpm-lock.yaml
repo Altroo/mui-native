@@ -366,6 +366,9 @@ importers:
       react:
         specifier: '>=19.3.0 <20'
         version: 19.3.0
+      react-is:
+        specifier: 19.3.0
+        version: 19.3.0
       react-native:
         specifier: '>=0.88.1 <0.89'
         version: 0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)

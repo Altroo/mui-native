@@ -15,8 +15,21 @@ import { useNativeTextRootRef } from './nativeTextRegistry';
 import {
   NativeRootHandoffContext,
   registerNativeRoot,
+  isNativeCooperatingRoot,
+  nativeCooperatingRootTarget,
+  NativeRootStyleForwardContext,
+  useNativeRootStyleForward,
+  clearNativeRootStyleForward,
+  useNativeRootHandoffForward,
   useNativeRootHandoff,
 } from './nativeRootHandoff';
+import { sameNativeRootCss, snapshotNativeRootCss } from './nativeStyledMetadata';
+import {
+  useNativeRootSnapshotScope,
+  retainNativeRootSnapshotProps,
+  retainNativeRootSnapshotElement,
+  nativeRootSnapshotClassName,
+} from './nativeRootStyleSnapshots';
 import { NativeTextScope, useNativeTextContext, nativeTextStyleContext } from './textScope';
 import {
   componentStyle,
@@ -145,57 +158,189 @@ type NativeStyledRef<Props> = 'ref' extends keyof Props
     ? Instance
     : unknown
   : unknown;
+type NativeStyledLayer = Readonly<{
+  prepare(
+    props: Record<string, unknown>,
+    rawTheme: Theme,
+    parent: ReturnType<typeof useNativeTextContext>,
+    width: number,
+    last: boolean,
+    genuine?: Record<string, unknown>,
+  ): Readonly<{
+    theme: Theme;
+    name: string;
+    props: Record<string, unknown>;
+    sx: SxProps | undefined;
+    context: StyleContext;
+  }>;
+  forward(key: string): boolean;
+}>;
+function forwardNativeStyledProps(
+  rest: Record<string, unknown>,
+  layers: readonly NativeStyledLayer[],
+) {
+  return Object.fromEntries(
+    Object.entries(rest).filter(([key]) => {
+      for (const layer of layers) if (!layer.forward(key)) return false;
+      return true;
+    }),
+  );
+}
+const styledRecipes = new WeakMap<
+  object,
+  Readonly<{
+    base: React.ComponentType<object>;
+    target: object | undefined;
+    layers: readonly NativeStyledLayer[];
+  }>
+>();
 export function styled<P extends object>(
   Component: React.ComponentType<P>,
-  options: {
-    name?: string;
-    shouldForwardProp?: (prop: string) => boolean;
-    themeId?: string;
-  } = {},
+  options: { name?: string; shouldForwardProp?: (prop: string) => boolean; themeId?: string } = {},
 ) {
   return (styles: SxObject | ((props: P & { theme: Theme; ownerState?: unknown }) => SxProps)) => {
+    // Only our exact first-party constructors contribute recipes. Memo is an
+    // actual component boundary, never flattened or invoked by this metadata.
+    const inherited = styledRecipes.get(Component);
+    const known = Component === (View as unknown) || isNativeCooperatingRoot(Component);
+    const layer: NativeStyledLayer = {
+      prepare(props, rawTheme, parent, width, last, genuine) {
+        const theme = scopedTheme(rawTheme, options.themeId);
+        const callbackProps = genuine ?? { ...props, theme };
+        if (genuine) genuine.theme = theme;
+        const resolved =
+          typeof styles === 'function'
+            ? styles(callbackProps as P & { theme: Theme; ownerState?: unknown })
+            : styles;
+        return {
+          theme,
+          name: options.name ?? '',
+          props: genuine ?? props,
+          sx: last ? (callbackProps.sx as SxProps | undefined) : undefined,
+          context: {
+            ...nativeTextStyleContext(parent, props.style as StyleProp<NativeStyle>, theme),
+            width,
+            baseStyle: resolved,
+          },
+        };
+      },
+      forward: (key) => options.shouldForwardProp?.(key) ?? true,
+    };
+    const layers = inherited ? [...inherited.layers, layer] : [layer];
+    const Base = (inherited?.base ?? Component) as React.ComponentType<P>;
+    const baseTarget = inherited?.target ?? nativeCooperatingRootTarget(Base);
+    // Constructor-specialized hook: ordinary terminal roots create no snapshot scope.
+    const useForwarding =
+      known && Base !== (View as unknown)
+        ? function useForwardingScope() {
+            const snapshots = useNativeRootSnapshotScope('css', sameNativeRootCss);
+            const native = useNativeRootHandoffForward(baseTarget!);
+            const css = useMemo(
+              () => Object.freeze({ target: baseTarget!, snapshots }),
+              [snapshots],
+            );
+            return { snapshots, native, css };
+          }
+        : function useNoForwardingScope() {
+            return null;
+          };
     const Styled = forwardRef<
       NativeStyledRef<P>,
-      P & {
-        sx?: SxProps | undefined;
-        style?: StyleProp<NativeStyle>;
-        ownerState?: unknown;
-      }
+      P & { sx?: SxProps | undefined; style?: StyleProp<NativeStyle>; ownerState?: unknown }
     >((props, ref) => {
-      const handoff = useNativeRootHandoff(Styled);
+      const rootClassName = (props as Record<string, unknown>).className;
+      const handoff = useNativeRootHandoff(Styled, rootClassName);
+      const forwarded = useNativeRootStyleForward(Styled, rootClassName);
+      const forwarding = useForwarding();
       const { root, ref: rootRef } = useNativeTextRootRef(ref);
-      const theme = scopedTheme(useTheme(), options.themeId);
+      const rawTheme = useTheme(),
+        theme = scopedTheme(rawTheme, options.themeId);
       const parent = useNativeTextContext();
       const { width } = useWindowDimensions();
       const { sx, style, ownerState, ...rest } = props;
-      const resolved =
-        typeof styles === 'function'
-          ? styles({ ...props, theme } as P & {
-              theme: Theme;
-              ownerState?: unknown;
-            })
-          : styles;
-      const filtered = Object.fromEntries(
-        Object.entries(rest).filter(([key]) => options.shouldForwardProp?.(key) ?? true),
-      );
-      const finalStyle = createNativeStyledStyle(
-        theme,
-        options.name ?? '',
-        props,
-        sx,
-        {
-          ...nativeTextStyleContext(parent, style, theme),
-          width,
-          baseStyle: resolved,
-        },
-        style,
-      );
+      let filtered: Record<string, unknown>;
+      let finalStyle: StyleProp<NativeStyle>;
+      if (inherited) {
+        const genuine = { ...props };
+        finalStyle = createNativeStyledStyle(
+          theme,
+          '',
+          props,
+          undefined,
+          { ...nativeTextStyleContext(parent, style, theme), width },
+          style,
+          undefined,
+          {
+            layers: layers.map(
+              (own, index) => () =>
+                own.prepare(props, rawTheme, parent, width, index === layers.length - 1, genuine),
+            ),
+            forwarded: forwarded?.programme,
+          },
+        );
+        filtered = forwardNativeStyledProps(rest, layers);
+      } else {
+        const resolved =
+          typeof styles === 'function'
+            ? styles({ ...props, theme } as P & { theme: Theme; ownerState?: unknown })
+            : styles;
+        // Preserve opaque-root behavior. Known constructors follow the source's
+        // style evaluation before native-prop filtering.
+        if (!known) filtered = forwardNativeStyledProps(rest, layers);
+        finalStyle = createNativeStyledStyle(
+          theme,
+          options.name ?? '',
+          props,
+          sx,
+          { ...nativeTextStyleContext(parent, style, theme), width, baseStyle: resolved },
+          style,
+          undefined,
+          forwarded ? { forwarded: forwarded.programme } : undefined,
+        );
+        if (known) filtered = forwardNativeStyledProps(rest, layers);
+      }
+      const output = filtered!;
+      if (Base !== (View as unknown) && known) {
+        const target = nativeCooperatingRootTarget(Base);
+        if (!target || target !== baseTarget)
+          throw Error('Known root composition no longer reaches its original first-party terminal');
+        const record = forwarding!.snapshots.publish(snapshotNativeRootCss(finalStyle));
+        const element = React.createElement(Base, {
+          ...output,
+          ref,
+          className: nativeRootSnapshotClassName(rootClassName, record),
+          ...(Object.hasOwn(props, 'style') ? { style } : {}),
+        } as unknown as P);
+        retainNativeRootSnapshotProps(
+          element.props as object,
+          record,
+          handoff?.retained,
+          forwarded?.retained,
+        );
+        const content = (
+          <NativeRootStyleForwardContext.Provider value={forwarding!.css}>
+            {element}
+          </NativeRootStyleForwardContext.Provider>
+        );
+        const result = forwarding!.native ? (
+          <NativeRootHandoffContext.Provider value={forwarding!.native}>
+            {content}
+          </NativeRootHandoffContext.Provider>
+        ) : (
+          content
+        );
+        return retainNativeRootSnapshotElement(
+          result,
+          record,
+          handoff?.retained,
+          forwarded?.retained,
+        );
+      }
       if (handoff) {
-        if (Component !== (View as unknown)) throw Error('Only styled(View) can cooperate');
+        if (Base !== (View as unknown))
+          throw Error('Only known first-party styled roots can cooperate');
         const classes =
-          typeof filtered.className === 'string'
-            ? filtered.className.split(/\s+/).filter(Boolean)
-            : [];
+          typeof output.className === 'string' ? output.className.split(/\s+/).filter(Boolean) : [];
         const context = {
           ...nativeTextStyleContext(parent, style, theme),
           width,
@@ -208,18 +353,19 @@ export function styled<P extends object>(
           context,
           parentDirection: parent?.direction ?? theme.direction,
         });
-        return (
+        return clearNativeRootStyleForward(
+          forwarded,
           <NativeTextScope
             rootRef={root as React.RefObject<object | null>}
             theme={theme}
             style={preparation.presentation}
-            content={(filtered as { children?: React.ReactNode }).children}
+            content={output.children as React.ReactNode}
           >
             {(presentation, children) => (
               <NativeRootHandoffContext.Provider value={null}>
                 {handoff.render({
                   preparation,
-                  hostProps: filtered,
+                  hostProps: output,
                   nativeRef: rootRef as React.Ref<import('react-native').ViewInstance>,
                   children,
                   presentation,
@@ -228,36 +374,46 @@ export function styled<P extends object>(
                 })}
               </NativeRootHandoffContext.Provider>
             )}
-          </NativeTextScope>
+          </NativeTextScope>,
+          handoff?.retained,
         );
       }
-      if (Component === (View as unknown) || Component === (Text as unknown)) {
-        return (
+      if (Base === (View as unknown) || Base === (Text as unknown)) {
+        return clearNativeRootStyleForward(
+          forwarded,
           <NativeTextScope
             rootRef={root as React.RefObject<object | null>}
             theme={theme}
-            kind={Component === (Text as unknown) ? 'text' : 'view'}
+            kind={Base === (Text as unknown) ? 'text' : 'view'}
             style={finalStyle}
-            content={(filtered as { children?: React.ReactNode }).children}
+            content={output.children as React.ReactNode}
           >
             {(style, children) =>
-              React.createElement(Component, {
-                ...filtered,
+              React.createElement(Base, {
+                ...output,
                 ref: rootRef,
                 style,
                 children,
               } as unknown as P)
             }
-          </NativeTextScope>
+          </NativeTextScope>,
         );
       }
-      return React.createElement(Component, {
-        ...filtered,
-        ref,
-        style: finalStyle,
-      } as unknown as P);
+      return React.createElement(Base, { ...output, ref, style: finalStyle } as unknown as P);
     });
-    if (Component === (View as unknown)) registerNativeRoot(Styled);
+    // Emotion copies the genuine tag defaults at every styled construction,
+    // including canonical memo boundaries; preserve its exact read/copy timing.
+    (Styled as { defaultProps?: unknown }).defaultProps = (
+      Component as { defaultProps?: unknown }
+    ).defaultProps;
+    if (known) {
+      registerNativeRoot(Styled);
+      styledRecipes.set(Styled, {
+        base: Base as React.ComponentType<object>,
+        target: baseTarget,
+        layers,
+      });
+    }
     return Styled;
   };
 }

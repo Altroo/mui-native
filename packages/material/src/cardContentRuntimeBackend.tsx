@@ -1,5 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Internal explicit preparation adapter. Public CardContent is not switched here.
+import { createElement, useMemo } from 'react';
 import { View } from 'react-native';
 import {
   createOwnedStyleActivation,
@@ -15,8 +16,15 @@ import {
 } from '@altroo/mui-native-host/internal/owned-view';
 import {
   NativeRootHandoffContext,
-  isNativeCooperatingRoot,
+  nativeCooperatingRootTarget,
   type NativeRootHandoff,
+  type NativeRootHandoffSnapshot,
+  useNativeRootSnapshotScope,
+  snapshotNativeRootCss,
+  sameNativeRootCss,
+  nativeRootSnapshotClassName,
+  retainNativeRootSnapshotProps,
+  retainNativeRootSnapshotElement,
 } from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeStyleScope } from './nativeStyleScope';
 import { diagnostic } from '@altroo/mui-native-system';
@@ -79,6 +87,13 @@ function decimal(value: unknown): value is string {
     typeof value === 'string' && /^(0|[1-9][0-9]{0,19})$/.test(value) && BigInt(value) <= maximum
   );
 }
+function sameHandoffSnapshot(a: NativeRootHandoffSnapshot, b: NativeRootHandoffSnapshot): boolean {
+  return (
+    a.classes.length === b.classes.length &&
+    a.classes.every((value, index) => value === b.classes[index]) &&
+    sameNativeRootCss(a.programme, b.programme)
+  );
+}
 /** Call during explicit preparation/effects or native-observation events, never render. */
 export function prepareRuntimeCardContent({
   native,
@@ -129,61 +144,85 @@ export function prepareRuntimeCardContent({
   // resets it. An active degraded service cannot be advertised as healthy startup.
   if (initialStatus.active && initialStatus.degraded)
     throw Error('Active structural runtime is degraded: ' + initialStatus.lastError);
-  function Backend(input: CardContentBackendInput) {
-    if (input.Root !== View) {
-      if (!isNativeCooperatingRoot(input.Root) || !input.cooperation)
-        throw Error(
-          'Runtime CardContent requires View/div or an exact first-party cooperating root',
+  // Isolate callbacks from the producer hook environment. Retained snapshot
+  // props must not accidentally retain that environment's weak owner table.
+  function createHandoff(
+    target: object,
+    compilerInput: Parameters<typeof compileCooperatingCandidates>[0],
+    rootRef: CardContentBackendInput['rootRef'],
+    classes: readonly string[],
+  ): NativeRootHandoff {
+    return Object.freeze({
+      target,
+      prepare: (root) => compileCooperatingCandidates(compilerInput, root),
+      render: (output) => {
+        const pair = encodeStylePair(
+          expected,
+          { ...output.preparation.normal },
+          { ...output.preparation.last },
         );
-      const Root = input.Root;
-      const handoff: NativeRootHandoff = {
-        target: Root,
-        prepare: (root) => compileCooperatingCandidates(input, root),
-        render: (output) => {
-          const pair = encodeStylePair(
-            expected,
-            { ...output.preparation.normal },
-            { ...output.preparation.last },
-          );
-          const programme: OwnedProgramme = {
-            schema: 1,
-            profile: expected,
-            normal: pair.normal,
-            last: pair.last,
-          };
-          return (
-            <NativeStyleScope
-              root={input.rootRef}
-              theme={output.theme}
-              classes={Array.from(
-                new Set([...input.className.split(/\s+/).filter(Boolean), ...output.classes]),
-              )}
-              prepared={output.preparation.prepared}
+        const programme: OwnedProgramme = {
+          schema: 1,
+          profile: expected,
+          normal: pair.normal,
+          last: pair.last,
+        };
+        return (
+          <NativeStyleScope
+            root={rootRef}
+            theme={output.theme}
+            classes={Array.from(new Set([...classes, ...output.classes]))}
+            prepared={output.preparation.prepared}
+          >
+            <OwnedStructuralHost
+              {...output.hostProps}
+              activation={hostActivation}
+              Native={Native}
+              ref={output.nativeRef}
+              style={output.presentation}
+              normalPaddingBottom={0}
+              lastPaddingBottom={0}
+              ownedProgramme={programme}
             >
-              <OwnedStructuralHost
-                {...output.hostProps}
-                activation={hostActivation}
-                Native={Native}
-                ref={output.nativeRef}
-                style={output.presentation}
-                normalPaddingBottom={0}
-                lastPaddingBottom={0}
-                ownedProgramme={programme}
-              >
-                {output.children}
-              </OwnedStructuralHost>
-            </NativeStyleScope>
-          );
-        },
-      };
-      return (
-        <NativeRootHandoffContext.Provider value={handoff}>
-          <Root {...input.cooperation.props} ref={input.nativeRef}>
-            {input.children}
-          </Root>
-        </NativeRootHandoffContext.Provider>
-      );
-    }
+              {output.children}
+            </OwnedStructuralHost>
+          </NativeStyleScope>
+        );
+      },
+    });
+  }
+  function CooperatingBackend(input: CardContentBackendInput) {
+    const snapshots = useNativeRootSnapshotScope('handoff', sameHandoffSnapshot);
+    const Root = input.Root;
+    const target = nativeCooperatingRootTarget(Root);
+    if (!input.cooperation || !target)
+      throw Error('Runtime CardContent requires View/div or an exact first-party cooperating root');
+    const classes = Object.freeze([...(input.styleContext.classes ?? [])]);
+    const css = snapshotNativeRootCss(input.styleProgram);
+    const rootRef = input.rootRef;
+    const compilerInput = { styleProgram: css, styleContext: { classes } };
+    const source = useMemo(() => Object.freeze({ target, snapshots }), [target, snapshots]);
+    const handoff = createHandoff(target, compilerInput, rootRef, classes);
+    const record = snapshots.publish(Object.freeze({ handoff, programme: css, classes }));
+    const element = createElement(
+      Root,
+      {
+        ...input.cooperation.props,
+        ref: input.nativeRef,
+        className: nativeRootSnapshotClassName(input.cooperation.props.className, record),
+      },
+      input.children,
+    );
+    retainNativeRootSnapshotProps(element.props as object, record);
+    return retainNativeRootSnapshotElement(
+      <NativeRootHandoffContext.Provider value={source}>
+        {element}
+      </NativeRootHandoffContext.Provider>,
+      record,
+    );
+  }
+  function Backend(input: CardContentBackendInput) {
+    if (input.Root !== View) return <CooperatingBackend {...input} />;
     const candidates = compileCandidates(input);
     const pair = encodeStylePair(expected, { ...candidates.normal }, { ...candidates.last });
     const programme: OwnedProgramme = {

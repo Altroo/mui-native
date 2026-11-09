@@ -144,3 +144,131 @@ export function restoreNativeRootStyle(
     ? (...args: unknown[]) => retain(Reflect.apply(authored, undefined, args))
     : retain(authored);
 }
+
+/** Internal pure CSS handoff; genuine style/prop presence stays on the actual root. */
+export function retainNativeRootCss(
+  style: StyleProp<NativeStyle>,
+  programme: StyleProp<NativeStyle>,
+  supplied: boolean,
+): StyleProp<NativeStyle> {
+  const descriptor =
+    programme && typeof programme === 'object' ? nativeStyledStyles.get(programme) : undefined;
+  if (!descriptor) throw Error('Expected first-party prepared root CSS');
+  const carrier = [style];
+  nativeStyledStyles.set(
+    carrier,
+    Object.freeze({ sheets: descriptor.sheets, authored: style, hasAuthoredStyle: supplied }),
+  );
+  return carrier;
+}
+
+const generatedRootToken = /^altroo-root-(css|handoff)-v1-/;
+const selectorKeys = [
+  'classes',
+  'lastChild',
+  'states',
+  'descendantClasses',
+  'descendantPath',
+  'descendantOnly',
+  'slot',
+  'width',
+  'protectPhysicalGeometry',
+] as const;
+/** Pure descriptor comparison of prepared data, never user getter evaluation. */
+function samePreparedData(a: unknown, b: unknown, seen = new WeakMap<object, object>()): boolean {
+  if (Object.is(a, b)) return true;
+  if (
+    !a ||
+    !b ||
+    typeof a !== 'object' ||
+    typeof b !== 'object' ||
+    Object.getPrototypeOf(a) !== Object.getPrototypeOf(b)
+  )
+    return false;
+  if (seen.has(a)) return seen.get(a) === b;
+  seen.set(a, b);
+  if (a instanceof Map && b instanceof Map) {
+    const right = [...b];
+    return (
+      a.size === b.size &&
+      [...a].every(
+        ([key, value], at) =>
+          Object.is(key, right[at][0]) && samePreparedData(value, right[at][1], seen),
+      )
+    );
+  }
+  if (
+    !Array.isArray(a) &&
+    Object.getPrototypeOf(a) !== Object.prototype &&
+    Object.getPrototypeOf(a) !== null
+  )
+    return false;
+  const left = Object.getOwnPropertyDescriptors(a),
+    right = Object.getOwnPropertyDescriptors(b);
+  const keys = Reflect.ownKeys(left),
+    other = Reflect.ownKeys(right);
+  return (
+    keys.length === other.length &&
+    keys.every((key, at) => {
+      if (key !== other[at]) return false;
+      const x = Reflect.get(left, key) as PropertyDescriptor,
+        y = Reflect.get(right, key) as PropertyDescriptor;
+      return (
+        'value' in x === 'value' in y &&
+        ('value' in x
+          ? samePreparedData(x.value, y.value, seen)
+          : x.get === y.get && x.set === y.set)
+      );
+    })
+  );
+}
+function selectorSnapshot(context: NativeSelectorContext): Record<string, unknown> {
+  const result: Record<string, unknown> = {};
+  for (const key of selectorKeys) {
+    const descriptor = Object.getOwnPropertyDescriptor(context, key);
+    if (!descriptor) continue;
+    // This field is the library-owned deferred structural predicate. A later
+    // compiler binds each counterfactual; do not observe a released getter.
+    if (!('value' in descriptor)) {
+      result[key] = key === 'lastChild' ? 'deferred-last-child' : descriptor;
+      continue;
+    }
+    const value: unknown = descriptor.value;
+    result[key] =
+      (key === 'classes' || key === 'descendantClasses') && Array.isArray(value)
+        ? value.filter((value) => typeof value !== 'string' || !generatedRootToken.test(value))
+        : value;
+  }
+  return result;
+}
+/** Compare stylesheet semantics rather than freshly allocated carrier identity. */
+export function sameNativeRootCss(a: StyleProp<NativeStyle>, b: StyleProp<NativeStyle>): boolean {
+  if (a === b) return true;
+  const left = a && typeof a === 'object' ? nativeStyledStyles.get(a) : undefined;
+  const right = b && typeof b === 'object' ? nativeStyledStyles.get(b) : undefined;
+  return (
+    !!left &&
+    !!right &&
+    left.sheets.length === right.sheets.length &&
+    left.sheets.every((sheet, index) => {
+      const other = right.sheets[index];
+      return (
+        sheet.ancestor === other.ancestor &&
+        samePreparedData(sheet.nodes, other.nodes) &&
+        samePreparedData(selectorSnapshot(sheet.context), selectorSnapshot(other.context))
+      );
+    })
+  );
+}
+/** Retain CSS only. Native inline stays exclusively in the actual accepted props. */
+export function snapshotNativeRootCss(programme: StyleProp<NativeStyle>): StyleProp<NativeStyle> {
+  const descriptor =
+    programme && typeof programme === 'object' ? nativeStyledStyles.get(programme) : undefined;
+  if (!descriptor) throw Error('Expected prepared root CSS snapshot');
+  const carrier = Object.freeze([undefined]);
+  nativeStyledStyles.set(
+    carrier,
+    Object.freeze({ sheets: descriptor.sheets, authored: undefined, hasAuthoredStyle: false }),
+  );
+  return carrier;
+}
