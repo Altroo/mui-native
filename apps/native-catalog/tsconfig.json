@@ -21,7 +21,16 @@
       "@mui/x-charts": ["../../packages/x-charts/src/index.ts"],
       "@mui/x-date-pickers": ["../../packages/x-date-pickers/src/index.ts"],
       "@mui/icons-material/*": ["../../packages/icons/src/*"],
-      "@altroo/mui-native-icons/*": ["../../packages/icons/src/*"]
+      "@altroo/mui-native-icons/*": ["../../packages/icons/src/*"],
+      "@altroo/mui-native-host/internal/owned-view": [
+        "../../packages/native-host/src/internal/owned-view/index.ts"
+      ],
+      "@altroo/mui-native-system/internal/prepared-style": [
+        "../../packages/system/src/internal/prepared-style/index.ts"
+      ],
+      "@altroo/mui-native-system/internal/generated-paragraph": [
+        "../../packages/system/src/internal/generated-paragraph/index.ts"
+      ]
     },
     "noUnusedLocals": true,
     "noUnusedParameters": true
