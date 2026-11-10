@@ -26,7 +26,8 @@
     "lint": "eslint . --max-warnings=0 && pnpm typecheck",
     "typecheck:consumer": "tsc --noEmit -p fixtures/native-consumer/tsconfig.json && pnpm typecheck:typography",
     "typecheck:typography": "tsc --noEmit -p fixtures/typography-consumer/tsconfig.json",
-    "reference:typography": "node scripts/reference/typography.mjs --check && node scripts/reference/typography-contract.mjs --check && node scripts/reference/check-typography-consumer.mjs"
+    "reference:typography": "node scripts/reference/typography.mjs --check && node scripts/reference/typography-contract.mjs --check && node scripts/reference/check-typography-consumer.mjs",
+    "check:ci": "node scripts/validate-ci.mjs"
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
@@ -52,6 +53,7 @@
     "react-native-svg": "15.16.0",
     "react-test-renderer": "19.3.0",
     "semver": "^7.7.0",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "yaml": "2.9.1"
   }
 }

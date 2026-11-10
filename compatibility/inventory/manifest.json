@@ -6,7 +6,7 @@
     "files": {
       ".nvmrc": "45507e6d96329a845faa642c0f485313bcb2ca1e08b043589cde4ddd15969cd6",
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
-      "package.json": "60e0dbd8613d483d9f1a8b6280414c364162c35efb570dce369faa2764467f36",
+      "package.json": "ac781227822a7892824ab1be2abacf620afb90e20f717c575180951d96747bde",
       "packages/compat/package.json": "59904f1e9920728c84cb290e1ce34d0e6e4f7c7832b65b0eb8ff70c01df2c4de",
       "packages/compat/supported.json": "f3debed5ca60fd087376dde2cb334de6300fcafc6354b447c7e8c431f081a216",
       "packages/icons/package.json": "b2066761b6f8b5ea49d9e75aeb75fab01bddda969cb6959ba57c6cf0d09011d8",
@@ -11100,7 +11100,7 @@
       "packages/x-tree-view/src/index.ts": "ab22b3b9ae39b7c4ab4cd4fbabfeabba4c6f49624be7566810efc44adc1d4560",
       "packages/x-tree-view/src/RichTreeView.tsx": "3082d26cd7c55f248338dc2e4e81ef4764e733879082e2d601823359d2a49852",
       "packages/x-tree-view/src/RichTreeView/index.ts": "b4492fdbf2f10d6f6d2d368d9fc5932c5a784fb24b5cbd0e58604c5050eb0853",
-      "pnpm-lock.yaml": "922dcb79715f7d89c8c0dad4ecfbd79a805fff22e4993ed47eb2d0c50a0c93aa",
+      "pnpm-lock.yaml": "42f5f6bdba7fb4699da93858f2e076a78dfac8be8117b45e3196209fd638e6cb",
       "scripts/inventory/declarations.mjs": "7de3a26694ecbdabc9da1a1a6a855e45dbc8dcaad1a27783855d3cb0a30323f4",
       "scripts/inventory/declarations.test.mjs": "6ddc738a07e2b64cdb339de7e47cbfab1180719ab45e071daac38c5e21e3d16a",
       "scripts/inventory/freshness.mjs": "a170cbd4928d3bc22db5b4a535bbb125376202e1b8527829a796788a3a825734",
