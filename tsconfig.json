@@ -35,6 +35,9 @@
       "@altroo/mui-native-icons/*": ["./packages/icons/src/*"],
       "@altroo/mui-native-system/internal/generated-paragraph": [
         "./packages/system/src/internal/generated-paragraph/index.ts"
+      ],
+      "@altroo/mui-native-host/internal/native-keys": [
+        "./packages/native-host/src/internal/native-keys/index.ts"
       ]
     },
     "customConditions": ["react-native"],

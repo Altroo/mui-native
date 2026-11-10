@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React from 'react';
 import { Pressable, Linking, Platform, StyleSheet, type ViewInstance } from 'react-native';
 import { render, screen, fireEvent, act, cleanup } from '@testing-library/react-native';
@@ -377,3 +378,23 @@ test('virtual option state styles without focusing or firing native focus callba
     restore();
   }
 });
+
+test.each(['Enter', ' '] as const)(
+  'ancestor capture cancellation suppresses %s activation while retaining the child callback',
+  (key) => {
+    const click = jest.fn(),
+      down = jest.fn(),
+      up = jest.fn();
+    render(field({ onClick: click, onKeyDown: down, onKeyUp: up }));
+    const original = event(key);
+    original.preventDefault();
+    fireEvent(screen.getByTestId('base'), key === 'Enter' ? 'MUIKeyDown' : 'MUIKeyUp', original);
+    const callback = key === 'Enter' ? down : up;
+    expect(callback).toHaveBeenCalledTimes(1);
+    expect(callback.mock.calls[0][0].nativeEvent).toBe(original.nativeEvent);
+    expect(callback.mock.calls[0][0].isDefaultPrevented()).toBe(true);
+    expect(click).not.toHaveBeenCalled();
+    fireEvent(screen.getByTestId('base'), key === 'Enter' ? 'MUIKeyDown' : 'MUIKeyUp', event(key));
+    expect(click).toHaveBeenCalledTimes(1);
+  },
+);

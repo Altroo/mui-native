@@ -431,8 +431,13 @@ export const ButtonBase: React.ForwardRefExoticComponent<
         key.preventDefault();
       return;
     }
+    // Ancestor capture cancellation must reach the native activation path.
+    // Keep MUI's own onKeyDown semantics: canceling Enter inside that callback
+    // does not suppress its separately dispatched click event.
+    const capturePrevented = isButtonEventPrevented(key);
     onKeyDown?.(key);
-    if (key.target !== key.currentTarget || key.isComposing || key.isCanceled) return;
+    if (key.target !== key.currentTarget || key.isComposing || key.isCanceled || capturePrevented)
+      return;
     if (key.key === ' ' && activationKeys.includes(' ')) key.preventDefault();
     else if (key.key === 'Enter' && activationKeys.includes('Enter')) {
       key.preventDefault();

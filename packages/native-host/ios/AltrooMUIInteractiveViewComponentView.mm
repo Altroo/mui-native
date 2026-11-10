@@ -311,8 +311,8 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
   UIKeyModifierFlags flags = key.modifierFlags;
   bool alt = (flags & UIKeyModifierAlternate) != 0, ctrl = (flags & UIKeyModifierControl) != 0;
   bool meta = (flags & UIKeyModifierCommand) != 0, shift = (flags & UIKeyModifierShift) != 0;
-  if (down) emitter.onMUIKeyDown({.key=value,.code=code,.altKey=alt,.ctrlKey=ctrl,.metaKey=meta,.shiftKey=shift,.repeat=(bool)repeat,.isComposing=false,.isCanceled=false});
-  else emitter.onMUIKeyUp({.key=value,.code=code,.altKey=alt,.ctrlKey=ctrl,.metaKey=meta,.shiftKey=shift,.repeat=false,.isComposing=false,.isCanceled=false});
+  if (down) emitter.onMUIKeyDown({.key=value,.code=code,.altKey=alt,.ctrlKey=ctrl,.metaKey=meta,.shiftKey=shift,.repeat=(bool)repeat,.isComposing=false,.isCanceled=false,.muiKeySource="hardware"});
+  else emitter.onMUIKeyUp({.key=value,.code=code,.altKey=alt,.ctrlKey=ctrl,.metaKey=meta,.shiftKey=shift,.repeat=false,.isComposing=false,.isCanceled=false,.muiKeySource="hardware"});
 }
 - (NSSet<UIPress *> *)nonActivatingPresses:(NSSet<UIPress *> *)presses {
   NSMutableSet *remaining = [NSMutableSet set];

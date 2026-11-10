@@ -351,7 +351,11 @@ test.each(['stock', 'custom', 'styled'] as const)(
     expect(host.props.accessibilityActions).toBe(actions);
     expect(host.props.focusable).toBe(true);
     for (const [name, callback] of Object.entries(handlers)) {
-      expect(host.props[name]).toBe(callback);
+      // Keyboard callbacks also accept the owned native event transport.
+      // The standard transport filters framework duplicates for owned targets.
+      if (name.startsWith('onKey'))
+        expect(host.props[name.replace('onKey', 'onMUIKey')]).toBe(callback);
+      else expect(host.props[name]).toBe(callback);
       const event = { nativeEvent: { target: 71, key: 'a', code: 'KeyA', actionName: 'inspect' } };
       host.props[name](event);
       expect(callback.mock.calls).toEqual([[event]]);
