@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import type { StyleProp } from 'react-native';
 import {
   ThemeProvider as SystemThemeProvider,
+  createTheme,
   useTheme as useSystemTheme,
   useThemeProps as useSystemThemeProps,
   useSx as useSystemSx,
@@ -19,6 +20,8 @@ import {
 } from '@altroo/mui-native-system';
 // Material's public scope identifier, from the pinned MIT reference.
 export const THEME_ID = '$$material';
+// Material and System own separate fallback singletons, including without a provider.
+const materialDefaultTheme = createTheme();
 export interface ThemeProviderProps<T = Theme>
   extends Omit<SystemThemeProviderProps<T>, 'themeId'> {}
 export function ThemeProvider<T = Theme>({ theme, children }: ThemeProviderProps<T>) {
@@ -39,7 +42,8 @@ export function ThemeProvider<T = Theme>({ theme, children }: ThemeProviderProps
   );
 }
 export function useTheme<T = Theme>(): T {
-  const raw = useSystemTheme<Theme & Record<string, unknown>>();
+  const raw = useSystemTheme(materialDefaultTheme) as Theme & Record<string, unknown>;
+  if (process.env.NODE_ENV !== 'production') React.useDebugValue(raw);
   return (raw[THEME_ID] || raw) as T;
 }
 export interface ThemeWithProps {
@@ -61,10 +65,11 @@ export function useThemeProps<ThemeInput extends ThemeWithProps, Props, Name ext
     props: props as object,
     name: name as string,
     themeId: THEME_ID,
+    defaultTheme: materialDefaultTheme,
   }) as Props & ThemedProps<ThemeInput, Name>;
 }
 export function useSx(sx?: SxProps, context: StyleContext = {}) {
-  return useSystemSx(sx, context, THEME_ID);
+  return useSystemSx(sx, context, THEME_ID, materialDefaultTheme);
 }
 export function useComponentStyle(
   name: string,
@@ -72,7 +77,7 @@ export function useComponentStyle(
   sx?: SxProps,
   context: StyleContext = {},
 ) {
-  return useSystemComponentStyle(name, props, sx, context, THEME_ID);
+  return useSystemComponentStyle(name, props, sx, context, THEME_ID, materialDefaultTheme);
 }
 /** Resolve library-created styled layers after the native root knows its state classes. */
 export function useComponentRootStyle(
@@ -82,11 +87,23 @@ export function useComponentRootStyle(
   style: StyleProp<NativeStyle>,
   context: StyleContext = {},
 ): NativeRootStyleResult {
-  return useSystemComponentRootStyle(name, props, sx, style, context, THEME_ID);
+  return useSystemComponentRootStyle(
+    name,
+    props,
+    sx,
+    style,
+    context,
+    THEME_ID,
+    materialDefaultTheme,
+  );
 }
 export function styled<P extends object>(
   Component: React.ComponentType<P>,
   options: { name?: string; shouldForwardProp?: (prop: string) => boolean } = {},
 ) {
-  return systemStyled(Component, { ...options, themeId: THEME_ID });
+  return systemStyled(Component, {
+    ...options,
+    themeId: THEME_ID,
+    defaultTheme: materialDefaultTheme,
+  });
 }

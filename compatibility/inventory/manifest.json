@@ -10986,7 +10986,7 @@
       "packages/material/src/switchStyles.ts": "825ab8c7506ac69bd749f49e6ea878580735bc1884688e3ad2e16948d0b26da8",
       "packages/material/src/switchTypes.ts": "6aa392fca52bab3cd0b5c611020d99697f3c5c72d1393273e5c783747e5cbbe1",
       "packages/material/src/TextField/index.ts": "09d175ad9a5284adba213076e847ca9df592241b342d7be930528fcbeef4fadd",
-      "packages/material/src/themeProvider.tsx": "4b0257300da076e111e1b1d6ec37a47b76f0876f17212003870b404572fd9ada",
+      "packages/material/src/themeProvider.tsx": "806d5626104f2aa44e74d6f60a569cede7f9556874a8eb012a5b9d29e6bc2d5f",
       "packages/material/src/transitionReadiness.ts": "7cd66b0245b59e533c8147c7b58eae1dc14f63e46b2a9a2ae62b60ebacfd2e1b",
       "packages/material/src/transitions/index.ts": "546d17934941fa6afc2456a1dce661eb58acd153ce519d43a4d3d4bdb4869221",
       "packages/material/src/transitions/types/index.ts": "2be28a80b322dae98eac4c54284bd51cdcb1b81b5cbbdbe329cd4b0641ee818d",
@@ -11064,7 +11064,7 @@
       "packages/system/src/nativeTextInputProvenance.ts": "4d2e2822b8ce042892e6eb683b1113a24db40fb96042e244d754a039bca86541",
       "packages/system/src/nativeTextProvenance.ts": "23a1076504d3bd52ed7ebcf6b908ad8826b5b2e88800e4bfae5e3047cd0bb079",
       "packages/system/src/nativeTextRegistry.ts": "c536ccead134058c42a1187c2d5e744fc1196042d10ec861006356895f2d3d8c",
-      "packages/system/src/provider.tsx": "bb9c0bcbfdcde9573a65027b91b67dd1d00d9f4784d8477bc9d38910fe53f856",
+      "packages/system/src/provider.tsx": "aa5781ad1f8db85f99cb96b201c7e74a22b852294db9f189aad40f2a070f5941",
       "packages/system/src/RtlProvider/index.tsx": "b69eb42a9148e815c75cb9c53d7d233ac80c2bef973cde0bd1d4f690fa8cbc62",
       "packages/system/src/shadows.ts": "87e93f86773fb40cfad65d0a4c5a6cabbb0a5813a2b2568b67324543a88abb96",
       "packages/system/src/spacing.ts": "e4751abd448354e69a065d9115834b7a2de9e7bf183c99b63785e623fd611b31",
@@ -11172,7 +11172,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "8afa0de68bba9561f36d5d7e0d1f609310a2d2591bcaef78b16e0e309771d88e",
+      "nativeSourceSha256": "8c481afabb85c73bc50238873ab63b690616502040ebf00e1fecce31d0be54e8",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11184,7 +11184,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "0d74195dd8ac968dad8b605f9382621436887113a51485fa07ab872946f9479d"
+      "sha256": "07f8453bd9833e40ddb1ed051527a68b48604a014764f9b1a554e2b06829235d"
     },
     {
       "package": "@mui/system",
@@ -11194,7 +11194,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "2a81a5a0483f52c330e57f2665dc4a4c2a305d832e08d3026fd189a435eeffa3",
+      "nativeSourceSha256": "28c124baaa8ccfe36c04110d229f36d3d59870c12914686cf6451dda372624b2",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -11206,7 +11206,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "2f5aeaf8ac1cafd4a1b461233605fa155bf2ac01cb42d59e6cfbc303b678ffdc"
+      "sha256": "13d809b4719e2500fe90231bad9d6bff7703392039695c3a635ca1ff50a7f668"
     },
     {
       "package": "@mui/icons-material",

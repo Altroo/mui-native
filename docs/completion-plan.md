@@ -1,6 +1,6 @@
 # Completion plan for existing modules
 
-The current priority is to finish existing implementations before starting another component. This audit is based on the source, type fixtures and guides available on 7 November 2026, including the merged Divider contract and finite native validation at `6e223c98`.
+The current priority is to finish the easiest existing unfinished component or API to its full agreed native contract before moving to another family. The partial-row inventory retains the 7 November 2026 audit, including the merged Divider contract and finite native validation at `6e223c98`; completion priorities and theme-reading evidence were updated on 10 November 2026.
 
 There are **61 rows at 50% or 75%**: 54 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **20 rows at 25%**: 10 Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
 
@@ -10,7 +10,7 @@ For each family, make the agreed native contract finite: list every eligible pro
 
 Keep three independent checklists: implementation gaps, locally executable verification, and external device/release verification. Missing software behavior must be implemented now. Native emulator tests, accessibility-tree assertions, RTL/large-font checks and release-build benchmarks are local work when the available tools support them. Physical keyboard, IME and screen-reader usability evidence stays explicitly unverified until exercised; it must not conceal an implementation gap or be silently marked complete.
 
-Finish each selected family's implementation and local checks within its workstream before moving that workstream to another family. Independent modules may proceed in parallel with isolated source changes and independent review; a required dependency must have explicit exit conditions. Do not promote a row merely because it was rendered indirectly by a later component. Do not add a new zero-percent component to avoid completing an existing dependency.
+Finish each selected family's implementation and local checks within its workstream before moving that workstream to another family. Select one family at a time. A required dependency must be necessary for that family and have explicit exit conditions; supporting infrastructure and CI work must not displace its closure. Do not promote a row merely because it was rendered indirectly by a later component. Do not add a new zero-percent component to avoid completing an existing dependency.
 
 ## Retained closure gates: ButtonGroup and required existing styling
 
@@ -26,7 +26,7 @@ Finish each selected family's implementation and local checks within its workstr
 
 ## Ordered completion queue
 
-The full pinned icon catalog and the finite RtlProvider/DefaultPropsProvider contracts are complete. Continue the remaining ButtonGroup gates and existing styling, typography and Paper dependencies, completing each finite contract before its workstream advances. The queue below retains the larger dependency order. ButtonGroup enlarged-text, shared styling-cache and optimized-build gates remain open; they are not discarded by completing an independent renderless provider or icon catalog.
+The full pinned icon catalog and the finite RtlProvider/DefaultPropsProvider contracts are complete. The existing [Material and System theme-reading hooks](theme-reading.md) are also complete within their finite native context contracts. Prioritize the smallest remaining existing API whose full contract can be closed now, then small existing wrappers with executable closure gates. The table below records the larger dependency order; it does not require exhausting a large styling subsystem before closing an independent small API. ButtonGroup enlarged-text, shared styling-cache and optimized-build gates remain open; they are not discarded by completing an independent renderless provider or icon catalog.
 
 | Order | Existing family                                                                                              | Concrete exit work                                                                                                                                                                                                      |
 | ----- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -43,7 +43,7 @@ The full pinned icon catalog and the finite RtlProvider/DefaultPropsProvider con
 
 ## All existing partial rows
 
-The entries below enumerate the 81 current partial status rows and the separately completed RtlProvider, two DefaultPropsProvider entries and icon-catalog scopes. Material and System DefaultPropsProvider are separate package entries; foundation rows are cross-cutting work rather than extra components. Each linked guide is evidence and a starting point for the finite contract audit, not proof that every inherited API is complete.
+The entries below enumerate the 81 current partial status rows and the separately completed RtlProvider, two DefaultPropsProvider entries, three theme-reading APIs and icon-catalog scopes. Material and System DefaultPropsProvider are separate package entries; foundation rows are cross-cutting work rather than extra components. Each linked guide is evidence and a starting point for the finite contract audit, not proof that every inherited API is complete.
 
 ### Foundations
 

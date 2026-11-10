@@ -103,8 +103,13 @@ export function useThemeProps<P extends object>({
   return getThemeProps({ theme: scoped as Theme, props, name });
 }
 
-export function useSx(sx?: SxProps, context: StyleContext = {}, themeId?: string) {
-  const theme = scopedTheme(useTheme(), themeId);
+export function useSx(
+  sx?: SxProps,
+  context: StyleContext = {},
+  themeId?: string,
+  fallback?: Theme,
+) {
+  const theme = scopedTheme(useTheme(fallback), themeId);
   const { width } = useWindowDimensions();
   return resolveSx(sx, theme, { width, ...context });
 }
@@ -114,8 +119,9 @@ export function useComponentStyle(
   sx?: SxProps,
   context: StyleContext = {},
   themeId?: string,
+  fallback?: Theme,
 ) {
-  const theme = scopedTheme(useTheme(), themeId);
+  const theme = scopedTheme(useTheme(fallback), themeId);
   const { width } = useWindowDimensions();
   return componentStyle(theme, name, props as Record<string, unknown>, sx, {
     width,
@@ -130,8 +136,9 @@ export function useComponentRootStyle(
   style: StyleProp<NativeStyle>,
   context: StyleContext = {},
   themeId?: string,
+  fallback?: Theme,
 ): NativeRootStyleResult {
-  const theme = scopedTheme(useTheme(), themeId);
+  const theme = scopedTheme(useTheme(fallback), themeId);
   const { width } = useWindowDimensions();
   return componentRootStyle(theme, name, props as Record<string, unknown>, sx, style, {
     width,
@@ -195,14 +202,23 @@ const styledRecipes = new WeakMap<
     layers: readonly NativeStyledLayer[];
   }>
 >();
+// Retain the first styled creator's fallback across exact constructor composition.
+// Memo remains a component boundary, so its inner creator resolves independently.
+const styledFallbacks = new WeakMap<object, Theme>();
 export function styled<P extends object>(
   Component: React.ComponentType<P>,
-  options: { name?: string; shouldForwardProp?: (prop: string) => boolean; themeId?: string } = {},
+  options: {
+    name?: string;
+    shouldForwardProp?: (prop: string) => boolean;
+    themeId?: string;
+    defaultTheme?: Theme;
+  } = {},
 ) {
   return (styles: SxObject | ((props: P & { theme: Theme; ownerState?: unknown }) => SxProps)) => {
     // Only our exact first-party constructors contribute recipes. Memo is an
     // actual component boundary, never flattened or invoked by this metadata.
     const inherited = styledRecipes.get(Component);
+    const fallback = styledFallbacks.get(Component) ?? options.defaultTheme ?? systemDefaultTheme;
     const known = Component === (View as unknown) || isNativeCooperatingRoot(Component);
     const layer: NativeStyledLayer = {
       prepare(props, rawTheme, parent, width, last, genuine) {
@@ -254,7 +270,7 @@ export function styled<P extends object>(
       const forwarded = useNativeRootStyleForward(Styled, rootClassName);
       const forwarding = useForwarding();
       const { root, ref: rootRef } = useNativeTextRootRef(ref);
-      const rawTheme = useTheme(),
+      const rawTheme = useTheme(fallback),
         theme = scopedTheme(rawTheme, options.themeId);
       const parent = useNativeTextContext();
       const { width } = useWindowDimensions();
@@ -416,6 +432,7 @@ export function styled<P extends object>(
         layers,
       });
     }
+    styledFallbacks.set(Styled, fallback);
     return Styled;
   };
 }

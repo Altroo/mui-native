@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "2a81a5a0483f52c330e57f2665dc4a4c2a305d832e08d3026fd189a435eeffa3",
+  "nativeSourceSha256": "28c124baaa8ccfe36c04110d229f36d3d59870c12914686cf6451dda372624b2",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7928,7 +7928,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentRootStyle",
           "kind": "value",
-          "line": 126
+          "line": 132
         }
       ]
     },
@@ -7939,7 +7939,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentStyle",
           "kind": "value",
-          "line": 111
+          "line": 116
         }
       ]
     },
@@ -7961,7 +7961,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useNativeRootProps",
           "kind": "value",
-          "line": 146
+          "line": 153
         }
       ]
     },
@@ -19176,7 +19176,7 @@
     {
       "name": "NativeStyledRef",
       "file": "src/provider.tsx",
-      "line": 157,
+      "line": 164,
       "kind": "type",
       "members": [],
       "references": [
@@ -19190,7 +19190,7 @@
     {
       "name": "NativeStyledLayer",
       "file": "src/provider.tsx",
-      "line": 162,
+      "line": 169,
       "kind": "type",
       "members": [],
       "references": [
