@@ -45,7 +45,8 @@ public final class LayoutRootScenario {
   private enum Scenario {
     LAYOUT_ROOTS("layout-roots", "layoutRoot"), TEXT_ALIGNMENT("text-alignment", "textAlignment"),
     FORM_GROUP_EVENTS("form-group-events", "formGroupEvents"), FORM_GROUP_KEYBOARD("form-group-keyboard", "formGroupKeyboard"),
-    FORM_GROUP_FOCUS("form-group-focus", "formGroupFocus"), FORM_GROUP_EDITOR("form-group-editor", "formGroupEditor");
+    FORM_GROUP_FOCUS("form-group-focus", "formGroupFocus"), FORM_GROUP_EDITOR("form-group-editor", "formGroupEditor"),
+    FORM_GROUP_ACCESSIBILITY("form-group-accessibility", "formGroupAccessibility");
     final String label, key;
     Scenario(String label, String key) { this.label = label; this.key = key; }
   }
@@ -70,6 +71,7 @@ public final class LayoutRootScenario {
   public static void runFormGroupKeyboard(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_KEYBOARD, null).run(); }
   public static void runFormGroupFocus(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_FOCUS, null).run(); }
   public static void runFormGroupEditor(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_EDITOR, null).run(); }
+  public static void runFormGroupAccessibility(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_ACCESSIBILITY, null).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
@@ -111,7 +113,9 @@ public final class LayoutRootScenario {
       } while (!wrappersReady && navigationAttempts < 2);
       report.put("navigationAttempts", navigationAttempts);
       require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
-      if (scenario == Scenario.FORM_GROUP_EDITOR) {
+      if (scenario == Scenario.FORM_GROUP_ACCESSIBILITY) {
+        formGroupAccessibility();
+      } else if (scenario == Scenario.FORM_GROUP_EDITOR) {
         formGroupEditor(report);
       } else if (scenario == Scenario.FORM_GROUP_FOCUS) {
         formGroupFocus(report);
@@ -729,6 +733,87 @@ public final class LayoutRootScenario {
       .put("height", (bottom - top + 1) / density).put("pixels", pixels);
   }
 
+  private void formGroupAccessibility() throws Exception {
+    require(Math.abs(activity.getResources().getConfiguration().fontScale - 1) < .01, "Normal native font scale required");
+    android.accessibilityservice.AccessibilityServiceInfo service = automation.getServiceInfo();
+    service.flags |= android.accessibilityservice.AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
+    automation.setServiceInfo(service);
+    groupAccessibilityState("initial", false, 0);
+    for (String group : GROUPS) tap("form-group-contract-child-" + group);
+    String[] controls = {"row", "error", "theme", "rtl", "text"};
+    for (String control : controls) tap("form-group-contract-" + control);
+    groupAccessibilityState("updated", true, 1);
+    for (String control : controls) tap("form-group-contract-" + control);
+    groupAccessibilityState("restored", false, 1);
+  }
+
+  private void groupAccessibilityState(String name, boolean updated, int count) throws Exception {
+    JSONObject current = settled(() -> {
+      JSONObject value = metadata("form-group-contract-receipt");
+      require(value.getInt("schemaVersion") == 1 && value.getBoolean("row") == updated &&
+        value.getBoolean("parentError") == updated && value.getBoolean("themed") == updated &&
+        value.getBoolean("rtl") == updated && value.getInt("fontSize") == (updated ? 20 : 16), "Actual group stage did not commit");
+      scale(value);
+      // The default state can render before the first native layout acknowledges refs.
+      for (String group : GROUPS) {
+        JSONObject ref = value.getJSONObject("refs").getJSONObject(group);
+        require(ref.getInt("attached") == 1 && ref.getInt("cleaned") == 0, "Live group ref not ready: " + group + " " + ref);
+        require(value.getJSONObject("receipts").has(group), "Native group layout not ready: " + group);
+      }
+      return value;
+    }, "Group accessibility stage " + name);
+    JSONArray groups = new JSONArray();
+    for (String group : GROUPS) {
+      String rootId = "form-group-contract-" + group;
+      JSONObject ref = current.getJSONObject("refs").getJSONObject(group);
+      require(ref.getInt("attached") == 1 && ref.getInt("cleaned") == 0, "Retained group ref " + group);
+      int rootTag = ui(() -> retained(rootId).getId());
+      JSONObject button = groupAccessibilityLeaf(rootId, "form-group-contract-child-" + group, "android.widget.Button", "Choice " + count, true);
+      JSONObject text = groupAccessibilityLeaf(rootId, "form-group-contract-text-" + group, "android.widget.TextView", "Inherited text", false);
+      groups.put(new JSONObject().put("group", group).put("rootTag", rootTag).put("refs", ref).put("button", button).put("text", text));
+    }
+    states.put(new JSONObject().put("name", name).put("updated", updated).put("groups", groups));
+    stage(name); capture("group-tree-" + name + ".png");
+  }
+
+  private JSONObject groupAccessibilityLeaf(String rootId, String id, String expectedRole, String expectedLabel, boolean click) throws Exception {
+    revealComplete(id);
+    final JSONObject[] observed = {null};
+    await(() -> {
+      AccessibilityNodeInfo root = automation.getRootInActiveWindow();
+      if (root == null || !PACKAGE.equals(String.valueOf(root.getPackageName()))) return false;
+      java.util.ArrayDeque<AccessibilityNodeInfo> queue = new java.util.ArrayDeque<>(); queue.add(root);
+      AccessibilityNodeInfo match = null;
+      int examined = 0, matches = 0;
+      while (!queue.isEmpty()) {
+        require(examined++ < 5000, "Accessibility tree exceeds the diagnostic node limit");
+        AccessibilityNodeInfo node = queue.removeFirst();
+        if (id.equals(node.getViewIdResourceName())) { matches++; match = node; }
+        for (int i = 0; i < node.getChildCount(); i++) { AccessibilityNodeInfo child = node.getChild(i); if (child != null) queue.addLast(child); }
+      }
+      if (match == null || !match.isVisibleToUser()) return false;
+      require(matches == 1, "One native accessibility node must expose " + id);
+      String role = String.valueOf(match.getClassName());
+      CharSequence description = match.getContentDescription();
+      String label = String.valueOf(description != null ? description : match.getText());
+      boolean clickable = match.getActionList().stream().anyMatch(action -> action.getId() == AccessibilityNodeInfo.ACTION_CLICK);
+      require(expectedRole.equals(role) && expectedLabel.equals(label), "Wrong native role/label for " + id + ": " + role + " / " + label);
+      require(!click || (match.isEnabled() && clickable), "Native button must expose its enabled click action: " + id);
+      Rect bounds = new Rect(); match.getBoundsInScreen(bounds);
+      Rect owner = ui(() -> {
+        View view = retained(rootId); int[] origin = new int[2]; view.getLocationOnScreen(origin);
+        return new Rect(origin[0], origin[1], origin[0] + view.getWidth(), origin[1] + view.getHeight());
+      });
+      require(!bounds.isEmpty() && owner.contains(bounds.centerX(), bounds.centerY()), "Native accessibility node center must stay in its group: " + id);
+      observed[0] = new JSONObject().put("id", id).put("role", role).put("label", label).put("matches", matches)
+        .put("enabled", match.isEnabled()).put("clickAction", clickable).put("visibleToUser", match.isVisibleToUser())
+        .put("bounds", new JSONArray().put(bounds.left).put(bounds.top).put(bounds.right).put(bounds.bottom))
+        .put("groupBounds", new JSONArray().put(owner.left).put(owner.top).put(owner.right).put(owner.bottom));
+      return true;
+    }, "Visible native accessibility node must be reachable: " + id);
+    return observed[0];
+  }
+
   private void group(String stage, boolean row, boolean error, boolean themed, boolean rtl, int fontSize, int count) throws Exception {
     JSONObject sample = settled(() -> {
       JSONObject metadata = metadata("form-group-contract-receipt");
@@ -1043,9 +1128,9 @@ public final class LayoutRootScenario {
     do { textDiagnostic = null; try { return ui(sample); } catch (AssertionError error) { last = error; } SystemClock.sleep(16); } while (SystemClock.uptimeMillis() < deadline);
     throw new AssertionError("Native state did not settle: " + name, last);
   }
-  private void await(java.util.function.BooleanSupplier condition, String message) throws Exception {
+  private void await(java.util.concurrent.Callable<Boolean> condition, String message) throws Exception {
     long deadline = SystemClock.uptimeMillis() + 35000;
-    do { if (condition.getAsBoolean()) return; SystemClock.sleep(16); } while (SystemClock.uptimeMillis() < deadline);
+    do { if (condition.call()) return; SystemClock.sleep(16); } while (SystemClock.uptimeMillis() < deadline);
     throw new AssertionError(message);
   }
   private <T> T ui(java.util.concurrent.Callable<T> action) {
