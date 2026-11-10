@@ -1,6 +1,6 @@
 # MUI Native delivery roadmap
 
-Current priority: [finish existing partial modules](docs/completion-plan.md) before adding new components. The queue separates software work, locally executable verification and external validation.
+Current priority: [finish the easiest existing unfinished component or API](docs/completion-plan.md) to its full agreed native contract, one family at a time, before adding new components. The queue separates software work, locally executable verification and external validation.
 
 Updated: 2026-11-10. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
 
@@ -33,6 +33,8 @@ Each feature needs appropriate local checks and independent review of hidden bug
 Material UI baseline: 9.5.0. Stable X baseline: 9.15.0. Scheduler: 9.0.0-beta.13. Chat: 9.0.0-alpha.19, blocked for missing license text. These are references, not support claims. See `upstream/state.json` for exact commits and provenance.
 
 ## 1. Prove the architecture
+
+- [x] Complete the finite native context-reading contracts of Material `useTheme`, System `useTheme` and System `useThemeWithoutDefault`, with pinned original-runtime comparisons, fallback integration, canonical imports and strict installed consumers. See [theme reading](docs/theme-reading.md); broader providers, theme construction and styling remain separate.
 
 - [x] Native theme, spacing and responsive styling engine with diagnostics.
 - [x] Material UI form prototype using original imports through Metro.

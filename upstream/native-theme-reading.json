@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "description": "Finite native theme-reading hook contract; theme construction, provider and CSS-variable completion are separate.",
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "styles/useTheme.js": "456c09c3aec1f29d479442b5deb648d8087c33cc8a1b88d9ffc03f9051482818",
+        "styles/useTheme.d.ts": "56e9483c87ffd60f3811152a21d9704384c6539b13fef717ddbf99c5d944c330",
+        "styles/defaultTheme.js": "45889e8276a1bc1c2792da1683263633df7b8ddc9a31a383c8384b37ca49d5b2",
+        "styles/identifier.js": "e75aca64cb87bbbb2c752b14873c81211d8b14e97621014ab05043a19ded0bf0",
+        "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
+        "styles/useThemeProps.js": "153aededf39170da2b446a56fb5a050ca43b5f899d560dba271bb48fefea2a48"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "useTheme/useTheme.js": "d41fa6fcfc33ccd3bf85f8fd1af6b7f1b3af45cf5a6da5f8749d40767677d1e8",
+        "useTheme/useTheme.d.ts": "248309267e04429f5fbff4de4f1e12dd3e76f2df9688dd8051ee1057f89d18e8",
+        "useThemeWithoutDefault/useThemeWithoutDefault.js": "3d4208f5fd73e15d66adc0c6e0a98d166d30e9541f65d9dca7919a6a00fecd3f",
+        "useThemeWithoutDefault/useThemeWithoutDefault.d.ts": "da625a05492ce53ecca63a00ec09b257ea6bd40f44e75cd0a5ac20b989f02e4d",
+        "ThemeProvider/ThemeProvider.js": "cca6ab3f8adfb1c0664cdda3c89dfb1cf1f83b034390fe2670b276bed2a28569",
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
+        "styled/index.js": "2d8e45095e1766703671875938ee8021dbbeea92f826fdc0b9568196e6321f20"
+      }
+    }
+  ],
+  "localFiles": [
+    "packages/material/src/themeProvider.tsx",
+    "packages/system/src/provider.tsx",
+    "tests/theme-reading.test.tsx",
+    "fixtures/theme-reading-consumer/consumer.tsx"
+  ],
+  "adaptations": [
+    "Native hooks read the shared native context; no DOM/styled-engine bridge is installed.",
+    "Native Theme construction remains its own contract. Material and System retain distinct stable fallback objects.",
+    "Generic signatures and canonical root/styles/deep imports remain intact."
+  ],
+  "fixture": {
+    "path": "tests/fixtures/mui-theme-reading-9.5.0.json",
+    "sha256": "ad376b603fe0cd853aef4163a8db24cd825f7b166d914bc5c03822031b353334"
+  }
+}

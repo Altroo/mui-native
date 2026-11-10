@@ -74,3 +74,18 @@ test('System declaration isolation permits owned types and nondependency text', 
     ),
   );
 });
+
+test('theme-reading reference data remains bound to reviewed MUI baselines', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { createHash } = await import('node:crypto');
+  const provenance = JSON.parse(await readFile('upstream/native-theme-reading.json', 'utf8'));
+  const state = JSON.parse(await readFile('upstream/state.json', 'utf8'));
+  const bytes = await readFile(provenance.fixture.path);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), provenance.fixture.sha256);
+  for (const reference of provenance.references) {
+    const baseline = state.packages[reference.name].baseline;
+    for (const key of ['version', 'sourceCommit', 'integrity', 'licenseSha256'])
+      assert.equal(reference[key], baseline[key]);
+    assert(Object.keys(reference.sourceFiles).length > 0);
+  }
+});

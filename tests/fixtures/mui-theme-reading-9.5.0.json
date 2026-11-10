@@ -1,0 +1,200 @@
+{
+  "version": "9.5.0",
+  "fixtures": [
+    {
+      "input": { "name": "no provider", "kind": "none" },
+      "result": {
+        "systemIsDefault": true,
+        "materialIsDefault": true,
+        "materialIsSystem": false,
+        "nullableIsNull": true,
+        "explicitSystemIsFallback": true,
+        "explicitNullableIsFallback": true,
+        "systemStamp": null,
+        "materialStamp": null
+      }
+    },
+    {
+      "input": { "name": "empty context", "kind": "object", "theme": {} },
+      "result": {
+        "systemIsDefault": true,
+        "materialIsDefault": true,
+        "materialIsSystem": false,
+        "nullableIsNull": true,
+        "explicitSystemIsFallback": true,
+        "explicitNullableIsFallback": true,
+        "systemStamp": null,
+        "materialStamp": null
+      }
+    },
+    {
+      "input": {
+        "name": "unscoped context",
+        "kind": "object",
+        "theme": { "stamp": "outer" }
+      },
+      "result": {
+        "systemIsDefault": false,
+        "materialIsDefault": false,
+        "materialIsSystem": true,
+        "nullableIsNull": false,
+        "explicitSystemIsFallback": false,
+        "explicitNullableIsFallback": false,
+        "systemStamp": "outer",
+        "materialStamp": "outer"
+      }
+    },
+    {
+      "input": {
+        "name": "Material scope",
+        "kind": "object",
+        "theme": {
+          "stamp": "outer",
+          "$$material": { "stamp": "material" },
+          "other": { "stamp": "other" }
+        }
+      },
+      "result": {
+        "systemIsDefault": false,
+        "materialIsDefault": false,
+        "materialIsSystem": false,
+        "nullableIsNull": false,
+        "explicitSystemIsFallback": false,
+        "explicitNullableIsFallback": false,
+        "systemStamp": "outer",
+        "materialStamp": "material"
+      }
+    },
+    {
+      "input": {
+        "name": "falsy scope null",
+        "kind": "object",
+        "theme": { "stamp": "outer", "$$material": null }
+      },
+      "result": {
+        "systemIsDefault": false,
+        "materialIsDefault": false,
+        "materialIsSystem": true,
+        "nullableIsNull": false,
+        "explicitSystemIsFallback": false,
+        "explicitNullableIsFallback": false,
+        "systemStamp": "outer",
+        "materialStamp": "outer"
+      }
+    },
+    {
+      "input": {
+        "name": "falsy scope false",
+        "kind": "object",
+        "theme": { "stamp": "outer", "$$material": false }
+      },
+      "result": {
+        "systemIsDefault": false,
+        "materialIsDefault": false,
+        "materialIsSystem": true,
+        "nullableIsNull": false,
+        "explicitSystemIsFallback": false,
+        "explicitNullableIsFallback": false,
+        "systemStamp": "outer",
+        "materialStamp": "outer"
+      }
+    },
+    {
+      "input": {
+        "name": "falsy scope 0",
+        "kind": "object",
+        "theme": { "stamp": "outer", "$$material": 0 }
+      },
+      "result": {
+        "systemIsDefault": false,
+        "materialIsDefault": false,
+        "materialIsSystem": true,
+        "nullableIsNull": false,
+        "explicitSystemIsFallback": false,
+        "explicitNullableIsFallback": false,
+        "systemStamp": "outer",
+        "materialStamp": "outer"
+      }
+    },
+    {
+      "input": {
+        "name": "falsy scope \"\"",
+        "kind": "object",
+        "theme": { "stamp": "outer", "$$material": "" }
+      },
+      "result": {
+        "systemIsDefault": false,
+        "materialIsDefault": false,
+        "materialIsSystem": true,
+        "nullableIsNull": false,
+        "explicitSystemIsFallback": false,
+        "explicitNullableIsFallback": false,
+        "systemStamp": "outer",
+        "materialStamp": "outer"
+      }
+    },
+    {
+      "input": { "name": "empty callback replaces context", "kind": "reset" },
+      "result": {
+        "systemIsDefault": true,
+        "materialIsDefault": true,
+        "materialIsSystem": false,
+        "nullableIsNull": true,
+        "explicitSystemIsFallback": true,
+        "explicitNullableIsFallback": true,
+        "systemStamp": null,
+        "materialStamp": null
+      }
+    }
+  ],
+  "styledFixtures": [
+    {
+      "input": { "opaque": false, "firstMaterial": false, "memo": false },
+      "result": {
+        "innerIsMaterial": false,
+        "outerIsMaterial": false,
+        "sameTheme": true
+      }
+    },
+    {
+      "input": { "opaque": false, "firstMaterial": true, "memo": false },
+      "result": {
+        "innerIsMaterial": true,
+        "outerIsMaterial": true,
+        "sameTheme": true
+      }
+    },
+    {
+      "input": { "opaque": true, "firstMaterial": false, "memo": false },
+      "result": {
+        "innerIsMaterial": false,
+        "outerIsMaterial": false,
+        "sameTheme": true
+      }
+    },
+    {
+      "input": { "opaque": true, "firstMaterial": true, "memo": false },
+      "result": {
+        "innerIsMaterial": true,
+        "outerIsMaterial": true,
+        "sameTheme": true
+      }
+    },
+    {
+      "input": { "opaque": false, "firstMaterial": false, "memo": true },
+      "result": {
+        "innerIsMaterial": false,
+        "outerIsMaterial": true,
+        "sameTheme": false
+      }
+    },
+    {
+      "input": { "opaque": false, "firstMaterial": true, "memo": true },
+      "result": {
+        "innerIsMaterial": true,
+        "outerIsMaterial": false,
+        "sameTheme": false
+      }
+    }
+  ]
+}

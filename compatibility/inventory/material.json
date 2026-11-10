@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "8afa0de68bba9561f36d5d7e0d1f609310a2d2591bcaef78b16e0e309771d88e",
+  "nativeSourceSha256": "8c481afabb85c73bc50238873ab63b690616502040ebf00e1fecce31d0be54e8",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -37671,7 +37671,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentRootStyle",
           "kind": "value",
-          "line": 126
+          "line": 132
         }
       ]
     },
@@ -37682,7 +37682,7 @@
           "module": "@altroo/mui-native:src/themeProvider.tsx",
           "name": "useComponentStyle",
           "kind": "value",
-          "line": 69
+          "line": 74
         }
       ]
     },
@@ -37704,7 +37704,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useNativeRootProps",
           "kind": "value",
-          "line": 146
+          "line": 153
         }
       ]
     },
@@ -37770,7 +37770,7 @@
           "module": "@altroo/mui-native:src/themeProvider.tsx",
           "name": "useSx",
           "kind": "value",
-          "line": 66
+          "line": 71
         }
       ]
     },
@@ -142870,7 +142870,7 @@
         {
           "name": "ThemeProviderProps",
           "file": "src/themeProvider.tsx",
-          "line": 22,
+          "line": 25,
           "package": "@altroo/mui-native"
         }
       ]
@@ -143040,7 +143040,7 @@
         {
           "name": "ThemeProviderProps",
           "file": "src/themeProvider.tsx",
-          "line": 22,
+          "line": 25,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175413,7 +175413,7 @@
         {
           "name": "ThemeWithProps",
           "file": "src/themeProvider.tsx",
-          "line": 45,
+          "line": 49,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175435,7 +175435,7 @@
         {
           "name": "ThemedProps",
           "file": "src/themeProvider.tsx",
-          "line": 48,
+          "line": 52,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175470,7 +175470,7 @@
         {
           "name": "ThemeWithProps",
           "file": "src/themeProvider.tsx",
-          "line": 45,
+          "line": 49,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175492,7 +175492,7 @@
         {
           "name": "ThemedProps",
           "file": "src/themeProvider.tsx",
-          "line": 48,
+          "line": 52,
           "package": "@altroo/mui-native"
         }
       ]
@@ -209721,7 +209721,7 @@
     {
       "name": "ThemeProviderProps",
       "file": "src/themeProvider.tsx",
-      "line": 22,
+      "line": 25,
       "kind": "type",
       "members": [],
       "references": [
@@ -209736,7 +209736,7 @@
     {
       "name": "ThemeWithProps",
       "file": "src/themeProvider.tsx",
-      "line": 45,
+      "line": 49,
       "kind": "type",
       "members": [
         {
@@ -209746,7 +209746,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "components?: Components;",
-          "line": 46,
+          "line": 50,
           "kind": "property",
           "type": "Components"
         }
@@ -209760,7 +209760,7 @@
     {
       "name": "ThemedProps",
       "file": "src/themeProvider.tsx",
-      "line": 48,
+      "line": 52,
       "kind": "type",
       "members": [],
       "references": [
