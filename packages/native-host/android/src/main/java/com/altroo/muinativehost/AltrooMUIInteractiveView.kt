@@ -248,6 +248,7 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
       putBoolean("ctrlKey",event.isCtrlPressed); putBoolean("metaKey",event.isMetaPressed); putBoolean("shiftKey",event.isShiftPressed)
       putBoolean("repeat",event.repeatCount > 0); putBoolean("isComposing",false); putBoolean("isCanceled",event.isCanceled)
     }
+    data.putString("muiKeySource","hardware")
     emit(if(event.action == KeyEvent.ACTION_DOWN) "topMUIKeyDown" else "topMUIKeyUp",data)
     // JavaScript owns these keys. Never also call View's native performClick path.
     return if(isManaged(key)) true else super.dispatchKeyEvent(event)

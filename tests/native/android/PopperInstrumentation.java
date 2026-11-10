@@ -49,6 +49,7 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean buttonGroupReadingScenario;
   private boolean layoutRootScenario;
   private boolean formGroupEventsScenario;
+  private boolean formGroupKeyboardScenario;
   private boolean textAlignmentScenario;
   private boolean dividerScenario;
   private boolean paperScenario;
@@ -71,6 +72,7 @@ public final class PopperInstrumentation extends Instrumentation {
     buttonGroupReadingScenario = "button-group-reading".equals(arguments.getString("scenario"));
     layoutRootScenario = "layout-roots".equals(arguments.getString("scenario"));
     formGroupEventsScenario = "form-group-events".equals(arguments.getString("scenario"));
+    formGroupKeyboardScenario = "form-group-keyboard".equals(arguments.getString("scenario"));
     textAlignmentScenario = "text-alignment".equals(arguments.getString("scenario"));
     readingGlobalRTL = "true".equals(arguments.getString("globalRTL"));
     dividerScenario = "divider".equals(arguments.getString("scenario"));
@@ -89,6 +91,7 @@ public final class PopperInstrumentation extends Instrumentation {
     if (cardScenario) { CardScenario.run(this, dividerFontProfile); return; }
     if (boxScenario) { BoxScenario.run(this, dividerFontProfile); return; }
     if (paperScenario) { PaperScenario.run(this, dividerFontProfile); return; }
+    if (formGroupKeyboardScenario) { LayoutRootScenario.runFormGroupKeyboard(this); return; }
     if (formGroupEventsScenario) { LayoutRootScenario.runFormGroupEvents(this); return; }
     if (textAlignmentScenario) { LayoutRootScenario.runTextAlignment(this); return; }
     if (dividerScenario) { DividerScenario.run(this, dividerFontProfile); return; }

@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import type React from 'react';
 import {
   codegenNativeComponent,
@@ -17,6 +18,7 @@ type KeyData = Readonly<{
   repeat: boolean;
   isComposing: boolean;
   isCanceled: boolean;
+  muiKeySource: string;
 }>;
 type DescendantKeyData = Readonly<{
   key: string;

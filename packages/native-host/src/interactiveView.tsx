@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { forwardRef, useCallback, useRef } from 'react';
 import type { ColorValue, ViewInstance, ViewProps } from 'react-native';
 import {
@@ -6,6 +7,7 @@ import {
   type NativeHostKeyEvent,
 } from './nativeKeyboard';
 import { recordNativeFocus, clearNativeFocus } from './nativeFocus';
+import { registerNativeKeyTarget } from './nativeKeyTargets';
 import type { NativeProps } from './AltrooMUIInteractiveViewNativeComponent';
 let implementation: typeof import('./AltrooMUIInteractiveViewNativeComponent') | undefined;
 function nativeImplementation() {
@@ -109,6 +111,7 @@ export const InteractiveView: React.ForwardRefExoticComponent<
           value: () => native.Commands.blur(node as any),
         },
       });
+      const releaseKeyTarget = registerNativeKeyTarget(node);
       let release: (() => void) | void;
       let released = false;
       const restore = () => {
@@ -127,6 +130,7 @@ export const InteractiveView: React.ForwardRefExoticComponent<
           else if (typeof forwarded === 'function') forwarded(null);
           else if (forwarded?.current === node) forwarded.current = null;
         } finally {
+          releaseKeyTarget();
           restore();
         }
       };
@@ -134,6 +138,7 @@ export const InteractiveView: React.ForwardRefExoticComponent<
         if (typeof forwarded === 'function') release = forwarded(node);
         else if (forwarded) forwarded.current = node;
       } catch (error) {
+        releaseKeyTarget();
         restore();
         throw error;
       }

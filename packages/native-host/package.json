@@ -49,6 +49,11 @@
       "types": "./dist/internal/owned-view/index.d.ts",
       "react-native": "./src/internal/owned-view/index.ts",
       "default": "./dist/internal/owned-view/index.js"
+    },
+    "./internal/native-keys": {
+      "types": "./dist/internal/native-keys/index.d.ts",
+      "react-native": "./src/internal/native-keys/index.ts",
+      "default": "./dist/internal/native-keys/index.js"
     }
   },
   "dependencies": {},

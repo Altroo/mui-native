@@ -27,6 +27,7 @@ import { useTheme, useComponentStyle, useComponentRootStyle } from './themeProvi
 import { FormContext, useControlled } from './formState';
 import { mergeNativeRootStyle } from './nativeControlStyles';
 import { useMenuEvent } from './useMenuEvent';
+import { acceptsNativeViewKey } from '@altroo/mui-native-host/internal/native-keys';
 import { NativeRadioRegistry } from './nativeRadioRegistry';
 import { RadioContext } from './radioContext';
 import type { NativeCheckedChangeEvent } from './checkedTypes';
@@ -37,6 +38,16 @@ import {
 } from './controlClasses';
 export { useRadioGroup } from './radioContext';
 export type { RadioGroupState } from './radioContext';
+// RN can emit a framework copy before the owned control's native event.
+// Leave plain View/TextInput delivery intact. Groups without key handlers add
+// no event callbacks or layout effects to the ordinary layout-only path.
+function nativeGroupKey(callback: ViewProps['onKeyDown']) {
+  return callback
+    ? (event: Parameters<NonNullable<ViewProps['onKeyDown']>>[0]) => {
+        if (acceptsNativeViewKey(event)) callback(event);
+      }
+    : undefined;
+}
 export interface FormGroupProps extends Omit<ViewProps, 'style'> {
   children?: React.ReactNode;
   row?: boolean | undefined;
@@ -117,6 +128,18 @@ export const FormGroup = forwardRef<ViewInstance, FormGroupProps>(function FormG
       {(nativeStyle, content) => (
         <Root
           {...native}
+          onKeyDown={nativeGroupKey(native.onKeyDown)}
+          onKeyUp={nativeGroupKey(native.onKeyUp)}
+          onKeyDownCapture={nativeGroupKey(native.onKeyDownCapture)}
+          onKeyUpCapture={nativeGroupKey(native.onKeyUpCapture)}
+          {...{
+            // Owned controls bubble native keyboard events under these transport
+            // names. Keep the original root and event objects across both paths.
+            onMUIKeyDown: native.onKeyDown,
+            onMUIKeyUp: native.onKeyUp,
+            onMUIKeyDownCapture: native.onKeyDownCapture,
+            onMUIKeyUpCapture: native.onKeyUpCapture,
+          }}
           {...(Root === View ? {} : { className: rootClass })}
           ref={scopeRef}
           style={nativeStyle}

@@ -9,6 +9,8 @@ module.exports = {
     // Internal first-party imports must share source context and style carriers.
     '^@altroo/mui-native/internal/card-content$':
       '<rootDir>/packages/material/src/internal/card-content',
+    '^@altroo/mui-native-host/internal/native-keys$':
+      '<rootDir>/packages/native-host/src/internal/native-keys',
     '^@altroo/mui-native-host/internal/owned-view$':
       '<rootDir>/packages/native-host/src/internal/owned-view',
     '^@altroo/mui-native-system/internal/generated-paragraph$':

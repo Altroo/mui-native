@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "08f41965b61e04b8d34c91341cf40dda6054038967c4e013d5f3bb9c211968a4",
+  "nativeSourceSha256": "766f5251329bdd634b08861d920c88e28cb11bbe740f85c073453395d48a3315",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -37209,7 +37209,7 @@
           "module": "@altroo/mui-native:src/controlGroups.tsx",
           "name": "RadioGroupActions",
           "kind": "type",
-          "line": 136
+          "line": 159
         }
       ]
     },
@@ -72435,7 +72435,7 @@
         {
           "name": "FormGroupProps",
           "file": "src/controlGroups.tsx",
-          "line": 40,
+          "line": 51,
           "package": "@altroo/mui-native"
         }
       ]
@@ -72514,7 +72514,7 @@
         {
           "name": "FormGroupProps",
           "file": "src/controlGroups.tsx",
-          "line": 40,
+          "line": 51,
           "package": "@altroo/mui-native"
         }
       ]
@@ -104029,7 +104029,7 @@
         {
           "name": "RadioGroupProps",
           "file": "src/controlGroups.tsx",
-          "line": 139,
+          "line": 162,
           "package": "@altroo/mui-native"
         }
       ]
@@ -104104,7 +104104,7 @@
         {
           "name": "RadioGroupProps",
           "file": "src/controlGroups.tsx",
-          "line": 139,
+          "line": 162,
           "package": "@altroo/mui-native"
         }
       ]
@@ -191727,7 +191727,7 @@
     {
       "name": "FormGroupProps",
       "file": "src/controlGroups.tsx",
-      "line": 40,
+      "line": 51,
       "kind": "type",
       "members": [
         {
@@ -191737,7 +191737,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 41,
+          "line": 52,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -191748,7 +191748,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "row?: boolean | undefined;",
-          "line": 42,
+          "line": 53,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -191759,7 +191759,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "error?: boolean | undefined;",
-          "line": 43,
+          "line": 54,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -191770,7 +191770,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps | undefined;",
-          "line": 44,
+          "line": 55,
           "kind": "property",
           "type": "SxProps | undefined"
         },
@@ -191781,7 +191781,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle>;",
-          "line": 45,
+          "line": 56,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -191792,7 +191792,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<FormGroupClasses> | undefined;",
-          "line": 46,
+          "line": 57,
           "kind": "property",
           "type": "Partial<FormGroupClasses> | undefined"
         },
@@ -191803,7 +191803,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 47,
+          "line": 58,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -191814,7 +191814,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?:\n    | React.ComponentType<\n        ViewProps & { className?: string | undefined } & React.RefAttributes<ViewInstance>\n      >\n    | undefined;",
-          "line": 48,
+          "line": 59,
           "kind": "property",
           "type": "| React.ComponentType<\n        ViewProps & { className?: string | undefined } & React.RefAttributes<ViewInstance>\n      >\n    | undefined"
         }
@@ -191838,7 +191838,7 @@
     {
       "name": "RadioGroupActions",
       "file": "src/controlGroups.tsx",
-      "line": 136,
+      "line": 159,
       "kind": "type",
       "members": [
         {
@@ -191848,7 +191848,7 @@
           "computed": false,
           "memberKind": "TSMethodSignature",
           "declaration": "focus(): void;",
-          "line": 137,
+          "line": 160,
           "kind": "property",
           "type": "focus(): void;"
         }
@@ -191860,7 +191860,7 @@
     {
       "name": "RadioGroupProps",
       "file": "src/controlGroups.tsx",
-      "line": 139,
+      "line": 162,
       "kind": "type",
       "members": [
         {
@@ -191870,7 +191870,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value?: unknown;",
-          "line": 140,
+          "line": 163,
           "kind": "property",
           "type": "unknown"
         },
@@ -191881,7 +191881,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultValue?: unknown;",
-          "line": 141,
+          "line": 164,
           "kind": "property",
           "type": "unknown"
         },
@@ -191892,7 +191892,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name?: string;",
-          "line": 142,
+          "line": 165,
           "kind": "property",
           "type": "string"
         },
@@ -191903,7 +191903,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onChange?: (event: NativeCheckedChangeEvent, value: string) => void;",
-          "line": 143,
+          "line": 166,
           "kind": "event",
           "type": "(event: NativeCheckedChangeEvent, value: string) => void"
         },
@@ -191914,7 +191914,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "actions?: React.Ref<RadioGroupActions>;",
-          "line": 144,
+          "line": 167,
           "kind": "property",
           "type": "React.Ref<RadioGroupActions>"
         },
@@ -191925,7 +191925,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<RadioGroupClasses>;",
-          "line": 145,
+          "line": 168,
           "kind": "property",
           "type": "Partial<RadioGroupClasses>"
         }
