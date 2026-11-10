@@ -215,8 +215,8 @@ static NSString *AltrooDescendantKey(UIKeyCommand *command) {
   _focusReported = focused;
   if (!_eventEmitter) return;
   const auto &emitter = static_cast<const AltrooMUIInteractiveViewEventEmitter &>(*_eventEmitter);
-  if (focused) emitter.onMUIFocus({.target = (int)self.tag});
-  else emitter.onMUIBlur({.target = (int)self.tag});
+  if (focused) emitter.onMUIFocus({.target = (int)self.tag, .muiFocusSource = "owned"});
+  else emitter.onMUIBlur({.target = (int)self.tag, .muiFocusSource = "owned"});
 }
 - (BOOL)becomeFirstResponder {
   BOOL result = [super becomeFirstResponder];

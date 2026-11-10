@@ -4,6 +4,7 @@ import { ScrollView, View } from 'react-native';
 import { Button } from '@mui/material';
 import { FormGroupContractExample } from './FormGroupContractExample';
 import { FormGroupKeyboardExample } from './FormGroupKeyboardExample';
+import { FormGroupFocusExample } from './FormGroupFocusExample';
 import { ListItemAvatarContractExample } from './ListItemAvatarContractExample';
 import { LayoutRootBenchmarkExample } from './LayoutRootBenchmarkExample';
 import { ListItemIconContractExample } from './ListItemIconContractExample';
@@ -22,6 +23,7 @@ export function RootLayoutExamples() {
   const [example, setExample] = useState<
     | 'group'
     | 'group-keyboard'
+    | 'group-focus'
     | 'avatar'
     | 'icon'
     | 'details'
@@ -64,6 +66,16 @@ export function RootLayoutExamples() {
           onClick={() => setExample('group-keyboard')}
         >
           Group keys
+        </Button>
+        <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
+          testID="root-layout-group-focus"
+          accessibilityState={{ selected: example === 'group-focus' }}
+          variant={example === 'group-focus' ? 'contained' : 'text'}
+          onClick={() => setExample('group-focus')}
+        >
+          Group focus
         </Button>
         <Button
           size="small"
@@ -200,6 +212,8 @@ export function RootLayoutExamples() {
             <FormGroupContractExample />
           ) : example === 'group-keyboard' ? (
             <FormGroupKeyboardExample />
+          ) : example === 'group-focus' ? (
+            <FormGroupFocusExample />
           ) : example === 'avatar' ? (
             <ListItemAvatarContractExample />
           ) : example === 'icon' ? (

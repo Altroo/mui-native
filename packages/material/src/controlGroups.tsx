@@ -27,7 +27,10 @@ import { useTheme, useComponentStyle, useComponentRootStyle } from './themeProvi
 import { FormContext, useControlled } from './formState';
 import { mergeNativeRootStyle } from './nativeControlStyles';
 import { useMenuEvent } from './useMenuEvent';
-import { acceptsNativeViewKey } from '@altroo/mui-native-host/internal/native-keys';
+import {
+  acceptsNativeViewKey,
+  acceptsNativeViewFocus,
+} from '@altroo/mui-native-host/internal/native-keys';
 import { NativeRadioRegistry } from './nativeRadioRegistry';
 import { RadioContext } from './radioContext';
 import type { NativeCheckedChangeEvent } from './checkedTypes';
@@ -45,6 +48,15 @@ function nativeGroupKey(callback: ViewProps['onKeyDown']) {
   return callback
     ? (event: Parameters<NonNullable<ViewProps['onKeyDown']>>[0]) => {
         if (acceptsNativeViewKey(event)) callback(event);
+      }
+    : undefined;
+}
+// Owned focus events share one original event across parent and child. Keep
+// standard focus from ordinary native descendants, and suppress only its copy.
+function nativeGroupFocus(callback: ViewProps['onFocus']) {
+  return callback
+    ? (event: Parameters<NonNullable<ViewProps['onFocus']>>[0]) => {
+        if (acceptsNativeViewFocus(event)) callback(event);
       }
     : undefined;
 }
@@ -128,13 +140,21 @@ export const FormGroup = forwardRef<ViewInstance, FormGroupProps>(function FormG
       {(nativeStyle, content) => (
         <Root
           {...native}
+          onFocus={nativeGroupFocus(native.onFocus)}
+          onBlur={nativeGroupFocus(native.onBlur)}
+          onFocusCapture={nativeGroupFocus(native.onFocusCapture)}
+          onBlurCapture={nativeGroupFocus(native.onBlurCapture)}
           onKeyDown={nativeGroupKey(native.onKeyDown)}
           onKeyUp={nativeGroupKey(native.onKeyUp)}
           onKeyDownCapture={nativeGroupKey(native.onKeyDownCapture)}
           onKeyUpCapture={nativeGroupKey(native.onKeyUpCapture)}
           {...{
-            // Owned controls bubble native keyboard events under these transport
+            // Owned controls bubble native focus and key events under these transport
             // names. Keep the original root and event objects across both paths.
+            onMUIFocus: native.onFocus,
+            onMUIBlur: native.onBlur,
+            onMUIFocusCapture: native.onFocusCapture,
+            onMUIBlurCapture: native.onBlurCapture,
             onMUIKeyDown: native.onKeyDown,
             onMUIKeyUp: native.onKeyUp,
             onMUIKeyDownCapture: native.onKeyDownCapture,

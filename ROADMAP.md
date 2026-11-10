@@ -141,6 +141,8 @@ Review update issues weekly, prioritize relevant security changes, and implement
 
 NativeSelect, native Select and native TextField now parse option/group configuration, preserve DOM-shaped string/selectedOptions semantics and native refs, and hold overlay ownership through actual native dismissal. See [native selection](docs/native-select.md) and [issue #32](https://github.com/Altroo/mui-native/issues/32). Full browser forms, inline list layout and physical picker/accessibility/performance gates remain open.
 
+The current small-wrapper closure is [FormGroup](docs/form-group.md): finite source/types/imports, both-platform geometry, retained state/refs, Android keyboard capture/cancellation and iOS/Android owned-child focus/blur have scoped evidence. The remaining local and external checks stay explicit in the [completion plan](docs/completion-plan.md#current-wrapper-closure-formgroup).
+
 ## Native mobile extension track
 
 Add selected mobile-specific patterns alongside the full Material UI/X compatibility work, after the first pre-alpha preview. Use the same theme, `sx`, controlled-state, ref, slots/slotProps, defaults/overrides/variants and documentation conventions. Keep genuinely new APIs in an explicitly native extension namespace; do not invent original `@mui/material` imports. The proposed optional `@altroo/mui-native-mobile` package is not created or published until it contains real components. See [the design and examples](docs/mobile-extensions.md).

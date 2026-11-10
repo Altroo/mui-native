@@ -41,7 +41,13 @@ public final class LayoutRootScenario {
   private static final String PACKAGE = "dev.altroo.muinative.catalog";
   private static final String[] GROUPS = {"inherited", "own-false", "custom", "styled"};
   private static final String[] AVATARS = {"native", "custom", "portal"};
-  private enum Scenario { LAYOUT_ROOTS, TEXT_ALIGNMENT, FORM_GROUP_EVENTS, FORM_GROUP_KEYBOARD }
+  private enum Scenario {
+    LAYOUT_ROOTS("layout-roots", "layoutRoot"), TEXT_ALIGNMENT("text-alignment", "textAlignment"),
+    FORM_GROUP_EVENTS("form-group-events", "formGroupEvents"), FORM_GROUP_KEYBOARD("form-group-keyboard", "formGroupKeyboard"),
+    FORM_GROUP_FOCUS("form-group-focus", "formGroupFocus");
+    final String label, key;
+    Scenario(String label, String key) { this.label = label; this.key = key; }
+  }
   private final Instrumentation driver;
   private final Scenario scenario;
   private final boolean textAlignment;
@@ -61,10 +67,11 @@ public final class LayoutRootScenario {
   public static void runTextAlignment(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.TEXT_ALIGNMENT, null).run(); }
   public static void runFormGroupEvents(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_EVENTS, null).run(); }
   public static void runFormGroupKeyboard(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_KEYBOARD, null).run(); }
+  public static void runFormGroupFocus(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_FOCUS, null).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
-      String label = scenario == Scenario.FORM_GROUP_KEYBOARD ? "form-group-keyboard" : scenario == Scenario.FORM_GROUP_EVENTS ? "form-group-events" : textAlignment ? "text-alignment" : "layout-roots";
+      String label = scenario.label;
       directory = new File(driver.getTargetContext().getCacheDir(), "mui-" + label + "-" + System.currentTimeMillis());
       require(directory.mkdir(), "Preserve existing native evidence");
       report.put("schemaVersion", 1).put("scenario", label + "-v1")
@@ -102,7 +109,9 @@ public final class LayoutRootScenario {
       } while (!wrappersReady && navigationAttempts < 2);
       report.put("navigationAttempts", navigationAttempts);
       require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
-      if (scenario == Scenario.FORM_GROUP_KEYBOARD) {
+      if (scenario == Scenario.FORM_GROUP_FOCUS) {
+        formGroupFocus(report);
+      } else if (scenario == Scenario.FORM_GROUP_KEYBOARD) {
         formGroupKeyboard(report);
       } else if (scenario == Scenario.FORM_GROUP_EVENTS) {
         formGroupEvents(report);
@@ -150,10 +159,79 @@ public final class LayoutRootScenario {
     } finally {
       try {
         report.put("status", passed ? "passed" : "failed").put("stages", stages).put("states", states).put("screenshots", pictures);
-        result.putString(scenario == Scenario.FORM_GROUP_KEYBOARD ? "formGroupKeyboardReport" : scenario == Scenario.FORM_GROUP_EVENTS ? "formGroupEventsReport" : textAlignment ? "textAlignmentReport" : "layoutRootReport", report.toString());
+        result.putString(scenario.key + "Report", report.toString());
       } catch (Exception error) { result.putString("Error", error.toString()); passed = false; }
       driver.finish(passed ? Activity.RESULT_OK : Activity.RESULT_CANCELED, result);
     }
+  }
+
+  /** Public JS ref commands must produce actual native child focus and original bubbling. */
+  private void formGroupFocus(JSONObject report) throws Exception {
+    tap("root-layout-group-focus");
+    await(() -> ui(() -> find("form-group-focus-receipt") != null && metadata("form-group-focus-receipt").optBoolean("ready")), "All focus controls must lay out");
+    JSONObject initial = settledGroupReceipt("form-group-focus-receipt", "form-group-focus-");
+    require(initial.getInt("total") == 0, "Focus history must start empty");
+    report.put("initial", initial); stage("ready");
+    for (String kind : new String[]{"native", "host", "stock", "custom", "styled"}) {
+      String id = "form-group-focus-" + kind + "-button";
+      tap(id);
+      await(() -> ui(() -> metadata("form-group-focus-receipt").getJSONObject("requests").optInt(kind) == 1 &&
+        metadata("form-group-focus-receipt").optInt("focused") == view(id).getId() && view(id).isFocused()), "Public ref must focus the actual native child: " + kind);
+      JSONObject current = settledGroupReceipt("form-group-focus-receipt", "form-group-focus-");
+      states.put(new JSONObject().put("kind", kind).put("name", kind).put("metadata", current)
+        .put("nativeRootId", ui(() -> view("form-group-focus-" + kind).getId())).put("nativeChildId", ui(() -> view(id).getId()))
+        .put("nativeFocused", ui(() -> view(id).isFocused())).put("rootFrame", ui(() -> bounds(view("form-group-focus-" + kind))))
+        .put("childFrame", ui(() -> bounds(view(id)))));
+      capture("form-group-focus-" + kind + ".png"); stage(kind);
+    }
+    tap("form-group-focus-release");
+    await(() -> ui(() -> noObservedFocus()), "Every observed native child must release focus");
+    JSONObject released = settledGroupReceipt("form-group-focus-receipt", "form-group-focus-");
+    report.put("released", released).put("releasedNativeFocusedChildren", new JSONArray()); stage("released");
+    JSONArray entries = released.getJSONArray("entries"), gaps = new JSONArray();
+    for (int i = 0; i < entries.length(); i++) {
+      JSONObject event = entries.getJSONObject(i);
+      String kind = event.getString("kind"), phase = event.getString("phase"), type = event.getString("type");
+      require(java.util.Arrays.asList("native", "host", "stock", "custom", "styled").contains(kind), "Only observed focus kinds may log callbacks");
+      require(java.util.Arrays.asList("capture", "child", "bubble").contains(phase) && (type.equals("focus") || type.equals("blur")), "Focus callback type and phase must be explicit");
+      int target = ui(() -> view("form-group-focus-" + kind + "-button").getId());
+      int currentTarget = ui(() -> view("form-group-focus-" + kind + (phase.equals("child") ? "-button" : "")).getId());
+      require(event.getInt("sequence") == i + 1 && event.getInt("eventId") > 0 && event.getInt("payloadId") > 0 && event.getString("targetKind").equals("object"), "Complete original focus event identities are required");
+      require(event.getInt("target") == target && event.getInt("nativeTarget") == target && event.getInt("currentTarget") == currentTarget, "Actual focus target/currentTarget IDs must agree with native views");
+    }
+    String[] expected = {"focus/capture", "focus/child", "focus/bubble", "blur/capture", "blur/child", "blur/bubble"};
+    for (String kind : new String[]{"native", "host", "stock", "custom", "styled"}) {
+      JSONArray own = new JSONArray(), child = new JSONArray();
+      for (int i = 0; i < entries.length(); i++) {
+        JSONObject event = entries.getJSONObject(i);
+        if (event.getString("kind").equals(kind)) { own.put(event); if (event.getString("phase").equals("child")) child.put(event); }
+      }
+      require(child.length() == 2 && child.getJSONObject(0).getString("type").equals("focus") && child.getJSONObject(1).getString("type").equals("blur"), "Actual native child must provide one focus/blur pair: " + kind);
+      if (kind.equals("native")) continue;
+      boolean valid = own.length() == 6;
+      for (int i = 0; i < own.length(); i++) {
+        JSONObject event = own.getJSONObject(i);
+        valid &= i < expected.length && (event.getString("type") + "/" + event.getString("phase")).equals(expected[Math.min(i, expected.length - 1)]);
+        valid &= event.optString("focusSource").equals("owned");
+      }
+      if (valid) for (int offset : new int[]{0, 3}) {
+        JSONObject first = own.getJSONObject(offset);
+        for (int i = 0; i < 3; i++) {
+          JSONObject event = own.getJSONObject(offset + i);
+          valid &= first.getInt("eventId") > 0 && event.getInt("eventId") == first.getInt("eventId") && first.getInt("payloadId") > 0 && event.getInt("payloadId") == first.getInt("payloadId");
+        }
+      }
+      if (!valid) gaps.put(kind + ": missing original owned focus/blur propagation");
+    }
+    tap("form-group-focus-clear");
+    await(() -> ui(() -> metadata("form-group-focus-receipt").optInt("total") == 0 && noObservedFocus()), "Clear must retain roots without observed focus");
+    report.put("cleared", settledGroupReceipt("form-group-focus-receipt", "form-group-focus-")).put("clearedNativeFocusedChildren", new JSONArray()).put("gaps", gaps);
+    stage("cleared"); capture("form-group-focus-released.png");
+    require(gaps.length() == 0, "Missing native focus contract: " + gaps.toString());
+  }
+  private boolean noObservedFocus() {
+    for (String kind : new String[]{"native", "host", "stock", "custom", "styled"}) if (view("form-group-focus-" + kind + "-button").isFocused()) return false;
+    return true;
   }
 
   /** A focused native button proves input delivery before parent propagation is assessed. */
@@ -215,22 +293,26 @@ public final class LayoutRootScenario {
     require(gaps.length() == 0, "Missing native parent key contract: " + gaps.toString());
   }
   private JSONObject settledKeyboardReceipt() throws Exception {
+    return settledGroupReceipt("form-group-keyboard-receipt", "form-group-keyboard-");
+  }
+  private JSONObject settledGroupReceipt(String receiptId, String prefix) throws Exception {
     final String[] previous = {null}; final long[] stable = {0}; final JSONObject[] result = {null};
     await(() -> ui(() -> {
-      JSONObject value = metadata("form-group-keyboard-receipt");
-      require(value.getBoolean("ready") && value.getInt("total") == value.getJSONArray("entries").length(), "Keyboard history must remain complete");
+      JSONObject value = metadata(receiptId);
+      require(value.getBoolean("ready") && value.getInt("total") == value.getJSONArray("entries").length(), "Group event history must remain complete");
+      require(value.getJSONObject("nodes").length() == 10 && value.getJSONObject("refs").length() == 10, "Exactly ten root/child bindings must be retained");
       java.util.HashSet<Integer> tags = new java.util.HashSet<>();
       for (String kind : new String[]{"native", "host", "stock", "custom", "styled"}) for (String suffix : new String[]{"", "-button"}) {
         String id = kind + suffix; JSONObject ref = value.getJSONObject("refs").getJSONObject(id);
         require(ref.getInt("attached") == 1 && ref.getInt("cleaned") == 0, "Root and child refs must survive every policy/reset");
-        int tag = view("form-group-keyboard-" + id).getId();
-        require(tag > 0 && tags.add(tag) && value.getJSONObject("nodes").getInt(id) == tag, "Every keyboard control must bind a distinct actual native host");
+        int tag = view(prefix + id).getId();
+        require(tag > 0 && tags.add(tag) && value.getJSONObject("nodes").getInt(id) == tag, "Every group control must bind a distinct actual native host");
       }
       String serialized = value.toString();
       if (!serialized.equals(previous[0])) { previous[0] = serialized; stable[0] = SystemClock.uptimeMillis(); return false; }
       if (SystemClock.uptimeMillis() - stable[0] < 100) return false;
       result[0] = value; return true;
-    }), "Keyboard callback receipt must settle");
+    }), "Group callback receipt must settle");
     return result[0];
   }
 
@@ -779,7 +861,7 @@ public final class LayoutRootScenario {
     finally { bitmap.recycle(); }
     pictures.put(name);
   }
-  private void stage(String name) { stages.put(name); Bundle update = new Bundle(); update.putString(scenario == Scenario.FORM_GROUP_KEYBOARD ? "formGroupKeyboardStage" : scenario == Scenario.FORM_GROUP_EVENTS ? "formGroupEventsStage" : textAlignment ? "textAlignmentStage" : "layoutRootStage", name); driver.sendStatus(1, update); }
+  private void stage(String name) { stages.put(name); Bundle update = new Bundle(); update.putString(scenario.key + "Stage", name); driver.sendStatus(1, update); }
   private JSONObject settled(java.util.concurrent.Callable<JSONObject> sample, String name) throws Exception {
     long deadline = SystemClock.uptimeMillis() + 20000; Throwable last = null;
     do { textDiagnostic = null; try { return ui(sample); } catch (AssertionError error) { last = error; } SystemClock.sleep(16); } while (SystemClock.uptimeMillis() < deadline);

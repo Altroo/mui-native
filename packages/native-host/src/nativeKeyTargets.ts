@@ -20,3 +20,13 @@ export function acceptsNativeViewKey(event: Parameters<NonNullable<ViewProps['on
     !targets.has(target)
   );
 }
+
+/** Focus and blur from owned hosts also have a framework transport on Android. */
+export function acceptsNativeViewFocus(event: Parameters<NonNullable<ViewProps['onFocus']>>[0]) {
+  const target = event.target;
+  const source = (event.nativeEvent as typeof event.nativeEvent & { muiFocusSource?: string })
+    .muiFocusSource;
+  return (
+    source === 'owned' || target === null || typeof target !== 'object' || !targets.has(target)
+  );
+}

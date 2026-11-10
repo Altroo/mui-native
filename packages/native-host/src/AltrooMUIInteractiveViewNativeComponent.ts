@@ -34,7 +34,7 @@ type DescendantKeyData = Readonly<{
   muiKeySequence?: string;
   isEditable?: boolean;
 }>;
-type FocusData = Readonly<{ target: CodegenTypes.Int32 }>;
+type FocusData = Readonly<{ target: CodegenTypes.Int32; muiFocusSource: string }>;
 export interface NativeProps extends ViewProps {
   nativeFocusable?: CodegenTypes.WithDefault<boolean, true>;
   nativeTabIndex?: CodegenTypes.WithDefault<CodegenTypes.Int32, 0>;

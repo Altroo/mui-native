@@ -363,3 +363,18 @@ node scripts/native-catalog/android-popper.mjs run --serial emulator-5554 --scen
 Choose an unused output directory and actual OS text scale 1.0. The driver opens Wrappers, requires destination acknowledgement, and selects Group keys. It focuses real native child buttons and injects Enter/Space/A for each observe/prevent/stop policy. Raw View is a framework baseline; the direct interaction host is a positive control. Stock, custom and styled FormGroup roots must preserve capture/child/bubble order, original payload identity, actual target/currentTarget tags, capture cancellation, single activation and all ten refs across resets. Successful native status alone is insufficient: the collector also validates the complete receipt. Failed runs retain safe reports and screenshots.
 
 The report records the actual native `enableKeyEvents` capability. A default-disabled run does not prove the enabled configuration, and a model fixture does not replace actual native interaction. This scenario verifies owned Button descendants. Root-self key delivery with framework dispatch disabled, managed TextInput/composite duplication, iOS interactions and physical accessibility/performance remain separate checks.
+
+## FormGroup child focus and blur
+
+Build the catalog and instrumentation from the current native-host sources, then select an existing emulator:
+
+```sh
+node scripts/native-catalog/android-popper.mjs prepare --project apps/native-catalog/android
+node scripts/native-catalog/android-popper.mjs run --serial emulator-5554 --scenario form-group-focus --output .cache/native-form-group-focus
+```
+
+Use an unused output directory. If testing with a separate Metro port, build Android with the matching `-PreactNativeDevServerPort` and forward that port to the selected emulator. A bundle request to the separate server does not change the installed application's configured port.
+
+The driver opens Wrappers and Group focus. Native touches invoke public child ref commands across a raw View baseline, direct interaction host, stock FormGroup, custom host root and styled FormGroup. Its report authenticates all ten native tags, retained refs, independent native focused state and frames, cumulative request counters, complete callback history, original event/payload identities and release/clear behavior. Android's baseline must contain actual ordinary framework copies; owned groups must receive only one capture/child/bubble sequence per focus or blur.
+
+The [iOS XCTest source](../tests/native/ios/FormGroupFocusCatalogUITests.swift) uses the same catalog scene on an existing iPhone simulator. Add it to a native UI test target whose target application is the freshly built catalog. It writes a durable JSON receipt in the test runner's Documents directory and retains screenshots/JSON attachments. The test uses UIKit focus commands from native touches, not physical keyboard input. Both platform tests preserve root identity; neither establishes assistive-technology usability or optimized input latency.
