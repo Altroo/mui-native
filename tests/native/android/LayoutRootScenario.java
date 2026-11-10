@@ -15,6 +15,7 @@ import android.text.TextPaint;
 import android.text.Layout;
 import android.util.TypedValue;
 import android.view.InputDevice;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,9 @@ public final class LayoutRootScenario {
   private static final String PACKAGE = "dev.altroo.muinative.catalog";
   private static final String[] GROUPS = {"inherited", "own-false", "custom", "styled"};
   private static final String[] AVATARS = {"native", "custom", "portal"};
+  private enum Scenario { LAYOUT_ROOTS, TEXT_ALIGNMENT, FORM_GROUP_EVENTS }
   private final Instrumentation driver;
+  private final Scenario scenario;
   private final boolean textAlignment;
   private final String fontProfile;
   private final JSONArray stages = new JSONArray(), states = new JSONArray(), pictures = new JSONArray();
@@ -51,15 +54,19 @@ public final class LayoutRootScenario {
   private int tagId;
   private String textDiagnostic;
 
-  private LayoutRootScenario(Instrumentation driver, boolean textAlignment, String fontProfile) { this.driver = driver; this.textAlignment = textAlignment; this.fontProfile = fontProfile; }
-  public static void run(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, false, fontProfile).run(); }
-  public static void runTextAlignment(Instrumentation driver) { new LayoutRootScenario(driver, true, null).run(); }
+  private LayoutRootScenario(Instrumentation driver, Scenario scenario, String fontProfile) {
+    this.driver = driver; this.scenario = scenario; this.textAlignment = scenario == Scenario.TEXT_ALIGNMENT; this.fontProfile = fontProfile;
+  }
+  public static void run(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.LAYOUT_ROOTS, fontProfile).run(); }
+  public static void runTextAlignment(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.TEXT_ALIGNMENT, null).run(); }
+  public static void runFormGroupEvents(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_EVENTS, null).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
-      directory = new File(driver.getTargetContext().getCacheDir(), (textAlignment ? "mui-text-alignment-" : "mui-layout-roots-") + System.currentTimeMillis());
+      String label = scenario == Scenario.FORM_GROUP_EVENTS ? "form-group-events" : textAlignment ? "text-alignment" : "layout-roots";
+      directory = new File(driver.getTargetContext().getCacheDir(), "mui-" + label + "-" + System.currentTimeMillis());
       require(directory.mkdir(), "Preserve existing native evidence");
-      report.put("schemaVersion", 1).put("scenario", textAlignment ? "text-alignment-v1" : "layout-roots-v1")
+      report.put("schemaVersion", 1).put("scenario", label + "-v1")
         .put("driver", "native Instrumentation and UiAutomation").put("artifactDirectory", "cache/" + directory.getName())
         .put("device", new JSONObject().put("sdk", Build.VERSION.SDK_INT).put("model", Build.MODEL)
           .put("density", driver.getTargetContext().getResources().getDisplayMetrics().density)
@@ -69,7 +76,7 @@ public final class LayoutRootScenario {
       require(launch != null, "Catalog must be installed");
       launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity = driver.startActivitySync(launch);
-      if (!textAlignment) {
+      if (scenario == Scenario.LAYOUT_ROOTS) {
         require("normal".equals(fontProfile) || "enlarged".equals(fontProfile), "Layout root checks require an explicit normal/enlarged font profile");
         float actualFontScale = activity.getResources().getConfiguration().fontScale;
         report.put("fontProfile", fontProfile);
@@ -81,7 +88,9 @@ public final class LayoutRootScenario {
       tagId = driver.getTargetContext().getResources().getIdentifier("react_test_id", "id", PACKAGE);
       require(tagId != 0, "Native test identifier resource is missing");
       tap("catalog-tab-Wrappers");
-      if (textAlignment) {
+      if (scenario == Scenario.FORM_GROUP_EVENTS) {
+        formGroupEvents(report);
+      } else if (textAlignment) {
         revealComplete("root-layout-details"); tap("root-layout-details");
         alignment("alignment-20-ltr", 20, false, 0);
         tap("details-contract-child"); tap("details-contract-font"); tap("details-contract-rtl");
@@ -125,10 +134,136 @@ public final class LayoutRootScenario {
     } finally {
       try {
         report.put("status", passed ? "passed" : "failed").put("stages", stages).put("states", states).put("screenshots", pictures);
-        result.putString(textAlignment ? "textAlignmentReport" : "layoutRootReport", report.toString());
+        result.putString(scenario == Scenario.FORM_GROUP_EVENTS ? "formGroupEventsReport" : textAlignment ? "textAlignmentReport" : "layoutRootReport", report.toString());
       } catch (Exception error) { result.putString("Error", error.toString()); passed = false; }
       driver.finish(passed ? Activity.RESULT_OK : Activity.RESULT_CANCELED, result);
     }
+  }
+
+  /** Native focus and custom actions have a plain View positive control before MUI roots. */
+  private void formGroupEvents(JSONObject report) throws Exception {
+    require(Math.abs(activity.getResources().getConfiguration().fontScale - 1) < .01, "Event probe requires actual baseline OS text scale");
+    boolean keyEventsEnabled = com.facebook.react.internal.featureflags.ReactNativeFeatureFlags.enableKeyEvents();
+    report.put("keyEventsEnabled", keyEventsEnabled);
+    await(() -> ui(() -> find("form-group-events-receipt") != null && metadata("form-group-events-receipt").optBoolean("ready")), "All event control roots must lay out");
+    tap("form-group-events-reset");
+    // A hardware key exits touch mode. Move focus outside the observed roots so
+    // every controlled request below must produce a fresh native focus event.
+    driver.sendKeyDownUpSync(KeyEvent.KEYCODE_TAB);
+    require(ui(() -> view("form-group-events-reset").requestFocus()), "Neutral native control must accept hardware focus");
+    JSONObject before = settledEventReceipt();
+    int baseline = before.getInt("total");
+    report.put("baseline", before); stage("ready");
+    String previous = null;
+    for (String key : new String[]{"native", "stock", "custom", "styled"}) {
+      final String current = key;
+      revealComplete("form-group-events-" + key);
+      View host = ui(() -> view("form-group-events-" + current));
+      int nativeId = ui(host::getId);
+      int start = settledEventReceipt().getInt("total");
+      require(ui(host::requestFocus), "Actual event root must accept native focus: " + key);
+      await(() -> ui(host::hasFocus), "Actual event root must own focus: " + key);
+      int expectedFocusCount = previous == null ? 2 : 4;
+      await(() -> ui(() -> metadata("form-group-events-receipt").optInt("total") >= start + expectedFocusCount), "Focus callbacks must reach JavaScript: " + key);
+      JSONObject focused = settledEventReceipt();
+      JSONArray focus = eventSlice(focused, start);
+      require(focus.length() == expectedFocusCount, "Exactly capture/bubble for each native focus transition: " + key);
+      if (previous != null) eventPair(focus, 0, previous, "blur", before.getJSONObject("nodes").getInt(previous));
+      eventPair(focus, expectedFocusCount - 2, key, "focus", nativeId);
+      int keyStart = focused.getInt("total");
+      driver.sendKeyDownUpSync(KeyEvent.KEYCODE_A);
+      // The actual accessibility action is also a JS acknowledgement after the
+      // hardware event. It avoids inferring absent key events from a fixed sleep.
+      AccessibilityNodeInfo node = eventAccessibilityNode("form-group-events-" + key);
+      int actionId = 0;
+      for (AccessibilityNodeInfo.AccessibilityAction action : node.getActionList())
+        if (action.getLabel() != null && "Inspect control".contentEquals(action.getLabel())) actionId = action.getId();
+      require(actionId != 0 && node.performAction(actionId), "Real custom accessibility action must dispatch: " + key);
+      await(() -> ui(() -> {
+        JSONObject receipt = metadata("form-group-events-receipt"); JSONArray entries = receipt.optJSONArray("entries");
+        return entries != null && entries.length() > 0 && entries.optJSONObject(entries.length() - 1).optString("type").equals("accessibility");
+      }), "Custom action callback must acknowledge native input: " + key);
+      JSONObject after = settledEventReceipt();
+      JSONArray input = eventSlice(after, keyStart);
+      require(input.length() == (keyEventsEnabled ? 5 : 1), "Native key capability and callback count must agree: " + key);
+      if (keyEventsEnabled) {
+        eventPair(input, 0, key, "key-down", nativeId); eventPair(input, 2, key, "key-up", nativeId);
+        for (int i = 0; i < 4; i++) {
+          JSONObject event = input.getJSONObject(i);
+          require(event.getString("key").equals("a") && event.getString("code").equals("KeyA") &&
+            !event.getBoolean("altKey") && !event.getBoolean("ctrlKey") && !event.getBoolean("metaKey") && !event.getBoolean("shiftKey"), "Actual key and modifiers must survive native dispatch");
+        }
+      }
+      JSONObject action = input.getJSONObject(input.length() - 1);
+      eventTarget(action, key, "accessibility", "direct", nativeId);
+      require(action.getString("actionName").equals("inspect"), "Actual custom action name must survive");
+      require(ui(host::hasFocus), "Input must preserve the actual focused event root");
+      states.put(new JSONObject().put("name", key).put("nativeId", nativeId).put("nativeClass", host.getClass().getName())
+        .put("bounds", ui(() -> bounds(host))).put("focus", focus).put("input", input).put("metadata", after));
+      previous = key; before = after; stage(key);
+    }
+    int releaseStart = before.getInt("total");
+    require(ui(() -> view("form-group-events-reset").requestFocus()), "Neutral control must release the last event root");
+    await(() -> ui(() -> metadata("form-group-events-receipt").optInt("total") >= releaseStart + 2), "Final native blur must reach JavaScript");
+    JSONObject released = settledEventReceipt(); JSONArray blur = eventSlice(released, releaseStart);
+    require(blur.length() == 2, "Exactly one final native blur pair");
+    eventPair(blur, 0, "styled", "blur", released.getJSONObject("nodes").getInt("styled"));
+    require(baseline < released.getInt("total"), "Controlled native dispatch must advance the receipt");
+    report.put("released", released).put("release", blur); stage("released"); capture("form-group-events.png");
+  }
+  private JSONObject settledEventReceipt() throws Exception {
+    final String[] prior = {null}; final long[] stableSince = {0}; final JSONObject[] result = {null};
+    await(() -> ui(() -> {
+      JSONObject value = metadata("form-group-events-receipt");
+      require(value.getBoolean("ready"), "All event roots must stay mounted");
+      int total = value.getInt("total"); JSONArray entries = value.getJSONArray("entries");
+      require(entries.length() == total && total <= 64, "Native event history must be complete and bounded");
+      java.util.HashSet<Integer> ids = new java.util.HashSet<>();
+      for (String key : new String[]{"native", "stock", "custom", "styled"}) {
+        JSONObject refs = value.getJSONObject("refs").getJSONObject(key);
+        require(refs.getInt("attached") == 1 && refs.getInt("cleaned") == 0, "Event roots must retain their original refs");
+        int tag = view("form-group-events-" + key).getId();
+        require(tag > 0 && ids.add(tag) && value.getJSONObject("nodes").getInt(key) == tag, "Callback ref must identify each distinct actual native root");
+      }
+      String serialized = value.toString();
+      if (!serialized.equals(prior[0])) { prior[0] = serialized; stableSince[0] = SystemClock.uptimeMillis(); return false; }
+      if (SystemClock.uptimeMillis() - stableSince[0] < 100) return false;
+      result[0] = value; return true;
+    }), "Native event receipts must settle");
+    return result[0];
+  }
+  private static JSONArray eventSlice(JSONObject receipt, int start) throws Exception {
+    JSONArray all = receipt.getJSONArray("entries"), result = new JSONArray();
+    require(start >= 0 && start <= all.length(), "Event slice must be part of complete history");
+    for (int i = start; i < all.length(); i++) result.put(all.getJSONObject(i));
+    return result;
+  }
+  private static void eventTarget(JSONObject event, String key, String type, String phase, int tag) throws Exception {
+    require(event.getString("kind").equals(key) && event.getString("type").equals(type) && event.getString("phase").equals(phase) &&
+      event.getInt("target") == tag && event.getInt("currentTarget") == tag && event.getInt("expectedTarget") == tag,
+      "Native callback must retain phase and actual target: " + key + "/" + type + "/" + phase);
+  }
+  private static void eventPair(JSONArray entries, int index, String key, String type, int tag) throws Exception {
+    JSONObject capture = entries.getJSONObject(index), bubble = entries.getJSONObject(index + 1);
+    eventTarget(capture, key, type, "capture", tag); eventTarget(bubble, key, type, "bubble", tag);
+    require(capture.getInt("eventId") == bubble.getInt("eventId") && bubble.getInt("sequence") == capture.getInt("sequence") + 1,
+      "Capture and bubble must observe the same native event object in order");
+    if (type.equals("focus") || type.equals("blur")) require(capture.getInt("nativeTarget") == tag && bubble.getInt("nativeTarget") == tag, "Native focus payload must identify its actual host");
+  }
+  private AccessibilityNodeInfo eventAccessibilityNode(String id) throws Exception {
+    final AccessibilityNodeInfo[] result = {null};
+    await(() -> {
+      AccessibilityNodeInfo root = automation.getRootInActiveWindow();
+      if (root == null || !PACKAGE.contentEquals(root.getPackageName())) return false;
+      java.util.ArrayDeque<AccessibilityNodeInfo> queue = new java.util.ArrayDeque<>(); queue.add(root);
+      for (int inspected = 0; !queue.isEmpty() && inspected < 2048; inspected++) {
+        AccessibilityNodeInfo node = queue.removeFirst();
+        if (id.equals(node.getViewIdResourceName()) && PACKAGE.contentEquals(node.getPackageName()) && node.isVisibleToUser()) { result[0] = node; return true; }
+        for (int i = 0; i < node.getChildCount(); i++) { AccessibilityNodeInfo child = node.getChild(i); if (child != null) queue.addLast(child); }
+      }
+      return false;
+    }, "Actual accessible event control must be visible: " + id);
+    return result[0];
   }
 
   /** Three source-unique short text states; glyph position comes from actual PNG pixels. */
@@ -550,7 +685,7 @@ public final class LayoutRootScenario {
     finally { bitmap.recycle(); }
     pictures.put(name);
   }
-  private void stage(String name) { stages.put(name); Bundle update = new Bundle(); update.putString(textAlignment ? "textAlignmentStage" : "layoutRootStage", name); driver.sendStatus(1, update); }
+  private void stage(String name) { stages.put(name); Bundle update = new Bundle(); update.putString(scenario == Scenario.FORM_GROUP_EVENTS ? "formGroupEventsStage" : textAlignment ? "textAlignmentStage" : "layoutRootStage", name); driver.sendStatus(1, update); }
   private JSONObject settled(java.util.concurrent.Callable<JSONObject> sample, String name) throws Exception {
     long deadline = SystemClock.uptimeMillis() + 20000; Throwable last = null;
     do { textDiagnostic = null; try { return ui(sample); } catch (AssertionError error) { last = error; } SystemClock.sleep(16); } while (SystemClock.uptimeMillis() < deadline);

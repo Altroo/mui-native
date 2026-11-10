@@ -1,5 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { forwardRef, useCallback, useMemo, useRef, useState, type RefCallback } from 'react';
+import { FormGroupEventsExample } from './FormGroupEventsExample';
 import {
   StyleSheet,
   View,
@@ -271,6 +272,7 @@ export function FormGroupContractExample() {
           Refs {attached}/{cleaned} · layouts {Object.keys(receipts).length}/4 · OS{' '}
           {fontScale.toFixed(2)}×
         </Typography>
+        <FormGroupEventsExample />
       </Box>
     </ThemeProvider>
   );
