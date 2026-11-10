@@ -37,6 +37,7 @@ export function FormGroupKeyboardExample() {
     entries: Entry[];
     clicks: Partial<Record<Kind, number>>;
   }>({ entries: [], clicks: {} });
+  const [focused, setFocused] = useState<number | null>(null);
   const [ready, setReady] = useState<Record<string, boolean>>({});
   const nodes = useRef<Record<string, ViewInstance>>({});
   const lifetimes = useRef<Record<string, { attached: number; cleaned: number }>>({});
@@ -111,6 +112,7 @@ export function FormGroupKeyboardExample() {
   const metadata = {
     schemaVersion: 1,
     policy,
+    focused,
     ready: kinds.every((kind) => ready[kind] && ready[kind + '-button']),
     total: sequence.current,
     entries: recorded.entries,
@@ -164,14 +166,21 @@ export function FormGroupKeyboardExample() {
             {...bindings[kind + '-button']}
             testID={'form-group-keyboard-' + kind + '-button'}
             variant="outlined"
+            onFocus={(event) => setFocused(findNodeHandle(event.target) ?? null)}
+            onBlur={(event) => {
+              const target = findNodeHandle(event.target) ?? null;
+              setFocused((previous) => (previous === target ? null : previous));
+            }}
             onKeyDown={(event) => record(kind, 'button', 'down', event)}
             onKeyUp={(event) => record(kind, 'button', 'up', event)}
-            onClick={() =>
+            onClick={(event) => {
+              // Native touch requests focus; only the native callback acknowledges it.
+              if (!('key' in event)) nodes.current[kind + '-button']?.focus();
               setRecorded((previous) => ({
                 ...previous,
                 clicks: { ...previous.clicks, [kind]: (previous.clicks[kind] ?? 0) + 1 },
-              }))
-            }
+              }));
+            }}
           >
             {kind} action {recorded.clicks[kind] ?? 0}
           </Button>

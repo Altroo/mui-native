@@ -16,7 +16,7 @@ Finish each selected family's implementation and local checks within its workstr
 
 The finite source, utility/type, import, defaults/style and installed-consumer contract is documented in [FormGroup](form-group.md). Normal/enlarged native geometry and live state/ref checks pass on both simulators. Root callback dispatch and Android owned-child keyboard capture/cancellation have dedicated native evidence. Owned-child focus/blur now passes on iOS and Android with retained roots and duplicate suppression.
 
-Continue within this family: verify iOS child keyboard interactions, managed TextInput/composite delivery with framework keys enabled, accessibility-tree ownership and a current optimized-build workload. Root-self hardware keys when the framework flag is disabled remain a separate runtime capability. Physical keyboard/IME, screen-reader usability and representative physical performance remain external evidence. The row stays at its existing 75% evidence stage until its remaining gates are satisfied.
+iOS Space/A keyboard interactions now have 30 scoped cases across all five roots and three policies. Its independent UIKit prerequisite cannot deliver raw Return/keypad Enter; that remainder stays explicitly unverified. Continue within this family: managed TextInput/composite delivery with framework keys enabled, accessibility-tree ownership and a current optimized-build workload. Root-self hardware keys when the framework flag is disabled remain a separate runtime capability. Physical keyboard/IME, screen-reader usability and representative physical performance remain external evidence. The row stays at its existing 75% evidence stage until its remaining gates are satisfied.
 
 ## Retained closure gates: ButtonGroup and required existing styling
 
