@@ -331,3 +331,22 @@ Repeat with `--size 2.0`, `--font-profile enlarged` and fresh profile/evidence o
 On API 37, both requested profiles passed all fourteen states at actual OS text scales 1.0 and 2.0. The row-fit check includes the measured interaction root, including its inner padding and minimum width. Adjacent wrapped rows are compared in physical pixels so float conversion residue cannot become a false overlap. Touch coordinates are captured after stable visibility through profile relayout. These are native layout and interaction observations, not a screen-reader or optimized-performance certification.
 
 The glyph oracle uses Android's [SP conversion](<https://developer.android.com/reference/android/util/TypedValue#applyDimension(int,float,android.util.DisplayMetrics)>) with the rendered view's resources, including platform font scaling. It does not multiply authored font sizes in JavaScript. Review the raw native reports and screenshots; software collector tests do not establish device success or complete physical accessibility/performance coverage.
+
+## FormGroup native callbacks
+
+The `form-group-events` scenario uses the existing layout-root instrumentation. Rebuild it from the current source, select an existing emulator and use the baseline OS text profile:
+
+```sh
+node scripts/native-catalog/text-profile.mjs \
+  --platform android --device "$MUI_QA_DEVICE" --size 1.0 \
+  --outputDir "$MUI_QA_ARTIFACTS/group-events-profile" -- \
+  node scripts/native-catalog/android-popper.mjs run \
+    --serial "$MUI_QA_DEVICE" --scenario form-group-events \
+    --output "$MUI_QA_ARTIFACTS/group-events"
+```
+
+The raw View positive control runs before stock, custom and styled FormGroup roots. Native focus requests, a hardware key and a custom accessibility action drive the probe. The report binds callback targets to distinct actual native host IDs, retains capture/bubble object identity and ordering, checks unchanged refs and complete bounded history, and requires a final blur. The accessibility action also acknowledges the native input before the collector evaluates the callback history.
+
+The native runtime's actual key-event feature flag is recorded independently. An enabled flag requires both phases of key-down and key-up with the real key/modifier payload. A disabled flag requires the acknowledged absence of those callbacks and leaves keyboard dispatch unverified. It does not permit the report to claim key-event coverage. Twenty focus/blur/custom-action callbacks passed on API 37 with the default disabled flag at OS text scale 1.0. Source/model tests cover both collector branches; they do not prove the enabled native configuration.
+
+The catalog scene uses `role="group"` and exposes an Inspect control action. This callback evidence does not certify a distinct TalkBack group announcement, manual screen-reader navigation, iOS dispatch or optimized performance. Failed runs retain their report and screenshot before the selected catalog is reopened.

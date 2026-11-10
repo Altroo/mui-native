@@ -30,6 +30,10 @@ import { inspectDividerReport, summarizeDivider } from './android-divider-report
 import { prepareLayoutRootSource } from './android-layout-root-source.mjs';
 import { inspectLayoutRootReport, summarizeLayoutRoots } from './android-layout-root-report.mjs';
 import {
+  inspectFormGroupEvents,
+  summarizeFormGroupEvents,
+} from './android-form-group-events-report.mjs';
+import {
   inspectTextAlignmentReport,
   summarizeTextAlignment,
 } from './android-text-alignment-report.mjs';
@@ -216,7 +220,7 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'text-alignment' | 'divider' | 'paper' | 'box' | 'card' | 'structure' | 'structure-children', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'form-group-events' | 'text-alignment' | 'divider' | 'paper' | 'box' | 'card' | 'structure' | 'structure-children', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
@@ -231,6 +235,7 @@ export async function run(
       'button-group',
       'button-group-reading',
       'layout-roots',
+      'form-group-events',
       'text-alignment',
       'divider',
       'paper',
@@ -317,21 +322,23 @@ export async function run(
           ? inspectBoxReport(text)
           : scenario === 'paper'
             ? inspectPaperReport(text)
-            : scenario === 'text-alignment'
-              ? inspectTextAlignmentReport(text)
-              : scenario === 'divider'
-                ? inspectDividerReport(text)
-                : scenario === 'layout-roots'
-                  ? inspectLayoutRootReport(text)
-                  : scenario === 'accordion'
-                    ? inspectAccordionReport(text)
-                    : scenario === 'svg-icon'
-                      ? inspectSvgIconReport(text)
-                      : scenario === 'button-group-reading'
-                        ? inspectReadingReport(text)
-                        : scenario === 'button-group'
-                          ? inspectButtonGroupReport(text)
-                          : inspectReport(text);
+            : scenario === 'form-group-events'
+              ? inspectFormGroupEvents(text)
+              : scenario === 'text-alignment'
+                ? inspectTextAlignmentReport(text)
+                : scenario === 'divider'
+                  ? inspectDividerReport(text)
+                  : scenario === 'layout-roots'
+                    ? inspectLayoutRootReport(text)
+                    : scenario === 'accordion'
+                      ? inspectAccordionReport(text)
+                      : scenario === 'svg-icon'
+                        ? inspectSvgIconReport(text)
+                        : scenario === 'button-group-reading'
+                          ? inspectReadingReport(text)
+                          : scenario === 'button-group'
+                            ? inspectButtonGroupReport(text)
+                            : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -353,6 +360,7 @@ export async function run(
     else if (scenario === 'card') summarizeCard(text, { fontProfile });
     else if (scenario === 'box') summarizeBox(text, { fontProfile });
     else if (scenario === 'paper') summarizePaper(text, { fontProfile });
+    else if (scenario === 'form-group-events') summarizeFormGroupEvents(text);
     else if (scenario === 'text-alignment') summarizeTextAlignment(text);
     else if (scenario === 'divider') summarizeDivider(text, { fontProfile });
     else if (scenario === 'layout-roots') summarizeLayoutRoots(text, { fontProfile });

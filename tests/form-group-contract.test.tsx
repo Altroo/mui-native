@@ -297,7 +297,7 @@ test('native root attributes and event objects retain caller identity', () => {
       testID="group"
       nativeID="group-id"
       accessibilityLabel="Preferences"
-      accessibilityRole="group"
+      role="group"
       accessible={false}
       onLayout={onLayout}
       onTouchEnd={onTouchEnd}
@@ -306,6 +306,7 @@ test('native root attributes and event objects retain caller identity', () => {
   const host = tree.getByTestId('group');
   expect(host.props.nativeID).toBe('group-id');
   expect(host.props.accessibilityLabel).toBe('Preferences');
+  expect(host.props.role).toBe('group');
   expect(host.props.accessible).toBe(false);
   expect(host.props.onLayout).toBe(onLayout);
   expect(host.props.onTouchEnd).toBe(onTouchEnd);
@@ -317,6 +318,47 @@ test('native root attributes and event objects retain caller identity', () => {
   expect(onTouchEnd).toHaveBeenCalledWith(touch);
   expect(ref.current).toBeTruthy();
 });
+
+test.each(['stock', 'custom', 'styled'] as const)(
+  '%s root preserves native focus/key/accessibility callbacks and original event objects',
+  (kind) => {
+    const CustomRoot = forwardRef<ViewInstance, ViewProps & { className?: string | undefined }>(
+      ({ className: _className, ...props }, ref) => <View {...props} ref={ref} />,
+    );
+    const Root = kind === 'styled' ? styled(FormGroup)({ borderWidth: 1 }) : FormGroup;
+    const handlers = {
+      onFocus: jest.fn(),
+      onFocusCapture: jest.fn(),
+      onBlur: jest.fn(),
+      onBlurCapture: jest.fn(),
+      onKeyDown: jest.fn(),
+      onKeyDownCapture: jest.fn(),
+      onKeyUp: jest.fn(),
+      onKeyUpCapture: jest.fn(),
+      onAccessibilityAction: jest.fn(),
+    };
+    const actions = [{ name: 'inspect', label: 'Inspect group' }];
+    const tree = render(
+      <Root
+        {...handlers}
+        testID="native-events"
+        component={kind === 'custom' ? CustomRoot : undefined}
+        focusable
+        accessibilityActions={actions}
+      />,
+    );
+    const host = tree.getByTestId('native-events');
+    expect(host.props.accessibilityActions).toBe(actions);
+    expect(host.props.focusable).toBe(true);
+    for (const [name, callback] of Object.entries(handlers)) {
+      expect(host.props[name]).toBe(callback);
+      const event = { nativeEvent: { target: 71, key: 'a', code: 'KeyA', actionName: 'inspect' } };
+      host.props[name](event);
+      expect(callback.mock.calls).toEqual([[event]]);
+      expect(callback.mock.calls[0][0]).toBe(event);
+    }
+  },
+);
 
 test('root then row overrides, sx and native inline shorthands retain source priority', () => {
   const theme = createTheme({

@@ -51,9 +51,19 @@ export const nodes = (
     component={Root}
     ref={createRef<ViewInstance>()}
     aria-label="Options"
-    accessibilityRole="group"
+    role="group"
     onLayout={(event): number => event.nativeEvent.layout.width}
     onTouchEnd={(event): number => event.nativeEvent.pageX}
+    onFocus={(event): number => event.nativeEvent.target}
+    onFocusCapture={(event): number => event.nativeEvent.target}
+    onBlur={(event): number => event.nativeEvent.target}
+    onBlurCapture={(event): number => event.nativeEvent.target}
+    onKeyDown={(event): string => event.nativeEvent.key}
+    onKeyDownCapture={(event): string => event.nativeEvent.code}
+    onKeyUp={(event): boolean => event.nativeEvent.ctrlKey}
+    onKeyUpCapture={(event): boolean => event.nativeEvent.shiftKey}
+    accessibilityActions={[{ name: 'inspect', label: 'Inspect group' }]}
+    onAccessibilityAction={(event): string => event.nativeEvent.actionName}
   >
     <RootGroup />
     <NativeGroup />
