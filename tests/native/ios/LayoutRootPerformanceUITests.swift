@@ -3,6 +3,7 @@ import XCTest
 
 /// Raw optimized simulator workload metrics, not input latency or calibrated device results.
 /// Run serially (-parallel-testing-enabled NO), selecting one RN/MUI family pair at a time.
+@MainActor
 final class LayoutRootPerformanceUITests: XCTestCase {
   private let app = XCUIApplication(bundleIdentifier: "dev.altroo.muinative.catalog")
   private let preflight = ProcessInfo.processInfo.environment
@@ -20,7 +21,7 @@ final class LayoutRootPerformanceUITests: XCTestCase {
     let expectation = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in condition() }, object: nil)
     guard XCTWaiter.wait(for: [expectation], timeout: 15) == .completed else { throw Refusal.invalid(message) }
   }
-  override func setUpWithError() throws {
+  override func setUp() async throws {
     continueAfterFailure = false
     // The build runner must first retain Release build settings, source manifest
     // and the installed app executable hash. These required inputs bind every

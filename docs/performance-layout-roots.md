@@ -4,7 +4,20 @@ The maintained workload compares FormGroup and ListItemAvatar with an equivalent
 
 Each cohort mounts 100 rows and advances sixteen epochs. Four independent bits change row alignment, inherited error, theme and native inline geometry. Stable keys and actual root refs must survive every update. Receipt readiness describes committed React rows; the iOS collector additionally waits for row zero's native text and 44/52-point frame. It does not claim that every GPU frame has finished rendering.
 
-## Recorded optimized simulator run
+## Current FormGroup run
+
+The [10 November FormGroup result](../compatibility/evidence/native-form-group-ios-2026-11-10.json) captures the catalog source used in the editor integration, with actual Release compiler settings, installed app executable and bundled JavaScript identity verified. Both Swift 6 XCTest methods passed on the existing iPhone 18 Pro / iOS 27 simulator at the normal OS text size. This run selects FormGroup only.
+
+| Measured root | Mean app CPU, seconds | Mean peak physical memory, kB |
+| ------------- | --------------------: | ----------------------------: |
+| Native View   |                 7.549 |                       107,203 |
+| MUI FormGroup |                 8.165 |                       118,208 |
+
+Each mode retained 100 roots through sixteen acknowledged native updates, for 1,600 completed row updates and zero root cleanups per cohort. The result includes one discarded warm-up and three measured cohorts per mode. It retains selected lifecycle fields from all eight native validation receipts and the exact three CPU and memory samples per mode.
+
+The MUI variant used more app CPU and peak memory in this run. Whole-app totals include native accessibility acknowledgements, and the fixed MUI-first order and three samples limit what can be attributed to the wrapper. These measurements do not establish a change from the earlier snapshot, a leak, input latency, scrolling, mount cost or physical-device performance.
+
+## Earlier optimized simulator run
 
 The [machine-readable result](../compatibility/evidence/native-layout-roots-ios-2026-11-05.json) records the exact local build fingerprint and executable/bundle hashes. Swift used `-O`, C/C++ used `-Os`, and the installed executable and bundled JavaScript matched the reviewed artifacts. The collector rejected development JavaScript, a missing Hermes runtime, an unexpected source fingerprint or invalid lifecycle counts.
 
