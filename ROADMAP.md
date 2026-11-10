@@ -2,7 +2,7 @@
 
 Current priority: [finish existing partial modules](docs/completion-plan.md) before adding new components. The queue separates software work, locally executable verification and external validation.
 
-Updated: 2026-11-07. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
+Updated: 2026-11-10. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
 
 ## Decisions
 
@@ -38,6 +38,8 @@ Material UI baseline: 9.5.0. Stable X baseline: 9.15.0. Scheduler: 9.0.0-beta.13
 - [x] Material UI form prototype using original imports through Metro.
 - [x] Native form-label activation/content sizing, input alias guards and localized calendar weekday layout, with isolated regressions and consumer validation. Tracked in [issue #7](https://github.com/Altroo/mui-native/issues/7); device accessibility and full picker contracts remain open.
 - [x] Native grid, rich tree, chart and date prototypes.
+- [x] Add a searchable, grouped native catalog index with retained search, stable scene routes, responsive charts and compact navigation at enlarged text sizes. Scoped iOS simulator checks cover preview interaction, search, return navigation, appearance and the largest preferred text size. Android Back has software regression coverage; native Android and physical screen-reader checks remain open.
+- [ ] Polish the remaining specimen detail screens and verify full catalog navigation and accessibility on both platforms.
 - [x] Optional adaptive native grid cards with a shared data model, explicit table mode and application-composed content. Scoped local checks cover model preservation; native visual, accessibility and performance gates remain open.
 - [ ] Verify packed-package imports, TypeScript augmentation, and web isolation together.
 - [ ] Exercise input composition, focus, keyboard and nested overlay behavior on both platforms. Matched cold-editor controls and authored replacement/clear diagnostics track the intermittent Android omission in [issue #58](https://github.com/Altroo/mui-native/issues/58); passing trials do not resolve its cause.

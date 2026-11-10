@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add a searchable native catalog index with grouped examples, retained search, Android return navigation and compact large-text headers. Make chart previews responsive, clarify compatibility wording and compact layout-inspector controls while preserving native test routes.
+
 - Retain coherent native text source snapshots for internal style preparation, preserving raw, normalized and emitted values without repeating caller reads. Add element-handoff and changing-source regression coverage. Native family binding and selected-style projection remain separate gates.
 
 - Preserve nested React and nonplain Theme defaults so equivalent theme reconstruction retains custom-root state and refs, while Date, Map, Set and class values retain their identity and methods. Add pinned original-source, getter and replacement regression coverage.

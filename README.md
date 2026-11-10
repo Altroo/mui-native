@@ -392,6 +392,8 @@ pnpm check
 pnpm catalog
 ```
 
+Start in **Explore** to search by component name or browse grouped examples. The index keeps your search when you return from a collection; Android Back returns to the index. Use the appearance switch to compare light and dark themes. Layout inspectors keep their behavior controls separate from the normal browsing index.
+
 The catalog uses Expo SDK 58. Rendering interactive rows or Modal/Dialog/Popover/Menu/Select requires a native development build because Expo Go does not include the library's interaction host. See [installation](docs/installation.md) and [native host](docs/native-host.md). Press `i` or `a` from Expo's terminal interface to launch the corresponding simulator. `pnpm --filter native-catalog ios` and `pnpm --filter native-catalog android` create development builds when native build prerequisites are installed.
 
 ## Install the pre-alpha preview
