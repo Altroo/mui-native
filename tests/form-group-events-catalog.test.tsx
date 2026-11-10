@@ -120,17 +120,20 @@ test('keyboard modifiers and custom accessibility actions are observed without c
   ]);
 });
 
-test('reset clears only the callback history and preserves each root and handler', () => {
+test('reset clears only the callback history and preserves each root and caller handler', () => {
   const tree = render(<FormGroupEventsExample />);
   const roots = kinds.map((kind) => tree.getByTestId(`form-group-events-${kind}`));
-  const handlers = roots.map((node) => node.props.onFocus);
+  // The standard focus prop may wrap duplicate suppression. The private
+  // transport retains the original caller callback on grouped roots.
+  const callerFocus = (node: (typeof roots)[number]) => node.props.onMUIFocus ?? node.props.onFocus;
+  const handlers = roots.map(callerFocus);
   fireEvent(roots[1], 'focus', { target: 45, currentTarget: 45, nativeEvent: { target: 45 } });
   fireEvent.press(tree.getByTestId('form-group-events-reset'));
   expect(receipt(tree)).toMatchObject({ total: 0, entries: [] });
   for (const [index, kind] of kinds.entries()) {
     const node = tree.getByTestId(`form-group-events-${kind}`);
     expect(node).toBe(roots[index]);
-    expect(node.props.onFocus).toBe(handlers[index]);
+    expect(callerFocus(node)).toBe(handlers[index]);
     expect(receipt(tree).refs[kind]).toEqual({ attached: 1, cleaned: 0 });
   }
 });

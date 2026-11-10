@@ -12,6 +12,12 @@ Keep three independent checklists: implementation gaps, locally executable verif
 
 Finish each selected family's implementation and local checks within its workstream before moving that workstream to another family. Select one family at a time. A required dependency must be necessary for that family and have explicit exit conditions; supporting infrastructure and CI work must not displace its closure. Do not promote a row merely because it was rendered indirectly by a later component. Do not add a new zero-percent component to avoid completing an existing dependency.
 
+## Current wrapper closure: FormGroup
+
+The finite source, utility/type, import, defaults/style and installed-consumer contract is documented in [FormGroup](form-group.md). Normal/enlarged native geometry and live state/ref checks pass on both simulators. Root callback dispatch and Android owned-child keyboard capture/cancellation have dedicated native evidence. Owned-child focus/blur now passes on iOS and Android with retained roots and duplicate suppression.
+
+Continue within this family: verify iOS child keyboard interactions, managed TextInput/composite delivery with framework keys enabled, accessibility-tree ownership and a current optimized-build workload. Root-self hardware keys when the framework flag is disabled remain a separate runtime capability. Physical keyboard/IME, screen-reader usability and representative physical performance remain external evidence. The row stays at its existing 75% evidence stage until its remaining gates are satisfied.
+
 ## Retained closure gates: ButtonGroup and required existing styling
 
 | Contract                        | Concrete work                                                                                                                                                                                                       | Current state                                                                                                                                          |
