@@ -2,15 +2,19 @@
 jest.mock('@mui/material', () => jest.requireActual('../packages/material/src'), { virtual: true });
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 import * as RN from 'react-native';
+import { Commands } from '../packages/native-host/src/AltrooMUIInteractiveViewNativeComponent';
+import { clearNativeFocus, getNativeFocusedView } from '../packages/native-host/src/nativeFocus';
 import { FormGroupKeyboardExample } from '../apps/native-catalog/FormGroupKeyboardExample';
 const kinds = ['native', 'host', 'stock', 'custom', 'styled'];
-beforeEach(() =>
+beforeEach(() => {
+  jest.spyOn(Commands, 'focus').mockImplementation(() => {});
   jest
     .spyOn(RN, 'findNodeHandle')
-    .mockImplementation((node) => (typeof node === 'number' ? node : undefined)),
-);
+    .mockImplementation((node) => (typeof node === 'number' ? node : undefined));
+});
 afterEach(() => {
   cleanup();
+  clearNativeFocus(getNativeFocusedView());
   jest.restoreAllMocks();
 });
 const receipt = (tree: ReturnType<typeof render>) =>
@@ -92,4 +96,32 @@ test('policy and reset retain every root/child while exposing capture cancellati
     expect(tree.getByTestId('form-group-keyboard-' + id)).toBe(roots[index]);
     expect(receipt(tree).refs[id]).toEqual({ attached: 1, cleaned: 0 });
   }
+});
+
+test('touch requests focus but only the native callback acknowledges it, and keyboard clicks do not refocus', () => {
+  const tree = render(<FormGroupKeyboardExample />);
+  const button = tree.getByTestId('form-group-keyboard-stock-button');
+  expect(receipt(tree).focused).toBeNull();
+  fireEvent.press(button, { nativeEvent: {} });
+  expect(Commands.focus).toHaveBeenCalledTimes(1);
+  expect(receipt(tree)).toMatchObject({ focused: null, total: 0, clicks: { stock: 1 } });
+  fireEvent(button, 'MUIFocus', { target: 41, currentTarget: 41, nativeEvent: { target: 41 } });
+  expect(receipt(tree).focused).toBe(41);
+  fireEvent.press(tree.getByTestId('form-group-keyboard-reset'));
+  expect(receipt(tree)).toMatchObject({ focused: 41, total: 0, entries: [], clicks: {} });
+  fireEvent(button, 'MUIKeyDown', event());
+  fireEvent(button, 'MUIKeyUp', event());
+  expect(Commands.focus).toHaveBeenCalledTimes(1);
+  expect(receipt(tree).clicks.stock).toBe(1);
+  fireEvent(button, 'MUIBlur', { target: 41, currentTarget: 41, nativeEvent: { target: 41 } });
+  expect(receipt(tree).focused).toBeNull();
+});
+test('a delayed blur from another child cannot clear the acknowledged focused child', () => {
+  const tree = render(<FormGroupKeyboardExample />);
+  const first = tree.getByTestId('form-group-keyboard-stock-button'),
+    second = tree.getByTestId('form-group-keyboard-styled-button');
+  fireEvent(first, 'MUIFocus', { target: 41, currentTarget: 41, nativeEvent: { target: 41 } });
+  fireEvent(second, 'MUIFocus', { target: 51, currentTarget: 51, nativeEvent: { target: 51 } });
+  fireEvent(first, 'MUIBlur', { target: 41, currentTarget: 41, nativeEvent: { target: 41 } });
+  expect(receipt(tree).focused).toBe(51);
 });
