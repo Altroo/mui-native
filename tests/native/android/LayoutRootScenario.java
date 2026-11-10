@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.TextView;
+import android.widget.EditText;
 import com.facebook.react.uimanager.BackgroundStyleApplicator;
 import com.facebook.react.uimanager.PixelUtil;
 import com.facebook.react.uimanager.style.LogicalEdge;
@@ -44,7 +45,7 @@ public final class LayoutRootScenario {
   private enum Scenario {
     LAYOUT_ROOTS("layout-roots", "layoutRoot"), TEXT_ALIGNMENT("text-alignment", "textAlignment"),
     FORM_GROUP_EVENTS("form-group-events", "formGroupEvents"), FORM_GROUP_KEYBOARD("form-group-keyboard", "formGroupKeyboard"),
-    FORM_GROUP_FOCUS("form-group-focus", "formGroupFocus");
+    FORM_GROUP_FOCUS("form-group-focus", "formGroupFocus"), FORM_GROUP_EDITOR("form-group-editor", "formGroupEditor");
     final String label, key;
     Scenario(String label, String key) { this.label = label; this.key = key; }
   }
@@ -68,6 +69,7 @@ public final class LayoutRootScenario {
   public static void runFormGroupEvents(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_EVENTS, null).run(); }
   public static void runFormGroupKeyboard(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_KEYBOARD, null).run(); }
   public static void runFormGroupFocus(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_FOCUS, null).run(); }
+  public static void runFormGroupEditor(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_EDITOR, null).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
@@ -109,7 +111,9 @@ public final class LayoutRootScenario {
       } while (!wrappersReady && navigationAttempts < 2);
       report.put("navigationAttempts", navigationAttempts);
       require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
-      if (scenario == Scenario.FORM_GROUP_FOCUS) {
+      if (scenario == Scenario.FORM_GROUP_EDITOR) {
+        formGroupEditor(report);
+      } else if (scenario == Scenario.FORM_GROUP_FOCUS) {
         formGroupFocus(report);
       } else if (scenario == Scenario.FORM_GROUP_KEYBOARD) {
         formGroupKeyboard(report);
@@ -163,6 +167,178 @@ public final class LayoutRootScenario {
       } catch (Exception error) { result.putString("Error", error.toString()); passed = false; }
       driver.finish(passed ? Activity.RESULT_OK : Activity.RESULT_CANCELED, result);
     }
+  }
+
+  private static final String[] EDITORS = {"stock-native", "stock-field", "custom-native", "custom-field", "styled-native", "styled-field"};
+  /** Real editable commands retain native input identity before callback claims are evaluated. */
+  private void formGroupEditor(JSONObject report) throws Exception {
+    require(Build.VERSION.SDK_INT >= 30, "Editor QA viewport checks require API30+; API29 remains unverified");
+    java.util.HashSet<String> generations = new java.util.HashSet<>();
+    JSONObject observedValues = new JSONObject();
+    boolean framework = com.facebook.react.internal.featureflags.ReactNativeFeatureFlags.enableKeyEvents();
+    report.put("keyEventsEnabled", framework);
+    tap("root-layout-group-editor");
+    await(() -> ui(() -> find("form-group-editor-receipt") != null && metadata("form-group-editor-receipt").optBoolean("ready")), "Every native editor must lay out");
+    JSONObject initial = settledEditorReceipt(); report.put("initial", initial); stage("ready");
+    for (String control : EDITORS) {
+      require(ui(() -> ((EditText)view("form-group-editor-" + control + "-input")).getText().toString()).equals("Rabat"), "Actual native initial editor text must match the fixture");
+      require(!ui(() -> ((EditText)view("form-group-editor-" + control + "-input")).getShowSoftInputOnFocus()), "Explicit native soft-input-on-focus policy must reach every editor");
+    }
+    require(ui(() -> view("form-group-editor-baseline-input").getClass() == com.facebook.react.views.textinput.ReactEditText.class), "Independent baseline must be the original RN native editor, not an MUI subclass");
+    hideEditorIme(); tap("form-group-editor-baseline-input");
+    await(() -> ui(() -> view("form-group-editor-baseline-input").isFocused() && metadata("form-group-editor-receipt").optInt("focused") == view("form-group-editor-baseline-input").getId()), "Original RN baseline must receive real focus");
+    ui(() -> { EditText editor = (EditText)view("form-group-editor-baseline-input"); editor.setSelection(editor.length()); return null; });
+    String baselineBefore = ui(() -> ((EditText)view("form-group-editor-baseline-input")).getText().toString());
+    require(baselineBefore.equals("Rabat"), "Original RN baseline must start with native fixture text");
+    driver.sendKeyDownUpSync(KeyEvent.KEYCODE_A);
+    await(() -> ui(() -> ((EditText)view("form-group-editor-baseline-input")).getText().toString().equals("Rabata") && metadata("form-group-editor-receipt").getString("baselineValue").equals("Rabata")), "Original RN baseline must acknowledge actual character editing");
+    if (framework) await(() -> ui(() -> { JSONArray events = metadata("form-group-editor-receipt").getJSONArray("entries"); for (int i=0;i<events.length();i++) if (events.getJSONObject(i).optString("phase").equals("up")) return true; return false; }), "Original RN framework key-up positive control is required");
+    hideEditorIme(); JSONObject baseline = settledEditorReceipt();
+    int baselineRoot = ui(() -> view("form-group-editor-baseline").getId()), baselineInput = ui(() -> view("form-group-editor-baseline-input").getId());
+    String baselineAfter = ui(() -> ((EditText)view("form-group-editor-baseline-input")).getText().toString());
+    require(!ui(() -> ((EditText)view("form-group-editor-baseline-input")).getShowSoftInputOnFocus()), "Original RN soft-input-on-focus policy must remain false");
+    require(baselineAfter.equals("Rabata") && ui(() -> view("form-group-editor-baseline-input").isFocused()), "Final original RN text and focus must remain native observations");
+    JSONArray baselineEvents = baseline.getJSONArray("entries");
+    java.util.ArrayList<String> baselinePhases = new java.util.ArrayList<>();
+    for (int i=0;i<baselineEvents.length();i++) {
+      JSONObject event = baselineEvents.getJSONObject(i); String phase = event.getString("phase"), scope = event.getString("scope");
+      require(event.getString("control").equals("baseline") && event.getString("key").equals("a") && event.getString("code").equals("KeyA") && event.isNull("source") && event.getInt("target")==baselineInput && event.getInt("nativeTarget")==baselineInput && event.getInt("currentTarget")==baselineRoot && event.getString("targetKind").equals("object") && event.getInt("sequence")==i+1 && !event.getBoolean("prevented") && !event.getBoolean("stopped"), "Independent RN events must retain actual unmarked native targets");
+      require(scope.equals(i%2==0?"capture":"bubble"), "Original RN phases must retain capture/bubble order");
+      if(i%2==0) baselinePhases.add(phase);
+      else { JSONObject first=baselineEvents.getJSONObject(i-1); require(first.getString("phase").equals(phase) && first.getInt("eventId")>0 && first.getInt("eventId")==event.getInt("eventId") && first.getInt("payloadId")>0 && first.getInt("payloadId")==event.getInt("payloadId"), "Original RN event/payload identity must survive capture/bubble"); }
+    }
+    require(framework ? baselinePhases.equals(java.util.Arrays.asList("up")) || baselinePhases.equals(java.util.Arrays.asList("down","up")) : baselinePhases.isEmpty(), "Original RN baseline requires unique observed native phases, including enabled key-up");
+    require(baselineEvents.length()==baselinePhases.size()*2, "Every original RN phase must complete both callbacks");
+    report.put("frameworkBaseline",new JSONObject().put("metadata",baseline).put("nativeInputId",baselineInput).put("nativeInputClass",ui(() -> view("form-group-editor-baseline-input").getClass().getName())).put("nativeRootId",baselineRoot).put("nativeFocused",true).put("showSoftInputOnFocus",ui(() -> ((EditText)view("form-group-editor-baseline-input")).getShowSoftInputOnFocus())).put("nativeTextBefore",baselineBefore).put("nativeTextAfter",baselineAfter).put("phases",new JSONArray(baselinePhases)));
+    capture("form-group-editor-baseline.png"); stage("framework-baseline");
+    for (String policy : new String[]{"observe", "prevent", "stop"}) {
+      if (!policy.equals("observe")) tap("form-group-editor-policy");
+      await(() -> ui(() -> metadata("form-group-editor-receipt").getString("policy").equals(policy)), "Editor capture policy must acknowledge update");
+      for (String key : new String[]{"ArrowDown", "Enter", "a"}) for (String control : EDITORS) {
+        hideEditorIme();
+        tap("form-group-editor-" + control + "-focus");
+        await(() -> ui(() -> view("form-group-editor-" + control + "-input").isFocused() && metadata("form-group-editor-receipt").optInt("focused") == view("form-group-editor-" + control + "-input").getId()), "Public editor ref must acknowledge native touch with actual focus");
+        ui(() -> { EditText editor = (EditText)view("form-group-editor-" + control + "-input"); editor.setSelection(editor.length()); return null; });
+        String before = ui(() -> ((EditText)view("form-group-editor-" + control + "-input")).getText().toString());
+        tap("form-group-editor-reset");
+        // Android reset buttons can take focus, so acknowledge the actual input again.
+        tap("form-group-editor-" + control + "-focus");
+        await(() -> ui(() -> metadata("form-group-editor-receipt").getInt("total") == 0 && metadata("form-group-editor-receipt").getJSONObject("submissions").length() == 0 && view("form-group-editor-" + control + "-input").isFocused() && metadata("form-group-editor-receipt").optInt("focused") == view("form-group-editor-" + control + "-input").getId()), "Reset must clear all observations before injecting input");
+        ui(() -> { EditText editor = (EditText)view("form-group-editor-" + control + "-input"); editor.setSelection(editor.length()); return null; });
+        driver.sendKeyDownUpSync(key.equals("ArrowDown") ? KeyEvent.KEYCODE_DPAD_DOWN : key.equals("Enter") ? KeyEvent.KEYCODE_ENTER : KeyEvent.KEYCODE_A);
+        String expectedText = key.equals("a") ? before + "a" : before;
+        await(() -> ui(() -> ((EditText)view("form-group-editor-" + control + "-input")).getText().toString().equals(expectedText) && (!key.equals("a") || metadata("form-group-editor-receipt").getJSONObject("values").optString(control).equals(expectedText))), "Actual native editing and value callbacks must settle");
+        if (!key.equals("a") || framework) await(() -> ui(() -> {
+          JSONArray delivered = metadata("form-group-editor-receipt").getJSONArray("entries");
+          for (int i = 0; i < delivered.length(); i++) { JSONObject event = delivered.getJSONObject(i); if (event.optString("control").equals(control) && event.optString("key").equals(key) && event.optString("phase").equals("up")) return true; }
+          return false;
+        }), "Actual editable key-up must acknowledge dispatch before evidence settles");
+        hideEditorIme();
+        JSONObject value = settledEditorReceipt();
+        String actualAfter = ui(() -> ((EditText)view("form-group-editor-" + control + "-input")).getText().toString());
+        boolean softInputOnFocus = ui(() -> ((EditText)view("form-group-editor-" + control + "-input")).getShowSoftInputOnFocus());
+        require(!softInputOnFocus, "Native editor soft-input-on-focus prop must survive editing and ref rebinding");
+        require(actualAfter.equals(expectedText), "Final actual native text must match after viewport and JS settling");
+        if (key.equals("a")) observedValues.put(control, actualAfter);
+        require(value.getJSONObject("values").toString().equals(observedValues.toString()), "Every earlier native value acknowledgement must survive reset and later cases");
+        require(value.getJSONObject("nodes").toString().equals(initial.getJSONObject("nodes").toString()), "Editor interactions must retain every actual native host");
+        int inputId = ui(() -> view("form-group-editor-" + control + "-input").getId()), rootId = ui(() -> view("form-group-editor-" + control).getId()), ownerId = ui(() -> view("form-group-editor-" + control + "-owner").getId());
+        boolean focused = ui(() -> view("form-group-editor-" + control + "-input").isFocused());
+        require(focused && value.getInt("focused") == inputId, "The same actual native editor must retain focus");
+        require(value.getJSONObject("submissions").length() == 0, "Managed Enter must not submit or blur the native editor");
+        JSONArray events = value.getJSONArray("entries");
+        java.util.ArrayList<String> expected = new java.util.ArrayList<>();
+        boolean claimed = !key.equals("a"), stopped = claimed && policy.equals("stop"), prevented = claimed && policy.equals("prevent");
+        java.util.ArrayList<String> observedPhases = new java.util.ArrayList<>();
+        if (claimed) observedPhases.addAll(java.util.Arrays.asList("down","up"));
+        else if (framework) {
+          for (int i=0;i<events.length();i++) { JSONObject event = events.getJSONObject(i); if (event.getString("scope").equals("input")) observedPhases.add(event.getString("phase")); }
+          require(observedPhases.equals(java.util.Arrays.asList("up")) || observedPhases.equals(java.util.Arrays.asList("down","up")), "Every grouped editor needs unique ordinary input phases and a key-up positive control");
+          require(!baselinePhases.contains("down") || observedPhases.contains("down"), "Grouped input lacks key-down observed by independent RN baseline; ordinary input parity remains unverified");
+        }
+        for (String phase : observedPhases) {
+          if (claimed) { expected.add("capture/" + phase); if (!stopped) { expected.add("input/" + phase); expected.add("owner/" + phase); expected.add("bubble/" + phase); } }
+          else if (framework) { if (!control.startsWith("custom")) expected.add("capture/" + phase); expected.add("input/" + phase); if (!control.startsWith("custom")) expected.add("bubble/" + phase); }
+        }
+        states.put(new JSONObject().put("name", policy + "-" + control + "-" + key).put("control", control).put("key", key).put("policy", policy).put("nativeInputId", inputId).put("nativeRootId", rootId).put("nativeOwnerId", ownerId).put("nativeFocused", focused).put("showSoftInputOnFocus", softInputOnFocus).put("nativeTextBefore", before).put("nativeTextAfter", actualAfter).put("metadata", value));
+        stage(policy + "-" + control + "-" + key);
+        require(events.length() == expected.size(), "Exact editor callback count is required: " + control + " " + key + " " + policy + " " + events.toString());
+        String sequenceToken = null;
+        java.util.HashMap<String, Integer> eventIds = new java.util.HashMap<>(), payloadIds = new java.util.HashMap<>();
+        for (int i = 0; i < events.length(); i++) {
+          JSONObject event = events.getJSONObject(i); String scope = event.getString("scope"), phase = event.getString("phase");
+          require((scope + "/" + phase).equals(expected.get(i)) && event.getString("control").equals(control) && event.getInt("sequence") == i + 1, "Exact editor callback order and identity are required");
+          require(event.getString("key").equals(key) && event.getString("code").equals(key.equals("a") ? "KeyA" : key), "Real native key/code fields are required");
+          require(event.getString("targetKind").equals("object") && event.getInt("target") == inputId && event.getInt("nativeTarget") == inputId && event.getInt("currentTarget") == (scope.equals("input") ? inputId : scope.equals("owner") ? ownerId : rootId), "Actual editable target/currentTarget identities must match native views");
+          require(event.getBoolean("prevented") == prevented && event.getBoolean("stopped") == stopped, "Capture cancellation must survive each editable callback");
+          require(event.getInt("eventId") > 0 && event.getInt("payloadId") > 0, "Original editable event/payload identities are required");
+          if (!eventIds.containsKey(phase)) { eventIds.put(phase, event.getInt("eventId")); payloadIds.put(phase, event.getInt("payloadId")); }
+          require(eventIds.get(phase) == event.getInt("eventId") && payloadIds.get(phase) == event.getInt("payloadId"), "All editable phases must share one original event/payload per native dispatch");
+          if (claimed) {
+            require(event.getString("source").equals("hardware") && event.getBoolean("editable") && !event.getBoolean("composing") && !event.getBoolean("canceled"), "Actual owned editable hardware provenance is required");
+            String token = event.getString("keySequence"); require(!token.isEmpty(), "Native editable generation token is required");
+            if (sequenceToken == null) sequenceToken = token; require(sequenceToken.equals(token), "Native down/up must belong to one owned generation");
+          } else require(event.isNull("source"), "Ordinary native editing must remain a separate framework transport");
+        }
+        if (payloadIds.containsKey("down") && payloadIds.containsKey("up")) require(!payloadIds.get("down").equals(payloadIds.get("up")), "Down and up need distinct native payloads");
+        if (claimed) require(sequenceToken != null && generations.add(sequenceToken), "Different injected native presses must use distinct owned generations");
+      }
+      capture("form-group-editor-" + policy + ".png");
+    }
+    report.put("gaps", new JSONArray()); require(states.length() == 54, "All54 editable interaction cases are required");
+  }
+  /** Hardware input may expose the IME even when focus itself does not. Keep
+   * the diagnostic viewport clear without changing editor focus or app sessions. */
+  private void hideEditorIme() throws Exception {
+    require(Build.VERSION.SDK_INT >= 30, "Editor viewport observation requires API30+");
+    final long[] hiddenSince = {0}, lastRequest = {0};
+    await(() -> ui(() -> {
+      View decor = activity.getWindow().getDecorView();
+      android.view.WindowInsets insets = decor.getRootWindowInsets();
+      if (insets == null) return false;
+      long now = SystemClock.uptimeMillis();
+      if (insets.isVisible(android.view.WindowInsets.Type.ime())) {
+        hiddenSince[0] = 0;
+        if (now - lastRequest[0] >= 150) {
+          android.view.WindowInsetsController controller = decor.getWindowInsetsController();
+          require(controller != null, "Native IME viewport controller must be available");
+          controller.hide(android.view.WindowInsets.Type.ime());
+          android.view.inputmethod.InputMethodManager input = (android.view.inputmethod.InputMethodManager)activity.getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+          View focused = activity.getCurrentFocus();
+          require(input != null && focused != null, "Current editor IME connection must remain application-owned");
+          input.hideSoftInputFromWindow(focused.getWindowToken(), 0);
+          lastRequest[0] = now;
+        }
+        return false;
+      }
+      if (hiddenSince[0] == 0) hiddenSince[0] = now;
+      return now - hiddenSince[0] >= 150;
+    }), "Hardware diagnostic viewport must stably exclude the IME before touches");
+  }
+  private JSONObject settledEditorReceipt() throws Exception {
+    final String[] previous = {null}; final long[] stable = {0}; final JSONObject[] result = {null};
+    await(() -> ui(() -> {
+      JSONObject value = metadata("form-group-editor-receipt");
+      require(value.getBoolean("ready") && value.getInt("total") == value.getJSONArray("entries").length() && value.getInt("total") <= 64, "Complete bounded editor history is required");
+      require(value.getJSONObject("nodes").length() == 20 && value.getJSONObject("refs").length() == 20, "Exactly20 native baseline/group/owner/input bindings are required");
+      java.util.HashSet<Integer> tags = new java.util.HashSet<>();
+      for (String control : EDITORS) for (String suffix : new String[]{"", "-owner", "-input"}) {
+        String id = control + suffix; int tag = view("form-group-editor-" + id).getId(); JSONObject ref = value.getJSONObject("refs").getJSONObject(id);
+        require(tag > 0 && tags.add(tag) && value.getJSONObject("nodes").getInt(id) == tag, "Every editor binding must match a distinct actual native view");
+        require(ref.getInt("attached") > 0 && ref.getInt("cleaned") == ref.getInt("attached") - 1, "Every public ref must retain one live native node");
+        if (!suffix.equals("-input")) require(ref.getInt("attached") == 1, "Grouping and command-owner refs must not remount");
+      }
+      for (String id : new String[]{"baseline", "baseline-input"}) {
+        int tag = view("form-group-editor-"+id).getId(); JSONObject ref=value.getJSONObject("refs").getJSONObject(id);
+        require(tag>0 && tags.add(tag) && value.getJSONObject("nodes").getInt(id)==tag && ref.getInt("attached")>0 && ref.getInt("cleaned")==ref.getInt("attached")-1, "Independent RN baseline bindings must retain actual native hosts");
+        if(id.equals("baseline")) require(ref.getInt("attached")==1,"Original RN baseline root must not remount");
+      }
+      require(Math.abs(value.getDouble("fontScale") - activity.getResources().getConfiguration().fontScale) < .01, "Actual OS font scale must agree");
+      String serialized = value.toString(); if (!serialized.equals(previous[0])) { previous[0] = serialized; stable[0] = SystemClock.uptimeMillis(); return false; }
+      if (SystemClock.uptimeMillis() - stable[0] < 100) return false;
+      result[0] = value; return true;
+    }), "Editor callback receipt must settle");
+    return result[0];
   }
 
   /** Public JS ref commands must produce actual native child focus and original bubbling. */

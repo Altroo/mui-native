@@ -384,3 +384,22 @@ Use an unused output directory. If testing with a separate Metro port, build And
 The driver opens Wrappers and Group focus. Native touches invoke public child ref commands across a raw View baseline, direct interaction host, stock FormGroup, custom host root and styled FormGroup. Its report authenticates all ten native tags, retained refs, independent native focused state and frames, cumulative request counters, complete callback history, original event/payload identities and release/clear behavior. Android's baseline must contain actual ordinary framework copies; owned groups must receive only one capture/child/bubble sequence per focus or blur.
 
 The [iOS XCTest source](../tests/native/ios/FormGroupFocusCatalogUITests.swift) uses the same catalog scene on an existing iPhone simulator. Add it to a native UI test target whose target application is the freshly built catalog. It writes a durable JSON receipt in the test runner's Documents directory and retains screenshots/JSON attachments. The test uses UIKit focus commands from native touches, not physical keyboard input. Both platform tests preserve root identity; neither establishes assistive-technology usability or optimized input latency.
+
+## FormGroup editable descendants
+
+Prepare/build the current catalog and instrumentation, then run on an existing API 30+ emulator with an unused output directory:
+
+```sh
+node scripts/native-catalog/android-popper.mjs prepare --project apps/native-catalog/android
+node scripts/native-catalog/android-popper.mjs run --serial emulator-5554 --scenario form-group-editor --output .cache/native-form-group-editor
+```
+
+The binary's actual `enableKeyEvents` value is recorded independently. Validate both the default and enabled native test configurations; a JavaScript toggle cannot establish the other native configuration. Test-only native startup overrides belong to a dedicated QA build. They are not library installation requirements or a production API. Match the compiled development-server port to the intended Metro instance.
+
+The driver opens Group editors and first tests an original RN View/TextInput pair without a managed owner. It authenticates the exact native ReactEditText class, native focus, real Rabat-to-Rabata editing, native tags and unmarked capture/bubble payloads. The enabled baseline requires key-up and records whether key-down arrived. Missing, duplicated, reordered or private-marked baseline events fail.
+
+Each of the 54 grouped cases uses native focus-control touches to call public input refs, then requires actual native focus and the input's callback acknowledgement. Reset clears callbacks/submissions while retaining observed text. Managed commands and enabled ordinary-key cases require key-up acknowledgement before quiescence; disabled ordinary-key cases require the real native edit and change callback. Native text is re-read after viewport and JavaScript settling; expected text alone cannot populate that result. The driver keeps the IME out of the touch viewport through public WindowInsets and InputMethodManager APIs, requiring a stable hidden state while retaining focus. It also reads the actual native showSoftInputOnFocus property before the matrix and after each case. API 29 is unverified by this profile.
+
+Managed commands require both phases, exact capture/input/owner/bubble order, cancellation flags, original event/payload identities and a unique native press generation. Ordinary character events use the input callbacks as a positive control for parent forwarding and retain the independent RN baseline capability. The actual native editor must edit even when framework key events are disabled. The custom interaction-host root's marked-event policy remains explicit. Reports retain all twenty native host IDs, one live ref per host, complete cumulative native text acknowledgements and zero submissions. Editable refs may rebind while retaining the same actual native host.
+
+On API 37 at OS text scale 1.0, both the default-disabled and enabled configurations completed 54 cases each, 108 total. The disabled configuration produced real native edits without ordinary key callbacks. The enabled original RN baseline and grouped editors received ordinary key-up only. This establishes the recorded forwarding/editing assertions and does not certify unobserved ordinary key-down, iOS editor commands, physical IME behavior or assistive-technology usability. Failed runs preserve safe reports/screenshots before the selected preview is restored.
