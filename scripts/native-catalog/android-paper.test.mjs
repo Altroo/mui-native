@@ -752,7 +752,7 @@ test('real CLI prepare registers Paper and preserves existing Divider/reading/la
   );
   assert.match(dispatcher, /PaperScenario\.run\(this, dividerFontProfile\)/);
   assert.match(dispatcher, /DividerScenario\.run\(this, dividerFontProfile\)/);
-  assert.match(dispatcher, /LayoutRootScenario\.run\(this\)/);
+  assert.match(dispatcher, /LayoutRootScenario\.run\(this, dividerFontProfile\)/);
   assert.match(dispatcher, /button-group-reading/);
   const paths = targetPaths(project);
   await writeFile(paths.reference, '{"manual":"keep"}');

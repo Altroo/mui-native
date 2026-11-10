@@ -437,7 +437,7 @@ test('source preparation is repeatable and preserves both manual edits and unown
 test('collector uses only the selected emulator, retains artifacts and restores only the catalog', async () => {
   const directory = await mkdtemp(join(tmpdir(), 'mui-layout-root-run-')),
     calls = [],
-    complete = report();
+    complete = { ...report(), fontProfile: 'normal' };
   try {
     const execute = async (_binary, args) => {
       calls.push(args);
@@ -449,7 +449,13 @@ test('collector uses only the selected emulator, retains artifacts and restores 
     };
     assert.deepEqual(
       await run(
-        { adb: 'adb', serial: 'emulator-5554', output: directory, scenario: 'layout-roots' },
+        {
+          adb: 'adb',
+          serial: 'emulator-5554',
+          output: directory,
+          scenario: 'layout-roots',
+          fontProfile: 'normal',
+        },
         execute,
       ),
       complete,
@@ -464,6 +470,9 @@ test('collector uses only the selected emulator, retains artifacts and restores 
       '-e',
       'scenario',
       'layout-roots',
+      '-e',
+      'fontProfile',
+      'normal',
       component,
     ]);
     assert(
@@ -501,7 +510,13 @@ test('a native assertion retains its failure image before existing stop/restore 
     };
     await assert.rejects(
       run(
-        { adb: 'adb', serial: 'emulator-5554', output: directory, scenario: 'layout-roots' },
+        {
+          adb: 'adb',
+          serial: 'emulator-5554',
+          output: directory,
+          scenario: 'layout-roots',
+          fontProfile: 'normal',
+        },
         async (_binary, args) => {
           calls.push(args);
           if (args.includes('get-state')) return 'device';
@@ -716,3 +731,76 @@ for (const [name, corrupt] of [
     corrupt(value);
     assert.throws(() => summarizeLayoutRoots(output(value)));
   });
+
+test('an explicitly requested profile cannot be satisfied by unlabeled or mismatched evidence', () => {
+  const legacy = report();
+  assert.deepEqual(summarizeLayoutRoots(output(legacy)), legacy);
+  assert.throws(
+    () => summarizeLayoutRoots(output(legacy), { fontProfile: 'normal' }),
+    /font profile/,
+  );
+  const normal = { ...report(), fontProfile: 'normal' };
+  assert.deepEqual(summarizeLayoutRoots(output(normal), { fontProfile: 'normal' }), normal);
+  assert.throws(
+    () => summarizeLayoutRoots(output(normal), { fontProfile: 'enlarged' }),
+    /font profile/,
+  );
+  const enlarged = structuredClone(normal);
+  enlarged.fontProfile = 'enlarged';
+  enlarged.device.fontScale = 2;
+  for (const state of enlarged.states) state.metadata.fontScale = 2;
+  assert.deepEqual(summarizeLayoutRoots(output(enlarged), { fontProfile: 'enlarged' }), enlarged);
+  const stale = structuredClone(enlarged);
+  stale.device.fontScale = 1;
+  for (const state of stale.states) state.metadata.fontScale = 1;
+  assert.throws(
+    () => summarizeLayoutRoots(output(stale), { fontProfile: 'enlarged' }),
+    /font profile/,
+  );
+  assert.throws(
+    () => summarizeLayoutRoots(output(enlarged), { fontProfile: 'huge' }),
+    /font profile/,
+  );
+});
+
+test('layout-root runner rejects missing or invalid font profiles before contacting a device', async () => {
+  for (const fontProfile of [undefined, 'huge']) {
+    await assert.rejects(
+      run(
+        {
+          adb: 'adb',
+          serial: 'emulator-5554',
+          output: 'unused',
+          scenario: 'layout-roots',
+          fontProfile,
+        },
+        () => {
+          throw Error('Must not contact a device');
+        },
+      ),
+      /Layout root checks require an explicit normal\/enlarged font profile/,
+    );
+  }
+});
+
+test('wrapped row classification ignores float residue but still rejects a real pixel overlap', () => {
+  for (const name of ['group-row', 'group-text']) {
+    const value = report();
+    const state = value.states.find((entry) => entry.name === name);
+    const root = state.roots[0];
+    root.bounds.height = root.receipt.local.height = root.receipt.window.height = 100;
+    root.literal = rectangle(20, root.bounds.y + 1, 80, 22);
+    root.action = rectangle(
+      20,
+      root.literal.y + root.literal.height - 0.00005 / value.device.density,
+      80,
+      36,
+    );
+    root.unwrappedFitWidth = root.bounds.width + 1;
+    assert.deepEqual(summarizeLayoutRoots(output(value)), value);
+    const actualOverlap = structuredClone(value);
+    const bad = actualOverlap.states.find((entry) => entry.name === name).roots[0];
+    bad.action.y = bad.literal.y + bad.literal.height - 1 / actualOverlap.device.density;
+    assert.throws(() => summarizeLayoutRoots(output(actualOverlap)), /physical row ordering/);
+  }
+});

@@ -312,3 +312,22 @@ Both collectors check zero-border transitions near the actual outer edge. Source
 ## Ordered native structure
 
 The [internal structure observer guide](native-structure-observation.md) describes the Wrappers > Structure scene, seven-state iOS/Android checks, required development rebuild and remaining CSS/Portal/timing gates. This probe does not promote CardContent or CardActions compatibility.
+
+## FormGroup and ListItemAvatar
+
+The `layout-roots` scenario checks eight Group states and six Avatar states, including actual native glyphs, frames, direction, retained refs/counters and Portal ownership. Prepare and rebuild the Android instrumentation sources before using the current collector. Select an existing emulator and set `MUI_QA_ARTIFACTS` to your chosen output directory outside the checkout. Keep the existing device and Metro running.
+
+```sh
+node scripts/native-catalog/text-profile.mjs \
+  --platform android --device "$MUI_QA_DEVICE" --size 1.0 \
+  --outputDir "$MUI_QA_ARTIFACTS/layout-normal-profile" -- \
+  node scripts/native-catalog/android-popper.mjs run \
+    --serial "$MUI_QA_DEVICE" --scenario layout-roots --font-profile normal \
+    --output "$MUI_QA_ARTIFACTS/layout-normal"
+```
+
+Repeat with `--size 2.0`, `--font-profile enlarged` and fresh profile/evidence output directories. The profile wrapper records/restores the OS setting; native instrumentation and the report validator additionally require the actual native font scale to match the requested profile. Normal requires scale near one; enlarged requires at least 1.6. A report must carry the matching profile tag. Historical unlabelled reports cannot satisfy a requested profile. This does not change the separate baseline-only text-alignment scenario.
+
+On API 37, both requested profiles passed all fourteen states at actual OS text scales 1.0 and 2.0. The row-fit check includes the measured interaction root, including its inner padding and minimum width. Adjacent wrapped rows are compared in physical pixels so float conversion residue cannot become a false overlap. Touch coordinates are captured after stable visibility through profile relayout. These are native layout and interaction observations, not a screen-reader or optimized-performance certification.
+
+The glyph oracle uses Android's [SP conversion](<https://developer.android.com/reference/android/util/TypedValue#applyDimension(int,float,android.util.DisplayMetrics)>) with the rendered view's resources, including platform font scaling. It does not multiply authored font sizes in JavaScript. Review the raw native reports and screenshots; software collector tests do not establish device success or complete physical accessibility/performance coverage.
