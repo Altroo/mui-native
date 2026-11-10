@@ -1,5 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { copyNativeBorderStyle } from './borders';
+import { tracksNativeTextContext, retainNativeTextNormalization } from './nativeTextProvenance';
 import { I18nManager, Platform, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
 import type { Theme } from './theme';
 import { diagnostic } from './diagnostics';
@@ -201,13 +202,16 @@ export function normalizeTextStyle(
 ): Record<string, unknown> {
   input = { ...input, ...context.nativeTextMetrics };
   const output = { ...input };
+  let rootFont: number | undefined;
   const rem =
-    Number.isFinite(theme.cssRootFontSize ?? 16) && (theme.cssRootFontSize ?? 16) > 0
-      ? (theme.cssRootFontSize ?? 16)
+    Number.isFinite((rootFont = theme.cssRootFontSize) ?? 16) &&
+    ((rootFont = theme.cssRootFontSize) ?? 16) > 0
+      ? ((rootFont = theme.cssRootFontSize) ?? 16)
       : 16;
   const parentSize = context.parentTextStyle?.fontSize ?? rem;
   const ownSize = size(input.fontSize, parentSize, rem);
-  const fallbackSize = size(theme.typography.body1?.fontSize, parentSize, rem) ?? rem;
+  const bodyFont = theme.typography.body1?.fontSize;
+  const fallbackSize = size(bodyFont, parentSize, rem) ?? rem;
   const nativeSize = Object.hasOwn(context.nativeTextMetrics ?? {}, 'fontSize')
     ? undefined
     : context.nativeStyle?.fontSize;
@@ -318,5 +322,15 @@ export function normalizeTextStyle(
       } else metrics[key] = key === 'lineHeight' ? authoredLineHeight : input[key];
     }
   cssTextMetrics.set(output, metrics);
+  if (tracksNativeTextContext(context))
+    retainNativeTextNormalization(output, {
+      rootFont,
+      bodyFont,
+      rootSize: rem,
+      parentSize,
+      effectiveSize,
+      direction,
+      metrics,
+    });
   return output;
 }

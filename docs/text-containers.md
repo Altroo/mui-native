@@ -59,6 +59,14 @@ function Message({ children }: { children?: ReactNode }) {
 
 The callback receives (nativeStyle, content, scope). kind='text' targets an existing native Text root; reset starts a new root scope. NativeTextStyleContext, useNativeTextContext, nativeTextStyleContext and renderNativeTextChildren are also native extension helpers. They are not original MUI browser exports; keep their use in native implementation modules.
 
+## Internal source capture
+
+The System resolver retains shallow, read-only snapshots of authored native text, normalized output, emitted text and normalization constants for first-party preparation. Captures belong to the actual library-created element and preserve opaque values by identity. Public element copies do not inherit the receipt.
+
+Capture observes the existing style reads. It declines inconsistent Proxy values or property presence, inherited native fields, accessors and unsupported composite inline layers without changing ordinary rendered styles. Raw defaults and their existing normalized values remain distinct. Source snapshots describe JavaScript preparation; native family binding, retained projection and writer admission still need their own validation.
+
+The [source provenance regressions](../tests/native-text-provenance.test.tsx) cover element handoff and the [input coherence regressions](../tests/native-text-input-provenance.test.tsx) cover changing source reads and frozen inputs. These checks do not change component completion percentages.
+
 ## Evidence and limits
 
 Twenty-eight focused cases cover literal values, keys/state/refs, custom root inspection, CSS/native metric distinctions, theme defaults, explicit Text/View hosts, Button isolation, Modal window boundaries and ten browser-observed upstream comparisons. The browser fixture was captured from original Material UI/System 9.5.0 rendered in Chromium, with immutable source/license/tarball checks. It compares computed font sizes, line heights, letter spacing and static colors. Native tests use mocked hosts and do not prove physical font shaping, baseline alignment, accessibility grouping or large-text geometry.

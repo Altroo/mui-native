@@ -34,3 +34,8 @@ export {
   retainNativeRootSnapshotElement,
   nativeRootSnapshotClassName,
 } from '../../nativeRootStyleSnapshots';
+
+export { nativeTextIntentStyleServices } from '../../nativeTextConditions';
+export { normalizeTextStyle } from '../../nativeText';
+export { nativeTextElementProvenance } from '../../nativeTextProvenance';
+export type { NativeTextProvenance, NativeTextNormalization } from '../../nativeTextProvenance';

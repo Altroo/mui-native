@@ -17,7 +17,20 @@ import {
   type NativeTextChildRootTracker,
 } from './nativeTextRegistry';
 import type { Theme } from './theme';
+import {
+  trackNativeTextContext,
+  finishNativeTextProvenance,
+  sealNativeTextElement,
+  bindNativeTextEmission,
+  sealNativeTextEmission,
+  type NativeTextProvenance,
+} from './nativeTextProvenance';
 import { GENERATED_TEXT_ORIGIN_CONTRACT } from './generatedParagraphOrigin';
+import {
+  flattenNativeTextInput,
+  nativeTextInputSources,
+  retainNativeTextInputContext,
+} from './nativeTextInputProvenance';
 import {
   nativeStyleBorderDeclarations,
   applyNativeBorderStyle,
@@ -54,16 +67,18 @@ export function nativeTextStyleContext(
   style?: StyleProp<NativeStyle>,
   theme?: Theme,
 ) {
-  return {
+  const context = {
     parentTextStyle:
       parent?.style ?? (theme ? { fontSize: theme.cssRootFontSize ?? 16 } : undefined),
     parentLineHeight: parent?.lineHeight,
     parentDirection: nativeTextParagraphDirection(parent?.direction, undefined, false),
     parentTextAlign: parent?.textAlign,
-    nativeStyle: StyleSheet.flatten(style) ?? undefined,
+    nativeStyle: flattenNativeTextInput(style, StyleSheet.flatten) ?? undefined,
     nativeTextMetrics: nativeStyleTextMetrics(style),
     inheritOnly: true,
   };
+  retainNativeTextInputContext(context, style);
+  return context;
 }
 function ownText(style: TextStyle): TextStyle {
   return Object.fromEntries(
@@ -84,21 +99,23 @@ function resolveScope(
   const metrics = nativeStyleTextMetrics(style);
   // Literal RN lineHeight is an absolute length, unlike a CSS unitless ratio.
   if (!Object.hasOwn(metrics, 'lineHeight')) delete text.lineHeight;
+  const context = trackNativeTextContext(nativeTextStyleContext(parent, style, theme));
   const normalized = normalizeTextStyle(
     text as Record<string, unknown>,
     theme,
-    nativeTextStyleContext(parent, style, theme),
+    context,
   ) as TextStyle;
   const adjusted = applyNativeTextMetrics(flat, normalized, metrics) ?? {};
+  let defaults: Record<string, unknown> | undefined;
   const base =
     parent?.style ??
     (kind === 'view'
       ? (normalizeTextStyle(
-          {
+          (defaults = {
             fontFamily: theme.typography.fontFamily,
             fontSize: theme.cssRootFontSize ?? 16,
             color: theme.palette.text.primary,
-          },
+          }),
           theme,
         ) as TextStyle)
       : {});
@@ -152,19 +169,37 @@ function resolveScope(
       ),
     ),
   };
+  const materializeParent = kind !== 'view' && parent && !parent.nativeText;
   const native =
     kind === 'view'
       ? Object.fromEntries(Object.entries(own).filter(([key]) => !isNativeTextStyleProperty(key)))
-      : { ...(parent && !parent.nativeText ? value.style : {}), ...own };
+      : { ...(materializeParent ? value.style : {}), ...own };
+  const presentation = applyNativeBorderStyle(
+    copyNativeBorderStyle(
+      flat,
+      kind === 'text'
+        ? nativeTextAlignmentStyle(native, value.textAlign, paragraphDirection ?? direction)
+        : native,
+    ),
+  );
   return {
     value,
-    native: applyNativeBorderStyle(
-      copyNativeBorderStyle(
-        flat,
-        kind === 'text'
-          ? nativeTextAlignmentStyle(native, value.textAlign, paragraphDirection ?? direction)
-          : native,
-      ),
+    native: presentation,
+    provenance: finishNativeTextProvenance(
+      normalized,
+      presentation,
+      value.literalStyle,
+      metrics,
+      defaults,
+      nativeTextInputSources(flat, kind, context),
+      {
+        scopeKind: kind,
+        materializesParentTextStyle: !!materializeParent,
+        paragraphDirection: paragraphDirection ?? direction,
+        cssTextAlign: value.textAlign,
+      },
+      context,
+      defaults ? base : undefined,
     ),
   };
 }
@@ -214,7 +249,14 @@ export function NativeTextScope({
     <NativeTextStyleContext.Provider value={stable.current}>
       {children(
         resolved.native,
-        renderNativeTextChildren(content, theme, stable.current, trackChildren),
+        renderNativeTextChildren(
+          content,
+          theme,
+          stable.current,
+          trackChildren,
+          '',
+          resolved.provenance,
+        ),
         stable.current,
       )}
     </NativeTextStyleContext.Provider>
@@ -223,23 +265,20 @@ export function NativeTextScope({
 // Only library-created literal runs use this wrapper. Explicit consumer Text
 // keeps its own nativeID/id, refs and props. The namespace identifies origin;
 // it does not authenticate callers or add another native host.
-function GeneratedParagraph({
-  children,
-  style,
-}: {
-  children: string;
-  style: StyleProp<TextStyle>;
-}) {
+function GeneratedParagraph(props: { children: string; style: StyleProp<TextStyle> }) {
+  const { children, style } = props;
   // An unconditional hook keeps identity stable across updates and StrictMode.
   const id = useId();
   const mobile = Platform.OS === 'ios' || Platform.OS === 'android';
-  return (
+  return sealNativeTextEmission(
     <Text
       style={style}
       {...(mobile ? { nativeID: GENERATED_TEXT_ORIGIN_CONTRACT.nativeIDPrefix + id } : {})}
     >
       {children}
-    </Text>
+    </Text>,
+    style,
+    props,
   );
 }
 export function renderNativeTextChildren(
@@ -248,26 +287,27 @@ export function renderNativeTextChildren(
   scope: NativeTextScopeValue,
   track?: NativeTextChildRootTracker,
   parentKey = '',
+  provenance?: NativeTextProvenance,
 ): React.ReactNode {
   const items = React.Children.toArray(content),
     result: React.ReactNode[] = [];
   let run: string[] = [];
   const flush = () => {
     if (run.length) {
-      result.push(
-        <GeneratedParagraph
-          key={'native-text:' + result.length}
-          style={nativeTextAlignmentStyle(
-            scope.literalStyle ?? scope.style,
-            scope.textAlign,
-            scope.paragraphDirection ??
-              scope.direction ??
-              nativeTextParagraphDirection(undefined, undefined, false),
-          )}
-        >
-          {run.join('')}
-        </GeneratedParagraph>,
+      const style = nativeTextAlignmentStyle(
+        scope.literalStyle ?? scope.style,
+        scope.textAlign,
+        scope.paragraphDirection ??
+          scope.direction ??
+          nativeTextParagraphDirection(undefined, undefined, false),
       );
+      const element = (
+        <GeneratedParagraph key={'native-text:' + result.length} style={style}>
+          {run.join('')}
+        </GeneratedParagraph>
+      );
+      bindNativeTextEmission(element.props, style, provenance);
+      result.push(element);
       run = [];
     }
   };
@@ -297,7 +337,7 @@ export function renderNativeTextChildren(
           React.cloneElement(
             child,
             {},
-            renderNativeTextChildren(child.props.children, theme, scope, track, key),
+            renderNativeTextChildren(child.props.children, theme, scope, track, key, provenance),
           ),
         );
       else if (child.type === Text || child.type === View) {
@@ -308,17 +348,27 @@ export function renderNativeTextChildren(
           child.type === Text ? 'text' : 'view',
           child.type === Text ? scope.paragraphDirection : undefined,
         );
+        const element = React.cloneElement(
+          child,
+          {
+            style: resolved.native,
+            ...(track ? { ref: track(key, child.props.ref, resolved.value) } : {}),
+          },
+          <NativeTextStyleContext.Provider value={resolved.value}>
+            {renderNativeTextChildren(
+              child.props.children,
+              theme,
+              resolved.value,
+              track,
+              key,
+              resolved.provenance,
+            )}
+          </NativeTextStyleContext.Provider>,
+        );
         result.push(
-          React.cloneElement(
-            child,
-            {
-              style: resolved.native,
-              ...(track ? { ref: track(key, child.props.ref, resolved.value) } : {}),
-            },
-            <NativeTextStyleContext.Provider value={resolved.value}>
-              {renderNativeTextChildren(child.props.children, theme, resolved.value, track, key)}
-            </NativeTextStyleContext.Provider>,
-          ),
+          child.type === Text
+            ? sealNativeTextElement(element, resolved.native, resolved.provenance)
+            : element,
         );
       } else result.push(child);
     } else result.push(child);

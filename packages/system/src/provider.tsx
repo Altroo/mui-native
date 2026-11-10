@@ -31,6 +31,7 @@ import {
   nativeRootSnapshotClassName,
 } from './nativeRootStyleSnapshots';
 import { NativeTextScope, useNativeTextContext, nativeTextStyleContext } from './textScope';
+import { sealNativeTextElement } from './nativeTextProvenance';
 import {
   componentStyle,
   componentRootStyle,
@@ -388,14 +389,15 @@ export function styled<P extends object>(
             style={finalStyle}
             content={output.children as React.ReactNode}
           >
-            {(style, children) =>
-              React.createElement(Base, {
+            {(style, children) => {
+              const element = React.createElement(Base, {
                 ...output,
                 ref: rootRef,
                 style,
                 children,
-              } as unknown as P)
-            }
+              } as unknown as P);
+              return Base === (Text as unknown) ? sealNativeTextElement(element, style) : element;
+            }}
           </NativeTextScope>,
         );
       }
