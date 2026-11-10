@@ -204,41 +204,59 @@ export function FormGroupContractExample() {
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ padding: 1 }}>
-        <Button
-          testID="form-group-contract-row"
-          variant="outlined"
-          onClick={() => setRow((value) => !value)}
-        >
-          Layout: {row ? 'row' : 'column'}
-        </Button>
-        <Button
-          testID="form-group-contract-error"
-          variant="outlined"
-          onClick={() => setParentError((value) => !value)}
-        >
-          Parent error: {parentError ? 'on' : 'off'}
-        </Button>
-        <Button
-          testID="form-group-contract-theme"
-          variant="outlined"
-          onClick={() => setThemed((value) => !value)}
-        >
-          Theme: {themed ? 'alternate' : 'muted'}
-        </Button>
-        <Button
-          testID="form-group-contract-rtl"
-          variant="outlined"
-          onClick={() => setRtl((value) => !value)}
-        >
-          Direction: {rtl ? 'RTL' : 'LTR'}
-        </Button>
-        <Button
-          testID="form-group-contract-text"
-          variant="outlined"
-          onClick={() => setAlternateText((value) => !value)}
-        >
-          Authored text: {fontSize}
-        </Button>
+        <Typography variant="h6" accessibilityRole="header">
+          Form group
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          Arrange related controls and inherit form state.
+        </Typography>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+          <Button
+            size="small"
+            style={{ minHeight: 44 }}
+            testID="form-group-contract-row"
+            variant="outlined"
+            onClick={() => setRow((value) => !value)}
+          >
+            Layout: {row ? 'row' : 'column'}
+          </Button>
+          <Button
+            size="small"
+            style={{ minHeight: 44 }}
+            testID="form-group-contract-error"
+            variant="outlined"
+            onClick={() => setParentError((value) => !value)}
+          >
+            Parent error: {parentError ? 'on' : 'off'}
+          </Button>
+          <Button
+            size="small"
+            style={{ minHeight: 44 }}
+            testID="form-group-contract-theme"
+            variant="outlined"
+            onClick={() => setThemed((value) => !value)}
+          >
+            Theme: {themed ? 'alternate' : 'muted'}
+          </Button>
+          <Button
+            size="small"
+            style={{ minHeight: 44 }}
+            testID="form-group-contract-rtl"
+            variant="outlined"
+            onClick={() => setRtl((value) => !value)}
+          >
+            Direction: {rtl ? 'RTL' : 'LTR'}
+          </Button>
+          <Button
+            size="small"
+            style={{ minHeight: 44 }}
+            testID="form-group-contract-text"
+            variant="outlined"
+            onClick={() => setAlternateText((value) => !value)}
+          >
+            Authored text: {fontSize}
+          </Button>
+        </View>
         <Box sx={{ direction: rtl ? 'rtl' : 'ltr', fontSize, lineHeight: 1.4, marginTop: 1 }}>
           <FormControl fullWidth error={parentError}>
             {keys.map(group)}
