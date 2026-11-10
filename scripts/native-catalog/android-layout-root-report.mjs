@@ -165,6 +165,7 @@ export function inspectLayoutRootReport(output) {
     report?.schemaVersion !== 1 ||
     report.scenario !== 'layout-roots-v1' ||
     report.driver !== 'native Instrumentation and UiAutomation' ||
+    (report.fontProfile !== undefined && !['normal', 'enlarged'].includes(report.fontProfile)) ||
     !['passed', 'failed'].includes(report.status) ||
     typeof report.artifactDirectory !== 'string' ||
     !/^cache\/mui-layout-roots-\d+$/.test(report.artifactDirectory) ||
@@ -184,7 +185,7 @@ export function inspectLayoutRootReport(output) {
   return report;
 }
 /** Native views, glyph paint and receipts must agree through every real touch update. */
-export function summarizeLayoutRoots(output) {
+export function summarizeLayoutRoots(output, { fontProfile } = {}) {
   if (
     [...output.matchAll(/^INSTRUMENTATION_CODE:/gm)].length !== 1 ||
     !/^INSTRUMENTATION_CODE: -1\r?$/m.test(output) ||
@@ -193,6 +194,19 @@ export function summarizeLayoutRoots(output) {
     throw Error('Missing or failed layout-root instrumentation');
   const report = inspectLayoutRootReport(output);
   requireEvidence(report.status === 'passed' && report.error == null, 'native completion');
+  // Unlabeled historical captures remain readable, but cannot prove a requested profile.
+  if (fontProfile !== undefined || report.fontProfile !== undefined) {
+    const profile = fontProfile ?? report.fontProfile;
+    requireEvidence(
+      ['normal', 'enlarged'].includes(profile) &&
+        report.fontProfile === profile &&
+        (profile === 'normal'
+          ? close(report.device.fontScale, 1, 0.01)
+          : report.device.fontScale >= 1.6),
+      'requested font profile and actual OS scale',
+    );
+  }
+
   requireEvidence(
     same(report.stages, layoutRootStages) && same(report.screenshots, layoutRootPictures),
     'complete stages/screenshots',
@@ -298,14 +312,17 @@ export function summarizeLayoutRoots(output) {
           const overlap =
             Math.min(root.literal.y + root.literal.height, root.action.y + root.action.height) -
             Math.max(root.literal.y, root.action.y);
+          // Android converts integer native pixels to float DIPs; touching rows may
+          // acquire tiny positive residue. Preserve every actual pixel of overlap.
+          const sameRow = Math.round(overlap * report.device.density) > 0;
           requireEvidence(
             finite(root.unwrappedFitWidth) &&
               root.unwrappedFitWidth > 0 &&
-              (root.unwrappedFitWidth > root.bounds.width || overlap > 0),
+              (root.unwrappedFitWidth > root.bounds.width || sameRow),
             'native intrinsic row fit ' + key,
           );
           requireEvidence(
-            overlap > 0
+            sameRow
               ? expected.rtl
                 ? centerX(root.literal) > centerX(root.action)
                 : centerX(root.literal) < centerX(root.action)

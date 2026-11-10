@@ -244,18 +244,20 @@ export async function run(
   if (typeof globalRTL !== 'boolean' || (globalRTL && scenario !== 'button-group-reading'))
     throw Error('Global RTL profiles apply only to reading checks');
   if (
-    ['divider', 'paper', 'box', 'card'].includes(scenario)
+    ['divider', 'paper', 'box', 'card', 'layout-roots'].includes(scenario)
       ? !['normal', 'enlarged'].includes(fontProfile)
       : fontProfile !== undefined
   )
     throw Error(
-      (scenario === 'card'
-        ? 'Card'
-        : scenario === 'box'
-          ? 'Box'
-          : scenario === 'paper'
-            ? 'Paper'
-            : 'Divider') + ' checks require an explicit normal/enlarged font profile',
+      (scenario === 'layout-roots'
+        ? 'Layout root'
+        : scenario === 'card'
+          ? 'Card'
+          : scenario === 'box'
+            ? 'Box'
+            : scenario === 'paper'
+              ? 'Paper'
+              : 'Divider') + ' checks require an explicit normal/enlarged font profile',
     );
   if (typeof serial !== 'string' || !serial.trim())
     throw Error('Choose one explicit --serial; devices are never selected automatically');
@@ -287,7 +289,7 @@ export async function run(
             '-w',
             '-r',
             ...(scenario === 'popper' ? [] : ['-e', 'scenario', scenario]),
-            ...(['divider', 'paper', 'box', 'card'].includes(scenario)
+            ...(['divider', 'paper', 'box', 'card', 'layout-roots'].includes(scenario)
               ? ['-e', 'fontProfile', fontProfile]
               : []),
             ...(scenario === 'button-group-reading' ? ['-e', 'globalRTL', String(globalRTL)] : []),
@@ -353,7 +355,7 @@ export async function run(
     else if (scenario === 'paper') summarizePaper(text, { fontProfile });
     else if (scenario === 'text-alignment') summarizeTextAlignment(text);
     else if (scenario === 'divider') summarizeDivider(text, { fontProfile });
-    else if (scenario === 'layout-roots') summarizeLayoutRoots(text);
+    else if (scenario === 'layout-roots') summarizeLayoutRoots(text, { fontProfile });
     else if (scenario === 'accordion') summarizeAccordion(text);
     else if (scenario === 'svg-icon') summarizeSvgIcon(text);
     else if (scenario === 'button-group-reading') summarizeReadingReport(text, { globalRTL });

@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextPaint;
 import android.text.Layout;
+import android.util.TypedValue;
 import android.view.InputDevice;
 import android.view.MotionEvent;
 import android.view.View;
@@ -41,6 +42,7 @@ public final class LayoutRootScenario {
   private static final String[] AVATARS = {"native", "custom", "portal"};
   private final Instrumentation driver;
   private final boolean textAlignment;
+  private final String fontProfile;
   private final JSONArray stages = new JSONArray(), states = new JSONArray(), pictures = new JSONArray();
   private final Map<String, View> hosts = new HashMap<>();
   private Activity activity;
@@ -49,9 +51,9 @@ public final class LayoutRootScenario {
   private int tagId;
   private String textDiagnostic;
 
-  private LayoutRootScenario(Instrumentation driver, boolean textAlignment) { this.driver = driver; this.textAlignment = textAlignment; }
-  public static void run(Instrumentation driver) { new LayoutRootScenario(driver, false).run(); }
-  public static void runTextAlignment(Instrumentation driver) { new LayoutRootScenario(driver, true).run(); }
+  private LayoutRootScenario(Instrumentation driver, boolean textAlignment, String fontProfile) { this.driver = driver; this.textAlignment = textAlignment; this.fontProfile = fontProfile; }
+  public static void run(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, false, fontProfile).run(); }
+  public static void runTextAlignment(Instrumentation driver) { new LayoutRootScenario(driver, true, null).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
@@ -67,6 +69,15 @@ public final class LayoutRootScenario {
       require(launch != null, "Catalog must be installed");
       launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity = driver.startActivitySync(launch);
+      if (!textAlignment) {
+        require("normal".equals(fontProfile) || "enlarged".equals(fontProfile), "Layout root checks require an explicit normal/enlarged font profile");
+        float actualFontScale = activity.getResources().getConfiguration().fontScale;
+        report.put("fontProfile", fontProfile);
+        report.getJSONObject("device").put("fontScale", actualFontScale);
+        require("normal".equals(fontProfile) ? Math.abs(actualFontScale - 1) < .01 : actualFontScale >= 1.6,
+          "Actual native OS font scale does not match requested profile: " + fontProfile + " scale=" + actualFontScale);
+      }
+
       tagId = driver.getTargetContext().getResources().getIdentifier("react_test_id", "id", PACKAGE);
       require(tagId != 0, "Native test identifier resource is missing");
       tap("catalog-tab-Wrappers");
@@ -253,20 +264,23 @@ public final class LayoutRootScenario {
         JSONObject a = bounds(action), l = bounds(literal), t = bounds(leaf);
         JSONObject physical = groupPhysical(root, literal, action, leaf);
         float density = root.getResources().getDisplayMetrics().density;
-        // Eight DIPs conservatively cover both root/action borders. Only demand
-        // an unwrapped row when actual glyph runs plus native padding fit; the
-        // source flexWrap must remain valid at larger OS font profiles.
-        double fitWidth = (literalText.desiredWidth() + labelText.desiredWidth() + action.getPaddingLeft() + action.getPaddingRight()) / density + 8;
+        // The interaction root's measured width includes inner content padding and
+        // minimum sizing that a label-only estimate misses. Eight DIPs retain the
+        // existing conservative allowance for the owning root's border edges.
+        double fitWidth = (literalText.desiredWidth() + action.getWidth()) / density + 8;
         if (row) {
-          boolean overlap = overlapY(a, l) > 0;
-          require(fitWidth > root.getWidth() / density || overlap, "Group items must share a row when actual native text fits: " + key);
-          require(overlap ? (rtl ? centerX(l) > centerX(a) : centerX(l) < centerX(a)) :
-            l.getDouble("y") + l.getDouble("height") <= a.getDouble("y") + 1.5, "Group physical order/wrapping must follow actual direction: " + key);
+          // Quantize only conversion residue; a real native pixel still overlaps.
+          boolean sameRow = Math.round(overlapY(a, l) * density) > 0;
+          require(fitWidth > root.getWidth() / density || sameRow, "Group items must share a row when actual native text fits: " + key);
+          require(sameRow ? (rtl ? centerX(l) > centerX(a) : centerX(l) < centerX(a)) :
+            l.getDouble("y") + l.getDouble("height") <= a.getDouble("y") + 1.5, String.format(java.util.Locale.ROOT, "Group order %s ov=%.6fpx lx=%.2f ax=%.2f ly=%.3f lh=%.3f ay=%.3f ah=%.3f", key, overlapY(a, l) * density, centerX(l), centerX(a), l.getDouble("y"), l.getDouble("height"), a.getDouble("y"), a.getDouble("height")));
         } else {
           require(l.getDouble("y") + l.getDouble("height") <= a.getDouble("y") + 1.5 &&
             a.getDouble("y") + a.getDouble("height") <= t.getDouble("y") + 1.5, "Group column children must stack: " + key);
         }
-        float expectedFont = (float)Math.ceil(PixelUtil.toPixelFromSP(fontSize * .8f));
+        // Use the rendered view's platform resources, independent of RN's cached metrics.
+        float expectedFont = (float)Math.ceil(TypedValue.applyDimension(
+          TypedValue.COMPLEX_UNIT_SP, fontSize * .8f, leaf.getResources().getDisplayMetrics()));
         TextPaint paint = glyphPaint(leaf);
         require(Math.abs(paint.getTextSize() - expectedFont) <= 1.1 && leafText.layout.getLineCount() > 0, "Actual inherited glyph size differs: " + key + " actualPx=" + paint.getTextSize() + " expectedPx=" + expectedFont + " lines=" + leafText.layout.getLineCount());
         float alpha = key.equals("styled") && error ? .6f : 1f;
@@ -504,9 +518,20 @@ public final class LayoutRootScenario {
       ((android.widget.ScrollView)scroll).fullScroll(View.FOCUS_DOWN);
       return null;
     });
-    ui(() -> { View root = view(id); root.requestRectangleOnScreen(new Rect(0, 0, root.getWidth(), root.getHeight()), true); return null; });
-    await(() -> ui(() -> { Rect rect = new Rect(); return view(id).getGlobalVisibleRect(rect) && rect.width() > 0 && rect.height() > 0; }), "Touch target must be visible: " + id);
-    float[] point = ui(() -> { Rect visible = new Rect(); require(view(id).getGlobalVisibleRect(visible), "Touch target is clipped"); return new float[]{visible.exactCenterX(), visible.exactCenterY()}; });
+    final Rect[] previous = {null}; final long[] stableSince = {0}; final float[][] touch = {null};
+    // Font-profile relayout and selected-tab scrolling can move a target between UI calls.
+    // Capture visibility and coordinates atomically, after 100ms of stable native bounds.
+    await(() -> ui(() -> {
+      View target = find(id); Rect visible = new Rect();
+      if (target == null || !target.isShown()) { previous[0] = null; return false; }
+      target.requestRectangleOnScreen(new Rect(0, 0, target.getWidth(), target.getHeight()), true);
+      if (!target.getGlobalVisibleRect(visible) || visible.width() <= 0 || visible.height() <= 0) { previous[0] = null; return false; }
+      if (!visible.equals(previous[0])) { previous[0] = new Rect(visible); stableSince[0] = SystemClock.uptimeMillis(); return false; }
+      if (SystemClock.uptimeMillis() - stableSince[0] < 100) return false;
+      touch[0] = new float[]{visible.exactCenterX(), visible.exactCenterY()};
+      return true;
+    }), "Touch target must be stably visible: " + id);
+    float[] point = touch[0];
     long down = SystemClock.uptimeMillis();
     for (int action : new int[]{MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP}) {
       MotionEvent event = MotionEvent.obtain(down, SystemClock.uptimeMillis(), action, point[0], point[1], 0); event.setSource(InputDevice.SOURCE_TOUCHSCREEN);

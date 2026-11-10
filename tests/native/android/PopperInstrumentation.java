@@ -89,7 +89,7 @@ public final class PopperInstrumentation extends Instrumentation {
     if (paperScenario) { PaperScenario.run(this, dividerFontProfile); return; }
     if (textAlignmentScenario) { LayoutRootScenario.runTextAlignment(this); return; }
     if (dividerScenario) { DividerScenario.run(this, dividerFontProfile); return; }
-    if (layoutRootScenario) { LayoutRootScenario.run(this); return; }
+    if (layoutRootScenario) { LayoutRootScenario.run(this, dividerFontProfile); return; }
     if (keyboardScenario) { KeyboardScenario.run(this); return; }
     if (autocompleteScenario) { AutocompleteScenario.run(this); return; }
     if (inputIntegrityScenario) { InputIntegrityScenario.run(this); return; }
