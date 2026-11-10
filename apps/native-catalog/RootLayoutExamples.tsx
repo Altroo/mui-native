@@ -44,99 +44,131 @@ export function RootLayoutExamples() {
         contentContainerStyle={{ flexDirection: 'row', gap: 8 }}
       >
         <Button
-          style={{ maxWidth: '100%' }}
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-form-group"
-          variant={example === 'group' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'group' }}
+          variant={example === 'group' ? 'contained' : 'text'}
           onClick={() => setExample('group')}
         >
           Group
         </Button>
         <Button
-          style={{ maxWidth: '100%' }}
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-avatar"
-          variant={example === 'avatar' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'avatar' }}
+          variant={example === 'avatar' ? 'contained' : 'text'}
           onClick={() => setExample('avatar')}
         >
           Avatar
         </Button>
         <Button
-          style={{ maxWidth: '100%' }}
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-icon"
-          variant={example === 'icon' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'icon' }}
+          variant={example === 'icon' ? 'contained' : 'text'}
           onClick={() => setExample('icon')}
         >
           Icon
         </Button>
         <Button
-          style={{ maxWidth: '100%' }}
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-details"
-          variant={example === 'details' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'details' }}
+          variant={example === 'details' ? 'contained' : 'text'}
           onClick={() => setExample('details')}
         >
           Details
         </Button>
         <Button
-          style={{ maxWidth: '100%' }}
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-menu-styles"
-          variant={example === 'menu-styles' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'menu-styles' }}
+          variant={example === 'menu-styles' ? 'contained' : 'text'}
           onClick={() => setExample('menu-styles')}
         >
           Menu
         </Button>
         <Button
-          style={{ maxWidth: '100%' }}
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-typography"
-          variant={example === 'typography' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'typography' }}
+          variant={example === 'typography' ? 'contained' : 'text'}
           onClick={() => setExample('typography')}
         >
           Typography
         </Button>
         <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-divider"
-          variant={example === 'divider' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'divider' }}
+          variant={example === 'divider' ? 'contained' : 'text'}
           onClick={() => setExample('divider')}
         >
           Divider
         </Button>
         <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-paper"
-          variant={example === 'paper' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'paper' }}
+          variant={example === 'paper' ? 'contained' : 'text'}
           onClick={() => setExample('paper')}
         >
           Paper
         </Button>
         <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-card"
-          variant={example === 'card' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'card' }}
+          variant={example === 'card' ? 'contained' : 'text'}
           onClick={() => setExample('card')}
         >
           Card
         </Button>
         <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-structure"
-          variant={example === 'structure' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'structure' }}
+          variant={example === 'structure' ? 'contained' : 'text'}
           onClick={() => setExample('structure')}
         >
           Structure
         </Button>
         <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-box"
-          variant={example === 'box' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'box' }}
+          variant={example === 'box' ? 'contained' : 'text'}
           onClick={() => setExample('box')}
         >
           Box
         </Button>
         <Button
-          style={{ maxWidth: '100%' }}
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-benchmark"
-          variant={example === 'benchmark' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'benchmark' }}
+          variant={example === 'benchmark' ? 'contained' : 'text'}
           onClick={() => setExample('benchmark')}
         >
           Workload
         </Button>
         <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-paper-benchmark"
-          variant={example === 'paper-benchmark' ? 'contained' : 'outlined'}
+          accessibilityState={{ selected: example === 'paper-benchmark' }}
+          variant={example === 'paper-benchmark' ? 'contained' : 'text'}
           onClick={() => setExample('paper-benchmark')}
         >
           Paper workload

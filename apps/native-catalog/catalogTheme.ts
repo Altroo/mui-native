@@ -1,6 +1,7 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { createTheme } from '@mui/material';
 
-// The catalog uses the same quiet surfaces and data hierarchy as Facturation Native.
+// Keep the catalog palette restrained so component states carry the visual emphasis.
 // Library defaults remain Material defaults; applications choose their own theme.
 export function createCatalogTheme(dark: boolean) {
   return createTheme({
@@ -8,7 +9,7 @@ export function createCatalogTheme(dark: boolean) {
     palette: {
       mode: dark ? 'dark' : 'light',
       primary: { main: dark ? '#8dc4ff' : '#0274d7', contrastText: dark ? '#121722' : '#ffffff' },
-      background: { default: dark ? '#121722' : '#f5f5f5', paper: dark ? '#222c3d' : '#ffffff' },
+      background: { default: dark ? '#121722' : '#f7f8fa', paper: dark ? '#222c3d' : '#ffffff' },
       text: { primary: dark ? '#f1f5f9' : '#0d070b', secondary: dark ? '#a8b7ca' : '#64748b' },
       divider: dark ? '#475569' : '#e2e8f0',
       action: { selected: dark ? '#263c58' : '#e7f1fb' },

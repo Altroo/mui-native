@@ -1,6 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { useMemo, useState } from 'react';
-import { Pressable, ScrollView, StatusBar, View, useWindowDimensions } from 'react-native';
+import { ScrollView, StatusBar, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import {
   ThemeProvider,
@@ -10,7 +10,6 @@ import {
   Button,
   TextField,
   Checkbox,
-  Switch,
   FormControlLabel,
   Dialog,
   DialogTitle,
@@ -29,14 +28,17 @@ import { SvgIconExamples } from './SvgIconExamples';
 import { RootLayoutExamples } from './RootLayoutExamples';
 import { AutocompleteExamples } from './AutocompleteExamples';
 import { createCatalogTheme } from './catalogTheme';
+import { CatalogHeader } from './CatalogHeader';
+import { CatalogHome } from './CatalogHome';
+import { useCatalogNavigation } from './useCatalogNavigation';
 import { RichTreeView } from '@mui/x-tree-view';
 import { BarChart, LineChart } from '@mui/x-charts';
 import { DatePicker, LocalizationProvider, AdapterDayjs } from '@mui/x-date-pickers';
 import supported from '../../packages/compat/supported.json';
 export default function App() {
-  const { fontScale } = useWindowDimensions();
-  const compactHeader = fontScale > 1.5;
-  const [section, setSection] = useState('Grid');
+  const { section, navigate } = useCatalogNavigation();
+  const [query, setQuery] = useState('');
+  const [contentWidth, setContentWidth] = useState(362);
   const [dark, setDark] = useState(false);
   const [name, setName] = useState('');
   const [draftName, setDraftName] = useState('');
@@ -49,84 +51,23 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <SafeAreaView style={{ flex: 1, backgroundColor: theme.palette.background.default }}>
           <StatusBar barStyle={dark ? 'light-content' : 'dark-content'} />
+          <CatalogHeader
+            section={section}
+            onNavigate={navigate}
+            dark={dark}
+            onDarkChange={setDark}
+          />
           <View
+            onLayout={({ nativeEvent }) => setContentWidth(nativeEvent.layout.width)}
             style={{
-              paddingHorizontal: 20,
-              paddingTop: 8,
-              backgroundColor: theme.palette.background.paper,
-              borderBottomWidth: 1,
-              borderColor: theme.palette.divider,
+              flex: 1,
+              paddingHorizontal: section === 'Explore' ? 0 : 16,
+              paddingTop: section === 'Explore' ? 0 : 16,
             }}
           >
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingBottom: 8 }}>
-              <View style={{ flex: 1 }}>
-                <Typography variant={compactHeader ? 'body2' : 'h6'} numberOfLines={1}>
-                  Native catalog
-                </Typography>
-                {compactHeader ? null : (
-                  <Typography variant="caption" color="text.secondary">
-                    Altroo · Pre-alpha
-                  </Typography>
-                )}
-              </View>
-              <Switch
-                checked={dark}
-                onChange={(_, checked) => setDark(checked)}
-                aria-label="Dark mode"
-              />
-            </View>
-            <ScrollView
-              testID="catalog-tabs"
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              keyboardShouldPersistTaps="handled"
-            >
-              <View style={{ flexDirection: 'row', gap: 24 }} accessibilityRole="tablist">
-                {[
-                  'Form',
-                  'Grid',
-                  'Overlays',
-                  'Tree',
-                  'Charts',
-                  'Dates',
-                  'Coverage',
-                  'Autocomplete',
-                  'Keyboard',
-                  'Inputs',
-                  'Transitions',
-                  'Accordion',
-                  'Icons',
-                  'Groups',
-                  'Wrappers',
-                ].map((name) => (
-                  <Pressable
-                    key={name}
-                    testID={`catalog-tab-${name}`}
-                    accessibilityRole="tab"
-                    accessibilityState={{ selected: section === name }}
-                    onPress={() => setSection(name)}
-                    style={({ pressed }) => ({
-                      minHeight: 44,
-                      justifyContent: 'center',
-                      borderBottomWidth: 2,
-                      borderBottomColor:
-                        section === name ? theme.palette.primary.main : 'transparent',
-                      opacity: pressed ? 0.65 : 1,
-                    })}
-                  >
-                    <Typography
-                      variant="body2"
-                      color={section === name ? 'primary.main' : 'text.secondary'}
-                      style={{ fontWeight: section === name ? '600' : '500' }}
-                    >
-                      {name === 'Grid' ? 'Data grid' : name}
-                    </Typography>
-                  </Pressable>
-                ))}
-              </View>
-            </ScrollView>
-          </View>
-          <View style={{ flex: 1, paddingHorizontal: 16, paddingTop: 16 }}>
+            {section === 'Explore' ? (
+              <CatalogHome query={query} onQueryChange={setQuery} onNavigate={navigate} />
+            ) : null}
             {section === 'Autocomplete' ? <AutocompleteExamples /> : null}
             {section === 'Keyboard' ? <KeyboardExamples /> : null}
             {section === 'Inputs' ? <InputExamples /> : null}
@@ -209,17 +150,33 @@ export default function App() {
               />
             ) : null}
             {section === 'Charts' ? (
-              <ScrollView>
-                <BarChart
-                  width={330}
-                  xAxis={[{ data: ['Jan', 'Feb', 'Mar', 'Apr'] }]}
-                  series={[{ label: 'Orders', data: [24, 36, 28, 48] }]}
-                />
-                <LineChart
-                  width={330}
-                  xAxis={[{ data: ['Jan', 'Feb', 'Mar', 'Apr'] }]}
-                  series={[{ label: 'Balance', data: [12, -4, 18, 30] }]}
-                />
+              <ScrollView contentContainerStyle={{ gap: 16, paddingBottom: 24 }}>
+                <View>
+                  <Typography variant="h5">A view of your data</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Monthly orders and account balance.
+                  </Typography>
+                </View>
+                <Paper variant="outlined" sx={{ p: 2 }}>
+                  <Typography variant="subtitle1" accessibilityRole="header">
+                    Orders
+                  </Typography>
+                  <BarChart
+                    width={Math.max(1, contentWidth - 64)}
+                    xAxis={[{ data: ['Jan', 'Feb', 'Mar', 'Apr'] }]}
+                    series={[{ label: 'Orders', data: [24, 36, 28, 48] }]}
+                  />
+                </Paper>
+                <Paper variant="outlined" sx={{ p: 2 }}>
+                  <Typography variant="subtitle1" accessibilityRole="header">
+                    Balance
+                  </Typography>
+                  <LineChart
+                    width={Math.max(1, contentWidth - 64)}
+                    xAxis={[{ data: ['Jan', 'Feb', 'Mar', 'Apr'] }]}
+                    series={[{ label: 'Balance', data: [12, -4, 18, 30] }]}
+                  />
+                </Paper>
               </ScrollView>
             ) : null}
             {section === 'Coverage' ? (
@@ -227,14 +184,14 @@ export default function App() {
                 <Stack spacing={3}>
                   <Typography variant="h6">Port coverage</Typography>
                   <Typography color="text.secondary">
-                    These demos cover a small part of Material UI and MUI X Community. No component
-                    has a complete compatibility claim yet.
+                    These collections preview available Material UI and MUI X Community behavior. A
+                    working example does not guarantee full API compatibility.
                   </Typography>
                   {Object.entries(supported).map(([name, config]) => (
                     <Paper key={name} variant="outlined" sx={{ p: 2 }}>
                       <Typography variant="subtitle2">{name}</Typography>
                       <Typography variant="caption" color="primary.main">
-                        Partial prototypes
+                        Preview imports
                       </Typography>
                       <Typography>
                         {config.subpaths.filter((entry) => entry !== 'styles').join(', ') ||
@@ -242,11 +199,11 @@ export default function App() {
                       </Typography>
                     </Paper>
                   ))}
-                  <Typography variant="h6">Still to port</Typography>
+                  <Typography variant="h6">Remaining compatibility work</Typography>
                   <Typography>
-                    Navigation, menus, Select, Autocomplete, Tabs, Tooltip, Accordion, Slider,
-                    Table, Stepper and the remaining eligible Material UI APIs. Each X family also
-                    needs substantial API, interaction and accessibility work.
+                    API, interaction, accessibility and performance coverage is still being expanded
+                    across Material UI and every X Community family. Check the compatibility
+                    documentation for the verified scope of each component.
                   </Typography>
                   <Typography color="text.secondary">
                     The complete scope is tracked in ROADMAP.md. Pro and Premium packages are
