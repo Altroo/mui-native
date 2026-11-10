@@ -255,7 +255,7 @@ class AltrooMUIInteractiveView(context: ThemedReactContext) : ReactViewGroup(con
   }
   override fun onFocusChanged(gainFocus: Boolean, direction: Int, previous: Rect?) {
     super.onFocusChanged(gainFocus,direction,previous)
-    emit(if(gainFocus) "topMUIFocus" else "topMUIBlur",Arguments.createMap().apply { putInt("target",id) })
+    emit(if(gainFocus) "topMUIFocus" else "topMUIBlur",Arguments.createMap().apply { putInt("target",id); putString("muiFocusSource","owned") })
   }
   override fun addFocusables(views: ArrayList<View>?, direction: Int, mode: Int) {
     if(allowKeyboardFocus && nativeTabIndex >= 0) super.addFocusables(views,direction,mode)
