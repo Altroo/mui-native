@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "8c481afabb85c73bc50238873ab63b690616502040ebf00e1fecce31d0be54e8",
+  "nativeSourceSha256": "08f41965b61e04b8d34c91341cf40dda6054038967c4e013d5f3bb9c211968a4",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -35603,7 +35603,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "DefaultPropsProvider",
           "kind": "value",
-          "line": 131
+          "line": 135
         }
       ]
     },
@@ -35691,7 +35691,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "getThemeProps",
           "kind": "value",
-          "line": 102
+          "line": 106
         }
       ]
     },
@@ -37231,7 +37231,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "resolveSlotProps",
           "kind": "value",
-          "line": 148
+          "line": 152
         }
       ]
     },
@@ -37473,7 +37473,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "systemDefaultTheme",
           "kind": "value",
-          "line": 46
+          "line": 52
         }
       ]
     },
@@ -37671,7 +37671,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentRootStyle",
           "kind": "value",
-          "line": 132
+          "line": 138
         }
       ]
     },
@@ -37693,7 +37693,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "useDefaultProps",
           "kind": "value",
-          "line": 137
+          "line": 141
         }
       ]
     },
@@ -37704,7 +37704,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useNativeRootProps",
           "kind": "value",
-          "line": 153
+          "line": 159
         }
       ]
     },
@@ -37781,7 +37781,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useThemeWithoutDefault",
           "kind": "value",
-          "line": 80
+          "line": 86
         }
       ]
     }
@@ -181545,7 +181545,7 @@
         {
           "name": "SlotProps",
           "file": "src/defaultProps.tsx",
-          "line": 147,
+          "line": 151,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -181653,7 +181653,7 @@
         {
           "name": "SlotProps",
           "file": "src/defaultProps.tsx",
-          "line": 147,
+          "line": 151,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -209745,10 +209745,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "components?: Components;",
+          "declaration": "components?: Components | undefined;",
           "line": 50,
           "kind": "property",
-          "type": "Components"
+          "type": "Components | undefined"
         }
       ],
       "references": [
@@ -213152,7 +213152,7 @@
     {
       "name": "SlotProps",
       "file": "src/defaultProps.tsx",
-      "line": 147,
+      "line": 151,
       "kind": "type",
       "members": [],
       "references": [

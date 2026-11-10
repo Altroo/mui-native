@@ -94,7 +94,11 @@ export function resolveDefaultProps<P>(defaults: unknown, props: P, mergeStyle =
   }
   return output as P;
 }
-type ThemedDefaults<ThemeInput, Name extends PropertyKey> = ThemeInput extends {
+// Match the permissive upstream theme envelope without constraining custom names.
+export interface ThemeWithProps {
+  components?: any;
+}
+export type ThemedProps<ThemeInput, Name extends PropertyKey> = ThemeInput extends {
   components: Record<Name, { defaultProps: infer Props }>;
 }
   ? Props
@@ -107,7 +111,7 @@ export function getThemeProps<ThemeInput, Props, Name extends PropertyKey>({
   props: Props;
   name: Name;
   theme?: ThemeInput | undefined;
-}): Props & ThemedDefaults<ThemeInput, Name> {
+}): Props & ThemedProps<ThemeInput, Name> {
   const selected = theme as { components?: Record<PropertyKey, unknown> } | null | undefined;
   if (
     !selected ||
@@ -115,9 +119,9 @@ export function getThemeProps<ThemeInput, Props, Name extends PropertyKey>({
     !selected.components[name] ||
     !object(selected.components[name]).defaultProps
   )
-    return props as Props & ThemedDefaults<ThemeInput, Name>;
+    return props as Props & ThemedProps<ThemeInput, Name>;
   return resolveDefaultProps(object(selected.components[name]).defaultProps, props) as Props &
-    ThemedDefaults<ThemeInput, Name>;
+    ThemedProps<ThemeInput, Name>;
 }
 export type DefaultPropsProviderProps = React.PropsWithChildren<{
   // System intentionally accepts arbitrary component names and configuration values.

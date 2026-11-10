@@ -26,7 +26,7 @@ Finish each selected family's implementation and local checks within its workstr
 
 ## Ordered completion queue
 
-The full pinned icon catalog and the finite RtlProvider/DefaultPropsProvider contracts are complete. The existing [Material and System theme-reading hooks](theme-reading.md) are also complete within their finite native context contracts. Prioritize the smallest remaining existing API whose full contract can be closed now, then small existing wrappers with executable closure gates. The table below records the larger dependency order; it does not require exhausting a large styling subsystem before closing an independent small API. ButtonGroup enlarged-text, shared styling-cache and optimized-build gates remain open; they are not discarded by completing an independent renderless provider or icon catalog.
+The full pinned icon catalog and the finite RtlProvider/DefaultPropsProvider contracts are complete. The existing [Material and System theme-reading hooks](theme-reading.md) are also complete within their finite native context contracts. The [theme-prop hooks](theme-props.md) complete their separate finite context/default/type contracts; the already completed direct default-resolution helpers are not counted again. Prioritize the smallest remaining existing API whose full contract can be closed now, then small existing wrappers with executable closure gates. The table below records the larger dependency order; it does not require exhausting a large styling subsystem before closing an independent small API. ButtonGroup enlarged-text, shared styling-cache and optimized-build gates remain open; they are not discarded by completing an independent renderless provider or icon catalog.
 
 | Order | Existing family                                                                                              | Concrete exit work                                                                                                                                                                                                      |
 | ----- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -43,7 +43,7 @@ The full pinned icon catalog and the finite RtlProvider/DefaultPropsProvider con
 
 ## All existing partial rows
 
-The entries below enumerate the 81 current partial status rows and the separately completed RtlProvider, two DefaultPropsProvider entries, three theme-reading APIs and icon-catalog scopes. Material and System DefaultPropsProvider are separate package entries; foundation rows are cross-cutting work rather than extra components. Each linked guide is evidence and a starting point for the finite contract audit, not proof that every inherited API is complete.
+The entries below enumerate the 81 current partial status rows and the separately completed RtlProvider, two DefaultPropsProvider entries, five theme context APIs and icon-catalog scopes. Material and System DefaultPropsProvider are separate package entries; foundation rows are cross-cutting work rather than extra components. Each linked guide is evidence and a starting point for the finite contract audit, not proof that every inherited API is complete.
 
 ### Foundations
 

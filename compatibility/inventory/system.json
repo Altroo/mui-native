@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "28c124baaa8ccfe36c04110d229f36d3d59870c12914686cf6451dda372624b2",
+  "nativeSourceSha256": "9dd2fd71fba963ac7f65aadd0fc19f43ceccc7daa5d6c83c6e8f450e2dd0c90a",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7180,7 +7180,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "DefaultPropsProvider",
           "kind": "value",
-          "line": 131
+          "line": 135
         }
       ]
     },
@@ -7664,7 +7664,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "resolveSlotProps",
           "kind": "value",
-          "line": 148
+          "line": 152
         }
       ]
     },
@@ -7741,7 +7741,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "SlotProps",
           "kind": "type",
-          "line": 147
+          "line": 151
         }
       ]
     },
@@ -7928,7 +7928,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentRootStyle",
           "kind": "value",
-          "line": 132
+          "line": 138
         }
       ]
     },
@@ -7939,7 +7939,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentStyle",
           "kind": "value",
-          "line": 116
+          "line": 122
         }
       ]
     },
@@ -7950,7 +7950,7 @@
           "module": "@altroo/mui-native-system:src/defaultProps.tsx",
           "name": "useDefaultProps",
           "kind": "value",
-          "line": 137
+          "line": 141
         }
       ]
     },
@@ -7961,7 +7961,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useNativeRootProps",
           "kind": "value",
-          "line": 153
+          "line": 159
         }
       ]
     },
@@ -8016,7 +8016,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useSx",
           "kind": "value",
-          "line": 106
+          "line": 112
         }
       ]
     }
@@ -11263,7 +11263,7 @@
         {
           "name": "ThemeProviderProps",
           "file": "src/provider.tsx",
-          "line": 49,
+          "line": 55,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -11325,7 +11325,7 @@
         {
           "name": "ThemeProviderProps",
           "file": "src/provider.tsx",
-          "line": 49,
+          "line": 55,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -17633,7 +17633,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemedProps",
+          "file": "src/defaultProps.tsx",
+          "line": 101,
+          "package": "@altroo/mui-native-system"
+        }
+      ]
     },
     {
       "name": "ThemedProps",
@@ -17648,7 +17655,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemedProps",
+          "file": "src/defaultProps.tsx",
+          "line": 101,
+          "package": "@altroo/mui-native-system"
+        }
+      ]
     },
     {
       "name": "ThemeWithProps",
@@ -17666,13 +17680,20 @@
           "line": 2,
           "kind": "property",
           "type": "any",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemeWithProps",
+          "file": "src/defaultProps.tsx",
+          "line": 98,
+          "package": "@altroo/mui-native-system"
+        }
+      ]
     },
     {
       "name": "ThemedProps",
@@ -17687,7 +17708,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemedProps",
+          "file": "src/defaultProps.tsx",
+          "line": 101,
+          "package": "@altroo/mui-native-system"
+        }
+      ]
     },
     {
       "name": "ThemeWithProps",
@@ -17705,13 +17733,20 @@
           "line": 2,
           "kind": "property",
           "type": "any",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemeWithProps",
+          "file": "src/defaultProps.tsx",
+          "line": 98,
+          "package": "@altroo/mui-native-system"
+        }
+      ]
     },
     {
       "name": "ThemedProps",
@@ -17726,7 +17761,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ThemedProps",
+          "file": "src/defaultProps.tsx",
+          "line": 101,
+          "package": "@altroo/mui-native-system"
+        }
+      ]
     }
   ],
   "nativeContracts": [
@@ -18092,9 +18134,31 @@
       "package": "@altroo/mui-native-system"
     },
     {
-      "name": "ThemedDefaults",
+      "name": "ThemeWithProps",
       "file": "src/defaultProps.tsx",
-      "line": 97,
+      "line": 98,
+      "kind": "type",
+      "members": [
+        {
+          "name": "components",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "components?: any;",
+          "line": 99,
+          "kind": "property",
+          "type": "any"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "ThemedProps",
+      "file": "src/defaultProps.tsx",
+      "line": 101,
       "kind": "type",
       "members": [],
       "references": [
@@ -18110,7 +18174,7 @@
     {
       "name": "DefaultPropsProviderProps",
       "file": "src/defaultProps.tsx",
-      "line": 122,
+      "line": 126,
       "kind": "type",
       "members": [],
       "references": [
@@ -18123,7 +18187,7 @@
     {
       "name": "DefaultPropsProviderComponent",
       "file": "src/defaultProps.tsx",
-      "line": 126,
+      "line": 130,
       "kind": "type",
       "members": [
         {
@@ -18133,7 +18197,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: DefaultPropsProviderProps): React.JSX.Element;",
-          "line": 127,
+          "line": 131,
           "kind": "signature",
           "type": "(props: DefaultPropsProviderProps): React.JSX.Element;"
         },
@@ -18144,7 +18208,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "propTypes?: any;",
-          "line": 129,
+          "line": 133,
           "kind": "property",
           "type": "any"
         }
@@ -18159,7 +18223,7 @@
     {
       "name": "SlotProps",
       "file": "src/defaultProps.tsx",
-      "line": 147,
+      "line": 151,
       "kind": "type",
       "members": [],
       "references": [
@@ -19127,7 +19191,7 @@
     {
       "name": "ThemeProviderProps",
       "file": "src/provider.tsx",
-      "line": 49,
+      "line": 55,
       "kind": "type",
       "members": [
         {
@@ -19137,7 +19201,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme: Partial<T> | ((outer: T) => T);",
-          "line": 50,
+          "line": 56,
           "kind": "property",
           "type": "Partial<T> | ((outer: T) => T)"
         },
@@ -19148,7 +19212,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "themeId?: string;",
-          "line": 51,
+          "line": 57,
           "kind": "property",
           "type": "string"
         },
@@ -19159,7 +19223,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 52,
+          "line": 58,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -19176,7 +19240,7 @@
     {
       "name": "NativeStyledRef",
       "file": "src/provider.tsx",
-      "line": 164,
+      "line": 170,
       "kind": "type",
       "members": [],
       "references": [
@@ -19190,7 +19254,7 @@
     {
       "name": "NativeStyledLayer",
       "file": "src/provider.tsx",
-      "line": 169,
+      "line": 175,
       "kind": "type",
       "members": [],
       "references": [

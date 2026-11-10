@@ -16,6 +16,9 @@
         "RtlProvider/index.js": "791d4454366a950cff318fe2b97006e51431441d44d6696aa0aa8333a456f878",
         "RtlProvider/index.d.ts": "f5a100b8afd68a48691eb40d0cb7ee805612e40b84ca9c2b5acd07554b4210a5",
         "useThemeProps/useThemeProps.js": "7ab3656727158f84371c3e8b9f72e4980a63ae113b92d8c0f95234355f8a6c17",
+        "useThemeProps/useThemeProps.d.ts": "b87a5b1b4ef40860bb48923e0abed7183883a6b4bf16ee7d1ddd745e1c52737b",
+        "useThemeProps/index.d.ts": "b8d2dd99cfb475eb238ebfaec6b685617a20fc85d60c888ad46c10b5283bf50a",
+        "useThemeProps/getThemeProps.js": "a766955dd15117cbe7bfb26cf43d793b3f57694563507c23ffed10d1cd4b60d6",
         "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7",
         "createBox/createBox.js": "8cee82044816a0bdb217b3fdaf47354ebd42fb4c6987167c87ceb7e0e6c39e27"
       }
@@ -33,6 +36,7 @@
         "styles/useTheme.js": "456c09c3aec1f29d479442b5deb648d8087c33cc8a1b88d9ffc03f9051482818",
         "styles/useThemeProps.js": "153aededf39170da2b446a56fb5a050ca43b5f899d560dba271bb48fefea2a48",
         "styles/useThemeProps.d.ts": "9c8bc1fc30b6495e83b6ca136037ddffcb911c1fbe0adfeedc41a734e99452b0",
+        "styles/defaultTheme.js": "45889e8276a1bc1c2792da1683263633df7b8ddc9a31a383c8384b37ca49d5b2",
         "styles/identifier.js": "e75aca64cb87bbbb2c752b14873c81211d8b14e97621014ab05043a19ded0bf0",
         "styles/styled.js": "c21478da9485c0aaedea226ac26ea72bc2968c7594113f2b939a58a9d4f2c9c0",
         "Box/Box.js": "306d78c5254c68f321b72999149d084a76903e4b45797999cc9f71eea80b79ce"
