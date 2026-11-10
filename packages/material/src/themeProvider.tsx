@@ -47,7 +47,7 @@ export function useTheme<T = Theme>(): T {
   return (raw[THEME_ID] || raw) as T;
 }
 export interface ThemeWithProps {
-  components?: Components;
+  components?: Components | undefined;
 }
 export type ThemedProps<ThemeInput, Name extends PropertyKey> = ThemeInput extends {
   components: Record<Name, { defaultProps: infer Props }>;
@@ -62,8 +62,8 @@ export function useThemeProps<ThemeInput extends ThemeWithProps, Props, Name ext
   name: Name;
 }): Props & ThemedProps<ThemeInput, Name> {
   return useSystemThemeProps({
-    props: props as object,
-    name: name as string,
+    props,
+    name,
     themeId: THEME_ID,
     defaultTheme: materialDefaultTheme,
   }) as Props & ThemedProps<ThemeInput, Name>;

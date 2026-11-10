@@ -4,7 +4,13 @@ import { useWindowDimensions, View, Text, type StyleProp } from 'react-native';
 import { createTheme, type Theme } from './theme';
 import { diagnostic } from './diagnostics';
 import RtlProvider from './RtlProvider';
-import { DefaultPropsProvider, getThemeProps, useDefaultProps } from './defaultProps';
+import {
+  DefaultPropsProvider,
+  getThemeProps,
+  useDefaultProps,
+  type ThemeWithProps,
+  type ThemedProps,
+} from './defaultProps';
 import {
   separateNativeRootProps,
   restoreNativeRootStyle,
@@ -87,20 +93,20 @@ export function useTheme<T = Theme>(fallback: T = systemDefaultTheme as T): T {
 function scopedTheme(theme: Theme, themeId?: string): Theme {
   return (themeId && (theme as unknown as Record<string, Theme>)[themeId]) || theme;
 }
-export function useThemeProps<P extends object>({
+export function useThemeProps<ThemeInput extends ThemeWithProps, Props, Name extends PropertyKey>({
   props,
   name,
   defaultTheme: fallback,
   themeId,
 }: {
-  props: P;
-  name: string;
-  defaultTheme?: Theme;
-  themeId?: string;
-}): P {
+  props: Props;
+  name: Name;
+  defaultTheme?: ThemeInput | undefined;
+  themeId?: string | undefined;
+}): Props & ThemedProps<ThemeInput, Name> {
   const theme = useTheme(fallback);
-  const scoped = themeId ? (theme as unknown as Record<string, unknown>)[themeId] || theme : theme;
-  return getThemeProps({ theme: scoped as Theme, props, name });
+  const scoped = themeId ? (theme as Record<string, unknown>)[themeId] || theme : theme;
+  return getThemeProps({ theme: scoped as ThemeInput, props, name });
 }
 
 export function useSx(

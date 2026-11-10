@@ -11,6 +11,9 @@ const system = await loadReference('@mui/system', [
   'RtlProvider/index.js',
   'RtlProvider/index.d.ts',
   'useThemeProps/useThemeProps.js',
+  'useThemeProps/useThemeProps.d.ts',
+  'useThemeProps/index.d.ts',
+  'useThemeProps/getThemeProps.js',
   'createStyled/createStyled.js',
   'createBox/createBox.js',
 ]);
@@ -21,6 +24,7 @@ const material = await loadReference('@mui/material', [
   'styles/useTheme.js',
   'styles/useThemeProps.js',
   'styles/useThemeProps.d.ts',
+  'styles/defaultTheme.js',
   'styles/identifier.js',
   'styles/styled.js',
   'Box/Box.js',

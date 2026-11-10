@@ -213,13 +213,15 @@ Expand a family to see individual entries. Percentages link to the implementatio
 | 🔧    | **styled / defaults / slots**              |                                [50%](docs/default-props.md) | Native styled/default/slot composition subsets have contract/consumer coverage; complete upstream semantics remain.                                                                               |
 | 🗺️    | **CSS variables / color-scheme providers** | [0%](docs/compatibility.md#unsupported-or-not-yet-verified) | Full CSS-variable and color-scheme provider APIs are not implemented.                                                                                                                             |
 
-The following existing theme-reading helpers have completed their finite native context contracts. They are separate from the partial ThemeProvider, theme construction and styling contracts above. These changes are unpublished development after `0.0.7-prealpha.0`.
+The following existing theme context helpers have completed their finite native contracts. They are separate from the partial ThemeProvider, theme construction and styling contracts above. These changes are unpublished development after `0.0.7-prealpha.0`.
 
 | Status | Existing API                      |                      Progress | Verified scope                                                                                                                     |
 | ------ | --------------------------------- | ----------------------------: | ---------------------------------------------------------------------------------------------------------------------------------- |
 | ✅     | **Material useTheme**             | [100%](docs/theme-reading.md) | Scoped context, distinct stable fallback, development debug value, canonical imports and installed generic/augmentation contracts. |
 | ✅     | **System useTheme**               | [100%](docs/theme-reading.md) | Nonempty context selection, stable default and explicit fallback identity, canonical imports and installed declarations.           |
 | ✅     | **System useThemeWithoutDefault** | [100%](docs/theme-reading.md) | Nullable default, explicit fallback identity, context updates, canonical imports and installed declarations.                       |
+| ✅     | **Material useThemeProps**        |   [100%](docs/theme-props.md) | Complete finite scoped default lookup, generic/helper types, canonical imports and strict original/native consumers.               |
+| ✅     | **System useThemeProps**          |   [100%](docs/theme-props.md) | Complete finite context/fallback lookup, inferred defaults, all name-key types and strict installed declarations.                  |
 
 </details>
 
