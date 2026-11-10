@@ -41,7 +41,7 @@ public final class LayoutRootScenario {
   private static final String PACKAGE = "dev.altroo.muinative.catalog";
   private static final String[] GROUPS = {"inherited", "own-false", "custom", "styled"};
   private static final String[] AVATARS = {"native", "custom", "portal"};
-  private enum Scenario { LAYOUT_ROOTS, TEXT_ALIGNMENT, FORM_GROUP_EVENTS }
+  private enum Scenario { LAYOUT_ROOTS, TEXT_ALIGNMENT, FORM_GROUP_EVENTS, FORM_GROUP_KEYBOARD }
   private final Instrumentation driver;
   private final Scenario scenario;
   private final boolean textAlignment;
@@ -60,10 +60,11 @@ public final class LayoutRootScenario {
   public static void run(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.LAYOUT_ROOTS, fontProfile).run(); }
   public static void runTextAlignment(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.TEXT_ALIGNMENT, null).run(); }
   public static void runFormGroupEvents(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_EVENTS, null).run(); }
+  public static void runFormGroupKeyboard(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_KEYBOARD, null).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
-      String label = scenario == Scenario.FORM_GROUP_EVENTS ? "form-group-events" : textAlignment ? "text-alignment" : "layout-roots";
+      String label = scenario == Scenario.FORM_GROUP_KEYBOARD ? "form-group-keyboard" : scenario == Scenario.FORM_GROUP_EVENTS ? "form-group-events" : textAlignment ? "text-alignment" : "layout-roots";
       directory = new File(driver.getTargetContext().getCacheDir(), "mui-" + label + "-" + System.currentTimeMillis());
       require(directory.mkdir(), "Preserve existing native evidence");
       report.put("schemaVersion", 1).put("scenario", label + "-v1")
@@ -87,8 +88,23 @@ public final class LayoutRootScenario {
 
       tagId = driver.getTargetContext().getResources().getIdentifier("react_test_id", "id", PACKAGE);
       require(tagId != 0, "Native test identifier resource is missing");
-      tap("catalog-tab-Wrappers");
-      if (scenario == Scenario.FORM_GROUP_EVENTS) {
+      // Initial JS layout can still move the horizontal catalog tabs. Only
+      // navigation is retried, and the destination must acknowledge the touch.
+      int navigationAttempts = 0;
+      boolean wrappersReady = false;
+      do {
+        tap("catalog-tab-Wrappers"); navigationAttempts++;
+        long deadline = SystemClock.uptimeMillis() + 2500;
+        do {
+          wrappersReady = ui(() -> find("root-layout-navigation") != null && view("root-layout-navigation").isShown());
+          if (!wrappersReady) SystemClock.sleep(25);
+        } while (!wrappersReady && SystemClock.uptimeMillis() < deadline);
+      } while (!wrappersReady && navigationAttempts < 2);
+      report.put("navigationAttempts", navigationAttempts);
+      require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
+      if (scenario == Scenario.FORM_GROUP_KEYBOARD) {
+        formGroupKeyboard(report);
+      } else if (scenario == Scenario.FORM_GROUP_EVENTS) {
         formGroupEvents(report);
       } else if (textAlignment) {
         revealComplete("root-layout-details"); tap("root-layout-details");
@@ -134,10 +150,88 @@ public final class LayoutRootScenario {
     } finally {
       try {
         report.put("status", passed ? "passed" : "failed").put("stages", stages).put("states", states).put("screenshots", pictures);
-        result.putString(scenario == Scenario.FORM_GROUP_EVENTS ? "formGroupEventsReport" : textAlignment ? "textAlignmentReport" : "layoutRootReport", report.toString());
+        result.putString(scenario == Scenario.FORM_GROUP_KEYBOARD ? "formGroupKeyboardReport" : scenario == Scenario.FORM_GROUP_EVENTS ? "formGroupEventsReport" : textAlignment ? "textAlignmentReport" : "layoutRootReport", report.toString());
       } catch (Exception error) { result.putString("Error", error.toString()); passed = false; }
       driver.finish(passed ? Activity.RESULT_OK : Activity.RESULT_CANCELED, result);
     }
+  }
+
+  /** A focused native button proves input delivery before parent propagation is assessed. */
+  private void formGroupKeyboard(JSONObject report) throws Exception {
+    require(Math.abs(activity.getResources().getConfiguration().fontScale - 1) < .01, "Keyboard proof requires baseline OS text scale");
+    report.put("keyEventsEnabled", com.facebook.react.internal.featureflags.ReactNativeFeatureFlags.enableKeyEvents());
+    tap("root-layout-group-keyboard");
+    await(() -> ui(() -> find("form-group-keyboard-receipt") != null && metadata("form-group-keyboard-receipt").optBoolean("ready")), "Keyboard controls must lay out");
+    JSONArray gaps = new JSONArray();
+    for (String policy : new String[]{"observe", "prevent", "stop"}) {
+      if (!policy.equals("observe")) tap("form-group-keyboard-policy");
+      final String expectedPolicy = policy;
+      await(() -> ui(() -> metadata("form-group-keyboard-receipt").optString("policy").equals(expectedPolicy)), "Keyboard policy must commit");
+      for (String key : new String[]{"Enter", " ", "a"}) for (String kind : new String[]{"native", "host", "stock", "custom", "styled"}) {
+        tap("form-group-keyboard-reset");
+        await(() -> ui(() -> metadata("form-group-keyboard-receipt").optInt("total") == 0), "Keyboard log must clear");
+        String id = "form-group-keyboard-" + kind + "-button";
+        revealComplete(id);
+        View button = ui(() -> view(id));
+        int target = ui(button::getId);
+        require(ui(button::requestFocus) && ui(button::isFocused), "Actual child button must own keyboard focus");
+        driver.sendKeyDownUpSync(key.equals("Enter") ? KeyEvent.KEYCODE_ENTER : key.equals(" ") ? KeyEvent.KEYCODE_SPACE : KeyEvent.KEYCODE_A);
+        await(() -> ui(() -> {
+          JSONArray entries = metadata("form-group-keyboard-receipt").getJSONArray("entries");
+          for (int i = 0; i < entries.length(); i++) if (entries.getJSONObject(i).getString("phase").startsWith("up")) return true;
+          return false;
+        }), "Real key-up must reach a root or child callback");
+        JSONObject receipt = settledKeyboardReceipt();
+        JSONArray entries = receipt.getJSONArray("entries");
+        JSONArray parent = new JSONArray(), child = new JSONArray();
+        for (int i = 0; i < entries.length(); i++) {
+          JSONObject event = entries.getJSONObject(i);
+          require(event.getString("kind").equals(kind) && event.getString("key").equals(key), "Only the focused child may receive this key");
+          if (event.getString("scope").equals("root")) parent.put(event); else child.put(event);
+        }
+        int rootTag = ui(() -> view("form-group-keyboard-" + kind).getId());
+        int clicks = receipt.getJSONObject("clicks").optInt(kind);
+        boolean baseline = kind.equals("native");
+        boolean stopped = policy.equals("stop") && !baseline && !key.equals("a");
+        boolean canceled = !policy.equals("observe") && !baseline && !key.equals("a");
+        boolean valid = parent.length() == (stopped ? 3 : 4) && child.length() == (stopped ? 1 : 2) && clicks == (canceled || key.equals("a") ? 0 : 1);
+        if (!baseline && !valid) gaps.put(policy + "/" + (key.equals(" ") ? "Space" : key) + "/" + kind + ": parent=" + parent.length() + " child=" + child.length() + " clicks=" + clicks);
+        // Root tags come from actual native Views, independently of JS's ref receipt.
+        require(receipt.getJSONObject("nodes").getInt(kind) == rootTag && receipt.getJSONObject("nodes").getInt(kind + "-button") == target, "Actual keyboard root/child ref tags must agree");
+        for (int i = 0; i < parent.length(); i++) {
+          JSONObject event = parent.getJSONObject(i);
+          require(event.getInt("target") == target && event.getInt("currentTarget") == rootTag, "Parent callback must retain actual child target and root currentTarget");
+        }
+        require(ui(button::isFocused), "Key dispatch must preserve native child focus");
+        String name = policy + "-" + kind + "-" + (key.equals(" ") ? "Space" : key);
+        states.put(new JSONObject().put("name", name).put("policy", policy).put("kind", kind).put("key", key)
+          .put("rootId", rootTag).put("buttonId", target).put("rootClass", ui(() -> view("form-group-keyboard-" + kind).getClass().getName()))
+          .put("parent", parent).put("child", child).put("clicks", clicks).put("metadata", receipt));
+        stage(name);
+      }
+      capture("form-group-keyboard-" + policy + ".png");
+    }
+    report.put("gaps", gaps);
+    require(gaps.length() == 0, "Missing native parent key contract: " + gaps.toString());
+  }
+  private JSONObject settledKeyboardReceipt() throws Exception {
+    final String[] previous = {null}; final long[] stable = {0}; final JSONObject[] result = {null};
+    await(() -> ui(() -> {
+      JSONObject value = metadata("form-group-keyboard-receipt");
+      require(value.getBoolean("ready") && value.getInt("total") == value.getJSONArray("entries").length(), "Keyboard history must remain complete");
+      java.util.HashSet<Integer> tags = new java.util.HashSet<>();
+      for (String kind : new String[]{"native", "host", "stock", "custom", "styled"}) for (String suffix : new String[]{"", "-button"}) {
+        String id = kind + suffix; JSONObject ref = value.getJSONObject("refs").getJSONObject(id);
+        require(ref.getInt("attached") == 1 && ref.getInt("cleaned") == 0, "Root and child refs must survive every policy/reset");
+        int tag = view("form-group-keyboard-" + id).getId();
+        require(tag > 0 && tags.add(tag) && value.getJSONObject("nodes").getInt(id) == tag, "Every keyboard control must bind a distinct actual native host");
+      }
+      String serialized = value.toString();
+      if (!serialized.equals(previous[0])) { previous[0] = serialized; stable[0] = SystemClock.uptimeMillis(); return false; }
+      if (SystemClock.uptimeMillis() - stable[0] < 100) return false;
+      result[0] = value; return true;
+    }), "Keyboard callback receipt must settle");
+    return result[0];
   }
 
   /** Native focus and custom actions have a plain View positive control before MUI roots. */
@@ -685,7 +779,7 @@ public final class LayoutRootScenario {
     finally { bitmap.recycle(); }
     pictures.put(name);
   }
-  private void stage(String name) { stages.put(name); Bundle update = new Bundle(); update.putString(scenario == Scenario.FORM_GROUP_EVENTS ? "formGroupEventsStage" : textAlignment ? "textAlignmentStage" : "layoutRootStage", name); driver.sendStatus(1, update); }
+  private void stage(String name) { stages.put(name); Bundle update = new Bundle(); update.putString(scenario == Scenario.FORM_GROUP_KEYBOARD ? "formGroupKeyboardStage" : scenario == Scenario.FORM_GROUP_EVENTS ? "formGroupEventsStage" : textAlignment ? "textAlignmentStage" : "layoutRootStage", name); driver.sendStatus(1, update); }
   private JSONObject settled(java.util.concurrent.Callable<JSONObject> sample, String name) throws Exception {
     long deadline = SystemClock.uptimeMillis() + 20000; Throwable last = null;
     do { textDiagnostic = null; try { return ui(sample); } catch (AssertionError error) { last = error; } SystemClock.sleep(16); } while (SystemClock.uptimeMillis() < deadline);

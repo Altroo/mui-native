@@ -350,3 +350,16 @@ The raw View positive control runs before stock, custom and styled FormGroup roo
 The native runtime's actual key-event feature flag is recorded independently. An enabled flag requires both phases of key-down and key-up with the real key/modifier payload. A disabled flag requires the acknowledged absence of those callbacks and leaves keyboard dispatch unverified. It does not permit the report to claim key-event coverage. Twenty focus/blur/custom-action callbacks passed on API 37 with the default disabled flag at OS text scale 1.0. Source/model tests cover both collector branches; they do not prove the enabled native configuration.
 
 The catalog scene uses `role="group"` and exposes an Inspect control action. This callback evidence does not certify a distinct TalkBack group announcement, manual screen-reader navigation, iOS dispatch or optimized performance. Failed runs retain their report and screenshot before the selected catalog is reopened.
+
+## FormGroup child keyboard
+
+Build a native catalog containing the current native-host code and run:
+
+```sh
+node scripts/native-catalog/android-popper.mjs prepare --project apps/native-catalog/android
+node scripts/native-catalog/android-popper.mjs run --serial emulator-5554 --scenario form-group-keyboard --output .cache/native-form-group-keyboard
+```
+
+Choose an unused output directory and actual OS text scale 1.0. The driver opens Wrappers, requires destination acknowledgement, and selects Group keys. It focuses real native child buttons and injects Enter/Space/A for each observe/prevent/stop policy. Raw View is a framework baseline; the direct interaction host is a positive control. Stock, custom and styled FormGroup roots must preserve capture/child/bubble order, original payload identity, actual target/currentTarget tags, capture cancellation, single activation and all ten refs across resets. Successful native status alone is insufficient: the collector also validates the complete receipt. Failed runs retain safe reports and screenshots.
+
+The report records the actual native `enableKeyEvents` capability. A default-disabled run does not prove the enabled configuration, and a model fixture does not replace actual native interaction. This scenario verifies owned Button descendants. Root-self key delivery with framework dispatch disabled, managed TextInput/composite duplication, iOS interactions and physical accessibility/performance remain separate checks.
