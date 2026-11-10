@@ -17,6 +17,18 @@ import type {
 } from './theme';
 export type ResponsiveStyleValue<T> = T | readonly (T | null)[] | { [key: string]: T | null };
 import { diagnostic } from './diagnostics';
+import {
+  nativeTextIntentStyleServices,
+  nativeRelativeLength,
+  numberPattern,
+} from './nativeTextConditions';
+const { parseSelectors, matchesMedia, allowedCSS: allowed } = nativeTextIntentStyleServices;
+import {
+  retainNativeTextWinner,
+  retainNativeTextStyleInputs,
+  simpleNativeTextInput,
+} from './nativeTextInputProvenance';
+import { nativeTextEmissionKeys } from './nativeTextProvenance';
 import { cssBorder, finishCssBorderStyle } from './borders';
 import {
   normalizeTextStyle,
@@ -105,11 +117,7 @@ const aliases: Record<string, string[]> = {
   py: ['paddingTop', 'paddingBottom'],
   bgcolor: ['backgroundColor'],
 };
-const allowed = new Set(
-  'alignContent alignItems alignSelf aspectRatio backfaceVisibility backgroundColor borderBottomColor borderBottomLeftRadius borderBottomRightRadius borderBottomWidth borderColor borderLeftColor borderLeftWidth borderRadius borderRightColor borderRightWidth borderStyle borderTopColor borderTopLeftRadius borderTopRightRadius borderTopWidth borderWidth bottom color columnGap direction display elevation flex flexBasis flexDirection flexGrow flexShrink flexWrap fontFamily fontSize fontStyle fontWeight gap height justifyContent left letterSpacing lineHeight margin marginTop marginRight marginBottom marginLeft marginStart marginEnd maxHeight maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineStyle outlineWidth overflow padding paddingTop paddingRight paddingBottom paddingLeft paddingStart paddingEnd position right rowGap shadowColor shadowOffset shadowOpacity shadowRadius start end textAlign textDecorationColor textDecorationLine textDecorationStyle textTransform top transform width zIndex'.split(
-    ' ',
-  ),
-);
+
 const svgProperties = new Set(
   'fill fillOpacity fillRule stroke strokeOpacity strokeWidth strokeDasharray strokeDashoffset strokeLinecap strokeLinejoin strokeMiterlimit clipRule clipPath mask vectorEffect'.split(
     ' ',
@@ -128,16 +136,13 @@ function path(object: unknown, key: string): unknown {
       object,
     );
 }
-const numberPattern = '[+-]?(?:\\d+\\.?\\d*|\\.\\d+)(?:e[+-]?\\d+)?';
+
 const literalLength = new RegExp(`^(${numberPattern})(px|rem)?$`, 'i');
 const multipliedLength = new RegExp(
   `^calc\\(\\s*(${numberPattern})\\s*\\*\\s*(${numberPattern})(px|rem|%)\\s*\\)$`,
   'i',
 );
-const widthCondition = new RegExp(
-  `^\\((min|max)-width\\s*:\\s*(${numberPattern})(px|em|rem)\\)$`,
-  'i',
-);
+
 function length(value: unknown, theme: Theme): unknown {
   if (typeof value !== 'string') return value;
   const literal = value.match(literalLength);
@@ -158,27 +163,7 @@ function length(value: unknown, theme: Theme): unknown {
   }
   return value;
 }
-function matchesMedia(query: string, width: number): boolean {
-  const prefix = query.match(/^@media\s+(not all and\s+)?(.+)$/);
-  const parts = prefix?.[2].split(/\s+and\s+/);
-  if (!parts || !parts.length) {
-    diagnostic('media-query', `Unsupported native media query: ${query}`);
-    return false;
-  }
-  let matches = true;
-  for (const part of parts) {
-    const condition = part.trim().match(widthCondition);
-    if (!condition) {
-      diagnostic('media-query', `Unsupported native media query: ${query}`);
-      return false;
-    }
-    // CSS media em/rem units use the initial font size, not an element's authored font size.
-    const boundary = Number(condition[2]) * (condition[3].toLowerCase() === 'px' ? 1 : 16);
-    matches =
-      matches && (condition[1].toLowerCase() === 'min' ? width >= boundary : width <= boundary);
-  }
-  return prefix?.[1] ? !matches : matches;
-}
+
 const edges = ['Top', 'Right', 'Bottom', 'Left'] as const;
 function setStyle(target: Record<string, unknown>, key: string, value: unknown) {
   // Replacing a transformed CSS key retains its insertion order, as upstream does.
@@ -314,7 +299,7 @@ function prepareStyle(
       const em =
         typeof next === 'string' ? next.match(new RegExp(`^(${numberPattern})em$`, 'i')) : null;
       if (em) {
-        setStyle(target, nativeKey, { emLength: Number(em[1]) });
+        setStyle(target, nativeKey, nativeRelativeLength(Number(em[1])));
         continue;
       }
       next = length(next, theme);
@@ -456,36 +441,7 @@ function bindLastChild<T extends SelectorContext>(context: T, read: LastChildRea
   });
   return context;
 }
-type SelectorAtom = { classes: string[]; tag?: string };
-function parseSelectors(key: string) {
-  const selectors = key.split(',').map((selector) => selector.trim());
-  const parsed = selectors.map((selector) => {
-    const [head, ...parts] = selector.split(/\s+/);
-    const match = head.match(/^&((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)*)(:last-child)?$/);
-    if (!match) return undefined;
-    const atoms: SelectorAtom[] = [];
-    for (const part of parts) {
-      const descendant = part.match(/^(svg)?((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)*)$/);
-      if (!descendant || (!descendant[1] && !descendant[2])) return undefined;
-      atoms.push({
-        classes: descendant[2].split('.').slice(1),
-        ...(descendant[1] ? { tag: descendant[1] } : {}),
-      });
-    }
-    return {
-      self: match[1].split('.').slice(1),
-      lastChild: Boolean(match[2]),
-      atoms,
-    };
-  });
-  return parsed.every(Boolean)
-    ? (parsed as {
-        self: string[];
-        lastChild: boolean;
-        atoms: SelectorAtom[];
-      }[])
-    : undefined;
-}
+
 function collectRules(nodes: readonly PreparedNode[], context: SelectorContext): StyleRule[] {
   // Physical path embeddings discover matches in a different order from CSS.
   // Keep each prepared occurrence once, with its greatest matched specificity,
@@ -643,7 +599,12 @@ function resolveRules(input: SxProps | undefined, theme: Theme, context: StyleCo
 // Warning history belongs only to our retained prepared declaration records,
 // never a global message or caller style. New root-owned sheets remain untracked.
 const preparedTextDiagnostics = new WeakMap<object, Set<string>>();
-function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {}): NativeStyle {
+function finishRules(
+  rules: StyleRule[],
+  theme: Theme,
+  context: StyleContext = {},
+  retainTextInputs = false,
+): NativeStyle {
   const result: Record<string, unknown> = {};
   const textOwners: Record<string, Readonly<Record<string, unknown>>> = {};
   // Stable sorting preserves upstream rule order within equal specificity.
@@ -802,7 +763,9 @@ function finishRules(rules: StyleRule[], theme: Theme, context: StyleContext = {
       }
     }
   }
-  return finishCssBorderStyle(normalized as NativeStyle);
+  const finished = finishCssBorderStyle(normalized as NativeStyle);
+  if (retainTextInputs) retainNativeTextWinner(finished, result, nativeTextEmissionKeys);
+  return finished;
 }
 export function resolveSx(
   input: SxProps | undefined,
@@ -1069,12 +1032,19 @@ export function createNativeStyledStyle(
     Object.freeze(sheet.context);
     Object.freeze(sheet);
   }
-  const computed = finishRules(collectSheets(sheets), theme, context);
+  const computed = finishRules(collectSheets(sheets), theme, context, true);
   const native = StyleSheet.flatten(authored) ?? undefined;
-  const finalStyle = [
+  const adjusted = applyNativeTextMetrics(native, computed, nativeStyleTextMetrics(authored));
+  const finalStyle = [computed, adjusted];
+  // Composite/adjusted inputs need their own pre-adjusted source binder.
+  retainNativeTextStyleInputs(
+    finalStyle,
     computed,
-    applyNativeTextMetrics(native, computed, nativeStyleTextMetrics(authored)),
-  ];
+    adjusted,
+    native === adjusted && simpleNativeTextInput(authored),
+    sheets,
+    nativeTextEmissionKeys,
+  );
   nativeStyledStyles.set(
     finalStyle,
     Object.freeze({

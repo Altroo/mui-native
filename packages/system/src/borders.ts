@@ -3,6 +3,7 @@
  * Native parsing/paint: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 import { StyleSheet, processColor, type StyleProp } from 'react-native';
 import type { NativeStyle } from './sx';
+import { beginNativeTextInputCapture } from './nativeTextInputProvenance';
 
 // Composition results are library-owned and mutable; authored RN styles stay readonly.
 type OwnedNativeStyle = { -readonly [Property in keyof NativeStyle]: NativeStyle[Property] };
@@ -71,6 +72,7 @@ export function copyNativeBorderStyle<Style extends object>(source: object, targ
 }
 /** @internal Restore declared widths while composing CSS and genuine native layers. */
 export function nativeStyleBorderDeclarations(style: StyleProp<NativeStyle>): OwnedNativeStyle {
+  const inputCapture = beginNativeTextInputCapture(style);
   const result: Record<string, unknown> = {};
   let none = false;
   const visit = (entry: StyleProp<NativeStyle>) => {
@@ -81,7 +83,7 @@ export function nativeStyleBorderDeclarations(style: StyleProp<NativeStyle>): Ow
     const flat = StyleSheet.flatten(entry);
     if (!flat) return;
     const declaration = cssNone.get(flat);
-    const source: Record<string, unknown> = { ...flat };
+    const source: Record<string, unknown> = inputCapture ? inputCapture.copy(flat) : { ...flat };
     if (declaration?.widths) {
       for (const key of Object.keys(source)) if (widthKey.test(key)) delete source[key];
       Object.assign(source, declaration.widths);
@@ -92,6 +94,7 @@ export function nativeStyleBorderDeclarations(style: StyleProp<NativeStyle>): Ow
   };
   visit(style);
   if (none) cssNone.set(result, {});
+  inputCapture?.finish(result);
   return result as OwnedNativeStyle;
 }
 /** @internal CSS none affects used paint, after every declaration/inline layer. */
