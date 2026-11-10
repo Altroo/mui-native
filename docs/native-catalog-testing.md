@@ -406,8 +406,22 @@ On API 37 at OS text scale 1.0, both the default-disabled and enabled configurat
 
 ## FormGroup native accessibility tree
 
+### iOS
+
 Use the generated iOS development project and add [FormGroupAccessibilityCatalogUITests.swift](../tests/native/ios/FormGroupAccessibilityCatalogUITests.swift) to a UI Testing Bundle targeting `dev.altroo.muinative.catalog`. Run it on an existing iOS simulator with its normal OS text size and the current development bundle.
 
 The test records selected XCTest observations for a plain React Native View and TextInput in Group editors for context. It then opens Wrappers / Group and checks stock, `error={false}`, custom and styled roots with `accessible={false}`. Each group must expose a unique identified button with its own role and label, plus a separately identified static text entry. Both centers must be within the actual group bounds. Nesting is reported separately because XCTest can flatten a container and the baseline has a different control role. The test reveals each leaf before inspecting it because clipped elements can have empty frames.
 
 A real tap increments each child counter. The test then changes the row layout, inherited error, theme, RTL direction and authored font size, checks the identified elements for all four groups, and repeats after restoring the original layout state. Counters and attached root refs must survive both transitions. The retained result includes three stage receipts with selected XCTest observations. This checks native tree exposure and touch activation; VoiceOver navigation order, spoken announcements and rotor behavior require separate testing.
+
+### Android
+
+[Prepare and build both APKs](#build-the-catalog-and-test-apks), then [install both and forward Metro](#select-one-device-and-run) on the selected emulator. At normal OS text size, replace the generic run command with the following, using the same serial and an unused output directory:
+
+```sh
+node scripts/native-catalog/android-popper.mjs run --serial "$MUI_QA_DEVICE" --scenario form-group-accessibility --output .cache/native-form-group-accessibility
+```
+
+The driver waits for actual native layout and attached ref acknowledgement before testing the three stages. For all four roots, it locates the separately identified Button and TextView in the active UiAutomation tree, reads native roles and labels, checks that the button exposes an enabled click action, and verifies both node centers inside the measured group. Real touches increment all four counters. This checks the advertised click action and actual touch behavior; it does not invoke `ACTION_CLICK`.
+
+The strict collector requires three stages, twelve group observations, unchanged actual root tags and live refs, the expected node roles and labels, and three screenshots. The scenario passed on API 37 at actual OS text scale 1.0. Android screen-reader traversal and spoken announcements remain separate evidence.
