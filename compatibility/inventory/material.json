@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "113613ecb94417be0b453344972368416acf2c2dc0d9e3da11796c42aad4ccba",
+  "nativeSourceSha256": "c49f70bf0430cb66ff4bb7122fd4f3a977ff5e283f21050a635033906950b58e",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -85788,7 +85788,7 @@
         {
           "name": "ListItemAvatarClasses",
           "file": "src/listItemAvatarClasses.ts",
-          "line": 4,
+          "line": 6,
           "package": "@altroo/mui-native"
         }
       ]
@@ -85807,7 +85807,7 @@
         {
           "name": "ListItemAvatarClassKey",
           "file": "src/listItemAvatarClasses.ts",
-          "line": 8,
+          "line": 10,
           "package": "@altroo/mui-native"
         }
       ]
@@ -85851,7 +85851,7 @@
         {
           "name": "ListItemAvatarClasses",
           "file": "src/listItemAvatarClasses.ts",
-          "line": 4,
+          "line": 6,
           "package": "@altroo/mui-native"
         }
       ]
@@ -85870,7 +85870,7 @@
         {
           "name": "ListItemAvatarClassKey",
           "file": "src/listItemAvatarClasses.ts",
-          "line": 8,
+          "line": 10,
           "package": "@altroo/mui-native"
         }
       ]
@@ -197147,7 +197147,7 @@
     {
       "name": "ListItemAvatarClasses",
       "file": "src/listItemAvatarClasses.ts",
-      "line": 4,
+      "line": 6,
       "kind": "type",
       "members": [
         {
@@ -197157,7 +197157,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root: string;",
-          "line": 5,
+          "line": 7,
           "kind": "property",
           "type": "string"
         },
@@ -197168,7 +197168,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "alignItemsFlexStart: string;",
-          "line": 6,
+          "line": 8,
           "kind": "property",
           "type": "string"
         }
@@ -197180,7 +197180,7 @@
     {
       "name": "ListItemAvatarClassKey",
       "file": "src/listItemAvatarClasses.ts",
-      "line": 8,
+      "line": 10,
       "kind": "type",
       "members": [],
       "references": [
