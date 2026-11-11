@@ -14,7 +14,15 @@ requireConsumer.resolve('react-native-svg/package.json');
 Module._load = function (request, parent, main) {
   if (request === 'react-native-svg') return svg;
   if (request === 'react-native')
-    return { Platform: { OS: 'ios' }, StyleSheet: { flatten: (value) => value } };
+    return {
+      Platform: { OS: 'ios' },
+      I18nManager: { isRTL: false, doLeftAndRightSwapInRTL: false },
+      StyleSheet: {
+        flatten: function flatten(value) {
+          return Array.isArray(value) ? Object.assign({}, ...value.map(flatten)) : value;
+        },
+      },
+    };
   return load.call(this, request, parent, main);
 };
 try {
@@ -95,6 +103,52 @@ try {
     requireConsumer('@altroo/mui-native/ButtonGroup/buttonGroupClasses').default,
     material.buttonGroupClasses,
   );
+
+  // The installed compiler and internal barrel must share constructor metadata.
+  // This probes module identity and retained CSS, without asserting native layout.
+  const { rebaseNativeComponentStyle } = requireConsumer(
+    '@altroo/mui-native-system/internal/prepared-style',
+  );
+  let groupStyleCalls = 0;
+  const groupTheme = root.createTheme({
+    components: {
+      MuiButtonGroup: {
+        styleOverrides: {
+          root: () => {
+            groupStyleCalls++;
+            return { padding: 7 };
+          },
+        },
+      },
+    },
+  });
+  const groupStyle = root.componentRootStyle(
+    groupTheme,
+    'MuiButtonGroup',
+    {},
+    undefined,
+    undefined,
+    { baseStyle: { minWidth: 10 } },
+  );
+  const constructor = root.componentRootStyle(groupTheme, '', {}, undefined, undefined, {
+    baseStyle: { minWidth: 20 },
+  });
+  const retained = rebaseNativeComponentStyle(groupStyle.prepared, constructor.prepared);
+  const rebound = root.componentStyle(groupTheme, '', {}, undefined, {
+    ancestors: [
+      {
+        theme: groupTheme,
+        name: '',
+        props: {},
+        context: {},
+        sameRoot: true,
+        prepared: retained,
+      },
+    ],
+  });
+  assert.equal(rebound.minWidth, 20);
+  assert.equal(rebound.padding, 7);
+  assert.equal(groupStyleCalls, 1);
 
   const materialDefaults = requireConsumer('@altroo/mui-native/DefaultPropsProvider');
   for (const name of [

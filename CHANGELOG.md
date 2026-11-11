@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Prepare ButtonGroup theme/variant/sx callbacks once at their owning styled root and reuse the sheets during child updates. Preserve source getter order, deferred root arguments, native direction geometry and the established native recursive-slot extension. The shared insertion-history gate in [#127](https://github.com/Altroo/mui-native/issues/127) remains open.
+
 ## 0.0.8-prealpha.0
 
 All nine scoped packages remain pre-alpha and share this version. Use npm `latest` or explicit `0.0.8-prealpha.0` versions; the `prealpha` alias is not consistently aligned across packages. This does not certify full MUI/MUI X compatibility or verified-alpha readiness.

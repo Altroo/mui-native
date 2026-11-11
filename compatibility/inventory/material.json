@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "c176ad35e0c8a7ae1e6fcd8cd829cc1ecf210fff9e9c222eb9bd5ef778122aa4",
+  "nativeSourceSha256": "b5c632d77b6c4ad6a389aa8006a83840487af711962ff9a2420cb32da7df3db7",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -35427,7 +35427,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentRootStyle",
           "kind": "value",
-          "line": 1132
+          "line": 1170
         }
       ]
     },
@@ -35438,7 +35438,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 1028
+          "line": 1066
         }
       ]
     },
@@ -35559,7 +35559,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "createNativeStyledStyle",
           "kind": "value",
-          "line": 1054
+          "line": 1092
         }
       ]
     },
@@ -36593,7 +36593,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeRootStyleResult",
           "kind": "type",
-          "line": 1119
+          "line": 1157
         }
       ]
     },
@@ -36736,7 +36736,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeStyle",
           "kind": "type",
-          "line": 53
+          "line": 54
         }
       ]
     },
@@ -36769,7 +36769,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeStyleTarget",
           "kind": "type",
-          "line": 54
+          "line": 55
         }
       ]
     },
@@ -37242,7 +37242,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "resolveSx",
           "kind": "value",
-          "line": 770
+          "line": 773
         }
       ]
     },
@@ -37429,7 +37429,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "StyleContext",
           "kind": "type",
-          "line": 61
+          "line": 62
         }
       ]
     },
@@ -37462,7 +37462,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "SxObject",
           "kind": "type",
-          "line": 47
+          "line": 48
         }
       ]
     },
@@ -213819,7 +213819,7 @@
     {
       "name": "SxObject",
       "file": "src/sx.ts",
-      "line": 47,
+      "line": 48,
       "kind": "type",
       "members": [
         {
@@ -213829,7 +213829,7 @@
           "computed": false,
           "memberKind": "TSIndexSignature",
           "declaration": "[key: string]: unknown",
-          "line": 47,
+          "line": 48,
           "kind": "signature",
           "type": "[key: string]: unknown"
         }
@@ -213841,7 +213841,7 @@
     {
       "name": "SxProps",
       "file": "src/sx.ts",
-      "line": 48,
+      "line": 49,
       "kind": "type",
       "members": [],
       "references": [
@@ -213855,7 +213855,7 @@
     {
       "name": "NativeStyle",
       "file": "src/sx.ts",
-      "line": 53,
+      "line": 54,
       "kind": "type",
       "members": [],
       "references": [
@@ -213868,7 +213868,7 @@
     {
       "name": "NativeStyleTarget",
       "file": "src/sx.ts",
-      "line": 54,
+      "line": 55,
       "kind": "type",
       "members": [
         {
@@ -213878,7 +213878,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly classes: readonly string[];",
-          "line": 55,
+          "line": 56,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -213889,7 +213889,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly tag?: string | undefined;",
-          "line": 56,
+          "line": 57,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -213900,7 +213900,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly lastChild?: boolean | undefined;",
-          "line": 58,
+          "line": 59,
           "kind": "property",
           "type": "boolean | undefined"
         }
@@ -213912,7 +213912,7 @@
     {
       "name": "StyleContext",
       "file": "src/sx.ts",
-      "line": 61,
+      "line": 62,
       "kind": "type",
       "members": [
         {
@@ -213922,7 +213922,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "baseStyle?: SxProps;",
-          "line": 62,
+          "line": 63,
           "kind": "property",
           "type": "SxProps"
         },
@@ -213933,9 +213933,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideKeys?: readonly string[];",
-          "line": 63,
+          "line": 64,
           "kind": "property",
           "type": "readonly string[]"
+        },
+        {
+          "name": "overrideSelectors",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "overrideSelectors?: Readonly<Record<string, string>>;",
+          "line": 66,
+          "kind": "property",
+          "type": "Readonly<Record<string, string>>"
         },
         {
           "name": "width",
@@ -213944,7 +213955,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "width?: number;",
-          "line": 64,
+          "line": 67,
           "kind": "property",
           "type": "number"
         },
@@ -213955,7 +213966,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "states?: readonly string[];",
-          "line": 65,
+          "line": 68,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -213966,7 +213977,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slot?: string;",
-          "line": 66,
+          "line": 69,
           "kind": "slot",
           "type": "string"
         },
@@ -213977,7 +213988,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootSlot?: string;",
-          "line": 67,
+          "line": 70,
           "kind": "slot",
           "type": "string"
         },
@@ -213988,7 +213999,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "skipVariants?: boolean;",
-          "line": 68,
+          "line": 71,
           "kind": "property",
           "type": "boolean"
         },
@@ -213999,7 +214010,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "svg?: boolean;",
-          "line": 70,
+          "line": 73,
           "kind": "property",
           "type": "boolean"
         },
@@ -214010,7 +214021,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootProps?: Record<string, unknown>;",
-          "line": 72,
+          "line": 75,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -214021,7 +214032,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantClasses?: readonly string[];",
-          "line": 74,
+          "line": 77,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -214032,7 +214043,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantPath?: readonly NativeStyleTarget[];",
-          "line": 76,
+          "line": 79,
           "kind": "property",
           "type": "readonly NativeStyleTarget[]"
         },
@@ -214043,7 +214054,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantOnly?: boolean;",
-          "line": 78,
+          "line": 81,
           "kind": "property",
           "type": "boolean"
         },
@@ -214054,7 +214065,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "protectPhysicalGeometry?: boolean | undefined;",
-          "line": 80,
+          "line": 83,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -214065,7 +214076,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: readonly string[];",
-          "line": 82,
+          "line": 85,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -214076,7 +214087,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "lastChild?: boolean | undefined;",
-          "line": 84,
+          "line": 87,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -214087,7 +214098,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ancestors?: readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n    /** @internal Recollect retained CSS without rerunning owning callbacks. */\n    prepared?: import('./nativeStyledMetadata').NativePreparedStyle;\n    /** @internal A composed implementation sheet shares this physical root. */\n    sameRoot?: boolean;\n  }[];",
-          "line": 86,
+          "line": 89,
           "kind": "property",
           "type": "readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n    /** @internal Recollect retained CSS without rerunning owning callbacks. */\n    prepared?: import('./nativeStyledMetadata').NativePreparedStyle;\n    /** @internal A composed implementation sheet shares this physical root. */\n    sameRoot?: boolean;\n  }[]"
         },
@@ -214098,7 +214109,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "logicalInsets?: {\n    parentDirection: 'ltr' | 'rtl';\n    direction?: 'ltr' | 'rtl' | 'inherit';\n  };",
-          "line": 97,
+          "line": 100,
           "kind": "property",
           "type": "{\n    parentDirection: 'ltr' | 'rtl';\n    direction?: 'ltr' | 'rtl' | 'inherit';\n  }"
         },
@@ -214109,7 +214120,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection: 'ltr' | 'rtl';",
-          "line": 98,
+          "line": 101,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -214120,7 +214131,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | 'inherit';",
-          "line": 99,
+          "line": 102,
           "kind": "property",
           "type": "'ltr' | 'rtl' | 'inherit'"
         },
@@ -214131,7 +214142,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode?: 'sx' | 'css';",
-          "line": 101,
+          "line": 104,
           "kind": "property",
           "type": "'sx' | 'css'"
         }
@@ -214140,6 +214151,7 @@
         "NativeStyleTarget",
         "NativeTextContext",
         "Omit",
+        "Readonly",
         "Record",
         "StyleContext",
         "SxProps",
@@ -214151,7 +214163,7 @@
     {
       "name": "NativeRootStyleResult",
       "file": "src/sx.ts",
-      "line": 1119,
+      "line": 1157,
       "kind": "type",
       "members": [
         {
@@ -214161,7 +214173,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "programme?: StyleProp<NativeStyle>;",
-          "line": 1121,
+          "line": 1159,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -214172,7 +214184,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 1122,
+          "line": 1160,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -214183,7 +214195,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 1123,
+          "line": 1161,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -214194,7 +214206,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 1125,
+          "line": 1163,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         }

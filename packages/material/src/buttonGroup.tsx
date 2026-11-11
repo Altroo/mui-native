@@ -15,18 +15,15 @@ import {
   NativeTextScope,
   useNativeTextContext,
   nativeTextStyleContext,
-  componentStyle,
+  componentRootStyle,
   alpha,
   joinClassNames,
   useRtl,
   type Theme,
   type SxProps,
   type SxObject,
-  type ComponentStyleArgs,
-  type ComponentStyleObject,
-  type ComponentStyleValue,
-  type ComponentVariantArgs,
 } from '@altroo/mui-native-system';
+import { rebaseNativeComponentStyle } from '@altroo/mui-native-system/internal/prepared-style';
 import { useTheme } from './themeProvider';
 import { useForkRef } from './utils';
 import { nativeStyleTree } from './nativeStyleAncestry';
@@ -143,68 +140,6 @@ function baseRules(theme: Theme, owner: ButtonGroupOwnerState, direction: 'ltr' 
   }
   return result;
 }
-function scopedVariantStyle(
-  slot: string,
-  input: unknown,
-  args: ComponentVariantArgs,
-): ComponentStyleValue {
-  if (typeof input === 'function') return scopedVariantStyle(slot, input(args), args);
-  const resolved = input;
-  if (Array.isArray(resolved))
-    return resolved.map((entry) => scopedVariantStyle(slot, entry, args));
-  return resolved && typeof resolved === 'object' ? { [select(slot)]: resolved } : null;
-}
-function scopedSlotStyle(
-  slot: string,
-  input: unknown,
-  args: ComponentStyleArgs,
-): ComponentStyleValue {
-  if (typeof input === 'function') return scopedSlotStyle(slot, input(args), args);
-  const resolved = input;
-  if (Array.isArray(resolved)) return resolved.map((entry) => scopedSlotStyle(slot, entry, args));
-  if (!resolved || typeof resolved !== 'object') return null;
-  const { variants, ...style } = resolved as ComponentStyleObject;
-  // Original styled processing resolves each slot's variants before its
-  // overrides resolver adds the descendant selector. Keep matching and merged
-  // callback arguments in System, then scope the selected variant's styles.
-  return [
-    { [select(slot)]: style },
-    ...(Array.isArray(variants)
-      ? [
-          {
-            variants: variants.map((variant) => ({
-              ...variant,
-              style: (state: ComponentVariantArgs) =>
-                scopedVariantStyle(slot, variant.style, state),
-            })),
-          },
-        ]
-      : []),
-  ];
-}
-function styledTheme(theme: Theme): Theme {
-  const entry = theme.components.MuiButtonGroup;
-  const config = entry && typeof entry === 'object' ? entry : undefined;
-  const overrides = config?.styleOverrides ?? {};
-  return {
-    ...theme,
-    components: {
-      ...theme.components,
-      MuiButtonGroup: {
-        ...config,
-        styleOverrides: {
-          ...overrides,
-          root: (args) => [
-            ...['grouped', 'firstButton', 'lastButton', 'middleButton'].map((key) =>
-              scopedSlotStyle(key, overrides[key], args),
-            ),
-            typeof overrides.root === 'function' ? overrides.root(args) : overrides.root,
-          ],
-        },
-      },
-    },
-  };
-}
 export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
   function ButtonGroup(inProps, ref) {
     const groupRoot = useRef<ViewInstance | null>(null);
@@ -293,7 +228,6 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
     const providerDirection = rtl ? 'rtl' : 'ltr';
     const ancestryInputs = useShallowStable(rawAncestry.flatMap((rule) => [rule, rule.cascade]));
     const ancestry = useMemo(() => rawAncestry, [ancestryInputs]);
-    const scopedTheme = useMemo(() => styledTheme(theme), [theme]);
     const rootProps = useMemo(
       () => ({
         as: component,
@@ -319,24 +253,53 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
           ...(orientation === 'vertical' ? ['vertical'] : []),
         ],
         baseStyle: baseRules(theme, owner, providerDirection),
+        overrideSelectors: {
+          grouped: select('grouped'),
+          firstButton: select('firstButton'),
+          lastButton: select('lastButton'),
+          middleButton: select('middleButton'),
+        },
         protectPhysicalGeometry: true,
         rootProps,
         ancestors: ancestry.map((rule) => rule.cascade(rootClass.split(/\s+/))),
       }),
       [theme, parent, width, owner, rootProps, ancestry, providerDirection],
     );
-    const computed = useMemo(
-      () => componentStyle(scopedTheme, 'MuiButtonGroup', { ...owner }, sx, common),
-      [scopedTheme, owner, sx, common],
+    const resolved = useMemo(
+      () => componentRootStyle(theme, 'MuiButtonGroup', { ...owner }, sx, style, common),
+      [theme, owner, sx, style, common],
     );
+    const computed = resolved.computed;
     const direction = directionOf(
-      StyleSheet.flatten(style)?.direction,
+      StyleSheet.flatten(resolved.authored)?.direction,
       computed.direction,
       parent?.direction ?? providerDirection,
     );
     const scopeStyle = useMemo(
-      () => [mergeNativeButtonStyle(computed, style), { direction }],
-      [computed, style, direction],
+      () => [mergeNativeButtonStyle(computed, resolved.authored), { direction }],
+      [computed, resolved.authored, direction],
+    );
+    // Direction may replace native joining geometry; theme/SX callbacks belong
+    // to this root's single preparation and remain shared by every descendant.
+    const cascadeBase = useMemo(
+      () =>
+        direction === providerDirection ? common.baseStyle : baseRules(theme, owner, direction),
+      [common.baseStyle, direction, providerDirection, theme, owner],
+    );
+    const prepared = useMemo(
+      () =>
+        cascadeBase === common.baseStyle
+          ? resolved.prepared
+          : rebaseNativeComponentStyle(
+              resolved.prepared,
+              componentRootStyle(theme, '', {}, undefined, undefined, {
+                ...common,
+                ancestors: [],
+                overrideSelectors: {},
+                baseStyle: cascadeBase,
+              }).prepared,
+            ),
+      [cascadeBase, common, resolved.prepared, theme],
     );
     const ownRule = useMemo<NativeButtonGroupRule>(
       () => ({
@@ -345,20 +308,21 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
         },
         selector: { classes: rootClass.split(/\s+/).filter(Boolean) },
         cascade: (classes, path) => ({
-          theme: scopedTheme,
+          theme,
           name: 'MuiButtonGroup',
           props: { ...owner },
           sx,
+          prepared,
           context: {
             ...common,
-            baseStyle: baseRules(theme, owner, direction),
+            baseStyle: cascadeBase,
             descendantClasses: classes,
             descendantPath: path,
             descendantOnly: true,
           },
         }),
       }),
-      [scopedTheme, owner, sx, common, theme, direction],
+      [theme, owner, sx, common, cascadeBase, prepared],
     );
     const committedRule = useRef(ownRule);
     const registryRule = useMemo<NativeButtonGroupRule>(
