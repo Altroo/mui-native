@@ -9,6 +9,7 @@
     "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
     "sourceFiles": {
       "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+      "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
       "ListItemAvatar/ListItemAvatar.js": "2914dcf38c93a0577faf78664611c41ab613a324f2a158826b2b2ff35ac892c7",
       "ListItemAvatar/ListItemAvatar.d.ts": "1c671fa97ad69902c110c7890527f5720a785a2e0b68efcb77c16f37d6274d67",
       "ListItemAvatar/ListItemAvatar.d.mts": "9bbd46596e7bdf430ddd61954ddb903cfcde5e10683b9f449aaabdfa234cc0cf",
@@ -32,17 +33,20 @@
     "sourceFiles": {
       "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
       "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f",
-      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+      "ClassNameGenerator/index.js": "0c39c4bf9fb30edc3e30c45b86d594cae57f1f3b841030dcb0a46b522fa84c6e",
+      "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0"
     }
   },
   "localFiles": [
     "packages/material/src/lists.tsx",
     "packages/material/src/listItemAvatarClasses.ts",
-    "packages/material/src/ListItemAvatar/index.ts"
+    "packages/material/src/ListItemAvatar/index.ts",
+    "packages/material/src/classNameGenerator.ts"
   ],
   "adaptations": [
     "View and native custom roots replace the DOM div and retain inherited native props/events/ref lifecycle.",
-    "Original class identifiers and authored classes participate in finite self selectors and custom-root metadata; external CSS is not rendered.",
+    "Original and configured class identifiers and authored classes participate in finite self selectors and custom-root metadata; external CSS is not rendered.",
     "Native text scopes preserve container text inheritance without placing raw strings under Views.",
     "Native inline inset shorthands replace computed edge declarations with the existing native control merger, preserving native array semantics, inherited direction and CSS text metric provenance."
   ]

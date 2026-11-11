@@ -5,6 +5,7 @@ import { format, resolveConfig } from 'prettier';
 import { loadReference } from './load.mjs';
 const files = [
   'package.json',
+  'className/index.js',
   'ListItemAvatar/ListItemAvatar.js',
   'ListItemAvatar/ListItemAvatar.d.ts',
   'ListItemAvatar/ListItemAvatar.d.mts',
@@ -23,6 +24,8 @@ const { reference: utilitiesReference } = await loadReference('@mui/utils', [
   'generateUtilityClass/generateUtilityClass.js',
   'generateUtilityClasses/generateUtilityClasses.js',
   'composeClasses/composeClasses.js',
+  'ClassNameGenerator/index.js',
+  'ClassNameGenerator/ClassNameGenerator.js',
 ]);
 const React = require('react');
 const { renderToStaticMarkup } = require('react-dom/server');
@@ -169,12 +172,44 @@ const utilitySlots = [
   'custom',
   '__proto__',
 ];
+const { unstable_ClassNameGenerator: generator } = load('className');
+const configured = (() => {
+  const configure = (name) => `Consumer${name}`;
+  generator.configure(configure);
+  try {
+    const root = React.createElement(
+      Avatar,
+      { id: 'configured-avatar', className: 'chosen' },
+      'Avatar',
+    );
+    const markup = renderToStaticMarkup(
+      React.createElement(Item, { alignItems: 'flex-start' }, root),
+    );
+    const tag = markup.match(/<div[^>]*id="configured-avatar"[^>]*>/)?.[0];
+    assert(tag, 'Original configured avatar root is missing');
+    const className = tag
+      .match(/class="([^"]*)"/)[1]
+      .split(/\s+/)
+      .filter((token) => !token.startsWith('css-'))
+      .join(' ');
+    return {
+      className,
+      root: classes.getListItemAvatarUtilityClass('root'),
+      alignItemsFlexStart: classes.getListItemAvatarUtilityClass('alignItemsFlexStart'),
+      disabled: classes.getListItemAvatarUtilityClass('disabled'),
+      mapRoot: classes.default.root,
+    };
+  } finally {
+    generator.reset();
+  }
+})();
 const value = {
   reference,
   utilitiesReference,
   renderer:
     'Original React DOM static markup and theme callbacks; no native or browser geometry evidence',
   fixtures,
+  configured,
   classes: classes.default,
   utilities: Object.fromEntries(
     utilitySlots.map((slot) => [slot, classes.getListItemAvatarUtilityClass(slot)]),
@@ -190,10 +225,11 @@ const provenance = {
     'packages/material/src/lists.tsx',
     'packages/material/src/listItemAvatarClasses.ts',
     'packages/material/src/ListItemAvatar/index.ts',
+    'packages/material/src/classNameGenerator.ts',
   ],
   adaptations: [
     'View and native custom roots replace the DOM div and retain inherited native props/events/ref lifecycle.',
-    'Original class identifiers and authored classes participate in finite self selectors and custom-root metadata; external CSS is not rendered.',
+    'Original and configured class identifiers and authored classes participate in finite self selectors and custom-root metadata; external CSS is not rendered.',
     'Native text scopes preserve container text inheritance without placing raw strings under Views.',
     'Native inline inset shorthands replace computed edge declarations with the existing native control merger, preserving native array semantics, inherited direction and CSS text metric provenance.',
   ],

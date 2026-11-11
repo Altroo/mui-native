@@ -10878,7 +10878,7 @@
       "packages/material/src/listItem.tsx": "625de9b65b2312739602293363fb647bf0fa57d6a750be7f0c3860d7f32e2c8a",
       "packages/material/src/ListItem/index.ts": "05c70018fe123278e47ff55f7f1cc9145e8954a338d1f9eb704a9c10b887e1f0",
       "packages/material/src/ListItemAvatar/index.ts": "181b6bf12d218ca69b07b01089e2ad44a9817e2ba53e8655c55dc09aa4a7731d",
-      "packages/material/src/listItemAvatarClasses.ts": "ad019d6cbb7707085c96bb1fab14cd33f1550415a8b483939fceee5ba640d5e6",
+      "packages/material/src/listItemAvatarClasses.ts": "3b5438410cd4b3110a4a38044a4009d56cb6867f3d4900f055ee7780f1c35206",
       "packages/material/src/listItemButton.tsx": "55423cd058434f0aef90b1ae821e0133cea79534c69a28c86e30c1515d7ce3aa",
       "packages/material/src/ListItemButton/index.ts": "0d1d26d6826a387bfc4d87af1c566971f7182262a7f63b0f959abc2d4e439137",
       "packages/material/src/ListItemIcon/index.ts": "4e0754e3bc8a8b5a4ef0a715aef11b1085eaca54005888765fe5bdcc3476496f",
@@ -11174,7 +11174,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "113613ecb94417be0b453344972368416acf2c2dc0d9e3da11796c42aad4ccba",
+      "nativeSourceSha256": "c49f70bf0430cb66ff4bb7122fd4f3a977ff5e283f21050a635033906950b58e",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11186,7 +11186,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "0f157e587f9c06a85ef47e444e0f1b6ae65ca5612ab823aab21569c7fa4a1952"
+      "sha256": "fe9465ee6146fb0d2d6e0e065df6dc25ef8229657c61f052ba6dec12f96e91a3"
     },
     {
       "package": "@mui/system",
