@@ -24,7 +24,7 @@ iOS Space/A keyboard interactions now have 30 scoped cases across all five roots
 
 [AccordionActions](accordion.md#accordionactions) now composes the source root and spacing classes and preserves native custom roots, refs and styles. The strict installed consumer passes. The same five layout and touch stages passed at OS text scales 1.0 and 3.571 on iOS and 1.0 and 2.0 on Android. Visual polish at the largest settings, assistive traversal and an optimized workload are still separate checks; these results do not change the coverage stage.
 
-[ButtonGroup](button-group.md#ios-reading-matrix) now has four iOS reading profiles: normal/largest OS text in both global layout directions, with 28 retained phase records for current glyphs, stable native geometry, live policy changes and retained action counts. Android enlarged-text and optimized-build workload checks remain open; the coverage stage is unchanged.
+[ButtonGroup](button-group.md#ios-reading-matrix) now has four iOS reading profiles: normal/largest OS text in both global layout directions, with 28 retained phase records for current glyphs, stable native geometry, live policy changes and retained action counts. The [iOS optimized workload](performance-button-group.md) also has native correctness, CPU and peak-memory evidence for 100 groups and two actions per group. Android enlarged-text, input/scroll latency and broader workload checks remain open; the coverage stage is unchanged.
 
 ## Retained closure gates: ButtonGroup and required existing styling
 

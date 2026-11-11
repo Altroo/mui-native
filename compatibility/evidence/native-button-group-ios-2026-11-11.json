@@ -1,0 +1,1711 @@
+{
+  "schemaVersion": 1,
+  "measuredOn": "2026-11-11",
+  "catalogSourceCommit": "f96802f2b99d868401225cbd6ccc05d708802a7d",
+  "sourceId": "f11b951a4aba664f4dca1e7d542528922dedc3eb4cdf220f5c8e2b8c9cedfa22",
+  "nativeAppExecutableSHA256": "ba9b5bdc6a3511c08d6433194fb7230730105e73d99bec403a21811b968783fc",
+  "bundleSHA256": "f31ace1d7cc56bb99d25b6087f947f2c9a08110d29457b3cadfc74dada5a46de",
+  "swiftCollectorSHA256": "8f7ac8458c76d2a29de8e201c0c8564e16d842e355121bd9d98434ca99b7e916",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS 27.0",
+    "sdk": "iPhoneSimulator 27.1",
+    "nativeConfiguration": "Release",
+    "swiftOptimization": "-O",
+    "gccOptimization": "s",
+    "osContentSize": "large",
+    "hermes": true,
+    "developmentJS": false,
+    "installedArtifactVerified": true
+  },
+  "workload": {
+    "id": "layout-root-v1",
+    "family": "button-group",
+    "rows": 100,
+    "operation": "update",
+    "epochsPerCohort": 16,
+    "discardedWarmupsPerMode": 1,
+    "reportedSamplesPerMode": 3,
+    "unmeasuredCorrectnessCohortsPerMode": 1,
+    "actionsPerRow": 2,
+    "order": ["mui", "rn"],
+    "allTestsPassed": true,
+    "expectedNativeRootsPerCohort": 100,
+    "expectedRootCleanupsDuringUpdates": 0,
+    "expectedRowUpdateCommitsPerCohort": 1600
+  },
+  "limits": [
+    "The custom-styled two-action workload is not a default-appearance parity measurement.",
+    "A separate unmeasured correctness cohort precedes each mode metric warm-up.",
+    "Whole-app simulator CPU and peak physical memory include native accessibility acknowledgements.",
+    "Three samples and fixed MUI-first order limit comparisons.",
+    "No comparison to the earlier snapshot establishes a regression or improvement.",
+    "No input latency, scrolling, mount cost, leak or physical-device performance claim."
+  ],
+  "nativeCorrectness": [
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 00 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 0,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 01 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 1,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 02 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 2,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 03 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 3,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 04 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 4,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 05 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 5,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 06 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 6,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 07 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 7,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 08 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 8,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 09 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 9,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 10 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 10,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 11 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 11,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 12 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 12,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 13 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 13,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 14 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 14,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 15 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 15,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "mui",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 00 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 16,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 00 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 0,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 01 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 1,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 02 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 2,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 03 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 3,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 04 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 4,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 05 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 5,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 06 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 6,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 07 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 7,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 08 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 8,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 09 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 9,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 10 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 10,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 11 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 11,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 12 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 12,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 13 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 13,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 14 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 14,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": false,
+          "frame": {
+            "height": 54,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 15 presses 0"
+        }
+      ],
+      "enabled": false,
+      "epoch": 15,
+      "group": {
+        "height": 56,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    },
+    {
+      "mode": "rn",
+      "actions": [
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 29,
+            "y": 421.6666603088379
+          },
+          "label": "Row 001 presses 1"
+        },
+        {
+          "enabled": true,
+          "frame": {
+            "height": 46,
+            "width": 172,
+            "x": 201,
+            "y": 421.6666603088379
+          },
+          "label": "Stage 00 presses 0"
+        }
+      ],
+      "enabled": true,
+      "epoch": 16,
+      "group": {
+        "height": 48,
+        "width": 346,
+        "x": 28,
+        "y": 420.6666603088379
+      }
+    }
+  ],
+  "cohorts": [
+    {
+      "mode": "mui",
+      "phase": "native-validation",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 48,
+      "nativeRow0WidthPoints": 346,
+      "cohortId": "layout-root-cohort-4-mui-button-group-update-100",
+      "nativeActions": {
+        "actions": [
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 29,
+              "y": 421.6666603088379
+            },
+            "label": "Row 001 presses 1"
+          },
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 201,
+              "y": 421.6666603088379
+            },
+            "label": "Stage 00 presses 0"
+          }
+        ],
+        "enabled": true,
+        "epoch": 16,
+        "group": {
+          "height": 48,
+          "width": 346,
+          "x": 28,
+          "y": 420.6666603088379
+        }
+      }
+    },
+    {
+      "mode": "mui",
+      "phase": "warmup-discarded",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 48,
+      "nativeRow0WidthPoints": 346,
+      "cohortId": "layout-root-cohort-5-mui-button-group-update-100",
+      "nativeActions": {
+        "actions": [
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 29,
+              "y": 421.6666603088379
+            },
+            "label": "Row 001 presses 1"
+          },
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 201,
+              "y": 421.6666603088379
+            },
+            "label": "Stage 00 presses 0"
+          }
+        ],
+        "enabled": true,
+        "epoch": 16,
+        "group": {
+          "height": 48,
+          "width": 346,
+          "x": 28,
+          "y": 420.6666603088379
+        }
+      }
+    },
+    {
+      "mode": "mui",
+      "phase": "sample-1",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 48,
+      "nativeRow0WidthPoints": 346,
+      "cohortId": "layout-root-cohort-6-mui-button-group-update-100",
+      "nativeActions": {
+        "actions": [
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 29,
+              "y": 421.6666603088379
+            },
+            "label": "Row 001 presses 1"
+          },
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 201,
+              "y": 421.6666603088379
+            },
+            "label": "Stage 00 presses 0"
+          }
+        ],
+        "enabled": true,
+        "epoch": 16,
+        "group": {
+          "height": 48,
+          "width": 346,
+          "x": 28,
+          "y": 420.6666603088379
+        }
+      }
+    },
+    {
+      "mode": "mui",
+      "phase": "sample-2",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 48,
+      "nativeRow0WidthPoints": 346,
+      "cohortId": "layout-root-cohort-7-mui-button-group-update-100",
+      "nativeActions": {
+        "actions": [
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 29,
+              "y": 421.6666603088379
+            },
+            "label": "Row 001 presses 1"
+          },
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 201,
+              "y": 421.6666603088379
+            },
+            "label": "Stage 00 presses 0"
+          }
+        ],
+        "enabled": true,
+        "epoch": 16,
+        "group": {
+          "height": 48,
+          "width": 346,
+          "x": 28,
+          "y": 420.6666603088379
+        }
+      }
+    },
+    {
+      "mode": "mui",
+      "phase": "sample-3",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 48,
+      "nativeRow0WidthPoints": 346,
+      "cohortId": "layout-root-cohort-8-mui-button-group-update-100",
+      "nativeActions": {
+        "actions": [
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 29,
+              "y": 421.6666603088379
+            },
+            "label": "Row 001 presses 1"
+          },
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 201,
+              "y": 421.6666603088379
+            },
+            "label": "Stage 00 presses 0"
+          }
+        ],
+        "enabled": true,
+        "epoch": 16,
+        "group": {
+          "height": 48,
+          "width": 346,
+          "x": 28,
+          "y": 420.6666603088379
+        }
+      }
+    },
+    {
+      "mode": "rn",
+      "phase": "native-validation",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 48,
+      "nativeRow0WidthPoints": 346,
+      "cohortId": "layout-root-cohort-3-rn-button-group-update-100",
+      "nativeActions": {
+        "actions": [
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 29,
+              "y": 421.6666603088379
+            },
+            "label": "Row 001 presses 1"
+          },
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 201,
+              "y": 421.6666603088379
+            },
+            "label": "Stage 00 presses 0"
+          }
+        ],
+        "enabled": true,
+        "epoch": 16,
+        "group": {
+          "height": 48,
+          "width": 346,
+          "x": 28,
+          "y": 420.6666603088379
+        }
+      }
+    },
+    {
+      "mode": "rn",
+      "phase": "warmup-discarded",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 48,
+      "nativeRow0WidthPoints": 346,
+      "cohortId": "layout-root-cohort-4-rn-button-group-update-100",
+      "nativeActions": {
+        "actions": [
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 29,
+              "y": 421.6666603088379
+            },
+            "label": "Row 001 presses 1"
+          },
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 201,
+              "y": 421.6666603088379
+            },
+            "label": "Stage 00 presses 0"
+          }
+        ],
+        "enabled": true,
+        "epoch": 16,
+        "group": {
+          "height": 48,
+          "width": 346,
+          "x": 28,
+          "y": 420.6666603088379
+        }
+      }
+    },
+    {
+      "mode": "rn",
+      "phase": "sample-1",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 48,
+      "nativeRow0WidthPoints": 346,
+      "cohortId": "layout-root-cohort-5-rn-button-group-update-100",
+      "nativeActions": {
+        "actions": [
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 29,
+              "y": 421.6666603088379
+            },
+            "label": "Row 001 presses 1"
+          },
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 201,
+              "y": 421.6666603088379
+            },
+            "label": "Stage 00 presses 0"
+          }
+        ],
+        "enabled": true,
+        "epoch": 16,
+        "group": {
+          "height": 48,
+          "width": 346,
+          "x": 28,
+          "y": 420.6666603088379
+        }
+      }
+    },
+    {
+      "mode": "rn",
+      "phase": "sample-2",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 48,
+      "nativeRow0WidthPoints": 346,
+      "cohortId": "layout-root-cohort-6-rn-button-group-update-100",
+      "nativeActions": {
+        "actions": [
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 29,
+              "y": 421.6666603088379
+            },
+            "label": "Row 001 presses 1"
+          },
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 201,
+              "y": 421.6666603088379
+            },
+            "label": "Stage 00 presses 0"
+          }
+        ],
+        "enabled": true,
+        "epoch": 16,
+        "group": {
+          "height": 48,
+          "width": 346,
+          "x": 28,
+          "y": 420.6666603088379
+        }
+      }
+    },
+    {
+      "mode": "rn",
+      "phase": "sample-3",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 48,
+      "nativeRow0WidthPoints": 346,
+      "cohortId": "layout-root-cohort-7-rn-button-group-update-100",
+      "nativeActions": {
+        "actions": [
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 29,
+              "y": 421.6666603088379
+            },
+            "label": "Row 001 presses 1"
+          },
+          {
+            "enabled": true,
+            "frame": {
+              "height": 46,
+              "width": 172,
+              "x": 201,
+              "y": 421.6666603088379
+            },
+            "label": "Stage 00 presses 0"
+          }
+        ],
+        "enabled": true,
+        "epoch": 16,
+        "group": {
+          "height": 48,
+          "width": 346,
+          "x": 28,
+          "y": 420.6666603088379
+        }
+      }
+    }
+  ],
+  "measurements": [
+    {
+      "mode": "mui",
+      "metric": "appCpuSeconds",
+      "samples": [24.599412798000003, 24.664428261, 24.693142693000002],
+      "mean": 24.652327917333334,
+      "relativeStandardDeviationPercent": 0.159
+    },
+    {
+      "mode": "mui",
+      "metric": "peakPhysicalMemoryKB",
+      "samples": [156289.568, 155552.288, 163334.688],
+      "mean": 158392.18133333334,
+      "relativeStandardDeviationPercent": 2.215
+    },
+    {
+      "mode": "rn",
+      "metric": "appCpuSeconds",
+      "samples": [20.389642555000002, 20.382517862, 20.426149775000003],
+      "mean": 20.399436730666668,
+      "relativeStandardDeviationPercent": 0.094
+    },
+    {
+      "mode": "rn",
+      "metric": "peakPhysicalMemoryKB",
+      "samples": [104778.248, 104778.248, 108218.888],
+      "mean": 105925.12800000001,
+      "relativeStandardDeviationPercent": 1.531
+    }
+  ]
+}
