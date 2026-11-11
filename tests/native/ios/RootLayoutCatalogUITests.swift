@@ -62,6 +62,28 @@ final class RootLayoutCatalogUITests: XCTestCase {
     tab.tap()
     XCTAssertTrue(node("root-layout-form-group").waitForExistence(timeout: 10))
   }
+  func testCatalogPrimaryTabFitsAtNormalTextSize() {
+    assertCatalogPrimaryTabFits(enlarged: false)
+  }
+
+  func testCatalogPrimaryTabFitsAtEnlargedTextSize() {
+    assertCatalogPrimaryTabFits(enlarged: true)
+  }
+
+  private func assertCatalogPrimaryTabFits(enlarged: Bool) {
+    let tab = node("catalog-tab-Wrappers"), scroller = node("catalog-tabs")
+    waitFor("The selected primary tab must fit inside the visible viewport") {
+      guard let scale = self.metadata("form-group-contract-receipt")?["fontScale"] as? Double,
+        (enlarged ? scale >= 1.6 : abs(scale - 1) < 0.01),
+        tab.exists && tab.isHittable && scroller.exists else { return false }
+      let viewport = scroller.frame.intersection(self.app.frame).insetBy(dx: -1, dy: -1)
+      return !tab.frame.isEmpty && viewport.contains(tab.frame) && tab.label == "Layout & surfaces"
+    }
+    let actualScale = metadata("form-group-contract-receipt")?["fontScale"] as? Double ?? 0
+    print("Catalog primary tab: fontScale=\(actualScale), viewport=\(scroller.frame), selected=\(tab.frame), label=\(tab.label)")
+    capture(enlarged ? "catalog-primary-tab-enlarged" : "catalog-primary-tab-normal")
+  }
+
   private func measured(_ receiptID: String, roots: [String: String]) throws {
     waitFor("Every forwarded ref must measure a nonempty native root") {
       guard let receipts = self.metadata(receiptID)?["receipts"] as? [String: [String: Any]]
