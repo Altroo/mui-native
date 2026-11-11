@@ -53,6 +53,7 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean formGroupFocusScenario;
   private boolean formGroupEditorScenario;
   private boolean formGroupAccessibilityScenario;
+  private boolean avatarAccessibilityScenario;
   private boolean textAlignmentScenario;
   private boolean dividerScenario;
   private boolean paperScenario;
@@ -78,6 +79,7 @@ public final class PopperInstrumentation extends Instrumentation {
     formGroupKeyboardScenario = "form-group-keyboard".equals(arguments.getString("scenario"));
     formGroupEditorScenario = "form-group-editor".equals(arguments.getString("scenario"));
     formGroupAccessibilityScenario = "form-group-accessibility".equals(arguments.getString("scenario"));
+    avatarAccessibilityScenario = "list-item-avatar-accessibility".equals(arguments.getString("scenario"));
     formGroupFocusScenario = "form-group-focus".equals(arguments.getString("scenario"));
     textAlignmentScenario = "text-alignment".equals(arguments.getString("scenario"));
     readingGlobalRTL = "true".equals(arguments.getString("globalRTL"));
@@ -97,6 +99,7 @@ public final class PopperInstrumentation extends Instrumentation {
     if (cardScenario) { CardScenario.run(this, dividerFontProfile); return; }
     if (boxScenario) { BoxScenario.run(this, dividerFontProfile); return; }
     if (paperScenario) { PaperScenario.run(this, dividerFontProfile); return; }
+    if (avatarAccessibilityScenario) { LayoutRootScenario.runAvatarAccessibility(this); return; }
     if (formGroupAccessibilityScenario) { LayoutRootScenario.runFormGroupAccessibility(this); return; }
     if (formGroupEditorScenario) { LayoutRootScenario.runFormGroupEditor(this); return; }
     if (formGroupFocusScenario) { LayoutRootScenario.runFormGroupFocus(this); return; }
