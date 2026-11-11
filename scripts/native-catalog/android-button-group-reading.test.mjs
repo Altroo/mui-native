@@ -65,7 +65,7 @@ function complete(globalRTL = false, fontScale = 1) {
           fontPx,
           expectedFontPx: fontPx,
           lineCount: 1,
-          lines: [{ left: 0, right: 65, top: 0, bottom: height - 10, ellipsis: 0 }],
+          lines: [{ left: 0, right: 65, width: 65, top: 0, bottom: height - 10, ellipsis: 0 }],
         };
       });
       return {
@@ -90,7 +90,7 @@ function complete(globalRTL = false, fontScale = 1) {
               String(index),
               [
                 {
-                  text: ['Save 1', 'Review 0', 'Send 0'][index],
+                  text: `${['Save', 'Review', 'Send'][index]} ${index === 0 || stateIndex >= 5 ? 1 : 0}`,
                   x: 0,
                   y: 0,
                   width: 65,
@@ -187,6 +187,30 @@ test('missing, forged, clipped and stale native reading receipts cannot pass', (
     },
     (x) => {
       delete x.states[0].metadata.metrics['2'];
+    },
+    (x) => {
+      x.states[5].metadata.metrics['1'][0].text = 'Review 0';
+    },
+    (x) => {
+      x.states[0].metadata.metrics['0'][0].text = 'Sav 1';
+    },
+    (x) => {
+      x.states[0].metadata.metrics['0'][0].width = 69;
+    },
+    (x) => {
+      x.states[0].metadata.metrics['0'][0].width = 0;
+    },
+    (x) => {
+      x.states[0].metadata.metrics['0'][0].x = -3;
+    },
+    (x) => {
+      x.states[0].metadata.metrics['0'][0].width = 1000;
+    },
+    (x) => {
+      x.states[0].metadata.metrics['0'][0].y = 1000;
+    },
+    (x) => {
+      x.states[0].metadata.metrics['0'][0].capHeight = 1000;
     },
     (x) => {
       x.portal.fontPx = 60;

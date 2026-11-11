@@ -9,6 +9,7 @@ export const readingPhases = [
   'scaling-restored',
 ];
 export const readingPictures = [
+  'reading-navigation.png',
   'reading-ltr-horizontal.png',
   'reading-rtl-horizontal.png',
   'reading-rtl-vertical.png',
@@ -153,12 +154,13 @@ export function summarizeReadingReport(output, { globalRTL }) {
       );
       for (const line of action.lines)
         ensure(
-          ['left', 'right', 'top', 'bottom', 'ellipsis'].every((key) =>
+          ['left', 'right', 'width', 'top', 'bottom', 'ellipsis'].every((key) =>
             Number.isFinite(line[key]),
           ) &&
             line.ellipsis === 0 &&
             line.left >= -1.5 &&
             line.right >= line.left &&
+            line.width >= 0 &&
             line.right <= action.label.width + 1.5 &&
             line.top >= -1.5 &&
             line.bottom > line.top &&
@@ -168,17 +170,37 @@ export function summarizeReadingReport(output, { globalRTL }) {
       const receipt = metadata.metrics?.[String(index)];
       ensure(
         Array.isArray(receipt) &&
-          receipt.length > 0 &&
+          receipt.length === action.lineCount &&
           receipt.every(
-            (line) =>
+            (line, lineIndex) =>
               typeof line.text === 'string' &&
               ['x', 'y', 'width', 'height', 'capHeight'].every((key) =>
                 Number.isFinite(line[key]),
               ) &&
+              line.x >= -1.5 &&
+              line.y >= -1.5 &&
+              line.width >= 0 &&
+              (!/\S/.test(line.text) || line.width > 0) &&
               line.height > 0 &&
-              line.capHeight > 0,
+              line.capHeight > 0 &&
+              line.capHeight <= line.height + 1.5 &&
+              line.x + line.width <= action.label.width + 1.5 &&
+              line.y + line.height <= action.label.height + 1.5 &&
+              close(line.x, action.lines[lineIndex].left) &&
+              close(line.y, action.lines[lineIndex].top) &&
+              close(line.width, action.lines[lineIndex].width) &&
+              close(line.height, action.lines[lineIndex].bottom - action.lines[lineIndex].top),
           ),
-        'Native onTextLayout receipt is missing',
+        'Native onTextLayout glyphs must fit their current label',
+      );
+      // A previous count can retain valid numeric metrics after a native update.
+      // Compare complete source characters, allowing layout-generated whitespace.
+      ensure(
+        receipt
+          .map((line) => line.text)
+          .join('')
+          .replace(/\s+/g, '') === `${['Save', 'Review', 'Send'][index]}${action.count}`,
+        'Native onTextLayout must contain the current complete action text',
       );
       const expectedCorners = vertical
         ? [index === 0 ? 10 : 0, index === 0 ? 10 : 0, index === 2 ? 10 : 0, index === 2 ? 10 : 0]
