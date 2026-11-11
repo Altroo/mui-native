@@ -1,6 +1,6 @@
 {
   "name": "@altroo/mui-native-compat",
-  "version": "0.0.7-prealpha.0",
+  "version": "0.0.8-prealpha.0",
   "license": "MIT",
   "main": "index.cjs",
   "files": [
@@ -36,7 +36,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "tag": "prealpha",
+    "tag": "latest",
     "registry": "https://registry.npmjs.org/"
   }
 }
