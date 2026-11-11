@@ -15,6 +15,7 @@ const material = await loadReference('@mui/material', [
   ...['Paper', 'paperClasses', 'index'].flatMap((name) =>
     ['js', 'd.ts', 'd.mts'].map((ext) => `Paper/${name}.${ext}`),
   ),
+  'className/index.js',
   'styles/getOverlayAlpha.js',
   'styles/getOverlayAlpha.d.ts',
   'transitions/utils.js',
@@ -33,6 +34,8 @@ const utils = await loadReference('@mui/utils', [
   'composeClasses/composeClasses.js',
   'generateUtilityClass/generateUtilityClass.js',
   'generateUtilityClasses/generateUtilityClasses.js',
+  'ClassNameGenerator/index.js',
+  'ClassNameGenerator/ClassNameGenerator.js',
 ]);
 const system = await loadReference('@mui/system', [
   'createStyled/createStyled.js',
@@ -395,8 +398,25 @@ try {
 } catch (caught) {
   staticProxyAccess.error = caught.message;
 }
+const { unstable_ClassNameGenerator: classNameGenerator } =
+  material.require('@mui/material/className');
+const classNameConfiguration = { before: canonical.paperClasses.root };
+try {
+  classNameGenerator.configure((name) => 'Consumer' + name);
+  classNameConfiguration.configured = {
+    root: canonical.getPaperUtilityClass('root'),
+    unknown: canonical.getPaperUtilityClass('contributorSlot'),
+    disabled: canonical.getPaperUtilityClass('disabled'),
+    mapRoot: canonical.paperClasses.root,
+    className: observation(render({ className: 'authored', elevation: 0 })).className,
+  };
+} finally {
+  classNameGenerator.reset();
+}
+classNameConfiguration.after = canonical.getPaperUtilityClass('root');
 const data = {
   references: [material.reference, utils.reference, system.reference],
+  classNameConfiguration,
   classes: canonical.paperClasses,
   utilities: Object.fromEntries(
     utilitySlots.map((slot) => [slot, canonical.getPaperUtilityClass(slot)]),

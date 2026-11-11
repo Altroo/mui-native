@@ -10935,7 +10935,7 @@
       "packages/material/src/OutlinedInput/index.ts": "def45dc15be298ea7eb34c3573df021ad1b653d5d8e1933d958beb3edae46375",
       "packages/material/src/paper.tsx": "923708c0b8a2d2857c14e0b2edc1b672549f3b9f7403ac52c98bb545c915f743",
       "packages/material/src/Paper/index.ts": "ae99719013b91bd66d37804347cb68e1bfeac6248afd83879d69fad440958c68",
-      "packages/material/src/paperClasses.ts": "83a567d151f82a578aa9f0d1760858407487950851f876e81712b187ebdaf361",
+      "packages/material/src/paperClasses.ts": "eed07bcac7513de3cfd10590c8de066b33316519a8511223e46808633d6ba00c",
       "packages/material/src/paperTypes.ts": "e3ea130643808ba8a003ef9d35cecb34437b45190f064d4061b49338c5eefa18",
       "packages/material/src/popover.tsx": "78515abd2b95535448097c9ab26ef4472cdb7d72a58f51721e1299b5d06daed9",
       "packages/material/src/Popover/index.ts": "11a166f368795378f9e7267de7a160267170dfdd7568cd85c9384dc03da8b850",
@@ -11174,7 +11174,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "08780504f7477cdf41f69e7d1aa5405d2c2c09af93208025aa544f1b0fc8a76d",
+      "nativeSourceSha256": "7ba16d4be56ef2a8311c1173ca5bc8479594d3d4f4e1c729af2b389d39b49879",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11186,7 +11186,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "1270a2deb0ca05ea49c3f19022cde6c6883d1226af6e22886a54805c4b29174b"
+      "sha256": "2491be6f6e21ba8effa1967c11bc56a8f494fef99f20e401dcc357663c2f16b6"
     },
     {
       "package": "@mui/system",

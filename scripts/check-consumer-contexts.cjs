@@ -32,6 +32,7 @@ try {
     ['AccordionDetails', 'accordionDetailsClasses', 'getAccordionDetailsUtilityClass'],
     ['Accordion', 'accordionClasses', 'getAccordionUtilityClass'],
     ['AccordionSummary', 'accordionSummaryClasses', 'getAccordionSummaryUtilityClass'],
+    ['Paper', 'paperClasses', 'getPaperUtilityClass'],
     ['Typography', 'typographyClasses', 'getTypographyUtilityClass'],
   ]) {
     const entry = requireConsumer('@altroo/mui-native/' + name);
@@ -59,6 +60,8 @@ try {
       'InstalledMuiAccordionDetails-root',
     );
     assert.equal(details.getAccordionDetailsUtilityClass('disabled'), 'Mui-disabled');
+    assert.equal(material.getPaperUtilityClass('root'), 'InstalledMuiPaper-root');
+    assert.equal(material.getPaperUtilityClass('disabled'), 'Mui-disabled');
     for (const name of ['Accordion', 'AccordionSummary']) {
       const entry = requireConsumer('@altroo/mui-native/' + name);
       const prefix = name[0].toLowerCase() + name.slice(1);

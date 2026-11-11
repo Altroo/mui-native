@@ -1,6 +1,8 @@
 /* Utility vocabulary adapts MIT Material UI 9.5.0.
  * Copyright (c) MUI contributors. See NOTICE and upstream/paper.json.
  * Native adaptation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
+import { unstable_ClassNameGenerator } from './classNameGenerator';
+
 export interface PaperClasses {
   root: string;
   rounded: string;
@@ -81,7 +83,7 @@ const globalStates: Record<string, unknown> = {
 };
 export function getPaperUtilityClass(slot: string): string {
   const state = globalStates[slot];
-  return state ? `Mui-${state}` : `MuiPaper-${slot}`;
+  return state ? `Mui-${state}` : `${unstable_ClassNameGenerator.generate('MuiPaper')}-${slot}`;
 }
 // Augmentation changes the declaration, not the pinned runtime vocabulary.
 export const paperClasses = Object.fromEntries(
