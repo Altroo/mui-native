@@ -115,3 +115,21 @@ test('New sample resets a completed 16-epoch cohort while advances retain its ex
     ready: true,
   });
 });
+
+test('family selection cycles through all real workloads with fresh cohorts', () => {
+  const tree = render(<LayoutRootBenchmarkExample rowCount={2} />);
+  for (const family of ['list-item-avatar', 'button-group', 'form-group']) {
+    const previous = controller(tree).cohortId;
+    fireEvent.press(tree.getByTestId('layout-root-controller-family'));
+    expect(controller(tree).family).toBe(family);
+    expect(controller(tree).cohortId).not.toBe(previous);
+    expect(tree.queryByTestId(previous)).toBeNull();
+    expect(receipt(tree)).toMatchObject({
+      family,
+      updateEpoch: 0,
+      activeRows: 2,
+      activeRoots: 2,
+      ready: true,
+    });
+  }
+});

@@ -23,9 +23,9 @@ function renderedText(node: ReactTestInstance): string {
     .join('');
 }
 const strings = (tree: ReturnType<typeof render>) =>
-  tree.getAllByTestId(/^layout-root-(label|detail)-/).map(renderedText);
+  tree.getAllByTestId(/^layout-root-(label|detail)-\d{3}$/).map(renderedText);
 
-test.each(['form-group', 'list-item-avatar'] as const)(
+test.each(['form-group', 'list-item-avatar', 'button-group'] as const)(
   '%s uses identical baseline/material content and real commit/ref counts',
   (family) => {
     const observed: string[][] = [];
@@ -67,6 +67,8 @@ test.each([
   ['mui', 'form-group'],
   ['rn', 'list-item-avatar'],
   ['mui', 'list-item-avatar'],
+  ['rn', 'button-group'],
+  ['mui', 'button-group'],
 ] as const)(
   '%s/%s keeps the exact roots and keys through row/error/theme/style updates',
   (mode, family) => {
@@ -95,7 +97,7 @@ test.each([
       alternateStyle: true,
     });
     expect(StyleSheet.flatten(tree.getByTestId('layout-root-row-000').props.style)).toMatchObject({
-      minHeight: 52,
+      minHeight: family === 'button-group' ? 56 : 52,
       borderRadius: 8,
     });
     for (const kind of ['margin', 'padding'] as const)
@@ -149,3 +151,40 @@ test('removing rows exposes actual effect/ref cleanups rather than resetting cou
     ready: true,
   });
 });
+
+// These are real actions in both modes, with child-owned state and inherited
+// disabled behavior, rather than inert labels standing in for Button controls.
+test.each(['rn', 'mui'] as const)(
+  '%s grouped actions retain local state through all workload updates',
+  (mode) => {
+    const tree = render(<LayoutRootBenchmark mode={mode} family="button-group" rowCount={2} />);
+    const first = tree.getByTestId('layout-root-label-000-action');
+    const second = tree.getByTestId('layout-root-detail-000-action');
+    fireEvent.press(first);
+    fireEvent.press(second);
+    expect(tree.getByLabelText('Row 001 presses 1')).toBeTruthy();
+    for (let epoch = 1; epoch <= 16; epoch++) {
+      fireEvent.press(tree.getByTestId('layout-root-advance'));
+      const action = tree.getByTestId('layout-root-label-000-action');
+      expect(action).toBe(first);
+      expect(tree.getByTestId('layout-root-detail-000-action')).toBe(second);
+      expect(tree.getByLabelText('Row 001 presses 1')).toBeTruthy();
+      expect(
+        tree.getByLabelText(`Stage ${String(epoch % 16).padStart(2, '0')} presses 1`),
+      ).toBeTruthy();
+      const disabled = Math.floor(epoch / 2) % 2 === 1;
+      expect(action.props.accessibilityState.disabled).toBe(disabled);
+      if (disabled) {
+        fireEvent.press(action);
+        expect(tree.getByLabelText('Row 001 presses 1')).toBeTruthy();
+      }
+      expect(read(tree)).toMatchObject({
+        activeRows: 2,
+        activeRoots: 2,
+        cleanups: 0,
+        rootCleanups: 0,
+        ready: true,
+      });
+    }
+  },
+);

@@ -10,6 +10,8 @@ import {
   type ViewInstance,
 } from 'react-native';
 import {
+  Button,
+  ButtonGroup,
   FormControl,
   FormGroup,
   List,
@@ -20,9 +22,11 @@ import {
   type Theme,
 } from '@mui/material';
 
+export type LayoutRootBenchmarkFamily = 'form-group' | 'list-item-avatar' | 'button-group';
+
 export interface LayoutRootBenchmarkProps {
   mode?: 'rn' | 'mui';
-  family?: 'form-group' | 'list-item-avatar';
+  family?: LayoutRootBenchmarkFamily;
   operation?: 'mount' | 'update';
   rowCount?: number;
 }
@@ -37,7 +41,7 @@ type Counters = {
 type RowProps = {
   index: number;
   mode: 'rn' | 'mui';
-  family: 'form-group' | 'list-item-avatar';
+  family: LayoutRootBenchmarkFamily;
   epoch: number;
   row: boolean;
   error: boolean;
@@ -62,6 +66,17 @@ const themes = (['light', 'dark'] as const).map((mode) =>
           }),
         },
       },
+      MuiButtonGroup: {
+        styleOverrides: {
+          root: ({ theme, ownerState }) => ({
+            borderWidth: 1,
+            borderColor: ownerState.disabled ? theme.palette.error.main : theme.palette.divider,
+            backgroundColor: theme.palette.background.paper,
+            marginTop: 8,
+            paddingTop: 7,
+          }),
+        },
+      },
       MuiListItemAvatar: {
         styleOverrides: {
           root: ({ theme }) => ({
@@ -76,6 +91,43 @@ const themes = (['light', 'dark'] as const).map((mode) =>
     },
   }),
 );
+
+/** Both modes own real local action state; parent updates must preserve it. */
+function GroupBenchmarkAction({
+  mode,
+  content,
+  testID,
+  disabled,
+  theme,
+}: {
+  mode: 'rn' | 'mui';
+  content: string;
+  testID: string;
+  disabled: boolean;
+  theme: Theme;
+}) {
+  const [presses, setPresses] = useState(0);
+  const onPress = () => setPresses((value) => value + 1);
+  const label = (
+    <Text testID={testID} style={[styles.text, { color: theme.palette.text.primary }]}>
+      {content}
+    </Text>
+  );
+  const props = {
+    testID: testID + '-action',
+    accessibilityLabel: `${content} presses ${presses}`,
+    style: styles.groupAction,
+  };
+  return mode === 'mui' ? (
+    <Button {...props} onClick={onPress}>
+      {label}
+    </Button>
+  ) : (
+    <Pressable {...props} disabled={disabled} accessibilityRole="button" onPress={onPress}>
+      {label}
+    </Pressable>
+  );
+}
 
 const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
   index,
@@ -121,7 +173,7 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
     margin: 0,
     padding: 0,
     width: '100%' as const,
-    minHeight: alternateStyle ? 52 : 44,
+    minHeight: family === 'button-group' ? (alternateStyle ? 56 : 48) : alternateStyle ? 52 : 44,
     borderRadius: alternateStyle ? 8 : 4,
   };
   const children = [
@@ -138,8 +190,43 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
   ];
   // The baseline supplies equivalent final native styles; MUI computes its real defaults,
   // inherited error/alignment, theme overrides and native inline shorthand normalization.
+  const groupChildren =
+    family === 'button-group'
+      ? [
+          <GroupBenchmarkAction
+            key="label"
+            mode={mode}
+            content={`Row ${String(index + 1).padStart(3, '0')}`}
+            testID={`layout-root-label-${id}`}
+            disabled={error}
+            theme={theme}
+          />,
+          <GroupBenchmarkAction
+            key="detail"
+            mode={mode}
+            content={`Stage ${String(epoch % 16).padStart(2, '0')}`}
+            testID={`layout-root-detail-${id}`}
+            disabled={error}
+            theme={theme}
+          />,
+        ]
+      : undefined;
   const measured =
-    mode === 'rn' ? (
+    family === 'button-group' && mode === 'mui' ? (
+      <ButtonGroup
+        ref={rootRef}
+        testID={`layout-root-row-${id}`}
+        collapsable={false}
+        fullWidth
+        disableElevation
+        disabled={error}
+        variant={row ? 'contained' : 'outlined'}
+        size="small"
+        style={inline}
+      >
+        {groupChildren}
+      </ButtonGroup>
+    ) : mode === 'rn' ? (
       <View
         ref={rootRef}
         testID={`layout-root-row-${id}`}
@@ -149,9 +236,10 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
             borderWidth: 1,
             borderColor: error ? theme.palette.error.main : theme.palette.divider,
             backgroundColor: theme.palette.background.paper,
-            flexDirection: family === 'form-group' && row ? 'row' : 'column',
+            flexDirection:
+              family === 'button-group' || (family === 'form-group' && row) ? 'row' : 'column',
             flexWrap: family === 'form-group' ? 'wrap' : 'nowrap',
-            minWidth: family === 'form-group' ? 0 : 56,
+            minWidth: family === 'list-item-avatar' ? 56 : 0,
             flexShrink: 0,
             marginTop: 0,
             paddingTop: 0,
@@ -159,7 +247,7 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
           inline,
         ]}
       >
-        {children}
+        {groupChildren ?? children}
       </View>
     ) : family === 'form-group' ? (
       <FormGroup
@@ -211,7 +299,7 @@ export function LayoutRootBenchmark({
   if (!Number.isFinite(rowCount)) throw new RangeError('Layout benchmark rowCount must be finite.');
   if (
     !['rn', 'mui'].includes(mode) ||
-    !['form-group', 'list-item-avatar'].includes(family) ||
+    !['form-group', 'list-item-avatar', 'button-group'].includes(family) ||
     !['mount', 'update'].includes(operation)
   )
     throw new RangeError('Unknown layout benchmark configuration.');
@@ -369,6 +457,22 @@ const styles = StyleSheet.create({
   viewport: { height: 340 },
   content: { gap: 4 },
   avatarRow: { minHeight: 64 },
+  // Match the baseline's final flat action geometry. MUI still resolves real
+  // group defaults, variant/disabled context and theme sheets before inline styles.
+  groupAction: {
+    margin: 0,
+    borderWidth: 0,
+    borderRadius: 0,
+    backgroundColor: 'transparent',
+    flexGrow: 1,
+    flexBasis: 0,
+    minWidth: 40,
+    minHeight: 44,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   text: {
     fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif',
     fontSize: 14,
