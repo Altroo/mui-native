@@ -1,26 +1,28 @@
 # Installation during pre-alpha development
 
-Use the explicit `prealpha` dist-tag for this experimental preview in a disposable/development Expo SDK 58 / React Native 0.88.1 application. APIs and behavior are incomplete; native builds, full physical-device matrices and calibrated performance are not certified by publication.
+Use the `latest` dist-tag or the explicit `0.0.8-prealpha.0` version for this experimental preview in a disposable/development Expo SDK 58 / React Native 0.88.1 application. APIs and behavior are incomplete; native builds, full physical-device matrices and calibrated performance are not certified by publication.
 
 ```sh
-npm install @altroo/mui-native@prealpha @altroo/mui-native-host@prealpha
+npm install @altroo/mui-native@latest @altroo/mui-native-host@latest
 ```
 
-Keep the host as a direct native app dependency for autolinking. If retaining supported original MUI imports, also install `@altroo/mui-native-compat@prealpha`. Rebuild with `npx expo run:ios` or `npx expo run:android`; Expo Go cannot load the custom native hosts. For a bare React Native app, rebuild its native projects normally after installing dependencies/pods.
+Keep the host as a direct native app dependency for autolinking. If retaining supported original MUI imports, also install `@altroo/mui-native-compat@latest`. Rebuild with `npx expo run:ios` or `npx expo run:android`; Expo Go cannot load the custom native hosts. For a bare React Native app, rebuild its native projects normally after installing dependencies/pods.
 
 Material now requires `react-native-svg` as a direct app dependency. In the matched Expo app, run `npx expo install react-native-svg` before rebuilding. Bare React Native apps must install a version within the declared peer range; the reviewed baseline is 15.16.0.
 
 Optional packages use the same tag:
 
-- `@altroo/mui-native-icons@prealpha` and `@altroo/mui-native-x-charts@prealpha`: install `react-native-svg` directly with `npx expo install react-native-svg` in the matched Expo app, then rebuild.
-- `@altroo/mui-native-x-data-grid@prealpha`: install `@shopify/flash-list@2.3.2` directly for native autolinking, then rebuild.
-- `@altroo/mui-native-x-tree-view@prealpha` and `@altroo/mui-native-x-date-pickers@prealpha`: reuse the Material/system/host foundation; the date package carries Day.js.
+- `@altroo/mui-native-icons@latest` and `@altroo/mui-native-x-charts@latest`: install `react-native-svg` directly with `npx expo install react-native-svg` in the matched Expo app, then rebuild.
+- `@altroo/mui-native-x-data-grid@latest`: install `@shopify/flash-list@2.3.2` directly for native autolinking, then rebuild.
+- `@altroo/mui-native-x-tree-view@latest` and `@altroo/mui-native-x-date-pickers@latest`: reuse the Material/system/host foundation; the date package carries Day.js.
+
+Some packaged README examples still use the older `prealpha` alias. Follow this guide and use `latest` or explicit versions instead.
 
 Pinned preview version: `0.0.8-prealpha.0` for all nine packages. Explicit native imports work after installation; original `@mui/...` imports also need the Metro and TypeScript configuration below.
 
 ## Upgrade from 0.0.7-prealpha.0
 
-Install `0.0.8-prealpha.0` for every scoped package used by the application, including the direct native host. Install `react-native-svg` directly for Material and rebuild both native projects. This version adds native interfaces, Android default-font registration and the full pinned icon catalog; reloading JavaScript does not update an older binary. Keep React Native 0.88.1 and the matched React 19.3.0 / Expo SDK 58 baseline. Both npm `latest` and `prealpha` are aligned by the release process; explicit versions make an upgrade reproducible.
+Install `0.0.8-prealpha.0` for every scoped package used by the application, including the direct native host. Install `react-native-svg` directly for Material and rebuild both native projects. This version adds native interfaces, Android default-font registration and the full pinned icon catalog; reloading JavaScript does not update an older binary. Keep React Native 0.88.1 and the matched React 19.3.0 / Expo SDK 58 baseline. Use `latest` consistently or pin every used scoped package to `0.0.8-prealpha.0` for a reproducible upgrade. The `prealpha` alias is not consistently aligned across packages; do not mix the two tags.
 
 ## Upgrade from 0.0.6-prealpha.0
 
@@ -77,7 +79,7 @@ npx tsc --project tsconfig.native.json --noEmit
 
 Keep the existing web tsconfig separate and install the original `@mui/*` packages in the web application. TypeScript aliases do not configure Metro by themselves. Do not alias every `@mui/*` import globally. Only implemented public subpaths are mapped; commercial and internal imports are rejected on native.
 
-Use the catalog as a setup reference. The `prealpha` tag is an early preview channel; verified alpha/stable releases require the roadmap gates. Local archives remain available for unpublished source changes. React Native peer ranges will only broaden after matrix validation.
+Use the catalog as a setup reference. The `latest` tag currently selects a pre-alpha preview; verified alpha/stable releases require the roadmap gates. Local archives remain available for unpublished source changes. React Native peer ranges will only broaden after matrix validation.
 
 SDK 58 uses React Native's strict public TypeScript API. Native refs use `ViewInstance` and `TextInputInstance`; DOM refs are incompatible. The generated native tsconfig selects the `react-native` condition. Keep `skipLibCheck: true`, as recommended by the [React Native migration guide](https://reactnative.dev/docs/strict-typescript-api), because upstream generated declarations contain internal errors. The consumer fixture still checks component usage, native refs, theme augmentation and rejection of unsupported imports.
 

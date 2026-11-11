@@ -2,7 +2,7 @@
 
 `@altroo/mui-native-host` is an independent native dependency of the material package. It provides `InteractiveView` and `NativePressable` for native keyboard/focus composition, plus the separate [NativePicker anchor](native-picker.md) for platform selection surfaces. Its Fabric spec, Android manager/view and iOS component view ship in the local archive and are autolinked into the application. The interaction primitive adds no containing native View or global React Native feature-flag override. Picker presentation uses its own transparent native anchor. The [Portal host and canvas](portal.md) provide a separate in-window nonmodal rendering boundary.
 
-The current peer matrix is React 19.3.0 / React Native 0.88.1, with the catalog on Expo SDK 58. The current pre-alpha aligns all library packages at `0.0.8-prealpha.0`, with aligned `latest` and `prealpha` npm tags. The host wire protocol remains 0.0.5; publication does not certify a broader runtime/device matrix. This nonzero host version also satisfies CocoaPods' default minimum-version constraint.
+The current peer matrix is React 19.3.0 / React Native 0.88.1, with the catalog on Expo SDK 58. The current pre-alpha aligns all library packages at `0.0.8-prealpha.0`, using npm `latest` or explicit matching versions; the `prealpha` alias is not consistently aligned across packages. The host wire protocol remains 0.0.5; publication does not certify a broader runtime/device matrix. This nonzero host version also satisfies CocoaPods' default minimum-version constraint.
 
 ## Consumer setup
 
