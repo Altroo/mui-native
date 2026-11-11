@@ -34,7 +34,7 @@ public final class AccordionScenario {
   private UiAutomation automation;
   private int tagId;
   private File directory;
-  private final JSONArray stages=new JSONArray(), pictures=new JSONArray(), samples=new JSONArray();
+  private final JSONArray stages=new JSONArray(), pictures=new JSONArray(), samples=new JSONArray(), touches=new JSONArray();
   private AccordionScenario(Instrumentation driver) {this.driver=driver;}
   public static void run(Instrumentation driver) {new AccordionScenario(driver).run();}
   private void run() {
@@ -43,15 +43,13 @@ public final class AccordionScenario {
       directory=new File(driver.getTargetContext().getCacheDir(),"mui-accordion-"+System.currentTimeMillis());
       require(directory.mkdir(),"Preserve existing native evidence");
       report.put("schemaVersion",1).put("scenario","accordion-v1").put("driver","native Instrumentation and UiAutomation")
-        .put("artifactDirectory","cache/"+directory.getName()).put("device",new JSONObject().put("sdk",Build.VERSION.SDK_INT).put("model",Build.MODEL));
+        .put("artifactDirectory","cache/"+directory.getName()).put("device",new JSONObject().put("sdk",Build.VERSION.SDK_INT).put("model",Build.MODEL).put("fontScale",driver.getTargetContext().getResources().getConfiguration().fontScale));
       automation=driver.getUiAutomation(UiAutomation.FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES);
       Intent launch=driver.getTargetContext().getPackageManager().getLaunchIntentForPackage("dev.altroo.muinative.catalog");
       require(launch!=null,"Catalog must be installed"); launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity=driver.startActivitySync(launch);
       tagId=driver.getTargetContext().getResources().getIdentifier("react_test_id","id","dev.altroo.muinative.catalog");
       await(()->ui(()->find("catalog-tabs") instanceof HorizontalScrollView && ((HorizontalScrollView)view("catalog-tabs")).getChildCount()>0&&((HorizontalScrollView)view("catalog-tabs")).getChildAt(0).getWidth()>0),"Catalog tabs must finish layout");
-      ui(()->{HorizontalScrollView tabs=(HorizontalScrollView)view("catalog-tabs");tabs.scrollTo(tabs.getChildAt(0).getWidth(),0);return null;});
-      await(()->ui(()->{View tab=view("catalog-tab-Accordion");Rect visible=new Rect();return tab.getGlobalVisibleRect(visible)&&visible.width()==tab.getWidth();}),"Accordion tab must be fully visible");
       tap("catalog-tab-Accordion");
       await(()->expanded("delivery")&&ui(()->find("accordion-note-value")!=null),"Accordion scene must render and measure");
       require(ui(()->{for(String id:new String[]{"accordion-delivery","accordion-payment","accordion-disabled","accordion-help"})if(Math.abs(view(id).getElevation())>0.01f)return false;return true;}),"Flat bordered catalog panels must explicitly disable Android elevation");
@@ -63,6 +61,8 @@ public final class AccordionScenario {
       await(()->ui(()->text("accordion-note-value").contains("8472")),"Native text events must update body-local state");
       String edited=ui(()->text("accordion-note-value"));
       ui(()->{((InputMethodManager)activity.getSystemService(Activity.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(original.getWindowToken(),0);original.clearFocus();return null;});
+      await(() -> ui(() -> Build.VERSION.SDK_INT < 30 || (activity.getWindow().getDecorView().getRootWindowInsets() != null && !activity.getWindow().getDecorView().getRootWindowInsets().isVisible(android.view.WindowInsets.Type.ime()))),
+        "The editor IME must finish hiding before a different summary is touched");
       stage("edited-local-note");
       tap("accordion-payment-summary");
       await(()->expanded("payment")&&ui(()->view("accordion-delivery-transition").getHeight()==0&&text("accordion-changes").equals("Section changes: 1")),"Controlled expansion must close delivery and open payment exactly once");
@@ -81,7 +81,7 @@ public final class AccordionScenario {
     } catch(Throwable error) {
       try {report.put("error",error.toString());if(directory!=null)capture("failure.png");} catch(Throwable ignored) { /* Preserve the original assertion. */ }
     } finally {
-      try {report.put("status",passed?"passed":"failed").put("stages",stages).put("screenshots",pictures).put("samples",samples);result.putString("accordionReport",report.toString());}
+      try {report.put("status",passed?"passed":"failed").put("stages",stages).put("screenshots",pictures).put("samples",samples).put("touches",touches);result.putString("accordionReport",report.toString());}
       catch(Exception error){result.putString("Error",error.toString());passed=false;}
       driver.finish(passed?Activity.RESULT_OK:Activity.RESULT_CANCELED,result);
     }
@@ -98,7 +98,34 @@ public final class AccordionScenario {
   private void tap(String id) throws Exception {
     await(() -> ui(() -> find(id)!=null && view(id).isShown() && view(id).getWidth()>0), "Native touch target did not lay out: " + id);
     ui(() -> { View target=view(id); target.requestRectangleOnScreen(new Rect(0,0,target.getWidth(),target.getHeight()),true); return null; });
-    float[] point=ui(() -> { View target=view(id); Rect visible=new Rect(); int[] origin=new int[2]; require(target.getLocalVisibleRect(visible)&&!visible.isEmpty(),"Native touch target is covered"); target.getLocationOnScreen(origin); return new float[]{origin[0]+visible.exactCenterX(),origin[1]+visible.exactCenterY()}; });
+    // Keyboard insets and scroll requests settle asynchronously. Inject against
+    // a stable native viewport, never a coordinate sampled during that movement.
+    // Fabric may retain request-layout flags after applying native positions.
+    final Rect[] previous = {null};
+    final long[] stableSince = {0};
+    await(() -> ui(() -> {
+      View target = view(id);
+      Rect visible = new Rect();
+      if (!target.getGlobalVisibleRect(visible) || visible.width() < target.getWidth() || visible.height() < target.getHeight()) {
+        target.requestRectangleOnScreen(new Rect(0, 0, target.getWidth(), target.getHeight()), true);
+        previous[0] = null;
+        stableSince[0] = 0;
+        return false;
+      }
+      long now = SystemClock.uptimeMillis();
+      if (!visible.equals(previous[0])) { previous[0] = new Rect(visible); stableSince[0] = now; }
+      if (stableSince[0] == 0) stableSince[0] = now;
+      return now - stableSince[0] >= 150;
+    }), "Native touch target must settle after scrolling: " + id);
+    float[] point = ui(() -> {
+      View target = view(id);
+      Rect visible = new Rect(); int[] origin = new int[2];
+      require(target.getLocalVisibleRect(visible) && !visible.isEmpty(), "Native touch target is covered");
+      target.getLocationOnScreen(origin);
+      return new float[]{origin[0] + visible.exactCenterX(), origin[1] + visible.exactCenterY()};
+    });
+    boolean imeVisible = ui(() -> Build.VERSION.SDK_INT >= 30 && activity.getWindow().getDecorView().getRootWindowInsets() != null && activity.getWindow().getDecorView().getRootWindowInsets().isVisible(android.view.WindowInsets.Type.ime()));
+    touches.put(new JSONObject().put("target", id).put("x", point[0]).put("y", point[1]).put("imeVisible", imeVisible));
     long time=SystemClock.uptimeMillis();
     for(int action:new int[]{MotionEvent.ACTION_DOWN,MotionEvent.ACTION_UP}) { MotionEvent event=MotionEvent.obtain(time,SystemClock.uptimeMillis(),action,point[0],point[1],0); event.setSource(InputDevice.SOURCE_TOUCHSCREEN); try { require(automation.injectInputEvent(event,true),"Native touch injection failed"); } finally { event.recycle(); } SystemClock.sleep(30); }
   }
