@@ -2,7 +2,7 @@
 
 Experimental native SVG icons for MUI Native.
 
-**Unpublished development after `0.0.7-prealpha.0`.** The full catalog and new-icon examples below apply to development source and have not been published to npm. The released `0.0.7-prealpha.0` preview contains only the four prototype glyphs Add, Check, Close and Remove.
+**Included in `0.0.8-prealpha.0`.** This preview contains the full pinned catalog and the new-icon examples below. The earlier `0.0.7-prealpha.0` preview contained four prototype glyphs: Add, Check, Close and Remove.
 
 **Pre-alpha preview.** Expect incomplete APIs and breaking changes. This is an independent Altroo project, not an official or endorsed MUI product. Pro/Premium source and paid-only feature parity are excluded.
 
@@ -18,7 +18,7 @@ Charts/icons also need `react-native-svg` as a direct app dependency. In the mat
 
 ## Current scope
 
-**Development scope, not yet published:** all **10,750 icon exports** from the pinned `@mui/icons-material` 9.5.0 package are generated from its integrity-checked source archive. The supplied Filled, Outlined, Rounded, Sharp and TwoTone names, legacy aliases and single-style icons are retained exactly. Missing sibling variants are not invented. Generated artwork shares native Material SvgIcon styling, accessibility props, refs and viewBox behavior. The early root `createSvgIcon(pathString, name)` extension remains available.
+**Catalog scope:** all **10,750 icon exports** from the pinned `@mui/icons-material` 9.5.0 package are generated from its integrity-checked source archive. The supplied Filled, Outlined, Rounded, Sharp and TwoTone names, legacy aliases and single-style icons are retained exactly. Missing sibling variants are not invented. Generated artwork shares native Material SvgIcon styling, accessibility props, refs and viewBox behavior. The early root `createSvgIcon(pathString, name)` extension remains available.
 
 Prefer a direct import for bounded startup:
 

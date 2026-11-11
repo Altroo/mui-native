@@ -30,7 +30,7 @@ export function Example() {
 }
 ```
 
-Source development after `0.0.7-prealpha.0` adds native SvgIcon and requires `react-native-svg` as a direct application dependency. See [the SVG guide](https://github.com/Altroo/mui-native/blob/main/docs/svg-icon.md). The published preview does not include that implementation yet.
+Starting with `0.0.8-prealpha.0`, Material includes native SvgIcon and requires `react-native-svg` as a direct application dependency. See [the SVG guide](https://github.com/Altroo/mui-native/blob/main/docs/svg-icon.md). Install it in the matched Expo application with `npx expo install react-native-svg`, then rebuild.
 
 ## Current scope
 

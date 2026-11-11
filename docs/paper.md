@@ -13,7 +13,7 @@ import { Typography } from '@altroo/mui-native';
 
 The package root exports the same `Paper`, `paperClasses`, `getPaperUtilityClass` and public props/classes/type-map types as the canonical native subpath. Existing additive Box, Stack, Typography and Card imports from the Paper subpath remain available.
 
-This guide describes unpublished development after `0.0.7-prealpha.0`. See the [changelog](../CHANGELOG.md) for released package contents.
+This guide describes version `0.0.8-prealpha.0`. See the [changelog](../CHANGELOG.md) for released package contents.
 
 ## Source software contract
 

@@ -1,6 +1,6 @@
 # Divider native contract
 
-This is unpublished development after `0.0.7-prealpha.0`. The existing Divider prototype now has a finite native implementation based on Material UI 9.5.0. It does not establish complete browser CSS, renderer, accessibility or performance compatibility.
+This implementation is included in `0.0.8-prealpha.0`. The existing Divider prototype now has a finite native implementation based on Material UI 9.5.0. It does not establish complete browser CSS, renderer, accessibility or performance compatibility.
 
 Use the ordinary public component barrel:
 

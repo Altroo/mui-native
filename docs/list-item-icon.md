@@ -2,7 +2,7 @@
 
 ListItemIcon is the existing one-root icon wrapper from pinned MIT Material UI 9.5.0. It reserves theme spacing, supplies the action foreground, and follows its nearest row alignment. It preserves caller-owned Icon, SvgIcon, text and custom content; it does not implement those separate components.
 
-This page describes development work after `0.0.7-prealpha.0`. Source and type checks do not update the published package or certify native geometry, accessibility or optimized performance.
+This page describes the implementation in `0.0.8-prealpha.0`. Source and type checks do not certify native geometry, accessibility or optimized performance.
 
 ```tsx
 import { ListItem, ListItemIcon, ListItemText } from '@mui/material';

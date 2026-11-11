@@ -1,6 +1,6 @@
 # Card native contract
 
-Card provides a native Paper-backed surface with the pinned Material UI 9.5.0 Card API. This guide describes unpublished development after `0.0.7-prealpha.0`; see the [changelog](../CHANGELOG.md) for released package contents. CardContent, CardActions and CardActionArea have separate contracts and are not completed by this surface.
+Card provides a native Paper-backed surface with the pinned Material UI 9.5.0 Card API. This guide describes version `0.0.8-prealpha.0`; see the [changelog](../CHANGELOG.md) for released package contents. CardContent, CardActions and CardActionArea have separate contracts and are not completed by this surface.
 
 ```tsx
 import Card from '@mui/material/Card';

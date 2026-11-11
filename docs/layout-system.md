@@ -23,7 +23,7 @@ The public helpers expose sorted `keys`/`values`, `unit`, `up`, `down`, `between
 
 ### Pure helper options and imports
 
-**Development after `0.0.7-prealpha.0`.** The deep route and helper boundary/type corrections described here apply to development source and are absent from that published preview.
+**Included in `0.0.8-prealpha.0`.** This preview contains the deep route and helper boundary/type corrections described here.
 
 The published `@mui/system/createBreakpoints` entry exposes the named `unstable_createBreakpoints` helper for internal Pigment CSS integration. Native routing retains that entry and its factory identity. The existing native `createBreakpoints()` convenience also accepts omitted options; the original helper expects an options object.
 

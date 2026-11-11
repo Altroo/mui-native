@@ -6,7 +6,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 ## Currently exercised
 
-- Native [Accordion family](accordion.md): expansion, Summary/Details/Actions composition, source-defined slot/callback priority, refs and shared ButtonBase/Collapse behavior. Scoped iOS/Android checks cover retained local edits, controlled panels, actions, disabled interaction and optional unmounting. This is development work after `0.0.7-prealpha.0`; full native matrices and inherited contracts remain open.
+- Native [Accordion family](accordion.md): expansion, Summary/Details/Actions composition, source-defined slot/callback priority, refs and shared ButtonBase/Collapse behavior. Scoped iOS/Android checks cover retained local edits, controlled panels, actions, disabled interaction and optional unmounting. This is included in `0.0.8-prealpha.0`; full native matrices and inherited contracts remain open.
 
 - Native [Portal](portal.md) with same-window rendering, ordinary View containers, context/state/ref preservation, native bounds and guarded touch/keyboard ownership. Active clipped-subview containers and full physical device validation remain open.
 

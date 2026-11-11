@@ -1,6 +1,6 @@
 # RTL context provider
 
-`RtlProvider` and `useRtl` implement the complete native React context contract of the pinned MUI System 9.5.0 module. This is development after `0.0.7-prealpha.0`. The provider renders its children without adding a native host; directional layout, paint and accessibility remain responsibilities of consuming components.
+`RtlProvider` and `useRtl` implement the complete native React context contract of the pinned MUI System 9.5.0 module. This is included in `0.0.8-prealpha.0`. The provider renders its children without adding a native host; directional layout, paint and accessibility remain responsibilities of consuming components.
 
 ```tsx
 import RtlProvider, { useRtl } from '@mui/system/RtlProvider';

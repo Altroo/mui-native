@@ -1,6 +1,6 @@
 # Material icon catalog
 
-This is **unpublished development after `0.0.7-prealpha.0`**. The npm preview still contains the earlier four glyphs; installing its current prealpha tag does not install this catalog.
+Version **`0.0.8-prealpha.0`** includes the full pinned icon catalog. The earlier `0.0.7-prealpha.0` preview contained four prototype glyphs.
 
 The catalog implements every **10,750 glyph export** supplied by the pinned MIT `@mui/icons-material` 9.5.0 archive. Filled, Outlined, Rounded, Sharp and TwoTone names, legacy aliases and single-style icons are retained exactly. The source is not a uniform set of five variants for every base name, so absent siblings are not invented. Material's font-based `Icon` component is a separate unimplemented module.
 
@@ -33,7 +33,7 @@ Prefer deep imports for predictable application startup. A deep glyph depends on
 
 ## Native rendering boundary
 
-All glyphs share the [SvgIcon renderer](svg-icon.md). Representative tests cover its required primitive shapes, fixed artwork, live props/refs and custom roots. Complete source/catalog coverage does not establish every physical-device rasterization, screen-reader interaction, inherited DOM adaptation or CSS fill transition. The broader renderer, font/RTL/accessibility/device and calibrated-performance gates remain open. No version, npm publication, release tag or verified-alpha claim accompanies this catalog.
+All glyphs share the [SvgIcon renderer](svg-icon.md). Representative tests cover its required primitive shapes, fixed artwork, live props/refs and custom roots. Complete source/catalog coverage does not establish every physical-device rasterization, screen-reader interaction, inherited DOM adaptation or CSS fill transition. The broader renderer, font/RTL/accessibility/device and calibrated-performance gates remain open. Catalog publication does not promote the shared renderer or verified-alpha gates.
 
 ## Reproduce
 

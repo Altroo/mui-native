@@ -1,6 +1,6 @@
 # Native SvgIcon and icon factories
 
-This implementation is development after `0.0.7-prealpha.0`; it is not in the published preview. Material `SvgIcon`, its class helpers and `createSvgIcon` share the existing native SVG renderer. The [full pinned catalog of 10,750 glyphs](material-icons.md) uses that same implementation. Artwork/import completion does not close the renderer gates below.
+This implementation is included in `0.0.8-prealpha.0`. Material `SvgIcon`, its class helpers and `createSvgIcon` share the existing native SVG renderer. The [full pinned catalog of 10,750 glyphs](material-icons.md) uses that same implementation. Artwork/import completion does not close the renderer gates below.
 
 ```tsx
 import SvgIcon, { createSvgIcon } from '@mui/material/SvgIcon';
@@ -13,7 +13,7 @@ const Parcel = createSvgIcon(<path d="M4 4h16v16H4z" />, 'Parcel');
 </SvgIcon>;
 ```
 
-Registered Metro routing accepts the original Material root/deep imports, `SvgIcon/svgIconClasses`, `SvgIcon/createSvgIcon`, `utils` and the legacy `utils/createSvgIcon` entry. Direct imports from `@altroo/mui-native` use the same instances. Web continues to use original MUI. The development Material package adds `react-native-svg` as a required peer; install it directly in the application and rebuild if it is not already in the binary. See [installation](installation.md).
+Registered Metro routing accepts the original Material root/deep imports, `SvgIcon/svgIconClasses`, `SvgIcon/createSvgIcon`, `utils` and the legacy `utils/createSvgIcon` entry. Direct imports from `@altroo/mui-native` use the same instances. Web continues to use original MUI. Starting with `0.0.8-prealpha.0`, Material requires `react-native-svg` as a peer; install it directly in the application and rebuild if it is not already in the binary. See [installation](installation.md).
 
 ## Geometry and native refs
 

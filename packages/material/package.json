@@ -1,6 +1,6 @@
 {
   "name": "@altroo/mui-native",
-  "version": "0.0.7-prealpha.0",
+  "version": "0.0.8-prealpha.0",
   "description": "Experimental React Native compatibility for Material UI.",
   "keywords": [
     "mui-native",
@@ -575,7 +575,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "tag": "prealpha",
+    "tag": "latest",
     "registry": "https://registry.npmjs.org/"
   },
   "private": false,

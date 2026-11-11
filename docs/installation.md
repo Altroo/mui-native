@@ -8,23 +8,29 @@ npm install @altroo/mui-native@prealpha @altroo/mui-native-host@prealpha
 
 Keep the host as a direct native app dependency for autolinking. If retaining supported original MUI imports, also install `@altroo/mui-native-compat@prealpha`. Rebuild with `npx expo run:ios` or `npx expo run:android`; Expo Go cannot load the custom native hosts. For a bare React Native app, rebuild its native projects normally after installing dependencies/pods.
 
+Material now requires `react-native-svg` as a direct app dependency. In the matched Expo app, run `npx expo install react-native-svg` before rebuilding. Bare React Native apps must install a version within the declared peer range; the reviewed baseline is 15.16.0.
+
 Optional packages use the same tag:
 
 - `@altroo/mui-native-icons@prealpha` and `@altroo/mui-native-x-charts@prealpha`: install `react-native-svg` directly with `npx expo install react-native-svg` in the matched Expo app, then rebuild.
 - `@altroo/mui-native-x-data-grid@prealpha`: install `@shopify/flash-list@2.3.2` directly for native autolinking, then rebuild.
 - `@altroo/mui-native-x-tree-view@prealpha` and `@altroo/mui-native-x-date-pickers@prealpha`: reuse the Material/system/host foundation; the date package carries Day.js.
 
-Pinned preview version: `0.0.7-prealpha.0` for all nine packages. Explicit native imports work after installation; original `@mui/...` imports also need the Metro and TypeScript configuration below.
+Pinned preview version: `0.0.8-prealpha.0` for all nine packages. Explicit native imports work after installation; original `@mui/...` imports also need the Metro and TypeScript configuration below.
+
+## Upgrade from 0.0.7-prealpha.0
+
+Install `0.0.8-prealpha.0` for every scoped package used by the application, including the direct native host. Install `react-native-svg` directly for Material and rebuild both native projects. This version adds native interfaces, Android default-font registration and the full pinned icon catalog; reloading JavaScript does not update an older binary. Keep React Native 0.88.1 and the matched React 19.3.0 / Expo SDK 58 baseline. Both npm `latest` and `prealpha` are aligned by the release process; explicit versions make an upgrade reproducible.
 
 ## Upgrade from 0.0.6-prealpha.0
 
-Install the matching `0.0.7-prealpha.0` versions of every `@altroo/mui-native*` package used by the application, including the direct native-host dependency. This preview adds the managed native text editor used by Material inputs and Autocomplete. **Rebuild the iOS/Android application** after upgrading; a JavaScript reload cannot add its Fabric component. Expo Go cannot run these hosts.
+Install the matching `0.0.8-prealpha.0` versions of every `@altroo/mui-native*` package used by the application, including the direct native-host dependency. This version also includes the managed native text editor introduced in 0.0.7 for Material inputs and Autocomplete. **Rebuild the iOS/Android application** after upgrading; a JavaScript reload cannot add its Fabric component. Expo Go cannot run these hosts.
 
 The native editor adapter requires **React Native 0.88.1** in both JavaScript and the application binary. Its peer/source guards intentionally reject unreviewed ABIs. Keep React 19.3.0 and the matched Expo SDK 58 baseline, then perform the usual native dependency installation/build. Do not bypass a missing-descriptor or peer-source mismatch error; follow its generated-cache/rebuild guidance in [the native-host guide](native-host.md#native-text-editor).
 
-## Android system fonts in source development
+## Android system fonts
 
-The unpublished source after `0.0.7-prealpha.0` routes Android CSS-derived platform-default sans-serif fonts through a private library alias registered during native-host package construction. Native default-font rendering needs the matching `@altroo/mui-native-host` as a direct application dependency and an Android rebuild, including applications using System without Material or X. Without that rebuilt host, the alias follows React Native's ordinary unregistered-family normal/bold fallback. The renderless `DefaultPropsProvider` and `RtlProvider` entries and the canonical `createBreakpoints` helper entry still work without initializing the native renderer or host.
+Starting with `0.0.8-prealpha.0`, the library routes Android CSS-derived platform-default sans-serif fonts through a private library alias registered during native-host package construction. Native default-font rendering needs the matching `@altroo/mui-native-host` as a direct application dependency and an Android rebuild, including applications using System without Material or X. Without that rebuilt host, the alias follows React Native's ordinary unregistered-family normal/bold fallback. The renderless `DefaultPropsProvider` and `RtlProvider` entries and the canonical `createBreakpoints` helper entry still work without initializing the native renderer or host.
 
 React Native applies exact numeric Typeface weights on Android 28 and later; Android 24-27 retain its native normal/bold fallback. The actual stock MUI font stack and CSS platform-default names map to the internal Android alias. An explicit CSS default-font value remains an effective reset inside a custom-font paragraph; it is never omitted in favor of inheriting that paragraph's font.
 
@@ -40,13 +46,13 @@ pnpm check
 pnpm pack:all
 ```
 
-Install the generated system, material and native-host archives together in the consumer. Add the compatibility archive if retaining original imports, and only the X/icon archives you need. X archives depend on the material and system packages, so pass all local archives together to the package manager. Install React 19.3.0 / React Native 0.88.1 peers. Source development after `0.0.7-prealpha.0` also requires `react-native-svg` 15.16.0 for Material SvgIcon; the published preview requires it for charts/icons. Install it directly in the consumer; use `npx expo install react-native-svg` in a matched Expo app. The grid archive carries FlashList, and the date archive carries Day.js.
+Install the generated system, material and native-host archives together in the consumer. Add the compatibility archive if retaining original imports, and only the X/icon archives you need. X archives depend on the material and system packages, so pass all local archives together to the package manager. Install React 19.3.0 / React Native 0.88.1 peers. Version `0.0.8-prealpha.0` requires `react-native-svg` 15.16.0 for Material SvgIcon as well as charts/icons. Install it directly in the consumer; use `npx expo install react-native-svg` in a matched Expo app. The grid archive carries FlashList, and the date archive carries Day.js.
 
 ```sh
-npm install /absolute/path/artifacts/packages/altroo-mui-native-system-0.0.7-prealpha.0.tgz \
-  /absolute/path/artifacts/packages/altroo-mui-native-0.0.7-prealpha.0.tgz \
-  /absolute/path/artifacts/packages/altroo-mui-native-host-0.0.7-prealpha.0.tgz \
-  /absolute/path/artifacts/packages/altroo-mui-native-compat-0.0.7-prealpha.0.tgz
+npm install /absolute/path/artifacts/packages/altroo-mui-native-system-0.0.8-prealpha.0.tgz \
+  /absolute/path/artifacts/packages/altroo-mui-native-0.0.8-prealpha.0.tgz \
+  /absolute/path/artifacts/packages/altroo-mui-native-host-0.0.8-prealpha.0.tgz \
+  /absolute/path/artifacts/packages/altroo-mui-native-compat-0.0.8-prealpha.0.tgz
 ```
 
 Keep `@altroo/mui-native-host` as a direct native application dependency for autolinking. Rebuild the native application after installing it or updating native host source/schema. The descendant Tab/Escape bridge also needs that rebuild; a JavaScript reload is insufficient. Expo Go does not contain the Fabric interaction host required by interactive rows and Modal/Dialog/Popover/Menu. Use an Expo development build (`npx expo run:ios` or `npx expo run:android`) or the application's existing bare React Native native build. Existing controls have not all been migrated to the host. See [native host setup and custom roots](native-host.md).

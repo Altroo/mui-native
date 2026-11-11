@@ -10,7 +10,7 @@ import Box from '@mui/material/Box';
 </Box>;
 ```
 
-This guide describes unpublished development after `0.0.7-prealpha.0`. See the [changelog](../CHANGELOG.md) for released package contents.
+This guide describes version `0.0.8-prealpha.0`. See the [changelog](../CHANGELOG.md) for released package contents.
 
 ## Props and roots
 
