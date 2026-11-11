@@ -2,6 +2,7 @@
 import XCTest
 
 /// Native touch, body-local edit retention and opt-in unmounting; physical matrices remain separate.
+@MainActor
 final class AccordionCatalogUITests: XCTestCase {
   private let app = XCUIApplication(bundleIdentifier: "dev.altroo.muinative.catalog")
   private func node(_ id: String) -> XCUIElement {
@@ -12,7 +13,7 @@ final class AccordionCatalogUITests: XCTestCase {
       predicate: NSPredicate { _, _ in condition() }, object: nil)
     XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: 12), .completed, message)
   }
-  override func setUpWithError() throws {
+  override func setUp() async throws {
     continueAfterFailure = false
     app.launchArguments = []
     app.launch()

@@ -58,13 +58,13 @@ export interface AccordionSlotsAndSlotProps {
 }
 export interface AccordionOwnProps extends AccordionSlotsAndSlotProps {
   children: NonNullable<React.ReactNode>;
-  classes?: Partial<AccordionClasses>;
-  className?: string;
-  defaultExpanded?: boolean;
-  disabled?: boolean;
-  disableGutters?: boolean;
-  expanded?: boolean;
-  onChange?: (event: ButtonBaseActivationEvent, expanded: boolean) => void;
+  classes?: Partial<AccordionClasses> | undefined;
+  className?: string | undefined;
+  defaultExpanded?: boolean | undefined;
+  disabled?: boolean | undefined;
+  disableGutters?: boolean | undefined;
+  expanded?: boolean | undefined;
+  onChange?: ((event: ButtonBaseActivationEvent, expanded: boolean) => void) | undefined;
 }
 export interface AccordionProps
   extends Omit<PaperProps, 'children' | 'onChange' | 'component' | 'classes'>,
@@ -80,6 +80,8 @@ export interface AccordionSummaryRootSlotPropsOverrides {}
 export interface AccordionSummaryContentSlotPropsOverrides {}
 export interface AccordionSummaryExpandIconWrapperSlotPropsOverrides {}
 export interface AccordionSummaryRootSlotProps extends Omit<ButtonBaseProps, 'children'> {
+  className?: string | undefined;
+  focusVisibleClassName?: string | undefined;
   children?: React.ReactNode;
   ownerState?: AccordionSummaryOwnerState;
   as?: React.ComponentType<any>;
@@ -109,11 +111,11 @@ export interface AccordionSummarySlotsAndSlotProps {
   };
 }
 export interface AccordionSummaryOwnProps extends AccordionSummarySlotsAndSlotProps {
-  classes?: Partial<AccordionSummaryClasses>;
-  className?: string;
-  focusVisibleClassName?: string;
+  classes?: Partial<AccordionSummaryClasses> | undefined;
+  className?: string | undefined;
+  focusVisibleClassName?: string | undefined;
   expandIcon?: React.ReactNode;
-  'aria-controls'?: string;
+  'aria-controls'?: string | undefined;
 }
 export interface AccordionSummaryProps
   extends Omit<ButtonBaseProps, 'children'>,
@@ -122,9 +124,9 @@ export interface AccordionSummaryProps
 }
 export interface AccordionSummaryOwnerState
   extends Omit<AccordionSummaryProps, 'slots' | 'slotProps'> {
-  expanded?: boolean;
+  expanded?: boolean | undefined;
   disabled: boolean;
-  disableGutters?: boolean;
+  disableGutters?: boolean | undefined;
 }
 export interface AccordionDetailsProps extends Omit<BoxProps, 'sx' | 'component'> {
   classes?: Partial<AccordionDetailsClasses> | undefined;

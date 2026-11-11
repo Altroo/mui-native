@@ -30,6 +30,8 @@ try {
     ['ListItemAvatar', 'listItemAvatarClasses', 'getListItemAvatarUtilityClass'],
     ['ListItemIcon', 'listItemIconClasses', 'getListItemIconUtilityClass'],
     ['AccordionDetails', 'accordionDetailsClasses', 'getAccordionDetailsUtilityClass'],
+    ['Accordion', 'accordionClasses', 'getAccordionUtilityClass'],
+    ['AccordionSummary', 'accordionSummaryClasses', 'getAccordionSummaryUtilityClass'],
     ['Typography', 'typographyClasses', 'getTypographyUtilityClass'],
   ]) {
     const entry = requireConsumer('@altroo/mui-native/' + name);
@@ -57,6 +59,16 @@ try {
       'InstalledMuiAccordionDetails-root',
     );
     assert.equal(details.getAccordionDetailsUtilityClass('disabled'), 'Mui-disabled');
+    for (const name of ['Accordion', 'AccordionSummary']) {
+      const entry = requireConsumer('@altroo/mui-native/' + name);
+      const prefix = name[0].toLowerCase() + name.slice(1);
+      const leaf = requireConsumer('@altroo/mui-native/' + name + '/' + prefix + 'Classes');
+      assert.equal(leaf.default, entry[prefix + 'Classes']);
+      assert.equal(leaf['get' + name + 'UtilityClass'], material['get' + name + 'UtilityClass']);
+      assert.equal(leaf['get' + name + 'UtilityClass']('root'), 'InstalledMui' + name + '-root');
+      assert.equal(entry['get' + name + 'UtilityClass']('disabled'), 'Mui-disabled');
+    }
+
     assert.equal(details.accordionDetailsClasses.root, loadedDetailsRoot);
   } finally {
     unstable_ClassNameGenerator.reset();

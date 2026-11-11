@@ -49,7 +49,9 @@ Summary `id` and `aria-controls` map to the region's native ID and `aria-labelle
 
 Native theme defaults, variants, named slot overrides, supported state selectors, `sx` and native `style` compose through the existing styling system. Root-slot `sx` replaces component `sx`; native styles apply last. `disableGutters` prevents expanded summary height/content-margin growth and outer expansion margins. `square`, `variant` and `elevation` flow through the native Paper root. Actions use end alignment and optional spacing.
 
-Utility-class helpers preserve the pinned identifier vocabulary. Arbitrary browser CSS classes, HTML element roots and DOM refs require native equivalents. Browser sibling pseudo-elements, automatic first/last sibling rounding, CSS margin animation and animated icon rotation are not implemented. Native grouping/animation policies, inherited Paper/polymorphic contracts, physical accessibility, RTL/font matrices and calibrated performance remain open. No full compatibility or completion claim is made.
+Accordion and Summary compose the original utility identifiers with supplied class maps and className. Generated and authored slot tokens match supported native self selectors; custom roots receive composed className metadata. Summary focus classes activate with the actual native focus-visible state. Utility helpers read the canonical class-name generator live, global state names stay fixed, and exported maps retain their module-load names. The class interfaces support augmentation without adding unimplemented runtime slots.
+
+External browser stylesheets, HTML element roots and DOM refs require native equivalents. Browser sibling pseudo-elements, automatic first/last sibling rounding, CSS margin animation and animated icon rotation are not implemented. Native grouping/animation policies, inherited Paper/polymorphic contracts, physical accessibility, RTL/font matrices and calibrated performance remain open. No full compatibility or completion claim is made.
 
 ## AccordionActions
 

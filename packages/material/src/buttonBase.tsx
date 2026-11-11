@@ -10,6 +10,8 @@ import React, {
 } from 'react';
 import {
   Pressable,
+  View,
+  Text,
   StyleSheet,
   Platform,
   Linking,
@@ -33,6 +35,7 @@ import {
   isNativeTextStyleProperty,
   diagnostic,
   componentStyle,
+  componentRootStyle,
   type SxProps,
   type NativeStyle,
   type StyleContext,
@@ -48,6 +51,7 @@ import {
   type ButtonBaseActivationEvent,
 } from './nativeButtonEvents';
 import { NativePressable } from '@altroo/mui-native-host';
+import { unstable_ClassNameGenerator } from './classNameGenerator';
 import { NativeButtonActivationKeys } from './nativeButtonActivationKeys';
 import { NativeCompositeKeys } from './nativeCompositeKeys';
 import { useNativeButtonAutoFocus } from './useNativeButtonAutoFocus';
@@ -81,6 +85,8 @@ export interface ButtonBaseOwnProps {
   _muiNativeItemState?: { focused: boolean; focusVisible: boolean; selected: boolean };
   /** @internal Exact generated class metadata; authored CSS still diagnoses. */
   _muiNativeClassName?: string;
+  /** @internal Class metadata activated by the actual native focus-visible state. */
+  _muiNativeClassMetadata?: { root: string; focusVisible?: string | undefined };
   /** @internal A composing control can own its theme focus ring. */
   internalDisabledThemeFocusVisible?: boolean;
   /** @internal Keep wrapper CSS in the same cascade, separately from native inline styles. */
@@ -95,8 +101,8 @@ export interface ButtonBaseOwnProps {
   children?: React.ReactNode | ((state: ButtonBaseState) => React.ReactNode);
   sx?: SxProps;
   style?: StyleProp<NativeStyle> | ((state: ButtonBaseState) => StyleProp<NativeStyle>);
-  component?: React.ComponentType<ButtonBaseRootProps>;
-  LinkComponent?: React.ComponentType<ButtonBaseRootProps>;
+  component?: React.ComponentType<ButtonBaseRootProps> | typeof View;
+  LinkComponent?: React.ComponentType<ButtonBaseRootProps> | typeof View;
   href?: string;
   to?: unknown;
   onClick?: (event: ButtonBaseActivationEvent) => void;
@@ -212,6 +218,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     _muiNativeStyle,
     _muiNativeItemState,
     _muiNativeClassName,
+    _muiNativeClassMetadata,
     onClick,
     onPress,
     onKeyDown,
@@ -269,12 +276,14 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     parent = useNativeTextContext(),
     { width } = useWindowDimensions();
   const isLink = Boolean(href || to);
-  const chosen = component === Pressable ? NativePressable : component;
-  const link = LinkComponent === Pressable ? NativePressable : LinkComponent;
-  const Root =
+  const chosen = component === Pressable || component === View ? NativePressable : component;
+  const link =
+    LinkComponent === Pressable || LinkComponent === View ? NativePressable : LinkComponent;
+  const Root = (
     !chosen || chosen === NativePressable
       ? ((isLink ? link : undefined) ?? NativePressable)
-      : chosen;
+      : chosen
+  ) as React.ComponentType<ButtonBaseRootProps>;
   const ownedLink = Root === NativePressable && Boolean(href);
   const staticStyle = typeof style === 'function' ? undefined : style;
   const ownerState = {
@@ -287,7 +296,25 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     tabIndex,
     focusVisible: visualFocusVisible,
   };
+  // A composed Summary retains the actual inherited ButtonBase identifiers.
+  const composedClassName = _muiNativeClassMetadata
+    ? [
+        unstable_ClassNameGenerator.generate('MuiButtonBase') + '-root',
+        disabled && 'Mui-disabled',
+        focusVisible && !suppressFocusVisible && 'Mui-focusVisible',
+        focusVisible && !suppressFocusVisible && _muiNativeClassMetadata.focusVisible,
+        _muiNativeClassMetadata.root,
+      ]
+        .filter(Boolean)
+        .join(' ')
+    : undefined;
   const styleContext = {
+    ...(_muiNativeClassMetadata
+      ? {
+          classes: composedClassName!.split(/\s+/).filter(Boolean),
+          rootProps: { ...props, className: composedClassName, ownerState },
+        }
+      : {}),
     ...nativeTextStyleContext(parent, staticStyle, theme),
     width,
     states: [
@@ -351,21 +378,39 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     focusVisible: visualFocusVisible,
     disabled,
   });
-  let styleCache: { authored: StyleProp<NativeStyle>; computed: NativeStyle } | undefined;
+  let styleCache:
+    | { input: StyleProp<NativeStyle>; authored: StyleProp<NativeStyle>; computed: NativeStyle }
+    | undefined;
   const effectiveStyle = (state: PressableStateCallbackType): StyleProp<NativeStyle> => {
     let authored: StyleProp<NativeStyle>;
     let resolved: NativeStyle;
     if (_muiNativeStyle) {
       ({ computed: resolved, authored } = _muiNativeStyle(stateFor(state), baseSheet));
     } else if (typeof style === 'function') {
-      authored = style(stateFor(state));
-      if (styleCache && styleCache.authored === authored) resolved = styleCache.computed;
-      else {
-        resolved = componentStyle(theme, 'MuiButtonBase', ownerState, sx, {
-          ...styleContext,
-          ...nativeTextStyleContext(parent, authored, theme),
-        });
-        styleCache = { authored, computed: resolved };
+      const input = style(stateFor(state));
+      if (styleCache && styleCache.input === input) {
+        resolved = styleCache.computed;
+        authored = styleCache.authored;
+      } else {
+        if (_muiNativeClassMetadata) {
+          const root = componentRootStyle(
+            theme,
+            'MuiButtonBase',
+            ownerState,
+            sx,
+            input,
+            styleContext,
+          );
+          resolved = root.computed;
+          authored = root.authored;
+        } else {
+          authored = input;
+          resolved = componentStyle(theme, 'MuiButtonBase', ownerState, sx, {
+            ...styleContext,
+            ...nativeTextStyleContext(parent, authored, theme),
+          });
+        }
+        styleCache = { input, authored, computed: resolved };
       }
     } else {
       authored = style;
@@ -463,13 +508,25 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   return (
     <Root
       {...host}
+      {...(Root === NativePressable || Root === View || Root === Text || !_muiNativeClassMetadata
+        ? {}
+        : {
+            className: composedClassName,
+          })}
       {...(Root === NativePressable ? {} : { href, to })}
       ref={ref}
       accessibilityRole={native.accessibilityRole ?? (isLink ? 'link' : 'button')}
       accessibilityState={{ ...native.accessibilityState, disabled }}
       aria-disabled={disabled || native['aria-disabled']}
       disabled={disabled && focusableWhenDisabled ? undefined : disabled}
-      pointerEvents={disabled ? 'none' : native.pointerEvents}
+      // The shared host's disabled class blocks pointer targeting even when a
+      // slot keeps disabled=false and native keyboard activation enabled.
+      pointerEvents={
+        disabled ||
+        (_muiNativeClassMetadata && composedClassName?.split(/\s+/).includes('Mui-disabled'))
+          ? 'none'
+          : native.pointerEvents
+      }
       onLongPress={(event) => {
         if (!disabled) native.onLongPress?.(event);
       }}
