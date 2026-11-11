@@ -21,6 +21,7 @@ import {
 import DeepAvatar, {
   listItemAvatarClasses as deepClasses,
 } from '../packages/material/src/ListItemAvatar';
+import { unstable_ClassNameGenerator } from '../packages/material/src/className';
 import reference from './fixtures/mui-list-item-avatar-9.5.0.json';
 import { NativePortalModel } from './helpers/nativePortalModel';
 
@@ -81,6 +82,39 @@ test('root and canonical deep imports preserve identity and all pinned utility i
   expect(listItemAvatarClasses).toEqual(reference.classes);
   for (const [slot, value] of Object.entries(reference.utilities))
     expect(getListItemAvatarUtilityClass(slot)).toBe(value);
+});
+test('the canonical class generator configures live Avatar classes and self selectors', () => {
+  const Root = forwardRef<ViewInstance, ListItemAvatarRootProps>(
+    ({ className: _className, ...native }, ref) => <View {...native} ref={ref} />,
+  );
+  const content = () => (
+    <ListItem alignItems="flex-start">
+      <ListItemAvatar
+        component={Root}
+        className="chosen"
+        testID="configured-avatar"
+        sx={{ [`&.${reference.configured.alignItemsFlexStart}`]: { marginTop: '15px' } }}
+      />
+    </ListItem>
+  );
+  const tree = render(content());
+  expect(tree.getByTestId('configured-avatar')).toHaveStyle({ marginTop: 8 });
+  try {
+    unstable_ClassNameGenerator.configure((name) => `Consumer${name}`);
+    tree.rerender(content());
+    expect(tree.UNSAFE_getByType(Root).props.className).toBe(reference.configured.className);
+    expect(tree.getByTestId('configured-avatar')).toHaveStyle({ marginTop: 15 });
+    expect(getListItemAvatarUtilityClass('root')).toBe(reference.configured.root);
+    expect(getListItemAvatarUtilityClass('alignItemsFlexStart')).toBe(
+      reference.configured.alignItemsFlexStart,
+    );
+    expect(getListItemAvatarUtilityClass('disabled')).toBe(reference.configured.disabled);
+    expect(listItemAvatarClasses.root).toBe(reference.configured.mapRoot);
+  } finally {
+    unstable_ClassNameGenerator.reset();
+  }
+  tree.rerender(content());
+  expect(tree.getByTestId('configured-avatar')).toHaveStyle({ marginTop: 8 });
 });
 test.each(reference.fixtures)('original complete wrapper composition: $input.name', (fixture) => {
   const input = fixture.input as {

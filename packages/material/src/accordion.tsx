@@ -26,7 +26,10 @@ import { Collapse } from './collapse';
 import { useControlled } from './formState';
 import { useTheme, useComponentStyle, useComponentRootStyle } from './themeProvider';
 import { useForkRef } from './utils';
-import { getAccordionDetailsUtilityClass } from './accordionClasses';
+import {
+  getAccordionActionsUtilityClass,
+  getAccordionDetailsUtilityClass,
+} from './accordionClasses';
 import { mergeNativeRootStyle } from './nativeControlStyles';
 import type {
   AccordionProps,
@@ -476,29 +479,93 @@ export const AccordionDetails: NativeAccordionDetailsComponent = forwardRef<
     </NativeTextScope>
   );
 }) as NativeAccordionDetailsComponent;
-export const AccordionActions: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<AccordionActionsProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, AccordionActionsProps>(function AccordionActions(inProps, ref) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiAccordionActions' });
-  const { classes, className, component, children, disableSpacing = false, ...native } = props;
-  classesDiagnostic('AccordionActions', classes, className);
-  return (
-    <Frame
-      name="MuiAccordionActions"
-      owner={{ ...props, disableSpacing }}
-      resolved={native}
-      component={component}
-      ref={ref}
-      overrideKeys={disableSpacing ? [] : ['spacing']}
-      base={{
+interface NativeAccordionActionsComponent
+  extends React.ForwardRefExoticComponent<
+    React.PropsWithoutRef<AccordionActionsProps> & React.RefAttributes<ViewInstance>
+  > {
+  (props: AccordionActionsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;
+}
+export const AccordionActions: NativeAccordionActionsComponent = forwardRef<
+  ViewInstance,
+  AccordionActionsProps
+>(function AccordionActions(inProps, ref) {
+  const { props, style: preparedStyle } = useNativeRootProps({
+    props: inProps,
+    name: 'MuiAccordionActions',
+  });
+  const {
+    classes,
+    className,
+    component: Component = View,
+    as,
+    ref: slotRef,
+    ownerState: _ownerState,
+    children,
+    disableSpacing = false,
+    id,
+    sx,
+    style,
+    ...native
+  } = props as AccordionActionsProps & NativeAccordionSlotProps;
+  const Root = Component === View ? (as ?? View) : Component;
+  const mergedRef = useForkRef(ref, slotRef);
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(mergedRef);
+  const theme = useTheme(),
+    parent = useNativeTextContext();
+  const token = (slot: 'root' | 'spacing') => {
+    let value = getAccordionActionsUtilityClass(slot);
+    // Match composeClasses: a truthy active entry is read once again when appended.
+    if (classes && classes[slot]) value += ' ' + classes[slot];
+    return value;
+  };
+  const rootClass = joinClassNames(token('root'), !disableSpacing && token('spacing'), className);
+  const owner = { ...props, disableSpacing };
+  const { disableSpacing: _disableSpacing, ...styledProps } = props;
+  const { computed: resolved, authored } = useComponentRootStyle(
+    'MuiAccordionActions',
+    owner,
+    sx,
+    preparedStyle,
+    {
+      ...nativeTextStyleContext(parent, style, theme),
+      slot: 'root',
+      overrideKeys: disableSpacing ? [] : ['spacing'],
+      classes: rootClass.split(/\s+/).filter(Boolean),
+      rootProps: {
+        ...styledProps,
+        ...(as || Component !== View ? { as: as ?? Component } : {}),
+        className: rootClass,
+      },
+      baseStyle: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-end',
         padding: 8,
+        // Yoga gap preserves caller-owned children and mirrors with the native row direction.
         columnGap: disableSpacing ? 0 : 8,
-      }}
-    >
-      {children}
-    </Frame>
+      },
+    },
   );
-});
+  // Keep native array precedence: an inline gap does not erase a named columnGap.
+  return (
+    <NativeTextScope
+      rootRef={scopeRoot}
+      theme={theme}
+      style={[resolved, authored]}
+      content={children}
+    >
+      {(rootStyle, content) => (
+        <Root
+          {...native}
+          nativeID={id ?? native.nativeID}
+          {...(Root === View ? {} : { className: rootClass, ownerState: owner })}
+          {...(Component !== View && as ? { as } : {})}
+          ref={scopeRef}
+          style={rootStyle}
+        >
+          {content}
+        </Root>
+      )}
+    </NativeTextScope>
+  );
+}) as NativeAccordionActionsComponent;

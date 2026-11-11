@@ -1,7 +1,7 @@
 /* Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 import XCTest
 
-/// Actual native ref measurements and retained children for the two layout wrappers.
+/// Actual native measurements, accessibility and retained children for layout wrappers.
 @MainActor
 final class RootLayoutCatalogUITests: XCTestCase {
   private let app = XCUIApplication(bundleIdentifier: "dev.altroo.muinative.catalog")
@@ -111,18 +111,26 @@ final class RootLayoutCatalogUITests: XCTestCase {
     XCTAssertGreaterThan(reveal("form-group-contract-styled").frame.width, 0)
     capture("form-group-ios-row-error-rtl-authored-text")
   }
-  private func chooseAvatar() throws {
-    let route = node("root-layout-avatar"), navigation = node("root-layout-navigation")
+  private func chooseWrapper(_ id: String) throws {
+    let route = node(id), navigation = node("root-layout-navigation")
     for _ in 0..<16 {
       let frame = route.exists ? route.frame : .zero
-      if !frame.isEmpty && navigation.frame.contains(CGPoint(x: frame.midX, y: frame.midY)) && route.isHittable {
+      let viewport = navigation.frame.intersection(app.frame).insetBy(dx: 12, dy: 3)
+      XCTAssertGreaterThan(viewport.width, 48, "A visible wrapper navigation viewport is required")
+      if !frame.isEmpty && viewport.contains(CGPoint(x: frame.midX, y: frame.midY)) && route.isHittable {
         route.tap()
         return
       }
-      if !frame.isEmpty && frame.midX < navigation.frame.minX { navigation.swipeRight() }
-      else { navigation.swipeLeft() }
+      let delta = frame.isEmpty ? viewport.width : frame.midX - viewport.midX
+      let distance = min(max(abs(delta), 24), viewport.width * 0.4)
+      let origin = app.coordinate(withNormalizedOffset: .zero)
+      let x = viewport.midX - app.frame.minX, y = viewport.midY - app.frame.minY
+      // Bounded, slow drags avoid alternating across a route between pages.
+      let start = origin.withOffset(CGVector(dx: x, dy: y))
+      let end = origin.withOffset(CGVector(dx: x - (delta >= 0 ? distance : -distance), dy: y))
+      start.press(forDuration: 0.1, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.2)
     }
-    throw NSError(domain: "RootLayoutCatalogUITests", code: 1, userInfo: [NSLocalizedDescriptionKey: "Avatar route is not visible"])
+    throw NSError(domain: "RootLayoutCatalogUITests", code: 1, userInfo: [NSLocalizedDescriptionKey: "Wrapper route is not visible: " + id])
   }
 
   private func verifyAvatarExposure(_ roots: [String: String], count: Int, stage: String) throws {
@@ -173,7 +181,7 @@ final class RootLayoutCatalogUITests: XCTestCase {
   }
 
   private func runAvatar(checkExposure: Bool) throws {
-    try chooseAvatar()
+    try chooseWrapper("root-layout-avatar")
     let receipt = "avatar-contract-receipt"
     let roots = ["native": "avatar-contract-native", "custom": "avatar-contract-custom",
       "portal": "avatar-contract-portal"]
@@ -208,5 +216,73 @@ final class RootLayoutCatalogUITests: XCTestCase {
     try measured(receipt, roots: roots)
     XCTAssertEqual(node("avatar-contract-native").frame.width, 56, accuracy: 1)
     try verifyAvatarExposure(roots, count: 1, stage: "restored")
+  }
+
+  func testAccordionActionsGapAndRetainedChild() throws {
+    try runAccordionActions(enlarged: false)
+  }
+
+  func testAccordionActionsAtEnlargedOSTextSize() throws {
+    try runAccordionActions(enlarged: true)
+  }
+
+  private func runAccordionActions(enlarged: Bool) throws {
+    try chooseWrapper("root-layout-actions")
+    try actionsState("standard", disable: false, roomy: false, rtl: false, gap: 8, count: 0, enlarged: enlarged)
+    reveal("actions-preview-save").tap()
+    reveal("actions-preview-theme").tap()
+    try actionsState("roomy", disable: false, roomy: true, rtl: false, gap: 16, count: 1, enlarged: enlarged)
+    reveal("actions-preview-direction").tap()
+    try actionsState("rtl", disable: false, roomy: true, rtl: true, gap: 16, count: 1, enlarged: enlarged)
+    capture("accordion-actions-rtl")
+    reveal("actions-preview-spacing").tap()
+    try actionsState("no-gap", disable: true, roomy: true, rtl: true, gap: 0, count: 1, enlarged: enlarged)
+    for id in ["spacing", "theme", "direction"] { reveal("actions-preview-" + id).tap() }
+    try actionsState("restored", disable: false, roomy: false, rtl: false, gap: 8, count: 1, enlarged: enlarged)
+    capture("accordion-actions-restored")
+  }
+
+  private func actionsState(
+    _ stage: String, disable: Bool, roomy: Bool, rtl: Bool, gap: CGFloat, count: Int, enlarged: Bool
+  ) throws {
+    let receipt = "actions-preview-receipt"
+    let row = node("actions-preview-row")
+    let keep = reveal("actions-preview-keep"), save = reveal("actions-preview-save")
+    func childGap(_ first: CGRect, _ second: CGRect) -> CGFloat {
+      rtl ? first.minX - second.maxX : second.minX - first.maxX
+    }
+    // React state alone cannot acknowledge the new Yoga layout. Require actual
+    // accessible button frames to reach the expected gap and physical order.
+    waitFor("Native action row must settle: " + stage) {
+      guard let value = self.metadata(receipt),
+        value["disableSpacing"] as? Bool == disable,
+        value["roomy"] as? Bool == roomy, value["rtl"] as? Bool == rtl,
+        let refs = value["refs"] as? [String: Int], refs["attached"] == 1, refs["cleaned"] == 0,
+        let font = value["fontScale"] as? Double, (enlarged ? font >= 1.6 : abs(font - 1) < 0.01),
+        keep.exists, save.exists, row.exists else { return false }
+      let first = keep.frame, second = save.frame, parent = row.frame
+      return !first.isEmpty && !second.isEmpty && !parent.isEmpty
+        && abs(first.midY - second.midY) <= 1
+        && parent.contains(CGPoint(x: first.midX, y: first.midY))
+        && parent.contains(CGPoint(x: second.midX, y: second.midY))
+        && (rtl ? first.midX > second.midX : first.midX < second.midX)
+        && abs(childGap(first, second) - gap) <= 1
+        && save.label == "Saved notes " + String(count)
+    }
+    let rowFrame = row.frame, keepFrame = keep.frame, saveFrame = save.frame
+    func rectangle(_ frame: CGRect) -> [Double] {
+      [Double(frame.minX), Double(frame.minY), Double(frame.width), Double(frame.height)]
+    }
+    let observation: [String: Any] = [
+      "stage": stage, "gap": Double(childGap(keepFrame, saveFrame)),
+      "rowFrame": rectangle(rowFrame), "keepFrame": rectangle(keepFrame),
+      "saveFrame": rectangle(saveFrame), "saveLabel": save.label,
+      "state": try XCTUnwrap(metadata(receipt)),
+    ]
+    let data = try JSONSerialization.data(withJSONObject: observation, options: [.sortedKeys])
+    let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+    attachment.name = "accordion-actions-" + stage
+    attachment.lifetime = .keepAlways
+    add(attachment)
   }
 }

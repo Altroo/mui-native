@@ -433,3 +433,31 @@ node scripts/native-catalog/android-popper.mjs run --serial "$MUI_QA_DEVICE" --s
 The driver waits for actual native layout and attached ref acknowledgement before testing the three stages. For all four roots, it locates the separately identified Button and TextView in the active UiAutomation tree, reads native roles and labels, checks that the button exposes an enabled click action, and verifies both node centers inside the measured group. Real touches increment all four counters. This checks the advertised click action and actual touch behavior; it does not invoke `ACTION_CLICK`.
 
 The strict collector requires three stages, twelve group observations, unchanged actual root tags and live refs, the expected node roles and labels, and three screenshots. The scenario passed on API 37 at actual OS text scale 1.0. Android screen-reader traversal and spoken announcements remain separate evidence.
+
+## ListItemAvatar native accessibility tree
+
+Run `testAvatarNativeAccessibilityExposure` from [RootLayoutCatalogUITests.swift](../tests/native/ios/RootLayoutCatalogUITests.swift) on the existing iOS simulator at normal OS text size. This method is separate from the enlarged-text geometry check.
+
+On Android, [prepare both APKs](#build-the-catalog-and-test-apks) and [select the existing emulator](#select-one-device-and-run) at normal OS text size. Use an unused output directory:
+
+```sh
+node scripts/native-catalog/android-popper.mjs run --serial "$MUI_QA_DEVICE" --scenario list-item-avatar-accessibility --output .cache/native-list-item-avatar-accessibility
+```
+
+The Android test clears the UiAutomation flag that includes views marked unimportant for accessibility, then locates the inline and portaled images by role and label in the active native tree. Their centers must belong to their respective measured wrapper frames, and the native source nodes must differ. The custom child must expose a unique button identifier and an enabled click action. The test activates it by a real tap, then rechecks its counter and the retained wrapper tags after changing alignment, theme and direction and after restoring them. The report retains three stage records and screenshots. This covers selected native tree exposure and touch; screen reader traversal and announcements need separate checks.
+
+## AccordionActions native layout
+
+The catalog's Wrappers / Actions scene shows a delivery note with two retained action buttons. Open it on an existing simulator at normal OS text size. The controls change the active spacing class, the themed gap and the native row direction.
+
+On iOS, select `testAccordionActionsGapAndRetainedChild` from [RootLayoutCatalogUITests.swift](../tests/native/ios/RootLayoutCatalogUITests.swift). It uses actual XCTest button frames and a real tap. The same View ref must stay attached while the measured gap changes between 8, 16 and 0 points. The saved count must remain at one after restoring the original settings. Select `testAccordionActionsAtEnlargedOSTextSize` separately after setting the iOS simulator to an enlarged OS text category; the maintained check requires actual font scale of at least 1.6.
+
+On Android, [build both APKs](#build-the-catalog-and-test-apks) and [select the existing emulator](#select-one-device-and-run). At normal OS text size, use an unused output directory:
+
+```sh
+node scripts/native-catalog/android-popper.mjs run --serial "$MUI_QA_DEVICE" --scenario accordion-actions-layout --output .cache/native-accordion-actions
+```
+
+For enlarged Android text, select a system font scale of at least 1.6 and add `--font-profile enlarged`. Use a new output directory and restore the original OS text setting after the run. Without the flag, the scenario requires normal OS text. The recorded API 37 runs used actual scales 1.0 and 2.0.
+
+The Android driver measures the retained native row and both action Views. It checks whether the actions are native descendants or immediate flattened siblings, then verifies physical order, both ref counters and the saved count at all five stages. It exports two screenshots and the stage receipts. These scenarios cover native layout and touch. They do not establish accessibility traversal, visual layout for every OS text setting or performance.
