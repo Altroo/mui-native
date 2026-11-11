@@ -56,7 +56,7 @@ function inside(child, parent) {
 }
 
 /** Confirm the actual retained root, native geometry and real touch result. */
-export function summarizeAccordionActionsLayout(output) {
+export function summarizeAccordionActionsLayout(output, { fontProfile = 'normal' } = {}) {
   const report = inspectAccordionActionsLayout(output);
   const codes = [...output.matchAll(/^INSTRUMENTATION_CODE: (-?\d+)\r?$/gm)].map((m) => m[1]);
   requireEvidence(
@@ -65,11 +65,15 @@ export function summarizeAccordionActionsLayout(output) {
       report.status === 'passed',
     report.error ?? 'successful instrumentation',
   );
+  const fontScale = report.device?.fontScale;
   requireEvidence(
-    Number.isInteger(report.device?.sdk) &&
+    ['normal', 'enlarged'].includes(fontProfile) &&
+      (report.fontProfile ?? 'normal') === fontProfile &&
+      Number.isInteger(report.device?.sdk) &&
       report.device.sdk >= 29 &&
-      report.device.fontScale === 1,
-    'actual normal OS text size',
+      Number.isFinite(fontScale) &&
+      (fontProfile === 'normal' ? fontScale === 1 : fontScale >= 1.6),
+    'actual requested OS text size',
   );
   requireEvidence(
     equal(report.stages, stages) &&
@@ -89,7 +93,8 @@ export function summarizeAccordionActionsLayout(output) {
         state?.disableSpacing === disabled &&
         state.roomy === roomy &&
         state.rtl === rtl &&
-        state.fontScale === 1 &&
+        Number.isFinite(state.fontScale) &&
+        Math.abs(state.fontScale - fontScale) < 0.01 &&
         state.refs?.attached === 1 &&
         state.refs.cleaned === 0 &&
         sample.saveLabel === `Saved notes ${count}`,

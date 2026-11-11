@@ -278,21 +278,33 @@ export async function run(
     throw Error('Unknown catalog scenario');
   if (typeof globalRTL !== 'boolean' || (globalRTL && scenario !== 'button-group-reading'))
     throw Error('Global RTL profiles apply only to reading checks');
+  const usesFontProfile = [
+    'divider',
+    'paper',
+    'box',
+    'card',
+    'layout-roots',
+    'accordion-actions-layout',
+  ].includes(scenario);
+  const selectedFontProfile =
+    scenario === 'accordion-actions-layout' ? (fontProfile ?? 'normal') : fontProfile;
   if (
-    ['divider', 'paper', 'box', 'card', 'layout-roots'].includes(scenario)
-      ? !['normal', 'enlarged'].includes(fontProfile)
-      : fontProfile !== undefined
+    usesFontProfile
+      ? !['normal', 'enlarged'].includes(selectedFontProfile)
+      : selectedFontProfile !== undefined
   )
     throw Error(
-      (scenario === 'layout-roots'
-        ? 'Layout root'
-        : scenario === 'card'
-          ? 'Card'
-          : scenario === 'box'
-            ? 'Box'
-            : scenario === 'paper'
-              ? 'Paper'
-              : 'Divider') + ' checks require an explicit normal/enlarged font profile',
+      (scenario === 'accordion-actions-layout'
+        ? 'AccordionActions'
+        : scenario === 'layout-roots'
+          ? 'Layout root'
+          : scenario === 'card'
+            ? 'Card'
+            : scenario === 'box'
+              ? 'Box'
+              : scenario === 'paper'
+                ? 'Paper'
+                : 'Divider') + ' checks require an explicit normal/enlarged font profile',
     );
   if (typeof serial !== 'string' || !serial.trim())
     throw Error('Choose one explicit --serial; devices are never selected automatically');
@@ -324,9 +336,7 @@ export async function run(
             '-w',
             '-r',
             ...(scenario === 'popper' ? [] : ['-e', 'scenario', scenario]),
-            ...(['divider', 'paper', 'box', 'card', 'layout-roots'].includes(scenario)
-              ? ['-e', 'fontProfile', fontProfile]
-              : []),
+            ...(usesFontProfile ? ['-e', 'fontProfile', selectedFontProfile] : []),
             ...(scenario === 'button-group-reading' ? ['-e', 'globalRTL', String(globalRTL)] : []),
             component,
           ],
@@ -407,7 +417,8 @@ export async function run(
     else if (scenario === 'form-group-editor') summarizeFormGroupEditor(text);
     else if (scenario === 'form-group-accessibility') summarizeFormGroupAccessibility(text);
     else if (scenario === 'list-item-avatar-accessibility') summarizeAvatarAccessibility(text);
-    else if (scenario === 'accordion-actions-layout') summarizeAccordionActionsLayout(text);
+    else if (scenario === 'accordion-actions-layout')
+      summarizeAccordionActionsLayout(text, { fontProfile: selectedFontProfile });
     else if (scenario === 'form-group-focus') summarizeFormGroupFocus(text);
     else if (scenario === 'text-alignment') summarizeTextAlignment(text);
     else if (scenario === 'divider') summarizeDivider(text, { fontProfile });

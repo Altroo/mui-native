@@ -14,19 +14,21 @@ const stageValues = [
   ['restored', false, false, false, 8, 1],
 ];
 const frame = (x) => ({ x, y: 12, width: 104, height: 44 });
-function sample() {
+function sample(fontProfile = 'normal') {
+  const fontScale = fontProfile === 'normal' ? 1 : 2;
   return {
     schemaVersion: 1,
     scenario: 'accordion-actions-layout-v1',
     driver: 'native Instrumentation and UiAutomation',
     artifactDirectory: 'cache/mui-accordion-actions-layout-123',
-    device: { sdk: 37, fontScale: 1 },
+    fontProfile,
+    device: { sdk: 37, fontScale },
     status: 'passed',
     stages: stageValues.map(([name]) => name),
     screenshots: ['accordion-actions-rtl.png', 'accordion-actions-restored.png'],
     states: stageValues.map(([name, disableSpacing, roomy, rtl, gap, count]) => ({
       name,
-      metadata: { disableSpacing, roomy, rtl, fontScale: 1, refs: { attached: 1, cleaned: 0 } },
+      metadata: { disableSpacing, roomy, rtl, fontScale, refs: { attached: 1, cleaned: 0 } },
       rootTag: 182,
       physical: {
         mode: rtl ? 'flattened-siblings' : 'descendants',
@@ -72,5 +74,31 @@ test('extracts safe failed diagnostics but rejects unsafe paths and exit codes',
   assert.throws(
     () => inspectAccordionActionsLayout(output({ ...report, screenshots: ['../failure.png'] }, 0)),
     /safe diagnostics/,
+  );
+});
+
+test('requires the observed OS text profile rather than relabeling a normal run', () => {
+  const enlarged = sample('enlarged');
+  assert.deepEqual(
+    summarizeAccordionActionsLayout(output(enlarged), { fontProfile: 'enlarged' }),
+    enlarged,
+  );
+  assert.throws(
+    () => summarizeAccordionActionsLayout(output(sample()), { fontProfile: 'enlarged' }),
+    /OS text size/,
+  );
+  const previousNormal = sample();
+  delete previousNormal.fontProfile;
+  assert.deepEqual(summarizeAccordionActionsLayout(output(previousNormal)), previousNormal);
+  enlarged.states[1].metadata.fontScale = '2';
+  assert.throws(
+    () => summarizeAccordionActionsLayout(output(enlarged), { fontProfile: 'enlarged' }),
+    /committed controls/,
+  );
+  enlarged.states[1].metadata.fontScale = 2;
+  enlarged.device.fontScale = 1;
+  assert.throws(
+    () => summarizeAccordionActionsLayout(output(enlarged), { fontProfile: 'enlarged' }),
+    /OS text size/,
   );
 });

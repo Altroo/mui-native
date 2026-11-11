@@ -458,4 +458,6 @@ On Android, [build both APKs](#build-the-catalog-and-test-apks) and [select the 
 node scripts/native-catalog/android-popper.mjs run --serial "$MUI_QA_DEVICE" --scenario accordion-actions-layout --output .cache/native-accordion-actions
 ```
 
-The Android driver measures the retained native row and action Views, which may be descendants or immediate flattened siblings and checks physical order, both refs counters and the saved count at all five stages. It exports two screenshots and the stage receipts. These scenarios cover native layout and touch. They do not establish Android enlarged-text behavior, accessibility traversal or performance.
+For enlarged Android text, select a system font scale of at least 1.6 and add `--font-profile enlarged`. Use a new output directory and restore the original OS text setting after the run. Without the flag, the scenario requires normal OS text. The recorded API 37 runs used actual scales 1.0 and 2.0.
+
+The Android driver measures the retained native row and both action Views. It checks whether the actions are native descendants or immediate flattened siblings, then verifies physical order, both ref counters and the saved count at all five stages. It exports two screenshots and the stage receipts. These scenarios cover native layout and touch. They do not establish accessibility traversal, visual layout for every OS text setting or performance.
