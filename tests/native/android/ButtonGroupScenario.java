@@ -368,11 +368,13 @@ public final class ButtonGroupScenario {
       require(target.getGlobalVisibleRect(visible)&&visible.width()==target.getWidth()&&visible.height()==target.getHeight()&&viewport.contains(visible)&&visible.equals(previous[0]),"Native touch target is covered: "+id+" visible="+visible+" size="+target.getWidth()+"x"+target.getHeight()+" viewport="+viewport);
       View surface=target;
       while(!(surface instanceof com.facebook.react.ReactRootView)&&surface.getParent() instanceof View)surface=(View)surface.getParent();
-      require(surface instanceof com.facebook.react.ReactRootView,"React touch surface must be present");
+      // Window Portals retain React descendants under a physical native window,
+      // without a ReactRootView ancestor. Inspect that window's actual hit path.
+      require(surface instanceof ViewGroup,"Physical native touch container must be present");
       int[] origin=new int[2],nativeTarget={0};surface.getLocationOnScreen(origin);
       com.facebook.react.uimanager.TouchTargetHelper.findTargetTagAndCoordinatesForTouch(visible.exactCenterX()-origin[0],visible.exactCenterY()-origin[1],(ViewGroup)surface,new float[2],nativeTarget);
       View actual=surface.findViewById(nativeTarget[0]);
-      touches.put(new JSONObject().put("hitWithinTarget",actual!=null&&contains(target,actual)).put("hitTestID",actual==null?JSONObject.NULL:actual.getTag(tagId)).put("target",id).put("bounds",readingBounds(target)).put("viewportPx",new JSONObject().put("left",viewport.left).put("top",viewport.top).put("right",viewport.right).put("bottom",viewport.bottom)).put("xPx",visible.exactCenterX()).put("yPx",visible.exactCenterY()));
+      touches.put(new JSONObject().put("hitPathScope",surface instanceof com.facebook.react.ReactRootView?"react-surface":"physical-window").put("hitWithinTarget",actual!=null&&contains(target,actual)).put("hitTestID",actual==null?JSONObject.NULL:actual.getTag(tagId)).put("target",id).put("bounds",readingBounds(target)).put("viewportPx",new JSONObject().put("left",viewport.left).put("top",viewport.top).put("right",viewport.right).put("bottom",viewport.bottom)).put("xPx",visible.exactCenterX()).put("yPx",visible.exactCenterY()));
       return new float[]{visible.exactCenterX(),visible.exactCenterY()};
     });
     long time=SystemClock.uptimeMillis();
