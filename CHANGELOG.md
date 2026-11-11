@@ -1,23 +1,22 @@
 # Changelog
 
-## Unreleased
+## 0.0.8-prealpha.0
 
-- Add a searchable native catalog index with grouped examples, retained search, Android return navigation and compact large-text headers. Make chart previews responsive, clarify compatibility wording and compact layout-inspector controls while preserving native test routes.
+All nine scoped packages remain pre-alpha and share this version. Release publishing aligns both npm `latest` and `prealpha` tags. This does not certify full MUI/MUI X compatibility or verified-alpha readiness.
 
-- Retain coherent native text source snapshots for internal style preparation, preserving raw, normalized and emitted values without repeating caller reads. Add element-handoff and changing-source regression coverage. Native family binding and selected-style projection remain separate gates.
+- Include all **10,750 pinned Material icon exports**, original names and supported deep imports. Preserve upstream wrapper/artwork notices and use bounded ESM build batches; direct icon imports remain preferable for startup.
+- Add the native Accordion family, ButtonGroup, SvgIcon and React-node SVG factories. Expand Typography, Divider, Paper, Box, Card, FormGroup, ListItemIcon, ListItemAvatar and MenuItem icon styling with pinned props/classes, native roots/refs, source-ordered themes and installed-consumer coverage. Individual compatibility and physical-device gates remain documented.
+- Complete the finite RTL/default-prop provider, theme-reading/theme-prop hook, spacing and breakpoint helper contracts. Broader theme construction, provider composition and arbitrary CSS remain separate work.
+- Correct native inline/scoped-selector priority, cleared component themes, concrete CSS border/radius/shadow handling, physical Portal style ownership, rem-root calibration and text alignment. Register the Android platform-default font alias while retaining custom-family semantics and the documented older-Android fallback.
+- Add internal ordered Fabric observation and guarded structural-style preparation with lease cleanup, retained memo/styled roots, text-source provenance and generated-binding verification. This infrastructure does not complete public CardContent/Actions structural CSS or first-paint/Portal sibling behavior.
+- Expand scoped iOS/Android checks for native geometry, normal/enlarged text, live direction and policy changes, state/refs, focus, supported keyboard delivery, accessibility-tree exposure and Portal composition. Keep unavailable hardware-key phases, physical IME/screen-reader behavior and wider device matrices explicit.
+- Record optimized iOS simulator CPU/memory workloads for Paper, FormGroup, ListItemAvatar and ButtonGroup. These scoped measurements do not establish calibrated physical-device input/scroll performance or an isolated optimization target.
+- Add a searchable catalog index, grouped examples, retained search, Android return navigation, responsive chart previews and compact large-text headers/layout inspectors.
+- Add a full offline-capable local CI preflight, bounded declaration compiler memory, strict unused-code checks, archive consumers and separately reported hosted gates. Persist upstream detection off the protected development branch; detection does not promote verified support.
 
-- Preserve nested React and nonplain Theme defaults so equivalent theme reconstruction retains custom-root state and refs, while Date, Map, Set and class values retain their identity and methods. Add pinned original-source, getter and replacement regression coverage.
+**Upgrade:** update every used scoped package together, keep `@altroo/mui-native-host` as a direct app dependency, install `react-native-svg` directly for Material, and rebuild iOS/Android. React Native **0.88.1** is required in JavaScript and the native binary, with React 19.3.0 and the matched Expo SDK 58 baseline. A JavaScript reload or Expo Go cannot install the native changes. See [upgrade instructions](docs/installation.md#upgrade-from-007-prealpha0).
 
-- Add an internal ordered Fabric observer with lease-safe cleanup, guarded iOS/Android providers, native structure probes and installed-archive input checks. Structural CSS, initial paint and Portal sibling semantics remain separate implementation gates; CardContent/Actions status is unchanged.
-
-- Replace the native Card surface prototype with pinned 9.5.0 props/classes, raised/default ordering, native custom roots and reserved styled inputs. Add strict installed Card imports and thirteen-state iOS/Android checks at both text profiles. CardContent/Actions and wider native, physical accessibility, GPU and performance gates remain separate.
-
-- Align Material Box with its pinned 9.5.0 props, classes, native roots, selected themes and style priority. Add canonical className routing, exact-optional installed consumers and eleven-state iOS/Android checks at normal/enlarged text sizes. Browser themes, wider native matrices, physical accessibility and optimized Box performance remain separate gates.
-- Add shared native SvgIcon, React-node factories, original root/deep imports, source-ordered theme/paint priority, refs and typed native roots. The full pinned Material Icons artwork/import catalog is implemented; shared SvgIcon rendering gates remain separate. The next Material package requires `react-native-svg` directly in the app.
-- Separate native CSS rem root sizing (`cssRootFontSize`, default 16) from MUI's `htmlFontSize` pxToRem calibration. Correct SVG text font binding and authored gradient inline-paint priority, with scoped iOS/Android checks.
-
-- Add the native Accordion family, original root/deep imports and class helpers, source-defined expansion/slot/callback priority, native refs and shared ButtonBase/Collapse composition. Scoped device checks do not complete physical accessibility, inherited APIs or performance gates.
-- Add direct npm discovery links and relevant package keywords. Keyword metadata takes effect in the next planned publication.
+Community X remains an experimental subset; no Pro/Premium source or paid-only parity is introduced. Shared-cache CSS insertion-order compatibility remains open in [#127](https://github.com/Altroo/mui-native/issues/127), alongside the documented keyboard/input investigations [#55](https://github.com/Altroo/mui-native/issues/55) and [#58](https://github.com/Altroo/mui-native/issues/58). No newly detected upstream version is certified by this release. Coverage percentages remain unchanged.
 
 ## 0.0.7-prealpha.0
 

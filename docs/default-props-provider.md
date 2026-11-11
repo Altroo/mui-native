@@ -1,6 +1,6 @@
 # Default-prop context providers
 
-This guide covers the finite native React context contract of Material and System `DefaultPropsProvider`, `useDefaultProps` and their default-resolution helpers, based on MUI 9.5.0. These corrections are **unpublished development after `0.0.7-prealpha.0`**. Both modules are complete at **100% for this finite native context contract**. This excludes the broader ThemeProvider, style engine and consuming-component contracts; it does not update the published packages.
+This guide covers the finite native React context contract of Material and System `DefaultPropsProvider`, `useDefaultProps` and their default-resolution helpers, based on MUI 9.5.0. These corrections are **included in `0.0.8-prealpha.0`**. Both modules are complete at **100% for this finite native context contract**. This excludes the broader ThemeProvider, style engine and consuming-component contracts.
 
 ## Imports and types
 

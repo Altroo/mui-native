@@ -1,6 +1,6 @@
 # Native Accordion
 
-`Accordion`, `AccordionSummary`, `AccordionDetails` and `AccordionActions` compose native views, the shared ButtonBase activation host and the retained Collapse transition. They are development implementations after `0.0.7-prealpha.0`; the published preview does not include them yet.
+`Accordion`, `AccordionSummary`, `AccordionDetails` and `AccordionActions` compose native views, the shared ButtonBase activation host and the retained Collapse transition. They are implementations included in `0.0.8-prealpha.0`.
 
 ```tsx
 import {

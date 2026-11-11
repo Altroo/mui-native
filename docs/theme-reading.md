@@ -1,6 +1,6 @@
 # Native theme-reading hooks
 
-This contract covers Material `useTheme`, System `useTheme`, and System `useThemeWithoutDefault`. They read the existing native React theme context. Each is complete at **100% for this finite reading contract**, as unpublished development after `0.0.7-prealpha.0`. Theme construction, provider composition, CSS variables and the complete styling engine are separate contracts.
+This contract covers Material `useTheme`, System `useTheme`, and System `useThemeWithoutDefault`. They read the existing native React theme context. Each is complete at **100% for this finite reading contract**, included in `0.0.8-prealpha.0`. Theme construction, provider composition, CSS variables and the complete styling engine are separate contracts.
 
 | API                                                         | Native behavior                                                                                                                                                           |
 | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

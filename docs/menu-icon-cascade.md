@@ -1,6 +1,6 @@
 # MenuItem icon styling
 
-This development increment after `0.0.7-prealpha.0` applies pinned MIT Material UI 9.5.0 MenuItem descendant CSS to the existing native ListItemIcon and SvgIcon adapters. It does not publish a version or complete the separate MenuItem, SvgIcon, accessibility, device or optimized-performance gates.
+Version `0.0.8-prealpha.0` applies pinned MIT Material UI 9.5.0 MenuItem descendant CSS to the existing native ListItemIcon and SvgIcon adapters. It does not complete the separate MenuItem, SvgIcon, accessibility, device or optimized-performance gates.
 
 ```tsx
 import { MenuList, MenuItem, ListItemIcon } from '@mui/material';

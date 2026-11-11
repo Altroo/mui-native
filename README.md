@@ -7,7 +7,7 @@ MUI Native (`@altroo/mui-native`) is an independent React Native compatibility l
 
 [View on npm](https://www.npmjs.com/package/@altroo/mui-native) · [Installation guide](docs/installation.md) · [Preview releases](https://github.com/Altroo/mui-native/releases) · [Compatibility](docs/compatibility.md)
 
-**Status: public pre-alpha. Preview packages use the `prealpha` dist-tag. This is a partial implementation, not a drop-in replacement for MUI.** The native package versions and upstream compatibility versions are separate.
+**Status: public pre-alpha. Release publishing keeps the `latest` and `prealpha` npm tags aligned on the same preview. This is a partial implementation, not a drop-in replacement for MUI.** The native package versions and upstream compatibility versions are separate.
 
 The runtime uses native views on iOS and Android. The optional Metro resolver retains familiar `@mui/...` application imports. Web applications continue using the original MUI packages. This project is not affiliated with, endorsed by, or an official product of MUI.
 
@@ -21,9 +21,9 @@ I started MUI Native to address that gap: preserve familiar MUI component APIs a
 
 ## Status
 
-Updated: **7 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
+Updated: **11 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
 
-These tables describe development on `main`. Check the [release changelog](CHANGELOG.md) for published package contents; each newer component guide identifies its unpublished status.
+These tables describe development on `main`. Check the [release changelog](CHANGELOG.md) for version-specific package contents; development on `main` can precede npm publication.
 
 The [completion plan](docs/completion-plan.md) lists every existing partial entry and prioritizes closing its concrete implementation and validation gaps before adding new components.
 
@@ -213,7 +213,7 @@ Expand a family to see individual entries. Percentages link to the implementatio
 | 🔧    | **styled / defaults / slots**              |                                [50%](docs/default-props.md) | Native styled/default/slot composition subsets have contract/consumer coverage; complete upstream semantics remain.                                                                               |
 | 🗺️    | **CSS variables / color-scheme providers** | [0%](docs/compatibility.md#unsupported-or-not-yet-verified) | Full CSS-variable and color-scheme provider APIs are not implemented.                                                                                                                             |
 
-The following existing theme context helpers have completed their finite native contracts. They are separate from the partial ThemeProvider, theme construction and styling contracts above. These changes are unpublished development after `0.0.7-prealpha.0`.
+The following existing theme context helpers have completed their finite native contracts. They are separate from the partial ThemeProvider, theme construction and styling contracts above. These changes are included in `0.0.8-prealpha.0`.
 
 | Status | Existing API                      |                      Progress | Verified scope                                                                                                                     |
 | ------ | --------------------------------- | ----------------------------: | ---------------------------------------------------------------------------------------------------------------------------------- |
@@ -344,7 +344,7 @@ The following existing theme context helpers have completed their finite native 
 <details>
 <summary>Icons: all 10,750 pinned glyphs</summary>
 
-The complete catalog is development after `0.0.7-prealpha.0` and is not yet published to npm. Artwork/import completion below is separate from the [shared native SvgIcon renderer (75%)](docs/svg-icon.md) and its remaining compatibility gates.
+The complete catalog is included in `0.0.8-prealpha.0`. Artwork/import completion below is separate from the [shared native SvgIcon renderer (75%)](docs/svg-icon.md) and its remaining compatibility gates.
 
 | State | Part                          |                       Progress | What it means                                                                                                                              |
 | ----- | ----------------------------- | -----------------------------: | ------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -422,7 +422,7 @@ The native host must be a direct app dependency and requires a native rebuild. A
 | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `@altroo/mui-native`                | Layout, typography, buttons, inputs, Select/NativeSelect/TextField select, lists, checked controls, dialog, popover, menu, Portal, Popper, alert, progress, snackbar |
 | `@altroo/mui-native-system`         | Theme provider, tokens, responsive `sx`, supported state selectors, component defaults/overrides/variants, `styled`                                                  |
-| `@altroo/mui-native-icons`          | All 10,750 pinned glyphs and native import routes, unpublished after 0.0.7; [shared SVG limits](docs/svg-icon.md) remain                                             |
+| `@altroo/mui-native-icons`          | All 10,750 pinned glyphs and native import routes in 0.0.8; [shared SVG limits](docs/svg-icon.md) remain                                                             |
 | `@altroo/mui-native-host`           | Fabric keyboard/focus, in-window Portal and platform picker hosts; native rebuild required                                                                           |
 | `@altroo/mui-native-compat`         | Opt-in Metro import resolver and native TypeScript configuration generator                                                                                           |
 | `@altroo/mui-native-x-data-grid`    | Recycled rows, fixed columns, single sorting/filtering, pagination, selection, basic server modes                                                                    |

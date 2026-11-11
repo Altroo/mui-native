@@ -1,6 +1,6 @@
 # Native theme-prop hooks
 
-Material and System `useThemeProps` implement the complete finite native theme-context lookup contract of MUI 9.5.0. Both are **100% for this contract**, as unpublished development after `0.0.7-prealpha.0`. These hooks do not render a native host. Theme construction, provider composition, native component props and the styling engine retain their separate contracts.
+Material and System `useThemeProps` implement the complete finite native theme-context lookup contract of MUI 9.5.0. Both are **100% for this contract**, included in `0.0.8-prealpha.0`. These hooks do not render a native host. Theme construction, provider composition, native component props and the styling engine retain their separate contracts.
 
 | API                                                 | Parameters and behavior                                                                                                                                                                                                                        |
 | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
