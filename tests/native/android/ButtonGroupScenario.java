@@ -35,7 +35,7 @@ public final class ButtonGroupScenario {
   private UiAutomation automation;
   private int tagId;
   private File directory;
-  private final JSONArray stages=new JSONArray(), pictures=new JSONArray(), samples=new JSONArray(), portalSamples=new JSONArray();
+  private final JSONArray stages=new JSONArray(), pictures=new JSONArray(), samples=new JSONArray(), portalSamples=new JSONArray(), touches=new JSONArray();
   private float nestedCompact,nestedExpanded;
   private boolean nativeFocus;
   private ButtonGroupScenario(Instrumentation driver) {this.driver=driver;}
@@ -101,7 +101,7 @@ public final class ButtonGroupScenario {
     } catch(Throwable error) {
       try {report.put("error",error.toString());if(directory!=null)capture("failure.png");} catch(Throwable ignored) { /* Preserve the original assertion. */ }
     } finally {
-      try {report.put("status",passed?"passed":"failed").put("stages",stages).put("screenshots",pictures).put("samples",samples).put("closure",new JSONObject().put("nativeFocus",nativeFocus).put("nestedCompact",nestedCompact).put("nestedExpanded",nestedExpanded).put("portals",portalSamples));result.putString("buttonGroupReport",report.toString());}
+      try {report.put("status",passed?"passed":"failed").put("stages",stages).put("screenshots",pictures).put("samples",samples).put("touches",touches).put("closure",new JSONObject().put("nativeFocus",nativeFocus).put("nestedCompact",nestedCompact).put("nestedExpanded",nestedExpanded).put("portals",portalSamples));result.putString("buttonGroupReport",report.toString());}
       catch(Exception error){result.putString("Error",error.toString());passed=false;}
       driver.finish(passed?Activity.RESULT_OK:Activity.RESULT_CANCELED,result);
     }
@@ -127,8 +127,8 @@ public final class ButtonGroupScenario {
       require(launch!=null,"Catalog must be installed");launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity=driver.startActivitySync(launch);
       tagId=driver.getTargetContext().getResources().getIdentifier("react_test_id","id","dev.altroo.muinative.catalog");
-      await(()->ui(()->find("catalog-tab-Groups")!=null),"Catalog tabs must mount");
-      tap("catalog-tab-Groups");tap("group-closure-toggle");
+      await(()->ui(()->find("catalog-tabs") instanceof HorizontalScrollView && ((HorizontalScrollView)view("catalog-tabs")).getChildCount()>0&&((HorizontalScrollView)view("catalog-tabs")).getChildAt(0).getWidth()>0),"Catalog tabs must finish layout");
+      tap("catalog-tab-Groups","reading-navigation.png");tap("group-closure-toggle");
       await(()->ui(()->find("group-reading-scene")!=null),"Reading scene must mount");
       tap("group-reading-measurements-toggle");
       await(()->ui(()->readingMetadata().optJSONObject("metrics")!=null&&readingMetadata().getJSONObject("metrics").optJSONArray("2")!=null),"Real native text receipts must arrive");
@@ -175,7 +175,7 @@ public final class ButtonGroupScenario {
       try {report.put("error",error.toString());if(directory!=null)capture("failure.png");}catch(Throwable ignored){/* Preserve the first failure. */}
     } finally {
       if(previousRTL==null)System.clearProperty("FORCE_RTL_FOR_TESTING");else System.setProperty("FORCE_RTL_FOR_TESTING",previousRTL);
-      try {report.put("status",passed?"passed":"failed").put("states",states).put("screenshots",pictures);result.putString("buttonGroupReadingReport",report.toString());}
+      try {report.put("status",passed?"passed":"failed").put("states",states).put("screenshots",pictures).put("touches",touches);result.putString("buttonGroupReadingReport",report.toString());}
       catch(Exception error){result.putString("Error",error.toString());passed=false;}
       driver.finish(passed?Activity.RESULT_OK:Activity.RESULT_CANCELED,result);
     }
@@ -255,9 +255,22 @@ public final class ButtonGroupScenario {
         require(text.getLayout().getLineLeft(line)>=-1.5&&text.getLayout().getLineRight(line)<=text.getWidth()+1.5,"Actual native glyph line must fit its label");
       }
       JSONArray lines=new JSONArray();
-      for(int line=0;line<text.getLayout().getLineCount();line++)lines.put(new JSONObject().put("left",text.getLayout().getLineLeft(line)/metrics.density).put("right",text.getLayout().getLineRight(line)/metrics.density).put("top",text.getLayout().getLineTop(line)/metrics.density).put("bottom",text.getLayout().getLineBottom(line)/metrics.density).put("ellipsis",text.getLayout().getEllipsisCount(line)));
+      for(int line=0;line<text.getLayout().getLineCount();line++)lines.put(new JSONObject().put("left",text.getLayout().getLineLeft(line)/metrics.density).put("right",text.getLayout().getLineRight(line)/metrics.density).put("width",text.getLayout().getLineWidth(line)/metrics.density).put("top",text.getLayout().getLineTop(line)/metrics.density).put("bottom",text.getLayout().getLineBottom(line)/metrics.density).put("ellipsis",text.getLayout().getEllipsisCount(line)));
       int count=index==0||phase.startsWith("scaling-")?1:0;
       require(text("group-reading-action-"+index).equals(new String[]{"Save","Review","Send"}[index]+" "+count),"Live policy changes must retain every local action counter");
+      JSONArray receipts=metadata.getJSONObject("metrics").optJSONArray(String.valueOf(index));
+      require(receipts!=null&&receipts.length()==lines.length(),"Current onTextLayout lines must arrive after the native policy update");
+      StringBuilder receiptText=new StringBuilder();
+      for(int line=0;line<lines.length();line++) {
+        JSONObject observed=lines.getJSONObject(line),receipt=receipts.getJSONObject(line);
+        receiptText.append(receipt.getString("text"));
+        require(Math.abs(receipt.getDouble("x")-observed.getDouble("left"))<=1.1
+          &&Math.abs(receipt.getDouble("y")-observed.getDouble("top"))<=1.1
+          &&Math.abs(receipt.getDouble("width")-observed.getDouble("width"))<=1.1
+          &&Math.abs(receipt.getDouble("height")-(observed.getDouble("bottom")-observed.getDouble("top")))<=1.1,
+          "onTextLayout must acknowledge the current physical native glyph geometry");
+      }
+      require(receiptText.toString().replaceAll("\\s+","").equals(new String[]{"Save","Review","Send"}[index]+count),"onTextLayout must retain the complete current source text");
       JSONObject actionBounds=readingBounds(action);
       double expectedX=vertical?rootBounds.getDouble("x"):index==0?(rtl?rootBounds.getDouble("x")+rootBounds.getDouble("width")-actionBounds.getDouble("width"):rootBounds.getDouble("x")):rtl?previous.getDouble("x")+1-actionBounds.getDouble("width"):previous.getDouble("x")+previous.getDouble("width")-1;
       double expectedY=vertical&&index>0?previous.getDouble("y")+previous.getDouble("height")-1:rootBounds.getDouble("y");
@@ -298,22 +311,83 @@ public final class ButtonGroupScenario {
   private View find(String id) { return search(activity.getWindow().getDecorView(), id); }
   private View view(String id) { View node = find(id); require(node != null, "Missing native view " + id); return node; }
   private View search(View root, String id) { if (id.equals(root.getTag(tagId))) return root; if (root instanceof ViewGroup) for (int index=0; index<((ViewGroup)root).getChildCount(); index++) { View child=search(((ViewGroup)root).getChildAt(index),id); if(child!=null)return child; } return null; }
-  private void tap(String id) throws Exception {
+  /** RN can clip its canvas while framework clipChildren remains disabled. */
+  private Rect touchViewport(View target) {
+    Rect viewport=new Rect();activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(viewport);
+    for(android.view.ViewParent parent=target.getParent();parent instanceof View;parent=parent.getParent()) {
+      View ancestor=(View)parent;
+      if(ancestor instanceof android.widget.ScrollView || ancestor instanceof HorizontalScrollView) {
+        int[] origin=new int[2];ancestor.getLocationOnScreen(origin);
+        ViewGroup group=(ViewGroup)ancestor;boolean padded=group.getClipToPadding();
+        Rect clip=new Rect(origin[0]+(padded?ancestor.getPaddingLeft():0),origin[1]+(padded?ancestor.getPaddingTop():0),
+          origin[0]+ancestor.getWidth()-(padded?ancestor.getPaddingRight():0),origin[1]+ancestor.getHeight()-(padded?ancestor.getPaddingBottom():0));
+        if(!viewport.intersect(clip)){viewport.setEmpty();return viewport;}
+      }
+    }
+    return viewport;
+  }
+  private void tap(String id) throws Exception {tap(id,null);}
+  private void tap(String id,String picture) throws Exception {
     await(() -> ui(() -> find(id)!=null && view(id).isShown() && view(id).getWidth()>0), "Native touch target did not lay out: " + id);
     ui(() -> { View target=view(id); target.requestRectangleOnScreen(new Rect(0,0,target.getWidth(),target.getHeight()),true); return null; });
-    // Custom target resizing and ScrollView reveal commit asynchronously. Wait
-    // for the real native clipped rectangle before choosing a touch coordinate.
-    await(() -> ui(() -> { View target=find(id); Rect visible=new Rect(); return target!=null&&target.getLocalVisibleRect(visible)&&!visible.isEmpty(); }),"Native touch target remains clipped: "+id);
-    float[] point=ui(() -> { View target=view(id); Rect visible=new Rect(); int[] origin=new int[2]; require(target.getLocalVisibleRect(visible)&&!visible.isEmpty(),"Native touch target is covered: "+id); target.getLocationOnScreen(origin); return new float[]{origin[0]+visible.exactCenterX(),origin[1]+visible.exactCenterY()}; });
+    // Scroll requests can expose a moving target for one frame. Require its
+    // complete native rectangle to settle before choosing the injected point.
+    final Rect[] previous = {null};
+    final long[] stableSince = {0};
+    boolean committed=false,pictureRecorded=false;
+    for(int attempt=0;attempt<3&&!committed;attempt++) {
+      previous[0]=null;stableSince[0]=0;
+      await(() -> ui(() -> {
+      View target = view(id);
+      Rect visible = new Rect();
+      if (!target.getGlobalVisibleRect(visible) || visible.width() < target.getWidth() || visible.height() < target.getHeight() || !touchViewport(target).contains(visible)) {
+        target.requestRectangleOnScreen(new Rect(0, 0, target.getWidth(), target.getHeight()), true);
+        previous[0] = null;
+        stableSince[0] = 0;
+        return false;
+      }
+      long now = SystemClock.uptimeMillis();
+      if (!visible.equals(previous[0])) { previous[0] = new Rect(visible); stableSince[0] = now; }
+      if (stableSince[0] == 0) stableSince[0] = now;
+      return now - stableSince[0] >= 150;
+      }), "Native touch target must settle after scrolling: " + id);
+      // A frame commit can apply a pending scroll offset after native geometry
+      // first appeared stable. Reveal again before injecting any event if so.
+      if(picture!=null){capture(picture,pictureRecorded);pictureRecorded=true;}else awaitFrameCommit();
+      committed=ui(() -> {
+        View target=view(id);Rect visible=new Rect();
+        return target.getGlobalVisibleRect(visible)&&visible.width()==target.getWidth()&&visible.height()==target.getHeight()
+          &&touchViewport(target).contains(visible)&&visible.equals(previous[0]);
+      });
+      if(!committed)ui(() -> {View target=view(id);target.requestRectangleOnScreen(new Rect(0,0,target.getWidth(),target.getHeight()),true);return null;});
+    }
+    require(committed,"Native touch target moved across frame commits: "+id);
+    float[] point=ui(() -> {
+      View target=view(id); Rect visible=new Rect();
+      Rect viewport=touchViewport(target);
+      require(target.getGlobalVisibleRect(visible)&&visible.width()==target.getWidth()&&visible.height()==target.getHeight()&&viewport.contains(visible)&&visible.equals(previous[0]),"Native touch target is covered: "+id+" visible="+visible+" size="+target.getWidth()+"x"+target.getHeight()+" viewport="+viewport);
+      View surface=target;
+      while(!(surface instanceof com.facebook.react.ReactRootView)&&surface.getParent() instanceof View)surface=(View)surface.getParent();
+      require(surface instanceof com.facebook.react.ReactRootView,"React touch surface must be present");
+      int[] origin=new int[2],nativeTarget={0};surface.getLocationOnScreen(origin);
+      com.facebook.react.uimanager.TouchTargetHelper.findTargetTagAndCoordinatesForTouch(visible.exactCenterX()-origin[0],visible.exactCenterY()-origin[1],(ViewGroup)surface,new float[2],nativeTarget);
+      View actual=surface.findViewById(nativeTarget[0]);
+      touches.put(new JSONObject().put("hitWithinTarget",actual!=null&&contains(target,actual)).put("hitTestID",actual==null?JSONObject.NULL:actual.getTag(tagId)).put("target",id).put("bounds",readingBounds(target)).put("viewportPx",new JSONObject().put("left",viewport.left).put("top",viewport.top).put("right",viewport.right).put("bottom",viewport.bottom)).put("xPx",visible.exactCenterX()).put("yPx",visible.exactCenterY()));
+      return new float[]{visible.exactCenterX(),visible.exactCenterY()};
+    });
     long time=SystemClock.uptimeMillis();
     for(int action:new int[]{MotionEvent.ACTION_DOWN,MotionEvent.ACTION_UP}) { MotionEvent event=MotionEvent.obtain(time,SystemClock.uptimeMillis(),action,point[0],point[1],0); event.setSource(InputDevice.SOURCE_TOUCHSCREEN); try { require(automation.injectInputEvent(event,true),"Native touch injection failed"); } finally { event.recycle(); } SystemClock.sleep(30); }
   }
-  private void capture(String name) throws Exception {
+  private void awaitFrameCommit() throws Exception {
     CountDownLatch committed=new CountDownLatch(1); ui(() -> { View root=activity.getWindow().getDecorView(); root.getViewTreeObserver().registerFrameCommitCallback(committed::countDown); root.invalidate(); return null; });
-    require(committed.await(5,TimeUnit.SECONDS),"Native screenshot frame did not commit");
+    require(committed.await(5,TimeUnit.SECONDS),"Native frame did not commit after scrolling");
+  }
+  private void capture(String name) throws Exception {capture(name,false);}
+  private void capture(String name,boolean replace) throws Exception {
+    awaitFrameCommit();
     AccessibilityNodeInfo root=automation.getRootInActiveWindow(); require(root!=null&&"dev.altroo.muinative.catalog".contentEquals(root.getPackageName()),"Catalog must own the screenshot window");
     Bitmap image=automation.takeScreenshot(); require(image!=null,"Native screenshot missing");
-    try(FileOutputStream output=new FileOutputStream(new File(directory,name))) { require(image.compress(Bitmap.CompressFormat.PNG,100,output),"Native screenshot encoding failed"); } finally { image.recycle(); } pictures.put(name);
+    try(FileOutputStream output=new FileOutputStream(new File(directory,name))) { require(image.compress(Bitmap.CompressFormat.PNG,100,output),"Native screenshot encoding failed"); } finally { image.recycle(); } if(!replace)pictures.put(name);
   }
   private void await(java.util.function.BooleanSupplier condition,String message) throws Exception { long end=SystemClock.uptimeMillis()+35000; while(SystemClock.uptimeMillis()<end) { if(condition.getAsBoolean())return; SystemClock.sleep(16); } throw new AssertionError(message); }
   private <T>T ui(java.util.concurrent.Callable<T> action) { AtomicReference<T> result=new AtomicReference<>(); AtomicReference<Throwable> error=new AtomicReference<>(); driver.runOnMainSync(() -> { try { result.set(action.call()); } catch(Throwable failure) { error.set(failure); } }); if(error.get()!=null)throw new AssertionError(error.get()); return result.get(); }
