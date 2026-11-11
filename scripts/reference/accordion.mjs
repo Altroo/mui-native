@@ -14,6 +14,12 @@ const { reference, require, directory } = await loadReference('@mui/material', [
   'Accordion/AccordionContext.js',
   'utils/useSlot.js',
   'utils/useControlled.js',
+  'className/index.js',
+  'Paper/Paper.js',
+  'Paper/paperClasses.js',
+  'ButtonBase/ButtonBase.js',
+  'ButtonBase/buttonBaseClasses.js',
+  'styles/rootShouldForwardProp.js',
 ]);
 const React = require('react'),
   { create, act } = require('react-test-renderer');
@@ -34,6 +40,225 @@ const classes = Object.fromEntries(
     ).default,
   ]),
 );
+const classUtils = await loadReference('@mui/utils', [
+  'generateUtilityClass/generateUtilityClass.js',
+  'ClassNameGenerator/ClassNameGenerator.js',
+  'composeClasses/composeClasses.js',
+]);
+const { unstable_ClassNameGenerator: generator } = require(
+  directory + '/node_modules/@mui/material/className',
+);
+const classHelpers = Object.fromEntries(
+  names.map((name) => [
+    name,
+    require(directory + '/node_modules/@mui/material/' + name)['get' + name + 'UtilityClass'],
+  ]),
+);
+const utilitySlots = [
+  'root',
+  'unknown',
+  'active',
+  'checked',
+  'completed',
+  'disabled',
+  'error',
+  'expanded',
+  'focused',
+  'focusVisible',
+  'open',
+  'readOnly',
+  'required',
+  'selected',
+  'toString',
+  'constructor',
+  'valueOf',
+  'hasOwnProperty',
+  '__proto__',
+];
+const classUtility = Object.fromEntries(
+  Object.entries(classHelpers).map(([name, helper]) => [
+    name,
+    Object.fromEntries(utilitySlots.map((slot) => [slot, helper(slot)])),
+  ]),
+);
+const classContracts = [];
+for (const input of [
+  { expanded: false, disabled: false, square: false, disableGutters: false },
+  { expanded: true, disabled: true, square: false, disableGutters: false },
+  { expanded: true, disabled: false, square: true, disableGutters: true },
+]) {
+  const trace = [],
+    observed = {};
+  const cls = (family, names) =>
+    Object.fromEntries(
+      names.map((slot) => [
+        slot,
+        Object.defineProperty({}, 'value', {
+          get() {
+            trace.push(family + ':' + slot);
+            return family + '-' + slot;
+          },
+        }),
+      ]),
+    );
+  const getters = (family, names) =>
+    Object.fromEntries(
+      Object.entries(cls(family, names)).map(([key, v]) => [
+        key,
+        { enumerable: true, get: () => v.value },
+      ]),
+    );
+  const classes = Object.defineProperties(
+    {},
+    getters('accordion', [
+      'root',
+      'rounded',
+      'expanded',
+      'disabled',
+      'gutters',
+      'heading',
+      'region',
+    ]),
+  );
+  const summaryClasses = Object.defineProperties(
+    {},
+    getters('summary', [
+      'root',
+      'expanded',
+      'disabled',
+      'gutters',
+      'focusVisible',
+      'content',
+      'expandIconWrapper',
+    ]),
+  );
+  const slot = (name) =>
+    React.forwardRef(function Slot(props, ref) {
+      observed[name] = {
+        className: props.className ?? null,
+        focusVisibleClassName: props.focusVisibleClassName ?? null,
+        disabled: props.disabled ?? null,
+      };
+      return React.createElement(name, { ref }, props.children);
+    });
+  const aSlots = Object.fromEntries(
+    ['root', 'heading', 'region', 'transition'].map((name) => [name, slot('a-' + name)]),
+  );
+  const sSlots = Object.fromEntries(
+    ['root', 'content', 'expandIconWrapper'].map((name) => [name, slot('s-' + name)]),
+  );
+  const slotProps = (family, names) =>
+    Object.fromEntries(
+      names.map((name) => [
+        name,
+        () => {
+          trace.push(family + ':callback:' + name);
+          return { className: family + '-slot-' + name };
+        },
+      ]),
+    );
+  generator.configure((name) => 'Consumer' + name);
+  let tree;
+  await act(() => {
+    tree = create(
+      React.createElement(
+        Accordion,
+        {
+          ...input,
+          expanded: input.expanded,
+          classes,
+          className: 'authored-accordion',
+          slots: aSlots,
+          slotProps: slotProps('accordion', ['root', 'heading', 'transition', 'region']),
+        },
+        React.createElement(
+          Summary,
+          {
+            classes: summaryClasses,
+            className: 'authored-summary',
+            focusVisibleClassName: 'authored-focus',
+            expandIcon: 'Icon',
+            slots: sSlots,
+            slotProps: slotProps('summary', ['root', 'content', 'expandIconWrapper']),
+          },
+          'Summary',
+        ),
+        'Body',
+      ),
+    );
+  });
+  classContracts.push({ input, trace, observed });
+  await act(() => tree.unmount());
+  generator.reset();
+}
+const { renderToStaticMarkup } = require('react-dom/server');
+const publicClass = (value) =>
+  String(value ?? '')
+    .split(/\s+/)
+    .filter((token) => token && !token.startsWith('css-'))
+    .join(' ');
+const defaultClassContracts = [];
+for (const expanded of [false, true]) {
+  const leaves = {},
+    callbacks = {};
+  const leaf = (name) =>
+    React.forwardRef(function Leaf(props, ref) {
+      leaves[name] = publicClass(props.className);
+      return React.createElement('div', { ref }, props.children);
+    });
+  const override = (name) => (props) => {
+    const [component, slot] = name.split('.');
+    const expected = component + '-' + slot;
+    const className = publicClass(props.className);
+    if (className.split(' ').includes(expected)) callbacks[name] = className;
+    return {};
+  };
+  const components = Object.fromEntries(
+    [
+      ['MuiAccordion', ['root', 'heading', 'region']],
+      ['MuiAccordionSummary', ['root', 'content', 'expandIconWrapper']],
+      ['MuiPaper', ['root', 'rounded']],
+      ['MuiButtonBase', ['root']],
+    ].map(([name, slots]) => [
+      name,
+      {
+        styleOverrides: Object.fromEntries(
+          slots.map((slot) => [slot, override(name + '.' + slot)]),
+        ),
+      },
+    ]),
+  );
+  const theme = createTheme({ components });
+  const PanelLeaf = leaf('panel'),
+    SummaryLeaf = leaf('summary');
+  renderToStaticMarkup(
+    React.createElement(
+      ThemeProvider,
+      { theme },
+      React.createElement(
+        Accordion,
+        {
+          expanded,
+          component: PanelLeaf,
+          classes: { root: 'custom-panel-root', rounded: 'custom-panel-rounded' },
+          className: 'authored-panel',
+        },
+        React.createElement(
+          Summary,
+          {
+            component: SummaryLeaf,
+            classes: { root: 'custom-summary-root', content: 'custom-summary-content' },
+            className: 'authored-summary',
+            expandIcon: 'Icon',
+          },
+          'Summary',
+        ),
+        'Body',
+      ),
+    ),
+  );
+  defaultClassContracts.push({ expanded, leaves, callbacks });
+}
 const inputs = [
   { name: 'uncontrolled closed', props: {}, actions: ['click', 'click'] },
   { name: 'default expanded', props: { defaultExpanded: true }, actions: ['click', 'click'] },
@@ -234,10 +459,21 @@ for (const input of inputs) {
 const destination = 'tests/fixtures/mui-accordion-9.5.0.json';
 await writeFile(
   destination,
-  await format(JSON.stringify({ reference, classes, fixtures }), {
-    ...(await resolveConfig(destination)),
-    filepath: destination,
-  }),
+  await format(
+    JSON.stringify({
+      reference,
+      classes,
+      classUtils: classUtils.reference,
+      classUtility,
+      classContracts,
+      defaultClassContracts,
+      fixtures,
+    }),
+    {
+      ...(await resolveConfig(destination)),
+      filepath: destination,
+    },
+  ),
 );
 const provenance = 'upstream/accordion.json';
 await writeFile(
@@ -248,6 +484,7 @@ await writeFile(
       description:
         'Pinned MIT reference for native Accordion composition, callbacks, slots and utility vocabulary. No compatibility promotion.',
       reference,
+      classUtils: classUtils.reference,
       localFiles: [
         'packages/material/src/accordion.tsx',
         'packages/material/src/accordionClasses.ts',

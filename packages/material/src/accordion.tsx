@@ -3,20 +3,18 @@
  * Native layout and interaction: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
  * Details contract observations: upstream/accordion-details.json. */
 import React, { createContext, forwardRef, useCallback, useContext, useMemo } from 'react';
-import { View, useWindowDimensions, type ViewInstance, type StyleProp } from 'react-native';
+import { Text, View, useWindowDimensions, type ViewInstance, type StyleProp } from 'react-native';
 import {
   NativeTextScope,
   useNativeTextRootRef,
   useNativeTextContext,
   nativeTextStyleContext,
-  useDefaultProps,
   useNativeRootProps,
   joinClassNames,
   applyNativeTextMetrics,
   nativeStyleTextMetrics,
   resolveSlotProps,
-  diagnostic,
-  componentStyle,
+  componentRootStyle,
   type NativeStyle,
   type SxProps,
 } from '@altroo/mui-native-system';
@@ -28,6 +26,8 @@ import { useTheme, useComponentStyle, useComponentRootStyle } from './themeProvi
 import { useForkRef } from './utils';
 import {
   getAccordionActionsUtilityClass,
+  getAccordionUtilityClass,
+  getAccordionSummaryUtilityClass,
   getAccordionDetailsUtilityClass,
 } from './accordionClasses';
 import { mergeNativeRootStyle } from './nativeControlStyles';
@@ -37,6 +37,7 @@ import type {
   AccordionOwnerState,
   AccordionSummaryProps,
   AccordionSummaryOwnerState,
+  AccordionSummaryRootSlotProps,
   NativeAccordionSlotProps,
   AccordionDetailsProps,
   AccordionActionsProps,
@@ -52,15 +53,29 @@ interface ExpansionContext {
 }
 // Only the summary receives this scope. A nested body accordion owns its own state.
 const AccordionContext = createContext<ExpansionContext | null>(null);
-function classesDiagnostic(name: string, ...values: unknown[]) {
-  if (values.some(Boolean))
-    diagnostic(
-      'accordion-classes',
-      `${name} utility names identify slots; use native styles, sx or theme overrides instead of CSS classes.`,
-    );
+// Preserve source slot order and the two reads of a truthy authored class getter.
+function slotClasses<Slots extends Record<string, readonly (string | false | undefined)[]>>(
+  slots: Slots,
+  utility: (slot: string) => string,
+  supplied?: object,
+): Record<keyof Slots, string> {
+  const custom = supplied as Record<string, string | undefined> | undefined;
+  return Object.fromEntries(
+    Object.entries(slots).map(([key, names]) => [
+      key,
+      names
+        .filter((name): name is string => !!name)
+        .map((name) => {
+          const generated = utility(name);
+          return custom?.[name] ? generated + ' ' + custom[name] : generated;
+        })
+        .join(' '),
+    ]),
+  ) as Record<keyof Slots, string>;
 }
 interface FrameProps {
   name: string;
+  className?: string;
   slot?: string;
   owner: object;
   resolved?: NativeAccordionSlotProps<any>;
@@ -73,6 +88,7 @@ interface FrameProps {
 const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
   {
     name,
+    className,
     slot = 'root',
     owner,
     resolved = {},
@@ -89,6 +105,7 @@ const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
   const {
     sx,
     style,
+    className: slotClassName,
     component,
     as,
     ownerState: _ownerState,
@@ -100,10 +117,13 @@ const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
   const ref = useForkRef(forwarded, slotRef);
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const Element = Component === View ? (component ?? as ?? View) : Component;
+  const fullClassName = joinClassNames(className, slotClassName);
   const computed = useComponentStyle(name, { ...owner }, sx, {
     ...nativeTextStyleContext(parent, style, theme),
     slot,
     rootSlot: slot,
+    classes: fullClassName.split(/\s+/).filter(Boolean),
+    rootProps: { ...resolved, className: fullClassName, ownerState: owner },
     skipVariants: slot !== 'root',
     states,
     overrideKeys,
@@ -116,7 +136,9 @@ const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
           {...native}
           nativeID={id ?? native.nativeID}
           ref={scopeRef}
-          {...(Element === View ? {} : { ownerState: owner })}
+          {...(Element === View || Element === Text
+            ? {}
+            : { ownerState: owner, className: fullClassName })}
           {...(Component !== View && (component ?? as) ? { as: component ?? as } : {})}
           style={viewStyle}
         >
@@ -130,7 +152,10 @@ const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
 export const Accordion: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<AccordionProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, AccordionProps>(function Accordion(inProps, forwarded) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiAccordion' });
+  const { props, style: preparedStyle } = useNativeRootProps({
+    props: inProps,
+    name: 'MuiAccordion',
+  });
   const {
     children,
     defaultExpanded = false,
@@ -160,13 +185,29 @@ export const Accordion: React.ForwardRefExoticComponent<
     [expanded, disabled, disableGutters, toggle],
   );
   const owner: AccordionOwnerState = { ...props, expanded, disabled, disableGutters };
+  const composed = slotClasses(
+    {
+      root: [
+        'root',
+        !props.square && 'rounded',
+        expanded && 'expanded',
+        disabled && 'disabled',
+        !disableGutters && 'gutters',
+      ],
+      heading: ['heading'],
+      region: ['region'],
+    },
+    getAccordionUtilityClass,
+    classes,
+  );
   const root = resolveSlotProps(slotProps.root, owner) ?? {};
   const heading = resolveSlotProps(slotProps.heading, owner) ?? {};
-  const region = resolveSlotProps(slotProps.region, owner) ?? {};
   const transition = resolveSlotProps(slotProps.transition, owner) ?? {};
+  const region = resolveSlotProps(slotProps.region, owner) ?? {};
   const {
     sx: rootSx,
     style: rootStyle,
+    className: rootSlotClass,
     component: rootComponent,
     as: rootAs,
     ref: slotRef,
@@ -177,13 +218,20 @@ export const Accordion: React.ForwardRefExoticComponent<
   const ref = useForkRef(forwarded, slotRef);
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const theme = useTheme(),
-    parent = useNativeTextContext();
+    parent = useNativeTextContext(),
+    { width } = useWindowDimensions();
   const states = [...(expanded ? ['expanded'] : []), ...(disabled ? ['disabled'] : [])];
-  const computed = useComponentStyle(
+  const rootClass = joinClassNames(composed.root, className, rootSlotClass);
+  const { computed, authored, programme } = componentRootStyle(
+    theme,
     'MuiAccordion',
     { ...owner },
     Object.hasOwn(root, 'sx') ? rootSx : sx,
+    preparedStyle,
     {
+      classes: rootClass.split(/\s+/).filter(Boolean),
+      rootProps: { ...props, ...root, className: rootClass, ownerState: owner },
+      width,
       ...nativeTextStyleContext(parent, [style, rootStyle], theme),
       states,
       overrideKeys: [
@@ -198,8 +246,18 @@ export const Accordion: React.ForwardRefExoticComponent<
         ...(disabled ? { backgroundColor: theme.palette.action.disabledBackground } : {}),
       },
     },
+    true,
   );
-  classesDiagnostic('Accordion', classes, className);
+  // Paper binds retained selectors to the final shared host, including its own classes.
+  const rootInline = [authored, rootStyle];
+  const rootMerged = mergeNativeRootStyle(
+    parent?.direction ?? theme.direction,
+    computed,
+    rootInline,
+  );
+  const rootStyleResult =
+    applyNativeTextMetrics(rootMerged, computed, nativeStyleTextMetrics([computed, rootInline])) ??
+    rootMerged;
   const [summary, ...body] = React.Children.toArray(children);
   if (
     !React.isValidElement<{ id?: string; 'aria-controls'?: string }>(summary) ||
@@ -213,49 +271,56 @@ export const Accordion: React.ForwardRefExoticComponent<
   const Root = slots.root ?? (Paper as React.ComponentType<AccordionRootSlotProps>),
     Transition = slots.transition ?? Collapse;
   const leaf = rootComponent ?? component ?? rootAs;
-  return (
-    <NativeTextScope rootRef={scopeRoot} theme={theme} style={[computed, style, rootStyle]}>
-      {(viewStyle) => (
-        <Root
-          {...other}
-          {...rootNative}
-          ref={scopeRef}
-          component={leaf}
-          {...(Root === Paper || Root === View ? {} : { ownerState: owner })}
-          style={viewStyle}
+  const renderRoot = (viewStyle: StyleProp<NativeStyle>) => (
+    <Root
+      {...other}
+      {...rootNative}
+      ref={scopeRef}
+      component={leaf}
+      {...(Root === View ? {} : { className: rootClass })}
+      {...(Root === Paper || Root === View ? {} : { ownerState: owner })}
+      style={viewStyle}
+    >
+      <Frame
+        name="MuiAccordion"
+        slot="heading"
+        className={composed.heading}
+        owner={owner}
+        resolved={heading}
+        component={slots.heading}
+      >
+        <AccordionContext.Provider value={context}>{summary}</AccordionContext.Provider>
+      </Frame>
+      <Transition
+        in={expanded}
+        timeout="auto"
+        {...transition}
+        {...(Transition === Collapse ? {} : { ownerState: owner })}
+      >
+        <Frame
+          name="MuiAccordion"
+          slot="region"
+          className={composed.region}
+          owner={owner}
+          component={slots.region}
+          resolved={{
+            role: 'region',
+            'aria-labelledby': summary.props.id,
+            id: summary.props['aria-controls'],
+            ...region,
+          }}
         >
-          <Frame
-            name="MuiAccordion"
-            slot="heading"
-            owner={owner}
-            resolved={heading}
-            component={slots.heading}
-          >
-            <AccordionContext.Provider value={context}>{summary}</AccordionContext.Provider>
-          </Frame>
-          <Transition
-            in={expanded}
-            timeout="auto"
-            {...transition}
-            {...(Transition === Collapse ? {} : { ownerState: owner })}
-          >
-            <Frame
-              name="MuiAccordion"
-              slot="region"
-              owner={owner}
-              component={slots.region}
-              resolved={{
-                role: 'region',
-                'aria-labelledby': summary.props.id,
-                id: summary.props['aria-controls'],
-                ...region,
-              }}
-            >
-              {body}
-            </Frame>
-          </Transition>
-        </Root>
-      )}
+          {body}
+        </Frame>
+      </Transition>
+    </Root>
+  );
+  // Paper owns this physical root's text scope; a second scope would resolve em/% twice.
+  return Root === Paper ? (
+    renderRoot([programme, rootStyle])
+  ) : (
+    <NativeTextScope rootRef={scopeRoot} theme={theme} style={rootStyleResult}>
+      {renderRoot}
     </NativeTextScope>
   );
 });
@@ -263,7 +328,10 @@ export const Accordion: React.ForwardRefExoticComponent<
 export const AccordionSummary: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<AccordionSummaryProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, AccordionSummaryProps>(function AccordionSummary(inProps, forwarded) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiAccordionSummary' });
+  const { props, style: preparedStyle } = useNativeRootProps({
+    props: inProps,
+    name: 'MuiAccordionSummary',
+  });
   const {
     children,
     expandIcon,
@@ -285,12 +353,29 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
     disabled: context?.disabled ?? false,
     disableGutters: context?.disableGutters,
   };
+  const composed = slotClasses(
+    {
+      root: [
+        'root',
+        owner.expanded && 'expanded',
+        owner.disabled && 'disabled',
+        !owner.disableGutters && 'gutters',
+      ],
+      focusVisible: ['focusVisible'],
+      content: ['content', owner.expanded && 'expanded'],
+      expandIconWrapper: ['expandIconWrapper', owner.expanded && 'expanded'],
+    },
+    getAccordionSummaryUtilityClass,
+    classes,
+  );
   const root = resolveSlotProps(slotProps.root, owner) ?? {};
   const content = resolveSlotProps(slotProps.content, owner) ?? {};
   const icon = resolveSlotProps(slotProps.expandIconWrapper, owner) ?? {};
   const {
     sx: rootSx,
     style: rootStyle,
+    className: rootSlotClass,
+    focusVisibleClassName: rootFocusClass,
     ownerState: _ownerState,
     ref: slotRef,
     onClick: rootClick,
@@ -316,13 +401,40 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
   const expanded = owner.expanded,
     gutters = !owner.disableGutters;
   const states = [...(expanded ? ['expanded'] : []), ...(owner.disabled ? ['disabled'] : [])];
-  const styled = (state: ButtonBaseState): StyleProp<NativeStyle> => [
-    componentStyle(
+  const rootClass = joinClassNames(composed.root, className, rootSlotClass);
+  const focusClass = Object.hasOwn(root, 'focusVisibleClassName')
+    ? rootFocusClass
+    : joinClassNames(composed.focusVisible, focusVisibleClassName);
+  let cache:
+    | { pressed: boolean; focused: boolean; disabled: boolean; style: StyleProp<NativeStyle> }
+    | undefined;
+  const styled = (state: ButtonBaseState): StyleProp<NativeStyle> => {
+    if (
+      cache &&
+      cache.pressed === state.pressed &&
+      cache.focused === state.focusVisible &&
+      cache.disabled === state.disabled
+    )
+      return cache.style;
+    const result = componentRootStyle(
       theme,
       'MuiAccordionSummary',
       { ...owner },
       Object.hasOwn(root, 'sx') ? rootSx : sx,
+      typeof preparedStyle === 'function' ? preparedStyle(state) : preparedStyle,
       {
+        classes: joinClassNames(rootClass, state.focusVisible && focusClass)
+          .split(/\s+/)
+          .filter(Boolean),
+        rootProps: {
+          ...props,
+          ...root,
+          className: rootClass,
+          focusVisibleClassName: focusClass,
+          disabled,
+          'aria-expanded': ariaExpanded,
+          ownerState: owner,
+        },
         ...nativeTextStyleContext(parent, typeof style === 'function' ? undefined : style, theme),
         width,
         states: [
@@ -337,8 +449,7 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'flex-start',
-          paddingStart: theme.spacing(2),
-          paddingEnd: theme.spacing(2),
+          padding: theme.spacing(0, 2),
           direction: theme.direction,
           ...(owner.disabled || state.disabled
             ? { opacity: theme.palette.action.disabledOpacity }
@@ -346,12 +457,32 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
           ...(state.focusVisible ? { backgroundColor: theme.palette.action.focus } : {}),
         },
       },
-    ),
-    typeof style === 'function' ? style(state) : style,
-    typeof rootStyle === 'function' ? rootStyle(state) : rootStyle,
-  ];
-  classesDiagnostic('AccordionSummary', classes, className, focusVisibleClassName);
-  const Root = slots.root ?? ButtonBase;
+      true,
+    );
+    const slotInline = typeof rootStyle === 'function' ? rootStyle(state) : rootStyle;
+    const inline = [result.authored, slotInline];
+    const merged = mergeNativeRootStyle(
+      parent?.direction ?? theme.direction,
+      result.computed,
+      inline,
+    );
+    const resolvedStyle =
+      applyNativeTextMetrics(
+        merged,
+        result.computed,
+        nativeStyleTextMetrics([result.computed, inline]),
+      ) ?? merged;
+    // Base adds its own classes before resolving these sheets; authored native layers stay separate.
+    const output = Root === ButtonBase ? [result.programme, slotInline] : resolvedStyle;
+    cache = {
+      pressed: state.pressed,
+      focused: state.focusVisible,
+      disabled: state.disabled,
+      style: output,
+    };
+    return output;
+  };
+  const Root = slots.root ?? (ButtonBase as React.ComponentType<AccordionSummaryRootSlotProps>);
   return (
     <Root
       focusRipple={false}
@@ -360,6 +491,13 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
       {...rootNative}
       ref={ref}
       component={rootComponent ?? other.component ?? rootAs}
+      className={rootClass}
+      {...(Root === ButtonBase
+        ? {
+            _muiNativeClassName: rootClass,
+            _muiNativeClassMetadata: { root: rootClass, focusVisible: focusClass },
+          }
+        : { focusVisibleClassName: focusClass })}
       {...(Root === ButtonBase ? {} : { ownerState: owner })}
       disabled={disabled}
       aria-expanded={ariaExpanded}
@@ -381,6 +519,7 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
       <Frame
         name="MuiAccordionSummary"
         slot="content"
+        className={composed.content}
         owner={owner}
         resolved={content}
         component={slots.content}
@@ -400,6 +539,7 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
         <Frame
           name="MuiAccordionSummary"
           slot="expandIconWrapper"
+          className={composed.expandIconWrapper}
           owner={owner}
           resolved={icon}
           component={slots.expandIconWrapper}

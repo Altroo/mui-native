@@ -17,29 +17,32 @@ const globalStates = new Set([
   'required',
   'selected',
 ]);
-const utility = (name: string, slot: string) => `${globalStates.has(slot) ? 'Mui' : name}-${slot}`;
-const accordionSlots = [
-  'root',
-  'heading',
-  'rounded',
-  'expanded',
-  'disabled',
-  'gutters',
-  'region',
-] as const;
-const summarySlots = [
-  'root',
-  'expanded',
-  'focusVisible',
-  'disabled',
-  'gutters',
-  'content',
-  'expandIconWrapper',
-] as const;
-export type AccordionClassKey = (typeof accordionSlots)[number];
-export type AccordionClasses = Record<AccordionClassKey, string>;
-export type AccordionSummaryClassKey = (typeof summarySlots)[number];
-export type AccordionSummaryClasses = Record<AccordionSummaryClassKey, string>;
+// Match the source's ordinary object lookup, including inherited keys.
+const stateNames = Object.fromEntries([...globalStates].map((state) => [state, state]));
+const utility = (name: string, slot: string) => {
+  const state = stateNames[slot];
+  return state ? 'Mui-' + state : unstable_ClassNameGenerator.generate(name) + '-' + slot;
+};
+export interface AccordionClasses {
+  root: string;
+  heading: string;
+  rounded: string;
+  expanded: string;
+  disabled: string;
+  gutters: string;
+  region: string;
+}
+export type AccordionClassKey = keyof AccordionClasses;
+export interface AccordionSummaryClasses {
+  root: string;
+  expanded: string;
+  focusVisible: string;
+  disabled: string;
+  gutters: string;
+  content: string;
+  expandIconWrapper: string;
+}
+export type AccordionSummaryClassKey = keyof AccordionSummaryClasses;
 export interface AccordionDetailsClasses {
   root: string;
 }
@@ -52,26 +55,28 @@ export type AccordionActionsClassKey = keyof AccordionActionsClasses;
 export const getAccordionUtilityClass = (slot: string): string => utility('MuiAccordion', slot);
 export const getAccordionSummaryUtilityClass = (slot: string): string =>
   utility('MuiAccordionSummary', slot);
-// The source helper reads an ordinary object, including inherited keys.
-const wrapperGlobalStates = Object.fromEntries([...globalStates].map((state) => [state, state]));
-export const getAccordionDetailsUtilityClass = (slot: string): string => {
-  const state = wrapperGlobalStates[slot];
-  return state
-    ? `Mui-${state}`
-    : `${unstable_ClassNameGenerator.generate('MuiAccordionDetails')}-${slot}`;
+export const getAccordionDetailsUtilityClass = (slot: string): string =>
+  utility('MuiAccordionDetails', slot);
+export const getAccordionActionsUtilityClass = (slot: string): string =>
+  utility('MuiAccordionActions', slot);
+export const accordionClasses: AccordionClasses = {
+  root: getAccordionUtilityClass('root'),
+  heading: getAccordionUtilityClass('heading'),
+  rounded: getAccordionUtilityClass('rounded'),
+  expanded: getAccordionUtilityClass('expanded'),
+  disabled: getAccordionUtilityClass('disabled'),
+  gutters: getAccordionUtilityClass('gutters'),
+  region: getAccordionUtilityClass('region'),
 };
-export const getAccordionActionsUtilityClass = (slot: string): string => {
-  const state = wrapperGlobalStates[slot];
-  return state
-    ? `Mui-${state}`
-    : `${unstable_ClassNameGenerator.generate('MuiAccordionActions')}-${slot}`;
+export const accordionSummaryClasses: AccordionSummaryClasses = {
+  root: getAccordionSummaryUtilityClass('root'),
+  expanded: getAccordionSummaryUtilityClass('expanded'),
+  focusVisible: getAccordionSummaryUtilityClass('focusVisible'),
+  disabled: getAccordionSummaryUtilityClass('disabled'),
+  gutters: getAccordionSummaryUtilityClass('gutters'),
+  content: getAccordionSummaryUtilityClass('content'),
+  expandIconWrapper: getAccordionSummaryUtilityClass('expandIconWrapper'),
 };
-export const accordionClasses = Object.fromEntries(
-  accordionSlots.map((slot) => [slot, getAccordionUtilityClass(slot)]),
-) as AccordionClasses;
-export const accordionSummaryClasses = Object.fromEntries(
-  summarySlots.map((slot) => [slot, getAccordionSummaryUtilityClass(slot)]),
-) as AccordionSummaryClasses;
 export const accordionDetailsClasses = {
   root: getAccordionDetailsUtilityClass('root'),
 } as AccordionDetailsClasses;

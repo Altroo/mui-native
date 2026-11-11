@@ -26,7 +26,25 @@
       "AccordionActions/accordionActionsClasses.d.ts": "75624353ffcf91bb2b7911b44075d19a7b9283670f2a78938c17e82e50d1c0f3",
       "Accordion/AccordionContext.js": "da8c43dfb688469312656d3700cc5d62fb32940b78de289580704053c2987c43",
       "utils/useSlot.js": "c097cf9bb214c349ee8b28b7534552dc98fca0bc2ba268a3e24004b25b1a8246",
-      "utils/useControlled.js": "cc3676101c1b63699e87cc63da468631d76e2b0ebaa53943d52260a815c9fbee"
+      "utils/useControlled.js": "cc3676101c1b63699e87cc63da468631d76e2b0ebaa53943d52260a815c9fbee",
+      "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
+      "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+      "Paper/paperClasses.js": "a1018d4c7cdc4390e25ef889da1889eb7c13d19111d3465f25320dc1f5550f01",
+      "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+      "ButtonBase/buttonBaseClasses.js": "f670c87c82a17f16c18a6b79e01f09976d61026b6005d07cd6e9526672e3abcf",
+      "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa"
+    }
+  },
+  "classUtils": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+      "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0",
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
     }
   },
   "localFiles": [
