@@ -7,7 +7,7 @@ MUI Native (`@altroo/mui-native`) is an independent React Native compatibility l
 
 [View on npm](https://www.npmjs.com/package/@altroo/mui-native) · [Installation guide](docs/installation.md) · [Preview releases](https://github.com/Altroo/mui-native/releases) · [Compatibility](docs/compatibility.md)
 
-**Status: public pre-alpha. Release publishing keeps the `latest` and `prealpha` npm tags aligned on the same preview. This is a partial implementation, not a drop-in replacement for MUI.** The native package versions and upstream compatibility versions are separate.
+**Status: public pre-alpha. Use npm `latest` or an explicit preview version. The `prealpha` alias is not consistently aligned across packages. This is a partial implementation, not a drop-in replacement for MUI.** The native package versions and upstream compatibility versions are separate.
 
 The runtime uses native views on iOS and Android. The optional Metro resolver retains familiar `@mui/...` application imports. Web applications continue using the original MUI packages. This project is not affiliated with, endorsed by, or an official product of MUI.
 
@@ -408,13 +408,13 @@ The catalog uses Expo SDK 58. Rendering interactive rows or Modal/Dialog/Popover
 
 ## Install the pre-alpha preview
 
-Use the explicit `prealpha` tag in a disposable or development application:
+Use the `latest` tag in a disposable or development application. It currently selects a pre-alpha preview, not a stable release:
 
 ```sh
-npm install @altroo/mui-native@prealpha @altroo/mui-native-host@prealpha
+npm install @altroo/mui-native@latest @altroo/mui-native-host@latest
 ```
 
-The native host must be a direct app dependency and requires a native rebuild. Add `@altroo/mui-native-compat@prealpha` to retain supported original MUI imports. Optional icons/X packages use the same tag. Follow [installation](docs/installation.md) for peers, Metro/TypeScript setup and optional native dependencies. This preview is intended for testing the documented subset; alpha/stable verification remains open.
+The native host must be a direct app dependency and requires a native rebuild. Add `@altroo/mui-native-compat@latest` to retain supported original MUI imports. Optional icons/X packages use the same tag. Follow [installation](docs/installation.md) for peers, Metro/TypeScript setup and optional native dependencies. This preview is intended for testing the documented subset; alpha/stable verification remains open.
 
 ## Packages
 

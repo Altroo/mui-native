@@ -7,7 +7,7 @@ Opt-in Metro and TypeScript import routing for MUI Native. Experimental pre-alph
 ## Install
 
 ```sh
-npm install @altroo/mui-native-compat@prealpha
+npm install @altroo/mui-native-compat@latest
 ```
 
 The matched development baseline is React 19.3 / React Native 0.88.1 (Expo SDK 58). Review the [installation guide](https://github.com/Altroo/mui-native/blob/main/docs/installation.md) before using another runtime. Keep `@altroo/mui-native-host` as a direct application dependency when using Material or X components. Rebuild the native application after installing/updating native code; Expo Go does not contain these hosts.

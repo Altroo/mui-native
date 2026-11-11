@@ -2,7 +2,7 @@
 
 ## 0.0.8-prealpha.0
 
-All nine scoped packages remain pre-alpha and share this version. Release publishing aligns both npm `latest` and `prealpha` tags. This does not certify full MUI/MUI X compatibility or verified-alpha readiness.
+All nine scoped packages remain pre-alpha and share this version. Use npm `latest` or explicit `0.0.8-prealpha.0` versions; the `prealpha` alias is not consistently aligned across packages. This does not certify full MUI/MUI X compatibility or verified-alpha readiness.
 
 - Include all **10,750 pinned Material icon exports**, original names and supported deep imports. Preserve upstream wrapper/artwork notices and use bounded ESM build batches; direct icon imports remain preferable for startup.
 - Add the native Accordion family, ButtonGroup, SvgIcon and React-node SVG factories. Expand Typography, Divider, Paper, Box, Card, FormGroup, ListItemIcon, ListItemAvatar and MenuItem icon styling with pinned props/classes, native roots/refs, source-ordered themes and installed-consumer coverage. Individual compatibility and physical-device gates remain documented.
