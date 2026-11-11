@@ -101,7 +101,7 @@ public final class PopperInstrumentation extends Instrumentation {
     if (cardScenario) { CardScenario.run(this, dividerFontProfile); return; }
     if (boxScenario) { BoxScenario.run(this, dividerFontProfile); return; }
     if (paperScenario) { PaperScenario.run(this, dividerFontProfile); return; }
-    if (accordionActionsLayoutScenario) { LayoutRootScenario.runAccordionActionsLayout(this); return; }
+    if (accordionActionsLayoutScenario) { LayoutRootScenario.runAccordionActionsLayout(this, dividerFontProfile); return; }
     if (avatarAccessibilityScenario) { LayoutRootScenario.runAvatarAccessibility(this); return; }
     if (formGroupAccessibilityScenario) { LayoutRootScenario.runFormGroupAccessibility(this); return; }
     if (formGroupEditorScenario) { LayoutRootScenario.runFormGroupEditor(this); return; }

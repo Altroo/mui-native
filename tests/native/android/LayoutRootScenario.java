@@ -75,7 +75,7 @@ public final class LayoutRootScenario {
   public static void runFormGroupEditor(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_EDITOR, null).run(); }
   public static void runFormGroupAccessibility(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_ACCESSIBILITY, null).run(); }
   public static void runAvatarAccessibility(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.AVATAR_ACCESSIBILITY, null).run(); }
-  public static void runAccordionActionsLayout(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.ACCORDION_ACTIONS_LAYOUT, null).run(); }
+  public static void runAccordionActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.ACCORDION_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
@@ -92,7 +92,7 @@ public final class LayoutRootScenario {
       require(launch != null, "Catalog must be installed");
       launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity = driver.startActivitySync(launch);
-      if (scenario == Scenario.LAYOUT_ROOTS) {
+      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT) {
         require("normal".equals(fontProfile) || "enlarged".equals(fontProfile), "Layout root checks require an explicit normal/enlarged font profile");
         float actualFontScale = activity.getResources().getConfiguration().fontScale;
         report.put("fontProfile", fontProfile);
@@ -826,10 +826,8 @@ public final class LayoutRootScenario {
     return observed[0];
   }
 
-  /** Real Android action frames and touch state at the normal system text scale. */
+  /** Real Android action frames and touch state at the requested system text scale. */
   private void accordionActionsLayout() throws Exception {
-    require(Math.abs(activity.getResources().getConfiguration().fontScale - 1) < .01,
-      "Normal native font scale required");
     revealComplete("root-layout-actions"); tap("root-layout-actions");
     accordionActionsState("standard", false, false, false, 8, 0);
     tap("actions-preview-save");
