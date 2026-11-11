@@ -38,6 +38,23 @@ The owned Android interactive host also invalidates retained drawing layers on a
 
 The native cascade uses stable ancestry order for equal-specificity sheets. Original Emotion cache insertion history can alter equal-specificity cross-component results after dynamic style changes; that browser behavior remains an explicit styling gate. Arbitrary DOM selectors, external global stylesheets, pseudo-elements, CSS transition timing and custom browser layout roots are not established by this increment.
 
+## Callback preparation after 0.0.8
+
+Source after `0.0.8-prealpha.0` resolves the group's theme overrides, variants and sx at its owning styled root. Child state and focus styling reuse those prepared sheets. Named slots resolve in the original `for-in` callback/getter order before their selected CSS is scoped to descendants; inherited slots are retained, and unused slot CSS getters remain unread. Callbacks receive the same theme object consumed by the group.
+
+A native direction override can replace constructor-owned joining geometry while retaining the resolved theme/sx phases. Same-root ancestor and wrapper sheets keep their original order. The shared Emotion insertion-history gate in [#127](https://github.com/Altroo/mui-native/issues/127) remains open.
+
+For cross-platform named overrides, return style objects or arrays directly. The established native extension for recursive named-slot and variant-array callbacks is retained. Original 9.5.0 does not evaluate a second function nested under a named `grouped` override; the reference records that boundary separately from supported deferred root callbacks.
+
+The [preparation reference](../upstream/button-group-preparation.json) records three-button mount, child-only update and group-property update sequences, in ordinary and StrictMode trees, plus inherited getters and deferred arguments. The native software regressions match original callback counts and order; they do not establish physical-device timing or calibrated performance. Reproduce the original observations with:
+
+```sh
+node scripts/reference/button-group-preparation.mjs prepare
+# Serve .cache/button-group-preparation-reference locally and capture
+# window.buttonGroupPreparationObservations through a browser.
+node scripts/reference/button-group-preparation.mjs record /path/to/observations.json
+```
+
 ## Native direction and readable labels
 
 The native default root follows the nearest `RtlProvider`, including the provider installed by `ThemeProvider`. An authored `sx.direction` or native `style.direction` can override the root; native `direction: 'inherit'` follows its physical parent. Nested groups resolve their own provider default. Grouped corner, divider and overlap rules follow the resulting native direction, including when a child uses the opposite direction. Inline corner, border and margin shorthands replace earlier computed specific edges on both the group and its Buttons. Authored native style objects are preserved.

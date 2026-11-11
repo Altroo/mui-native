@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import js from '@eslint/js';
 import globals from 'globals';
 import { defineConfig, globalIgnores } from 'eslint/config';
@@ -41,6 +42,7 @@ export default defineConfig([
       'scripts/reference/check-controls-keyboard.mjs',
       'scripts/reference/svg-icon-browser.mjs',
       'scripts/reference/button-group-browser.mjs',
+      'scripts/reference/button-group-preparation-browser.mjs',
     ],
     languageOptions: { globals: globals.browser },
   },

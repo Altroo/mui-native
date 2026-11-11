@@ -2,12 +2,12 @@
 
 Current priority: [finish the easiest existing unfinished component or API](docs/completion-plan.md) to its full agreed native contract, one family at a time, before adding new components. The queue separates software work, locally executable verification and external validation.
 
-Updated: 2026-11-10. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
+Updated: 2026-11-11. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
 
 ## Decisions
 
 - One repository: `Altroo/mui-native`. Separate npm packages in the monorepo.
-- Public source and early npm previews under the `prealpha` tag. Verified alpha/stable publication still requires the release gates below.
+- Public source and early npm previews using `latest` or matching explicit versions from the installation guide. Verified alpha/stable publication still requires the release gates below.
 - Independent project and branding. Upstream collaboration does not imply acceptance or endorsement.
 - Material UI plus MIT-licensed MUI X Community only. Exclude Pro/Premium source and paid-only feature parity.
 - Native iOS/Android renderers, original MUI on web. No WebView substitute.

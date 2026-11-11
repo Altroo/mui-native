@@ -29,6 +29,7 @@ import {
   simpleNativeTextInput,
 } from './nativeTextInputProvenance';
 import { nativeTextEmissionKeys } from './nativeTextProvenance';
+import { retainNativeComponentBase, nativeComponentBaseRange } from './nativePreparedComponent';
 import { cssBorder, finishCssBorderStyle } from './borders';
 import {
   normalizeTextStyle,
@@ -61,6 +62,8 @@ export type { NativePreparedStyle } from './nativeStyledMetadata';
 export type StyleContext = NativeTextContext & {
   baseStyle?: SxProps;
   overrideKeys?: readonly string[];
+  /** @internal Scope resolved named slots before selecting root overrides. */
+  overrideSelectors?: Readonly<Record<string, string>>;
   width?: number;
   states?: readonly string[];
   slot?: string;
@@ -810,19 +813,37 @@ function componentSheets(
     // Native callback members of variant arrays are an existing extension.
     // Keep them deferred until selected, with their original merged arguments.
     variantState?: () => ComponentVariantArgs;
+    callbackState?: () => ComponentStyleArgs;
   };
-  const variantStyleRules = (
+  const preparedLayer = (
     input: unknown,
-    variantState: () => ComponentVariantArgs,
+    callbackState?: () => ComponentStyleArgs | ComponentVariantArgs,
+    selector?: string,
+    resolveNamedVariants = false,
   ): PreparedSheet[] => {
-    if (typeof input === 'function') return variantStyleRules(input(variantState()), variantState);
-    if (Array.isArray(input))
-      return input.flatMap((style) => variantStyleRules(style, variantState));
-    return prepareCss(input as SxProps);
+    if (callbackState && typeof input === 'function') {
+      const state = callbackState();
+      const resolved = input(state);
+      // The established named-slot extension resolves embedded variants.
+      // Source-facing root and variant-array results are already CSS here.
+      return resolveNamedVariants
+        ? prepareLayers(processStyle(resolved, state), selector)
+        : preparedLayer(resolved, callbackState, selector);
+    }
+    if (callbackState && Array.isArray(input))
+      return input.flatMap((style) =>
+        preparedLayer(style, callbackState, selector, resolveNamedVariants),
+      );
+    return prepareCss(selector === undefined ? (input as SxProps) : { [selector]: input });
   };
-  const prepareLayers = (layers: readonly ResolvedLayer[]): PreparedSheet[] =>
-    layers.flatMap(({ input, variantState }) =>
-      variantState ? variantStyleRules(input, variantState) : prepareCss(input as SxProps),
+  const prepareLayers = (layers: readonly ResolvedLayer[], selector?: string): PreparedSheet[] =>
+    layers.flatMap(({ input, variantState, callbackState }) =>
+      preparedLayer(
+        input,
+        variantState ?? callbackState,
+        selector,
+        selector !== undefined && variantState === undefined,
+      ),
     );
   // Adapted from MIT System 9.5.0 processStyleVariants. Resolution must finish
   // for every override slot before the selected output is prepared as CSS.
@@ -882,7 +903,15 @@ function componentSheets(
       }
       return variants(resolved.variants, variantProps, [{ input: rootStyle }]);
     }
-    return [{ input: resolved?.isProcessed ? resolved.style : resolved }];
+    const value = resolved?.isProcessed ? resolved.style : resolved;
+    return [
+      {
+        input: value,
+        ...(typeof value === 'function'
+          ? { callbackState: baseCallbackProps ?? (() => callbackProps) }
+          : {}),
+      },
+    ];
   };
   const overrideProps = { ...context.rootProps, theme, ownerState: props };
   const baseStyle = context.baseStyle;
@@ -913,16 +942,21 @@ function componentSheets(
     for (const key in styleOverrides)
       resolvedOverrides.set(key, processStyle(styleOverrides[key], overrideProps));
   }
+  const scopedOverrides = Object.entries(context.overrideSelectors ?? {}).flatMap(
+    ([key, selector]) => prepareLayers(resolvedOverrides.get(key) ?? [], selector),
+  );
   const bases = [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].flatMap((key) =>
     prepareLayers(resolvedOverrides.get(key) ?? []),
   );
   const componentVariants = context.skipVariants ? [] : (componentConfig()?.variants ?? []);
-  return [
+  const sheets = [
     ...baseRules,
+    ...scopedOverrides,
     ...bases,
     ...prepareLayers(variants(componentVariants, overrideProps)),
     ...prepare(sx, context),
   ];
+  return retainNativeComponentBase(sheets, 0, baseRules.length);
 }
 
 /** Keep a retained ancestor's lazy structural reader when rebinding its target. */
@@ -965,55 +999,59 @@ function prepareComponent(
   sx: SxProps | undefined,
   context: StyleContext,
 ): PreparedSheet[] {
-  return [
-    ...(context.ancestors ?? []).flatMap((sheet) => {
-      const readLastChild = deferredLastChild(sheet.context);
-      return (
-        sheet.prepared
-          ? sheet.prepared.sheets.map((prepared) =>
-              sheet.sameRoot && prepared.ancestor
-                ? {
-                    ...prepared,
-                    context: retainedAncestorContext(prepared.context, sheet.context),
-                  }
-                : {
-                    ...prepared,
-                    context: bindLastChild(
-                      {
-                        ...prepared.context,
-                        ...(sheet.sameRoot && !prepared.ancestor
-                          ? {
-                              // Implementation sheets share the final host's class/state
-                              // vocabulary while retaining aliases supplied by Base.
-                              classes: [
-                                ...new Set([
-                                  ...(prepared.context.classes ?? []),
-                                  ...(context.classes ?? []),
-                                ]),
-                              ],
-                              states: [
-                                ...new Set([
-                                  ...(prepared.context.states ?? []),
-                                  ...(context.states ?? []),
-                                ]),
-                              ],
-                              descendantOnly: prepared.context.descendantOnly,
-                            }
-                          : {
-                              descendantOnly: true,
-                              descendantPath: sheet.context.descendantPath,
-                              descendantClasses: sheet.context.descendantClasses,
-                            }),
-                      },
-                      readLastChild,
-                    ),
-                  },
-            )
-          : componentSheets(sheet.theme, sheet.name, sheet.props, sheet.sx, sheet.context)
-      ).map((prepared) => ({ ...prepared, ancestor: prepared.ancestor || !sheet.sameRoot }));
-    }),
-    ...componentSheets(theme, name, props, sx, context),
-  ];
+  const ancestors = (context.ancestors ?? []).flatMap((sheet) => {
+    const readLastChild = deferredLastChild(sheet.context);
+    return (
+      sheet.prepared
+        ? sheet.prepared.sheets.map((prepared) =>
+            sheet.sameRoot && prepared.ancestor
+              ? {
+                  ...prepared,
+                  context: retainedAncestorContext(prepared.context, sheet.context),
+                }
+              : {
+                  ...prepared,
+                  context: bindLastChild(
+                    {
+                      ...prepared.context,
+                      ...(sheet.sameRoot && !prepared.ancestor
+                        ? {
+                            // Implementation sheets share the final host's class/state
+                            // vocabulary while retaining aliases supplied by Base.
+                            classes: [
+                              ...new Set([
+                                ...(prepared.context.classes ?? []),
+                                ...(context.classes ?? []),
+                              ]),
+                            ],
+                            states: [
+                              ...new Set([
+                                ...(prepared.context.states ?? []),
+                                ...(context.states ?? []),
+                              ]),
+                            ],
+                            descendantOnly: prepared.context.descendantOnly,
+                          }
+                        : {
+                            descendantOnly: true,
+                            descendantPath: sheet.context.descendantPath,
+                            descendantClasses: sheet.context.descendantClasses,
+                          }),
+                    },
+                    readLastChild,
+                  ),
+                },
+          )
+        : componentSheets(sheet.theme, sheet.name, sheet.props, sheet.sx, sheet.context)
+    ).map((prepared) => ({ ...prepared, ancestor: prepared.ancestor || !sheet.sameRoot }));
+  });
+  const own = componentSheets(theme, name, props, sx, context);
+  const base = nativeComponentBaseRange(own);
+  return retainNativeComponentBase(
+    [...ancestors, ...own],
+    ancestors.length + base.start,
+    ancestors.length + base.end,
+  );
 }
 function collectSheets(sheets: readonly PreparedSheet[]): StyleRule[] {
   try {
@@ -1175,8 +1213,13 @@ export function componentRootStyle(
   };
   readLastChild.captureCopied(copiedContext);
   const finalContext = bindLastChild(copiedContext, readLastChild);
-  const sheets = [...prepareComponent(theme, name, props, sx, finalContext), ...wrappers];
+  const component = prepareComponent(theme, name, props, sx, finalContext);
+  const base = nativeComponentBaseRange(component);
+  const sheets = [...component, ...wrappers];
   const ownSheets = sheets.filter((sheet) => !sheet.ancestor);
+  let ownBaseStart = 0;
+  for (let i = 0; i < base.start; i++) if (!component[i].ancestor) ownBaseStart++;
+  retainNativeComponentBase(ownSheets, ownBaseStart, ownBaseStart + base.end - base.start);
   for (const sheet of ownSheets) retainPreparedNodes(sheet.nodes);
   const result: NativeRootStyleResult = {
     computed: finishRules(collectSheets(sheets), theme, finalContext),

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "description": "Pinned MIT ButtonGroup callback evaluation and deferred CSS preparation observations.",
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "ButtonGroup/ButtonGroup.js": "d1bc4fd08001d1d0513576e5b79cf72509bbac3eacd9530d83c253191c668289",
+      "Button/Button.js": "ff23554ae2eac98863f24c29ec04ab07c7903bc489ffbaf81a31f5979149a515",
+      "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+      "styles/ThemeProvider.js": "e1308a35b11aa6117dc361600b964a71d47bfb6c7b7ae040141fd77cecb7cb0a"
+    }
+  },
+  "systemReference": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+    }
+  },
+  "browserProbe": {
+    "source": "scripts/reference/button-group-preparation-browser.mjs",
+    "sha256": "0ee34fc72e92ac4f19ceb533bf7d559e24617213d82aac1024795c93c4ab6d5c"
+  },
+  "localFiles": [
+    "packages/material/src/buttonGroup.tsx",
+    "packages/system/src/sx.ts",
+    "packages/system/src/nativePreparedComponent.ts",
+    "packages/system/src/internal/prepared-style/index.ts"
+  ],
+  "adaptations": [
+    "Resolved named-slot output is scoped after source-order callbacks. Native joining geometry can rebind while retaining the owned theme/SX phases."
+  ]
+}
