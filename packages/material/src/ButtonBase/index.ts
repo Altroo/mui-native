@@ -1,5 +1,12 @@
-export { ButtonBase as default, ButtonBase } from '../buttonBase';
+export {
+  ButtonBase as default,
+  ButtonBase,
+  buttonBaseClasses,
+  getButtonBaseUtilityClass,
+} from '../buttonBase';
 export type {
+  ButtonBaseClasses,
+  ButtonBaseClassKey,
   ButtonBaseProps,
   ButtonBaseOwnProps,
   ButtonBaseRootProps,

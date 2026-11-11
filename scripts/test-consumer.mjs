@@ -380,6 +380,7 @@ for (const [contract, fixture] of [
   ['accordion-details', 'native.tsx'],
   ['accordion-actions', 'native.tsx'],
   ['accordion-classes', 'native.tsx'],
+  ['button-base-classes', 'native.tsx'],
   ['typography', 'native.tsx'],
   ['paper', 'native.tsx'],
   ['box', 'native.tsx'],

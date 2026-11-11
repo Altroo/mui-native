@@ -1,6 +1,6 @@
 # Native ButtonBase
 
-`ButtonBase` is an unstyled native activation and focus primitive for application controls and composite library components. Root and `@mui/material/ButtonBase` imports resolve to the same implementation when the [native import mapping](installation.md) is configured. It supplies [MenuItem/MenuList](menu-list.md) and [anchored Menu](menu.md); [Select](select.md) uses MenuItem for option activation and a dedicated native trigger. Existing Button, IconButton and other catalog controls have not yet been migrated to this primitive.
+`ButtonBase` is an unstyled native activation and focus primitive for application controls and composite library components. Root and `@mui/material/ButtonBase` imports resolve to the same implementation when the [native import mapping](installation.md) is configured. It supplies [MenuItem/MenuList](menu-list.md) and [anchored Menu](menu.md); [Select](select.md) uses MenuItem for option activation and a dedicated native trigger. Button, IconButton and native composite controls also reuse this primitive.
 
 ```tsx
 import React from 'react';
@@ -40,11 +40,19 @@ Disabled controls reject press, long press and keyboard activation, expose disab
 
 Focus-visible modality follows keyboard/pointer input observed by these library controls; input occurring exclusively outside them is not globally tracked. Focus callbacks, theme `MuiButtonBase.defaultProps`, root overrides, variants, native style callbacks and supported `&.Mui-disabled`/`&.Mui-focusVisible` selectors apply. A state callback receives `pressed`, `disabled` and `focusVisible`. Literal text and text style inheritance use the shared native text scope.
 
-ButtonBase does not impose a minimum touch size. The composing control/application owns dimensions, labels and touch targets. Android uses a native RippleDrawable, including theme color fallback, zero/automatic radius, foreground and borderless options. iOS uses pressed opacity. `disableRipple` and `disableTouchRipple` disable touch feedback; `focusRipple` provides a native outline when focus is visible and ripples are enabled. Browser ripple timing, pulsation, `TouchRippleProps`, ripple refs, nativeButton/form submission and CSS classes are outside this subset; native types omit these contracts and handled JavaScript inputs receive diagnostics.
+ButtonBase does not impose a minimum touch size. The composing control/application owns dimensions, labels and touch targets. Android uses a native RippleDrawable, including theme color fallback, zero/automatic radius, foreground and borderless options. iOS uses pressed opacity. `disableRipple` and `disableTouchRipple` disable touch feedback; `focusRipple` provides a native outline when focus is visible and ripples are enabled. Browser ripple timing, pulsation, `TouchRippleProps`, ripple refs, nativeButton/form submission are outside this subset; native types omit these contracts and handled JavaScript inputs receive diagnostics.
+
+## Class names and native styling
+
+The root and canonical `@mui/material/ButtonBase` entries export the three-slot `buttonBaseClasses` map, `getButtonBaseUtilityClass` and augmentable class interfaces. Active root, disabled and focus-visible names compose with `classes`, `focusVisibleClassName` and `className` in pinned source order. Inactive focus getters remain unread. Global state names stay fixed; the canonical generator changes live nonstate names while imported maps keep their module-load names.
+
+These tokens drive supported native self selectors, overrides, variants and prepared styled layers. Custom native roots receive composed `className` metadata and must consume it before forwarding native props; stock native hosts keep native props only. An inherited or authored Mui-disabled token blocks pointer targeting while an explicitly enabled control retains its native keyboard eligibility. Virtual option styling remains separate from actual editor focus. External browser stylesheets are not rendered.
 
 ## Evidence and open gates
 
 Pinned original-runtime fixtures cover twelve component traces and three underlying disabled-focus cases. Native component tests cover activation provenance, callback phases/cancellation, disabled aliases, links, native refs/actions, style/text scope and private event routing. Packed-consumer checks cover root/deep identity, public native types and browser-contract rejection. Reproduce the original fixtures with `node scripts/reference/button-base.mjs --check` after the [isolated reference setup](theming.md).
+
+The class/styling update also passed the two existing iOS Accordion interaction tests at normal OS text size: controlled expansion with body-local edit retention and disabled Summary with opt-in body unmounting. This checks the inherited ButtonBase composition path; it does not directly verify every public class combination on a device. The original simulator application was restored after testing.
 
 Native codegen and compile/link results establish build integration. They do not establish physical hardware-key delivery, focus-engine geometry, touch/ripple appearance, VoiceOver/TalkBack, RTL, large fonts, all keyboard layouts, nested native overlays, or measured release performance. Those gates and complete upstream ButtonBase support remain open. Earlier Modal/Box focus coordination also needs verification/integration against the explicit native host before its device focus claims can broaden.
 

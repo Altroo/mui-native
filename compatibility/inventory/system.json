@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "9dd2fd71fba963ac7f65aadd0fc19f43ceccc7daa5d6c83c6e8f450e2dd0c90a",
+  "nativeSourceSha256": "606b5342a4382cba1f016f282eb59f7c9062b85326a5a901fe739956fcd62ce8",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7015,7 +7015,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentRootStyle",
           "kind": "value",
-          "line": 1072
+          "line": 1132
         }
       ]
     },
@@ -7037,7 +7037,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 968
+          "line": 1028
         }
       ]
     },
@@ -7147,7 +7147,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "createNativeStyledStyle",
           "kind": "value",
-          "line": 994
+          "line": 1054
         }
       ]
     },
@@ -7411,7 +7411,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeRootStyleResult",
           "kind": "type",
-          "line": 1059
+          "line": 1119
         }
       ]
     },
@@ -19987,7 +19987,7 @@
     {
       "name": "NativeRootStyleResult",
       "file": "src/sx.ts",
-      "line": 1059,
+      "line": 1119,
       "kind": "type",
       "members": [
         {
@@ -19997,7 +19997,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "programme?: StyleProp<NativeStyle>;",
-          "line": 1061,
+          "line": 1121,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -20008,7 +20008,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 1062,
+          "line": 1122,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -20019,7 +20019,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 1063,
+          "line": 1123,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -20030,7 +20030,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 1065,
+          "line": 1125,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         }

@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "7ba16d4be56ef2a8311c1173ca5bc8479594d3d4f4e1c729af2b389d39b49879",
+  "nativeSourceSha256": "c176ad35e0c8a7ae1e6fcd8cd829cc1ecf210fff9e9c222eb9bd5ef778122aa4",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -10693,7 +10693,7 @@
           "line": 11
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10712,7 +10712,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -10731,7 +10731,7 @@
           "line": 9
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17020,7 +17020,7 @@
           "line": 10
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35328,7 +35328,7 @@
           "module": "@altroo/mui-native:src/buttonBase.tsx",
           "name": "ButtonBaseRootProps",
           "kind": "type",
-          "line": 78
+          "line": 82
         }
       ]
     },
@@ -35339,7 +35339,7 @@
           "module": "@altroo/mui-native:src/buttonBase.tsx",
           "name": "ButtonBaseState",
           "kind": "type",
-          "line": 68
+          "line": 72
         }
       ]
     },
@@ -35427,7 +35427,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentRootStyle",
           "kind": "value",
-          "line": 1072
+          "line": 1132
         }
       ]
     },
@@ -35438,7 +35438,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 968
+          "line": 1028
         }
       ]
     },
@@ -35559,7 +35559,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "createNativeStyledStyle",
           "kind": "value",
-          "line": 994
+          "line": 1054
         }
       ]
     },
@@ -35911,7 +35911,7 @@
           "module": "@altroo/mui-native:src/buttonBase.tsx",
           "name": "mergeNativeButtonStyle",
           "kind": "value",
-          "line": 140
+          "line": 148
         }
       ]
     },
@@ -36120,7 +36120,7 @@
           "module": "@altroo/mui-native:src/buttonBase.tsx",
           "name": "NativeButtonBaseStyleResult",
           "kind": "type",
-          "line": 74
+          "line": 78
         }
       ]
     },
@@ -36131,7 +36131,7 @@
           "module": "@altroo/mui-native:src/buttonBase.tsx",
           "name": "NativeButtonBaseStyleSheet",
           "kind": "type",
-          "line": 73
+          "line": 77
         }
       ]
     },
@@ -36593,7 +36593,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeRootStyleResult",
           "kind": "type",
-          "line": 1059
+          "line": 1119
         }
       ]
     },
@@ -53126,7 +53126,7 @@
           "line": 27,
           "kind": "property",
           "type": "Partial<ButtonBaseClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -53191,7 +53191,7 @@
           "line": 59,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -53319,13 +53319,13 @@
         {
           "name": "ButtonBaseOwnProps",
           "file": "src/buttonBase.tsx",
-          "line": 83,
+          "line": 88,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 121,
+          "line": 129,
           "package": "@altroo/mui-native"
         }
       ]
@@ -53463,7 +53463,7 @@
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 121,
+          "line": 129,
           "package": "@altroo/mui-native"
         }
       ]
@@ -53494,7 +53494,7 @@
         {
           "name": "ButtonBaseActions",
           "file": "src/buttonBase.tsx",
-          "line": 65,
+          "line": 69,
           "package": "@altroo/mui-native"
         }
       ]
@@ -53554,7 +53554,7 @@
           "line": 27,
           "kind": "property",
           "type": "Partial<ButtonBaseClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -53619,7 +53619,7 @@
           "line": 59,
           "kind": "property",
           "type": "string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -53747,13 +53747,13 @@
         {
           "name": "ButtonBaseOwnProps",
           "file": "src/buttonBase.tsx",
-          "line": 83,
+          "line": 88,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 121,
+          "line": 129,
           "package": "@altroo/mui-native"
         }
       ]
@@ -53891,7 +53891,7 @@
         {
           "name": "ButtonBaseProps",
           "file": "src/buttonBase.tsx",
-          "line": 121,
+          "line": 129,
           "package": "@altroo/mui-native"
         }
       ]
@@ -53922,7 +53922,7 @@
         {
           "name": "ButtonBaseActions",
           "file": "src/buttonBase.tsx",
-          "line": 65,
+          "line": 69,
           "package": "@altroo/mui-native"
         }
       ]
@@ -54209,7 +54209,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54222,7 +54222,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54235,13 +54235,20 @@
           "line": 7,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonBaseClasses",
+          "file": "src/buttonBaseClasses.ts",
+          "line": 5,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonBaseClassKey",
@@ -54253,7 +54260,14 @@
         "ButtonBaseClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonBaseClassKey",
+          "file": "src/buttonBaseClasses.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonBaseClasses",
@@ -54271,7 +54285,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54284,7 +54298,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -54297,13 +54311,20 @@
           "line": 7,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonBaseClasses",
+          "file": "src/buttonBaseClasses.ts",
+          "line": 5,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ButtonBaseClassKey",
@@ -54315,7 +54336,14 @@
         "ButtonBaseClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "ButtonBaseClassKey",
+          "file": "src/buttonBaseClasses.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "TouchRippleClasses",
@@ -185919,7 +185947,7 @@
     {
       "name": "ButtonBaseActions",
       "file": "src/buttonBase.tsx",
-      "line": 65,
+      "line": 69,
       "kind": "type",
       "members": [
         {
@@ -185929,7 +185957,7 @@
           "computed": false,
           "memberKind": "TSMethodSignature",
           "declaration": "focusVisible(): void;",
-          "line": 66,
+          "line": 70,
           "kind": "property",
           "type": "focusVisible(): void;"
         }
@@ -185941,7 +185969,7 @@
     {
       "name": "ButtonBaseState",
       "file": "src/buttonBase.tsx",
-      "line": 68,
+      "line": 72,
       "kind": "type",
       "members": [
         {
@@ -185951,7 +185979,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusVisible: boolean;",
-          "line": 69,
+          "line": 73,
           "kind": "property",
           "type": "boolean"
         },
@@ -185962,7 +185990,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 70,
+          "line": 74,
           "kind": "property",
           "type": "boolean"
         }
@@ -185976,7 +186004,7 @@
     {
       "name": "NativeButtonBaseStyleSheet",
       "file": "src/buttonBase.tsx",
-      "line": 73,
+      "line": 77,
       "kind": "type",
       "members": [],
       "references": [
@@ -185989,7 +186017,7 @@
     {
       "name": "NativeButtonBaseStyleResult",
       "file": "src/buttonBase.tsx",
-      "line": 74,
+      "line": 78,
       "kind": "type",
       "members": [
         {
@@ -185999,7 +186027,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 75,
+          "line": 79,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -186010,7 +186038,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 76,
+          "line": 80,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         }
@@ -186025,9 +186053,20 @@
     {
       "name": "ButtonBaseRootProps",
       "file": "src/buttonBase.tsx",
-      "line": 78,
+      "line": 82,
       "kind": "type",
       "members": [
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string | undefined;",
+          "line": 83,
+          "kind": "property",
+          "type": "string | undefined"
+        },
         {
           "name": "ref",
           "optional": true,
@@ -186035,7 +186074,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>;",
-          "line": 79,
+          "line": 84,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         },
@@ -186046,7 +186085,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "href?: string;",
-          "line": 80,
+          "line": 85,
           "kind": "property",
           "type": "string"
         },
@@ -186057,7 +186096,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "to?: unknown;",
-          "line": 81,
+          "line": 86,
           "kind": "property",
           "type": "unknown"
         }
@@ -186073,9 +186112,42 @@
     {
       "name": "ButtonBaseOwnProps",
       "file": "src/buttonBase.tsx",
-      "line": 83,
+      "line": 88,
       "kind": "type",
       "members": [
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<ButtonBaseClasses> | undefined;",
+          "line": 89,
+          "kind": "property",
+          "type": "Partial<ButtonBaseClasses> | undefined"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string | undefined;",
+          "line": 90,
+          "kind": "property",
+          "type": "string | undefined"
+        },
+        {
+          "name": "focusVisibleClassName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "focusVisibleClassName?: string | undefined;",
+          "line": 91,
+          "kind": "property",
+          "type": "string | undefined"
+        },
         {
           "name": "_muiNativeItemState",
           "optional": true,
@@ -186083,7 +186155,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "_muiNativeItemState?: { focused: boolean; focusVisible: boolean; selected: boolean };",
-          "line": 85,
+          "line": 93,
           "kind": "property",
           "type": "{ focused: boolean; focusVisible: boolean; selected: boolean }"
         },
@@ -186094,7 +186166,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focused: boolean;",
-          "line": 85,
+          "line": 93,
           "kind": "property",
           "type": "boolean"
         },
@@ -186105,7 +186177,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusVisible: boolean;",
-          "line": 85,
+          "line": 93,
           "kind": "property",
           "type": "boolean"
         },
@@ -186116,7 +186188,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "selected: boolean",
-          "line": 85,
+          "line": 93,
           "kind": "property",
           "type": "boolean"
         },
@@ -186127,7 +186199,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "_muiNativeClassName?: string;",
-          "line": 87,
+          "line": 95,
           "kind": "property",
           "type": "string"
         },
@@ -186138,7 +186210,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "_muiNativeClassMetadata?: { root: string; focusVisible?: string | undefined };",
-          "line": 89,
+          "line": 97,
           "kind": "property",
           "type": "{ root: string; focusVisible?: string | undefined }"
         },
@@ -186149,7 +186221,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root: string;",
-          "line": 89,
+          "line": 97,
           "kind": "property",
           "type": "string"
         },
@@ -186160,7 +186232,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusVisible?: string | undefined",
-          "line": 89,
+          "line": 97,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -186171,7 +186243,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "internalDisabledThemeFocusVisible?: boolean;",
-          "line": 91,
+          "line": 99,
           "kind": "property",
           "type": "boolean"
         },
@@ -186182,7 +186254,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "_muiNativeStyle?: (\n    state: ButtonBaseState,\n    base: NativeButtonBaseStyleSheet,\n  ) => NativeButtonBaseStyleResult;",
-          "line": 93,
+          "line": 101,
           "kind": "property",
           "type": "(\n    state: ButtonBaseState,\n    base: NativeButtonBaseStyleSheet,\n  ) => NativeButtonBaseStyleResult"
         },
@@ -186193,7 +186265,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean;",
-          "line": 97,
+          "line": 105,
           "kind": "property",
           "type": "boolean"
         },
@@ -186204,7 +186276,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "autoFocus?: boolean;",
-          "line": 98,
+          "line": 106,
           "kind": "property",
           "type": "boolean"
         },
@@ -186215,7 +186287,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>;",
-          "line": 99,
+          "line": 107,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         },
@@ -186226,7 +186298,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "action?: React.Ref<ButtonBaseActions>;",
-          "line": 100,
+          "line": 108,
           "kind": "property",
           "type": "React.Ref<ButtonBaseActions>"
         },
@@ -186237,7 +186309,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode | ((state: ButtonBaseState) => React.ReactNode);",
-          "line": 101,
+          "line": 109,
           "kind": "property",
           "type": "React.ReactNode | ((state: ButtonBaseState) => React.ReactNode)"
         },
@@ -186248,7 +186320,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 102,
+          "line": 110,
           "kind": "property",
           "type": "SxProps"
         },
@@ -186259,7 +186331,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle> | ((state: ButtonBaseState) => StyleProp<NativeStyle>);",
-          "line": 103,
+          "line": 111,
           "kind": "property",
           "type": "StyleProp<NativeStyle> | ((state: ButtonBaseState) => StyleProp<NativeStyle>)"
         },
@@ -186270,7 +186342,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<ButtonBaseRootProps> | typeof View;",
-          "line": 104,
+          "line": 112,
           "kind": "property",
           "type": "React.ComponentType<ButtonBaseRootProps> | typeof View"
         },
@@ -186281,7 +186353,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "LinkComponent?: React.ComponentType<ButtonBaseRootProps> | typeof View;",
-          "line": 105,
+          "line": 113,
           "kind": "property",
           "type": "React.ComponentType<ButtonBaseRootProps> | typeof View"
         },
@@ -186292,7 +186364,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "href?: string;",
-          "line": 106,
+          "line": 114,
           "kind": "property",
           "type": "string"
         },
@@ -186303,7 +186375,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "to?: unknown;",
-          "line": 107,
+          "line": 115,
           "kind": "property",
           "type": "unknown"
         },
@@ -186314,7 +186386,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClick?: (event: ButtonBaseActivationEvent) => void;",
-          "line": 108,
+          "line": 116,
           "kind": "event",
           "type": "(event: ButtonBaseActivationEvent) => void"
         },
@@ -186325,7 +186397,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onPress?: (event: ButtonBaseActivationEvent) => void;",
-          "line": 109,
+          "line": 117,
           "kind": "event",
           "type": "(event: ButtonBaseActivationEvent) => void"
         },
@@ -186336,7 +186408,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onKeyDown?: (event: ButtonBaseKeyEvent) => void;",
-          "line": 110,
+          "line": 118,
           "kind": "event",
           "type": "(event: ButtonBaseKeyEvent) => void"
         },
@@ -186347,7 +186419,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onKeyUp?: (event: ButtonBaseKeyEvent) => void;",
-          "line": 111,
+          "line": 119,
           "kind": "event",
           "type": "(event: ButtonBaseKeyEvent) => void"
         },
@@ -186358,7 +186430,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onFocusVisible?: PressableProps['onFocus'];",
-          "line": 112,
+          "line": 120,
           "kind": "event",
           "type": "PressableProps['onFocus']"
         },
@@ -186369,7 +186441,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableRipple?: boolean;",
-          "line": 113,
+          "line": 121,
           "kind": "property",
           "type": "boolean"
         },
@@ -186380,7 +186452,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableTouchRipple?: boolean;",
-          "line": 114,
+          "line": 122,
           "kind": "property",
           "type": "boolean"
         },
@@ -186391,7 +186463,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusRipple?: boolean;",
-          "line": 115,
+          "line": 123,
           "kind": "property",
           "type": "boolean"
         },
@@ -186402,7 +186474,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusableWhenDisabled?: boolean;",
-          "line": 117,
+          "line": 125,
           "kind": "property",
           "type": "boolean"
         },
@@ -186413,7 +186485,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "suppressFocusVisible?: boolean;",
-          "line": 119,
+          "line": 127,
           "kind": "property",
           "type": "boolean"
         }
@@ -186421,12 +186493,14 @@
       "references": [
         "ButtonBaseActions",
         "ButtonBaseActivationEvent",
+        "ButtonBaseClasses",
         "ButtonBaseKeyEvent",
         "ButtonBaseRootProps",
         "ButtonBaseState",
         "NativeButtonBaseStyleResult",
         "NativeButtonBaseStyleSheet",
         "NativeStyle",
+        "Partial",
         "PressableProps",
         "React.ComponentType",
         "React.ReactNode",
@@ -186441,13 +186515,69 @@
     {
       "name": "ButtonBaseProps",
       "file": "src/buttonBase.tsx",
-      "line": 121,
+      "line": 129,
       "kind": "type",
       "members": [],
       "references": [
         "ButtonBaseOwnProps",
         "Omit",
         "PressableProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonBaseClasses",
+      "file": "src/buttonBaseClasses.ts",
+      "line": 5,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: string;",
+          "line": 6,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "disabled",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disabled: string;",
+          "line": 7,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "focusVisible",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "focusVisible: string;",
+          "line": 8,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ButtonBaseClassKey",
+      "file": "src/buttonBaseClasses.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ButtonBaseClasses"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -214021,7 +214151,7 @@
     {
       "name": "NativeRootStyleResult",
       "file": "src/sx.ts",
-      "line": 1059,
+      "line": 1119,
       "kind": "type",
       "members": [
         {
@@ -214031,7 +214161,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "programme?: StyleProp<NativeStyle>;",
-          "line": 1061,
+          "line": 1121,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -214042,7 +214172,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 1062,
+          "line": 1122,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -214053,7 +214183,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 1063,
+          "line": 1123,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -214064,7 +214194,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 1065,
+          "line": 1125,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         }
