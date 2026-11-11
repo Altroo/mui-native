@@ -47,7 +47,8 @@ public final class LayoutRootScenario {
     FORM_GROUP_EVENTS("form-group-events", "formGroupEvents"), FORM_GROUP_KEYBOARD("form-group-keyboard", "formGroupKeyboard"),
     FORM_GROUP_FOCUS("form-group-focus", "formGroupFocus"), FORM_GROUP_EDITOR("form-group-editor", "formGroupEditor"),
     FORM_GROUP_ACCESSIBILITY("form-group-accessibility", "formGroupAccessibility"),
-    AVATAR_ACCESSIBILITY("list-item-avatar-accessibility", "avatarAccessibility");
+    AVATAR_ACCESSIBILITY("list-item-avatar-accessibility", "avatarAccessibility"),
+    ACCORDION_ACTIONS_LAYOUT("accordion-actions-layout", "accordionActionsLayout");
     final String label, key;
     Scenario(String label, String key) { this.label = label; this.key = key; }
   }
@@ -74,6 +75,7 @@ public final class LayoutRootScenario {
   public static void runFormGroupEditor(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_EDITOR, null).run(); }
   public static void runFormGroupAccessibility(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_ACCESSIBILITY, null).run(); }
   public static void runAvatarAccessibility(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.AVATAR_ACCESSIBILITY, null).run(); }
+  public static void runAccordionActionsLayout(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.ACCORDION_ACTIONS_LAYOUT, null).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
@@ -115,7 +117,9 @@ public final class LayoutRootScenario {
       } while (!wrappersReady && navigationAttempts < 2);
       report.put("navigationAttempts", navigationAttempts);
       require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
-      if (scenario == Scenario.AVATAR_ACCESSIBILITY) {
+      if (scenario == Scenario.ACCORDION_ACTIONS_LAYOUT) {
+        accordionActionsLayout();
+      } else if (scenario == Scenario.AVATAR_ACCESSIBILITY) {
         avatarAccessibility(report);
       } else if (scenario == Scenario.FORM_GROUP_ACCESSIBILITY) {
         formGroupAccessibility();
@@ -820,6 +824,60 @@ public final class LayoutRootScenario {
       return true;
     }, "Visible native accessibility node must be reachable: " + id);
     return observed[0];
+  }
+
+  /** Real Android action frames and touch state at the normal system text scale. */
+  private void accordionActionsLayout() throws Exception {
+    require(Math.abs(activity.getResources().getConfiguration().fontScale - 1) < .01,
+      "Normal native font scale required");
+    revealComplete("root-layout-actions"); tap("root-layout-actions");
+    accordionActionsState("standard", false, false, false, 8, 0);
+    tap("actions-preview-save");
+    tap("actions-preview-theme");
+    accordionActionsState("roomy", false, true, false, 16, 1);
+    tap("actions-preview-direction");
+    accordionActionsState("rtl", false, true, true, 16, 1);
+    capture("accordion-actions-rtl.png");
+    tap("actions-preview-spacing");
+    accordionActionsState("no-gap", true, true, true, 0, 1);
+    for (String control : new String[]{"spacing", "theme", "direction"}) tap("actions-preview-" + control);
+    accordionActionsState("restored", false, false, false, 8, 1);
+    capture("accordion-actions-restored.png");
+  }
+
+  private void accordionActionsState(String stage, boolean disabled, boolean roomy, boolean rtl, int expectedGap, int count) throws Exception {
+    JSONObject state = settled(() -> {
+      JSONObject value = metadata("actions-preview-receipt");
+      require(value.getBoolean("disableSpacing") == disabled && value.getBoolean("roomy") == roomy
+        && value.getBoolean("rtl") == rtl, "Action row controls have not committed");
+      scale(value);
+      JSONObject refs = value.getJSONObject("refs");
+      require(refs.getInt("attached") == 1 && refs.getInt("cleaned") == 0, "The action root must keep its original ref");
+      View row = retained("actions-preview-row");
+      View keep = retained("actions-preview-keep"), save = retained("actions-preview-save");
+      // Fabric may materialize the measured row and its two actions as siblings.
+      JSONObject physical = physicalChildren(row, new String[]{"keep", "save"}, new View[]{keep, save});
+      JSONObject parent = bounds(row), first = bounds(keep), second = bounds(save);
+      double firstX = first.getDouble("x"), secondX = second.getDouble("x");
+      double gap = rtl ? firstX - secondX - second.getDouble("width") : secondX - firstX - first.getDouble("width");
+      require(rtl ? centerX(first) > centerX(second) : centerX(first) < centerX(second), "Action order must follow native RTL");
+      require(Math.abs(gap - expectedGap) <= 1, "Native action gap differs: " + gap + " expected=" + expectedGap);
+      for (JSONObject child : new JSONObject[]{first, second}) {
+        double x = centerX(child), y = child.getDouble("y") + child.getDouble("height") / 2;
+        require(x >= parent.getDouble("x") && x < parent.getDouble("x") + parent.getDouble("width")
+          && y >= parent.getDouble("y") && y < parent.getDouble("y") + parent.getDouble("height"),
+          "Actual action center must remain inside the retained native row");
+      }
+      double firstY = first.getDouble("y") + first.getDouble("height") / 2;
+      double secondY = second.getDouble("y") + second.getDouble("height") / 2;
+      require(Math.abs(firstY - secondY) <= 1, "Actions must share the same native row");
+      String label = String.valueOf(save.getContentDescription());
+      require(label.equals("Saved notes " + count), "Actual saved note count differs: " + label);
+      return new JSONObject().put("name", stage).put("metadata", value).put("rootTag", row.getId())
+        .put("gap", gap).put("row", parent).put("keep", first).put("save", second)
+        .put("saveLabel", label).put("physical", physical);
+    }, stage);
+    states.put(state); stage(stage);
   }
 
   private void avatarAccessibility(JSONObject report) throws Exception {

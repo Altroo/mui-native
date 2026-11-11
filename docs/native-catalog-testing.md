@@ -445,3 +445,17 @@ node scripts/native-catalog/android-popper.mjs run --serial "$MUI_QA_DEVICE" --s
 ```
 
 The Android test clears the UiAutomation flag that includes views marked unimportant for accessibility, then locates the inline and portaled images by role and label in the active native tree. Their centers must belong to their respective measured wrapper frames, and the native source nodes must differ. The custom child must expose a unique button identifier and an enabled click action. The test activates it by a real tap, then rechecks its counter and the retained wrapper tags after changing alignment, theme and direction and after restoring them. The report retains three stage records and screenshots. This covers selected native tree exposure and touch; screen reader traversal and announcements need separate checks.
+
+## AccordionActions native layout
+
+The catalog's Wrappers / Actions scene shows a delivery note with two retained action buttons. Open it on an existing simulator at normal OS text size. The controls change the active spacing class, the themed gap and the native row direction.
+
+On iOS, select `testAccordionActionsGapAndRetainedChild` from [RootLayoutCatalogUITests.swift](../tests/native/ios/RootLayoutCatalogUITests.swift). It uses actual XCTest button frames and a real tap. The same View ref must stay attached while the measured gap changes between 8, 16 and 0 points. The saved count must remain at one after restoring the original settings. Select `testAccordionActionsAtEnlargedOSTextSize` separately after setting the iOS simulator to an enlarged OS text category; the maintained check requires actual font scale of at least 1.6.
+
+On Android, [build both APKs](#build-the-catalog-and-test-apks) and [select the existing emulator](#select-one-device-and-run). At normal OS text size, use an unused output directory:
+
+```sh
+node scripts/native-catalog/android-popper.mjs run --serial "$MUI_QA_DEVICE" --scenario accordion-actions-layout --output .cache/native-accordion-actions
+```
+
+The Android driver measures the retained native row and action Views, which may be descendants or immediate flattened siblings and checks physical order, both refs counters and the saved count at all five stages. It exports two screenshots and the stage receipts. These scenarios cover native layout and touch. They do not establish Android enlarged-text behavior, accessibility traversal or performance.

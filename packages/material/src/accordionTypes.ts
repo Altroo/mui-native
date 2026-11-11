@@ -138,7 +138,7 @@ export interface AccordionDetailsProps extends Omit<BoxProps, 'sx' | 'component'
 }
 export interface AccordionActionsProps extends Omit<BoxProps, 'component'> {
   component?: React.ComponentType<any> | undefined;
-  classes?: Partial<AccordionActionsClasses>;
-  className?: string;
-  disableSpacing?: boolean;
+  classes?: Partial<AccordionActionsClasses> | undefined;
+  className?: string | undefined;
+  disableSpacing?: boolean | undefined;
 }
