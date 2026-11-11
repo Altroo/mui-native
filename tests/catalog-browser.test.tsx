@@ -172,6 +172,15 @@ test.each([2, 3.571])(
       </ThemeProvider>,
     );
     expect(screen.getByText('Native')).toBeTruthy();
+    expect(screen.getByTestId('catalog-tab-Wrappers')).toHaveStyle({ maxWidth: 350 });
+    await fireEventAsync(screen.getByTestId('catalog-tabs'), 'layout', {
+      nativeEvent: { layout: { x: 0, y: 0, width: 330, height: 50 } },
+    });
+    expect(screen.getByTestId('catalog-tab-Wrappers')).toHaveStyle({ maxWidth: 290 });
+    expect(screen.getByText('Groups')).toBeTruthy();
+    expect(screen.getByRole('tab', { name: 'Button groups' })).toBeTruthy();
+    expect(screen.getByText('Layout')).toBeTruthy();
+    expect(screen.getByRole('tab', { name: 'Layout & surfaces' })).toBeTruthy();
     expect(screen.queryByText('COMPONENT LIBRARY · PRE-ALPHA')).toBeNull();
     expect(screen.getByRole('switch', { name: 'Dark mode' })).toBeTruthy();
     await fireEventAsync.press(screen.getByTestId('catalog-home'));

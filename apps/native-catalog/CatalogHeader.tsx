@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   Pressable,
   ScrollView,
@@ -9,6 +9,12 @@ import {
 } from 'react-native';
 import { Switch, Typography, useTheme } from '@mui/material';
 import { catalogSections, type CatalogRoute } from './catalogSections';
+
+const compactTabLabels: Partial<Record<CatalogRoute, string>> = {
+  Form: 'Forms',
+  Groups: 'Groups',
+  Wrappers: 'Layout',
+};
 
 export function CatalogHeader({
   section,
@@ -22,7 +28,12 @@ export function CatalogHeader({
   onDarkChange: (dark: boolean) => void;
 }) {
   const theme = useTheme();
-  const compact = useWindowDimensions().fontScale > 1.5;
+  const { fontScale, width } = useWindowDimensions();
+  const compact = fontScale > 1.5;
+  const [tabViewportWidth, setTabViewportWidth] = useState<number>();
+  // Safe area insets can make the scroll viewport narrower than the window.
+  const availableWidth = Math.min(width, tabViewportWidth ?? width);
+  const maxTabWidth = compact ? Math.max(44, availableWidth - 40) : undefined;
   const scroll = useRef<ScrollViewInstance>(null);
   const positions = useRef<Record<string, number>>({});
   // Index links can select a tab outside the viewport without a swipe gesture.
@@ -105,6 +116,9 @@ export function CatalogHeader({
         ref={scroll}
         style={{ flexGrow: 0, flexShrink: 0 }}
         testID="catalog-tabs"
+        onLayout={({ nativeEvent }) => {
+          if (nativeEvent.layout.width > 0) setTabViewportWidth(nativeEvent.layout.width);
+        }}
         horizontal
         showsHorizontalScrollIndicator
         keyboardShouldPersistTaps="handled"
@@ -117,6 +131,7 @@ export function CatalogHeader({
                 key={id}
                 testID={`catalog-tab-${id}`}
                 accessibilityRole="tab"
+                accessibilityLabel={label}
                 accessibilityState={{ selected: section === id }}
                 onPress={() => onNavigate(id)}
                 onLayout={({ nativeEvent }) => {
@@ -129,6 +144,7 @@ export function CatalogHeader({
                 }}
                 style={({ pressed }) => ({
                   minHeight: 44,
+                  maxWidth: maxTabWidth,
                   justifyContent: 'center',
                   borderBottomWidth: 2,
                   borderBottomColor: section === id ? theme.palette.primary.main : 'transparent',
@@ -140,7 +156,7 @@ export function CatalogHeader({
                   color={section === id ? 'text.primary' : 'text.secondary'}
                   style={{ fontWeight: section === id ? '600' : '400' }}
                 >
-                  {label}
+                  {compact ? (compactTabLabels[id] ?? label) : label}
                 </Typography>
               </Pressable>
             ),
