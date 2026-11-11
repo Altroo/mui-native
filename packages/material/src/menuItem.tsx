@@ -55,7 +55,9 @@ export interface MenuItemOwnProps {
   /** Native typeahead override for labels that are not represented by rendered text. */
   textValue?: string;
 }
-export interface MenuItemProps extends Omit<ButtonBaseProps, 'role'>, MenuItemOwnProps {}
+export interface MenuItemProps
+  extends Omit<ButtonBaseProps, 'role' | 'classes'>,
+    MenuItemOwnProps {}
 export const MenuItem: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<MenuItemProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, MenuItemProps>(function MenuItem(inProps, forwarded) {

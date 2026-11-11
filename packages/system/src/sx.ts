@@ -925,6 +925,39 @@ function componentSheets(
   ];
 }
 
+/** Keep a retained ancestor's lazy structural reader when rebinding its target. */
+function retainedAncestorContext<T extends SelectorContext>(
+  original: T,
+  target: SelectorContext,
+): T {
+  const clone = Object.create(Object.getPrototypeOf(original), {
+    ...Object.getOwnPropertyDescriptors(original),
+    descendantOnly: { value: true, enumerable: true, configurable: true, writable: true },
+    ...(target.descendantPath === undefined
+      ? {}
+      : {
+          descendantPath: {
+            value: target.descendantPath,
+            enumerable: true,
+            configurable: true,
+            writable: true,
+          },
+        }),
+    ...(target.descendantClasses === undefined
+      ? {}
+      : {
+          descendantClasses: {
+            value: target.descendantClasses,
+            enumerable: true,
+            configurable: true,
+            writable: true,
+          },
+        }),
+  }) as T;
+  const reader = lastChildReaders.get(original);
+  if (reader) lastChildReaders.set(clone, reader);
+  return clone;
+}
 function prepareComponent(
   theme: Theme,
   name: string,
@@ -937,20 +970,47 @@ function prepareComponent(
       const readLastChild = deferredLastChild(sheet.context);
       return (
         sheet.prepared
-          ? sheet.prepared.sheets.map((prepared) => ({
-              ...prepared,
-              context: bindLastChild(
-                {
-                  ...prepared.context,
-                  descendantOnly: true,
-                  descendantPath: sheet.context.descendantPath,
-                  descendantClasses: sheet.context.descendantClasses,
-                },
-                readLastChild,
-              ),
-            }))
+          ? sheet.prepared.sheets.map((prepared) =>
+              sheet.sameRoot && prepared.ancestor
+                ? {
+                    ...prepared,
+                    context: retainedAncestorContext(prepared.context, sheet.context),
+                  }
+                : {
+                    ...prepared,
+                    context: bindLastChild(
+                      {
+                        ...prepared.context,
+                        ...(sheet.sameRoot && !prepared.ancestor
+                          ? {
+                              // Implementation sheets share the final host's class/state
+                              // vocabulary while retaining aliases supplied by Base.
+                              classes: [
+                                ...new Set([
+                                  ...(prepared.context.classes ?? []),
+                                  ...(context.classes ?? []),
+                                ]),
+                              ],
+                              states: [
+                                ...new Set([
+                                  ...(prepared.context.states ?? []),
+                                  ...(context.states ?? []),
+                                ]),
+                              ],
+                              descendantOnly: prepared.context.descendantOnly,
+                            }
+                          : {
+                              descendantOnly: true,
+                              descendantPath: sheet.context.descendantPath,
+                              descendantClasses: sheet.context.descendantClasses,
+                            }),
+                      },
+                      readLastChild,
+                    ),
+                  },
+            )
           : componentSheets(sheet.theme, sheet.name, sheet.props, sheet.sx, sheet.context)
-      ).map((prepared) => ({ ...prepared, ancestor: !sheet.sameRoot }));
+      ).map((prepared) => ({ ...prepared, ancestor: prepared.ancestor || !sheet.sameRoot }));
     }),
     ...componentSheets(theme, name, props, sx, context),
   ];

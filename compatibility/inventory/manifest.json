@@ -10775,7 +10775,7 @@
       "packages/material/src/AccordionDetails/index.ts": "5b3c386a23eaae03678ac3ee4d2bf0b2e6b0cf8e8e8a6eca3f87a61323a3c141",
       "packages/material/src/AccordionSummary/accordionSummaryClasses/index.ts": "a1ee4f1833e324b76e3a0e29b18cb8a24bb891db3a592c2910155b7d250bbc82",
       "packages/material/src/AccordionSummary/index.ts": "a1e78905c2777f68e7c03205e7280086c1a93cba0567c7977b105a8d954840a9",
-      "packages/material/src/accordionTypes.ts": "e6ca6c019fde39ec8fbbe04b88379df9b9a663c3d0a95d674c17a4924050bd19",
+      "packages/material/src/accordionTypes.ts": "63570d0e2b95262e64404fe0695731c5cbacb10b694b611652794e2437a7f3c5",
       "packages/material/src/Alert/index.ts": "8c0a7b0a9ca5279bfd70b8db2e05b7d7e7f2a468c119ca83b3dc14fc6b8ca9df",
       "packages/material/src/autocomplete.tsx": "2830282e90dc0921fa700f6b960a613c0e05f3ece70363954034137b61b6cf74",
       "packages/material/src/Autocomplete/autocompleteClasses/index.ts": "67ed9e7c5e018685d2bc70f0b0a61d731d9b174c236839d5afc7f27573773bd7",
@@ -10790,8 +10790,9 @@
       "packages/material/src/boxTypes.ts": "6885354ae8e072d8cc9459a62204c67f7bbe498feb58d43bf49a0f41bc42921c",
       "packages/material/src/Button/buttonClasses/index.ts": "600115bf53966825856519d0a0c77142cf4abf08f239485770709670c1413270",
       "packages/material/src/Button/index.ts": "8a2c0cab0e6cdb8fe4cac45c2e2dbed7840497e62d2965f19c7eb9e0ea63eeff",
-      "packages/material/src/buttonBase.tsx": "0487d46e730bf9e3f7591a3b89dbac627b1ca0a7f12acfb18ec73c45787d1b62",
-      "packages/material/src/ButtonBase/index.ts": "9a878462816e8c473fa575d246fd63e93a5e7591c947c577b791e677cb3c7a3a",
+      "packages/material/src/buttonBase.tsx": "1db2fc79232de91057ba4d0ab3394b2ae11753d6aaf50871a9c3beb6a2cdccc4",
+      "packages/material/src/ButtonBase/index.ts": "cfaf4326e3c92e22a8d771dd0f6505ec13885301ed677371205f4fd23cc6c5a3",
+      "packages/material/src/buttonBaseClasses.ts": "48730de5b7bbb4c7a12b3f2052a2ff443a33b3c8842a5854dcc7589313136a7a",
       "packages/material/src/buttonClasses.ts": "1baee169b6df93ab1b8796587a9872f112e8f9d9b7973498cfcbb1031230743f",
       "packages/material/src/buttonGroup.tsx": "d9cddc5f0b2799ccdd663a81dfb4d04f6fa25bed8cfc857233497d86f3170b66",
       "packages/material/src/ButtonGroup/ButtonGroupButtonContext/index.ts": "52f013bde2558f32f64b90ef71e3c8880c8657630fc6623ef6eb2bfdf9f01df5",
@@ -10893,7 +10894,7 @@
       "packages/material/src/Menu/index.ts": "e6ae917f71dcd605fe3c57ecec1550a423d85d75cd613f969f0cea185ad584b3",
       "packages/material/src/Menu/menuClasses/index.ts": "98075436c046220f357e7bd045bec73c2dabd35d6a7bd823b11d88900330443e",
       "packages/material/src/menuContext.ts": "214e463f4b7b37d2109f6a2dcc538c2eee712ff20956e1889446bbca6441bbec",
-      "packages/material/src/menuItem.tsx": "23e3046c43bb6b99428a1b5691a88558ee6db6dda9d16ab329b48f9e0d532bdc",
+      "packages/material/src/menuItem.tsx": "b269b1f8cc411964314662d14a28fa517ac857ffa92fb4914d7b23e73f5fb591",
       "packages/material/src/MenuItem/index.ts": "54cda264b70c65c3bb58ee287577008e7bb209cc593eda6199bf63a604384a9b",
       "packages/material/src/menuList.tsx": "df61a73aec2ee55b56ca479d0f62e73aaf2b22a58d4e177e19f97601da225def",
       "packages/material/src/MenuList/index.ts": "37561f1ae162f901011a8ea2354fc8c94bbd84a16dd2df4150b3c1754dde68b2",
@@ -11070,7 +11071,7 @@
       "packages/system/src/RtlProvider/index.tsx": "b69eb42a9148e815c75cb9c53d7d233ac80c2bef973cde0bd1d4f690fa8cbc62",
       "packages/system/src/shadows.ts": "87e93f86773fb40cfad65d0a4c5a6cabbb0a5813a2b2568b67324543a88abb96",
       "packages/system/src/spacing.ts": "e4751abd448354e69a065d9115834b7a2de9e7bf183c99b63785e623fd611b31",
-      "packages/system/src/sx.ts": "5a53088feae5f2fb59142e929af2848c3c94127386e1bce1d1923212a79102a5",
+      "packages/system/src/sx.ts": "ad84256ca2ec9b74fd6908051ba6ba04fa5d45f05aaac58ef721405b1ec593e7",
       "packages/system/src/textScope.tsx": "f475720a17e2ac29c6592f3dfdb364a51449cbc4375b69b91821ce388b4e5205",
       "packages/system/src/theme.ts": "6857ac1b7a033d05864e4b97dcd839a07e9f6dfdaee071093b7ff23070198457",
       "packages/system/src/ThemeProvider/index.ts": "ab3008c2fe41aee2a32d75c3d7b9d353f41d7f922e286275f428b24ff8257c2b",
@@ -11152,7 +11153,7 @@
   },
   "documentation": {
     "path": "docs/coverage.md",
-    "sha256": "dc2d4e4309be3820dba7c9eb75bd619c1e8e864479460fc99d679676c99eb800"
+    "sha256": "3c644d868eec5cd14cba525d167f0c1b3d51ae4e724de6c5a0ab828bbe46fd1d"
   },
   "referenceDependencies": [
     {
@@ -11174,11 +11175,11 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "7ba16d4be56ef2a8311c1173ca5bc8479594d3d4f4e1c729af2b389d39b49879",
+      "nativeSourceSha256": "c176ad35e0c8a7ae1e6fcd8cd829cc1ecf210fff9e9c222eb9bd5ef778122aa4",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
-      "locallyDeclaredRootNames": 493,
+      "locallyDeclaredRootNames": 497,
       "directMembers": 4046,
       "eventDeclarations": 112,
       "slotDeclarations": 219,
@@ -11186,7 +11187,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "2491be6f6e21ba8effa1967c11bc56a8f494fef99f20e401dcc357663c2f16b6"
+      "sha256": "6a7f6ca3094d53b631379e291ec055b8605cda6764a5b24be677fae49053bf9b"
     },
     {
       "package": "@mui/system",
@@ -11196,7 +11197,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "9dd2fd71fba963ac7f65aadd0fc19f43ceccc7daa5d6c83c6e8f450e2dd0c90a",
+      "nativeSourceSha256": "606b5342a4382cba1f016f282eb59f7c9062b85326a5a901fe739956fcd62ce8",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -11208,7 +11209,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "961974a0d07dae5fb9c936217279b7aacf23c77842325c2254c8e4651ec98128"
+      "sha256": "bc0a7b8076ce33f2dddacb528e7b4525f2a6f430e24367a3ec7c7dd681b3e639"
     },
     {
       "package": "@mui/icons-material",

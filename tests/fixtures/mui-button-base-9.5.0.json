@@ -8,10 +8,107 @@
     "sourceFiles": {
       "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
       "ButtonBase/ButtonBase.d.ts": "676950377394922d4412fc2acbcfe68611fc93dcc3829b38dea96162a6994742",
+      "ButtonBase/buttonBaseClasses.js": "f670c87c82a17f16c18a6b79e01f09976d61026b6005d07cd6e9526672e3abcf",
+      "ButtonBase/buttonBaseClasses.d.ts": "c5e59270f3237a2bf344ac83ab3095f30c0ad8f3f07e41f266e662ce544520c5",
+      "ButtonBase/index.js": "614d26dbc66f78a15989f2e5fb4cc4c38f23d7d3847514b584816554025ed463",
+      "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
       "ButtonBase/useButtonBase.js": "f63eac3b144f02e1df42d66d6d9863e9a7888f11af6fe080509c657d0c2f5ad7",
       "utils/useFocusableWhenDisabled.js": "54fef8925c39d3e73e88e5b71ed50635c45f5013af4b67159d59074e1eef9bab"
     }
   },
+  "classUtils": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+      "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f",
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+      "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0"
+    }
+  },
+  "classes": {
+    "root": "MuiButtonBase-root",
+    "disabled": "Mui-disabled",
+    "focusVisible": "Mui-focusVisible"
+  },
+  "classUtilities": {
+    "root": "MuiButtonBase-root",
+    "disabled": "Mui-disabled",
+    "focusVisible": "Mui-focusVisible",
+    "checked": "Mui-checked",
+    "required": "Mui-required",
+    "unknown": "MuiButtonBase-unknown",
+    "toString": "Mui-function toString() { [native code] }",
+    "constructor": "Mui-function Object() { [native code] }",
+    "__proto__": "Mui-[object Object]"
+  },
+  "classConfiguration": {
+    "before": "MuiButtonBase-root",
+    "configured": {
+      "root": "ConsumerMuiButtonBase-root",
+      "disabled": "Mui-disabled",
+      "mapRoot": "MuiButtonBase-root"
+    },
+    "after": "MuiButtonBase-root"
+  },
+  "classContracts": [
+    {
+      "input": { "disabled": false, "suppress": false },
+      "initial": {
+        "className": "MuiButtonBase-root custom-root authored-root",
+        "reads": ["root", "root"]
+      },
+      "focused": {
+        "className": "MuiButtonBase-root custom-root Mui-focusVisible custom-focusVisible authored-focus authored-root",
+        "reads": ["root", "root", "focusVisible", "focusVisible"]
+      },
+      "blurred": {
+        "className": "MuiButtonBase-root custom-root authored-root",
+        "reads": ["root", "root"]
+      }
+    },
+    {
+      "input": { "disabled": false, "suppress": true },
+      "initial": {
+        "className": "MuiButtonBase-root custom-root authored-root",
+        "reads": ["root", "root"]
+      },
+      "focused": { "className": "MuiButtonBase-root custom-root authored-root", "reads": [] },
+      "blurred": {
+        "className": "MuiButtonBase-root custom-root authored-root",
+        "reads": ["root", "root"]
+      }
+    },
+    {
+      "input": { "disabled": true, "suppress": false },
+      "initial": {
+        "className": "MuiButtonBase-root custom-root Mui-disabled custom-disabled authored-root",
+        "reads": ["root", "root", "disabled", "disabled"]
+      },
+      "focused": {
+        "className": "MuiButtonBase-root custom-root Mui-disabled custom-disabled authored-root",
+        "reads": [
+          "root",
+          "root",
+          "disabled",
+          "disabled",
+          "focusVisible",
+          "focusVisible",
+          "root",
+          "root",
+          "disabled",
+          "disabled"
+        ]
+      },
+      "blurred": {
+        "className": "MuiButtonBase-root custom-root Mui-disabled custom-disabled authored-root",
+        "reads": ["root", "root", "disabled", "disabled"]
+      }
+    }
+  ],
   "renderer": "react-test-renderer 19.3.0; controlled non-button host, focus matcher and events; no CSS/native input evidence",
   "fixtures": [
     {

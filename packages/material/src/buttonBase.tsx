@@ -27,6 +27,9 @@ import {
   copyNativeBorderStyle,
   applyNativeBorderStyle,
   useDefaultProps,
+  separateNativeRootProps,
+  restoreNativeRootStyle,
+  joinClassNames,
   NativeTextScope,
   useNativeTextContext,
   nativeTextStyleContext,
@@ -34,7 +37,6 @@ import {
   nativeStyleTextMetrics,
   isNativeTextStyleProperty,
   diagnostic,
-  componentStyle,
   componentRootStyle,
   type SxProps,
   type NativeStyle,
@@ -51,7 +53,9 @@ import {
   type ButtonBaseActivationEvent,
 } from './nativeButtonEvents';
 import { NativePressable } from '@altroo/mui-native-host';
-import { unstable_ClassNameGenerator } from './classNameGenerator';
+import { getButtonBaseUtilityClass, type ButtonBaseClasses } from './buttonBaseClasses';
+export { buttonBaseClasses, getButtonBaseUtilityClass } from './buttonBaseClasses';
+export type { ButtonBaseClasses, ButtonBaseClassKey } from './buttonBaseClasses';
 import { NativeButtonActivationKeys } from './nativeButtonActivationKeys';
 import { NativeCompositeKeys } from './nativeCompositeKeys';
 import { useNativeButtonAutoFocus } from './useNativeButtonAutoFocus';
@@ -76,14 +80,18 @@ export interface NativeButtonBaseStyleResult {
   authored: StyleProp<NativeStyle>;
 }
 export interface ButtonBaseRootProps extends PressableProps {
+  className?: string | undefined;
   ref?: React.Ref<ViewInstance>;
   href?: string;
   to?: unknown;
 }
 export interface ButtonBaseOwnProps {
+  classes?: Partial<ButtonBaseClasses> | undefined;
+  className?: string | undefined;
+  focusVisibleClassName?: string | undefined;
   /** @internal Visual state for composites that keep native focus in an input. */
   _muiNativeItemState?: { focused: boolean; focusVisible: boolean; selected: boolean };
-  /** @internal Exact generated class metadata; authored CSS still diagnoses. */
+  /** @internal Generated class metadata supplied by native composite controls. */
   _muiNativeClassName?: string;
   /** @internal Class metadata activated by the actual native focus-visible state. */
   _muiNativeClassMetadata?: { root: string; focusVisible?: string | undefined };
@@ -197,10 +205,15 @@ export function mergeNativeButtonStyle(
 export const ButtonBase: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ButtonBaseProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ButtonBaseProps>(function ButtonBase(inProps, forwarded) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiButtonBase' });
+  const rootInput = separateNativeRootProps(inProps);
+  const props = useDefaultProps({ props: rootInput.props, name: 'MuiButtonBase' });
+  const preparedStyle = restoreNativeRootStyle(rootInput, props);
   const compositeKeys = useContext(NativeCompositeKeys);
   const activationKeys = useContext(NativeButtonActivationKeys);
   const {
+    classes,
+    className,
+    focusVisibleClassName,
     action,
     autoFocus = false,
     children,
@@ -293,28 +306,32 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     disableTouchRipple,
     focusRipple,
     internalDisabledThemeFocusVisible,
+    suppressFocusVisible,
     tabIndex,
     focusVisible: visualFocusVisible,
   };
-  // A composed Summary retains the actual inherited ButtonBase identifiers.
-  const composedClassName = _muiNativeClassMetadata
-    ? [
-        unstable_ClassNameGenerator.generate('MuiButtonBase') + '-root',
-        disabled && 'Mui-disabled',
-        focusVisible && !suppressFocusVisible && 'Mui-focusVisible',
-        focusVisible && !suppressFocusVisible && _muiNativeClassMetadata.focusVisible,
-        _muiNativeClassMetadata.root,
-      ]
-        .filter(Boolean)
-        .join(' ')
-    : undefined;
+  const activeFocus = focusVisible && !suppressFocusVisible;
+  // Keep source order and both reads of an active truthy custom class getter.
+  const composed = [
+    'root',
+    ...(disabled ? ['disabled'] : []),
+    ...(activeFocus ? ['focusVisible'] : []),
+  ]
+    .map((slot) => {
+      const generated = getButtonBaseUtilityClass(slot);
+      const custom = classes as Record<string, string | undefined> | undefined;
+      return custom?.[slot] ? generated + ' ' + custom[slot] : generated;
+    })
+    .join(' ');
+  const composedClassName = joinClassNames(
+    composed,
+    activeFocus &&
+      (_muiNativeClassMetadata ? _muiNativeClassMetadata.focusVisible : focusVisibleClassName),
+    className ?? _muiNativeClassMetadata?.root ?? _muiNativeClassName,
+  );
   const styleContext = {
-    ...(_muiNativeClassMetadata
-      ? {
-          classes: composedClassName!.split(/\s+/).filter(Boolean),
-          rootProps: { ...props, className: composedClassName, ownerState },
-        }
-      : {}),
+    classes: composedClassName.split(/\s+/).filter(Boolean),
+    rootProps: { ...props, className: composedClassName, ownerState },
     ...nativeTextStyleContext(parent, staticStyle, theme),
     width,
     states: [
@@ -339,17 +356,44 @@ export const ButtonBase: React.ForwardRefExoticComponent<
         : {}),
     },
   };
+  // Composite controls consume Base CSS on this same physical host. Prepare
+  // it once without invoking the composite's genuine native style callback.
+  const basePrepared = _muiNativeStyle
+    ? componentRootStyle(theme, 'MuiButtonBase', ownerState, sx, undefined, styleContext).prepared
+    : undefined;
   const baseSheet: NativeButtonBaseStyleSheet = {
     theme,
     name: 'MuiButtonBase',
     props: ownerState,
     sx,
     context: styleContext,
+    ...(_muiNativeStyle
+      ? {
+          sameRoot: true,
+          prepared: {
+            sheets: [
+              ...basePrepared!.sheets,
+              ...(rootInput.prepared?.sheets ?? []).map((sheet) =>
+                sheet.ancestor
+                  ? sheet
+                  : {
+                      ...sheet,
+                      context: {
+                        ...sheet.context,
+                        classes: styleContext.classes,
+                        states: styleContext.states,
+                      },
+                    },
+              ),
+            ],
+          },
+        }
+      : {}),
   };
-  const computed =
-    _muiNativeStyle || typeof style === 'function'
+  const rootStyle =
+    _muiNativeStyle || typeof preparedStyle === 'function'
       ? undefined
-      : componentStyle(theme, 'MuiButtonBase', ownerState, sx, styleContext);
+      : componentRootStyle(theme, 'MuiButtonBase', ownerState, sx, preparedStyle, styleContext);
   useImperativeHandle(
     action,
     () => ({
@@ -386,35 +430,27 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     let resolved: NativeStyle;
     if (_muiNativeStyle) {
       ({ computed: resolved, authored } = _muiNativeStyle(stateFor(state), baseSheet));
-    } else if (typeof style === 'function') {
-      const input = style(stateFor(state));
+    } else if (typeof preparedStyle === 'function') {
+      const input = preparedStyle(stateFor(state));
       if (styleCache && styleCache.input === input) {
         resolved = styleCache.computed;
         authored = styleCache.authored;
       } else {
-        if (_muiNativeClassMetadata) {
-          const root = componentRootStyle(
-            theme,
-            'MuiButtonBase',
-            ownerState,
-            sx,
-            input,
-            styleContext,
-          );
-          resolved = root.computed;
-          authored = root.authored;
-        } else {
-          authored = input;
-          resolved = componentStyle(theme, 'MuiButtonBase', ownerState, sx, {
-            ...styleContext,
-            ...nativeTextStyleContext(parent, authored, theme),
-          });
-        }
+        const root = componentRootStyle(
+          theme,
+          'MuiButtonBase',
+          ownerState,
+          sx,
+          input,
+          styleContext,
+        );
+        resolved = root.computed;
+        authored = root.authored;
         styleCache = { input, authored, computed: resolved };
       }
     } else {
-      authored = style;
-      resolved = computed!;
+      authored = rootStyle!.authored;
+      resolved = rootStyle!.computed;
     }
     return mergeNativeButtonStyle(resolved, authored, {
       ...(focusVisible && focusRipple && !disableRipple && !theme.focusVisible
@@ -434,9 +470,6 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     });
   };
   const {
-    classes,
-    className,
-    focusVisibleClassName,
     centerRipple,
     TouchRippleProps,
     touchRippleRef,
@@ -445,11 +478,6 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     formAction,
     ...host
   } = native as typeof native & Record<string, unknown>;
-  if (classes || (className && className !== _muiNativeClassName) || focusVisibleClassName)
-    diagnostic(
-      'button-classes',
-      'Use native ButtonBase sx state selectors or style callbacks instead of CSS classes.',
-    );
   if (
     centerRipple ||
     TouchRippleProps ||
@@ -508,7 +536,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   return (
     <Root
       {...host}
-      {...(Root === NativePressable || Root === View || Root === Text || !_muiNativeClassMetadata
+      {...(Root === NativePressable || Root === View || Root === Text
         ? {}
         : {
             className: composedClassName,
@@ -522,8 +550,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
       // The shared host's disabled class blocks pointer targeting even when a
       // slot keeps disabled=false and native keyboard activation enabled.
       pointerEvents={
-        disabled ||
-        (_muiNativeClassMetadata && composedClassName?.split(/\s+/).includes('Mui-disabled'))
+        disabled || composedClassName.split(/\s+/).includes('Mui-disabled')
           ? 'none'
           : native.pointerEvents
       }

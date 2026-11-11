@@ -118,7 +118,7 @@ export interface AccordionSummaryOwnProps extends AccordionSummarySlotsAndSlotPr
   'aria-controls'?: string | undefined;
 }
 export interface AccordionSummaryProps
-  extends Omit<ButtonBaseProps, 'children'>,
+  extends Omit<ButtonBaseProps, 'children' | 'classes'>,
     AccordionSummaryOwnProps {
   children?: React.ReactNode;
 }

@@ -1,12 +1,23 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { format, resolveConfig } from 'prettier';
 import { loadReference } from './load.mjs';
 const { reference, require, directory } = await loadReference('@mui/material', [
   'ButtonBase/ButtonBase.js',
   'ButtonBase/ButtonBase.d.ts',
+  'ButtonBase/buttonBaseClasses.js',
+  'ButtonBase/buttonBaseClasses.d.ts',
+  'ButtonBase/index.js',
+  'className/index.js',
   'ButtonBase/useButtonBase.js',
   'utils/useFocusableWhenDisabled.js',
+]);
+const classUtils = await loadReference('@mui/utils', [
+  'generateUtilityClass/generateUtilityClass.js',
+  'generateUtilityClasses/generateUtilityClasses.js',
+  'composeClasses/composeClasses.js',
+  'ClassNameGenerator/ClassNameGenerator.js',
 ]);
 const React = require('react');
 const { create, act } = require('react-test-renderer');
@@ -240,12 +251,118 @@ async function focusable(disabled, allow) {
     if (renderer) await act(() => renderer.unmount());
   }
 }
+const canonical = require(directory + '/node_modules/@mui/material/ButtonBase');
+const { unstable_ClassNameGenerator: generator } = require(
+  directory + '/node_modules/@mui/material/className',
+);
+const utilitySlots = [
+  'root',
+  'disabled',
+  'focusVisible',
+  'checked',
+  'required',
+  'unknown',
+  'toString',
+  'constructor',
+  '__proto__',
+];
+const classUtilities = Object.fromEntries(
+  utilitySlots.map((slot) => [slot, canonical.getButtonBaseUtilityClass(slot)]),
+);
+const classConfiguration = { before: canonical.buttonBaseClasses.root };
+try {
+  generator.configure((name) => 'Consumer' + name);
+  classConfiguration.configured = {
+    root: canonical.getButtonBaseUtilityClass('root'),
+    disabled: canonical.getButtonBaseUtilityClass('disabled'),
+    mapRoot: canonical.buttonBaseClasses.root,
+  };
+} finally {
+  generator.reset();
+}
+classConfiguration.after = canonical.getButtonBaseUtilityClass('root');
+async function observeClasses(input) {
+  let current,
+    renderer,
+    visible = false;
+  const reads = [];
+  const classes = Object.defineProperties(
+    {},
+    Object.fromEntries(
+      ['root', 'disabled', 'focusVisible'].map((key) => [
+        key,
+        {
+          enumerable: true,
+          get() {
+            reads.push(key);
+            return 'custom-' + key;
+          },
+        },
+      ]),
+    ),
+  );
+  const node = { tagName: 'DIV', matches: () => visible, focus() {} };
+  const Root = React.forwardRef(function Root(props, ref) {
+    current = props;
+    return React.createElement('div', { ref }, props.children);
+  });
+  const snapshot = () => ({
+    className: current.className
+      .split(/\s+/)
+      .filter((token) => !token.startsWith('css-'))
+      .join(' '),
+    reads: [...reads],
+  });
+  try {
+    await act(() => {
+      renderer = create(
+        React.createElement(
+          ButtonBase,
+          {
+            component: Root,
+            classes,
+            disabled: input.disabled,
+            suppressFocusVisible: input.suppress,
+            disableRipple: true,
+            className: 'authored-root',
+            focusVisibleClassName: 'authored-focus',
+          },
+          'Action',
+        ),
+        { createNodeMock: () => node },
+      );
+    });
+    const initial = snapshot();
+    reads.length = 0;
+    visible = true;
+    await act(() => current.onFocus({ target: node, currentTarget: node }));
+    const focused = snapshot();
+    reads.length = 0;
+    visible = false;
+    await act(() => current.onBlur({ target: node, currentTarget: node }));
+    return { input, initial, focused, blurred: snapshot() };
+  } finally {
+    if (renderer) await act(() => renderer.unmount());
+  }
+}
+const classContracts = [];
+for (const input of [
+  { disabled: false, suppress: false },
+  { disabled: false, suppress: true },
+  { disabled: true, suppress: false },
+])
+  classContracts.push(await observeClasses(input));
 const fixtures = [];
 for (const input of cases) fixtures.push(await run(input));
 const filename = 'tests/fixtures/mui-button-base-9.5.0.json';
 const output = await format(
   JSON.stringify({
     reference,
+    classUtils: classUtils.reference,
+    classes: canonical.buttonBaseClasses,
+    classUtilities,
+    classConfiguration,
+    classContracts,
     renderer:
       'react-test-renderer 19.3.0; controlled non-button host, focus matcher and events; no CSS/native input evidence',
     fixtures,
@@ -262,4 +379,25 @@ if (process.argv.includes('--check')) {
   console.log(
     `Pinned original ButtonBase passed ${cases.length} activation/focus cases and three disabled-focus hook cases.`,
   );
-} else await writeFile(filename, output);
+} else {
+  await writeFile(filename, output);
+  const provenance = {
+    schemaVersion: 1,
+    reference,
+    classUtils: classUtils.reference,
+    fixture: { path: filename, sha256: createHash('sha256').update(output).digest('hex') },
+    localFiles: [
+      'packages/material/src/buttonBase.tsx',
+      'packages/material/src/buttonBaseClasses.ts',
+    ],
+    scope:
+      'Pinned public class, activation and focus contracts; native paint, device interaction and browser form/ripple behavior are separate.',
+  };
+  await writeFile(
+    'upstream/button-base.json',
+    await format(JSON.stringify(provenance), {
+      ...(await resolveConfig('upstream/button-base.json')),
+      filepath: 'upstream/button-base.json',
+    }),
+  );
+}

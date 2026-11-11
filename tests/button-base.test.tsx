@@ -373,7 +373,8 @@ test('virtual option state styles without focusing or firing native focus callba
         _muiNativeClassName: authored,
       } as any),
     );
-    expect(diagnostic).toHaveBeenCalledWith(expect.objectContaining({ code: 'button-classes' }));
+    expect(captured.className).toContain('authored-css');
+    expect(diagnostic).not.toHaveBeenCalled();
   } finally {
     restore();
   }
