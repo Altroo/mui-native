@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "08780504f7477cdf41f69e7d1aa5405d2c2c09af93208025aa544f1b0fc8a76d",
+  "nativeSourceSha256": "7ba16d4be56ef2a8311c1173ca5bc8479594d3d4f4e1c729af2b389d39b49879",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -98501,7 +98501,7 @@
         {
           "name": "PaperClasses",
           "file": "src/paperClasses.ts",
-          "line": 4,
+          "line": 6,
           "package": "@altroo/mui-native"
         }
       ]
@@ -98520,7 +98520,7 @@
         {
           "name": "PaperClassKey",
           "file": "src/paperClasses.ts",
-          "line": 35,
+          "line": 37,
           "package": "@altroo/mui-native"
         }
       ]
@@ -98915,7 +98915,7 @@
         {
           "name": "PaperClasses",
           "file": "src/paperClasses.ts",
-          "line": 4,
+          "line": 6,
           "package": "@altroo/mui-native"
         }
       ]
@@ -98934,7 +98934,7 @@
         {
           "name": "PaperClassKey",
           "file": "src/paperClasses.ts",
-          "line": 35,
+          "line": 37,
           "package": "@altroo/mui-native"
         }
       ]
@@ -203974,7 +203974,7 @@
     {
       "name": "PaperClasses",
       "file": "src/paperClasses.ts",
-      "line": 4,
+      "line": 6,
       "kind": "type",
       "members": [
         {
@@ -203984,7 +203984,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root: string;",
-          "line": 5,
+          "line": 7,
           "kind": "property",
           "type": "string"
         },
@@ -203995,7 +203995,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rounded: string;",
-          "line": 6,
+          "line": 8,
           "kind": "property",
           "type": "string"
         },
@@ -204006,7 +204006,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "outlined: string;",
-          "line": 7,
+          "line": 9,
           "kind": "property",
           "type": "string"
         },
@@ -204017,7 +204017,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation: string;",
-          "line": 8,
+          "line": 10,
           "kind": "property",
           "type": "string"
         },
@@ -204028,7 +204028,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation0: string;",
-          "line": 9,
+          "line": 11,
           "kind": "property",
           "type": "string"
         },
@@ -204039,7 +204039,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation1: string;",
-          "line": 10,
+          "line": 12,
           "kind": "property",
           "type": "string"
         },
@@ -204050,7 +204050,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation2: string;",
-          "line": 11,
+          "line": 13,
           "kind": "property",
           "type": "string"
         },
@@ -204061,7 +204061,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation3: string;",
-          "line": 12,
+          "line": 14,
           "kind": "property",
           "type": "string"
         },
@@ -204072,7 +204072,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation4: string;",
-          "line": 13,
+          "line": 15,
           "kind": "property",
           "type": "string"
         },
@@ -204083,7 +204083,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation5: string;",
-          "line": 14,
+          "line": 16,
           "kind": "property",
           "type": "string"
         },
@@ -204094,7 +204094,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation6: string;",
-          "line": 15,
+          "line": 17,
           "kind": "property",
           "type": "string"
         },
@@ -204105,7 +204105,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation7: string;",
-          "line": 16,
+          "line": 18,
           "kind": "property",
           "type": "string"
         },
@@ -204116,7 +204116,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation8: string;",
-          "line": 17,
+          "line": 19,
           "kind": "property",
           "type": "string"
         },
@@ -204127,7 +204127,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation9: string;",
-          "line": 18,
+          "line": 20,
           "kind": "property",
           "type": "string"
         },
@@ -204138,7 +204138,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation10: string;",
-          "line": 19,
+          "line": 21,
           "kind": "property",
           "type": "string"
         },
@@ -204149,7 +204149,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation11: string;",
-          "line": 20,
+          "line": 22,
           "kind": "property",
           "type": "string"
         },
@@ -204160,7 +204160,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation12: string;",
-          "line": 21,
+          "line": 23,
           "kind": "property",
           "type": "string"
         },
@@ -204171,7 +204171,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation13: string;",
-          "line": 22,
+          "line": 24,
           "kind": "property",
           "type": "string"
         },
@@ -204182,7 +204182,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation14: string;",
-          "line": 23,
+          "line": 25,
           "kind": "property",
           "type": "string"
         },
@@ -204193,7 +204193,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation15: string;",
-          "line": 24,
+          "line": 26,
           "kind": "property",
           "type": "string"
         },
@@ -204204,7 +204204,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation16: string;",
-          "line": 25,
+          "line": 27,
           "kind": "property",
           "type": "string"
         },
@@ -204215,7 +204215,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation17: string;",
-          "line": 26,
+          "line": 28,
           "kind": "property",
           "type": "string"
         },
@@ -204226,7 +204226,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation18: string;",
-          "line": 27,
+          "line": 29,
           "kind": "property",
           "type": "string"
         },
@@ -204237,7 +204237,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation19: string;",
-          "line": 28,
+          "line": 30,
           "kind": "property",
           "type": "string"
         },
@@ -204248,7 +204248,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation20: string;",
-          "line": 29,
+          "line": 31,
           "kind": "property",
           "type": "string"
         },
@@ -204259,7 +204259,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation21: string;",
-          "line": 30,
+          "line": 32,
           "kind": "property",
           "type": "string"
         },
@@ -204270,7 +204270,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation22: string;",
-          "line": 31,
+          "line": 33,
           "kind": "property",
           "type": "string"
         },
@@ -204281,7 +204281,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation23: string;",
-          "line": 32,
+          "line": 34,
           "kind": "property",
           "type": "string"
         },
@@ -204292,7 +204292,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "elevation24: string;",
-          "line": 33,
+          "line": 35,
           "kind": "property",
           "type": "string"
         }
@@ -204304,7 +204304,7 @@
     {
       "name": "PaperClassKey",
       "file": "src/paperClasses.ts",
-      "line": 35,
+      "line": 37,
       "kind": "type",
       "members": [],
       "references": [

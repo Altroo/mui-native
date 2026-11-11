@@ -16,6 +16,7 @@
         "Paper/index.js": "9e8e26f6ce3a42e8e4946b95436d1608c9acc963ecd72277a9e7a87512158fb8",
         "Paper/index.d.ts": "6af214e64dbf7c599257f7f0851cb57b267c6eef97dbca04b1f2d204ac571fdb",
         "Paper/index.d.mts": "9de62af019a1c0bebb52b911dc14e89abab301b26c90a45845288067ea972a44",
+        "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
         "styles/getOverlayAlpha.js": "2703a5cb9333ba13b957c0f9aba760e5706f94ddf598260082c1d89fa27b5ca4",
         "styles/getOverlayAlpha.d.ts": "c326bb72f933aa18f366a29a27dfd4193749c4c077b0464bb31054134a84aa8b",
         "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
@@ -40,7 +41,9 @@
       "sourceFiles": {
         "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
         "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
-        "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f"
+        "generateUtilityClasses/generateUtilityClasses.js": "bc08b72d75da68f328c97f57cc544db3eeb06bac6ec6058445bcd62e590a715f",
+        "ClassNameGenerator/index.js": "0c39c4bf9fb30edc3e30c45b86d594cae57f1f3b841030dcb0a46b522fa84c6e",
+        "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0"
       }
     },
     {
@@ -57,6 +60,17 @@
       }
     }
   ],
+  "classNameConfiguration": {
+    "before": "MuiPaper-root",
+    "configured": {
+      "root": "ConsumerMuiPaper-root",
+      "unknown": "ConsumerMuiPaper-contributorSlot",
+      "disabled": "Mui-disabled",
+      "mapRoot": "MuiPaper-root",
+      "className": "ConsumerMuiPaper-root ConsumerMuiPaper-elevation ConsumerMuiPaper-rounded ConsumerMuiPaper-elevation0 authored"
+    },
+    "after": "MuiPaper-root"
+  },
   "classes": {
     "root": "MuiPaper-root",
     "rounded": "MuiPaper-rounded",

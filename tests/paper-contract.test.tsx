@@ -23,6 +23,7 @@ import Canonical, {
   Card as LegacyCard,
   paperClasses as CanonicalClasses,
 } from '../packages/material/src/Paper/index';
+import { unstable_ClassNameGenerator } from '../packages/material/src/className';
 import original from './fixtures/mui-paper-9.5.0.json';
 const processBackgroundImage = require('react-native/Libraries/StyleSheet/processBackgroundImage')
   .default as (input: unknown) => unknown;
@@ -32,6 +33,7 @@ const Root = forwardRef<ViewInstance, ViewProps & { className?: string | undefin
 );
 afterEach(() => {
   cleanup();
+  unstable_ClassNameGenerator.reset();
   jest.restoreAllMocks();
 });
 
@@ -588,4 +590,38 @@ test.each(original.shadowTableAccess)('source shadow table access $mode', (expec
     else environment.NODE_ENV = previous;
     cleanup();
   }
+});
+
+test('pinned live class configuration updates Paper metadata and selectors while imported maps retain their names', () => {
+  expect(paperClasses.root).toBe(original.classNameConfiguration.before);
+  unstable_ClassNameGenerator.configure((name) => 'Consumer' + name);
+  const configured = original.classNameConfiguration.configured;
+  expect(getPaperUtilityClass('root')).toBe(configured.root);
+  expect(getPaperUtilityClass('contributorSlot')).toBe(configured.unknown);
+  expect(getPaperUtilityClass('disabled')).toBe(configured.disabled);
+  expect(paperClasses.root).toBe(configured.mapRoot);
+  const tree = render(
+    <Paper
+      component={Root}
+      testID="configured-paper"
+      className="authored"
+      elevation={0}
+      sx={{ '&.ConsumerMuiPaper-root': { opacity: 0.4 } }}
+    />,
+  );
+  expect(tree.UNSAFE_getByType(Root).props.className).toBe(configured.className);
+  expect(tree.getByTestId('configured-paper')).toHaveStyle({ opacity: 0.4 });
+  unstable_ClassNameGenerator.reset();
+  expect(getPaperUtilityClass('root')).toBe(original.classNameConfiguration.after);
+  tree.rerender(
+    <Paper
+      component={Root}
+      testID="configured-paper"
+      className="authored"
+      elevation={0}
+      sx={{ '&.ConsumerMuiPaper-root': { opacity: 0.4 } }}
+    />,
+  );
+  expect(tree.getByTestId('configured-paper')).not.toHaveStyle({ opacity: 0.4 });
+  expect(paperClasses.root).toBe(original.classNameConfiguration.before);
 });
