@@ -188,3 +188,40 @@ test.each(['rn', 'mui'] as const)(
     }
   },
 );
+
+test.each(['rn', 'mui'] as const)(
+  '%s names each native cohort and uses identical authored typography',
+  (mode) => {
+    const tree = render(
+      <LayoutRootBenchmark
+        mode={mode}
+        family="button-group"
+        cohortId="owned-cohort"
+        rowCount={2}
+      />,
+    );
+    expect(tree.queryByTestId('layout-root-row-000')).toBeNull();
+    expect(tree.getByTestId('owned-cohort::layout-root-row-000')).toBeTruthy();
+    const label = tree.getByTestId('owned-cohort::layout-root-label-000');
+    expect(StyleSheet.flatten(label.props.style)).toMatchObject({
+      fontSize: 14,
+      lineHeight: 18,
+      fontWeight: '400',
+      textTransform: 'none',
+      letterSpacing: 0,
+      textAlign: 'left',
+    });
+    const receipt = () =>
+      JSON.parse(tree.getByTestId('owned-cohort::layout-root-receipt').props.accessibilityLabel);
+    expect(receipt()).toMatchObject({ cohortId: 'owned-cohort', ready: true, updateEpoch: 0 });
+    fireEvent.press(tree.getByTestId('owned-cohort::layout-root-label-000-action'));
+    fireEvent.press(tree.getByTestId('owned-cohort::layout-root-advance'));
+    expect(receipt()).toMatchObject({
+      cohortId: 'owned-cohort',
+      ready: true,
+      updateEpoch: 1,
+      rootCleanups: 0,
+    });
+    expect(tree.getByLabelText('Row 001 presses 1')).toBeTruthy();
+  },
+);

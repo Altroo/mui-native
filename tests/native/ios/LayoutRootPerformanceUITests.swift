@@ -13,6 +13,10 @@ final class LayoutRootPerformanceUITests: XCTestCase {
   private func node(_ id: String) -> XCUIElement {
     app.descendants(matching: .any).matching(identifier: id).firstMatch
   }
+  /// Bind each query to the current native sample without cached ancestor lookups.
+  private func member(_ cohort: XCUIElement, _ id: String) -> XCUIElement {
+    app.descendants(matching: .any).matching(identifier: cohort.identifier + "::" + id).element(boundBy: 0)
+  }
   private func json(_ element: XCUIElement) -> [String: Any]? {
     guard element.exists, let data = element.label.data(using: .utf8) else { return nil }
     return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
@@ -80,25 +84,52 @@ final class LayoutRootPerformanceUITests: XCTestCase {
     }
   }
   private func ack(_ cohort: XCUIElement, mode: String, family: String, epoch: Int) throws -> [String: Any] {
-    let receipt = cohort.descendants(matching: .any).matching(identifier: "layout-root-receipt").firstMatch
-    let row = cohort.descendants(matching: .any).matching(identifier: "layout-root-row-000").firstMatch
-    let text = cohort.descendants(matching: .any).matching(identifier: "layout-root-detail-000").firstMatch
+    let receipt = member(cohort, "layout-root-receipt")
+    let row = member(cohort, "layout-root-row-000")
+    let text = member(cohort, "layout-root-detail-000")
     // Normal OS text: wrapper roots use44/52pt; grouped actions use48/56pt
     // so both native buttons retain their minimum touch height inside the border.
     // A current native text label + frame acknowledges native application after React's ready flag.
     let expectedHeight: CGFloat = family == "button-group" ? ((epoch / 8) % 2 == 1 ? 56 : 48) : ((epoch / 8) % 2 == 1 ? 52 : 44)
-    try waitFor("Ready/native row-zero frame did not acknowledge epoch \(epoch)") {
-      guard let value = self.json(receipt), value["ready"] as? Bool == true,
-        value["updateEpoch"] as? Int == epoch, row.exists, text.exists else { return false }
-      let frame = row.frame
-      return frame.width.isFinite && frame.height.isFinite && frame.width > 0
-        && abs(frame.height - expectedHeight) <= 1 && self.app.frame.intersects(frame)
-        && text.label == String(format: "Stage %02d", epoch % 16)
+    var last: [String: Any] = [:]
+    do {
+      try waitFor("Ready/native row-zero frame did not acknowledge epoch \(epoch)") {
+        let value = self.json(receipt)
+        let rowExists = row.exists, textExists = text.exists
+        let frame = rowExists ? row.frame : .zero
+        let label = textExists ? text.label : "missing"
+        last = ["expectedHeight": Double(expectedHeight), "rowExists": rowExists, "textExists": textExists,
+          "frame": ["x": Double(frame.minX), "y": Double(frame.minY), "width": Double(frame.width), "height": Double(frame.height)],
+          "label": label, "receipt": value ?? [:]]
+        guard let value, value["ready"] as? Bool == true,
+          value["updateEpoch"] as? Int == epoch, rowExists, textExists else { return false }
+        return frame.width.isFinite && frame.height.isFinite && frame.width > 0
+          && abs(frame.height - expectedHeight) <= 1 && self.app.frame.intersects(frame)
+          && label == String(format: "Stage %02d", epoch % 16)
+      }
+    } catch {
+      let globalRow = member(cohort, "layout-root-row-000"), globalText = member(cohort, "layout-root-detail-000")
+      let globalAction = member(cohort, "layout-root-detail-000-action")
+      last["globalRowExists"] = globalRow.exists
+      last["globalTextExists"] = globalText.exists
+      last["globalActionExists"] = globalAction.exists
+      last["globalActionLabel"] = globalAction.exists ? globalAction.label : "missing"
+      last["cohortDescendantCount"] = cohort.descendants(matching: .any).count
+      let hierarchy = XCTAttachment(string: app.debugDescription)
+      hierarchy.name = "layout-root-ax-hierarchy"; hierarchy.lifetime = .keepAlways; add(hierarchy)
+      let data = try JSONSerialization.data(withJSONObject: last, options: [.sortedKeys, .prettyPrinted])
+      print("LAYOUT_ROOT_ACK_REFUSAL " + String(data: data, encoding: .utf8)!)
+      let details = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+      details.name = "layout-root-ack-refusal"; details.lifetime = .keepAlways; add(details)
+      let picture = XCTAttachment(screenshot: app.screenshot())
+      picture.name = "layout-root-ack-refusal"; picture.lifetime = .keepAlways; add(picture)
+      throw error
     }
     guard let value = json(receipt) else { throw Refusal.invalid("Receipt disappeared") }
+    guard value["cohortId"] as? String == cohort.identifier else { throw Refusal.invalid("Native receipt belongs to a different cohort") }
     try checked(value, mode: mode, family: family, epoch: epoch)
     if family == "button-group" && epoch > 0 {
-      let action = cohort.descendants(matching: .any).matching(identifier: "layout-root-label-000-action").firstMatch
+      let action = member(cohort, "layout-root-label-000-action")
       guard action.label == "Row 001 presses 1" else { throw Refusal.invalid("A grouped action lost its local press state") }
     }
     return value
@@ -118,7 +149,7 @@ final class LayoutRootPerformanceUITests: XCTestCase {
     _ = try ack(cohort, mode: mode, family: family, epoch: 0)
     if family == "button-group" {
       _ = try validateGroup(cohort: cohort, epoch: 0, firstPresses: 0)
-      let first = cohort.descendants(matching: .any).matching(identifier: "layout-root-label-000-action").firstMatch
+      let first = member(cohort, "layout-root-label-000-action")
       first.tap()
       try waitFor("Real grouped action activation must commit before measuring") { first.label == "Row 001 presses 1" }
     }
@@ -126,9 +157,9 @@ final class LayoutRootPerformanceUITests: XCTestCase {
   }
   /// Validate a correctness cohort outside metrics; retain actual native values.
   private func validateGroup(cohort: XCUIElement, epoch: Int, firstPresses: Int = 1, probeDisabled: Bool = false) throws -> [String: Any] {
-    let first = cohort.descendants(matching: .any).matching(identifier: "layout-root-label-000-action").firstMatch
-    let second = cohort.descendants(matching: .any).matching(identifier: "layout-root-detail-000-action").firstMatch
-    let group = cohort.descendants(matching: .any).matching(identifier: "layout-root-row-000").firstMatch.frame
+    let first = member(cohort, "layout-root-label-000-action")
+    let second = member(cohort, "layout-root-detail-000-action")
+    let group = member(cohort, "layout-root-row-000").frame
     let a = first.frame, b = second.frame
     let enabled = (epoch / 2) % 2 == 0
     let width = (group.width - 2) / 2
@@ -156,7 +187,7 @@ final class LayoutRootPerformanceUITests: XCTestCase {
         ["frame": rect(b), "label": second.label, "enabled": second.isEnabled]]]
   }
   private func record(_ receipt: [String: Any], cohort: XCUIElement, mode: String, family: String, phase: String, validation: [[String: Any]]? = nil) throws {
-    let frame = cohort.descendants(matching: .any).matching(identifier: "layout-root-row-000").firstMatch.frame
+    let frame = member(cohort, "layout-root-row-000").frame
     var summary: [String: Any] = ["phase": phase, "mode": mode, "family": family, "receipt": receipt,
       "preflight": ["expectedSourceId": expectedSourceID, "nativeAppExecutableSHA256": nativeAppSHA256, "nativeConfiguration": "Release"],
       "nativeRow0": ["x": Double(frame.minX), "y": Double(frame.minY), "width": Double(frame.width), "height": Double(frame.height)]]
@@ -176,7 +207,7 @@ final class LayoutRootPerformanceUITests: XCTestCase {
     try select("operation", "update", "layout-root-controller-operation")
     if family == "button-group" {
       let cohort = try fresh(mode: mode, family: family)
-      let advance = cohort.descendants(matching: .any).matching(identifier: "layout-root-advance").firstMatch
+      let advance = member(cohort, "layout-root-advance")
       var validation = [try validateGroup(cohort: cohort, epoch: 0)]
       var final: [String: Any] = [:]
       for epoch in 1...16 {
@@ -198,7 +229,7 @@ final class LayoutRootPerformanceUITests: XCTestCase {
       var measuring = false
       do {
         let cohort = try self.fresh(mode: mode, family: family)
-        let advance = cohort.descendants(matching: .any).matching(identifier: "layout-root-advance").firstMatch
+        let advance = member(cohort, "layout-root-advance")
         guard advance.exists && advance.isHittable && advance.isEnabled else { throw Refusal.invalid("Native Advance control is not visible/enabled") }
         self.startMeasuring()
         measuring = true

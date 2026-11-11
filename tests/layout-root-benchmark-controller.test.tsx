@@ -8,11 +8,14 @@ const controller = (tree: ReturnType<typeof render>) =>
   JSON.parse(tree.getByTestId('layout-root-controller-receipt').props.accessibilityLabel);
 const receipt = (tree: ReturnType<typeof render>) =>
   JSON.parse(
-    within(tree.getByTestId(controller(tree).cohortId)).getByTestId('layout-root-receipt').props
-      .accessibilityLabel,
+    within(tree.getByTestId(controller(tree).cohortId)).getByTestId(
+      `${controller(tree).cohortId}::layout-root-receipt`,
+    ).props.accessibilityLabel,
   );
 const root = (tree: ReturnType<typeof render>) =>
-  tree.UNSAFE_getAllByType(View).find((node) => node.props.testID === 'layout-root-row-000')!
+  tree
+    .UNSAFE_getAllByType(View)
+    .find((node) => node.props.testID === `${controller(tree).cohortId}::layout-root-row-000`)!
     .instance;
 
 test('default bounded cohort passes through actual workload identity and 100 rows', () => {
@@ -48,7 +51,7 @@ test('each configuration change remounts the cohort and never labels old counter
   const tree = render(<LayoutRootBenchmarkExample rowCount={3} />);
   let old = controller(tree).cohortId;
   let native = root(tree);
-  fireEvent.press(tree.getByTestId('layout-root-advance'));
+  fireEvent.press(tree.getByTestId(`${controller(tree).cohortId}::layout-root-advance`));
   expect(receipt(tree).updateEpoch).toBe(1);
   for (const [id, field, value] of [
     ['layout-root-controller-mode', 'mode', 'mui'],
@@ -71,7 +74,10 @@ test('each configuration change remounts the cohort and never labels old counter
     old = controller(tree).cohortId;
     native = root(tree);
   }
-  expect(tree.getByTestId('layout-root-advance').props.accessibilityState.disabled).toBe(true);
+  expect(
+    tree.getByTestId(`${controller(tree).cohortId}::layout-root-advance`).props.accessibilityState
+      .disabled,
+  ).toBe(true);
   tree.rerender(<LayoutRootBenchmarkExample rowCount={2} />);
   expect(controller(tree).cohortId).not.toBe(old);
   expect(receipt(tree)).toMatchObject({
@@ -86,7 +92,7 @@ test('New sample resets a completed 16-epoch cohort while advances retain its ex
   const old = controller(tree).cohortId,
     native = root(tree);
   for (let epoch = 1; epoch <= 16; epoch++) {
-    fireEvent.press(tree.getByTestId('layout-root-advance'));
+    fireEvent.press(tree.getByTestId(`${controller(tree).cohortId}::layout-root-advance`));
     expect(root(tree)).toBe(native);
     expect(receipt(tree)).toMatchObject({
       updateEpoch: epoch,

@@ -29,6 +29,7 @@ export interface LayoutRootBenchmarkProps {
   family?: LayoutRootBenchmarkFamily;
   operation?: 'mount' | 'update';
   rowCount?: number;
+  cohortId?: string;
 }
 type Counters = {
   mounts: number;
@@ -40,6 +41,7 @@ type Counters = {
 };
 type RowProps = {
   index: number;
+  cohortId: string;
   mode: 'rn' | 'mui';
   family: LayoutRootBenchmarkFamily;
   epoch: number;
@@ -109,7 +111,10 @@ function GroupBenchmarkAction({
   const [presses, setPresses] = useState(0);
   const onPress = () => setPresses((value) => value + 1);
   const label = (
-    <Text testID={testID} style={[styles.text, { color: theme.palette.text.primary }]}>
+    <Text
+      testID={testID}
+      style={[styles.text, styles.groupText, { color: theme.palette.text.primary }]}
+    >
       {content}
     </Text>
   );
@@ -131,6 +136,7 @@ function GroupBenchmarkAction({
 
 const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
   index,
+  cohortId,
   mode,
   family,
   epoch,
@@ -169,6 +175,7 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
     [rootEvent],
   );
   const id = String(index).padStart(3, '0');
+  const identify = (value: string) => (cohortId ? `${cohortId}::${value}` : value);
   const inline = {
     margin: 0,
     padding: 0,
@@ -179,12 +186,12 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
   const children = [
     <Text
       key="label"
-      testID={`layout-root-label-${id}`}
+      testID={identify(`layout-root-label-${id}`)}
       style={[styles.text, { color: theme.palette.text.primary }]}
     >{`Row ${String(index + 1).padStart(3, '0')}`}</Text>,
     <Text
       key="detail"
-      testID={`layout-root-detail-${id}`}
+      testID={identify(`layout-root-detail-${id}`)}
       style={[styles.text, { color: theme.palette.text.primary }]}
     >{`Stage ${String(epoch % 16).padStart(2, '0')}`}</Text>,
   ];
@@ -197,7 +204,7 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
             key="label"
             mode={mode}
             content={`Row ${String(index + 1).padStart(3, '0')}`}
-            testID={`layout-root-label-${id}`}
+            testID={identify(`layout-root-label-${id}`)}
             disabled={error}
             theme={theme}
           />,
@@ -205,7 +212,7 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
             key="detail"
             mode={mode}
             content={`Stage ${String(epoch % 16).padStart(2, '0')}`}
-            testID={`layout-root-detail-${id}`}
+            testID={identify(`layout-root-detail-${id}`)}
             disabled={error}
             theme={theme}
           />,
@@ -215,7 +222,7 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
     family === 'button-group' && mode === 'mui' ? (
       <ButtonGroup
         ref={rootRef}
-        testID={`layout-root-row-${id}`}
+        testID={identify(`layout-root-row-${id}`)}
         collapsable={false}
         fullWidth
         disableElevation
@@ -229,7 +236,7 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
     ) : mode === 'rn' ? (
       <View
         ref={rootRef}
-        testID={`layout-root-row-${id}`}
+        testID={identify(`layout-root-row-${id}`)}
         collapsable={false}
         style={[
           {
@@ -252,7 +259,7 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
     ) : family === 'form-group' ? (
       <FormGroup
         ref={rootRef}
-        testID={`layout-root-row-${id}`}
+        testID={identify(`layout-root-row-${id}`)}
         collapsable={false}
         row={row}
         style={inline}
@@ -262,7 +269,7 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
     ) : (
       <ListItemAvatar
         ref={rootRef}
-        testID={`layout-root-row-${id}`}
+        testID={identify(`layout-root-row-${id}`)}
         collapsable={false}
         className={error ? 'layout-root-error' : undefined}
         style={inline}
@@ -295,6 +302,7 @@ export function LayoutRootBenchmark({
   family = 'form-group',
   operation = 'update',
   rowCount = 40,
+  cohortId = '',
 }: LayoutRootBenchmarkProps) {
   if (!Number.isFinite(rowCount)) throw new RangeError('Layout benchmark rowCount must be finite.');
   if (
@@ -304,6 +312,7 @@ export function LayoutRootBenchmark({
   )
     throw new RangeError('Unknown layout benchmark configuration.');
   const rows = Math.max(1, Math.min(100, Math.trunc(rowCount)));
+  const identify = (value: string) => (cohortId ? `${cohortId}::${value}` : value);
   const [epoch, setEpoch] = useState(0);
   const [counts, setCounts] = useState<Counters>({
     mounts: 0,
@@ -350,6 +359,7 @@ export function LayoutRootBenchmark({
         <LayoutBenchmarkRow
           key={`layout-root-${index}`}
           index={index}
+          cohortId={cohortId}
           mode={mode}
           family={family}
           epoch={epoch}
@@ -362,7 +372,20 @@ export function LayoutRootBenchmark({
           committed={committed}
         />
       )),
-    [rows, mode, family, epoch, row, error, alternateStyle, theme, lifecycle, rootEvent, committed],
+    [
+      rows,
+      cohortId,
+      mode,
+      family,
+      epoch,
+      row,
+      error,
+      alternateStyle,
+      theme,
+      lifecycle,
+      rootEvent,
+      committed,
+    ],
   );
   const completedRows = [...epochs.current.values()].filter((value) => value === epoch).length;
   const activeRows = counts.mounts - counts.cleanups,
@@ -370,6 +393,7 @@ export function LayoutRootBenchmark({
   const receipt = {
     schemaVersion: 1,
     workload: 'layout-root-v1',
+    cohortId,
     sourceId: process.env.EXPO_PUBLIC_MUI_BENCHMARK_SOURCE_ID ?? 'unidentified',
     dev: __DEV__,
     hermes: Boolean((globalThis as { HermesInternal?: unknown }).HermesInternal),
@@ -398,7 +422,7 @@ export function LayoutRootBenchmark({
             : 'Advance one epoch on the same mounted roots.'}
         </Text>
         <Pressable
-          testID="layout-root-advance"
+          testID={identify('layout-root-advance')}
           accessibilityRole="button"
           accessibilityState={{ disabled: operation === 'mount' }}
           disabled={operation === 'mount'}
@@ -411,7 +435,7 @@ export function LayoutRootBenchmark({
         </Pressable>
         <FormControl fullWidth error={error}>
           <ScrollView
-            testID="layout-root-viewport"
+            testID={identify('layout-root-viewport')}
             style={styles.viewport}
             contentContainerStyle={styles.content}
             removeClippedSubviews={false}
@@ -426,7 +450,7 @@ export function LayoutRootBenchmark({
           </ScrollView>
         </FormControl>
         <Text
-          testID="layout-root-receipt"
+          testID={identify('layout-root-receipt')}
           accessibilityLabel={JSON.stringify(receipt)}
           style={styles.note}
         >
@@ -473,6 +497,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  // Material Button typography is inherited even by authored RN Text roots.
+  // Pin every differing field so both comparison modes draw the same labels.
+  groupText: { textTransform: 'none', letterSpacing: 0, textAlign: 'left' },
   text: {
     fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif',
     fontSize: 14,

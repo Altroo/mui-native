@@ -92,7 +92,13 @@ export function LayoutRootBenchmarkExample({ rowCount = 100 }: { rowCount?: numb
         {rows} rows · sample {sample}
       </Text>
       <View key={cohortId} testID={cohortId} collapsable={false}>
-        <LayoutRootBenchmark mode={mode} family={family} operation={operation} rowCount={rows} />
+        <LayoutRootBenchmark
+          mode={mode}
+          family={family}
+          operation={operation}
+          rowCount={rows}
+          cohortId={cohortId}
+        />
       </View>
     </View>
   );
