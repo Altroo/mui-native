@@ -10,6 +10,7 @@
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "sourceFiles": {
         "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+        "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
         "index.js": "3ef26e6ff602e27a6a3a8bd34a95cc3f9b1f903ab5ba90aa7bb3cf41217deafd",
         "index.d.ts": "88f12707de0dd1b6a15db521a6b7d1308b3a88aef114b0bc2964ece74d007d5e",
         "index.d.mts": "5b05f0c0198a9f0dea406ca740f74fe8df8766c3b9a80ad512d55b9add46de10",
@@ -40,6 +41,8 @@
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "sourceFiles": {
         "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "ClassNameGenerator/index.js": "0c39c4bf9fb30edc3e30c45b86d594cae57f1f3b841030dcb0a46b522fa84c6e",
+        "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0",
         "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
         "resolveProps/resolveProps.js": "f1ca742842ec733f23b40eda4bcbfff608300144f46cf928e1e0f8ab604c36c4"
       }
@@ -61,7 +64,7 @@
   ],
   "fixture": {
     "path": "tests/fixtures/mui-accordion-details-9.5.0.json",
-    "sha256": "ff699ab407756035b84d5e2ca8abe9175b91c42f86afced955535ca1f3b795a6",
+    "sha256": "9027af54db0e6c8856eab4561d8fa725063b2f17542eb8b4453ab1d628a424a8",
     "originalCases": 14,
     "styledDefaultCases": 12,
     "utilityIdentifiers": 19,
