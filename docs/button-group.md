@@ -54,15 +54,23 @@ The [baseline contract tests](../tests/button-group.test.tsx), [closure regressi
 
 The remaining work is separated by evidence type:
 
-| Gate                  | Remaining verification                                                                                                                                                                         |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Local native behavior | Expanded scenes and normal-size LTR/RTL reading checks pass. Android actual-border raster checks reproduce and correct the live RTL cache defect; complete enlarged-text matrices remain open. |
-| Styling boundary      | Repeatable cross-component updates against a shared original Emotion cache, plus the documented finite native selector/unit policy. Arbitrary CSS/global styles are not established.           |
-| Performance           | Representative optimized-build interaction, scrolling and memory workloads on both native platforms.                                                                                           |
-| Physical validation   | Screen-reader usability and physical keyboard/IME behavior on supported devices.                                                                                                               |
-| Delivery              | Local packed consumers and full IDE/source checks pass. Reviewed PR and exact-head/main CI remain pending for this closure. No release gate is inferred from unit tests.                       |
+| Gate                  | Remaining verification                                                                                                                                                                                                                                                                   |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Local native behavior | Expanded scenes and normal-size LTR/RTL reading checks pass. The iOS reading scene also passes both global directions at text scales 1.0 and 3.571. Android actual-border raster checks reproduce and correct the live RTL cache defect; its complete enlarged-text matrix remains open. |
+| Styling boundary      | Repeatable cross-component updates against a shared original Emotion cache, plus the documented finite native selector/unit policy. Arbitrary CSS/global styles are not established.                                                                                                     |
+| Performance           | Representative optimized-build interaction, scrolling and memory workloads on both native platforms.                                                                                                                                                                                     |
+| Physical validation   | Screen-reader usability and physical keyboard/IME behavior on supported devices.                                                                                                                                                                                                         |
+| Delivery              | Packed consumers and source lint/type checks cover the documented interfaces. Native evidence is limited to the recorded scenes and profiles; unit tests do not establish release readiness.                                                                                             |
 
 The exhaustive queue for existing partial families is in the [completion plan](completion-plan.md). No package version, tag or release accompanies this development work.
+
+## iOS reading matrix
+
+The maintained reading scene passed four iPhone 18 Pro simulator/iOS 27.0 profiles: normal OS text scale 1.0 and largest scale 3.571, each with the global LTR and RTL layout host. Each profile checks seven phases: local LTR and RTL horizontal layout, both vertical directions, restored horizontal layout, live text-policy changes and restored policies. All 28 phase records retain complete source text, actual glyph metrics and native parent/group/action/label bounds.
+
+The tests require the requested scale, current source text and policy-sized glyphs before positioning the complete group and waiting for stable native frames. Glyph endpoints must fit their actual label and touch-root bounds. The normal pair completed in 214.101 seconds and the largest pair in 418.909 seconds; these are test execution times, not library latency measurements. Both runs restored and verified the original application and normal OS text setting.
+
+Follow the [profile-specific iOS instructions](native-catalog-testing.md#buttongroup-reading-profiles). The mixed-label case checks retained state and authored label frames; the text Portal checks its independent font and text. Those narrower checks do not prove complete mixed-literal glyph layout or screen-reader usability. The results do not close the Android enlarged-text or optimized-workload gates.
 
 ## Reproducing the scoped native checks
 
