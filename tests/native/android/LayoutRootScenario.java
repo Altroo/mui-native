@@ -46,7 +46,8 @@ public final class LayoutRootScenario {
     LAYOUT_ROOTS("layout-roots", "layoutRoot"), TEXT_ALIGNMENT("text-alignment", "textAlignment"),
     FORM_GROUP_EVENTS("form-group-events", "formGroupEvents"), FORM_GROUP_KEYBOARD("form-group-keyboard", "formGroupKeyboard"),
     FORM_GROUP_FOCUS("form-group-focus", "formGroupFocus"), FORM_GROUP_EDITOR("form-group-editor", "formGroupEditor"),
-    FORM_GROUP_ACCESSIBILITY("form-group-accessibility", "formGroupAccessibility");
+    FORM_GROUP_ACCESSIBILITY("form-group-accessibility", "formGroupAccessibility"),
+    AVATAR_ACCESSIBILITY("list-item-avatar-accessibility", "avatarAccessibility");
     final String label, key;
     Scenario(String label, String key) { this.label = label; this.key = key; }
   }
@@ -72,6 +73,7 @@ public final class LayoutRootScenario {
   public static void runFormGroupFocus(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_FOCUS, null).run(); }
   public static void runFormGroupEditor(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_EDITOR, null).run(); }
   public static void runFormGroupAccessibility(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_ACCESSIBILITY, null).run(); }
+  public static void runAvatarAccessibility(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.AVATAR_ACCESSIBILITY, null).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
@@ -113,7 +115,9 @@ public final class LayoutRootScenario {
       } while (!wrappersReady && navigationAttempts < 2);
       report.put("navigationAttempts", navigationAttempts);
       require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
-      if (scenario == Scenario.FORM_GROUP_ACCESSIBILITY) {
+      if (scenario == Scenario.AVATAR_ACCESSIBILITY) {
+        avatarAccessibility(report);
+      } else if (scenario == Scenario.FORM_GROUP_ACCESSIBILITY) {
         formGroupAccessibility();
       } else if (scenario == Scenario.FORM_GROUP_EDITOR) {
         formGroupEditor(report);
@@ -733,11 +737,15 @@ public final class LayoutRootScenario {
       .put("height", (bottom - top + 1) / density).put("pixels", pixels);
   }
 
-  private void formGroupAccessibility() throws Exception {
+  private void requireNormalAccessibilityProfile() {
     require(Math.abs(activity.getResources().getConfiguration().fontScale - 1) < .01, "Normal native font scale required");
     android.accessibilityservice.AccessibilityServiceInfo service = automation.getServiceInfo();
     service.flags |= android.accessibilityservice.AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS;
     automation.setServiceInfo(service);
+  }
+
+  private void formGroupAccessibility() throws Exception {
+    requireNormalAccessibilityProfile();
     groupAccessibilityState("initial", false, 0);
     for (String group : GROUPS) tap("form-group-contract-child-" + group);
     String[] controls = {"row", "error", "theme", "rtl", "text"};
@@ -812,6 +820,114 @@ public final class LayoutRootScenario {
       return true;
     }, "Visible native accessibility node must be reachable: " + id);
     return observed[0];
+  }
+
+  private void avatarAccessibility(JSONObject report) throws Exception {
+    requireNormalAccessibilityProfile();
+    // UiAutomation normally includes views that assistive services can omit.
+    android.accessibilityservice.AccessibilityServiceInfo service = automation.getServiceInfo();
+    int inclusiveFlag = android.accessibilityservice.AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS;
+    service.flags &= ~inclusiveFlag;
+    automation.setServiceInfo(service);
+    boolean inclusive = (automation.getServiceInfo().flags & inclusiveFlag) != 0;
+    report.put("includesNotImportantViews", inclusive);
+    require(!inclusive, "Avatar accessibility requires the filtered native tree");
+    revealComplete("root-layout-avatar"); tap("root-layout-avatar");
+    avatarAccessibilityState("initial", false, 0);
+    tap("avatar-contract-child");
+    String[] controls = {"alignment", "theme", "rtl"};
+    for (String control : controls) tap("avatar-contract-" + control);
+    avatarAccessibilityState("updated", true, 1);
+    for (String control : controls) tap("avatar-contract-" + control);
+    avatarAccessibilityState("restored", false, 1);
+  }
+
+  private void avatarAccessibilityState(String name, boolean updated, int count) throws Exception {
+    JSONObject metadata = settled(() -> {
+      JSONObject value = metadata("avatar-contract-receipt");
+      require(value.getBoolean("top") == updated && value.getBoolean("customStyle") == updated &&
+        value.getBoolean("rtl") == updated, "Actual Avatar state has not committed");
+      scale(value);
+      for (String root : AVATARS) {
+        JSONObject receipt = value.getJSONObject("receipts").optJSONObject(root);
+        require(receipt != null && receipt.has("window"), "Native Avatar layout not ready: " + root);
+        View host = retained("avatar-contract-" + root);
+        measured(root, host, value);
+      }
+      return value;
+    }, "Avatar accessibility stage " + name);
+    // The images share a label. Their native source nodes must belong to different wrapper frames.
+    AvatarLeaf inline = avatarAccessibilityNode("native", null, "android.widget.ImageView", "Account owner");
+    AvatarLeaf portal = avatarAccessibilityNode("portal", null, "android.widget.ImageView", "Account owner");
+    require(!inline.node.equals(portal.node), "Inline and portaled images must be distinct native nodes");
+    AvatarLeaf child = avatarAccessibilityNode("custom", "avatar-contract-child", "android.widget.Button", "Avatar child count " + count);
+    require(child.observation.getBoolean("enabled") && child.observation.getBoolean("clickAction"), "Custom Avatar child must expose its actual click action");
+    JSONObject tags = ui(() -> {
+      JSONObject result = new JSONObject();
+      for (String root : AVATARS) result.put(root, retained("avatar-contract-" + root).getId());
+      return result;
+    });
+    states.put(new JSONObject().put("name", name).put("metadata", metadata).put("tags", tags)
+      .put("inline", inline.observation).put("portal", portal.observation).put("child", child.observation)
+      .put("distinctImages", !inline.node.equals(portal.node)));
+    stage(name); capture("avatar-tree-" + name + ".png");
+  }
+
+  private static final class AvatarLeaf {
+    final AccessibilityNodeInfo node;
+    final JSONObject observation;
+    AvatarLeaf(AccessibilityNodeInfo node, JSONObject observation) { this.node = node; this.observation = observation; }
+  }
+
+  private AvatarLeaf avatarAccessibilityNode(String owner, String id, String role, String label) throws Exception {
+    String rootId = "avatar-contract-" + owner;
+    revealComplete(id == null ? rootId : id);
+    AvatarLeaf[] result = {null};
+    await(() -> {
+      Rect ownerFrame = ui(() -> {
+        View view = retained(rootId); int[] origin = new int[2]; view.getLocationOnScreen(origin);
+        return new Rect(origin[0], origin[1], origin[0] + view.getWidth(), origin[1] + view.getHeight());
+      });
+      AccessibilityNodeInfo root = automation.getRootInActiveWindow();
+      if (root == null || !PACKAGE.equals(String.valueOf(root.getPackageName()))) return false;
+      java.util.ArrayDeque<AccessibilityNodeInfo> queue = new java.util.ArrayDeque<>(); queue.add(root);
+      int examined = 0, matches = 0, identified = 0;
+      while (!queue.isEmpty()) {
+        require(examined++ < 5000, "Native accessibility tree exceeds diagnostic node limit");
+        AccessibilityNodeInfo node = queue.removeFirst();
+        String nativeId = node.getViewIdResourceName();
+        if (id != null && id.equals(nativeId)) identified++;
+        if ((id == null || id.equals(nativeId)) && role.equals(String.valueOf(node.getClassName())) && label.equals(accessibilityLabel(node)) && node.isVisibleToUser()) {
+          Rect frame = new Rect(); node.getBoundsInScreen(frame);
+          if (!frame.isEmpty() && ownerFrame.contains(frame.centerX(), frame.centerY())) {
+            boolean click = node.getActionList().stream().anyMatch(action -> action.getId() == AccessibilityNodeInfo.ACTION_CLICK);
+            result[0] = new AvatarLeaf(node, new JSONObject().put("role", String.valueOf(node.getClassName()))
+              .put("label", accessibilityLabel(node)).put("visibleToUser", node.isVisibleToUser())
+              .put("id", nativeId == null ? JSONObject.NULL : nativeId)
+              .put("enabled", node.isEnabled()).put("clickAction", click)
+              .put("bounds", screenRectangle(frame)).put("ownerBounds", screenRectangle(ownerFrame)));
+            matches++;
+          }
+        }
+        for (int index = 0; index < node.getChildCount(); index++) {
+          AccessibilityNodeInfo child = node.getChild(index); if (child != null) queue.addLast(child);
+        }
+      }
+      require(id == null || identified <= 1, "Duplicate accessibility resource ID: " + id);
+      require(matches <= 1, "Duplicate native Avatar leaf in " + owner + " for " + label);
+      if (matches == 1) result[0].observation.put("matches", id == null ? matches : identified);
+      return matches == 1;
+    }, "Native Avatar leaf unavailable: " + owner + "/" + label);
+    return result[0];
+  }
+
+  private static JSONArray screenRectangle(Rect bounds) {
+    return new JSONArray().put(bounds.left).put(bounds.top).put(bounds.right).put(bounds.bottom);
+  }
+
+  private static String accessibilityLabel(AccessibilityNodeInfo node) {
+    CharSequence description = node.getContentDescription();
+    return String.valueOf(description != null ? description : node.getText());
   }
 
   private void group(String stage, boolean row, boolean error, boolean themed, boolean rtl, int fontSize, int count) throws Exception {
