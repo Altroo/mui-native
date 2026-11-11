@@ -1,6 +1,8 @@
 /* Utility vocabulary adapts MIT-licensed Material UI 9.5.0.
  * Copyright (c) MUI contributors. See NOTICE and upstream/accordion.json.
  * Native adaptation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
+import { unstable_ClassNameGenerator } from './classNameGenerator';
+
 const globalStates = new Set([
   'active',
   'checked',
@@ -34,7 +36,6 @@ const summarySlots = [
   'content',
   'expandIconWrapper',
 ] as const;
-const actionsSlots = ['root', 'spacing'] as const;
 export type AccordionClassKey = (typeof accordionSlots)[number];
 export type AccordionClasses = Record<AccordionClassKey, string>;
 export type AccordionSummaryClassKey = (typeof summarySlots)[number];
@@ -43,19 +44,26 @@ export interface AccordionDetailsClasses {
   root: string;
 }
 export type AccordionDetailsClassKey = keyof AccordionDetailsClasses;
-export type AccordionActionsClassKey = (typeof actionsSlots)[number];
-export type AccordionActionsClasses = Record<AccordionActionsClassKey, string>;
+export interface AccordionActionsClasses {
+  root: string;
+  spacing: string;
+}
+export type AccordionActionsClassKey = keyof AccordionActionsClasses;
 export const getAccordionUtilityClass = (slot: string): string => utility('MuiAccordion', slot);
 export const getAccordionSummaryUtilityClass = (slot: string): string =>
   utility('MuiAccordionSummary', slot);
 // The source helper reads an ordinary object, including inherited keys.
-const detailsGlobalStates = Object.fromEntries([...globalStates].map((state) => [state, state]));
+const wrapperGlobalStates = Object.fromEntries([...globalStates].map((state) => [state, state]));
 export const getAccordionDetailsUtilityClass = (slot: string): string => {
-  const state = detailsGlobalStates[slot];
+  const state = wrapperGlobalStates[slot];
   return state ? `Mui-${state}` : `MuiAccordionDetails-${slot}`;
 };
-export const getAccordionActionsUtilityClass = (slot: string): string =>
-  utility('MuiAccordionActions', slot);
+export const getAccordionActionsUtilityClass = (slot: string): string => {
+  const state = wrapperGlobalStates[slot];
+  return state
+    ? `Mui-${state}`
+    : `${unstable_ClassNameGenerator.generate('MuiAccordionActions')}-${slot}`;
+};
 export const accordionClasses = Object.fromEntries(
   accordionSlots.map((slot) => [slot, getAccordionUtilityClass(slot)]),
 ) as AccordionClasses;
@@ -65,6 +73,7 @@ export const accordionSummaryClasses = Object.fromEntries(
 export const accordionDetailsClasses = {
   root: getAccordionDetailsUtilityClass('root'),
 } as AccordionDetailsClasses;
-export const accordionActionsClasses = Object.fromEntries(
-  actionsSlots.map((slot) => [slot, getAccordionActionsUtilityClass(slot)]),
-) as AccordionActionsClasses;
+export const accordionActionsClasses = {
+  root: getAccordionActionsUtilityClass('root'),
+  spacing: getAccordionActionsUtilityClass('spacing'),
+} as AccordionActionsClasses;

@@ -1,0 +1,110 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+      "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
+      "AccordionActions/index.js": "d7ef77d8d566b087836e64e17add76062b406b53cd9ba330eb3c83bd795a1afa",
+      "AccordionActions/index.d.ts": "f54bb4e54d36037ae537835edc7d64caff0e33b34fac0a2c3e035a418258ab62",
+      "AccordionActions/AccordionActions.js": "ffe26c439d6a2d631d723ffefe1882429beb2b12e3e264f40030760b8405bee7",
+      "AccordionActions/AccordionActions.d.ts": "cad130d0060930b3e5108137b6860fb1eec34406d2710233512256e0b857a252",
+      "AccordionActions/accordionActionsClasses.js": "edc2cba24fe7754f6f2ee3cc30fced65410f7de5a12512deb61eb01941211a44",
+      "AccordionActions/accordionActionsClasses.d.ts": "75624353ffcf91bb2b7911b44075d19a7b9283670f2a78938c17e82e50d1c0f3"
+    }
+  },
+  "utilitiesReference": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "ClassNameGenerator/index.js": "0c39c4bf9fb30edc3e30c45b86d594cae57f1f3b841030dcb0a46b522fa84c6e",
+      "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0",
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+      "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574"
+    }
+  },
+  "observations": [
+    {
+      "input": { "name": "stock", "prop": "absent" },
+      "accesses": ["root", "root", "spacing", "spacing"],
+      "ownerDisableSpacing": false,
+      "rootHasDisableSpacing": false,
+      "className": "MuiAccordionActions-root own-root MuiAccordionActions-spacing own-spacing authored",
+      "siblingMargin": true,
+      "spacingOverride": true,
+      "liveRoot": "MuiAccordionActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiAccordionActions-root"
+    },
+    {
+      "input": { "name": "authored disabled", "prop": true },
+      "accesses": ["root", "root"],
+      "ownerDisableSpacing": true,
+      "rootHasDisableSpacing": false,
+      "className": "MuiAccordionActions-root own-root authored",
+      "siblingMargin": false,
+      "spacingOverride": false,
+      "liveRoot": "MuiAccordionActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiAccordionActions-root"
+    },
+    {
+      "input": { "name": "default disables spacing", "prop": "absent", "defaults": true },
+      "accesses": ["root", "root"],
+      "ownerDisableSpacing": true,
+      "rootHasDisableSpacing": false,
+      "className": "MuiAccordionActions-root own-root authored",
+      "siblingMargin": false,
+      "spacingOverride": false,
+      "liveRoot": "MuiAccordionActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiAccordionActions-root"
+    },
+    {
+      "input": {
+        "name": "explicit undefined inherits theme default",
+        "prop": "undefined",
+        "defaults": true
+      },
+      "accesses": ["root", "root"],
+      "ownerDisableSpacing": true,
+      "rootHasDisableSpacing": false,
+      "className": "MuiAccordionActions-root own-root authored",
+      "siblingMargin": false,
+      "spacingOverride": false,
+      "liveRoot": "MuiAccordionActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiAccordionActions-root"
+    },
+    {
+      "input": { "name": "explicit false restores spacing", "prop": false, "defaults": true },
+      "accesses": ["root", "root", "spacing", "spacing"],
+      "ownerDisableSpacing": false,
+      "rootHasDisableSpacing": false,
+      "className": "MuiAccordionActions-root own-root MuiAccordionActions-spacing own-spacing authored",
+      "siblingMargin": true,
+      "spacingOverride": true,
+      "liveRoot": "MuiAccordionActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiAccordionActions-root"
+    },
+    {
+      "input": { "name": "configured active classes", "prop": false, "configured": true },
+      "accesses": ["root", "root", "spacing", "spacing"],
+      "ownerDisableSpacing": false,
+      "rootHasDisableSpacing": false,
+      "className": "ConsumerMuiAccordionActions-root own-root ConsumerMuiAccordionActions-spacing own-spacing authored",
+      "siblingMargin": true,
+      "spacingOverride": true,
+      "liveRoot": "ConsumerMuiAccordionActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiAccordionActions-root"
+    }
+  ]
+}

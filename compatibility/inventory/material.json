@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "c49f70bf0430cb66ff4bb7122fd4f3a977ff5e283f21050a635033906950b58e",
+  "nativeSourceSha256": "3b5ecea0e6c968c711ebb43a76ebfe670e9c7cc2bf309b45afa5dd37b7b5791a",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -38649,7 +38649,7 @@
         {
           "name": "AccordionClasses",
           "file": "src/accordionClasses.ts",
-          "line": 39,
+          "line": 40,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38668,7 +38668,7 @@
         {
           "name": "AccordionClassKey",
           "file": "src/accordionClasses.ts",
-          "line": 38,
+          "line": 39,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38777,7 +38777,7 @@
         {
           "name": "AccordionClasses",
           "file": "src/accordionClasses.ts",
-          "line": 39,
+          "line": 40,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38796,7 +38796,7 @@
         {
           "name": "AccordionClassKey",
           "file": "src/accordionClasses.ts",
-          "line": 38,
+          "line": 39,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38975,7 +38975,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -38988,7 +38988,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -39017,7 +39017,7 @@
         {
           "name": "AccordionActionsClassKey",
           "file": "src/accordionClasses.ts",
-          "line": 46,
+          "line": 51,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39038,7 +39038,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -39051,7 +39051,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -39080,7 +39080,7 @@
         {
           "name": "AccordionActionsClassKey",
           "file": "src/accordionClasses.ts",
-          "line": 46,
+          "line": 51,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39243,7 +39243,7 @@
         {
           "name": "AccordionDetailsClasses",
           "file": "src/accordionClasses.ts",
-          "line": 42,
+          "line": 43,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39262,7 +39262,7 @@
         {
           "name": "AccordionDetailsClassKey",
           "file": "src/accordionClasses.ts",
-          "line": 45,
+          "line": 46,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39293,7 +39293,7 @@
         {
           "name": "AccordionDetailsClasses",
           "file": "src/accordionClasses.ts",
-          "line": 42,
+          "line": 43,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39312,7 +39312,7 @@
         {
           "name": "AccordionDetailsClassKey",
           "file": "src/accordionClasses.ts",
-          "line": 45,
+          "line": 46,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39981,7 +39981,7 @@
         {
           "name": "AccordionSummaryClasses",
           "file": "src/accordionClasses.ts",
-          "line": 41,
+          "line": 42,
           "package": "@altroo/mui-native"
         }
       ]
@@ -40000,7 +40000,7 @@
         {
           "name": "AccordionSummaryClassKey",
           "file": "src/accordionClasses.ts",
-          "line": 40,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -40109,7 +40109,7 @@
         {
           "name": "AccordionSummaryClasses",
           "file": "src/accordionClasses.ts",
-          "line": 41,
+          "line": 42,
           "package": "@altroo/mui-native"
         }
       ]
@@ -40128,7 +40128,7 @@
         {
           "name": "AccordionSummaryClassKey",
           "file": "src/accordionClasses.ts",
-          "line": 40,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -182148,7 +182148,7 @@
     {
       "name": "ExpansionContext",
       "file": "src/accordion.tsx",
-      "line": 44,
+      "line": 47,
       "kind": "type",
       "members": [
         {
@@ -182158,7 +182158,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "expanded: boolean;",
-          "line": 45,
+          "line": 48,
           "kind": "property",
           "type": "boolean"
         },
@@ -182169,7 +182169,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 46,
+          "line": 49,
           "kind": "property",
           "type": "boolean"
         },
@@ -182180,7 +182180,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableGutters: boolean;",
-          "line": 47,
+          "line": 50,
           "kind": "property",
           "type": "boolean"
         },
@@ -182191,7 +182191,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "toggle: (event: ButtonBaseActivationEvent) => void;",
-          "line": 48,
+          "line": 51,
           "kind": "property",
           "type": "(event: ButtonBaseActivationEvent) => void"
         }
@@ -182205,7 +182205,7 @@
     {
       "name": "FrameProps",
       "file": "src/accordion.tsx",
-      "line": 59,
+      "line": 62,
       "kind": "type",
       "members": [
         {
@@ -182215,7 +182215,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name: string;",
-          "line": 60,
+          "line": 63,
           "kind": "property",
           "type": "string"
         },
@@ -182226,7 +182226,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slot?: string;",
-          "line": 61,
+          "line": 64,
           "kind": "slot",
           "type": "string"
         },
@@ -182237,7 +182237,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "owner: object;",
-          "line": 62,
+          "line": 65,
           "kind": "property",
           "type": "object"
         },
@@ -182248,7 +182248,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "resolved?: NativeAccordionSlotProps<any>;",
-          "line": 63,
+          "line": 66,
           "kind": "property",
           "type": "NativeAccordionSlotProps<any>"
         },
@@ -182259,7 +182259,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<any>;",
-          "line": 64,
+          "line": 67,
           "kind": "property",
           "type": "React.ComponentType<any>"
         },
@@ -182270,7 +182270,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "base?: SxProps;",
-          "line": 65,
+          "line": 68,
           "kind": "property",
           "type": "SxProps"
         },
@@ -182281,7 +182281,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "states?: string[];",
-          "line": 66,
+          "line": 69,
           "kind": "property",
           "type": "string[]"
         },
@@ -182292,7 +182292,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideKeys?: string[];",
-          "line": 67,
+          "line": 70,
           "kind": "property",
           "type": "string[]"
         },
@@ -182303,7 +182303,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 68,
+          "line": 71,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -182320,7 +182320,7 @@
     {
       "name": "NativeAccordionDetailsComponent",
       "file": "src/accordion.tsx",
-      "line": 417,
+      "line": 420,
       "kind": "type",
       "members": [
         {
@@ -182330,7 +182330,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;",
-          "line": 424,
+          "line": 427,
           "kind": "signature",
           "type": "(props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;"
         }
@@ -182348,9 +182348,38 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "NativeAccordionActionsComponent",
+      "file": "src/accordion.tsx",
+      "line": 482,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: AccordionActionsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;",
+          "line": 486,
+          "kind": "signature",
+          "type": "(props: AccordionActionsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;"
+        }
+      ],
+      "references": [
+        "AccordionActionsProps",
+        "React.ForwardRefExoticComponent",
+        "React.JSX.Element",
+        "React.PropsWithoutRef",
+        "React.RefAttributes",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "AccordionClassKey",
       "file": "src/accordionClasses.ts",
-      "line": 38,
+      "line": 39,
       "kind": "type",
       "members": [],
       "references": [],
@@ -182360,7 +182389,7 @@
     {
       "name": "AccordionClasses",
       "file": "src/accordionClasses.ts",
-      "line": 39,
+      "line": 40,
       "kind": "type",
       "members": [],
       "references": [
@@ -182373,7 +182402,7 @@
     {
       "name": "AccordionSummaryClassKey",
       "file": "src/accordionClasses.ts",
-      "line": 40,
+      "line": 41,
       "kind": "type",
       "members": [],
       "references": [],
@@ -182383,7 +182412,7 @@
     {
       "name": "AccordionSummaryClasses",
       "file": "src/accordionClasses.ts",
-      "line": 41,
+      "line": 42,
       "kind": "type",
       "members": [],
       "references": [
@@ -182396,7 +182425,7 @@
     {
       "name": "AccordionDetailsClasses",
       "file": "src/accordionClasses.ts",
-      "line": 42,
+      "line": 43,
       "kind": "type",
       "members": [
         {
@@ -182406,7 +182435,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root: string;",
-          "line": 43,
+          "line": 44,
           "kind": "property",
           "type": "string"
         }
@@ -182418,7 +182447,7 @@
     {
       "name": "AccordionDetailsClassKey",
       "file": "src/accordionClasses.ts",
-      "line": 45,
+      "line": 46,
       "kind": "type",
       "members": [],
       "references": [
@@ -182428,24 +182457,46 @@
       "package": "@altroo/mui-native"
     },
     {
-      "name": "AccordionActionsClassKey",
+      "name": "AccordionActionsClasses",
       "file": "src/accordionClasses.ts",
-      "line": 46,
+      "line": 47,
       "kind": "type",
-      "members": [],
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: string;",
+          "line": 48,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "spacing",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "spacing: string;",
+          "line": 49,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
       "references": [],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
     },
     {
-      "name": "AccordionActionsClasses",
+      "name": "AccordionActionsClassKey",
       "file": "src/accordionClasses.ts",
-      "line": 47,
+      "line": 51,
       "kind": "type",
       "members": [],
       "references": [
-        "AccordionActionsClassKey",
-        "Record"
+        "AccordionActionsClasses"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -183358,10 +183409,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "classes?: Partial<AccordionActionsClasses>;",
+          "declaration": "classes?: Partial<AccordionActionsClasses> | undefined;",
           "line": 141,
           "kind": "property",
-          "type": "Partial<AccordionActionsClasses>"
+          "type": "Partial<AccordionActionsClasses> | undefined"
         },
         {
           "name": "className",
@@ -183369,10 +183420,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "className?: string;",
+          "declaration": "className?: string | undefined;",
           "line": 142,
           "kind": "property",
-          "type": "string"
+          "type": "string | undefined"
         },
         {
           "name": "disableSpacing",
@@ -183380,10 +183431,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "disableSpacing?: boolean;",
+          "declaration": "disableSpacing?: boolean | undefined;",
           "line": 143,
           "kind": "property",
-          "type": "boolean"
+          "type": "boolean | undefined"
         }
       ],
       "references": [
