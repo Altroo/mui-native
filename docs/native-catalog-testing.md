@@ -76,6 +76,33 @@ xcrun simctl launch "$MUI_QA_IOS" dev.altroo.muinative.catalog
 
 Retain the `.xcresult` bundle and export screenshots with `xcrun xcresulttool export attachments --path RESULT.xcresult --output-path EMPTY_DIRECTORY`. Record source revision, selected device/OS, build mode, scenario results and known limitations alongside the Android evidence. Passing simulator checks does not certify physical-device, screen-reader, keyboard/IME, RTL/font-scaling or calibrated release-performance gates.
 
+### ButtonGroup reading profiles
+
+Include [ButtonGroupReadingUITests.swift](../tests/native/ios/ButtonGroupReadingUITests.swift) in the existing catalog UI test target. Its methods ending in `Normal` require the normal `large` OS text category, observed as scale 1.0. Methods ending in `Largest` require `accessibility-extra-extra-extra-large`, observed as scale 3.571 with the pinned React Native runtime. Select only the two methods matching the active category; running all four under one category is intentionally rejected.
+
+For the `PopperCatalogUITests` target and scheme established above, the maintained text-profile helper runs both global layout directions at the largest category and records and verifies restoration of the previous OS setting:
+
+```sh
+node scripts/native-catalog/text-profile.mjs \
+  --platform ios --device "$MUI_QA_IOS" \
+  --size accessibility-extra-extra-extra-large \
+  --outputDir /tmp/mui-native-reading-ios-largest-NEW \
+  -- xcodebuild test \
+    -workspace apps/native-catalog/ios/MUINativeCatalog.xcworkspace \
+    -scheme PopperCatalogUITests \
+    -destination "id=$MUI_QA_IOS" \
+    -parallel-testing-enabled NO \
+    -collect-test-diagnostics never \
+    -test-timeouts-enabled YES \
+    -default-test-execution-time-allowance 360 \
+    -maximum-test-execution-time-allowance 420 \
+    -only-testing:PopperCatalogUITests/ButtonGroupReadingUITests/testReadingUnderLTRGlobalHostLargest \
+    -only-testing:PopperCatalogUITests/ButtonGroupReadingUITests/testReadingUnderRTLGlobalHostLargest \
+    -resultBundlePath .cache/button-group-reading-largest-NEW.xcresult
+```
+
+For the normal profile, use the `large` category, the two method names ending in `Normal` and a new result-bundle path. Substitute your existing test target and scheme when they have different names. The methods retain seven phase JSON records per global direction, including actual text scale, glyph measurements and native group, parent, action and label rectangles, alongside screenshots. Review the exported records and images together. The mixed-label and text-Portal checks have a narrower scope; they do not establish complete literal-glyph or screen-reader readability.
+
 ### Independent iOS Escape driver control
 
 Add [NativeKeyboardDriverControl.swift](../tests/native/ios/NativeKeyboardDriverControl.swift) to the catalog **application** target. It provides a debug-only UIKit scene with no React/MUI view tree. The UI test target still includes the separate XCTest files. In the generated SDK58 `SceneDelegate.swift`, import UIKit and route the control before Expo's normal scene setup:
@@ -230,7 +257,7 @@ PATH="$ANDROID_HOME/platform-tools:$PATH" node scripts/native-catalog/text-profi
 
 Run once without `--global-rtl` and once with that runner flag, at normal and enlarged text sizes. Global RTL is a process-local test override, not a persistent locale change. The version-three collector requires seven ordered states, eight screenshots, actual native text/line bounds, SP-converted fonts, retained action counters, real Portal text and actual border-layer corner raster samples, alongside resolved radius diagnostics. Missing raster evidence, older geometry-only reports or a fresh radius calculation hiding a stale native drawing path cannot pass. Android SP conversion can be nonlinear; the collector uses platform conversion rather than multiplying by `scaledDensity`.
 
-For iOS, add [ButtonGroupReadingUITests.swift](../tests/native/ios/ButtonGroupReadingUITests.swift) to the shared UI-test target and build it. Run both methods with `-only-testing:PopperCatalogUITests/ButtonGroupReadingUITests`. Wrap the existing `xcodebuild test-without-building` command with `text-profile.mjs --platform ios --device UUID --size accessibility-medium --outputDir /tmp/NEW_PROFILE_DIRECTORY --`. Use a concrete simulator UUID and a fresh result bundle. The tests require the actual requested global direction, native accessibility frames, real `onTextLayout` glyph metrics against UIKit, live scaling policies and independent Portal text. Global direction uses process-local launch arguments. Export and review result-bundle screenshots separately.
+For iOS, use the [profile-specific method selections](#buttongroup-reading-profiles) above at normal and largest text sizes. The four methods reject a mismatched OS category; do not select the entire class under one setting. The tests require actual global direction, native accessibility frames, real `onTextLayout` glyph metrics against UIKit, live scaling policies and independent Portal text. Global direction uses process-local launch arguments. Export and review result-bundle phase JSON and screenshots together.
 
 The profile helper records the original OS text setting before applying and verifying the requested size, waits for its owned test process group, then restores and verifies the original setting. Its durable receipt and per-device lease stay outside the checkout. It refuses a second run against an existing lease; an unconfirmed child exit, restoration failure or external setting change retains recovery evidence. Supplied collectors remain responsible for ending remote/on-device work before returning. If a device disconnects, preserve the failed receipt, confirm test termination and the original setting after recovery, and resolve that recovery evidence before starting another profile. Do not count an interrupted run as a compatibility result.
 
