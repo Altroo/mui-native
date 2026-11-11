@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "measuredOn": "2026-11-11",
+  "catalogSourceCommit": "32f22ecb6e2e8aa3c7d520fee68f4b87d2cb47b1",
+  "sourceId": "a5a87799af3d8d079236ce8fa465f6565f7a2ce6723e7eefcbf7e055618d30a7",
+  "nativeAppExecutableSHA256": "ba9b5bdc6a3511c08d6433194fb7230730105e73d99bec403a21811b968783fc",
+  "bundleSHA256": "639343eafc8d697b1f5a837980ee4064cba69953f214986974d9b625ac702898",
+  "swiftCollectorSHA256": "1b8a42788108ff248e1ffe7a66e0c38a5c72d1cee53717aa61d5c3d0ddb53632",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS 27.0",
+    "sdk": "iPhoneSimulator 27.1",
+    "nativeConfiguration": "Release",
+    "swiftOptimization": "-O",
+    "gccOptimization": "s",
+    "osContentSize": "large",
+    "hermes": true,
+    "developmentJS": false,
+    "installedArtifactVerified": true
+  },
+  "workload": {
+    "id": "layout-root-v1",
+    "family": "list-item-avatar",
+    "rows": 100,
+    "operation": "update",
+    "epochsPerCohort": 16,
+    "discardedWarmupsPerMode": 1,
+    "reportedSamplesPerMode": 3,
+    "order": ["mui", "rn"],
+    "allTestsPassed": true,
+    "expectedNativeRootsPerCohort": 100,
+    "expectedRootCleanupsDuringUpdates": 0,
+    "expectedRowUpdateCommitsPerCohort": 1600
+  },
+  "limits": [
+    "Whole-app simulator CPU and peak physical memory include native accessibility acknowledgements.",
+    "Three samples and fixed MUI-first order limit comparisons.",
+    "No comparison to the earlier snapshot establishes a regression or improvement.",
+    "No input latency, scrolling, mount cost, leak or physical-device performance claim."
+  ],
+  "cohorts": [
+    {
+      "mode": "mui",
+      "phase": "warmup-discarded",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 44
+    },
+    {
+      "mode": "mui",
+      "phase": "sample-1",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 44
+    },
+    {
+      "mode": "mui",
+      "phase": "sample-2",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 44
+    },
+    {
+      "mode": "mui",
+      "phase": "sample-3",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 44
+    },
+    {
+      "mode": "rn",
+      "phase": "warmup-discarded",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 44
+    },
+    {
+      "mode": "rn",
+      "phase": "sample-1",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 44
+    },
+    {
+      "mode": "rn",
+      "phase": "sample-2",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 44
+    },
+    {
+      "mode": "rn",
+      "phase": "sample-3",
+      "finalEpoch": 16,
+      "lifecycle": {
+        "mounts": 100,
+        "cleanups": 0,
+        "rootAttachments": 100,
+        "rootCleanups": 0,
+        "activeRows": 100,
+        "activeRoots": 100,
+        "completedRows": 100,
+        "rowEpochCommits": 1700,
+        "rowUpdateCommits": 1600
+      },
+      "nativeRow0HeightPoints": 44
+    }
+  ],
+  "measurements": [
+    {
+      "mode": "mui",
+      "metric": "appCpuSeconds",
+      "samples": [8.625191976, 8.585732469, 8.534920267],
+      "mean": 8.581948237333334,
+      "relativeStandardDeviationPercent": 0.431
+    },
+    {
+      "mode": "mui",
+      "metric": "peakPhysicalMemoryKB",
+      "samples": [132647.432, 130550.28, 130517.512],
+      "mean": 131238.408,
+      "relativeStandardDeviationPercent": 0.759
+    },
+    {
+      "mode": "rn",
+      "metric": "appCpuSeconds",
+      "samples": [8.389312375000001, 8.156211754000001, 8.337521298],
+      "mean": 8.294348475666668,
+      "relativeStandardDeviationPercent": 1.205
+    },
+    {
+      "mode": "rn",
+      "metric": "peakPhysicalMemoryKB",
+      "samples": [127863.304, 133188.104, 132450.824],
+      "mean": 131167.41066666666,
+      "relativeStandardDeviationPercent": 1.796
+    }
+  ]
+}
