@@ -17,7 +17,10 @@ test('workload owns its viewport without nesting inside the contract scene scrol
   expect(tree.getByTestId('root-layout-scroll')).toBeTruthy();
   fireEvent.press(tree.getByTestId('root-layout-benchmark'));
   expect(tree.queryByTestId('root-layout-scroll')).toBeNull();
-  expect(tree.getByTestId('layout-root-viewport')).toBeTruthy();
+  const cohortId = JSON.parse(
+    tree.getByTestId('layout-root-controller-receipt').props.accessibilityLabel,
+  ).cohortId;
+  expect(tree.getByTestId(`${cohortId}::layout-root-viewport`)).toBeTruthy();
   const state = JSON.parse(
     tree.getByTestId('layout-root-controller-receipt').props.accessibilityLabel,
   );

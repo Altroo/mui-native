@@ -10,6 +10,8 @@ import {
   type ViewInstance,
 } from 'react-native';
 import {
+  Button,
+  ButtonGroup,
   FormControl,
   FormGroup,
   List,
@@ -20,11 +22,14 @@ import {
   type Theme,
 } from '@mui/material';
 
+export type LayoutRootBenchmarkFamily = 'form-group' | 'list-item-avatar' | 'button-group';
+
 export interface LayoutRootBenchmarkProps {
   mode?: 'rn' | 'mui';
-  family?: 'form-group' | 'list-item-avatar';
+  family?: LayoutRootBenchmarkFamily;
   operation?: 'mount' | 'update';
   rowCount?: number;
+  cohortId?: string;
 }
 type Counters = {
   mounts: number;
@@ -36,8 +41,9 @@ type Counters = {
 };
 type RowProps = {
   index: number;
+  cohortId: string;
   mode: 'rn' | 'mui';
-  family: 'form-group' | 'list-item-avatar';
+  family: LayoutRootBenchmarkFamily;
   epoch: number;
   row: boolean;
   error: boolean;
@@ -62,6 +68,17 @@ const themes = (['light', 'dark'] as const).map((mode) =>
           }),
         },
       },
+      MuiButtonGroup: {
+        styleOverrides: {
+          root: ({ theme, ownerState }) => ({
+            borderWidth: 1,
+            borderColor: ownerState.disabled ? theme.palette.error.main : theme.palette.divider,
+            backgroundColor: theme.palette.background.paper,
+            marginTop: 8,
+            paddingTop: 7,
+          }),
+        },
+      },
       MuiListItemAvatar: {
         styleOverrides: {
           root: ({ theme }) => ({
@@ -77,8 +94,49 @@ const themes = (['light', 'dark'] as const).map((mode) =>
   }),
 );
 
+/** Both modes own real local action state; parent updates must preserve it. */
+function GroupBenchmarkAction({
+  mode,
+  content,
+  testID,
+  disabled,
+  theme,
+}: {
+  mode: 'rn' | 'mui';
+  content: string;
+  testID: string;
+  disabled: boolean;
+  theme: Theme;
+}) {
+  const [presses, setPresses] = useState(0);
+  const onPress = () => setPresses((value) => value + 1);
+  const label = (
+    <Text
+      testID={testID}
+      style={[styles.text, styles.groupText, { color: theme.palette.text.primary }]}
+    >
+      {content}
+    </Text>
+  );
+  const props = {
+    testID: testID + '-action',
+    accessibilityLabel: `${content} presses ${presses}`,
+    style: styles.groupAction,
+  };
+  return mode === 'mui' ? (
+    <Button {...props} onClick={onPress}>
+      {label}
+    </Button>
+  ) : (
+    <Pressable {...props} disabled={disabled} accessibilityRole="button" onPress={onPress}>
+      {label}
+    </Pressable>
+  );
+}
+
 const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
   index,
+  cohortId,
   mode,
   family,
   epoch,
@@ -117,41 +175,78 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
     [rootEvent],
   );
   const id = String(index).padStart(3, '0');
+  const identify = (value: string) => (cohortId ? `${cohortId}::${value}` : value);
   const inline = {
     margin: 0,
     padding: 0,
     width: '100%' as const,
-    minHeight: alternateStyle ? 52 : 44,
+    minHeight: family === 'button-group' ? (alternateStyle ? 56 : 48) : alternateStyle ? 52 : 44,
     borderRadius: alternateStyle ? 8 : 4,
   };
   const children = [
     <Text
       key="label"
-      testID={`layout-root-label-${id}`}
+      testID={identify(`layout-root-label-${id}`)}
       style={[styles.text, { color: theme.palette.text.primary }]}
     >{`Row ${String(index + 1).padStart(3, '0')}`}</Text>,
     <Text
       key="detail"
-      testID={`layout-root-detail-${id}`}
+      testID={identify(`layout-root-detail-${id}`)}
       style={[styles.text, { color: theme.palette.text.primary }]}
     >{`Stage ${String(epoch % 16).padStart(2, '0')}`}</Text>,
   ];
   // The baseline supplies equivalent final native styles; MUI computes its real defaults,
   // inherited error/alignment, theme overrides and native inline shorthand normalization.
+  const groupChildren =
+    family === 'button-group'
+      ? [
+          <GroupBenchmarkAction
+            key="label"
+            mode={mode}
+            content={`Row ${String(index + 1).padStart(3, '0')}`}
+            testID={identify(`layout-root-label-${id}`)}
+            disabled={error}
+            theme={theme}
+          />,
+          <GroupBenchmarkAction
+            key="detail"
+            mode={mode}
+            content={`Stage ${String(epoch % 16).padStart(2, '0')}`}
+            testID={identify(`layout-root-detail-${id}`)}
+            disabled={error}
+            theme={theme}
+          />,
+        ]
+      : undefined;
   const measured =
-    mode === 'rn' ? (
+    family === 'button-group' && mode === 'mui' ? (
+      <ButtonGroup
+        ref={rootRef}
+        testID={identify(`layout-root-row-${id}`)}
+        collapsable={false}
+        fullWidth
+        disableElevation
+        disabled={error}
+        variant={row ? 'contained' : 'outlined'}
+        size="small"
+        style={inline}
+      >
+        {groupChildren}
+      </ButtonGroup>
+    ) : mode === 'rn' ? (
       <View
         ref={rootRef}
-        testID={`layout-root-row-${id}`}
+        testID={identify(`layout-root-row-${id}`)}
         collapsable={false}
         style={[
           {
             borderWidth: 1,
             borderColor: error ? theme.palette.error.main : theme.palette.divider,
             backgroundColor: theme.palette.background.paper,
-            flexDirection: family === 'form-group' && row ? 'row' : 'column',
+            flexDirection:
+              family === 'button-group' || (family === 'form-group' && row) ? 'row' : 'column',
             flexWrap: family === 'form-group' ? 'wrap' : 'nowrap',
-            minWidth: family === 'form-group' ? 0 : 56,
+            minWidth: family === 'list-item-avatar' ? 56 : 0,
             flexShrink: 0,
             marginTop: 0,
             paddingTop: 0,
@@ -159,12 +254,12 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
           inline,
         ]}
       >
-        {children}
+        {groupChildren ?? children}
       </View>
     ) : family === 'form-group' ? (
       <FormGroup
         ref={rootRef}
-        testID={`layout-root-row-${id}`}
+        testID={identify(`layout-root-row-${id}`)}
         collapsable={false}
         row={row}
         style={inline}
@@ -174,7 +269,7 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
     ) : (
       <ListItemAvatar
         ref={rootRef}
-        testID={`layout-root-row-${id}`}
+        testID={identify(`layout-root-row-${id}`)}
         collapsable={false}
         className={error ? 'layout-root-error' : undefined}
         style={inline}
@@ -207,15 +302,17 @@ export function LayoutRootBenchmark({
   family = 'form-group',
   operation = 'update',
   rowCount = 40,
+  cohortId = '',
 }: LayoutRootBenchmarkProps) {
   if (!Number.isFinite(rowCount)) throw new RangeError('Layout benchmark rowCount must be finite.');
   if (
     !['rn', 'mui'].includes(mode) ||
-    !['form-group', 'list-item-avatar'].includes(family) ||
+    !['form-group', 'list-item-avatar', 'button-group'].includes(family) ||
     !['mount', 'update'].includes(operation)
   )
     throw new RangeError('Unknown layout benchmark configuration.');
   const rows = Math.max(1, Math.min(100, Math.trunc(rowCount)));
+  const identify = (value: string) => (cohortId ? `${cohortId}::${value}` : value);
   const [epoch, setEpoch] = useState(0);
   const [counts, setCounts] = useState<Counters>({
     mounts: 0,
@@ -262,6 +359,7 @@ export function LayoutRootBenchmark({
         <LayoutBenchmarkRow
           key={`layout-root-${index}`}
           index={index}
+          cohortId={cohortId}
           mode={mode}
           family={family}
           epoch={epoch}
@@ -274,7 +372,20 @@ export function LayoutRootBenchmark({
           committed={committed}
         />
       )),
-    [rows, mode, family, epoch, row, error, alternateStyle, theme, lifecycle, rootEvent, committed],
+    [
+      rows,
+      cohortId,
+      mode,
+      family,
+      epoch,
+      row,
+      error,
+      alternateStyle,
+      theme,
+      lifecycle,
+      rootEvent,
+      committed,
+    ],
   );
   const completedRows = [...epochs.current.values()].filter((value) => value === epoch).length;
   const activeRows = counts.mounts - counts.cleanups,
@@ -282,6 +393,7 @@ export function LayoutRootBenchmark({
   const receipt = {
     schemaVersion: 1,
     workload: 'layout-root-v1',
+    cohortId,
     sourceId: process.env.EXPO_PUBLIC_MUI_BENCHMARK_SOURCE_ID ?? 'unidentified',
     dev: __DEV__,
     hermes: Boolean((globalThis as { HermesInternal?: unknown }).HermesInternal),
@@ -310,7 +422,7 @@ export function LayoutRootBenchmark({
             : 'Advance one epoch on the same mounted roots.'}
         </Text>
         <Pressable
-          testID="layout-root-advance"
+          testID={identify('layout-root-advance')}
           accessibilityRole="button"
           accessibilityState={{ disabled: operation === 'mount' }}
           disabled={operation === 'mount'}
@@ -323,7 +435,7 @@ export function LayoutRootBenchmark({
         </Pressable>
         <FormControl fullWidth error={error}>
           <ScrollView
-            testID="layout-root-viewport"
+            testID={identify('layout-root-viewport')}
             style={styles.viewport}
             contentContainerStyle={styles.content}
             removeClippedSubviews={false}
@@ -338,7 +450,7 @@ export function LayoutRootBenchmark({
           </ScrollView>
         </FormControl>
         <Text
-          testID="layout-root-receipt"
+          testID={identify('layout-root-receipt')}
           accessibilityLabel={JSON.stringify(receipt)}
           style={styles.note}
         >
@@ -369,6 +481,25 @@ const styles = StyleSheet.create({
   viewport: { height: 340 },
   content: { gap: 4 },
   avatarRow: { minHeight: 64 },
+  // Match the baseline's final flat action geometry. MUI still resolves real
+  // group defaults, variant/disabled context and theme sheets before inline styles.
+  groupAction: {
+    margin: 0,
+    borderWidth: 0,
+    borderRadius: 0,
+    backgroundColor: 'transparent',
+    flexGrow: 1,
+    flexBasis: 0,
+    minWidth: 40,
+    minHeight: 44,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  // Material Button typography is inherited even by authored RN Text roots.
+  // Pin every differing field so both comparison modes draw the same labels.
+  groupText: { textTransform: 'none', letterSpacing: 0, textAlign: 'left' },
   text: {
     fontFamily: Platform.OS === 'ios' ? 'System' : 'sans-serif',
     fontSize: 14,

@@ -1,7 +1,10 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { LayoutRootBenchmark } from '../native-benchmark/LayoutRootBenchmark';
+import {
+  LayoutRootBenchmark,
+  type LayoutRootBenchmarkFamily,
+} from '../native-benchmark/LayoutRootBenchmark';
 
 /** Selection creates a fresh measured cohort. Build identity/counters stay owned by the workload. */
 export function LayoutRootBenchmarkExample({ rowCount = 100 }: { rowCount?: number }) {
@@ -9,7 +12,7 @@ export function LayoutRootBenchmarkExample({ rowCount = 100 }: { rowCount?: numb
   const rows = Math.max(1, Math.min(100, Math.trunc(rowCount)));
   const [selection, setSelection] = useState({
     mode: 'rn' as 'rn' | 'mui',
-    family: 'form-group' as 'form-group' | 'list-item-avatar',
+    family: 'form-group' as LayoutRootBenchmarkFamily,
     operation: 'update' as 'mount' | 'update',
     sample: 0,
   });
@@ -28,11 +31,17 @@ export function LayoutRootBenchmarkExample({ rowCount = 100 }: { rowCount?: numb
     },
     {
       id: 'layout-root-controller-family',
-      label: family === 'form-group' ? 'Group' : 'Avatar',
+      label:
+        family === 'form-group' ? 'Form' : family === 'list-item-avatar' ? 'Avatar' : 'Buttons',
       run: () =>
         setSelection((previous) => ({
           ...previous,
-          family: previous.family === 'form-group' ? 'list-item-avatar' : 'form-group',
+          family:
+            previous.family === 'form-group'
+              ? 'list-item-avatar'
+              : previous.family === 'list-item-avatar'
+                ? 'button-group'
+                : 'form-group',
           sample: previous.sample + 1,
         })),
     },
@@ -83,7 +92,13 @@ export function LayoutRootBenchmarkExample({ rowCount = 100 }: { rowCount?: numb
         {rows} rows · sample {sample}
       </Text>
       <View key={cohortId} testID={cohortId} collapsable={false}>
-        <LayoutRootBenchmark mode={mode} family={family} operation={operation} rowCount={rows} />
+        <LayoutRootBenchmark
+          mode={mode}
+          family={family}
+          operation={operation}
+          rowCount={rows}
+          cohortId={cohortId}
+        />
       </View>
     </View>
   );

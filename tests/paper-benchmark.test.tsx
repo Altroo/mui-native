@@ -190,7 +190,10 @@ test('Paper workload owns one viewport and preserves existing root routes', () =
   expect(controller(tree).rowCount).toBe(100);
   fireEvent.press(tree.getByTestId('root-layout-benchmark'));
   expect(tree.queryByTestId('paper-benchmark-controller')).toBeNull();
-  expect(tree.getByTestId('layout-root-viewport')).toBeTruthy();
+  const cohortId = JSON.parse(
+    tree.getByTestId('layout-root-controller-receipt').props.accessibilityLabel,
+  ).cohortId;
+  expect(tree.getByTestId(`${cohortId}::layout-root-viewport`)).toBeTruthy();
   fireEvent.press(tree.getByTestId('root-layout-paper'));
   expect(tree.getByTestId('root-layout-scroll')).toBeTruthy();
   expect(tree.getByTestId('paper-contract-receipt')).toBeTruthy();

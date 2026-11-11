@@ -45,9 +45,11 @@ These are whole-app CPU and memory totals across sixteen acknowledged updates. N
 
 MUI ran before the Native View mode for each family, and development work continued on the host. The three samples are an early regression record, with limited cross-mode conclusions. Mount cost, long-lived allocation behavior, input/scroll latency and representative physical devices remain separate measurements. The source fingerprint identifies this measured build snapshot; subsequent source changes need their own evidence when they affect the workload.
 
+The separately verified [ButtonGroup workload](performance-button-group.md) adds two real actions per row, cohort-qualified native identifiers and an unmeasured correctness cohort before its metric warm-up. Its reported scope and measurements are separate from the wrapper results above.
+
 ## Running the workload
 
-Prepare the native catalog following the [installation guide](installation.md). Open Wrappers, then Workload. The RN/MUI, Group/Avatar and Mount/Update controls create a new cohort. New sample resets the current configuration; Advance update keeps its current rows mounted. The visible Ready status alone is not a native timing measurement.
+Prepare the native catalog following the [installation guide](installation.md). Open Wrappers, then Workload. The RN/MUI, Form/Avatar/Buttons and Mount/Update controls create a new cohort. New sample resets the current configuration; Advance update keeps its current rows mounted. The visible Ready status alone is not a native timing measurement.
 
 For automated iOS measurements, add [LayoutRootPerformanceUITests.swift](../tests/native/ios/LayoutRootPerformanceUITests.swift) to a UI test target whose application is `dev.altroo.muinative.catalog`. Build the catalog and that test target in Release with verified native optimization settings. The measured workload lives in [LayoutRootBenchmark.tsx](../apps/native-benchmark/LayoutRootBenchmark.tsx); [LayoutRootBenchmarkExample.tsx](../apps/native-catalog/LayoutRootBenchmarkExample.tsx) owns fresh cohort selection.
 
