@@ -11,6 +11,7 @@ const formatter =
   );
 const material = await loadReference('@mui/material', [
   'package.json',
+  'className/index.js',
   'index.js',
   'index.d.ts',
   'index.d.mts',
@@ -28,6 +29,8 @@ const material = await loadReference('@mui/material', [
 ]);
 const utils = await loadReference('@mui/utils', [
   'generateUtilityClass/generateUtilityClass.js',
+  'ClassNameGenerator/index.js',
+  'ClassNameGenerator/ClassNameGenerator.js',
   'composeClasses/composeClasses.js',
   'resolveProps/resolveProps.js',
 ]);
@@ -337,7 +340,25 @@ const slots = [
   'toString',
   'hasOwnProperty',
 ];
+const { unstable_ClassNameGenerator: generator } = material.require('@mui/material/className');
+const configured = (() => {
+  generator.configure((name) => `Consumer${name}`);
+  try {
+    const markup = renderToStaticMarkup(
+      React.createElement(Details, { id: 'configured-details', className: 'chosen' }, 'Details'),
+    );
+    return {
+      className: markupObservation(markup, 'configured-details').className,
+      root: canonical.getAccordionDetailsUtilityClass('root'),
+      disabled: canonical.getAccordionDetailsUtilityClass('disabled'),
+      mapRoot: canonical.accordionDetailsClasses.root,
+    };
+  } finally {
+    generator.reset();
+  }
+})();
 const value = {
+  configured,
   references: [material.reference, utils.reference, system.reference],
   publicExports: {
     rootIdentity: true,

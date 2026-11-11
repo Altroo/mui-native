@@ -22,7 +22,7 @@ Shared web/native imports use `@mui/material` or `@mui/material/AccordionDetails
 
 The existing native-only `@altroo/mui-native/AccordionDetails/accordionDetailsClasses` alias remains available. Pinned original 9.5.0 ships the internal class file but does not export that package subpath. Use canonical named imports in shared code.
 
-Only `root` is a runtime Details slot. Original utility identifiers and authored root classes participate in the supported self-selector cascade. They do not create a browser stylesheet. Canonical type augmentation remains available:
+Only `root` is a runtime Details slot. Original utility identifiers and authored root classes participate in the supported self-selector cascade. They do not create a browser stylesheet. The canonical class-name generator configures live root names and native self selectors. Global state names stay fixed, and the exported class map reflects its module-load configuration. Canonical type augmentation remains available:
 
 ```tsx
 import type { AccordionDetailsClassKey } from '@mui/material/AccordionDetails';

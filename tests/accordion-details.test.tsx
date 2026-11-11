@@ -29,6 +29,42 @@ beforeEach(() => {
   jest.replaceProperty(I18nManager, 'doLeftAndRightSwapInRTL', false);
 });
 afterEach(cleanup);
+
+test('canonical class configuration controls live Details metadata and self selectors', () => {
+  const Root = forwardRef<
+    ViewInstance,
+    { className?: string | undefined; testID?: string | undefined }
+  >(({ className: _name, ...native }, ref) => <View {...native} ref={ref} />);
+  const node = () => (
+    <AccordionDetails
+      component={Root}
+      className="chosen"
+      testID="configured-details"
+      sx={{ [`&.${reference.configured.root}`]: { opacity: 0.4 } }}
+    >
+      Details
+    </AccordionDetails>
+  );
+  const tree = render(node());
+  expect(
+    StyleSheet.flatten(tree.getByTestId('configured-details').props.style).opacity,
+  ).toBeUndefined();
+  try {
+    unstable_ClassNameGenerator.configure((name) => `Consumer${name}`);
+    tree.rerender(node());
+    expect(tree.UNSAFE_getByType(Root).props.className).toBe(reference.configured.className);
+    expect(tree.getByTestId('configured-details')).toHaveStyle({ opacity: 0.4 });
+    expect(getAccordionDetailsUtilityClass('root')).toBe(reference.configured.root);
+    expect(getAccordionDetailsUtilityClass('disabled')).toBe(reference.configured.disabled);
+    expect(accordionDetailsClasses.root).toBe(reference.configured.mapRoot);
+  } finally {
+    unstable_ClassNameGenerator.reset();
+  }
+  tree.rerender(node());
+  expect(
+    StyleSheet.flatten(tree.getByTestId('configured-details').props.style).opacity,
+  ).toBeUndefined();
+});
 test('Details custom roots receive composed classes and source-filtered public props', () => {
   const Root = forwardRef<ViewInstance, ViewProps & { className?: string | undefined }>(
     (props, ref) => <View {...props} ref={ref} />,
@@ -129,6 +165,7 @@ import DetailsEntry, {
   accordionDetailsClasses as canonicalClasses,
 } from '../packages/material/src/AccordionDetails';
 import detailsLeaf from '../packages/material/src/AccordionDetails/accordionDetailsClasses';
+import { unstable_ClassNameGenerator } from '../packages/material/src/className';
 import reference from './fixtures/mui-accordion-details-9.5.0.json';
 const publicClass = (value: unknown) =>
   value == null

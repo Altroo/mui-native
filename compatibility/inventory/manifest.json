@@ -10770,7 +10770,7 @@
       "packages/material/src/Accordion/index.ts": "9639db89ce8b969ce9d85cef78ac49d12dad8cdba505a74ba477e621cf102fac",
       "packages/material/src/AccordionActions/accordionActionsClasses/index.ts": "5be3181aa79737e2f61160eb2334e3dae5855d1bf258a98707dcbacf52e22dec",
       "packages/material/src/AccordionActions/index.ts": "a26078abc86b28f6dcb07dad35c2315a6705967e74a465581fb0221a60b862c3",
-      "packages/material/src/accordionClasses.ts": "d659e54674e72a8f5fd2543c73c394fba8f8b4a83c2fb721f5e1fedcf6daa0c6",
+      "packages/material/src/accordionClasses.ts": "cb4221c45a77590024933883a8413b5936fb5b9d4a7511eb5acc183718756ade",
       "packages/material/src/AccordionDetails/accordionDetailsClasses/index.ts": "6bfce352f6decf4238bb1b8da9385aa09bc6ddcfbf3a5785fdc886b7cd949102",
       "packages/material/src/AccordionDetails/index.ts": "5b3c386a23eaae03678ac3ee4d2bf0b2e6b0cf8e8e8a6eca3f87a61323a3c141",
       "packages/material/src/AccordionSummary/accordionSummaryClasses/index.ts": "a1ee4f1833e324b76e3a0e29b18cb8a24bb891db3a592c2910155b7d250bbc82",
@@ -11174,7 +11174,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "3b5ecea0e6c968c711ebb43a76ebfe670e9c7cc2bf309b45afa5dd37b7b5791a",
+      "nativeSourceSha256": "7778fa1471e2b26540dced621d7d4ba2ac986b468ce8e96bd0445b4f2cc569b4",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11186,7 +11186,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "2836c74adbaa9c175203389f7fa49f7941035e5a675d4cc45dd8e4a88cf7fdc6"
+      "sha256": "2f2a6f074b08a358cea92a68331579aecedb501b66b6188cb013f4b64f072b8b"
     },
     {
       "package": "@mui/system",

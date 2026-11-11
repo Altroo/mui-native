@@ -56,7 +56,9 @@ export const getAccordionSummaryUtilityClass = (slot: string): string =>
 const wrapperGlobalStates = Object.fromEntries([...globalStates].map((state) => [state, state]));
 export const getAccordionDetailsUtilityClass = (slot: string): string => {
   const state = wrapperGlobalStates[slot];
-  return state ? `Mui-${state}` : `MuiAccordionDetails-${slot}`;
+  return state
+    ? `Mui-${state}`
+    : `${unstable_ClassNameGenerator.generate('MuiAccordionDetails')}-${slot}`;
 };
 export const getAccordionActionsUtilityClass = (slot: string): string => {
   const state = wrapperGlobalStates[slot];

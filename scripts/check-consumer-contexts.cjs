@@ -38,6 +38,29 @@ try {
     assert.equal(entry[classes], material[classes]);
     assert.equal(entry[utility], material[utility]);
   }
+  const details = requireConsumer('@altroo/mui-native/AccordionDetails');
+  const detailsClassEntry = requireConsumer(
+    '@altroo/mui-native/AccordionDetails/accordionDetailsClasses',
+  );
+  const { unstable_ClassNameGenerator } = requireConsumer('@altroo/mui-native/className');
+  const loadedDetailsRoot = details.accordionDetailsClasses.root;
+  assert.equal(detailsClassEntry.default, details.accordionDetailsClasses);
+  // Verify the installed entries share the live generator as well as export identity.
+  try {
+    unstable_ClassNameGenerator.configure((name) => 'Installed' + name);
+    assert.equal(
+      material.getAccordionDetailsUtilityClass('root'),
+      'InstalledMuiAccordionDetails-root',
+    );
+    assert.equal(
+      detailsClassEntry.getAccordionDetailsUtilityClass('root'),
+      'InstalledMuiAccordionDetails-root',
+    );
+    assert.equal(details.getAccordionDetailsUtilityClass('disabled'), 'Mui-disabled');
+    assert.equal(details.accordionDetailsClasses.root, loadedDetailsRoot);
+  } finally {
+    unstable_ClassNameGenerator.reset();
+  }
   const groupModule = requireConsumer('@altroo/mui-native/ButtonGroup');
   assert.equal(groupModule.default, material.ButtonGroup);
   assert.equal(groupModule.ButtonGroupContext, material.ButtonGroupContext);

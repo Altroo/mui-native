@@ -17,6 +17,17 @@ Each mode retained 100 roots through sixteen acknowledged native updates, for 1,
 
 The MUI variant used more app CPU and peak memory in this run. Whole-app totals include native accessibility acknowledgements, and the fixed MUI-first order and three samples limit what can be attributed to the wrapper. These measurements do not establish a change from the earlier snapshot, a leak, input latency, scrolling, mount cost or physical-device performance.
 
+## ListItemAvatar run
+
+The [11 November ListItemAvatar result](../compatibility/evidence/native-list-item-avatar-ios-2026-11-11.json) uses the fingerprinted catalog from the recorded source snapshot. Both XCTest methods passed on the iPhone 18 Pro / iOS 27 simulator at the normal OS text size. The verified Release build used Swift `-O`, native `-Os` and production Hermes JavaScript. The installed app matched the build before measurement.
+
+| Mode               | Mean app CPU (seconds) | Mean peak physical memory (kB) |
+| ------------------ | ---------------------: | -----------------------------: |
+| Native View        |                  8.294 |                        131,167 |
+| MUI ListItemAvatar |                  8.582 |                        131,238 |
+
+The collector ran MUI first, then Native View. Each mode completed one discarded warm-up and three measured cohorts of 100 retained roots and 16 acknowledged updates. The figures describe whole-app CPU and peak physical memory, including the native acknowledgements. Three samples in fixed order do not establish a regression or improvement over the earlier snapshot, input latency, mount cost, scrolling, leaks or performance on physical hardware.
+
 ## Earlier optimized simulator run
 
 The [machine-readable result](../compatibility/evidence/native-layout-roots-ios-2026-11-05.json) records the exact local build fingerprint and executable/bundle hashes. Swift used `-O`, C/C++ used `-Os`, and the installed executable and bundled JavaScript matched the reviewed artifacts. The collector rejected development JavaScript, a missing Hermes runtime, an unexpected source fingerprint or invalid lifecycle counts.
