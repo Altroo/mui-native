@@ -34,6 +34,10 @@ import {
   summarizeFormGroupAccessibility,
 } from './android-form-group-accessibility-report.mjs';
 import {
+  inspectAvatarAccessibility,
+  summarizeAvatarAccessibility,
+} from './android-avatar-accessibility-report.mjs';
+import {
   inspectFormGroupEditor,
   summarizeFormGroupEditor,
 } from './android-form-group-editor-report.mjs';
@@ -236,7 +240,7 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'form-group-events' | 'form-group-keyboard' | 'form-group-focus' | 'form-group-editor' | 'form-group-accessibility' | 'text-alignment' | 'divider' | 'paper' | 'box' | 'card' | 'structure' | 'structure-children', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'form-group-events' | 'form-group-keyboard' | 'form-group-focus' | 'form-group-editor' | 'form-group-accessibility' | 'list-item-avatar-accessibility' | 'text-alignment' | 'divider' | 'paper' | 'box' | 'card' | 'structure' | 'structure-children', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
@@ -256,6 +260,7 @@ export async function run(
       'form-group-focus',
       'form-group-editor',
       'form-group-accessibility',
+      'list-item-avatar-accessibility',
       'text-alignment',
       'divider',
       'paper',
@@ -342,31 +347,33 @@ export async function run(
           ? inspectBoxReport(text)
           : scenario === 'paper'
             ? inspectPaperReport(text)
-            : scenario === 'form-group-accessibility'
-              ? inspectFormGroupAccessibility(text)
-              : scenario === 'form-group-editor'
-                ? inspectFormGroupEditor(text)
-                : scenario === 'form-group-focus'
-                  ? inspectFormGroupFocus(text)
-                  : scenario === 'form-group-keyboard'
-                    ? inspectFormGroupKeyboard(text)
-                    : scenario === 'form-group-events'
-                      ? inspectFormGroupEvents(text)
-                      : scenario === 'text-alignment'
-                        ? inspectTextAlignmentReport(text)
-                        : scenario === 'divider'
-                          ? inspectDividerReport(text)
-                          : scenario === 'layout-roots'
-                            ? inspectLayoutRootReport(text)
-                            : scenario === 'accordion'
-                              ? inspectAccordionReport(text)
-                              : scenario === 'svg-icon'
-                                ? inspectSvgIconReport(text)
-                                : scenario === 'button-group-reading'
-                                  ? inspectReadingReport(text)
-                                  : scenario === 'button-group'
-                                    ? inspectButtonGroupReport(text)
-                                    : inspectReport(text);
+            : scenario === 'list-item-avatar-accessibility'
+              ? inspectAvatarAccessibility(text)
+              : scenario === 'form-group-accessibility'
+                ? inspectFormGroupAccessibility(text)
+                : scenario === 'form-group-editor'
+                  ? inspectFormGroupEditor(text)
+                  : scenario === 'form-group-focus'
+                    ? inspectFormGroupFocus(text)
+                    : scenario === 'form-group-keyboard'
+                      ? inspectFormGroupKeyboard(text)
+                      : scenario === 'form-group-events'
+                        ? inspectFormGroupEvents(text)
+                        : scenario === 'text-alignment'
+                          ? inspectTextAlignmentReport(text)
+                          : scenario === 'divider'
+                            ? inspectDividerReport(text)
+                            : scenario === 'layout-roots'
+                              ? inspectLayoutRootReport(text)
+                              : scenario === 'accordion'
+                                ? inspectAccordionReport(text)
+                                : scenario === 'svg-icon'
+                                  ? inspectSvgIconReport(text)
+                                  : scenario === 'button-group-reading'
+                                    ? inspectReadingReport(text)
+                                    : scenario === 'button-group'
+                                      ? inspectButtonGroupReport(text)
+                                      : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -392,6 +399,7 @@ export async function run(
     else if (scenario === 'form-group-keyboard') summarizeFormGroupKeyboard(text);
     else if (scenario === 'form-group-editor') summarizeFormGroupEditor(text);
     else if (scenario === 'form-group-accessibility') summarizeFormGroupAccessibility(text);
+    else if (scenario === 'list-item-avatar-accessibility') summarizeAvatarAccessibility(text);
     else if (scenario === 'form-group-focus') summarizeFormGroupFocus(text);
     else if (scenario === 'text-alignment') summarizeTextAlignment(text);
     else if (scenario === 'divider') summarizeDivider(text, { fontProfile });
