@@ -404,6 +404,14 @@ Managed commands require both phases, exact capture/input/owner/bubble order, ca
 
 On API 37 at OS text scale 1.0, both the default-disabled and enabled configurations completed 54 cases each, 108 total. The disabled configuration produced real native edits without ordinary key callbacks. The enabled original RN baseline and grouped editors received ordinary key-up only. This establishes the recorded forwarding/editing assertions and does not certify unobserved ordinary key-down, iOS editor commands, physical IME behavior or assistive-technology usability. Failed runs preserve safe reports/screenshots before the selected preview is restored.
 
+## iOS FormGroup editors
+
+Use the existing iOS development catalog and add [FormGroupEditorCatalogUITests.swift](../tests/native/ios/FormGroupEditorCatalogUITests.swift) to a UI Testing Bundle targeting `dev.altroo.muinative.catalog`. Include [NativeKeyboardDriverControl.swift](../tests/native/ios/NativeKeyboardDriverControl.swift) in the Debug catalog app target and use the existing independent UIKit driver setup described for [FormGroup child keyboard](#formgroup-child-keyboard). The UIKit control is outside the React tree and is never shipped in a library package.
+
+The test starts with the raw UIKit ArrowDown/A control and then checks actual ordinary editing in the original RN input. It opens Group editors, exercises all six input/root combinations for observe, prevent and stop capture policies, and keeps selected receipts for each policy. Use a serial test run with a unique result bundle and enough execution time for the real focus, typing and scroll interactions. The recorded run took about four minutes of XCTest time.
+
+All 36 cases passed on the iPhone 18 Pro simulator / iOS 27 at actual font scale 1.0. ArrowDown requires an editable-target command key-down with the exact callback route, original event/payload identity and cancellation flags. Ordinary A requires a single native edit, matching text acknowledgement and no extra key callbacks for the observed RN profile. The test keeps all twenty native tags, attached ref state and cumulative text through policy changes. It does not establish Return/keypad Enter or a physical key-up for UIKit commands.
+
 ## FormGroup native accessibility tree
 
 ### iOS
