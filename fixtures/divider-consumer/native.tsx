@@ -90,7 +90,14 @@ export const theme = createTheme({
     MuiDivider: {
       defaultProps: { classes, orientation: 'vertical' },
       styleOverrides: {
-        root: ({ ownerState }) => ({ opacity: ownerState.variant === 'dashed' ? 0.7 : 1 }),
+        root: ({ ownerState }) => ({
+          opacity:
+            ownerState &&
+            typeof ownerState === 'object' &&
+            Reflect.get(ownerState, 'variant') === 'dashed'
+              ? 0.7
+              : 1,
+        }),
         wrapper: { paddingLeft: 7 },
       },
     },

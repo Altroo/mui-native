@@ -142,12 +142,19 @@ export interface PaletteOptions {
   action?: Partial<TypeAction>;
   getContrastText?: (background: string) => string;
 }
+/** Arguments owned by a participating native component root. */
 export type ComponentStyleArgs = {
   theme: Theme;
   ownerState: Record<string, unknown>;
 } & Record<string, unknown>;
-// Keep direct theme fields on variant callbacks for the original native extension.
-export type ComponentVariantArgs = Theme & ComponentStyleArgs;
+// Shared theme configuration can also style an arbitrary component whose
+// genuine props omit ownerState or supply an application-defined value.
+export type SharedComponentStyleArgs = {
+  theme: Theme;
+  ownerState?: unknown;
+} & Record<string, unknown>;
+// Only native component callbacks extend their arguments with direct theme fields.
+export type ComponentVariantArgs = Partial<Theme> & SharedComponentStyleArgs;
 export interface ComponentVariant {
   props: Record<string, unknown> | ((props: ComponentVariantArgs) => boolean);
   style: ComponentStyleValue | ((args: ComponentVariantArgs) => ComponentStyle);
@@ -161,7 +168,9 @@ export type ComponentStyleValue =
   | undefined
   | false
   | readonly ComponentStyle[];
-export type ComponentStyle = ComponentStyleValue | ((args: ComponentStyleArgs) => ComponentStyle);
+export type ComponentStyle =
+  | ComponentStyleValue
+  | ((args: SharedComponentStyleArgs) => ComponentStyle);
 export interface ComponentConfig {
   defaultProps?: Record<string, unknown>;
   styleOverrides?: Record<string, ComponentStyle>;

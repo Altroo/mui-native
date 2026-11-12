@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { createRef, forwardRef, useState } from 'react';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 import { StyleSheet, Platform, View, Text, type ViewInstance, type ViewProps } from 'react-native';
@@ -143,7 +144,7 @@ test('the same host and retained child survive all depth/variant/square/dark cha
   tree.unmount();
   expect(cleaned).toHaveBeenCalledTimes(1);
 });
-const callbackArgs = (args: ComponentStyleArgs) => ({
+const callbackArgs = nativeStyleCallback((args: ComponentStyleArgs) => ({
   className: args.className,
   component: typeof args.ownerState.component === 'string' ? args.ownerState.component : 'custom',
   elevation: args.ownerState.elevation,
@@ -153,7 +154,7 @@ const callbackArgs = (args: ComponentStyleArgs) => ({
   ownerStyle: args.ownerState.style ?? null,
   rootHasElevation: Object.hasOwn(args, 'elevation'),
   as: typeof args.as === 'string' ? args.as : 'custom',
-});
+}));
 test.each(original.themed)(
   'source callback argument/slot order and selected CSS: $input',
   ({ input, calls: expected }) => {
@@ -161,10 +162,10 @@ test.each(original.themed)(
     const styleOverrides = Object.fromEntries(
       ['root', 'rounded', 'elevation', 'outlined', 'elevation3'].map((slot, index) => [
         slot,
-        (args: ComponentStyleArgs) => {
+        nativeStyleCallback((args: ComponentStyleArgs) => {
           calls.push({ slot, args: callbackArgs(args) });
           return { opacity: (index + 1) / 10 };
-        },
+        }),
       ]),
     );
     const theme = createTheme({

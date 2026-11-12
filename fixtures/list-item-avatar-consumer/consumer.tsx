@@ -98,7 +98,14 @@ const theme = createTheme({
         component: root,
       },
       styleOverrides: {
-        root: ({ ownerState }) => ({ opacity: ownerState.alignItems === 'flex-start' ? 0.5 : 1 }),
+        root: ({ ownerState }) => ({
+          opacity:
+            ownerState &&
+            typeof ownerState === 'object' &&
+            Reflect.get(ownerState, 'alignItems') === 'flex-start'
+              ? 0.5
+              : 1,
+        }),
         alignItemsFlexStart: { marginTop: 10 },
       },
       variants: [{ props: { className: 'theme-class' }, style: { opacity: 0.8 } }],

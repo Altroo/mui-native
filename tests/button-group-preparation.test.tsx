@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { act, cleanup, render } from '@testing-library/react-native';
@@ -241,10 +242,10 @@ test('direction rebinding and nested groups retain one callback evaluation per o
     components: {
       MuiButtonGroup: {
         styleOverrides: {
-          root: ({ ownerState }) => {
+          root: nativeStyleCallback(({ ownerState }) => {
             counts[ownerState.className as 'outer' | 'inner']++;
             return { padding: 4 };
-          },
+          }),
         },
       },
     },

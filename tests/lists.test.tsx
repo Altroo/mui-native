@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, type ViewInstance } from 'react-native';
 import { render, screen, fireEvent, act, cleanup } from '@testing-library/react-native';
@@ -55,14 +56,14 @@ test.each(reference.fixtures)('original list composition: $input.name', (fixture
         'Mui' + name,
         {
           styleOverrides: {
-            root: ({ ownerState }: { ownerState: Record<string, unknown> }) => {
+            root: nativeStyleCallback(({ ownerState }: { ownerState: Record<string, unknown> }) => {
               owners[name] = Object.fromEntries(
                 keys
                   .filter((key) => ownerState[key] !== undefined)
                   .map((key) => [key, ownerState[key]]),
               );
               return {};
-            },
+            }),
           },
         },
       ]),

@@ -88,7 +88,17 @@ export const theme = createTheme({
   components: {
     MuiTypography: {
       defaultProps: { ...defaults },
-      styleOverrides: { root: ({ ownerState }) => ({ opacity: ownerState.noWrap ? 0.5 : 1 }) },
+      styleOverrides: {
+        root: ({ ownerState }) => ({
+          opacity:
+            ownerState &&
+            typeof ownerState === 'object' &&
+            'noWrap' in ownerState &&
+            ownerState.noWrap
+              ? 0.5
+              : 1,
+        }),
+      },
     },
   },
 });

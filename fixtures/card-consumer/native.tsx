@@ -75,7 +75,14 @@ export const theme = createTheme({
   components: {
     MuiCard: {
       defaultProps: defaults,
-      styleOverrides: { root: ({ ownerState }) => ({ opacity: ownerState.raised ? 0.5 : 1 }) },
+      styleOverrides: {
+        root: ({ ownerState }) => ({
+          opacity:
+            ownerState && typeof ownerState === 'object' && Reflect.get(ownerState, 'raised')
+              ? 0.5
+              : 1,
+        }),
+      },
       variants: [{ props: { raised: true }, style: { padding: 3 } }],
     },
   },

@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { View } from 'react-native';
 import { render } from '@testing-library/react-native';
 import {
@@ -9,6 +10,7 @@ import {
   createTheme,
   styled,
   ThemeProvider,
+  type SharedComponentStyleArgs,
   type ComponentStyleArgs,
   type ComponentStyle,
   type ComponentVariant,
@@ -31,12 +33,12 @@ function run(
   const trace: Trace = [];
   const theme = createTheme();
   const ownerState = { color: 'owner', active: true };
-  const args = (input: ComponentStyleArgs) => [
+  const args = nativeStyleCallback((input: ComponentStyleArgs) => [
     input.color,
     input.rootOnly,
     input.ownerState === ownerState,
     input.theme.spacing(1),
-  ];
+  ]);
   const { overrides, variants = [], selected = ['root'] } = configure(trace, args, ownerState);
   theme.components.MuiSlotProbe = { styleOverrides: overrides, variants };
   let error: string | null = null;
@@ -59,20 +61,20 @@ function run(
 test('all enumerable slots resolve in source order, including inherited and recursive arrays', () => {
   run(0, (trace, args) => {
     const overrides = Object.create({
-      inherited: (input: ComponentStyleArgs) => {
+      inherited: nativeStyleCallback((input: ComponentStyleArgs) => {
         trace.push(['inherited', ...args(input)]);
         return {};
-      },
+      }),
     });
     Object.defineProperties(overrides, {
       root: {
         enumerable: true,
         get() {
           trace.push('get-root');
-          return (input: ComponentStyleArgs) => {
+          return nativeStyleCallback((input: ComponentStyleArgs) => {
             trace.push(['root', ...args(input)]);
             return {};
-          };
+          });
         },
       },
       unused: {
@@ -118,18 +120,18 @@ test('unused ordinary CSS and variant-array member callbacks are never prepared'
         embedded: {
           variants: [
             {
-              props: (input) => {
+              props: nativeStyleCallback((input) => {
                 trace.push(['predicate', ...args(input)]);
                 return true;
-              },
-              style: (input) => {
+              }),
+              style: nativeStyleCallback((input) => {
                 trace.push(['style', ...args(input)]);
                 return [
                   () => {
                     throw new Error('deferred-array');
                   },
                 ];
-              },
+              }),
             },
           ],
         },
@@ -149,10 +151,10 @@ test('embedded getters and variant method calls follow original access order', (
       },
       get style() {
         trace.push('get-style');
-        return function (this: unknown, input: ComponentStyleArgs) {
+        return nativeStyleCallback(function (this: unknown, input: ComponentStyleArgs) {
           trace.push(['style-call', this === variant, ...args(input)]);
           return {};
-        };
+        });
       },
     };
     return {
@@ -250,10 +252,14 @@ test('repeated selected keys reuse the source-resolved callback result', () => {
 test.each(['component', 'styled'] as const)(
   'normal %s styling evaluates unused overrides without applying their CSS',
   (kind) => {
-    const unused = jest.fn((input: ComponentStyleArgs) => {
+    const unused = jest.fn((input: SharedComponentStyleArgs) => {
       if (kind === 'component') expect(input.theme).toBe(theme);
       expect(input.theme.spacing(1)).toBe(theme.spacing(1));
-      expect(input.ownerState).toMatchObject({ testID: 'probe' });
+      if (kind === 'component') expect(input.ownerState).toMatchObject({ testID: 'probe' });
+      else {
+        expect(input.ownerState).toBeUndefined();
+        expect(input.testID).toBe('probe');
+      }
       return { padding: 99, '&::unsupported': { position: 'fixed' } };
     });
     const theme = createTheme({
@@ -348,14 +354,14 @@ test('later unused variants see mutation of the shared source override arguments
       unused: {
         variants: [
           {
-            props: (input) => {
+            props: nativeStyleCallback((input) => {
               trace.push(['predicate', ...args(input)]);
               return input.rootOnly === 7;
-            },
-            style: (input) => {
+            }),
+            style: nativeStyleCallback((input) => {
               trace.push(['style', ...args(input)]);
               return {};
-            },
+            }),
           },
         ],
       },

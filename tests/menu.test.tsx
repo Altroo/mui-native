@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import {
   View,
@@ -431,9 +432,15 @@ test('Menu theme defaults and named slot overrides retain owner state and dense 
           slotProps: { paper: { style: { padding: 9 } }, list: { dense: true } },
         },
         styleOverrides: {
-          root: ({ ownerState }) => ({ borderWidth: ownerState.variant === 'menu' ? 3 : 0 }),
-          paper: ({ ownerState }) => ({ borderWidth: ownerState.autoFocus ? 2 : 0 }),
-          list: ({ ownerState }) => ({ marginTop: ownerState.autoFocus ? 7 : 0 }),
+          root: nativeStyleCallback(({ ownerState }) => ({
+            borderWidth: ownerState.variant === 'menu' ? 3 : 0,
+          })),
+          paper: nativeStyleCallback(({ ownerState }) => ({
+            borderWidth: ownerState.autoFocus ? 2 : 0,
+          })),
+          list: nativeStyleCallback(({ ownerState }) => ({
+            marginTop: ownerState.autoFocus ? 7 : 0,
+          })),
         },
       },
     },

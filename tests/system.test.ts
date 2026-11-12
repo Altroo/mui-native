@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import {
   createTheme,
   resolveSx,
@@ -31,7 +32,10 @@ test('styles follow overrides, variants, sx precedence and CSS uses literal padd
     components: {
       MuiButton: {
         styleOverrides: {
-          root: ({ ownerState }) => ({ padding: 6, opacity: ownerState.disabled ? 0.3 : 1 }),
+          root: nativeStyleCallback(({ ownerState }) => ({
+            padding: 6,
+            opacity: ownerState.disabled ? 0.3 : 1,
+          })),
         },
         variants: [{ props: { variant: 'contained' }, style: { padding: 12 } }],
       },
@@ -47,7 +51,7 @@ test('unsupported selectors and CSS units emit actionable diagnostics', () => {
   const reset = configureDiagnostics(collect);
   try {
     expect(
-      resolveSx({ '&:hover': { color: 'red' }, height: '100vh', p: 1 }, createTheme()),
+      resolveSx({ '&:visited': { color: 'red' }, height: '100vh', p: 1 }, createTheme()),
     ).toEqual({ padding: 8 });
     expect(collect.mock.calls.map(([x]) => x.code).sort()).toEqual(['css-unit', 'selector']);
   } finally {

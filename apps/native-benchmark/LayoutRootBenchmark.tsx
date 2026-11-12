@@ -61,7 +61,13 @@ const themes = (['light', 'dark'] as const).map((mode) =>
         styleOverrides: {
           root: ({ theme, ownerState }) => ({
             borderWidth: 1,
-            borderColor: ownerState.error ? theme.palette.error.main : theme.palette.divider,
+            borderColor:
+              ownerState &&
+              typeof ownerState === 'object' &&
+              'error' in ownerState &&
+              ownerState.error
+                ? theme.palette.error.main
+                : theme.palette.divider,
             backgroundColor: theme.palette.background.paper,
             marginTop: 8,
             paddingTop: 7,
@@ -72,7 +78,13 @@ const themes = (['light', 'dark'] as const).map((mode) =>
         styleOverrides: {
           root: ({ theme, ownerState }) => ({
             borderWidth: 1,
-            borderColor: ownerState.disabled ? theme.palette.error.main : theme.palette.divider,
+            borderColor:
+              ownerState &&
+              typeof ownerState === 'object' &&
+              'disabled' in ownerState &&
+              ownerState.disabled
+                ? theme.palette.error.main
+                : theme.palette.divider,
             backgroundColor: theme.palette.background.paper,
             marginTop: 8,
             paddingTop: 7,

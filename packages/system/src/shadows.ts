@@ -135,6 +135,7 @@ export function nativeBoxShadow(
   value: unknown,
   shadows: Shadows | undefined,
   rem: number,
+  observeSource?: (source: unknown) => void,
 ): ViewStyle | undefined {
   const index =
     typeof value === 'number'
@@ -144,6 +145,7 @@ export function nativeBoxShadow(
         : undefined;
   const source =
     index === undefined ? value : Number.isInteger(index) ? shadows?.[index] : undefined;
+  observeSource?.(source);
   const parsed = typeof source === 'string' ? parseShadow(source, rem) : undefined;
   if (!parsed) {
     diagnostic(

@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import React from 'react';
 import { View, Text, TextInput, Linking, StyleSheet } from 'react-native';
 import { act, cleanup } from '@testing-library/react-native';
@@ -45,10 +46,10 @@ test.each(reference.fixtures)('original button wrapper: $input.name', async (fix
       ['Mui' + input.component]: {
         defaultProps: input.defaults,
         styleOverrides: {
-          root: ({ ownerState }: { ownerState: Record<string, unknown> }) => {
+          root: nativeStyleCallback(({ ownerState }: { ownerState: Record<string, unknown> }) => {
             owner = ownerState;
             return {};
-          },
+          }),
         },
       },
     },
@@ -248,9 +249,9 @@ test('named Button overrides receive owner state while inline native styles win 
           MuiButton: {
             styleOverrides: {
               outlined: { paddingRight: 40 },
-              sizeLarge: ({ ownerState }) => ({
+              sizeLarge: nativeStyleCallback(({ ownerState }) => ({
                 borderWidth: ownerState.variant === 'outlined' ? 3 : 0,
-              }),
+              })),
             },
           },
         },

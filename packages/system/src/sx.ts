@@ -11,7 +11,7 @@ import {
 import type {
   Theme,
   Breakpoint,
-  ComponentStyleArgs,
+  SharedComponentStyleArgs,
   ComponentVariant,
   ComponentVariantArgs,
 } from './theme';
@@ -30,6 +30,22 @@ import {
 } from './nativeTextInputProvenance';
 import { nativeTextEmissionKeys } from './nativeTextProvenance';
 import { retainNativeComponentBase, nativeComponentBaseRange } from './nativePreparedComponent';
+import {
+  createNativeCssOwner,
+  snapshotNativeCssValue,
+  nativeCssProgramTree,
+  nativeCssSequence,
+  nativeCssRegistered,
+  retainNativeCssProgram,
+  type NativeCssProgramNode,
+} from './nativeCssProgram';
+import {
+  nativeStyleCacheRegistry,
+  defaultNativeStyleCache,
+  type NativeStyleCache,
+} from './nativeStyleCache';
+import { nativePreprocessedCss } from './nativeStyledPreprocessing';
+import { retainNativeStyleEvaluation } from './nativeStyleEvaluation';
 import { cssBorder, finishCssBorderStyle } from './borders';
 import {
   normalizeTextStyle,
@@ -41,6 +57,10 @@ import {
 import { nativeBoxShadow, bindShadowColor } from './shadows';
 import {
   nativeStyledStyles,
+  registeredNativeCssProgrammes,
+  nativeStyleClassTokens,
+  nativeStyleClassReferences,
+  nativeStyleInput,
   type NativePreparedNode as PreparedNode,
   type NativeSelectorContext as SelectorContext,
   type NativePreparedSheet as PreparedSheet,
@@ -60,6 +80,25 @@ export interface NativeStyleTarget {
 }
 export type { NativePreparedStyle } from './nativeStyledMetadata';
 export type StyleContext = NativeTextContext & {
+  /** @internal Complete source constructor CSS, independent of native geometry. */
+  baseProgramme?: string;
+  /** @internal This preparation owns an actual styled source class. */
+  sourceClass?: boolean;
+  /** @internal Low-priority Yoga defaults are independent of source CSS identity. */
+  nativeLayout?: Pick<ViewStyle, 'alignSelf' | 'flexShrink'>;
+  /** @internal Source-owned root CSS; interaction frames only rebind its selectors. */
+  preparedRoot?: import('./nativeStyledMetadata').NativePreparedStyle;
+  /** @internal Stylesheet ownership is independent of theme and physical ancestry. */
+  styleCache?: NativeStyleCache;
+  /** @internal Genuine styled props, including its supplied ownerState. */
+  styledProps?: SharedComponentStyleArgs;
+  /** @internal First-party CSS class carriers consumed by this styled root. */
+  registeredStyles?: StyleProp<NativeStyle>;
+  /** @internal Pinned resolver output shape over already-resolved owned CSS. */
+  overrideProgramme?: (
+    owner: Record<string, unknown>,
+    styles: Readonly<Record<string, unknown>>,
+  ) => unknown;
   baseStyle?: SxProps;
   overrideKeys?: readonly string[];
   /** @internal Scope resolved named slots before selecting root overrides. */
@@ -189,6 +228,7 @@ type StyleRule = {
   style: Readonly<Record<string, unknown>>;
   specificity: number;
   typeSpecificity?: number;
+  cssOrder?: readonly [block: number, programme: number, owner: number];
   protectPhysicalGeometry?: boolean;
 };
 type StyleNode = {
@@ -199,10 +239,26 @@ function prepareStyle(
   input: SxProps | undefined,
   theme: Theme,
   context: StyleContext,
+  capture?: (value: unknown) => void,
 ): StyleNode[] {
+  const objects = new WeakMap<StyleNode, SxObject>();
+  const arrays = new WeakMap<StyleNode[], unknown>();
+  const source = (node: StyleNode): SxObject => {
+    let value = objects.get(node);
+    if (!value) {
+      value = Object.create(null) as SxObject;
+      objects.set(node, value);
+    }
+    return value;
+  };
+  const emit = (node: StyleNode, key: string, value: unknown, mode = context.mode) => {
+    if (capture && mode !== 'css') source(node)[key] = snapshotNativeCssValue(value);
+  };
   const assign = (node: StyleNode, key: string, value: unknown, mode = context.mode) => {
     const target = node.base;
+    if (capture && value && typeof value === 'object') value = snapshotNativeCssValue(value);
     if (value == null) {
+      for (const cssKey of aliases[key] ?? [key]) emit(node, cssKey, value, mode);
       // A responsive hole replaces declarations in this media branch only.
       // Retain its key position, then omit it when applying native rules.
       for (const nativeKey of aliases[key] ?? [key]) setStyle(target, nativeKey, value);
@@ -224,11 +280,14 @@ function prepareStyle(
         (typeof value === 'string' && /^(0|[1-9]\d*)$/.test(value))
           ? theme.shadows
           : undefined;
-      const shadow = nativeBoxShadow(value, shadows, theme.cssRootFontSize ?? 16);
+      const shadow = nativeBoxShadow(value, shadows, theme.cssRootFontSize ?? 16, (resolved) => {
+        emit(node, key, resolved || value, mode);
+      });
       if (shadow) setStyle(target, 'boxShadow', shadow);
       return;
     }
     if (key === 'border') {
+      emit(node, key, typeof value === 'number' ? `${value}px solid` : value, mode);
       const declaration = cssBorder(value);
       if (!declaration) diagnostic('border', `Unsupported CSS border: ${String(value)}`);
       else {
@@ -244,6 +303,7 @@ function prepareStyle(
     }
     for (const nativeKey of aliases[key] ?? [key]) {
       if (!allowed.has(nativeKey) && !(context.svg && svgProperties.has(nativeKey))) {
+        emit(node, key, value, mode);
         diagnostic('style', `Unsupported native style ${key}`);
         continue;
       }
@@ -278,6 +338,7 @@ function prepareStyle(
               : next * radius;
         } else if (sizing.test(nativeKey) && next > 0 && next <= 1) next = `${next * 100}%`;
       }
+      emit(node, nativeKey, next, mode);
       if (typeof next === 'string' && (nativeKey === 'margin' || nativeKey === 'padding')) {
         const tokens = next.trim().match(/calc\([^)]*\)|[^\s]+/g) ?? [];
         if (tokens.length > 1 && tokens.length <= 4) {
@@ -334,9 +395,10 @@ function prepareStyle(
     (node.conditions ??= new Map(
       theme.breakpoints.internal_mediaKeys.map((query) => [query, undefined]),
     ));
-  const mergeNode = (target: StyleNode, source: StyleNode) => {
-    mergeStyles(target.base, source.base);
-    for (const [query, branches] of source.conditions ?? []) {
+  const mergeNode = (target: StyleNode, incoming: StyleNode) => {
+    if (capture) mergeStyles(source(target), source(incoming));
+    mergeStyles(target.base, incoming.base);
+    for (const [query, branches] of incoming.conditions ?? []) {
       if (branches === undefined) continue;
       const previous = conditions(target).get(query);
       if (!branches.length || !previous?.length) conditions(target).set(query, branches);
@@ -344,15 +406,34 @@ function prepareStyle(
     }
   };
   const build = (raw: unknown, mode = context.mode): StyleNode[] => {
-    if (!raw) return [];
+    if (!raw) {
+      const empty: StyleNode[] = [];
+      if (capture) arrays.set(empty, raw);
+      return empty;
+    }
     if (typeof raw === 'function') return build(raw(theme), mode);
-    if (Array.isArray(raw)) return raw.flatMap((item) => build(item, mode));
+    if (Array.isArray(raw)) {
+      const children = raw.map((item) => build(item, mode));
+      const nodes = children.flat();
+      if (capture)
+        arrays.set(
+          nodes,
+          children.map((child) => arrays.get(child)),
+        );
+      return nodes;
+    }
     const node: StyleNode = { base: {} };
-    for (const [key, entry] of Object.entries(raw as SxObject)) {
-      const original = typeof entry === 'function' ? entry(theme) : entry;
+    for (const key in raw as SxObject) {
+      const entry = (raw as SxObject)[key];
+      let original = typeof entry === 'function' ? entry(theme) : entry;
       if (original == null) continue;
+      if (capture && mode === 'css' && !key.startsWith('@media') && !key.startsWith('&')) {
+        original = snapshotNativeCssValue(original);
+        source(node)[key] = original;
+      }
       if (key.startsWith('@media') || key.startsWith('&')) {
         const branches = build(original, mode);
+        if (capture) source(node)[key] = arrays.get(branches);
         // Validate once while preparing the sheet. Rebinding a supported root
         // selector later must not evaluate callbacks or duplicate diagnostics.
         if (key.startsWith('&') && !parseSelectors(key)) {
@@ -387,12 +468,17 @@ function prepareStyle(
         const branches = conditions(node).get(query) ?? [];
         if (!branches.length) branches.push({ base: {} });
         assign(branches[branches.length - 1], key, value, mode);
+        if (capture && mode !== 'css') source(node)[query] = source(branches[branches.length - 1]);
         conditions(node).set(query, branches);
       }
     }
-    return [node];
+    const nodes = [node];
+    if (capture) arrays.set(nodes, source(node));
+    return nodes;
   };
-  return build(input);
+  const nodes = build(input);
+  capture?.(arrays.get(nodes));
+  return nodes;
 }
 // Owned cells expose only cache DATA to prepared-style equality. A shared getter
 // avoids callback-identity churn; its source/reader stays private in the WeakMap.
@@ -608,11 +694,18 @@ function finishRules(
   context: StyleContext = {},
   retainTextInputs = false,
 ): NativeStyle {
-  const result: Record<string, unknown> = {};
+  const result: Record<string, unknown> = { ...context.nativeLayout };
   const textOwners: Record<string, Readonly<Record<string, unknown>>> = {};
   // Stable sorting preserves upstream rule order within equal specificity.
   const ordered = rules.sort(
-    (a, b) => a.specificity - b.specificity || (a.typeSpecificity ?? 0) - (b.typeSpecificity ?? 0),
+    (a, b) =>
+      a.specificity - b.specificity ||
+      (a.typeSpecificity ?? 0) - (b.typeSpecificity ?? 0) ||
+      (a.cssOrder && b.cssOrder
+        ? a.cssOrder[0] - b.cssOrder[0] ||
+          a.cssOrder[1] - b.cssOrder[1] ||
+          a.cssOrder[2] - b.cssOrder[2]
+        : 0),
   );
   const protectGeometry =
     context.protectPhysicalGeometry || ordered.some((rule) => rule.protectPhysicalGeometry);
@@ -785,26 +878,37 @@ function componentSheets(
   context: StyleContext = {},
 ): PreparedSheet[] {
   const readLastChild = deferredLastChild(context);
-  const prepare = (input: SxProps | undefined, context: StyleContext): PreparedSheet[] => [
-    {
-      nodes: prepareStyle(input, theme, context),
-      context: bindLastChild(
-        {
-          classes: context.classes?.slice(),
-          states: context.states?.slice(),
-          descendantClasses: context.descendantClasses?.slice(),
-          descendantPath: context.descendantPath,
-          descendantOnly: context.descendantOnly,
-          slot: context.slot,
-          width: context.width,
-          protectPhysicalGeometry: context.protectPhysicalGeometry,
-        },
-        readLastChild,
-      ),
-    },
-  ];
+  const snapshots = new WeakMap<readonly PreparedSheet[], unknown>();
+  const prepare = (input: SxProps | undefined, context: StyleContext): PreparedSheet[] => {
+    let snapshot: unknown;
+    const sheets: PreparedSheet[] = [
+      {
+        nodes: prepareStyle(input, theme, context, (value) => {
+          snapshot = value;
+        }),
+        context: bindLastChild(
+          {
+            classes: context.classes?.slice(),
+            states: context.states?.slice(),
+            descendantClasses: context.descendantClasses?.slice(),
+            descendantPath: context.descendantPath,
+            descendantOnly: context.descendantOnly,
+            slot: context.slot,
+            width: context.width,
+            protectPhysicalGeometry: context.protectPhysicalGeometry,
+          },
+          readLastChild,
+        ),
+      },
+    ];
+    snapshots.set(sheets, snapshot);
+    return sheets;
+  };
   const prepareCss = (input: SxProps) => {
-    const copy = { ...context, mode: 'css' as const };
+    const copy = {
+      ...context,
+      mode: 'css' as const,
+    };
     readLastChild.captureCopied(copy);
     return prepare(input, copy);
   };
@@ -813,14 +917,33 @@ function componentSheets(
     // Native callback members of variant arrays are an existing extension.
     // Keep them deferred until selected, with their original merged arguments.
     variantState?: () => ComponentVariantArgs;
-    callbackState?: () => ComponentStyleArgs;
+    callbackState?: () => SharedComponentStyleArgs;
+  };
+  const arrayResults = new WeakSet<readonly ResolvedLayer[]>();
+  const snapshotOf = (sheets: readonly PreparedSheet[], selector?: string): unknown => {
+    const unwrap = (value: unknown): unknown => {
+      if (Array.isArray(value)) return value.map(unwrap);
+      return selector && value && typeof value === 'object'
+        ? (value as Record<string, unknown>)[selector]
+        : value;
+    };
+    return unwrap(snapshots.get(sheets));
   };
   const preparedLayer = (
     input: unknown,
-    callbackState?: () => ComponentStyleArgs | ComponentVariantArgs,
+    callbackState?: () => SharedComponentStyleArgs | ComponentVariantArgs,
     selector?: string,
     resolveNamedVariants = false,
   ): PreparedSheet[] => {
+    if (input && typeof input === 'object' && nativePreprocessedCss.has(input)) {
+      const sheets = prepareCss(
+        selector === undefined
+          ? (nativePreprocessedCss.get(input) as SxProps)
+          : { [selector]: nativePreprocessedCss.get(input) },
+      );
+      snapshots.set(sheets, selector ? { [selector]: input } : input);
+      return sheets;
+    }
     if (callbackState && typeof input === 'function') {
       const state = callbackState();
       const resolved = input(state);
@@ -830,14 +953,19 @@ function componentSheets(
         ? prepareLayers(processStyle(resolved, state), selector)
         : preparedLayer(resolved, callbackState, selector);
     }
-    if (callbackState && Array.isArray(input))
-      return input.flatMap((style) =>
+    if (callbackState && Array.isArray(input)) {
+      const children = input.map((style) =>
         preparedLayer(style, callbackState, selector, resolveNamedVariants),
       );
+      const sheets = children.flat();
+      const values = children.map((child) => snapshotOf(child, selector));
+      snapshots.set(sheets, selector ? { [selector]: values } : values);
+      return sheets;
+    }
     return prepareCss(selector === undefined ? (input as SxProps) : { [selector]: input });
   };
-  const prepareLayers = (layers: readonly ResolvedLayer[], selector?: string): PreparedSheet[] =>
-    layers.flatMap(({ input, variantState, callbackState }) =>
+  const prepareLayers = (layers: readonly ResolvedLayer[], selector?: string): PreparedSheet[] => {
+    const children = layers.map(({ input, variantState, callbackState }) =>
       preparedLayer(
         input,
         variantState ?? callbackState,
@@ -845,20 +973,27 @@ function componentSheets(
         selector !== undefined && variantState === undefined,
       ),
     );
+    const sheets = children.flat();
+    const values = children.map((child) => snapshotOf(child, selector));
+    const value = arrayResults.has(layers) ? values : values[0];
+    snapshots.set(sheets, selector ? { [selector]: value } : value);
+    return sheets;
+  };
   // Adapted from MIT System 9.5.0 processStyleVariants. Resolution must finish
   // for every override slot before the selected output is prepared as CSS.
   const variants = (
     entries: readonly ComponentVariant[],
-    callbackProps: ComponentStyleArgs,
+    callbackProps: SharedComponentStyleArgs,
     results: ResolvedLayer[] = [],
   ): ResolvedLayer[] => {
     let mergedVariantState: ComponentVariantArgs | undefined;
     const variantState = () =>
       (mergedVariantState ??= {
-        // Retain direct theme fields for the existing native callback extension.
-        ...theme,
+        // Genuine styled arguments match upstream props. Direct theme fields
+        // remain available only to the existing native component extension.
+        ...(context.styledProps ? {} : theme),
         ...callbackProps,
-        ...callbackProps.ownerState,
+        ...Object(callbackProps.ownerState),
         ownerState: callbackProps.ownerState,
       });
     variantLoop: for (let i = 0; i < entries.length; i += 1) {
@@ -869,7 +1004,8 @@ function componentSheets(
         for (const key in variant.props)
           if (
             callbackProps[key] !== variant.props[key] &&
-            callbackProps.ownerState?.[key] !== variant.props[key]
+            (callbackProps.ownerState as Record<string, unknown> | null | undefined)?.[key] !==
+              variant.props[key]
           )
             continue variantLoop;
       }
@@ -880,19 +1016,25 @@ function componentSheets(
         variantState,
       });
     }
+    arrayResults.add(results);
     return results;
   };
   // Source processStyle resolves functions/arrays and embedded variants. It
   // does not traverse ordinary CSS objects until its resolver selects them.
   const processStyle = (
     input: unknown,
-    callbackProps: ComponentStyleArgs,
-    baseCallbackProps?: () => ComponentStyleArgs,
+    callbackProps: SharedComponentStyleArgs,
+    baseCallbackProps?: () => SharedComponentStyleArgs,
   ): ResolvedLayer[] => {
     const resolved =
       typeof input === 'function' ? input(baseCallbackProps?.() ?? callbackProps) : input;
-    if (Array.isArray(resolved))
-      return resolved.flatMap((style) => processStyle(style, callbackProps, baseCallbackProps));
+    if (Array.isArray(resolved)) {
+      const layers = resolved.flatMap((style) =>
+        processStyle(style, callbackProps, baseCallbackProps),
+      );
+      arrayResults.add(layers);
+      return layers;
+    }
     if (Array.isArray(resolved?.variants)) {
       const variantProps = baseCallbackProps?.() ?? callbackProps;
       let rootStyle;
@@ -913,13 +1055,14 @@ function componentSheets(
       },
     ];
   };
-  const overrideProps = { ...context.rootProps, theme, ownerState: props };
+  const overrideProps = context.styledProps ?? { ...context.rootProps, theme, ownerState: props };
   const baseStyle = context.baseStyle;
   // Preserve the native direct-theme snapshot for function/array bases. Static
   // bases only need arguments after processStyle's existing variants read has
   // selected that path; do not add observable Proxy presence/descriptor traps.
-  let baseCallbackProps: ComponentStyleArgs | undefined;
-  const resolveBaseCallbackProps = () => (baseCallbackProps ??= { ...theme, ...overrideProps });
+  let baseCallbackProps: SharedComponentStyleArgs | undefined;
+  const resolveBaseCallbackProps = () =>
+    (baseCallbackProps ??= context.styledProps ? overrideProps : { ...theme, ...overrideProps });
   const eagerBase = typeof baseStyle === 'function' || Array.isArray(baseStyle);
   const baseRules = prepareLayers(
     processStyle(
@@ -942,20 +1085,53 @@ function componentSheets(
     for (const key in styleOverrides)
       resolvedOverrides.set(key, processStyle(styleOverrides[key], overrideProps));
   }
-  const scopedOverrides = Object.entries(context.overrideSelectors ?? {}).flatMap(
-    ([key, selector]) => prepareLayers(resolvedOverrides.get(key) ?? [], selector),
+  const scopedLayers = Object.entries(context.overrideSelectors ?? {}).map(([key, selector]) =>
+    prepareLayers(resolvedOverrides.get(key) ?? [], selector),
   );
-  const bases = [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].flatMap((key) =>
+  const rootLayers = [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].map((key) =>
     prepareLayers(resolvedOverrides.get(key) ?? []),
   );
+  const scopedOverrides = scopedLayers.flat();
+  const bases = rootLayers.flat();
   const componentVariants = context.skipVariants ? [] : (componentConfig()?.variants ?? []);
-  const sheets = [
-    ...baseRules,
-    ...scopedOverrides,
-    ...bases,
-    ...prepareLayers(variants(componentVariants, overrideProps)),
-    ...prepare(sx, context),
-  ];
+  const variantLayers = prepareLayers(variants(componentVariants, overrideProps));
+  const sxLayers = prepare(sx, context);
+  // A custom variant can select the same slot twice (for example "root").
+  // Each occurrence has already observed its CSS getters exactly once. Keep
+  // those separate snapshots when the pinned resolver reads that slot again.
+  const selectedOccurrences = new Map<string, unknown[]>();
+  const selectOccurrence = (key: string, value: unknown) => {
+    const queue = selectedOccurrences.get(key) ?? [];
+    queue.push(value);
+    selectedOccurrences.set(key, queue);
+  };
+  Object.entries(context.overrideSelectors ?? {}).forEach(([key, selector], index) => {
+    selectOccurrence(key, snapshotOf(scopedLayers[index], selector));
+  });
+  [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].forEach((key, index) => {
+    selectOccurrence(key, snapshots.get(rootLayers[index]));
+  });
+  const selectedOverrides: Record<string, unknown> = Object.create(null);
+  for (const [key, occurrences] of selectedOccurrences) {
+    let next = 0;
+    Object.defineProperty(selectedOverrides, key, {
+      enumerable: true,
+      get: () => occurrences[next++],
+    });
+  }
+  const overrideSnapshot = !styleOverrides
+    ? null
+    : context.overrideProgramme
+      ? context.overrideProgramme(props, selectedOverrides)
+      : [...scopedLayers, ...rootLayers].map((layer) => snapshots.get(layer));
+  const owner = createNativeCssOwner(name, context.baseProgramme ?? snapshots.get(baseRules), [
+    overrideSnapshot,
+    snapshots.get(variantLayers),
+    snapshots.get(sxLayers),
+  ]);
+  const sheets = [...baseRules, ...scopedOverrides, ...bases, ...variantLayers, ...sxLayers].map(
+    (sheet, index) => ({ ...sheet, emissionOwner: owner, emissionStart: index === 0 }),
+  );
   return retainNativeComponentBase(sheets, 0, baseRules.length);
 }
 
@@ -992,15 +1168,61 @@ function retainedAncestorContext<T extends SelectorContext>(
   if (reader) lastChildReaders.set(clone, reader);
   return clone;
 }
+function bindPreparedRoot(
+  prepared: import('./nativeStyledMetadata').NativePreparedStyle,
+  context: StyleContext,
+): PreparedSheet[] {
+  const read = deferredLastChild(context);
+  const sheets = prepared.sheets.map((sheet) => ({
+    ...sheet,
+    context: bindLastChild(
+      {
+        ...sheet.context,
+        classes: sheet.retainSourceContext
+          ? [...new Set([...(sheet.context.classes ?? []), ...(context.classes ?? [])])]
+          : context.classes,
+        states: sheet.retainSourceContext
+          ? [...new Set([...(sheet.context.states ?? []), ...(context.states ?? [])])]
+          : context.states,
+        ...(context.descendantClasses === undefined
+          ? {}
+          : { descendantClasses: context.descendantClasses }),
+        ...(context.descendantPath === undefined ? {} : { descendantPath: context.descendantPath }),
+      },
+      read,
+    ),
+  }));
+  const base = nativeComponentBaseRange(prepared.sheets);
+  return retainNativeComponentBase(sheets, base.start, base.end);
+}
 function prepareComponent(
   theme: Theme,
   name: string,
   props: Record<string, unknown>,
   sx: SxProps | undefined,
   context: StyleContext,
+  registered: readonly NativeCssProgramNode[] = [],
 ): PreparedSheet[] {
+  const prefixes: NativeCssProgramNode[] = [];
   const ancestors = (context.ancestors ?? []).flatMap((sheet) => {
     const readLastChild = deferredLastChild(sheet.context);
+    if (sheet.sameRoot && sheet.prepared)
+      prefixes.push(nativeCssProgramTree(sheet.prepared.sheets));
+    const prepareAncestor = () => {
+      const prepared = componentSheets(
+        sheet.theme,
+        sheet.name,
+        sheet.props,
+        sheet.sx,
+        sheet.context,
+      );
+      if (sheet.sameRoot) prefixes.push(nativeCssProgramTree(prepared));
+      return retainNativeCssProgram(
+        prepared,
+        nativeCssProgramTree(prepared),
+        sheet.context.styleCache ?? defaultNativeStyleCache,
+      );
+    };
     return (
       sheet.prepared
         ? sheet.prepared.sheets.map((prepared) =>
@@ -1042,20 +1264,45 @@ function prepareComponent(
                   ),
                 },
           )
-        : componentSheets(sheet.theme, sheet.name, sheet.props, sheet.sx, sheet.context)
+        : prepareAncestor()
     ).map((prepared) => ({ ...prepared, ancestor: prepared.ancestor || !sheet.sameRoot }));
   });
-  const own = componentSheets(theme, name, props, sx, context);
+  const own = context.preparedRoot
+    ? bindPreparedRoot(context.preparedRoot, context)
+    : componentSheets(theme, name, props, sx, context);
   const base = nativeComponentBaseRange(own);
+  let programme = nativeCssRegistered(nativeCssProgramTree(own), [
+    ...registeredNativeCssProgrammes(
+      context.registeredStyles,
+      context.styleCache ?? defaultNativeStyleCache,
+    ),
+    ...registered,
+  ]);
+  for (const prefix of prefixes.reverse()) programme = nativeCssRegistered(prefix, [programme]);
   return retainNativeComponentBase(
-    [...ancestors, ...own],
+    retainNativeCssProgram(
+      [...ancestors, ...own],
+      programme,
+      context.styleCache ?? defaultNativeStyleCache,
+    ),
     ancestors.length + base.start,
     ancestors.length + base.end,
   );
 }
 function collectSheets(sheets: readonly PreparedSheet[]): StyleRule[] {
   try {
-    return sheets.flatMap((sheet) => collectRules(sheet.nodes, sheet.context));
+    return sheets.flatMap((sheet) => {
+      const order =
+        sheet.emissionProgramme &&
+        (sheet.emissionForeign
+          ? nativeStyleCacheRegistry.committedOrder(sheet.emissionProgramme.insertion)
+          : nativeStyleCacheRegistry.order(sheet.emissionProgramme.insertion));
+      if (sheet.emissionForeign && !order) return [];
+      return collectRules(sheet.nodes, sheet.context).map((rule) => ({
+        ...rule,
+        ...(order ? { cssOrder: [...order, sheet.emissionPosition ?? 0] as const } : {}),
+      }));
+    });
   } finally {
     // Retained wrappers/ancestors rebind to their current owner before reuse.
     // Unused predicates must not retain the original caller subtree either.
@@ -1063,6 +1310,19 @@ function collectSheets(sheets: readonly PreparedSheet[]): StyleRule[] {
   }
 }
 
+function evaluatePrepared(
+  sheets: readonly PreparedSheet[],
+  theme: Theme,
+  context: StyleContext,
+  retainTextInputs = false,
+): NativeStyle {
+  const computed = finishRules(collectSheets(sheets), theme, context, retainTextInputs);
+  return retainNativeStyleEvaluation(
+    computed,
+    () => evaluatePrepared(sheets, theme, context, retainTextInputs),
+    sheets,
+  );
+}
 export function componentStyle(
   theme: Theme,
   name: string,
@@ -1070,11 +1330,7 @@ export function componentStyle(
   sx?: SxProps,
   context: StyleContext = {},
 ): NativeStyle {
-  return finishRules(
-    collectSheets(prepareComponent(theme, name, props, sx, context)),
-    theme,
-    context,
-  );
+  return evaluatePrepared(prepareComponent(theme, name, props, sx, context), theme, context);
 }
 function retainPreparedNodes(nodes: readonly PreparedNode[]) {
   for (const node of nodes) {
@@ -1109,19 +1365,58 @@ export function createNativeStyledStyle(
       context: StyleContext;
     }>)[];
     forwarded?: StyleProp<NativeStyle>;
+    renderedClass?: boolean;
   }>,
 ): StyleProp<NativeStyle> {
-  const sheets = composition?.layers
+  const programmes: NativeCssProgramNode[] = [];
+  let sheets = composition?.layers
     ? composition.layers.flatMap((prepare) => {
         const layer = prepare();
-        return prepareComponent(layer.theme, layer.name, layer.props, layer.sx, layer.context);
+        const prepared = prepareComponent(
+          layer.theme,
+          layer.name,
+          layer.props,
+          layer.sx,
+          layer.context,
+        );
+        programmes.push(nativeCssProgramTree(prepared));
+        return prepared;
       })
     : prepareComponent(theme, name, props, sx, context);
+  if (!composition?.layers) programmes.push(nativeCssProgramTree(sheets));
+  const sourceSupplied = suppliedStyle ?? (Object.hasOwn(props, 'style') || authored !== undefined);
+  const authoredInput = nativeStyleInput(authored, sourceSupplied);
+  const hasIncomingClasses = nativeStyleClassTokens(authored).length > 0;
+  if (hasIncomingClasses)
+    sheets.push(
+      ...authoredInput.sheets.map((sheet) =>
+        sheet.ancestor
+          ? sheet
+          : {
+              ...sheet,
+              context: { ...sheet.context, classes: context.classes, states: context.states },
+            },
+      ),
+    );
+  const registrations = registeredNativeCssProgrammes(
+    authored,
+    context.styleCache ?? defaultNativeStyleCache,
+  );
   if (composition?.forwarded) {
     const forwarded = nativeStyledStyles.get(composition.forwarded as object);
     if (!forwarded) throw Error('Expected first-party prepared root CSS');
     sheets.push(...forwarded.sheets);
+    for (const programme of registeredNativeCssProgrammes(
+      composition.forwarded,
+      context.styleCache ?? defaultNativeStyleCache,
+    ))
+      if (!registrations.includes(programme)) registrations.push(programme);
   }
+  sheets = retainNativeCssProgram(
+    sheets,
+    nativeCssRegistered(nativeCssSequence(programmes), registrations),
+    context.styleCache ?? defaultNativeStyleCache,
+  );
   for (const sheet of sheets) {
     retainPreparedNodes(sheet.nodes);
     Object.freeze(sheet.context.classes);
@@ -1130,9 +1425,12 @@ export function createNativeStyledStyle(
     Object.freeze(sheet.context);
     Object.freeze(sheet);
   }
-  const computed = finishRules(collectSheets(sheets), theme, context, true);
-  const native = StyleSheet.flatten(authored) ?? undefined;
-  const adjusted = applyNativeTextMetrics(native, computed, nativeStyleTextMetrics(authored));
+  const computed = evaluatePrepared(sheets, theme, context, true);
+  const nativeAuthored = hasIncomingClasses
+    ? (authoredInput.style as StyleProp<NativeStyle>)
+    : authored;
+  const native = StyleSheet.flatten(nativeAuthored) ?? undefined;
+  const adjusted = applyNativeTextMetrics(native, computed, nativeStyleTextMetrics(nativeAuthored));
   const finalStyle = [computed, adjusted];
   // Composite/adjusted inputs need their own pre-adjusted source binder.
   retainNativeTextStyleInputs(
@@ -1147,8 +1445,17 @@ export function createNativeStyledStyle(
     finalStyle,
     Object.freeze({
       sheets: Object.freeze(sheets),
-      authored,
-      hasAuthoredStyle: suppliedStyle ?? (Object.hasOwn(props, 'style') || authored !== undefined),
+      ...(composition?.renderedClass
+        ? {
+            classTokens: nativeStyleClassReferences(
+              sheets,
+              [authored, composition.forwarded],
+              context.styleCache ?? defaultNativeStyleCache,
+            ),
+          }
+        : {}),
+      authored: nativeAuthored,
+      hasAuthoredStyle: hasIncomingClasses ? authoredInput.supplied : sourceSupplied,
     }),
   );
   return finalStyle;
@@ -1213,18 +1520,40 @@ export function componentRootStyle(
   };
   readLastChild.captureCopied(copiedContext);
   const finalContext = bindLastChild(copiedContext, readLastChild);
-  const component = prepareComponent(theme, name, props, sx, finalContext);
+  const component = prepareComponent(
+    theme,
+    name,
+    props,
+    sx,
+    finalContext,
+    registeredNativeCssProgrammes(authored, context.styleCache ?? defaultNativeStyleCache),
+  );
   const base = nativeComponentBaseRange(component);
-  const sheets = [...component, ...wrappers];
+  const sheets = retainNativeCssProgram(
+    [...component, ...wrappers],
+    nativeCssProgramTree(component),
+    context.styleCache ?? defaultNativeStyleCache,
+  );
   const ownSheets = sheets.filter((sheet) => !sheet.ancestor);
   let ownBaseStart = 0;
   for (let i = 0; i < base.start; i++) if (!component[i].ancestor) ownBaseStart++;
   retainNativeComponentBase(ownSheets, ownBaseStart, ownBaseStart + base.end - base.start);
   for (const sheet of ownSheets) retainPreparedNodes(sheet.nodes);
   const result: NativeRootStyleResult = {
-    computed: finishRules(collectSheets(sheets), theme, finalContext),
+    computed: evaluatePrepared(sheets, theme, finalContext),
     authored: native,
-    prepared: Object.freeze({ sheets: Object.freeze(ownSheets) }),
+    prepared: Object.freeze({
+      sheets: Object.freeze(ownSheets),
+      ...(context.sourceClass
+        ? {
+            classTokens: nativeStyleClassReferences(
+              ownSheets,
+              authored,
+              context.styleCache ?? defaultNativeStyleCache,
+            ),
+          }
+        : {}),
+    }),
   };
   if (!retainProgramme) return result;
   const programme = [result.computed, ...native];
@@ -1234,6 +1563,7 @@ export function componentRootStyle(
       sheets: Object.freeze([...sheets]),
       authored: native,
       hasAuthoredStyle: native.length > 0,
+      ...(result.prepared.classTokens ? { classTokens: result.prepared.classTokens } : {}),
     }),
   );
   return { ...result, programme };

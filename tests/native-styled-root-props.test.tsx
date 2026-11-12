@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import React, { forwardRef, useState } from 'react';
 import { View, Text, StyleSheet, type StyleProp, type ViewInstance } from 'react-native';
 import { render, fireEvent } from '@testing-library/react-native';
@@ -66,7 +67,7 @@ function observe(input: unknown) {
           ...(Object.hasOwn(spec, 'defaultSx') ? { sx: spec.defaultSx } : {}),
         },
         styleOverrides: {
-          root: ({ ownerState }) => {
+          root: nativeStyleCallback(({ ownerState }) => {
             actual = {
               hasStyle: Object.hasOwn(ownerState, 'style'),
               style: ownerState.style ?? null,
@@ -74,7 +75,7 @@ function observe(input: unknown) {
               sx: ownerState.sx ?? null,
             };
             return {};
-          },
+          }),
         },
       },
     },
@@ -118,10 +119,10 @@ test('registered frozen native arrays remain genuine owner props and keep their 
       MuiProbe: {
         defaultProps: { style: { opacity: 0.2 } },
         styleOverrides: {
-          root: ({ ownerState }) => {
+          root: nativeStyleCallback(({ ownerState }) => {
             observed = ownerState.style;
             return {};
-          },
+          }),
         },
       },
     },

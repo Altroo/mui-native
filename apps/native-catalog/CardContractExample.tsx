@@ -456,7 +456,10 @@ export function CardContractExample() {
             styleOverrides: {
               root: ({ ownerState }) => ({
                 backgroundColor:
-                  ownerState?.marker === cardProbeInputs.owner.marker
+                  ownerState &&
+                  typeof ownerState === 'object' &&
+                  'marker' in ownerState &&
+                  ownerState.marker === cardProbeInputs.owner.marker
                     ? cardProbeInputs.owner.matchedBackground
                     : cardProbeInputs.owner.unmatchedBackground,
               }),

@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { ActivityIndicator, Text, StyleSheet } from 'react-native';
 import type { ReactTestInstance } from 'react-test-renderer';
 import { fireEvent, render, screen } from '@testing-library/react-native';
@@ -73,10 +74,10 @@ test('custom indicators and default progress colors work with theme defaults and
       MuiButton: {
         defaultProps: { loadingPosition: 'end' },
         styleOverrides: {
-          root: ({ ownerState }) => ({
+          root: nativeStyleCallback(({ ownerState }) => ({
             borderWidth: ownerState.loadingPosition === 'end' ? 3 : 1,
             '&.Mui-loading': { opacity: 0.7 },
-          }),
+          })),
         },
       },
     },

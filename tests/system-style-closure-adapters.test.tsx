@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { forwardRef } from 'react';
 import { View, type ViewInstance } from 'react-native';
 import { cleanup, render } from '@testing-library/react-native';
@@ -18,7 +19,7 @@ test('list slot overrides process callback arrays and embedded variants without 
       MuiListItemText: {
         styleOverrides: {
           primary: [
-            ({ ownerState }) => ({
+            nativeStyleCallback(({ ownerState }) => ({
               padding: 1,
               variants: [
                 {
@@ -27,7 +28,7 @@ test('list slot overrides process callback arrays and embedded variants without 
                 },
               ],
               opacity: ownerState.dense ? 0.5 : 1,
-            }),
+            })),
           ],
         },
         variants: [{ props: {}, style: { margin: 99 } }],
@@ -62,7 +63,7 @@ test('InputLabel asterisk preserves FormLabel and InputLabel callback/variant la
       MuiInputLabel: {
         styleOverrides: {
           asterisk: [
-            ({ ownerState }) => ({
+            nativeStyleCallback(({ ownerState }) => ({
               marginLeft: ownerState.required ? 3 : 0,
               variants: [
                 {
@@ -70,7 +71,7 @@ test('InputLabel asterisk preserves FormLabel and InputLabel callback/variant la
                   style: ({ theme }) => ({ color: theme.palette.error.main, fontWeight: 700 }),
                 },
               ],
-            }),
+            })),
           ],
         },
       },
@@ -109,7 +110,7 @@ test('Dialog named slot arrays and embedded variants retain their source order a
         MuiDialog: {
           styleOverrides: {
             container: [
-              ({ ownerState }) => ({
+              nativeStyleCallback(({ ownerState }) => ({
                 padding: ownerState.fullWidth ? 2 : 1,
                 variants: [
                   {
@@ -117,7 +118,7 @@ test('Dialog named slot arrays and embedded variants retain their source order a
                     style: { padding: 3 },
                   },
                 ],
-              }),
+              })),
             ],
             paper: { variants: [{ props: { fullWidth: true }, style: { borderRadius: 10 } }] },
             paperFullWidth: [

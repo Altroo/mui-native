@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { forwardRef } from 'react';
 import { Text, View, type ViewInstance } from 'react-native';
 import { act, cleanup, render, screen } from '@testing-library/react-native';
@@ -284,10 +285,10 @@ test.each([undefined, false, true])(
           components: {
             MuiButtonBase: {
               styleOverrides: {
-                root: (args) => {
+                root: nativeStyleCallback((args) => {
                   values.push(args.ownerState.suppressFocusVisible);
                   return {};
-                },
+                }),
               },
               variants: [{ props: { suppressFocusVisible: false }, style: { opacity: 0.6 } }],
             },

@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { createRef } from 'react';
 import { cleanup, render } from '@testing-library/react-native';
 import { type ViewInstance } from 'react-native';
@@ -30,10 +31,10 @@ test.each(roots)(
           [name]: {
             defaultProps: { style: defaultStyle },
             styleOverrides: {
-              root: ({ ownerState, style }) => {
+              root: nativeStyleCallback(({ ownerState, style }) => {
                 callbacks.push({ owner: ownerState.style, root: style });
                 return {};
-              },
+              }),
             },
           },
         },
@@ -69,10 +70,10 @@ test.each(roots)(
         [name]: {
           defaultProps: { style: { opacity: 0.2 } },
           styleOverrides: {
-            root: ({ ownerState }) => {
+            root: nativeStyleCallback(({ ownerState }) => {
               styles.push(ownerState.style);
               return {};
-            },
+            }),
           },
         },
       },

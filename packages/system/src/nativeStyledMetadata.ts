@@ -1,4 +1,12 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import {
+  nativeCssProgram,
+  nativeCssProgramTree,
+  type NativeCssProgramNode,
+  type NativeCssOwner,
+  type NativeCssProgrammeOccurrence,
+} from './nativeCssProgram';
+import { nativeStyleCacheRegistry, type NativeStyleCache } from './nativeStyleCache';
 import type { StyleProp } from 'react-native';
 import type { NativeStyle, StyleContext } from './sx';
 
@@ -19,22 +27,88 @@ export type NativeSelectorContext = Pick<
   | 'protectPhysicalGeometry'
 >;
 export type NativePreparedSheet = {
+  readonly emissionProgramme?: NativeCssProgrammeOccurrence;
+  readonly emissionProgrammeStart?: boolean;
+  /** A retained foreign class keeps its emitting stylesheet, never a prospective insertion. */
+  readonly emissionForeign?: boolean;
+  readonly emissionPosition?: number;
+  readonly emissionOwner?: NativeCssOwner;
+  readonly emissionStart?: boolean;
   readonly nodes: readonly NativePreparedNode[];
   readonly context: NativeSelectorContext;
   readonly ancestor?: boolean;
+  /** Same-host source selectors retain Base aliases and virtual states in native frames. */
+  readonly retainSourceContext?: true;
 };
 /** @internal Immutable CSS prepared at its owning root, reusable by physical descendants. */
 export interface NativePreparedStyle {
   readonly sheets: readonly NativePreparedSheet[];
+  /** Actual source roots retain their ordered emitted classes; helper recipes omit this. */
+  readonly classTokens?: readonly NativeCssProgrammeOccurrence[];
 }
 interface NativeStyledStyleDescriptor {
   readonly sheets: readonly NativePreparedSheet[];
   readonly authored: StyleProp<NativeStyle>;
   readonly hasAuthoredStyle: boolean;
+  /** Present only for emitted class references; native preparation recipes stay explicit CSS. */
+  readonly classTokens?: readonly NativeCssProgrammeOccurrence[];
 }
 // Library-created arrays are the only keys. Metadata never appears on native
 // payloads or caller objects, and retained sheets are never changed by defaults.
 export const nativeStyledStyles = new WeakMap<object, NativeStyledStyleDescriptor>();
+/** Ordered emitted classes stay separate from their declaration-sheet order. */
+export function nativeStyleClassTokens(style: unknown): NativeCssProgrammeOccurrence[] {
+  if (!style || typeof style !== 'object') return [];
+  const descriptor = nativeStyledStyles.get(style);
+  if (descriptor)
+    return descriptor.classTokens
+      ? [...descriptor.classTokens]
+      : nativeStyleClassTokens(descriptor.authored);
+  return Array.isArray(style) ? style.flatMap(nativeStyleClassTokens) : [];
+}
+
+/** Finalize ordered classes once, with the same immutable carrier descriptor. */
+export function nativeStyleClassReferences(
+  sheets: readonly NativePreparedSheet[],
+  incoming: unknown,
+  cache: NativeStyleCache,
+): readonly NativeCssProgrammeOccurrence[] {
+  const own = sheets.find((sheet) => !sheet.ancestor && !sheet.emissionForeign)?.emissionProgramme;
+  const unknown = nativeStyleClassTokens(incoming).filter(
+    (token) => !nativeStyleCacheRegistry.registered(cache, token.insertion),
+  );
+  return Object.freeze([...unknown, ...(own ? [own] : [])]);
+}
+/** Nonterminal classes register after prop filtering, before virtual child preparation. */
+export function registerNativeStyleClass(style: StyleProp<NativeStyle>, register: boolean) {
+  if (!style || typeof style !== 'object') throw Error('Expected an owned styled carrier');
+  const descriptor = nativeStyledStyles.get(style);
+  if (!descriptor?.classTokens) throw Error('Expected prepared styled class metadata');
+  const own = descriptor.sheets.find(
+    (sheet) => !sheet.ancestor && !sheet.emissionForeign,
+  )?.emissionProgramme;
+  if (register && own) nativeStyleCacheRegistry.register([own.insertion]);
+}
+
+/** Only rendered classes require cache-local lookup; native recipes are explicit CSS fragments. */
+export function registeredNativeCssProgrammes(
+  style: unknown,
+  cache: NativeStyleCache,
+): NativeCssProgramNode[] {
+  if (!style || typeof style !== 'object') return [];
+  const descriptor = nativeStyledStyles.get(style);
+  if (descriptor) {
+    if (descriptor.classTokens)
+      return descriptor.classTokens
+        .filter((token) => nativeStyleCacheRegistry.registered(cache, token.insertion))
+        .map((token) => token.programme);
+    return [nativeCssProgramTree(descriptor.sheets)];
+  }
+  return Array.isArray(style)
+    ? style.flatMap((value) => registeredNativeCssProgrammes(value, cache))
+    : [];
+}
+
 interface StyleInput {
   readonly sheets: readonly NativePreparedSheet[];
   readonly style: unknown;
@@ -53,6 +127,10 @@ function separateStyle(style: unknown, supplied: boolean): StyleInput {
   }
   return { sheets: [], style, supplied };
 }
+/** Native inline data remains outside an already-prepared source root's CSS. */
+export function nativeInlineStyle(style: StyleProp<NativeStyle>): StyleProp<NativeStyle> {
+  return separateStyle(style, true).style as StyleProp<NativeStyle>;
+}
 /** @internal A retained carrier may widen a narrow object/tuple; callback argument ABI is preserved. */
 export type NativeRootStyle<Style> = Style extends (...args: infer Args) => unknown
   ? (...args: Args) => StyleProp<NativeStyle>
@@ -69,8 +147,13 @@ interface NativeRootPreparation<Props> {
     | {
         readonly sheets: readonly NativePreparedSheet[];
         readonly fallback: unknown;
+        readonly classTokens?: readonly NativeCssProgrammeOccurrence[];
       }
     | undefined;
+}
+/** @internal Separate owned CSS from the genuine native layer without evaluating callbacks. */
+export function nativeStyleInput(style: unknown, supplied: boolean): StyleInput {
+  return separateStyle(style, supplied);
 }
 /** Root-local split before default resolution; do not send prepared CSS through public props. */
 export function separateNativeRootProps<Props extends NativeStyleProps>(
@@ -108,7 +191,13 @@ export function separateNativeRootProps<Props extends NativeStyleProps>(
   return {
     props: clean,
     prepared: separated.sheets.length
-      ? Object.freeze({ sheets: Object.freeze(separated.sheets), fallback: style })
+      ? Object.freeze({
+          sheets: Object.freeze(separated.sheets),
+          fallback: style,
+          ...(nativeStyleClassTokens(style).length
+            ? { classTokens: Object.freeze(nativeStyleClassTokens(style)) }
+            : {}),
+        })
       : undefined,
   };
 }
@@ -131,6 +220,7 @@ export function restoreNativeRootStyle(
       style,
       Object.freeze({
         sheets: input.prepared!.sheets,
+        ...(input.prepared!.classTokens ? { classTokens: input.prepared!.classTokens } : {}),
         authored: native,
         hasAuthoredStyle: Object.hasOwn(props, 'style'),
       }),
@@ -150,14 +240,22 @@ export function retainNativeRootCss(
   style: StyleProp<NativeStyle>,
   programme: StyleProp<NativeStyle>,
   supplied: boolean,
+  fallback: StyleProp<NativeStyle> = style,
 ): StyleProp<NativeStyle> {
   const descriptor =
     programme && typeof programme === 'object' ? nativeStyledStyles.get(programme) : undefined;
   if (!descriptor) throw Error('Expected first-party prepared root CSS');
-  const carrier = [style];
+  // Plain native roots read the fallback; participating roots recover only
+  // genuine inline values and source classes from the immutable descriptor.
+  const carrier = [fallback];
   nativeStyledStyles.set(
     carrier,
-    Object.freeze({ sheets: descriptor.sheets, authored: style, hasAuthoredStyle: supplied }),
+    Object.freeze({
+      sheets: descriptor.sheets,
+      authored: style,
+      hasAuthoredStyle: supplied,
+      ...(descriptor.classTokens ? { classTokens: descriptor.classTokens } : {}),
+    }),
   );
   return carrier;
 }
@@ -249,11 +347,22 @@ export function sameNativeRootCss(a: StyleProp<NativeStyle>, b: StyleProp<Native
   return (
     !!left &&
     !!right &&
+    Boolean(left.classTokens) === Boolean(right.classTokens) &&
+    (left.classTokens ?? []).length === (right.classTokens ?? []).length &&
+    (left.classTokens ?? []).every(
+      (token, index) =>
+        token.insertion.cache === right.classTokens![index].insertion.cache &&
+        token.insertion.css === right.classTokens![index].insertion.css,
+    ) &&
+    nativeCssProgram(left.sheets) === nativeCssProgram(right.sheets) &&
     left.sheets.length === right.sheets.length &&
     left.sheets.every((sheet, index) => {
       const other = right.sheets[index];
       return (
         sheet.ancestor === other.ancestor &&
+        sheet.retainSourceContext === other.retainSourceContext &&
+        Boolean(sheet.emissionForeign) === Boolean(other.emissionForeign) &&
+        sheet.emissionProgramme?.insertion.cache === other.emissionProgramme?.insertion.cache &&
         samePreparedData(sheet.nodes, other.nodes) &&
         samePreparedData(selectorSnapshot(sheet.context), selectorSnapshot(other.context))
       );
@@ -268,7 +377,12 @@ export function snapshotNativeRootCss(programme: StyleProp<NativeStyle>): StyleP
   const carrier = Object.freeze([undefined]);
   nativeStyledStyles.set(
     carrier,
-    Object.freeze({ sheets: descriptor.sheets, authored: undefined, hasAuthoredStyle: false }),
+    Object.freeze({
+      sheets: descriptor.sheets,
+      authored: undefined,
+      hasAuthoredStyle: false,
+      ...(descriptor.classTokens ? { classTokens: descriptor.classTokens } : {}),
+    }),
   );
   return carrier;
 }

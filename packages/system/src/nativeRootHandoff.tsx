@@ -6,6 +6,7 @@ import type { Theme } from './theme';
 import type { NativeStyle, StyleContext } from './sx';
 import type { NativePreparedStyle } from './nativeStyledMetadata';
 import { nativeMemoType } from './nativeMemoInterop';
+import { nativeStyleCacheRegistry } from './nativeStyleCache';
 import {
   readNativeRootSnapshot,
   retainNativeRootSnapshotElement,
@@ -18,6 +19,33 @@ export type NativeRootPreparation = Readonly<{
   last: NativeStyle;
   prepared: NativePreparedStyle;
 }>;
+// Source roots retain their counterfactual compiler; cache epochs only repaint
+// already-prepared CSS and recheck its physical-root text invariant.
+const preparations = new WeakMap<
+  NativeRootPreparation,
+  {
+    revision: number;
+    project: () => NativeRootPreparation;
+    latest?: { revision: number; value: NativeRootPreparation };
+  }
+>();
+export function retainNativeRootPreparation(
+  value: NativeRootPreparation,
+  project: () => NativeRootPreparation,
+): NativeRootPreparation {
+  preparations.set(value, { revision: nativeStyleCacheRegistry.snapshot(), project });
+  return value;
+}
+export function refreshNativeRootPreparation(value: NativeRootPreparation): NativeRootPreparation {
+  const record = preparations.get(value);
+  const revision = nativeStyleCacheRegistry.snapshot();
+  if (!record || record.revision === revision) return value;
+  if (record.latest?.revision === revision) return record.latest.value;
+  const next = record.project();
+  record.latest = { revision, value: next };
+  return next;
+}
+
 export type NativeRootStyleInput = Readonly<{
   theme: Theme;
   programme: StyleProp<NativeStyle>;

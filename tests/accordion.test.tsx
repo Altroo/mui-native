@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import React, { forwardRef, useState, useRef, useImperativeHandle } from 'react';
 import { I18nManager, View, Text, TextInput, StyleSheet, type ViewInstance } from 'react-native';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react-native';
@@ -381,9 +382,11 @@ test('native root/content/region styles, gutter states and theme defaults compos
       },
       MuiAccordionSummary: {
         styleOverrides: {
-          content: ({ ownerState }: { ownerState: Record<string, unknown> }) => ({
-            opacity: ownerState.expanded ? 0.8 : 0.4,
-          }),
+          content: nativeStyleCallback(
+            ({ ownerState }: { ownerState: Record<string, unknown> }) => ({
+              opacity: ownerState.expanded ? 0.8 : 0.4,
+            }),
+          ),
         },
       },
       MuiAccordionDetails: { styleOverrides: { root: { paddingTop: 7 } } },
