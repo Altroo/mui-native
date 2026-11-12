@@ -114,6 +114,34 @@ function textOnly(children: React.ReactNode, defaultComponent: unknown): boolean
       (child.type === React.Fragment && textOnly(child.props.children, defaultComponent)),
   );
 }
+// Independent native Text roots can trim ordinary boundary spaces, especially
+// under RTL. Keep only anonymous run edges nonbreaking; internal word spaces
+// still wrap, and authored roots retain their refs and font-scaling policies.
+function inlineLabelChildren(children: React.ReactNode, preserveSpaces: boolean): React.ReactNode {
+  const result: React.ReactNode[] = [];
+  let run = '';
+  const flush = () => {
+    if (run)
+      result.push(
+        preserveSpaces ? run.replace(/^ +| +$/g, (spaces) => '\u00a0'.repeat(spaces.length)) : run,
+      );
+    run = '';
+  };
+  for (const child of React.Children.toArray(children)) {
+    if (typeof child === 'string' || typeof child === 'number' || typeof child === 'bigint') {
+      run += String(child);
+      continue;
+    }
+    flush();
+    result.push(
+      React.isValidElement<{ children?: React.ReactNode }>(child) && child.type === React.Fragment
+        ? React.cloneElement(child, {}, inlineLabelChildren(child.props.children, preserveSpaces))
+        : child,
+    );
+  }
+  flush();
+  return result;
+}
 function Content({
   defaultTypographyComponent,
   theme,
@@ -132,13 +160,14 @@ function Content({
   // boundary stable when a public scaling prop changes or is cleared.
   const text = literalOnly(children);
   const inline = !text && textOnly(children, defaultTypographyComponent);
+  // Both View modes need the same React key paths when a sibling changes type.
   return (
     <NativeTextScope
       rootRef={root}
       theme={theme}
       kind={text ? 'text' : 'view'}
       style={style}
-      content={children}
+      content={text ? children : inlineLabelChildren(children, inline)}
     >
       {(native, content) =>
         text ? (

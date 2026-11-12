@@ -10802,7 +10802,7 @@
       "packages/material/src/buttonGroupClasses.ts": "b68c2ec866a88550e90ae172bc86e484854e5a0000552afd48a5e2a89af3e021",
       "packages/material/src/buttonGroupContext.ts": "8a8c4ada9566ca20644329957b7bcfc9212d298e386e42f70250a9d3cdc67ec8",
       "packages/material/src/buttonGroupTypes.ts": "c4160bb25fa45972965f7924d98982b89001b4d44662008215476856692be522",
-      "packages/material/src/buttons.tsx": "098994e1b543eaf09b038888f80721e488d95b10099685ffc9ed91e468fffd3a",
+      "packages/material/src/buttons.tsx": "84ae96b7bf1ebeea1c45540686e33c163b9e21485721993ee834168216048824",
       "packages/material/src/buttonTypes.ts": "da8530f9cd3a5a85459cfdcd2d66e8a819e98eec4b97666cb87186877d5532ba",
       "packages/material/src/card.tsx": "b1afcafcf4ba4b9f2ec56699ddd14e0c686db511b7a6f07dc4428535262d2bdb",
       "packages/material/src/Card/index.ts": "5c6cee6682bac89582a3fbf5c81d63b60672436a92038d7985a3277b061e6c42",
@@ -11183,7 +11183,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "db3f0574c3f6568acdee5e37d4c18c0aa65d40c14ecb9b035bcb87195664de3b",
+      "nativeSourceSha256": "5d7059e22bd3c094b41b495bc9d42d389d066209625a8a628c37fd32105c7de6",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11195,7 +11195,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "53a3b6a0ec314a2b5598773e3f5005314d1266c7c56f3e6c481871961e91660f"
+      "sha256": "e1126993781160e433973ba20a59c53f336eb5b2bb0408b4ba4ad1b5b41aa53c"
     },
     {
       "package": "@mui/system",
