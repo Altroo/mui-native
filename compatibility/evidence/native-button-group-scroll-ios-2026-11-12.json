@@ -1,0 +1,524 @@
+{
+  "schemaVersion": 1,
+  "protocol": "button-group-scrolling-v1",
+  "status": "native-scroll-behavior-verified",
+  "environment": {
+    "model": "iPhone 18 Pro",
+    "platform": "iOS Simulator",
+    "osVersion": "27.0",
+    "architecture": "arm64"
+  },
+  "sourceId": "b81b43c4b4457520484fca5a0baf62d4b6f64f859132199c4426e2c3377bb511",
+  "nativeAppExecutableSHA256": "dee2018e0494861fc132c7e44a1f330d4e2154f070e0eec860030020e4992e95",
+  "bundleSHA256": "ed352e73adc2564323acc8a6da66a8daaeb8ae64e291115f36be963d2d966b03",
+  "swiftDriverSha256": "5b7071196e2981b6b5b75c1c2b2b5ec76121b6b136e7f1666a78a4a3b91c7bc7",
+  "nativeConfiguration": "Release",
+  "rowCount": 100,
+  "nativeActionsPerCohort": 200,
+  "reportedSamplesPerCase": 3,
+  "discardedWarmupsPerCase": 1,
+  "performance": {
+    "gate": "incomplete",
+    "hitchTelemetry": "missing",
+    "inputLatency": "unmeasured",
+    "durationInterpretation": "Native gesture/deceleration interval, not a library speed or smoothness score"
+  },
+  "cases": {
+    "testButtonGroupMUIScrollTowardEnd": {
+      "mode": "mui",
+      "direction": "toward-end",
+      "durationSeconds": [2.234146458, 2.2335666250000004, 2.2175168750000003],
+      "hitchMetrics": [],
+      "nativePhases": [
+        {
+          "phase": "warmup-discarded",
+          "cohortSample": 4,
+          "travel": 424.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -3.6666730244954238
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-1",
+          "cohortSample": 5,
+          "travel": 424.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -3.6666730244954238
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-2",
+          "cohortSample": 6,
+          "travel": 421.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -0.6666730244954238
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-3",
+          "cohortSample": 7,
+          "travel": 415.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 5.333326975504576
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        }
+      ]
+    },
+    "testButtonGroupMUIScrollTowardStart": {
+      "mode": "mui",
+      "direction": "toward-start",
+      "durationSeconds": [2.101281083, 1.817883375, 2.0180931660000003],
+      "hitchMetrics": [],
+      "nativePhases": [
+        {
+          "phase": "warmup-discarded",
+          "cohortSample": 4,
+          "travel": 417.6666666666667,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 2.999993642171205
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-1",
+          "cohortSample": 5,
+          "travel": 421.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -0.6666730244954238
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-2",
+          "cohortSample": 6,
+          "travel": 421.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -0.6666730244954238
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-3",
+          "cohortSample": 7,
+          "travel": 421.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -0.6666730244954238
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        }
+      ]
+    },
+    "testButtonGroupRNScrollTowardEnd": {
+      "mode": "rn",
+      "direction": "toward-end",
+      "durationSeconds": [2.2178657090000002, 2.2335560830000003, 2.217780208],
+      "hitchMetrics": [],
+      "nativePhases": [
+        {
+          "phase": "warmup-discarded",
+          "cohortSample": 3,
+          "travel": 421.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -0.6666730244954238
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-1",
+          "cohortSample": 4,
+          "travel": 421.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -0.6666730244954238
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-2",
+          "cohortSample": 5,
+          "travel": 425,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -4.333339691162109
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-3",
+          "cohortSample": 6,
+          "travel": 421.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -0.6666730244954238
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        }
+      ]
+    },
+    "testButtonGroupRNScrollTowardStart": {
+      "mode": "rn",
+      "direction": "toward-start",
+      "durationSeconds": [2.216886208, 2.2004479590000003, 2.217577625],
+      "hitchMetrics": [],
+      "nativePhases": [
+        {
+          "phase": "warmup-discarded",
+          "cohortSample": 3,
+          "travel": 421.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -13.33333969116211
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 407.9999936421712
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-1",
+          "cohortSample": 4,
+          "travel": 421.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -5.333339691162109
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 415.9999936421712
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-2",
+          "cohortSample": 5,
+          "travel": 411,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -13.33333969116211
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 397.6666603088379
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        },
+        {
+          "phase": "sample-3",
+          "cohortSample": 6,
+          "travel": 421.3333333333333,
+          "firstRowBefore": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": -6.333339691162109
+          },
+          "firstRowAfter": {
+            "height": 48,
+            "width": 346,
+            "x": 28,
+            "y": 414.9999936421712
+          },
+          "viewportBefore": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          },
+          "viewportAfter": {
+            "height": 340,
+            "width": 346,
+            "x": 28,
+            "y": 420.6666603088379
+          }
+        }
+      ]
+    }
+  }
+}

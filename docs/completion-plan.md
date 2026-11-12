@@ -26,6 +26,8 @@ iOS Space/A keyboard interactions now have 30 scoped cases across all five roots
 
 [ButtonGroup](button-group.md#ios-reading-matrix) now has four iOS reading profiles: normal/largest OS text in both global layout directions, with 28 retained phase records for current glyphs, stable native geometry, live policy changes and retained action counts. The [iOS optimized workload](performance-button-group.md) also has native correctness, CPU and peak-memory evidence for 100 groups and two actions per group. The Android reading matrix also passes normal/enlarged text in both global directions with 28 current glyph/layout phase records. Input/scroll latency and broader workload checks remain open; the coverage stage is unchanged.
 
+[ButtonGroup scrolling](performance-button-group.md#scrolling-behavior-12-november-2026) now has four Release native gesture cases with retained root-ref/state and complete 200-action counter checks. The recorded simulator supplies only scroll-duration samples; missing hitch/frame telemetry and input latency remain explicit performance gaps. The report reader rejects duration-only data when hitch telemetry is required. This does not advance the evidence stage.
+
 ## Retained closure gates: ButtonGroup and required existing styling
 
 The normal-text iOS screenshot review exposed concatenated adjacent mixed-label fragments under the global RTL host. The focused correction preserves anonymous boundary spaces while retaining independent authored text roots. The maintained native test retains mixed-label screenshots separately because frame/counter assertions alone do not establish boundary-space paint; full browser paragraph shaping remains outside this adaptation.
