@@ -230,6 +230,37 @@ final class ButtonGroupReadingUITests: XCTestCase {
     reveal("group-reading-text-portal-toggle").tap()
     XCTAssertFalse(node("group-reading-text-portal").exists)
   }
+  private func runMixedLabels(_ globalRTL: Bool, expectedScale: CGFloat) {
+    start(globalRTL)
+    reveal("group-reading-mixed-action").tap()
+    waitFor("Mixed label text and independent scaling policies must commit") {
+      let metadata = self.receipt()
+      guard let scale = metadata["fontScale"] as? NSNumber,
+        abs(CGFloat(scale.doubleValue) - expectedScale) < 0.001,
+        let metrics = metadata["metrics"] as? [String: [[String: Any]]],
+        let first = metrics["mixed-first"], let last = metrics["mixed-last"],
+        first.compactMap({ $0["text"] as? String }).joined() == "Approve",
+        last.compactMap({ $0["text"] as? String }).joined() == "delivery 1",
+        let firstCap = first.first?["capHeight"] as? NSNumber,
+        let lastCap = last.first?["capHeight"] as? NSNumber else { return false }
+      return abs(CGFloat(firstCap.doubleValue) - UIFont.systemFont(ofSize: 14 * expectedScale).capHeight) <= 0.75
+        && abs(CGFloat(lastCap.doubleValue) - UIFont.systemFont(ofSize: 14).capHeight) <= 0.75
+    }
+    let action = node("group-reading-mixed-action")
+    XCTAssertEqual(action.label, "Reading mixed count 1")
+    for id in ["group-reading-mixed-first", "group-reading-mixed-last"] {
+      XCTAssertTrue(contains(action.frame, node(id).frame))
+    }
+    // Frames and metrics protect scaling/state. Keep the actual mixed-label
+    // screenshot too: those numeric receipts cannot prove boundary-space paint.
+    capture("reading-ios-\(globalRTL ? "rtl-host" : "ltr-host")-mixed-label")
+    let attachment = XCTAttachment(string: node("group-reading-metadata").label)
+    attachment.name = "mixed-label-native-metrics"; attachment.lifetime = .keepAlways; add(attachment)
+  }
+  func testMixedLabelsUnderLTRGlobalHostNormal() { runMixedLabels(false, expectedScale: 1) }
+  func testMixedLabelsUnderRTLGlobalHostNormal() { runMixedLabels(true, expectedScale: 1) }
+  func testMixedLabelsUnderLTRGlobalHostLargest() { runMixedLabels(false, expectedScale: 3.571) }
+  func testMixedLabelsUnderRTLGlobalHostLargest() { runMixedLabels(true, expectedScale: 3.571) }
   func testReadingUnderLTRGlobalHostNormal() { runReading(false, expectedScale: 1) }
   func testReadingUnderRTLGlobalHostNormal() { runReading(true, expectedScale: 1) }
   func testReadingUnderLTRGlobalHostLargest() { runReading(false, expectedScale: 3.571) }
