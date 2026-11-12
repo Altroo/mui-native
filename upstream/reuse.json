@@ -694,11 +694,13 @@
           "Backdrop/Backdrop.js": "73542d3575213cd579db6fbce2fb1d16476a64bb9439f893a10f072506db8ef7",
           "Backdrop/Backdrop.d.ts": "dcf45828735e40cd1776f17c0c31983e92429fb697a8fc13fbf44aeab033341b",
           "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
-          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7"
+          "Dialog/Dialog.d.ts": "9a430677f48e1e762e12d42b2b8ee2b5f0af3c76528ab436d6ca8a8866882ca7",
+          "styles/createThemeNoVars.d.ts": "65a184175a5305cdedf83c628eca71f4cb44f6d997f8c55733974b228b30a037"
         }
       },
       "adaptations": [
-        "Typed theme duration/easing, CSS timing generation, automatic-height calculation and reduced-motion configuration follow the pinned MIT algorithms. No browser animation engine is introduced."
+        "Typed standalone duration/easing, CSS timing, automatic-height and motion factories preserve original callback/field ordering, getter/coercion timing, identity and diagnostics. No browser animation engine is introduced.",
+        "Diagnostic wording identifies MUI Native. The existing optional factory input and named native helper re-exports remain available; internal names absent from original JavaScript are not invented as runtime exports."
       ]
     },
     {

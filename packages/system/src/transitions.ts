@@ -1,3 +1,7 @@
+// Adapted from @mui/material 9.5.0 createTransitions/createMotion (MIT).
+// Copyright (c) 2014 Call-Em-All. Full permission notice: root NOTICE.
+// Source provenance and adaptations: upstream/reuse.json.
+// Native implementation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 export interface Easing {
   easeInOut: string;
   easeOut: string;
@@ -40,50 +44,90 @@ export interface Transitions {
   getAutoHeightDuration: (height: number) => number;
 }
 export interface TransitionsOptions {
-  easing?: Partial<Easing>;
-  duration?: Partial<Duration>;
+  easing?: Partial<Easing> | undefined;
+  duration?: Partial<Duration> | undefined;
   create?:
     | Transitions['create']
-    | ((props: string | string[], options?: TransitionCreateOptions) => string);
-  getAutoHeightDuration?: Transitions['getAutoHeightDuration'];
+    | ((props: string | string[], options?: TransitionCreateOptions) => string)
+    | undefined;
+  getAutoHeightDuration?: Transitions['getAutoHeightDuration'] | undefined;
 }
 export type ReducedMotionMode = 'never' | 'system' | 'always';
 export interface Motion {
   reducedMotion: ReducedMotionMode;
 }
 export interface MotionOptions {
-  reducedMotion?: ReducedMotionMode;
+  reducedMotion?: ReducedMotionMode | undefined;
 }
-export function createMotion(input: MotionOptions = {}): Motion {
+const EMPTY_MOTION = {};
+export function createMotion(input: MotionOptions = EMPTY_MOTION): Motion {
   return { reducedMotion: 'never', ...input };
 }
-export function createTransitions(input: TransitionsOptions = {}): Transitions {
+// Share factory defaults and the auto-height function as upstream does.
+const DEFAULT_TRANSITION_PROPS = ['all'];
+const EMPTY_OPTIONS = {};
+function formatMs(milliseconds: number): string {
+  return `${Math.round(milliseconds)}ms`;
+}
+function getAutoHeightDuration(height: number): number {
+  if (!height) return 0;
+  const constant = height / 36;
+  return Math.min(Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10), 3000);
+}
+export function createTransitions(input?: TransitionsOptions): Transitions {
   const transitions = { ...input };
   delete (transitions as Record<string, unknown>).reducedMotion;
   const mergedEasing = { ...easing, ...transitions.easing },
     mergedDuration = { ...duration, ...transitions.duration };
-  const create: Transitions['create'] = (props = ['all'], options = {}) => {
+  const createTransitionValue: Transitions['create'] = (
+    props = DEFAULT_TRANSITION_PROPS,
+    options = EMPTY_OPTIONS,
+  ) => {
+    // Collect unknown options in every build: their getters are observable even
+    // when development diagnostics are removed from the production bundle.
     const {
       duration: time = mergedDuration.standard,
       easing: curve = mergedEasing.easeInOut,
       delay = 0,
+      ...other
     } = options;
-    const ms = (value: number | string) =>
-      typeof value === 'string' ? value : `${Math.round(value)}ms`;
+    if (process.env.NODE_ENV !== 'production') {
+      const isString = (value: unknown) => typeof value === 'string';
+      const isNumber = (value: unknown) => !Number.isNaN(parseFloat(value as string));
+      if (!isString(props) && !Array.isArray(props))
+        console.error('MUI Native: Argument "props" must be a string or Array.');
+      if (!isNumber(time) && !isString(time))
+        console.error(
+          `MUI Native: Argument "duration" must be a number or a string but found ${time}.`,
+        );
+      if (!isString(curve)) console.error('MUI Native: Argument "easing" must be a string.');
+      if (!isNumber(delay) && !isString(delay))
+        console.error('MUI Native: Argument "delay" must be a number or a string.');
+      if (typeof options !== 'object')
+        console.error(
+          [
+            'MUI Native: Secong argument of transition.create must be an object.',
+            "Arguments should be either `create('prop1', options)` or `create(['prop1', 'prop2'], options)`",
+          ].join('\n'),
+        );
+      if (Object.keys(other).length !== 0)
+        console.error(`MUI Native: Unrecognized argument(s) [${Object.keys(other).join(',')}].`);
+    }
     return (Array.isArray(props) ? props : [props])
-      .map((prop) => `${prop} ${ms(time)} ${curve} ${ms(delay)}`)
+      .map(
+        (prop) =>
+          `${prop} ${typeof time === 'string' ? time : formatMs(time)} ${curve} ${typeof delay === 'string' ? delay : formatMs(delay)}`,
+      )
       .join(',');
   };
-  const getAutoHeightDuration = (height: number) => {
-    if (!height) return 0;
-    const constant = height / 36;
-    return Math.min(Math.round((4 + 15 * constant ** 0.25 + constant / 5) * 10), 3000);
-  };
+  const create = transitions.create ?? createTransitionValue;
+  // Preserve the source spread order, including authored undefined callbacks.
+  // Omit an optional callback key to retain its default implementation.
   return {
     getAutoHeightDuration,
+    create,
     ...transitions,
-    create: (transitions.create ?? create) as Transitions['create'],
     easing: mergedEasing,
     duration: mergedDuration,
-  };
+  } as Transitions;
 }

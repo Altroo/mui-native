@@ -23,6 +23,8 @@ await json('emit.json', {
     resolve(root, 'packages/system/src/createBreakpoints/index.ts'),
     resolve(root, 'packages/system/src/colorManipulator/index.ts'),
     resolve(root, 'packages/material/src/styles/index.ts'),
+    resolve(root, 'packages/material/src/styles/createTransitions/index.ts'),
+    resolve(root, 'packages/material/src/styles/createMotion/index.ts'),
   ],
   exclude: [resolve(root, 'node_modules'), '**/dist'],
 });
@@ -53,6 +55,12 @@ Object.assign(paths, {
   ],
   '@altroo/mui-native-system': [resolve(output, 'types/system/src/index.d.ts')],
   '@mui/material/styles': [resolve(output, 'types/material/src/styles/index.d.ts')],
+  '@mui/material/styles/createTransitions': [
+    resolve(output, 'types/material/src/styles/createTransitions/index.d.ts'),
+  ],
+  '@mui/material/styles/createMotion': [
+    resolve(output, 'types/material/src/styles/createMotion/index.d.ts'),
+  ],
   '@altroo/mui-native/*': [resolve(output, 'types/material/src/*/index.d.ts')],
 });
 await json('consumer.json', {
@@ -69,5 +77,5 @@ await json('consumer.json', {
 });
 compile('consumer.json');
 console.log(
-  'Strict emitted spacing/breakpoint/color consumer passed, including augmentation and explicit undefined options.',
+  'Strict emitted spacing/breakpoint/color/timing consumer passed, including augmentation and explicit undefined options.',
 );

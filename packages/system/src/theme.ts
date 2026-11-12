@@ -206,8 +206,8 @@ export interface ThemeOptions {
   cssRootFontSize?: number;
   breakpoints?: BreakpointsOptions;
   components?: Theme['components'] | undefined;
-  transitions?: TransitionsOptions;
-  motion?: MotionOptions;
+  transitions?: TransitionsOptions | undefined;
+  motion?: MotionOptions | undefined;
 }
 
 function createPalette(options: PaletteOptions = {}): Palette {

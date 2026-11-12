@@ -11081,9 +11081,9 @@
       "packages/system/src/spacing.ts": "e4751abd448354e69a065d9115834b7a2de9e7bf183c99b63785e623fd611b31",
       "packages/system/src/sx.ts": "39b9af6a052800be53f8fa290c64592280f7caedb1da2d0f06aa64f368ec64a7",
       "packages/system/src/textScope.tsx": "6a2e22e400515279e2eedab22c18e7773605606b587ab363c71605f3779395b7",
-      "packages/system/src/theme.ts": "2bdf5a5b575f9372eac7003a85054d64cfae875163698e82fbf3d4241c61c199",
+      "packages/system/src/theme.ts": "b3a7c59a2adcc723d222d0d000b69544065348c1fa49661fadb5662dcaf644a9",
       "packages/system/src/ThemeProvider/index.ts": "ab3008c2fe41aee2a32d75c3d7b9d353f41d7f922e286275f428b24ff8257c2b",
-      "packages/system/src/transitions.ts": "0c6ac12047d28e614c17e3d3be0c146856b5ed0460e498288974ba1927350e46",
+      "packages/system/src/transitions.ts": "15d72d84efa7dc80ae82a6f01e598cdbdcc58b7fc60a513da092ab7edd5d6407",
       "packages/system/src/typography.ts": "2cc8c8ce5c1d2ded14e4253c69efd2a5543763f84e18c5077c9623a9beefffd6",
       "packages/system/src/useTheme/index.ts": "998e13d9f217a06d6a708222dd857075e0591d3fc8365839f0c7589948b12d55",
       "packages/system/src/useThemeProps/index.ts": "8c0ce3f55396405055e9cf03c933875569c50d329301ffc5e9719f6d950c35b2",
@@ -11195,7 +11195,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "8b3499fb75a28d8be10d474ad4d9a0513bc8de45577c353cbbcf9c515c80acb1"
+      "sha256": "40c770f82f165c8668c857af7ac0987f3403309d4e8ac408477863d857d740b9"
     },
     {
       "package": "@mui/system",
@@ -11205,7 +11205,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "937486be284b4a738bf728ce9ca5e30b3e456e48b57ad943bded1ed0a83d16bc",
+      "nativeSourceSha256": "a51782bca23827f3647c1f1b7045d7d5c342ce7fb4a48de73ef9a94becb1b353",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -11217,7 +11217,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "92a23580c452a58b0507ac5634822f7ac171c3a7a870eaac6ba84bcb1e14408b"
+      "sha256": "f466a4253e2c95b3415b8d3b5063b500dac86fc2f582b9409be42a869fd251dc"
     },
     {
       "package": "@mui/icons-material",

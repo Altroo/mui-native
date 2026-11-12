@@ -38,6 +38,7 @@ Material UI baseline: 9.5.0. Stable X baseline: 9.15.0. Scheduler: 9.0.0-beta.13
 
 - [x] Complete Material/System `useThemeProps` finite native lookup, public helper/generic types and canonical imports, with strict original and fresh installed consumers. See [theme-prop hooks](docs/theme-props.md); broader theme and consuming-component contracts remain separate.
 - [x] Complete the finite pure color-helper calculation contract for all eighteen pinned exports, including source parsing/fallback/mutation behavior, strict optional declarations, canonical imports and fresh installed consumers. See [native theming](docs/theming.md); broader palette modes and native color rendering remain separate.
+- [x] Complete the finite pure transition-timing and motion factory contracts, including source diagnostics/getter ordering, callback defaults/identity, strict optional theme forwarding and canonical deep imports. See [transition helpers](docs/transitions.md#theme-helpers-and-reduced-motion); animated component and device-performance gates remain separate.
 - [x] Native theme, spacing and responsive styling engine with diagnostics.
 - [x] Material UI form prototype using original imports through Metro.
 - [x] Native form-label activation/content sizing, input alias guards and localized calendar weekday layout, with isolated regressions and consumer validation. Tracked in [issue #7](https://github.com/Altroo/mui-native/issues/7); device accessibility and full picker contracts remain open.
