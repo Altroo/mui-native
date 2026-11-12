@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "937486be284b4a738bf728ce9ca5e30b3e456e48b57ad943bded1ed0a83d16bc",
+  "nativeSourceSha256": "a51782bca23827f3647c1f1b7045d7d5c342ce7fb4a48de73ef9a94becb1b353",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7136,7 +7136,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "createMotion",
           "kind": "value",
-          "line": 57
+          "line": 63
         }
       ]
     },
@@ -7169,7 +7169,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "createTransitions",
           "kind": "value",
-          "line": 60
+          "line": 77
         }
       ]
     },
@@ -7224,7 +7224,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "duration",
           "kind": "value",
-          "line": 22
+          "line": 26
         }
       ]
     },
@@ -7235,7 +7235,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "Duration",
           "kind": "type",
-          "line": 7
+          "line": 11
         }
       ]
     },
@@ -7246,7 +7246,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "easing",
           "kind": "value",
-          "line": 16
+          "line": 20
         }
       ]
     },
@@ -7257,7 +7257,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "Easing",
           "kind": "type",
-          "line": 1
+          "line": 5
         }
       ]
     },
@@ -7367,7 +7367,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "Motion",
           "kind": "type",
-          "line": 51
+          "line": 56
         }
       ]
     },
@@ -7378,7 +7378,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "MotionOptions",
           "kind": "type",
-          "line": 54
+          "line": 59
         }
       ]
     },
@@ -7675,7 +7675,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "ReducedMotionMode",
           "kind": "type",
-          "line": 50
+          "line": 55
         }
       ]
     },
@@ -7829,7 +7829,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "TransitionCreateOptions",
           "kind": "type",
-          "line": 31
+          "line": 35
         }
       ]
     },
@@ -7840,7 +7840,7 @@
           "module": "@altroo/mui-native-system:src/transitions.ts",
           "name": "TransitionsOptions",
           "kind": "type",
-          "line": 42
+          "line": 46
         }
       ]
     },
@@ -12891,7 +12891,7 @@
         {
           "name": "Transitions",
           "file": "src/transitions.ts",
-          "line": 36,
+          "line": 40,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -13381,7 +13381,7 @@
         {
           "name": "Transitions",
           "file": "src/transitions.ts",
-          "line": 36,
+          "line": 40,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -22425,10 +22425,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "transitions?: TransitionsOptions;",
+          "declaration": "transitions?: TransitionsOptions | undefined;",
           "line": 209,
           "kind": "property",
-          "type": "TransitionsOptions"
+          "type": "TransitionsOptions | undefined"
         },
         {
           "name": "motion",
@@ -22436,10 +22436,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "motion?: MotionOptions;",
+          "declaration": "motion?: MotionOptions | undefined;",
           "line": 210,
           "kind": "property",
-          "type": "MotionOptions"
+          "type": "MotionOptions | undefined"
         }
       ],
       "references": [
@@ -22460,7 +22460,7 @@
     {
       "name": "Easing",
       "file": "src/transitions.ts",
-      "line": 1,
+      "line": 5,
       "kind": "type",
       "members": [
         {
@@ -22470,7 +22470,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "easeInOut: string;",
-          "line": 2,
+          "line": 6,
           "kind": "property",
           "type": "string"
         },
@@ -22481,7 +22481,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "easeOut: string;",
-          "line": 3,
+          "line": 7,
           "kind": "property",
           "type": "string"
         },
@@ -22492,7 +22492,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "easeIn: string;",
-          "line": 4,
+          "line": 8,
           "kind": "property",
           "type": "string"
         },
@@ -22503,7 +22503,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sharp: string;",
-          "line": 5,
+          "line": 9,
           "kind": "property",
           "type": "string"
         }
@@ -22515,7 +22515,7 @@
     {
       "name": "Duration",
       "file": "src/transitions.ts",
-      "line": 7,
+      "line": 11,
       "kind": "type",
       "members": [
         {
@@ -22525,7 +22525,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "shortest: number;",
-          "line": 8,
+          "line": 12,
           "kind": "property",
           "type": "number"
         },
@@ -22536,7 +22536,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "shorter: number;",
-          "line": 9,
+          "line": 13,
           "kind": "property",
           "type": "number"
         },
@@ -22547,7 +22547,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "short: number;",
-          "line": 10,
+          "line": 14,
           "kind": "property",
           "type": "number"
         },
@@ -22558,7 +22558,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "standard: number;",
-          "line": 11,
+          "line": 15,
           "kind": "property",
           "type": "number"
         },
@@ -22569,7 +22569,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "complex: number;",
-          "line": 12,
+          "line": 16,
           "kind": "property",
           "type": "number"
         },
@@ -22580,7 +22580,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "enteringScreen: number;",
-          "line": 13,
+          "line": 17,
           "kind": "property",
           "type": "number"
         },
@@ -22591,7 +22591,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "leavingScreen: number;",
-          "line": 14,
+          "line": 18,
           "kind": "property",
           "type": "number"
         }
@@ -22603,7 +22603,7 @@
     {
       "name": "TransitionCreateOptions",
       "file": "src/transitions.ts",
-      "line": 31,
+      "line": 35,
       "kind": "type",
       "members": [
         {
@@ -22613,7 +22613,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "duration?: number | string;",
-          "line": 32,
+          "line": 36,
           "kind": "property",
           "type": "number | string"
         },
@@ -22624,7 +22624,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "easing?: string;",
-          "line": 33,
+          "line": 37,
           "kind": "property",
           "type": "string"
         },
@@ -22635,7 +22635,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "delay?: number | string;",
-          "line": 34,
+          "line": 38,
           "kind": "property",
           "type": "number | string"
         }
@@ -22647,7 +22647,7 @@
     {
       "name": "Transitions",
       "file": "src/transitions.ts",
-      "line": 36,
+      "line": 40,
       "kind": "type",
       "members": [
         {
@@ -22657,7 +22657,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "easing: Easing;",
-          "line": 37,
+          "line": 41,
           "kind": "property",
           "type": "Easing"
         },
@@ -22668,7 +22668,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "duration: Duration;",
-          "line": 38,
+          "line": 42,
           "kind": "property",
           "type": "Duration"
         },
@@ -22679,7 +22679,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "create: (props?: string | string[], options?: TransitionCreateOptions) => string;",
-          "line": 39,
+          "line": 43,
           "kind": "property",
           "type": "(props?: string | string[], options?: TransitionCreateOptions) => string"
         },
@@ -22690,7 +22690,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "getAutoHeightDuration: (height: number) => number;",
-          "line": 40,
+          "line": 44,
           "kind": "property",
           "type": "(height: number) => number"
         }
@@ -22706,7 +22706,7 @@
     {
       "name": "TransitionsOptions",
       "file": "src/transitions.ts",
-      "line": 42,
+      "line": 46,
       "kind": "type",
       "members": [
         {
@@ -22715,10 +22715,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "easing?: Partial<Easing>;",
-          "line": 43,
+          "declaration": "easing?: Partial<Easing> | undefined;",
+          "line": 47,
           "kind": "property",
-          "type": "Partial<Easing>"
+          "type": "Partial<Easing> | undefined"
         },
         {
           "name": "duration",
@@ -22726,10 +22726,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "duration?: Partial<Duration>;",
-          "line": 44,
+          "declaration": "duration?: Partial<Duration> | undefined;",
+          "line": 48,
           "kind": "property",
-          "type": "Partial<Duration>"
+          "type": "Partial<Duration> | undefined"
         },
         {
           "name": "create",
@@ -22737,10 +22737,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "create?:\n    | Transitions['create']\n    | ((props: string | string[], options?: TransitionCreateOptions) => string);",
-          "line": 45,
+          "declaration": "create?:\n    | Transitions['create']\n    | ((props: string | string[], options?: TransitionCreateOptions) => string)\n    | undefined;",
+          "line": 49,
           "kind": "property",
-          "type": "| Transitions['create']\n    | ((props: string | string[], options?: TransitionCreateOptions) => string)"
+          "type": "| Transitions['create']\n    | ((props: string | string[], options?: TransitionCreateOptions) => string)\n    | undefined"
         },
         {
           "name": "getAutoHeightDuration",
@@ -22748,10 +22748,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "getAutoHeightDuration?: Transitions['getAutoHeightDuration'];",
-          "line": 48,
+          "declaration": "getAutoHeightDuration?: Transitions['getAutoHeightDuration'] | undefined;",
+          "line": 53,
           "kind": "property",
-          "type": "Transitions['getAutoHeightDuration']"
+          "type": "Transitions['getAutoHeightDuration'] | undefined"
         }
       ],
       "references": [
@@ -22767,7 +22767,7 @@
     {
       "name": "ReducedMotionMode",
       "file": "src/transitions.ts",
-      "line": 50,
+      "line": 55,
       "kind": "type",
       "members": [],
       "references": [],
@@ -22777,7 +22777,7 @@
     {
       "name": "Motion",
       "file": "src/transitions.ts",
-      "line": 51,
+      "line": 56,
       "kind": "type",
       "members": [
         {
@@ -22787,7 +22787,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "reducedMotion: ReducedMotionMode;",
-          "line": 52,
+          "line": 57,
           "kind": "property",
           "type": "ReducedMotionMode"
         }
@@ -22801,7 +22801,7 @@
     {
       "name": "MotionOptions",
       "file": "src/transitions.ts",
-      "line": 54,
+      "line": 59,
       "kind": "type",
       "members": [
         {
@@ -22810,10 +22810,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "reducedMotion?: ReducedMotionMode;",
-          "line": 55,
+          "declaration": "reducedMotion?: ReducedMotionMode | undefined;",
+          "line": 60,
           "kind": "property",
-          "type": "ReducedMotionMode"
+          "type": "ReducedMotionMode | undefined"
         }
       ],
       "references": [

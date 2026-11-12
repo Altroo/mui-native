@@ -1,0 +1,895 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "styles/createTransitions.js": "bca6a9394b2e0e134b93967f5f38e4e319e92e6af0d90387704b4d33ce4f6028",
+      "styles/createTransitions.d.ts": "5f54447feaafcbe24ab100c0b5e1583d9b7e6f684105c45eed84fc1cc90ed955",
+      "styles/createMotion.js": "9c16055324af253924283b18215cb1336cdd2bc8b5d020a3084702b5fae23c6b",
+      "styles/createMotion.d.ts": "ee33d486a5c1122915d4311f74ced3d28a6ad9bc8280ece2f5a92ff9b62a46fe",
+      "styles/createThemeNoVars.d.ts": "65a184175a5305cdedf83c628eca71f4cb44f6d997f8c55733974b228b30a037"
+    }
+  },
+  "transitionExports": ["default", "duration", "easing"],
+  "motionExports": ["default"],
+  "cases": {
+    "development": [
+      {
+        "name": "factory and method identity",
+        "output": {
+          "arity": 1,
+          "createArity": 0,
+          "createName": "createTransitionValue",
+          "autoName": "getAutoHeightDuration",
+          "sharedAuto": true,
+          "ownCreate": true,
+          "ownDuration": true,
+          "ownEasing": true
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory {\"undefined\":true}",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 300,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory null",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 300,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory {}",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 300,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory {\"duration\":{\"standard\":42}}",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "duration", "easing"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 42,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 42ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory {\"custom\":1}",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "custom", "easing", "duration"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 300,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory {\"reducedMotion\":\"always\"}",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 300,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "callback overrides undefined",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "create": { "undefined": true },
+          "auto": { "undefined": true }
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "callback overrides null",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "create": null,
+          "auto": null
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "callback overrides false",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "create": false,
+          "auto": false
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "callback overrides 0",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "create": 0,
+          "auto": 0
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "custom callbacks retain identity and argument forwarding",
+        "output": {
+          "sameCreate": true,
+          "sameAuto": true,
+          "output": "custom",
+          "height": 21,
+          "calls": [[["opacity"], { "duration": 4 }]]
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory snapshot retains symbols and reads getters once",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "duration", "easing", "Symbol(custom)"],
+          "symbol": 7,
+          "createType": "undefined"
+        },
+        "diagnostics": [],
+        "events": ["duration", "easing", "create"]
+      },
+      {
+        "name": "props {\"undefined\":true}",
+        "output": "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "props null",
+        "output": "null 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [
+          { "channel": "error", "args": ["MUI: Argument \"props\" must be a string or Array."] }
+        ],
+        "events": []
+      },
+      {
+        "name": "props 17",
+        "output": "17 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [
+          { "channel": "error", "args": ["MUI: Argument \"props\" must be a string or Array."] }
+        ],
+        "events": []
+      },
+      {
+        "name": "props {}",
+        "output": "[object Object] 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [
+          { "channel": "error", "args": ["MUI: Argument \"props\" must be a string or Array."] }
+        ],
+        "events": []
+      },
+      { "name": "props []", "output": "", "diagnostics": [], "events": [] },
+      {
+        "name": "props [\"opacity\",\"transform\"]",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "props \"height\"",
+        "output": "height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"undefined\":true}",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      { "name": "options null", "error": { "name": "TypeError" }, "diagnostics": [], "events": [] },
+      {
+        "name": "options 5",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": [
+              "MUI: Secong argument of transition.create must be an object.\nArguments should be either `create('prop1', options)` or `create(['prop1', 'prop2'], options)`"
+            ]
+          }
+        ],
+        "events": []
+      },
+      {
+        "name": "options \"bad\"",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": [
+              "MUI: Secong argument of transition.create must be an object.\nArguments should be either `create('prop1', options)` or `create(['prop1', 'prop2'], options)`"
+            ]
+          },
+          { "channel": "error", "args": ["MUI: Unrecognized argument(s) [0,1,2]."] }
+        ],
+        "events": []
+      },
+      {
+        "name": "options {\"duration\":null}",
+        "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: Argument \"duration\" must be a number or a string but found null."]
+          }
+        ],
+        "events": []
+      },
+      {
+        "name": "options {\"easing\":null}",
+        "output": "opacity 300ms null 0ms",
+        "diagnostics": [
+          { "channel": "error", "args": ["MUI: Argument \"easing\" must be a string."] }
+        ],
+        "events": []
+      },
+      {
+        "name": "options {\"delay\":null}",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [
+          { "channel": "error", "args": ["MUI: Argument \"delay\" must be a number or a string."] }
+        ],
+        "events": []
+      },
+      {
+        "name": "options {\"duration\":{\"number\":\"NaN\"}}",
+        "output": "opacity NaNms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: Argument \"duration\" must be a number or a string but found NaN."]
+          }
+        ],
+        "events": []
+      },
+      {
+        "name": "options {\"delay\":{\"number\":\"NaN\"}}",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) NaNms",
+        "diagnostics": [
+          { "channel": "error", "args": ["MUI: Argument \"delay\" must be a number or a string."] }
+        ],
+        "events": []
+      },
+      {
+        "name": "options {\"duration\":\"invalid\",\"easing\":\"linear\",\"delay\":\"invalid\"}",
+        "output": "opacity invalid linear invalid",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"unknown\":1}",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [
+          { "channel": "error", "args": ["MUI: Unrecognized argument(s) [unknown]."] }
+        ],
+        "events": []
+      },
+      {
+        "name": "options {\"duration\":1.6,\"delay\":2.4}",
+        "output": "opacity 2ms cubic-bezier(0.4, 0, 0.2, 1) 2ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"duration\":\"1s\",\"delay\":\"0.2s\",\"easing\":\"linear\"}",
+        "output": "opacity 1s linear 0.2s",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "option getter evaluation order",
+        "output": "opacity 4ms linear 2ms",
+        "diagnostics": [{ "channel": "error", "args": ["MUI: Unrecognized argument(s) [extra]."] }],
+        "events": ["duration", "easing", "delay", "extra"]
+      },
+      {
+        "name": "unknown option getter throws in every build",
+        "error": { "name": "Error", "message": "extra getter" },
+        "diagnostics": [],
+        "events": ["extra"]
+      },
+      {
+        "name": "coercion order",
+        "output": "opacity 2ms cubic-bezier(0.4, 0, 0.2, 1) 2ms",
+        "diagnostics": [],
+        "events": ["duration:string", "delay:string", "duration:number", "delay:number"]
+      },
+      {
+        "name": "create closure observes returned duration mutations",
+        "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "returned defaults are isolated from constant mutation",
+        "output": {
+          "old": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "fresh": "opacity 17ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      { "name": "height undefined", "output": 0, "diagnostics": [], "events": [] },
+      { "name": "height null", "output": 0, "diagnostics": [], "events": [] },
+      { "name": "height 0", "output": 0, "diagnostics": [], "events": [] },
+      { "name": "height 1", "output": 101, "diagnostics": [], "events": [] },
+      { "name": "height 36", "output": 192, "diagnostics": [], "events": [] },
+      { "name": "height 100", "output": 239, "diagnostics": [], "events": [] },
+      { "name": "height 1000000000", "output": 3000, "diagnostics": [], "events": [] },
+      { "name": "height -1", "output": { "number": "NaN" }, "diagnostics": [], "events": [] },
+      { "name": "height NaN", "output": 0, "diagnostics": [], "events": [] },
+      { "name": "height Infinity", "output": 3000, "diagnostics": [], "events": [] },
+      {
+        "name": "motion {\"undefined\":true}",
+        "output": { "output": { "reducedMotion": "never" }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion null",
+        "output": { "output": { "reducedMotion": "never" }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion {}",
+        "output": { "output": { "reducedMotion": "never" }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion {\"reducedMotion\":{\"undefined\":true}}",
+        "output": { "output": { "reducedMotion": { "undefined": true } }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion {\"reducedMotion\":\"always\"}",
+        "output": { "output": { "reducedMotion": "always" }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion {\"reducedMotion\":\"system\"}",
+        "output": { "output": { "reducedMotion": "system" }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion {\"reducedMotion\":\"never\",\"custom\":3}",
+        "output": { "output": { "reducedMotion": "never", "custom": 3 }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      }
+    ],
+    "production": [
+      {
+        "name": "factory and method identity",
+        "output": {
+          "arity": 1,
+          "createArity": 0,
+          "createName": "createTransitionValue",
+          "autoName": "getAutoHeightDuration",
+          "sharedAuto": true,
+          "ownCreate": true,
+          "ownDuration": true,
+          "ownEasing": true
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory {\"undefined\":true}",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 300,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory null",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 300,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory {}",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 300,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory {\"duration\":{\"standard\":42}}",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "duration", "easing"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 42,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 42ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory {\"custom\":1}",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "custom", "easing", "duration"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 300,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory {\"reducedMotion\":\"always\"}",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "duration": {
+            "shortest": 150,
+            "shorter": 200,
+            "short": 250,
+            "standard": 300,
+            "complex": 375,
+            "enteringScreen": 225,
+            "leavingScreen": 195
+          },
+          "easing": {
+            "easeInOut": "cubic-bezier(0.4, 0, 0.2, 1)",
+            "easeOut": "cubic-bezier(0.0, 0, 0.2, 1)",
+            "easeIn": "cubic-bezier(0.4, 0, 1, 1)",
+            "sharp": "cubic-bezier(0.4, 0, 0.6, 1)"
+          },
+          "value": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "callback overrides undefined",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "create": { "undefined": true },
+          "auto": { "undefined": true }
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "callback overrides null",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "create": null,
+          "auto": null
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "callback overrides false",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "create": false,
+          "auto": false
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "callback overrides 0",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "easing", "duration"],
+          "create": 0,
+          "auto": 0
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "custom callbacks retain identity and argument forwarding",
+        "output": {
+          "sameCreate": true,
+          "sameAuto": true,
+          "output": "custom",
+          "height": 21,
+          "calls": [[["opacity"], { "duration": 4 }]]
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "factory snapshot retains symbols and reads getters once",
+        "output": {
+          "keys": ["getAutoHeightDuration", "create", "duration", "easing", "Symbol(custom)"],
+          "symbol": 7,
+          "createType": "undefined"
+        },
+        "diagnostics": [],
+        "events": ["duration", "easing", "create"]
+      },
+      {
+        "name": "props {\"undefined\":true}",
+        "output": "all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "props null",
+        "output": "null 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "props 17",
+        "output": "17 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "props {}",
+        "output": "[object Object] 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      { "name": "props []", "output": "", "diagnostics": [], "events": [] },
+      {
+        "name": "props [\"opacity\",\"transform\"]",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,transform 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "props \"height\"",
+        "output": "height 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"undefined\":true}",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      { "name": "options null", "error": { "name": "TypeError" }, "diagnostics": [], "events": [] },
+      {
+        "name": "options 5",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options \"bad\"",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"duration\":null}",
+        "output": "opacity 0ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"easing\":null}",
+        "output": "opacity 300ms null 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"delay\":null}",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"duration\":{\"number\":\"NaN\"}}",
+        "output": "opacity NaNms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"delay\":{\"number\":\"NaN\"}}",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) NaNms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"duration\":\"invalid\",\"easing\":\"linear\",\"delay\":\"invalid\"}",
+        "output": "opacity invalid linear invalid",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"unknown\":1}",
+        "output": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"duration\":1.6,\"delay\":2.4}",
+        "output": "opacity 2ms cubic-bezier(0.4, 0, 0.2, 1) 2ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "options {\"duration\":\"1s\",\"delay\":\"0.2s\",\"easing\":\"linear\"}",
+        "output": "opacity 1s linear 0.2s",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "option getter evaluation order",
+        "output": "opacity 4ms linear 2ms",
+        "diagnostics": [],
+        "events": ["duration", "easing", "delay", "extra"]
+      },
+      {
+        "name": "unknown option getter throws in every build",
+        "error": { "name": "Error", "message": "extra getter" },
+        "diagnostics": [],
+        "events": ["extra"]
+      },
+      {
+        "name": "coercion order",
+        "output": "opacity 2ms cubic-bezier(0.4, 0, 0.2, 1) 2ms",
+        "diagnostics": [],
+        "events": ["duration:number", "delay:number"]
+      },
+      {
+        "name": "create closure observes returned duration mutations",
+        "output": "opacity 50ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "returned defaults are isolated from constant mutation",
+        "output": {
+          "old": "opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+          "fresh": "opacity 17ms cubic-bezier(0.4, 0, 0.2, 1) 0ms"
+        },
+        "diagnostics": [],
+        "events": []
+      },
+      { "name": "height undefined", "output": 0, "diagnostics": [], "events": [] },
+      { "name": "height null", "output": 0, "diagnostics": [], "events": [] },
+      { "name": "height 0", "output": 0, "diagnostics": [], "events": [] },
+      { "name": "height 1", "output": 101, "diagnostics": [], "events": [] },
+      { "name": "height 36", "output": 192, "diagnostics": [], "events": [] },
+      { "name": "height 100", "output": 239, "diagnostics": [], "events": [] },
+      { "name": "height 1000000000", "output": 3000, "diagnostics": [], "events": [] },
+      { "name": "height -1", "output": { "number": "NaN" }, "diagnostics": [], "events": [] },
+      { "name": "height NaN", "output": 0, "diagnostics": [], "events": [] },
+      { "name": "height Infinity", "output": 3000, "diagnostics": [], "events": [] },
+      {
+        "name": "motion {\"undefined\":true}",
+        "output": { "output": { "reducedMotion": "never" }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion null",
+        "output": { "output": { "reducedMotion": "never" }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion {}",
+        "output": { "output": { "reducedMotion": "never" }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion {\"reducedMotion\":{\"undefined\":true}}",
+        "output": { "output": { "reducedMotion": { "undefined": true } }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion {\"reducedMotion\":\"always\"}",
+        "output": { "output": { "reducedMotion": "always" }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion {\"reducedMotion\":\"system\"}",
+        "output": { "output": { "reducedMotion": "system" }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      },
+      {
+        "name": "motion {\"reducedMotion\":\"never\",\"custom\":3}",
+        "output": { "output": { "reducedMotion": "never", "custom": 3 }, "sameInput": false },
+        "diagnostics": [],
+        "events": []
+      }
+    ]
+  }
+}

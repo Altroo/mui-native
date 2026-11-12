@@ -12,10 +12,21 @@ import { createSpacing as nativeSpacing } from '@altroo/mui-native-system';
 import {
   alpha as materialAlpha,
   type ColorObject as MaterialColorObject,
+  type ThemeOptions,
 } from '@mui/material/styles';
 import * as colorHelpers from '@mui/system/colorManipulator';
 import { type ColorObject as SystemColorObject } from '@mui/system';
 import { type ColorObject as NativeColorObject } from '@altroo/mui-native-system';
+
+import createTransitions, {
+  duration as deepDuration,
+  easing as deepEasing,
+  type TransitionsOptions,
+  type Transitions,
+  type Easing,
+  type Duration,
+} from '@mui/material/styles/createTransitions';
+import createMotion, { type MotionOptions, type Motion } from '@mui/material/styles/createMotion';
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -80,3 +91,34 @@ export const invalidSpace: colorHelpers.ColorObject = {
   // @ts-expect-error unsupported spaces remain excluded from the public declaration
   colorSpace: 'xyz',
 };
+
+export const timingOptions: TransitionsOptions = {
+  easing: undefined,
+  duration: undefined,
+  create: undefined,
+  getAutoHeightDuration: undefined,
+};
+export const timing: Transitions = createTransitions({ duration: { standard: 42 } });
+export const timingText: string = timing.create(['opacity', 'transform'], {
+  duration: '1s',
+  delay: 2,
+});
+export const autoHeight: number = timing.getAutoHeightDuration(100);
+export const durations: Duration = deepDuration;
+export const curves: Easing = deepEasing;
+export const requiredPropertyCreator: TransitionsOptions = {
+  create: (props: string | string[]) => String(props),
+};
+export const motionOptions: MotionOptions = { reducedMotion: undefined };
+export const motion: Motion = createMotion(motionOptions);
+export const timingThemeOptions: ThemeOptions = { transitions: undefined, motion: undefined };
+export const nestedTimingThemeOptions: ThemeOptions = {
+  transitions: timingOptions,
+  motion: motionOptions,
+};
+// @ts-expect-error inner timing options retain original exact optional-property rules
+timing.create('opacity', { duration: undefined });
+// @ts-expect-error automatic-height calculation takes a numeric height
+timing.getAutoHeightDuration('100');
+// @ts-expect-error unknown reduced-motion modes are not public options
+createMotion({ reducedMotion: 'sometimes' });
