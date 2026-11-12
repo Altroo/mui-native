@@ -35,11 +35,17 @@ Closed Fade children retain layout and become transparent, noninteractive and hi
 
 Theme transitions contains easing, duration, create and getAutoHeightDuration. Partial duration/easing overrides, numeric/string CSS timing generation and the pinned automatic-height calculation are covered. These helpers are also available from @mui/material/styles/createTransitions. Motion configuration and types are available from @mui/material/styles/createMotion. Transition types are available from @mui/material/transitions and @mui/material/transitions/types.
 
+The finite JavaScript factory contract preserves timing formatting, source validation and getter order in both development and production, shared auto-height function identity, per-factory resolved timing values and original return-field ordering. Diagnostics identify MUI Native. The existing no-argument native factory convenience remains available; the function's runtime arity matches the original. `TransitionsOptions`, `MotionOptions` and theme forwarding accept the same explicit undefined outer fields as MUI; inner `create` timing fields retain their stricter optional types.
+
+**Migration from earlier native previews:** an explicitly authored `create: undefined` now remains undefined in the factory result, following MUI's spread order. Omit optional callback keys to retain defaults. Unknown option getters are read in production too; a throwing getter is not silently ignored. These are source calculation semantics, separate from native animation behavior.
+
 The pinned MUI 9.5.0 motion default is reducedMotion='never'. Set 'system' to follow AccessibilityInfo or 'always' to suppress owned motion. disablePrefersReducedMotion opts a Fade out. System observers are shared with native floating labels, removed after the last subscriber, and protected against stale asynchronous reads. While the native system preference is unresolved, motion is suppressed. Enabling reduced motion during an active phase stops motion and completes the phase promptly; this native behavior extends upstream's phase-start preference capture.
 
 Floating labels now use theme.transitions.duration.shorter/easing.easeOut and this motion policy. Applications that relied on the earlier native prototype always following the OS must set motion.reducedMotion='system'. The catalog sets that policy explicitly.
 
 Fade calls theme.transitions.create('opacity', timing). Native execution understands canonical opacity/all duration easing optional-delay clauses with nonnegative ms/s times, linear/ease/ease-in/ease-out/ease-in-out or cubic-bezier easing, plus 'none'. Unsupported CSS produces a diagnostic and uses the explicit native timing fallback. This is a bounded translation of timing, not arbitrary CSS execution. Fade style transitionDuration/transitionTimingFunction/transitionDelay configure native timing and are removed from the native style payload.
+
+The standalone helper reference needs no browser, renderer or device: run `node scripts/reference/transition-helpers.mjs --check` after the same isolated reference setup. It verifies both original factories and declarations before recording 55 boundary observations in each of development and production. Tests also retain root/deep identities and strict emitted/installed consumers.
 
 ## Dialog and Backdrop
 

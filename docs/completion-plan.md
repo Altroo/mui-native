@@ -30,6 +30,8 @@ iOS Space/A keyboard interactions now have 30 scoped cases across all five roots
 
 The existing [pure color helpers](theming.md) have source-derived calculation and boundary checks against all eighteen pinned exports, including strict optional color-space declarations, malformed-input fallback, diagnostics, getter order and HSL channel writes. This finite helper work does not close the broader createTheme/palette or native color-rendering row.
 
+The existing [transition-timing and motion factories](transitions.md#theme-helpers-and-reduced-motion) preserve their finite calculation, diagnostic, identity, override and strict declaration contracts. Their source comparisons and installed consumers do not close Fade, Grow, Collapse or native animation/performance gates.
+
 ## Retained closure gates: ButtonGroup and required existing styling
 
 The normal-text iOS screenshot review exposed concatenated adjacent mixed-label fragments under the global RTL host. The focused correction preserves anonymous boundary spaces while retaining independent authored text roots. The maintained native test retains mixed-label screenshots separately because frame/counter assertions alone do not establish boundary-space paint; full browser paragraph shaping remains outside this adaptation.
