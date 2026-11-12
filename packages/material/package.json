@@ -88,6 +88,11 @@
       "react-native": "./src/DialogActions/index.ts",
       "default": "./dist/DialogActions/index.js"
     },
+    "./DialogActions/dialogActionsClasses": {
+      "types": "./dist/DialogActions/dialogActionsClasses/index.d.ts",
+      "react-native": "./src/DialogActions/dialogActionsClasses/index.ts",
+      "default": "./dist/DialogActions/dialogActionsClasses/index.js"
+    },
     "./Button": {
       "types": "./dist/Button/index.d.ts",
       "react-native": "./src/Button/index.ts",

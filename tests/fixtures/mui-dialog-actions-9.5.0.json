@@ -1,0 +1,196 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+      "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
+      "DialogActions/index.js": "f7d39c5aaf3ce679f9e198805753bdb1441d4ff177f5f2f7b2f9719bcab0b551",
+      "DialogActions/index.d.ts": "5b6c6c22a039478fa3bc034d6d91d10c0e4d20af1829d986b78a85232cbe0d2f",
+      "DialogActions/DialogActions.js": "0665b4106b35bf86b048d083dd22d4af3ae7ff99ba1399af5261531c68dd9283",
+      "DialogActions/DialogActions.d.ts": "34b2c4b951dc5a34e03fc0eb0181da3890bd7c720cf8296104aeba2111748826",
+      "DialogActions/dialogActionsClasses.js": "deb8989c7199d220358c07b4377360a6b7527c2853e476cb89eb3e852d2b7732",
+      "DialogActions/dialogActionsClasses.d.ts": "221c6bb2c1152e37f7254d5a167f11ffd57f12c734e970ea15cdc59a97f2038e"
+    }
+  },
+  "utilitiesReference": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "ClassNameGenerator/index.js": "0c39c4bf9fb30edc3e30c45b86d594cae57f1f3b841030dcb0a46b522fa84c6e",
+      "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0",
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+      "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574"
+    }
+  },
+  "observations": [
+    {
+      "input": { "name": "stock", "prop": "absent" },
+      "accesses": ["root", "root", "spacing", "spacing"],
+      "ownerDisableSpacing": false,
+      "rootHasDisableSpacing": false,
+      "className": "MuiDialogActions-root own-root MuiDialogActions-spacing own-spacing authored",
+      "siblingMargin": true,
+      "spacingOverride": true,
+      "liveRoot": "MuiDialogActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiDialogActions-root"
+    },
+    {
+      "input": { "name": "authored disabled", "prop": true },
+      "accesses": ["root", "root"],
+      "ownerDisableSpacing": true,
+      "rootHasDisableSpacing": false,
+      "className": "MuiDialogActions-root own-root authored",
+      "siblingMargin": false,
+      "spacingOverride": false,
+      "liveRoot": "MuiDialogActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiDialogActions-root"
+    },
+    {
+      "input": { "name": "default disables spacing", "prop": "absent", "defaults": true },
+      "accesses": ["root", "root"],
+      "ownerDisableSpacing": true,
+      "rootHasDisableSpacing": false,
+      "className": "MuiDialogActions-root own-root authored",
+      "siblingMargin": false,
+      "spacingOverride": false,
+      "liveRoot": "MuiDialogActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiDialogActions-root"
+    },
+    {
+      "input": {
+        "name": "explicit undefined inherits theme default",
+        "prop": "undefined",
+        "defaults": true
+      },
+      "accesses": ["root", "root"],
+      "ownerDisableSpacing": true,
+      "rootHasDisableSpacing": false,
+      "className": "MuiDialogActions-root own-root authored",
+      "siblingMargin": false,
+      "spacingOverride": false,
+      "liveRoot": "MuiDialogActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiDialogActions-root"
+    },
+    {
+      "input": { "name": "explicit false restores spacing", "prop": false, "defaults": true },
+      "accesses": ["root", "root", "spacing", "spacing"],
+      "ownerDisableSpacing": false,
+      "rootHasDisableSpacing": false,
+      "className": "MuiDialogActions-root own-root MuiDialogActions-spacing own-spacing authored",
+      "siblingMargin": true,
+      "spacingOverride": true,
+      "liveRoot": "MuiDialogActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiDialogActions-root"
+    },
+    {
+      "input": { "name": "configured active classes", "prop": false, "configured": true },
+      "accesses": ["root", "root", "spacing", "spacing"],
+      "ownerDisableSpacing": false,
+      "rootHasDisableSpacing": false,
+      "className": "ConsumerMuiDialogActions-root own-root ConsumerMuiDialogActions-spacing own-spacing authored",
+      "siblingMargin": true,
+      "spacingOverride": true,
+      "liveRoot": "ConsumerMuiDialogActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiDialogActions-root"
+    }
+  ],
+  "reservedObservations": [
+    {
+      "name": "owner-on",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": true,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": true,
+      "siblingMargin": false,
+      "spacingOverride": false
+    },
+    {
+      "name": "owner-off",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": false,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": false,
+      "siblingMargin": true,
+      "spacingOverride": true
+    },
+    {
+      "name": "owner-empty",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": null,
+      "ownerHasDisableSpacing": false,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": false,
+      "siblingMargin": true,
+      "spacingOverride": true
+    },
+    {
+      "name": "owner-undefined",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": null,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": false,
+      "siblingMargin": true,
+      "spacingOverride": true
+    },
+    {
+      "name": "theme-plain",
+      "ownerIdentity": false,
+      "ownerDisableSpacing": false,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 12,
+      "sxThemeRadius": 12,
+      "spacingClass": true,
+      "siblingMargin": true,
+      "spacingOverride": true
+    },
+    {
+      "name": "theme-scoped",
+      "ownerIdentity": false,
+      "ownerDisableSpacing": false,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 12,
+      "sxThemeRadius": 12,
+      "spacingClass": true,
+      "siblingMargin": true,
+      "spacingOverride": true
+    }
+  ],
+  "nullableOwnerObservations": [
+    { "input": "null", "error": "TypeError" },
+    { "input": "undefined", "error": "TypeError" }
+  ],
+  "ownerGetterObservations": [
+    {
+      "first": false,
+      "trace": ["read:false", "read:true", "root", "spacing", "read:true"],
+      "siblingMargin": false,
+      "spacingOverride": false
+    },
+    {
+      "first": true,
+      "trace": ["read:true", "read:false", "root", "spacing", "read:false"],
+      "siblingMargin": true,
+      "spacingOverride": true
+    }
+  ]
+}

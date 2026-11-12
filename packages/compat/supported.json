@@ -16,6 +16,7 @@
       "DialogTitle",
       "DialogContent",
       "DialogActions",
+      "DialogActions/dialogActionsClasses",
       "Button",
       "IconButton",
       "TextField",

@@ -1,0 +1,196 @@
+/* DialogActions props, defaults and class composition adapt MIT Material UI 9.5.0.
+ * Copyright (c) MUI contributors. See NOTICE and upstream/dialog-actions.json.
+ * Native adaptation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
+import React, { forwardRef, useContext } from 'react';
+import { View, useWindowDimensions, type ViewInstance } from 'react-native';
+import {
+  NativeTextScope,
+  useNativeTextRootRef,
+  useNativeTextContext,
+  nativeTextStyleContext,
+  useNativeRootProps,
+  joinClassNames,
+  componentRootStyle,
+  type Theme,
+} from '@altroo/mui-native-system';
+import { useTheme, THEME_ID } from './themeProvider';
+import { useForkRef } from './utils/refs';
+import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
+import { NativeButtonGroupRules } from './buttonGroupContext';
+import type { BoxProps } from './boxTypes';
+import { getDialogActionsUtilityClass } from './dialogActionsClasses';
+export * from './dialogActionsClasses';
+
+export interface DialogActionsProps extends Omit<BoxProps, 'component'> {
+  component?: BoxProps['component'];
+  classes?: Partial<import('./dialogActionsClasses').DialogActionsClasses> | undefined;
+  className?: string | undefined;
+  disableSpacing?: boolean | undefined;
+}
+type DialogActionsNativeRootProps = {
+  as?: BoxProps['component'];
+  ownerState?: Record<string, unknown> | null | undefined;
+  theme?: Theme | null | undefined;
+};
+type ActionRoot = React.ComponentType<any> | 'div';
+type NativeActionRoot<R extends ActionRoot> = R extends 'div'
+  ? R
+  : R extends React.ComponentType<any>
+    ? [React.ComponentRef<R>] extends [never]
+      ? R
+      : React.ComponentRef<R> extends ViewInstance
+        ? R
+        : never
+    : never;
+type PropsForRoot<R extends ActionRoot> = Omit<DialogActionsProps, 'component'> &
+  Omit<BoxProps<R>, 'component'> & {
+    component?: (R & NativeActionRoot<R>) | undefined;
+  };
+type DefaultActionsProps = Omit<DialogActionsProps, 'component'> & { component?: undefined };
+type InferredActionsProps<P extends DialogActionsProps> = P extends unknown
+  ? [NonNullable<P['component']>] extends [never]
+    ? DefaultActionsProps
+    : NonNullable<P['component']> extends infer R extends ActionRoot
+      ? PropsForRoot<R>
+      : DialogActionsProps
+  : never;
+type InferredActionsKeys<P extends DialogActionsProps> = P extends unknown
+  ? keyof InferredActionsProps<P>
+  : never;
+// Infer the actual root before checking its ref. A widened ComponentType/props
+// field alone loses that relationship and silently accepts browser hosts.
+interface NativeDialogActionsComponent {
+  <R extends ActionRoot>(
+    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },
+  ): React.JSX.Element;
+  (props: DefaultActionsProps): React.JSX.Element;
+  <P extends DialogActionsProps>(
+    props: P &
+      NoInfer<InferredActionsProps<P>> &
+      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,
+  ): React.JSX.Element;
+  displayName?: string | undefined;
+}
+export const DialogActions: NativeDialogActionsComponent = forwardRef<
+  ViewInstance,
+  DialogActionsProps
+>(function DialogActions(inProps, ref) {
+  const { props, style: preparedStyle } = useNativeRootProps({
+    props: inProps,
+    name: 'MuiDialogActions',
+  });
+  const {
+    classes,
+    className,
+    component: Component = View,
+    as,
+    ref: slotRef,
+    ownerState: authoredOwner,
+    theme: explicitTheme,
+    children,
+    disableSpacing = false,
+    id,
+    sx,
+    style,
+    ...native
+  } = props as DialogActionsProps & DialogActionsNativeRootProps;
+  // The earlier Box-backed native entry gives a present as prop precedence,
+  // including undefined selecting the default View rather than component.
+  const selectedRoot = Object.hasOwn(props, 'as') ? as || View : Component;
+  const Root = (selectedRoot === 'div' ? View : selectedRoot) as React.ComponentType<any>;
+  const mergedRef = useForkRef(ref, slotRef);
+  const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(mergedRef);
+  const nativeRef = useNativeStyleRef(scopeRoot, scopeRef);
+  const providerTheme = useTheme(),
+    parent = useNativeTextContext(),
+    rules = useContext(NativeButtonGroupRules),
+    { width } = useWindowDimensions();
+  // A root-local theme selects this styled layer without changing provider
+  // defaults or the context seen by independently themed descendants.
+  const theme =
+    explicitTheme && typeof explicitTheme === 'object'
+      ? (explicitTheme as Theme & Record<string, Theme>)[THEME_ID] || explicitTheme
+      : providerTheme;
+  const token = (slot: 'root' | 'spacing') => {
+    let value = getDialogActionsUtilityClass(slot);
+    // Match composeClasses: a truthy active entry is read once again when appended.
+    if (classes && classes[slot]) value += ' ' + classes[slot];
+    return value;
+  };
+  const rootClass = joinClassNames(token('root'), !disableSpacing && token('spacing'), className);
+  const tokens = rootClass.split(/\s+/).filter(Boolean);
+  const generatedOwner = { ...props, disableSpacing };
+  // Original JSX spreads other after ownerState. Class composition still uses
+  // generated component state; named styling receives the authored object.
+  const owner = Object.hasOwn(props, 'ownerState') ? authoredOwner : generatedOwner;
+  const { disableSpacing: _disableSpacing, ...styledProps } = props;
+  const {
+    computed: resolved,
+    authored,
+    prepared,
+  } = componentRootStyle(
+    theme,
+    'MuiDialogActions',
+    owner as Record<string, unknown>,
+    sx,
+    preparedStyle,
+    {
+      ...nativeTextStyleContext(parent, style, theme),
+      width,
+      slot: 'root',
+      // Source overridesResolver observes owner state after every slot resolves.
+      overrideKeys: () =>
+        (owner as { disableSpacing?: boolean }).disableSpacing ? [] : ['spacing'],
+      classes: tokens,
+      ancestors: nativeStyleAncestors(rules, { classes: tokens }),
+      protectPhysicalGeometry: true,
+      rootProps: {
+        ...styledProps,
+        ...(Object.hasOwn(props, 'as') ? { as } : Component !== View ? { as: Component } : {}),
+        className: rootClass,
+      },
+      baseStyle: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        // Native zero flex preserves the footer basis without pinning
+        // longhands above a later authored flex shorthand.
+        flex: 0,
+        padding: 8,
+        // Preserve the constructor predicate at its source preparation stage.
+        // Yoga gap keeps caller-owned native hosts and children intact.
+        columnGap: 0,
+        variants: [
+          {
+            props: ({ ownerState }: { ownerState: Record<string, unknown> }) =>
+              !ownerState.disableSpacing,
+            style: { columnGap: 8 },
+          },
+        ],
+      },
+    },
+  );
+  // Keep native array precedence: an inline gap does not erase a named columnGap.
+  return (
+    <NativeStyleScope root={scopeRoot} theme={theme} classes={tokens} prepared={prepared}>
+      <NativeTextScope
+        rootRef={scopeRoot}
+        theme={theme}
+        style={[resolved, authored]}
+        content={children}
+      >
+        {(rootStyle, content) => (
+          <Root
+            {...native}
+            nativeID={id ?? native.nativeID}
+            {...(Root === View ? {} : { className: rootClass, ownerState: owner })}
+            ref={nativeRef}
+            style={rootStyle}
+          >
+            {content}
+          </Root>
+        )}
+      </NativeTextScope>
+    </NativeStyleScope>
+  );
+}) as NativeDialogActionsComponent;
