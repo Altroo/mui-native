@@ -142,14 +142,14 @@
         "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
         "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
         "sourceFiles": {
-          "colorManipulator/colorManipulator.js": "fd47c8f2e104a4f3927c20202e568a3b4cf9f3379875362062549568fa6fffb9"
+          "colorManipulator/colorManipulator.js": "fd47c8f2e104a4f3927c20202e568a3b4cf9f3379875362062549568fa6fffb9",
+          "colorManipulator/colorManipulator.d.ts": "4bdf4c3ce92802b8cf5799ba77d1120a3d9a4bf583c5b465feb88899528dc539"
         }
       },
       "adaptations": [
         "Typed standalone helpers without Babel or MUI runtime dependencies.",
-        "String input signatures follow declarations; undocumented object overloads are not supported.",
-        "recomposeColor leaves input channels unmodified.",
-        "Diagnostic wording identifies MUI Native."
+        "Original declared input signatures and parsed-object runtime reuse are retained, including source getter order and HSL channel writes.",
+        "Diagnostic wording identifies MUI Native and remains readable in production instead of using browser error URLs."
       ]
     },
     {

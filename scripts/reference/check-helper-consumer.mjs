@@ -21,6 +21,7 @@ await json('emit.json', {
   include: [
     resolve(root, 'packages/system/src/index.ts'),
     resolve(root, 'packages/system/src/createBreakpoints/index.ts'),
+    resolve(root, 'packages/system/src/colorManipulator/index.ts'),
     resolve(root, 'packages/material/src/styles/index.ts'),
   ],
   exclude: [resolve(root, 'node_modules'), '**/dist'],
@@ -30,11 +31,23 @@ const base = JSON.parse(await readFile(resolve(root, 'tsconfig.json'), 'utf8'));
 const paths = Object.fromEntries(
   Object.entries(base.compilerOptions.paths).map(([name, targets]) => [
     name,
-    targets.map((target) => resolve(root, target)),
+    // Keep transitive package imports on emitted declarations too. Resolving a
+    // native-host alias back to source would apply consumer-only strictness to
+    // implementation files and would not verify the shipped contract.
+    targets.map((target) =>
+      target.startsWith('./packages/')
+        ? resolve(
+            output,
+            'types',
+            target.slice('./packages/'.length).replace(/\.(?:tsx?|js)$/, '.d.ts'),
+          )
+        : resolve(root, target),
+    ),
   ]),
 );
 Object.assign(paths, {
   '@mui/system': [resolve(output, 'types/system/src/index.d.ts')],
+  '@mui/system/colorManipulator': [resolve(output, 'types/system/src/colorManipulator/index.d.ts')],
   '@mui/system/createBreakpoints': [
     resolve(output, 'types/system/src/createBreakpoints/index.d.ts'),
   ],
@@ -56,5 +69,5 @@ await json('consumer.json', {
 });
 compile('consumer.json');
 console.log(
-  'Strict emitted spacing/breakpoint consumer passed, including augmentation and explicit undefined options.',
+  'Strict emitted spacing/breakpoint/color consumer passed, including augmentation and explicit undefined options.',
 );

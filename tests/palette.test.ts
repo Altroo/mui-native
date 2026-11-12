@@ -1,3 +1,7 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import * as rootColors from '../packages/system/src';
+import * as materialColors from '../packages/material/src/styles';
+import * as deepColors from '../packages/system/src/colorManipulator/index';
 import {
   createTheme,
   type PaletteOptions,
@@ -28,7 +32,7 @@ test.each(reference.colors)(
   '$operation($args) matches pinned MUI',
   ({ operation, args, output }) => {
     const fn = colors[operation as keyof typeof colors] as (...values: unknown[]) => unknown;
-    expect(serializable(fn(...args))).toEqual(output);
+    expect(serializable(fn(...structuredClone(args)))).toEqual(output);
   },
 );
 
@@ -50,16 +54,12 @@ test('changing main derives new shades without mutating options or sharing palet
   expect(options).toEqual({ primary: { main: '#123456' } });
 });
 
-test('explicit zero tonal offsets remain valid and color recomposition does not mutate input', () => {
+test('explicit zero tonal offsets remain valid', () => {
   const palette = createTheme({
     palette: { primary: { main: '#123456' }, tonalOffset: { light: 0, dark: 0 } },
   }).palette;
   expect(palette.primary.light).toBe('rgb(18, 52, 86)');
   expect(palette.primary.dark).toBe('rgb(18, 52, 86)');
-  const color: colors.ColorObject = { type: 'hsl', values: [220, 70, 40] };
-  Object.freeze(color.values);
-  expect(colors.recomposeColor(color)).toBe('hsl(220, 70%, 40%)');
-  expect(color.values).toEqual([220, 70, 40]);
 });
 
 test('invalid palette colors fail early and unsupported CSS can use an explicit safe helper', () => {
@@ -69,7 +69,7 @@ test('invalid palette colors fail early and unsupported CSS can use an explicit 
       typeof createTheme
     >[0]),
   ).toThrow(/string main/);
-  expect(() => colors.lighten('var(--brand)', 0.2)).toThrow(/Unsupported color/);
+  expect(() => colors.lighten('var(--brand)', 0.2)).toThrow(/Unsupported `var\(--brand\)` color/);
   const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
   try {
     expect(colors.private_safeLighten('var(--brand)', 0.2, 'Cannot derive CSS variable')).toBe(
@@ -102,4 +102,26 @@ test('explicitly undefined palette controls retain resolved MUI defaults', () =>
   expect(palette.augmentColor({ color: { main: '#123456' } })).toEqual(
     createTheme().palette.augmentColor({ color: { main: '#123456' } }),
   );
+});
+
+const observeColorContract = require('../scripts/reference/color-contract-cases.cjs') as (
+  helpers: typeof colors,
+  mode: string,
+) => unknown;
+
+test.each(['development', 'production'] as const)(
+  'color boundary behavior matches original MUI in %s',
+  (mode) => {
+    expect(observeColorContract(colors, mode)).toEqual(reference.colorContract[mode]);
+  },
+);
+
+test('every original color helper export shares root, deep and Material identity', () => {
+  expect(Object.keys(colors).sort()).toEqual(reference.colorExports);
+  for (const name of reference.colorExports) {
+    const key = name as keyof typeof colors;
+    expect(rootColors[key]).toBe(colors[key]);
+    expect(deepColors[key]).toBe(colors[key]);
+    expect(materialColors[key]).toBe(colors[key]);
+  }
 });
