@@ -25,7 +25,21 @@
       "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "sourceFiles": {
-        "colorManipulator/colorManipulator.js": "fd47c8f2e104a4f3927c20202e568a3b4cf9f3379875362062549568fa6fffb9"
+        "colorManipulator/colorManipulator.js": "fd47c8f2e104a4f3927c20202e568a3b4cf9f3379875362062549568fa6fffb9",
+        "colorManipulator/colorManipulator.d.ts": "4bdf4c3ce92802b8cf5799ba77d1120a3d9a4bf583c5b465feb88899528dc539"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "clamp/index.js": "ec51a083e98a7fea297b2774a029905cdb18ef8b3f987143b008de394182dd37",
+        "clamp/clamp.js": "67470b5daaa9f489a88b18192519946e79244e225d8048cf09036ba91dacd2d0",
+        "formatMuiErrorMessage/index.js": "f9df4d7515e9989e1964af9d61b814bf695983c71c03c53c0c0c61af098ad958",
+        "formatMuiErrorMessage/formatMuiErrorMessage.js": "9fcb130d82d32786cedb2ec93f3ed39d4dfc100325a73c4fd244cf7493c3bcd2"
       }
     }
   ],
@@ -1752,5 +1766,1318 @@
       "args": [{ "type": "hsl", "values": [220, 70, 40] }],
       "output": "hsl(220, 70%, 40%)"
     }
-  ]
+  ],
+  "colorExports": [
+    "alpha",
+    "blend",
+    "colorChannel",
+    "darken",
+    "decomposeColor",
+    "emphasize",
+    "getContrastRatio",
+    "getLuminance",
+    "hexToRgb",
+    "hslToRgb",
+    "lighten",
+    "private_safeAlpha",
+    "private_safeColorChannel",
+    "private_safeDarken",
+    "private_safeEmphasize",
+    "private_safeLighten",
+    "recomposeColor",
+    "rgbToHex"
+  ],
+  "colorContract": {
+    "development": [
+      {
+        "name": "decompose rgbx",
+        "error": {
+          "name": "Error",
+          "message": "MUI: Unsupported `rgbx` color.\nThe following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color()."
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose rgb",
+        "error": {
+          "name": "Error",
+          "message": "MUI: Unsupported `rgb` color.\nThe following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color()."
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose hslx",
+        "error": {
+          "name": "Error",
+          "message": "MUI: Unsupported `hslx` color.\nThe following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color()."
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose color",
+        "error": {
+          "name": "Error",
+          "message": "MUI: Unsupported `color` color.\nThe following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color()."
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose RGB(1, 2, 3)",
+        "error": {
+          "name": "Error",
+          "message": "MUI: Unsupported `RGB(1, 2, 3)` color.\nThe following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color()."
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose var(--brand)",
+        "error": {
+          "name": "Error",
+          "message": "MUI: Unsupported `var(--brand)` color.\nThe following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color()."
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose red",
+        "error": {
+          "name": "Error",
+          "message": "MUI: Unsupported `red` color.\nThe following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color()."
+        },
+        "diagnostics": []
+      },
+      { "name": "hex #", "output": "", "diagnostics": [] },
+      {
+        "name": "hex #12345",
+        "output": "rgb(17, 34, 51, 0.267, 0.333)",
+        "diagnostics": []
+      },
+      {
+        "name": "hex #1234567",
+        "output": "rgba(18, 52, 86, 0.027)",
+        "diagnostics": []
+      },
+      {
+        "name": "hex #123456789",
+        "output": "rgb(18, 52, 86, 0.471, 0.035)",
+        "diagnostics": []
+      },
+      {
+        "name": "hex #fff ",
+        "output": "rgba(255, 255, 255, NaN)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": [
+              "MUI: The color: \"fff \" is invalid. Make sure the color input doesn't contain leading/trailing space."
+            ]
+          }
+        ]
+      },
+      { "name": "hex #ggg", "output": "rgb(NaN, NaN, NaN)", "diagnostics": [] },
+      {
+        "name": "space srgb",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6],
+          "colorSpace": "srgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space srgb /0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, 0.4],
+          "colorSpace": "srgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space srgb / 0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, { "number": "NaN" }, 0.4],
+          "colorSpace": "srgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space display-p3",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6],
+          "colorSpace": "display-p3"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space display-p3 /0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, 0.4],
+          "colorSpace": "display-p3"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space display-p3 / 0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, { "number": "NaN" }, 0.4],
+          "colorSpace": "display-p3"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space a98-rgb",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6],
+          "colorSpace": "a98-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space a98-rgb /0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, 0.4],
+          "colorSpace": "a98-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space a98-rgb / 0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, { "number": "NaN" }, 0.4],
+          "colorSpace": "a98-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space prophoto-rgb",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6],
+          "colorSpace": "prophoto-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space prophoto-rgb /0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, 0.4],
+          "colorSpace": "prophoto-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space prophoto-rgb / 0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, { "number": "NaN" }, 0.4],
+          "colorSpace": "prophoto-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space rec-2020",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6],
+          "colorSpace": "rec-2020"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space rec-2020 /0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, 0.4],
+          "colorSpace": "rec-2020"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space rec-2020 / 0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, { "number": "NaN" }, 0.4],
+          "colorSpace": "rec-2020"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space unknown",
+        "error": {
+          "name": "Error",
+          "message": "MUI: unsupported `unknown` color space.\nThe following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rgb, rec-2020."
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space unknown /0.4",
+        "error": {
+          "name": "Error",
+          "message": "MUI: unsupported `unknown` color space.\nThe following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rgb, rec-2020."
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space unknown / 0.4",
+        "error": {
+          "name": "Error",
+          "message": "MUI: unsupported `unknown` color space.\nThe following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rgb, rec-2020."
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "alpha coefficient -0.5",
+        "output": "rgba(12, 34, 56, 0)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided -0.5 is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "alpha coefficient 1.5",
+        "output": "rgba(12, 34, 56, 1)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided 1.5 is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "alpha coefficient NaN",
+        "output": "rgba(12, 34, 56, NaN)",
+        "diagnostics": []
+      },
+      {
+        "name": "alpha coefficient Infinity",
+        "output": "rgba(12, 34, 56, 1)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided Infinity is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "darken coefficient -0.5",
+        "output": "rgb(12, 34, 56)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided -0.5 is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "darken coefficient 1.5",
+        "output": "rgb(0, 0, 0)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided 1.5 is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "darken coefficient NaN",
+        "output": "rgb(NaN, NaN, NaN)",
+        "diagnostics": []
+      },
+      {
+        "name": "darken coefficient Infinity",
+        "output": "rgb(0, 0, 0)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided Infinity is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "lighten coefficient -0.5",
+        "output": "rgb(12, 34, 56)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided -0.5 is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "lighten coefficient 1.5",
+        "output": "rgb(255, 255, 255)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided 1.5 is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "lighten coefficient NaN",
+        "output": "rgb(NaN, NaN, NaN)",
+        "diagnostics": []
+      },
+      {
+        "name": "lighten coefficient Infinity",
+        "output": "rgb(255, 255, 255)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided Infinity is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "emphasize coefficient -0.5",
+        "output": "rgb(12, 34, 56)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided -0.5 is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "emphasize coefficient 1.5",
+        "output": "rgb(255, 255, 255)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided 1.5 is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "emphasize coefficient NaN",
+        "output": "rgb(NaN, NaN, NaN)",
+        "diagnostics": []
+      },
+      {
+        "name": "emphasize coefficient Infinity",
+        "output": "rgb(255, 255, 255)",
+        "diagnostics": [
+          {
+            "channel": "error",
+            "args": ["MUI: The value provided Infinity is out of range [0, 1]."]
+          }
+        ]
+      },
+      {
+        "name": "private_safeColorChannel rgbx warning=Cannot derive brand",
+        "output": "rgbx",
+        "diagnostics": [{ "channel": "warn", "args": ["Cannot derive brand"] }]
+      },
+      {
+        "name": "private_safeColorChannel rgbx warning=",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeColorChannel var(--brand) warning=Cannot derive brand",
+        "output": "var(--brand)",
+        "diagnostics": [{ "channel": "warn", "args": ["Cannot derive brand"] }]
+      },
+      {
+        "name": "private_safeColorChannel var(--brand) warning=",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeColorChannel #123456 warning=Cannot derive brand",
+        "output": "18 52 86",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeColorChannel #123456 warning=",
+        "output": "18 52 86",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeAlpha rgbx warning=Cannot derive brand",
+        "output": "rgbx",
+        "diagnostics": [{ "channel": "warn", "args": ["Cannot derive brand"] }]
+      },
+      {
+        "name": "private_safeAlpha rgbx warning=",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeAlpha var(--brand) warning=Cannot derive brand",
+        "output": "var(--brand)",
+        "diagnostics": [{ "channel": "warn", "args": ["Cannot derive brand"] }]
+      },
+      {
+        "name": "private_safeAlpha var(--brand) warning=",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeAlpha #123456 warning=Cannot derive brand",
+        "output": "rgba(18, 52, 86, 0.2)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeAlpha #123456 warning=",
+        "output": "rgba(18, 52, 86, 0.2)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeDarken rgbx warning=Cannot derive brand",
+        "output": "rgbx",
+        "diagnostics": [{ "channel": "warn", "args": ["Cannot derive brand"] }]
+      },
+      {
+        "name": "private_safeDarken rgbx warning=",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeDarken var(--brand) warning=Cannot derive brand",
+        "output": "var(--brand)",
+        "diagnostics": [{ "channel": "warn", "args": ["Cannot derive brand"] }]
+      },
+      {
+        "name": "private_safeDarken var(--brand) warning=",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeDarken #123456 warning=Cannot derive brand",
+        "output": "rgb(14, 41, 68)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeDarken #123456 warning=",
+        "output": "rgb(14, 41, 68)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeLighten rgbx warning=Cannot derive brand",
+        "output": "rgbx",
+        "diagnostics": [{ "channel": "warn", "args": ["Cannot derive brand"] }]
+      },
+      {
+        "name": "private_safeLighten rgbx warning=",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeLighten var(--brand) warning=Cannot derive brand",
+        "output": "var(--brand)",
+        "diagnostics": [{ "channel": "warn", "args": ["Cannot derive brand"] }]
+      },
+      {
+        "name": "private_safeLighten var(--brand) warning=",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeLighten #123456 warning=Cannot derive brand",
+        "output": "rgb(65, 92, 119)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeLighten #123456 warning=",
+        "output": "rgb(65, 92, 119)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeEmphasize rgbx warning=Cannot derive brand",
+        "output": "rgbx",
+        "diagnostics": [{ "channel": "warn", "args": ["Cannot derive brand"] }]
+      },
+      {
+        "name": "private_safeEmphasize rgbx warning=",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeEmphasize var(--brand) warning=Cannot derive brand",
+        "output": "var(--brand)",
+        "diagnostics": [{ "channel": "warn", "args": ["Cannot derive brand"] }]
+      },
+      {
+        "name": "private_safeEmphasize var(--brand) warning=",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeEmphasize #123456 warning=Cannot derive brand",
+        "output": "rgb(65, 92, 119)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeEmphasize #123456 warning=",
+        "output": "rgb(65, 92, 119)",
+        "diagnostics": []
+      },
+      {
+        "name": "recompose mutable rgb",
+        "output": {
+          "output": "rgb(12, 34, 56)",
+          "after": {
+            "type": "rgb",
+            "values": [12.8, 34.2, 56],
+            "colorSpace": { "undefined": true }
+          }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose frozen rgb",
+        "output": "rgb(12, 34, 56)",
+        "diagnostics": []
+      },
+      {
+        "name": "recompose mutable rgba",
+        "output": {
+          "output": "rgba(12, 34, 56, 0.4)",
+          "after": {
+            "type": "rgba",
+            "values": [12.8, 34.2, 56, 0.4],
+            "colorSpace": { "undefined": true }
+          }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose frozen rgba",
+        "output": "rgba(12, 34, 56)",
+        "diagnostics": []
+      },
+      {
+        "name": "recompose mutable hsl",
+        "output": {
+          "output": "hsl(12.8, 34.2%, 56%)",
+          "after": {
+            "type": "hsl",
+            "values": [12.8, "34.2%", "56%"],
+            "colorSpace": { "undefined": true }
+          }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose frozen hsl",
+        "error": {
+          "name": "TypeError",
+          "message": "Cannot assign to read only property '1' of object '[object Array]'"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose mutable hsla",
+        "output": {
+          "output": "hsla(12.8, 34.2%, 56%, 0.4)",
+          "after": {
+            "type": "hsla",
+            "values": [12.8, "34.2%", "56%", 0.4],
+            "colorSpace": { "undefined": true }
+          }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose frozen hsla",
+        "error": {
+          "name": "TypeError",
+          "message": "Cannot assign to read only property '1' of object '[object Array]'"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose mutable color",
+        "output": {
+          "output": "color(undefined 12.8 34.2 56)",
+          "after": {
+            "type": "color",
+            "values": [12.8, 34.2, 56],
+            "colorSpace": { "undefined": true }
+          }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose frozen color",
+        "output": "color(undefined 12 34 56)",
+        "diagnostics": []
+      },
+      {
+        "name": "recompose HSL repeated writes",
+        "output": {
+          "first": "hsl(220, 70%, 40%)",
+          "second": "hsl(220, 70%%, 40%%)",
+          "after": { "type": "hsl", "values": [220, "70%%", "40%%"] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose public getter order",
+        "output": {
+          "output": "rgb(20, 2, 3)",
+          "calls": ["type", "colorSpace", "values"]
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime object identity",
+        "output": true,
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime alpha",
+        "output": {
+          "output": "hsla(220, 70%, 40%, 0.2)",
+          "after": { "type": "hsla", "values": [220, "70%", "40%", 0.2] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime darken",
+        "output": {
+          "output": "hsl(220, 70%, 32%)",
+          "after": { "type": "hsl", "values": [220, "70%", "32%"] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime lighten",
+        "output": {
+          "output": "hsl(220, 70%, 52%)",
+          "after": { "type": "hsl", "values": [220, "70%", "52%"] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime emphasize",
+        "output": {
+          "output": "hsl(220, 70%, 52%)",
+          "after": { "type": "hsl", "values": [220, "70%", "52%"] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime hslToRgb",
+        "output": {
+          "output": "rgb(31, 78, 173)",
+          "after": { "type": "hsl", "values": [220, 70, 40] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime getLuminance",
+        "output": {
+          "output": 0.088,
+          "after": { "type": "hsl", "values": [220, 70, 40] }
+        },
+        "diagnostics": []
+      }
+    ],
+    "production": [
+      {
+        "name": "decompose rgbx",
+        "error": { "name": "Error" },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose rgb",
+        "error": { "name": "Error" },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose hslx",
+        "error": { "name": "Error" },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose color",
+        "error": { "name": "Error" },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose RGB(1, 2, 3)",
+        "error": { "name": "Error" },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose var(--brand)",
+        "error": { "name": "Error" },
+        "diagnostics": []
+      },
+      {
+        "name": "decompose red",
+        "error": { "name": "Error" },
+        "diagnostics": []
+      },
+      { "name": "hex #", "output": "", "diagnostics": [] },
+      {
+        "name": "hex #12345",
+        "output": "rgb(17, 34, 51, 0.267, 0.333)",
+        "diagnostics": []
+      },
+      {
+        "name": "hex #1234567",
+        "output": "rgba(18, 52, 86, 0.027)",
+        "diagnostics": []
+      },
+      {
+        "name": "hex #123456789",
+        "output": "rgb(18, 52, 86, 0.471, 0.035)",
+        "diagnostics": []
+      },
+      {
+        "name": "hex #fff ",
+        "output": "rgba(255, 255, 255, NaN)",
+        "diagnostics": []
+      },
+      { "name": "hex #ggg", "output": "rgb(NaN, NaN, NaN)", "diagnostics": [] },
+      {
+        "name": "space srgb",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6],
+          "colorSpace": "srgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space srgb /0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, 0.4],
+          "colorSpace": "srgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space srgb / 0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, { "number": "NaN" }, 0.4],
+          "colorSpace": "srgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space display-p3",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6],
+          "colorSpace": "display-p3"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space display-p3 /0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, 0.4],
+          "colorSpace": "display-p3"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space display-p3 / 0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, { "number": "NaN" }, 0.4],
+          "colorSpace": "display-p3"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space a98-rgb",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6],
+          "colorSpace": "a98-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space a98-rgb /0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, 0.4],
+          "colorSpace": "a98-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space a98-rgb / 0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, { "number": "NaN" }, 0.4],
+          "colorSpace": "a98-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space prophoto-rgb",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6],
+          "colorSpace": "prophoto-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space prophoto-rgb /0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, 0.4],
+          "colorSpace": "prophoto-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space prophoto-rgb / 0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, { "number": "NaN" }, 0.4],
+          "colorSpace": "prophoto-rgb"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space rec-2020",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6],
+          "colorSpace": "rec-2020"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space rec-2020 /0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, 0.4],
+          "colorSpace": "rec-2020"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space rec-2020 / 0.4",
+        "output": {
+          "type": "color",
+          "values": [0.2, 0.4, 0.6, { "number": "NaN" }, 0.4],
+          "colorSpace": "rec-2020"
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "space unknown",
+        "error": { "name": "Error" },
+        "diagnostics": []
+      },
+      {
+        "name": "space unknown /0.4",
+        "error": { "name": "Error" },
+        "diagnostics": []
+      },
+      {
+        "name": "space unknown / 0.4",
+        "error": { "name": "Error" },
+        "diagnostics": []
+      },
+      {
+        "name": "alpha coefficient -0.5",
+        "output": "rgba(12, 34, 56, 0)",
+        "diagnostics": []
+      },
+      {
+        "name": "alpha coefficient 1.5",
+        "output": "rgba(12, 34, 56, 1)",
+        "diagnostics": []
+      },
+      {
+        "name": "alpha coefficient NaN",
+        "output": "rgba(12, 34, 56, NaN)",
+        "diagnostics": []
+      },
+      {
+        "name": "alpha coefficient Infinity",
+        "output": "rgba(12, 34, 56, 1)",
+        "diagnostics": []
+      },
+      {
+        "name": "darken coefficient -0.5",
+        "output": "rgb(12, 34, 56)",
+        "diagnostics": []
+      },
+      {
+        "name": "darken coefficient 1.5",
+        "output": "rgb(0, 0, 0)",
+        "diagnostics": []
+      },
+      {
+        "name": "darken coefficient NaN",
+        "output": "rgb(NaN, NaN, NaN)",
+        "diagnostics": []
+      },
+      {
+        "name": "darken coefficient Infinity",
+        "output": "rgb(0, 0, 0)",
+        "diagnostics": []
+      },
+      {
+        "name": "lighten coefficient -0.5",
+        "output": "rgb(12, 34, 56)",
+        "diagnostics": []
+      },
+      {
+        "name": "lighten coefficient 1.5",
+        "output": "rgb(255, 255, 255)",
+        "diagnostics": []
+      },
+      {
+        "name": "lighten coefficient NaN",
+        "output": "rgb(NaN, NaN, NaN)",
+        "diagnostics": []
+      },
+      {
+        "name": "lighten coefficient Infinity",
+        "output": "rgb(255, 255, 255)",
+        "diagnostics": []
+      },
+      {
+        "name": "emphasize coefficient -0.5",
+        "output": "rgb(12, 34, 56)",
+        "diagnostics": []
+      },
+      {
+        "name": "emphasize coefficient 1.5",
+        "output": "rgb(255, 255, 255)",
+        "diagnostics": []
+      },
+      {
+        "name": "emphasize coefficient NaN",
+        "output": "rgb(NaN, NaN, NaN)",
+        "diagnostics": []
+      },
+      {
+        "name": "emphasize coefficient Infinity",
+        "output": "rgb(255, 255, 255)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeColorChannel rgbx warning=Cannot derive brand",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeColorChannel rgbx warning=",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeColorChannel var(--brand) warning=Cannot derive brand",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeColorChannel var(--brand) warning=",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeColorChannel #123456 warning=Cannot derive brand",
+        "output": "18 52 86",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeColorChannel #123456 warning=",
+        "output": "18 52 86",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeAlpha rgbx warning=Cannot derive brand",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeAlpha rgbx warning=",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeAlpha var(--brand) warning=Cannot derive brand",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeAlpha var(--brand) warning=",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeAlpha #123456 warning=Cannot derive brand",
+        "output": "rgba(18, 52, 86, 0.2)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeAlpha #123456 warning=",
+        "output": "rgba(18, 52, 86, 0.2)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeDarken rgbx warning=Cannot derive brand",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeDarken rgbx warning=",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeDarken var(--brand) warning=Cannot derive brand",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeDarken var(--brand) warning=",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeDarken #123456 warning=Cannot derive brand",
+        "output": "rgb(14, 41, 68)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeDarken #123456 warning=",
+        "output": "rgb(14, 41, 68)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeLighten rgbx warning=Cannot derive brand",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeLighten rgbx warning=",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeLighten var(--brand) warning=Cannot derive brand",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeLighten var(--brand) warning=",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeLighten #123456 warning=Cannot derive brand",
+        "output": "rgb(65, 92, 119)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeLighten #123456 warning=",
+        "output": "rgb(65, 92, 119)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeEmphasize rgbx warning=Cannot derive brand",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeEmphasize rgbx warning=",
+        "output": "rgbx",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeEmphasize var(--brand) warning=Cannot derive brand",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeEmphasize var(--brand) warning=",
+        "output": "var(--brand)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeEmphasize #123456 warning=Cannot derive brand",
+        "output": "rgb(65, 92, 119)",
+        "diagnostics": []
+      },
+      {
+        "name": "private_safeEmphasize #123456 warning=",
+        "output": "rgb(65, 92, 119)",
+        "diagnostics": []
+      },
+      {
+        "name": "recompose mutable rgb",
+        "output": {
+          "output": "rgb(12, 34, 56)",
+          "after": {
+            "type": "rgb",
+            "values": [12.8, 34.2, 56],
+            "colorSpace": { "undefined": true }
+          }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose frozen rgb",
+        "output": "rgb(12, 34, 56)",
+        "diagnostics": []
+      },
+      {
+        "name": "recompose mutable rgba",
+        "output": {
+          "output": "rgba(12, 34, 56, 0.4)",
+          "after": {
+            "type": "rgba",
+            "values": [12.8, 34.2, 56, 0.4],
+            "colorSpace": { "undefined": true }
+          }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose frozen rgba",
+        "output": "rgba(12, 34, 56)",
+        "diagnostics": []
+      },
+      {
+        "name": "recompose mutable hsl",
+        "output": {
+          "output": "hsl(12.8, 34.2%, 56%)",
+          "after": {
+            "type": "hsl",
+            "values": [12.8, "34.2%", "56%"],
+            "colorSpace": { "undefined": true }
+          }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose frozen hsl",
+        "error": { "name": "TypeError" },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose mutable hsla",
+        "output": {
+          "output": "hsla(12.8, 34.2%, 56%, 0.4)",
+          "after": {
+            "type": "hsla",
+            "values": [12.8, "34.2%", "56%", 0.4],
+            "colorSpace": { "undefined": true }
+          }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose frozen hsla",
+        "error": { "name": "TypeError" },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose mutable color",
+        "output": {
+          "output": "color(undefined 12.8 34.2 56)",
+          "after": {
+            "type": "color",
+            "values": [12.8, 34.2, 56],
+            "colorSpace": { "undefined": true }
+          }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose frozen color",
+        "output": "color(undefined 12 34 56)",
+        "diagnostics": []
+      },
+      {
+        "name": "recompose HSL repeated writes",
+        "output": {
+          "first": "hsl(220, 70%, 40%)",
+          "second": "hsl(220, 70%%, 40%%)",
+          "after": { "type": "hsl", "values": [220, "70%%", "40%%"] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "recompose public getter order",
+        "output": {
+          "output": "rgb(20, 2, 3)",
+          "calls": ["type", "colorSpace", "values"]
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime object identity",
+        "output": true,
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime alpha",
+        "output": {
+          "output": "hsla(220, 70%, 40%, 0.2)",
+          "after": { "type": "hsla", "values": [220, "70%", "40%", 0.2] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime darken",
+        "output": {
+          "output": "hsl(220, 70%, 32%)",
+          "after": { "type": "hsl", "values": [220, "70%", "32%"] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime lighten",
+        "output": {
+          "output": "hsl(220, 70%, 52%)",
+          "after": { "type": "hsl", "values": [220, "70%", "52%"] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime emphasize",
+        "output": {
+          "output": "hsl(220, 70%, 52%)",
+          "after": { "type": "hsl", "values": [220, "70%", "52%"] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime hslToRgb",
+        "output": {
+          "output": "rgb(31, 78, 173)",
+          "after": { "type": "hsl", "values": [220, 70, 40] }
+        },
+        "diagnostics": []
+      },
+      {
+        "name": "parsed runtime getLuminance",
+        "output": {
+          "output": 0.088,
+          "after": { "type": "hsl", "values": [220, 70, 40] }
+        },
+        "diagnostics": []
+      }
+    ]
+  }
 }

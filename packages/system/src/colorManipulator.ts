@@ -1,155 +1,182 @@
+'use strict';
+
 // Adapted from @mui/system 9.5.0 colorManipulator (MIT).
 // Copyright (c) 2014 Call-Em-All. Full permission notice: root NOTICE.
 // Source provenance and adaptations: upstream/reuse.json.
+// Native implementation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 export type ColorFormat = 'rgb' | 'rgba' | 'hsl' | 'hsla' | 'color';
 export interface ColorObject {
   type: ColorFormat;
   values: [number, number, number] | [number, number, number, number];
-  colorSpace?: 'srgb' | 'display-p3' | 'a98-rgb' | 'prophoto-rgb' | 'rec-2020';
+  colorSpace?: 'srgb' | 'display-p3' | 'a98-rgb' | 'prophoto-rgb' | 'rec-2020' | undefined;
 }
 function clamp(value: number) {
-  if (process.env.NODE_ENV !== 'production' && (value < 0 || value > 1)) {
-    console.error(`MUI Native: Color coefficient ${value} is outside [0, 1].`);
-  }
-  return Math.min(1, Math.max(0, value));
+  if (process.env.NODE_ENV !== 'production' && (value < 0 || value > 1))
+    console.error(`MUI Native: The value provided ${value} is out of range [0, 1].`);
+  return Math.max(0, Math.min(value, 1));
 }
 export function hexToRgb(color: string): string {
-  const hex = color.slice(1);
-  const parts = hex.match(new RegExp(`.{1,${hex.length >= 6 ? 2 : 1}}`, 'g'));
-  if (!parts) return '';
-  const channels = parts.map((part, index) => {
-    const value = parseInt(part.length === 1 ? part + part : part, 16);
-    return index === 3 ? Math.round((value / 255) * 1000) / 1000 : value;
-  });
-  return `rgb${parts.length === 4 ? 'a' : ''}(${channels.join(', ')})`;
+  color = color.slice(1);
+  let parts: string[] | null = color.match(new RegExp(`.{1,${color.length >= 6 ? 2 : 1}}`, 'g'));
+  // Expand the complete short form, rather than a trailing odd-length group.
+  if (parts && parts[0].length === 1) parts = parts.map((part) => part + part);
+  if (process.env.NODE_ENV !== 'production' && color.length !== color.trim().length)
+    console.error(
+      `MUI Native: The color: "${color}" is invalid. Make sure the color input doesn't contain leading/trailing space.`,
+    );
+  return parts
+    ? `rgb${parts.length === 4 ? 'a' : ''}(${parts
+        .map((part, i) =>
+          i < 3 ? parseInt(part, 16) : Math.round((parseInt(part, 16) / 255) * 1000) / 1000,
+        )
+        .join(', ')})`
+    : '';
+}
+function intToHex(value: number) {
+  const hex = value.toString(16);
+  return hex.length === 1 ? `0${hex}` : hex;
 }
 export function decomposeColor(color: string): ColorObject {
-  if (color.startsWith('#')) return decomposeColor(hexToRgb(color));
+  // MUI's implementation also reuses parsed objects internally. Preserve that
+  // runtime path without widening its original string-only declarations.
+  const existing = color as unknown as ColorObject;
+  if (existing.type) return existing;
+  if (color.charAt(0) === '#') return decomposeColor(hexToRgb(color));
   const marker = color.indexOf('(');
-  const type = color.slice(0, marker) as ColorFormat;
-  if (!['rgb', 'rgba', 'hsl', 'hsla', 'color'].includes(type)) {
+  const type = color.substring(0, marker) as ColorFormat;
+  if (!['rgb', 'rgba', 'hsl', 'hsla', 'color'].includes(type))
     throw new Error(
-      `MUI Native: Unsupported color ${color}. Use hex, rgb(), rgba(), hsl(), hsla() or color().`,
+      `MUI Native: Unsupported \`${color}\` color.\nThe following formats are supported: #nnn, #nnnnnn, rgb(), rgba(), hsl(), hsla(), color().`,
     );
-  }
-  const body = color.slice(marker + 1, -1);
+  const body = color.substring(marker + 1, color.length - 1);
   const parts = body.split(type === 'color' ? ' ' : ',');
   let colorSpace: ColorObject['colorSpace'];
   if (type === 'color') {
     colorSpace = parts.shift() as ColorObject['colorSpace'];
-    if (!['srgb', 'display-p3', 'a98-rgb', 'prophoto-rgb', 'rec-2020'].includes(colorSpace ?? '')) {
-      throw new Error(`MUI Native: Unsupported color space ${colorSpace}.`);
-    }
-    if (parts.length === 4 && parts[3].startsWith('/')) parts[3] = parts[3].slice(1);
+    if (parts.length === 4 && parts[3].charAt(0) === '/') parts[3] = parts[3].slice(1);
+    if (
+      !(
+        ['srgb', 'display-p3', 'a98-rgb', 'prophoto-rgb', 'rec-2020'] as Array<string | undefined>
+      ).includes(colorSpace)
+    )
+      throw new Error(
+        `MUI Native: unsupported \`${colorSpace}\` color space.\nThe following color spaces are supported: srgb, display-p3, a98-rgb, prophoto-rgb, rec-2020.`,
+      );
   }
-  return { type, values: parts.map(parseFloat) as ColorObject['values'], colorSpace };
+  return {
+    type,
+    values: parts.map((part) => parseFloat(part)) as ColorObject['values'],
+    colorSpace,
+  };
 }
-function compose(
-  type: ColorFormat,
-  values: (number | string)[],
-  colorSpace?: ColorObject['colorSpace'],
-): string {
-  const channels = values.map((value, index) => {
-    if (type.includes('rgb') && index < 3) return parseInt(String(value), 10);
-    if (type.includes('hsl') && (index === 1 || index === 2)) return `${value}%`;
-    return value;
-  });
-  return type === 'color'
-    ? `color(${colorSpace} ${channels.join(' ')})`
-    : `${type}(${channels.join(', ')})`;
-}
-export function recomposeColor(color: ColorObject): string {
-  return compose(color.type, color.values, color.colorSpace);
-}
-export function colorChannel(color: string): string {
+export const colorChannel = (color: string): string => {
   const parsed = decomposeColor(color);
   return parsed.values
     .slice(0, 3)
-    .map((value, index) => (parsed.type.includes('hsl') && index !== 0 ? `${value}%` : value))
+    .map((value, i) => (parsed.type.includes('hsl') && i !== 0 ? `${value}%` : value))
     .join(' ');
+};
+export function recomposeColor(color: ColorObject): string {
+  // Preserve source getter order: colorSpace can update the channels before
+  // values is read. RGB mapping is local; HSL percentage writes are observable.
+  const { type, colorSpace } = color;
+  let values = color.values as Array<number | string>;
+  if (type.includes('rgb'))
+    values = values.map((value, i) => (i < 3 ? parseInt(value as unknown as string, 10) : value));
+  else if (type.includes('hsl')) {
+    values[1] = `${values[1]}%`;
+    values[2] = `${values[2]}%`;
+  }
+  return type.includes('color')
+    ? `${type}(${colorSpace} ${values.join(' ')})`
+    : `${type}(${values.join(', ')})`;
 }
 export function rgbToHex(color: string): string {
   if (color.startsWith('#')) return color;
-  return (
-    '#' +
-    decomposeColor(color)
-      .values.map((value, index) =>
-        (index === 3 ? Math.round(255 * value) : value).toString(16).padStart(2, '0'),
-      )
-      .join('')
-  );
+  const { values } = decomposeColor(color);
+  return `#${values.map((value, i) => intToHex(i === 3 ? Math.round(255 * value) : value)).join('')}`;
 }
 export function hslToRgb(color: string): string {
   const parsed = decomposeColor(color);
-  const [hue, saturation, lightness] = parsed.values;
-  const light = lightness / 100;
-  const amplitude = (saturation / 100) * Math.min(light, 1 - light);
-  const channel = (offset: number) => {
-    const phase = (offset + hue / 30) % 12;
-    return Math.round((light - amplitude * Math.max(Math.min(phase - 3, 9 - phase, 1), -1)) * 255);
-  };
-  const values = [channel(0), channel(8), channel(4)];
-  if (parsed.type === 'hsla') values.push(parsed.values[3]!);
-  return compose(parsed.type === 'hsla' ? 'rgba' : 'rgb', values);
+  const { values } = parsed;
+  const hue = values[0],
+    saturation = values[1] / 100,
+    lightness = values[2] / 100;
+  const amplitude = saturation * Math.min(lightness, 1 - lightness);
+  const channel = (offset: number, phase = (offset + hue / 30) % 12) =>
+    lightness - amplitude * Math.max(Math.min(phase - 3, 9 - phase, 1), -1);
+  let type: ColorFormat = 'rgb';
+  const rgb = [
+    Math.round(channel(0) * 255),
+    Math.round(channel(8) * 255),
+    Math.round(channel(4) * 255),
+  ];
+  if (parsed.type === 'hsla') {
+    type = 'rgba';
+    rgb.push(values[3]!);
+  }
+  return recomposeColor({ type, values: rgb as ColorObject['values'] });
 }
 export function getLuminance(color: string): number {
   const parsed = decomposeColor(color);
-  const values = parsed.type.includes('hsl')
-    ? decomposeColor(hslToRgb(color)).values
-    : parsed.values;
-  const [red, green, blue] = values.map((value) => {
-    const normalized = parsed.type === 'color' ? value : value / 255;
-    return normalized <= 0.03928 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+  const rgb =
+    parsed.type === 'hsl' || parsed.type === 'hsla'
+      ? decomposeColor(hslToRgb(parsed as unknown as string)).values
+      : parsed.values;
+  const linear = rgb.map((value) => {
+    if (parsed.type !== 'color') value /= 255;
+    return value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
   });
-  return Number((0.2126 * red + 0.7152 * green + 0.0722 * blue).toFixed(3));
+  return Number((0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]).toFixed(3));
 }
 export function getContrastRatio(foreground: string, background: string): number {
-  const first = getLuminance(foreground);
-  const second = getLuminance(background);
+  const first = getLuminance(foreground),
+    second = getLuminance(background);
   return (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05);
 }
 export function alpha(color: string, value: number): string {
   const parsed = decomposeColor(color);
-  const opacity = clamp(value);
-  const type = parsed.type === 'rgb' ? 'rgba' : parsed.type === 'hsl' ? 'hsla' : parsed.type;
-  return compose(
-    type,
-    [...parsed.values.slice(0, 3), type === 'color' ? `/${opacity}` : opacity],
-    parsed.colorSpace,
-  );
-}
-function shift(color: string, coefficient: number, lighter: boolean): string {
-  const parsed = decomposeColor(color);
-  const amount = clamp(coefficient);
-  const values = parsed.values.map((value, index) => {
-    if (index === 3 || (parsed.type.includes('hsl') && index !== 2)) return value;
-    const ceiling = parsed.type.includes('hsl') ? 100 : parsed.type === 'color' ? 1 : 255;
-    return lighter ? value + (ceiling - value) * amount : value * (1 - amount);
-  });
-  return compose(parsed.type, values, parsed.colorSpace);
+  value = clamp(value);
+  if (parsed.type === 'rgb' || parsed.type === 'hsl')
+    parsed.type = `${parsed.type}a` as ColorFormat;
+  if (parsed.type === 'color') (parsed.values as Array<number | string>)[3] = `/${value}`;
+  else parsed.values[3] = value;
+  return recomposeColor(parsed);
 }
 export function darken(color: string, coefficient: number): string {
-  return shift(color, coefficient, false);
+  const parsed = decomposeColor(color);
+  coefficient = clamp(coefficient);
+  if (parsed.type.includes('hsl')) parsed.values[2] *= 1 - coefficient;
+  else if (parsed.type.includes('rgb') || parsed.type.includes('color'))
+    for (let i = 0; i < 3; i++) parsed.values[i]! *= 1 - coefficient;
+  return recomposeColor(parsed);
 }
 export function lighten(color: string, coefficient: number): string {
-  return shift(color, coefficient, true);
+  const parsed = decomposeColor(color);
+  coefficient = clamp(coefficient);
+  if (parsed.type.includes('hsl')) parsed.values[2] += (100 - parsed.values[2]) * coefficient;
+  else if (parsed.type.includes('rgb'))
+    for (let i = 0; i < 3; i++) parsed.values[i]! += (255 - parsed.values[i]!) * coefficient;
+  else if (parsed.type.includes('color'))
+    for (let i = 0; i < 3; i++) parsed.values[i]! += (1 - parsed.values[i]!) * coefficient;
+  return recomposeColor(parsed);
 }
 export function emphasize(color: string, coefficient = 0.15): string {
   return getLuminance(color) > 0.5 ? darken(color, coefficient) : lighten(color, coefficient);
 }
 export function blend(background: string, overlay: string, opacity: number, gamma = 1): string {
-  const base = decomposeColor(background).values;
-  const top = decomposeColor(overlay).values;
-  return compose(
-    'rgb',
-    base
-      .slice(0, 3)
-      .map((value, index) =>
-        Math.round(
-          (value ** (1 / gamma) * (1 - opacity) + top[index] ** (1 / gamma) * opacity) ** gamma,
-        ),
-      ),
-  );
+  const channel = (base: number, top: number) =>
+    Math.round((base ** (1 / gamma) * (1 - opacity) + top ** (1 / gamma) * opacity) ** gamma);
+  const base = decomposeColor(background),
+    top = decomposeColor(overlay);
+  return recomposeColor({
+    type: 'rgb',
+    values: [
+      channel(base.values[0], top.values[0]),
+      channel(base.values[1], top.values[1]),
+      channel(base.values[2], top.values[2]),
+    ],
+  });
 }
 function safe(color: string, operation: () => string, warning?: string): string {
   try {
@@ -159,13 +186,21 @@ function safe(color: string, operation: () => string, warning?: string): string 
     return color;
   }
 }
-export const private_safeColorChannel = (color: string, warning?: string) =>
+export const private_safeColorChannel = (color: string, warning?: string): string =>
   safe(color, () => colorChannel(color), warning);
-export const private_safeAlpha = (color: string, value: number, warning?: string) =>
-  safe(color, () => alpha(color, value), warning);
-export const private_safeDarken = (color: string, coefficient: number, warning?: string) =>
-  safe(color, () => darken(color, coefficient), warning);
-export const private_safeLighten = (color: string, coefficient: number, warning?: string) =>
-  safe(color, () => lighten(color, coefficient), warning);
-export const private_safeEmphasize = (color: string, coefficient?: number, warning?: string) =>
-  safe(color, () => emphasize(color, coefficient), warning);
+export function private_safeAlpha(color: string, value: number, warning?: string): string {
+  return safe(color, () => alpha(color, value), warning);
+}
+export function private_safeDarken(color: string, coefficient: number, warning?: string): string {
+  return safe(color, () => darken(color, coefficient), warning);
+}
+export function private_safeLighten(color: string, coefficient: number, warning?: string): string {
+  return safe(color, () => lighten(color, coefficient), warning);
+}
+export function private_safeEmphasize(
+  color: string,
+  coefficient?: number,
+  warning?: string,
+): string {
+  return safe(color, () => emphasize(color, coefficient), warning);
+}

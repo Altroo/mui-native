@@ -1,8 +1,10 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { format } from 'prettier';
 import { loadReference } from './load.mjs';
+import observeColorContract from './color-contract-cases.cjs';
 
 // Run against isolated original packages, never the native aliases or implementations.
 // Setup and cache locations are documented in docs/theming.md.
@@ -24,7 +26,19 @@ for (const [name, files] of [
       'colors/green.js',
     ],
   ],
-  ['@mui/system', ['colorManipulator/colorManipulator.js']],
+  [
+    '@mui/system',
+    ['colorManipulator/colorManipulator.js', 'colorManipulator/colorManipulator.d.ts'],
+  ],
+  [
+    '@mui/utils',
+    [
+      'clamp/index.js',
+      'clamp/clamp.js',
+      'formatMuiErrorMessage/index.js',
+      'formatMuiErrorMessage/formatMuiErrorMessage.js',
+    ],
+  ],
 ]) {
   const loaded = await loadReference(name, files);
   references.push(loaded.reference);
@@ -120,8 +134,18 @@ for (const color of [
   { type: 'hsl', values: [220, 70, 40] },
 ])
   add('recomposeColor', [color]);
+const colorContract = Object.fromEntries(
+  ['development', 'production'].map((mode) => [mode, observeColorContract(colors, mode)]),
+);
 const output = await format(
-  JSON.stringify({ references, palettes, augmentation, colors: colorCases }),
+  JSON.stringify({
+    references,
+    palettes,
+    augmentation,
+    colors: colorCases,
+    colorExports: Object.keys(colors).sort(),
+    colorContract,
+  }),
   { parser: 'json' },
 );
 const file = 'tests/fixtures/mui-palette-9.5.0.json';
@@ -130,5 +154,5 @@ if (process.argv.includes('--check')) {
     throw new Error('Palette reference fixture has drifted.');
 } else await writeFile(file, output);
 console.log(
-  `${palettes.length} palette, ${augmentation.length} augmentation and ${colorCases.length} color reference cases verified.`,
+  `${palettes.length} palette, ${augmentation.length} augmentation and ${colorCases.length} color reference cases and ${colorContract.development.length} boundary cases per mode verified.`,
 );

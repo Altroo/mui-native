@@ -9,7 +9,13 @@ import {
 } from '@mui/system';
 import { unstable_createBreakpoints } from '@mui/system/createBreakpoints';
 import { createSpacing as nativeSpacing } from '@altroo/mui-native-system';
-import type {} from '@mui/material/styles';
+import {
+  alpha as materialAlpha,
+  type ColorObject as MaterialColorObject,
+} from '@mui/material/styles';
+import * as colorHelpers from '@mui/system/colorManipulator';
+import { type ColorObject as SystemColorObject } from '@mui/system';
+import { type ColorObject as NativeColorObject } from '@altroo/mui-native-system';
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -52,3 +58,25 @@ breakpoints.only(640);
 spacing(1, 2, 3, 4, 5);
 // @ts-expect-error mui is an internal marker absent from the public Spacing declaration
 spacing.mui;
+
+// Explicit undefined is legal in the original declarations, including when a
+// strict consumer forwards a computed optional colorSpace through each entry.
+export const parsedColor: SystemColorObject = {
+  type: 'rgb',
+  values: [12, 34, 56],
+  colorSpace: undefined,
+};
+export const materialColor: MaterialColorObject = parsedColor;
+export const nativeColor: NativeColorObject = materialColor;
+export const deepColor: colorHelpers.ColorObject = nativeColor;
+export const recomposed: string = colorHelpers.recomposeColor(deepColor);
+export const overlay: string = materialAlpha(recomposed, 0.4);
+export const safeChannel: string = colorHelpers.private_safeColorChannel(recomposed);
+// @ts-expect-error runtime object reuse does not add a public object-input overload
+colorHelpers.decomposeColor(parsedColor);
+export const invalidSpace: colorHelpers.ColorObject = {
+  type: 'color',
+  values: [0, 0, 0],
+  // @ts-expect-error unsupported spaces remain excluded from the public declaration
+  colorSpace: 'xyz',
+};

@@ -370,7 +370,7 @@ execFileSync(
   ['--project', 'tsconfig.helper-contract.native.json', '--noEmit'],
   { cwd: consumer, stdio: 'inherit' },
 );
-console.log('Installed strict spacing/breakpoint helper contracts passed independently.');
+console.log('Installed strict spacing/breakpoint/color helper contracts passed independently.');
 // Each wrapper gets an isolated strict consumer so class augmentation cannot
 // accidentally satisfy another fixture through a shared compiler invocation.
 for (const [contract, fixture] of [

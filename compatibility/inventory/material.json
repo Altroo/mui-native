@@ -35262,7 +35262,7 @@
           "module": "@altroo/mui-native-system:src/colorManipulator.ts",
           "name": "blend",
           "kind": "value",
-          "line": 140
+          "line": 167
         }
       ]
     },
@@ -35394,7 +35394,7 @@
           "module": "@altroo/mui-native-system:src/colorManipulator.ts",
           "name": "colorChannel",
           "kind": "value",
-          "line": 64
+          "line": 72
         }
       ]
     },
@@ -37176,7 +37176,7 @@
           "module": "@altroo/mui-native-system:src/colorManipulator.ts",
           "name": "private_safeAlpha",
           "kind": "value",
-          "line": 164
+          "line": 191
         }
       ]
     },
@@ -37187,7 +37187,7 @@
           "module": "@altroo/mui-native-system:src/colorManipulator.ts",
           "name": "private_safeColorChannel",
           "kind": "value",
-          "line": 162
+          "line": 189
         }
       ]
     },
@@ -37198,7 +37198,7 @@
           "module": "@altroo/mui-native-system:src/colorManipulator.ts",
           "name": "private_safeDarken",
           "kind": "value",
-          "line": 166
+          "line": 194
         }
       ]
     },
@@ -37209,7 +37209,7 @@
           "module": "@altroo/mui-native-system:src/colorManipulator.ts",
           "name": "private_safeEmphasize",
           "kind": "value",
-          "line": 170
+          "line": 200
         }
       ]
     },
@@ -37220,7 +37220,7 @@
           "module": "@altroo/mui-native-system:src/colorManipulator.ts",
           "name": "private_safeLighten",
           "kind": "value",
-          "line": 168
+          "line": 197
         }
       ]
     },
@@ -213845,7 +213845,7 @@
     {
       "name": "ColorFormat",
       "file": "src/colorManipulator.ts",
-      "line": 4,
+      "line": 7,
       "kind": "type",
       "members": [],
       "references": [],
@@ -213855,7 +213855,7 @@
     {
       "name": "ColorObject",
       "file": "src/colorManipulator.ts",
-      "line": 5,
+      "line": 8,
       "kind": "type",
       "members": [
         {
@@ -213865,7 +213865,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "type: ColorFormat;",
-          "line": 6,
+          "line": 9,
           "kind": "property",
           "type": "ColorFormat"
         },
@@ -213876,7 +213876,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "values: [number, number, number] | [number, number, number, number];",
-          "line": 7,
+          "line": 10,
           "kind": "property",
           "type": "[number, number, number] | [number, number, number, number]"
         },
@@ -213886,10 +213886,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "colorSpace?: 'srgb' | 'display-p3' | 'a98-rgb' | 'prophoto-rgb' | 'rec-2020';",
-          "line": 8,
+          "declaration": "colorSpace?: 'srgb' | 'display-p3' | 'a98-rgb' | 'prophoto-rgb' | 'rec-2020' | undefined;",
+          "line": 11,
           "kind": "property",
-          "type": "'srgb' | 'display-p3' | 'a98-rgb' | 'prophoto-rgb' | 'rec-2020'"
+          "type": "'srgb' | 'display-p3' | 'a98-rgb' | 'prophoto-rgb' | 'rec-2020' | undefined"
         }
       ],
       "references": [
