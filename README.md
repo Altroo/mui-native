@@ -480,6 +480,7 @@ This project uses AI-assisted tools to accelerate development, review, and docum
 - [Native input variants and adornments](docs/inputs.md)
 - [Native labels, helper text and floating fields](docs/form-labels.md)
 - [Nested and scoped theme providers](docs/theme-providers.md)
+- [Native style cache ownership and lifetime](docs/native-style-cache.md)
 - [Native Modal, Backdrop and Dialog coordination](docs/modals.md)
 - [Native Fade, transition timing and reduced motion](docs/transitions.md)
 - [Native Grow and automatic height timing](docs/grow.md)
