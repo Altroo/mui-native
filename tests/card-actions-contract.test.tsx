@@ -1,11 +1,13 @@
-import { THEME_ID } from '../packages/material/src/themeProvider';
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { THEME_ID } from '../packages/material/src/themeProvider';
 import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { createRef, forwardRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, type ViewInstance, type ViewProps } from 'react-native';
 import { fireEvent, render } from '@testing-library/react-native';
 import {
   CardActions,
+  Box,
+  Button,
   ThemeProvider,
   cardActionsClasses,
   createTheme,
@@ -486,3 +488,15 @@ test.each(reference.ownerGetterObservations)(
     expect(style.paddingBottom ?? style.padding).toBe(observation.spacingOverride ? 13 : 8);
   },
 );
+
+test('retains supported incoming and descendant class selectors', () => {
+  const tree = render(
+    <Box sx={{ '& .MuiCardActions-root': { paddingTop: '13px' } }}>
+      <CardActions testID="scoped-row" sx={{ '& .MuiButton-root': { opacity: 0.4 } }}>
+        <Button testID="scoped-child">Save</Button>
+      </CardActions>
+    </Box>,
+  );
+  expect(tree.getByTestId('scoped-row')).toHaveStyle({ paddingTop: 13 });
+  expect(tree.getByTestId('scoped-child')).toHaveStyle({ opacity: 0.4 });
+});

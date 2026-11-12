@@ -20,7 +20,7 @@ The `MuiCardActions-root` class is always active. `MuiCardActions-spacing` and t
 
 Native spacing uses Yoga's `columnGap` in place of the browser sibling-margin rule. This keeps existing child hosts, refs and state intact without cloning action elements or inserting action wrappers. `disableSpacing` removes the default gap. For an explicit native gap, set `columnGap` through `sx`, a theme override or native `style`. Native gap and browser margin/gap arithmetic are different; this is a native layout adaptation, not complete CSS equivalence. The row follows its actual native layout direction.
 
-Theme defaults, root/spacing overrides, variants, supported self selectors and `sx` participate in the shared styling pipeline. Native inline styles keep their usual final precedence. Native text children inherit supported text styling through the shared text scope.
+Theme defaults, root/spacing overrides, variants, supported self and descendant class selectors and `sx` participate in the shared styling pipeline. Native inline styles keep their usual final precedence. Native text children inherit supported text styling through the shared text scope. Incoming and descendant class selectors use the existing physical style scope, including native Portal ownership.
 
 ## Native roots and refs
 
