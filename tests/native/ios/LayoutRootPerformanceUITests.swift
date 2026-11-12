@@ -249,6 +249,120 @@ final class LayoutRootPerformanceUITests: XCTestCase {
     }
     XCTAssertEqual(invocation, 4, "Expected one discarded warm-up and three reported samples")
   }
+  /// Native geometry acknowledges real inner scrolling, rather than a gesture
+  /// which only moved the enclosing catalog or never reached the ScrollView.
+  private func settledScrollFrame(_ row: XCUIElement) throws -> CGRect {
+    var previous = CGRect.null, stableSince = Date(), result = CGRect.null
+    try waitFor("Native scrolling did not settle on a finite retained row") {
+      guard row.exists else { return false }
+      let frame = row.frame
+      guard !frame.isNull, !frame.isInfinite, frame.width > 0, frame.height > 0 else { return false }
+      if frame != previous { previous = frame; stableSince = Date(); return false }
+      result = frame
+      return Date().timeIntervalSince(stableSince) >= 0.2
+    }
+    return result
+  }
+  private func scrollingReceipt(_ cohort: XCUIElement, mode: String) throws -> [String: Any] {
+    guard let value = json(member(cohort, "layout-root-receipt")),
+      value["cohortId"] as? String == cohort.identifier else { throw Refusal.invalid("Scrolling receipt belongs to another cohort") }
+    try checked(value, mode: mode, family: "button-group", epoch: 0)
+    guard member(cohort, "layout-root-label-000-action").label == "Row 001 presses 1",
+      member(cohort, "layout-root-detail-000-action").label == "Stage 00 presses 0" else {
+      throw Refusal.invalid("Scrolling lost local action state or activated an action")
+    }
+    // One native query covers the complete nonvirtualized cohort, including
+    // offscreen actions. A drag over another row must not activate that row.
+    let actions = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND identifier ENDSWITH %@",
+      cohort.identifier + "::layout-root-", "-action"))
+    let total = actions.count
+    let untouched = actions.matching(NSPredicate(format: "label ENDSWITH %@", " presses 0")).count
+    guard total == 200, untouched == 199 else {
+      throw Refusal.invalid("Expected 200 cohort actions and 199 untouched counters; observed \(total)/\(untouched)")
+    }
+    var native = value
+    native["nativeActionCount"] = total; native["untouchedActionCount"] = untouched
+    return native
+  }
+  private func scrollGesture(_ viewport: XCUIElement, reverse: Bool) throws {
+    let visible = viewport.frame.intersection(app.frame).insetBy(dx: 12, dy: 12)
+    guard viewport.isHittable, visible.width > 40, visible.height >= 160 else {
+      throw Refusal.invalid("The native workload viewport has no usable gesture region")
+    }
+    let startY = visible.minY + visible.height * (reverse ? 0.2 : 0.8)
+    let endY = visible.minY + visible.height * (reverse ? 0.8 : 0.2)
+    let origin = app.coordinate(withNormalizedOffset: .zero)
+    origin.withOffset(CGVector(dx: visible.midX, dy: startY)).press(forDuration: 0.02,
+      thenDragTo: origin.withOffset(CGVector(dx: visible.midX, dy: endY)),
+      withVelocity: .fast, thenHoldForDuration: 0)
+  }
+  private func profileScrolling(mode: String, reverse: Bool) throws {
+    guard #available(iOS 26.0, *) else { throw XCTSkip("The app-scoped hitch metric requires iOS 26 or later") }
+    try select("mode", mode, "layout-root-controller-mode")
+    try select("family", "button-group", "layout-root-controller-family")
+    try select("operation", "update", "layout-root-controller-operation")
+    let options = XCTMeasureOptions()
+    options.iterationCount = 3
+    options.invocationOptions = [.manuallyStart, .manuallyStop]
+    var invocation = 0
+    // Use the current SDK's combined scroll/deceleration metric. The app-wide
+    // hitch interval also contains native acknowledgement queries; it is not
+    // isolated component cost, input latency or a physical-device frame rate.
+    measure(metrics: [XCTOSSignpostMetric.scrollingAndDecelerationMetric,
+      XCTHitchMetric(application: app)], options: options) {
+      invocation += 1
+      var measuring = false
+      do {
+        let cohort = try self.fresh(mode: mode, family: "button-group")
+        let viewport = member(cohort, "layout-root-viewport")
+        let first = member(cohort, "layout-root-row-000")
+        if reverse { try self.scrollGesture(viewport, reverse: false) }
+        let before = try self.settledScrollFrame(first), viewportBefore = viewport.frame
+        _ = try self.scrollingReceipt(cohort, mode: mode)
+        self.startMeasuring(); measuring = true
+        try self.scrollGesture(viewport, reverse: reverse)
+        let after = try self.settledScrollFrame(first)
+        self.stopMeasuring(); measuring = false
+        let receipt = try self.scrollingReceipt(cohort, mode: mode), viewportAfter = viewport.frame
+        let travel = (after.minY - before.minY) * (reverse ? 1 : -1)
+        guard travel >= max(44, viewportBefore.height * 0.5),
+          abs(viewportBefore.minX - viewportAfter.minX) <= 1,
+          abs(viewportBefore.minY - viewportAfter.minY) <= 1,
+          abs(viewportBefore.width - viewportAfter.width) <= 1,
+          abs(viewportBefore.height - viewportAfter.height) <= 1,
+          abs(before.width - after.width) <= 1, abs(before.height - after.height) <= 1 else {
+          throw Refusal.invalid("The intended inner viewport did not scroll far enough while retaining its geometry")
+        }
+        func rect(_ value: CGRect) -> [String: Double] {
+          ["x": Double(value.minX), "y": Double(value.minY), "width": Double(value.width), "height": Double(value.height)]
+        }
+        let report: [String: Any] = ["protocol": "button-group-scrolling-v1", "mode": mode,
+          "direction": reverse ? "toward-start" : "toward-end",
+          "phase": invocation == 1 ? "warmup-discarded" : "sample-\(invocation - 1)",
+          "receipt": receipt, "viewportBefore": rect(viewportBefore), "viewportAfter": rect(viewportAfter),
+          "firstRowBefore": rect(before), "firstRowAfter": rect(after), "travel": Double(travel),
+          "preflight": ["expectedSourceId": expectedSourceID, "nativeAppExecutableSHA256": nativeAppSHA256,
+            "nativeConfiguration": "Release"]]
+        let data = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys, .prettyPrinted])
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "button-group-scroll-\(mode)-\(reverse ? "start" : "end")-\(invocation)"
+        attachment.lifetime = .keepAlways; add(attachment)
+        if invocation == 1 {
+          let picture = XCTAttachment(screenshot: app.screenshot())
+          picture.name = "button-group-scroll-\(mode)-\(reverse ? "start" : "end")"
+          picture.lifetime = .keepAlways; add(picture)
+        }
+      } catch {
+        if measuring { self.stopMeasuring() }
+        XCTFail("ButtonGroup scrolling profile refused: \(error)")
+      }
+    }
+    XCTAssertEqual(invocation, 4, "Expected one discarded warm-up and three reported samples")
+  }
+  func testButtonGroupRNScrollTowardEnd() throws { try profileScrolling(mode: "rn", reverse: false) }
+  func testButtonGroupMUIScrollTowardEnd() throws { try profileScrolling(mode: "mui", reverse: false) }
+  func testButtonGroupRNScrollTowardStart() throws { try profileScrolling(mode: "rn", reverse: true) }
+  func testButtonGroupMUIScrollTowardStart() throws { try profileScrolling(mode: "mui", reverse: true) }
   func testFormGroupRNCPUAndMemory() throws { try profile(mode: "rn", family: "form-group") }
   func testFormGroupMUICPUAndMemory() throws { try profile(mode: "mui", family: "form-group") }
   func testAvatarRNCPUAndMemory() throws { try profile(mode: "rn", family: "list-item-avatar") }
