@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import React, { useContext, useImperativeHandle, useRef } from 'react';
 import { View, StyleSheet, type ViewInstance, type ViewProps } from 'react-native';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
@@ -97,7 +98,7 @@ test('named slot arrays and callback variants preserve original arguments and sl
               minWidth: 51,
               variants: [{ props: { variant: 'outlined' }, style: { minWidth: 81 } }],
             },
-            (value) => {
+            nativeStyleCallback((value) => {
               args.override = { role: value.role, size: value.ownerState.size };
               return {
                 variants: [
@@ -113,7 +114,7 @@ test('named slot arrays and callback variants preserve original arguments and sl
                   },
                 ],
               };
-            },
+            }),
           ],
           firstButton: () => [
             { variants: [{ props: { size: 'large' }, style: { minWidth: 92 } }] },
@@ -296,7 +297,7 @@ test('top-level theme variants and callbacks receive original root props, owner 
     components: {
       MuiButtonGroup: {
         styleOverrides: {
-          root: (value) => {
+          root: nativeStyleCallback((value) => {
             args.override = {
               role: value.role,
               marker: value['data-callback'],
@@ -306,12 +307,12 @@ test('top-level theme variants and callbacks receive original root props, owner 
               color: value.ownerState.color,
             };
             return { minWidth: 53 };
-          },
+          }),
         },
         variants: [
           { props: { role: 'toolbar' }, style: { minWidth: 61 } },
           {
-            props: (value) => {
+            props: nativeStyleCallback((value) => {
               args.predicate = {
                 role: value.role,
                 orientation: value.orientation,
@@ -319,8 +320,8 @@ test('top-level theme variants and callbacks receive original root props, owner 
                 primary: value.theme.palette.primary.main,
               };
               return value.orientation === 'vertical' && value.role === 'toolbar';
-            },
-            style: (value) => {
+            }),
+            style: nativeStyleCallback((value) => {
               args.style = {
                 role: value.role,
                 orientation: value.orientation,
@@ -328,7 +329,7 @@ test('top-level theme variants and callbacks receive original root props, owner 
                 primary: value.theme.palette.primary.main,
               };
               return { minHeight: 37 };
-            },
+            }),
           },
         ],
       },

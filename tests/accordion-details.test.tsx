@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { createRef, forwardRef, useEffect, useState } from 'react';
 import {
   I18nManager,
@@ -121,10 +122,10 @@ test('wrapped Details preserve genuine default styles and owner callback argumen
       MuiAccordionDetails: {
         defaultProps: { style: defaultStyle },
         styleOverrides: {
-          root: ({ ownerState }) => {
+          root: nativeStyleCallback(({ ownerState }) => {
             styles.push(ownerState.style);
             return {};
-          },
+          }),
         },
       },
     },
@@ -174,7 +175,7 @@ const publicClass = (value: unknown) =>
         .split(/\s+/)
         .filter((token) => token && !token.startsWith('css-'))
         .join(' ');
-const observe = (args: ComponentStyleArgs) => ({
+const observe = nativeStyleCallback((args: ComponentStyleArgs) => ({
   ownerClass: publicClass(args.ownerState.className),
   rootClass: publicClass(args.className),
   id: args.id,
@@ -184,7 +185,7 @@ const observe = (args: ComponentStyleArgs) => ({
   ownerSx: args.ownerState.sx ?? null,
   rootStyle: args.style ?? null,
   direction: args.theme.direction,
-});
+}));
 const decode = (props: Record<string, unknown> = {}) =>
   Object.fromEntries(
     Object.entries(props).map(([key, value]) => [key, value === '$undefined' ? undefined : value]),
@@ -278,7 +279,7 @@ test.each(reference.fixtures)(
         MuiAccordionDetails: {
           defaultProps: input.defaults,
           styleOverrides: {
-            root: (args) => {
+            root: nativeStyleCallback((args) => {
               observation = observe(args);
               return {
                 ...input.overrides,
@@ -287,27 +288,27 @@ test.each(reference.fixtures)(
                       variants: [
                         {
                           props: { id: 'details-reference' },
-                          style: ({ ownerState }: ComponentStyleArgs) => ({
+                          style: nativeStyleCallback(({ ownerState }: ComponentStyleArgs) => ({
                             minWidth: ownerState.id === 'details-reference' ? 37 : 0,
-                          }),
+                          })),
                         },
                       ],
                     }
                   : {}),
               };
-            },
+            }),
           },
           variants: input.variant
             ? [
                 {
-                  props: (args) => {
+                  props: nativeStyleCallback((args) => {
                     variants.push(observe(args));
                     return publicClass(args.className) === 'authored';
-                  },
-                  style: (args) => {
+                  }),
+                  style: nativeStyleCallback((args) => {
                     variants.push(observe(args));
                     return { opacity: 0.45, minWidth: 33 };
-                  },
+                  }),
                 },
               ]
             : [],
@@ -358,10 +359,10 @@ test.each(reference.styledDefaults)(
             ...(Object.hasOwn(input, 'defaultSx') ? { sx: input.defaultSx } : {}),
           },
           styleOverrides: {
-            root: (args) => {
+            root: nativeStyleCallback((args) => {
               observation = observe(args);
               return {};
-            },
+            }),
           },
         },
       },
@@ -415,10 +416,10 @@ test('Details retains exact native attributes, event objects, original style cal
     components: {
       MuiAccordionDetails: {
         styleOverrides: {
-          root: ({ ownerState, style }) => {
+          root: nativeStyleCallback(({ ownerState, style }) => {
             observed.push(ownerState.style, style);
             return {};
-          },
+          }),
         },
       },
     },
@@ -592,10 +593,10 @@ test('Details live theme defaults rebind wrapped class selectors without replaci
         MuiAccordionDetails: {
           defaultProps: { classes: { root: rtl ? 'next-default' : 'first-default' } },
           styleOverrides: {
-            root: (args) => {
+            root: nativeStyleCallback((args) => {
               directions.push(args.theme.direction);
               return { opacity: args.ownerState.id === 'account' ? 0.6 : 1 };
-            },
+            }),
           },
         },
       },

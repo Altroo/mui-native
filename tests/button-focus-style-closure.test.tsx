@@ -139,7 +139,7 @@ test('contained native shadows follow source state order and theme tokens withou
   await model.mount();
   expect(buttonStyle(model)).toMatchObject({ boxShadow: theme.shadows[2] });
   expect(buttonStyle(model)?.elevation ?? 0).toBe(0);
-  fireEvent(model.tree!.UNSAFE_getByType(ButtonBase), 'hoverIn', {});
+  fireEvent(model.tree!.getByTestId('trigger'), 'hoverIn', {});
   expect(buttonStyle(model)?.boxShadow).toBe(theme.shadows[4]);
   expect(buttonStyle(model, { pressed: true })?.boxShadow).toBe(theme.shadows[8]);
   expect(buttonStyle(model, { pressed: true, focusVisible: true })?.boxShadow).toBe(

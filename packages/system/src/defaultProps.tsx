@@ -1,6 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Provider/default resolution adapts MIT MUI System/Utils 9.5.0. See NOTICE and upstream/reuse.json.
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useMemo } from 'react';
 import type { StyleProp, ViewStyle } from 'react-native';
 
 export type DefaultPropsConfig = Record<string, unknown>;
@@ -138,8 +138,11 @@ export const DefaultPropsProvider: DefaultPropsProviderComponent = function Defa
 }) {
   return <DefaultsContext.Provider value={value}>{children}</DefaultsContext.Provider>;
 };
-export function useDefaultProps<P>({ props, name }: { props: P; name: string }): P {
-  const values = useContext(DefaultsContext);
+/** @internal Retained source preparation follows genuine provider changes. */
+export function useNativeDefaultPropsSource() {
+  return useContext(DefaultsContext);
+}
+function providedProps<P>(props: P, name: string, values: Record<string, unknown> | undefined): P {
   if (!values || !values[name]) return props;
   const config = values[name] as DefaultPropsConfig;
   if (config.defaultProps)
@@ -147,6 +150,22 @@ export function useDefaultProps<P>({ props, name }: { props: P; name: string }):
   if (!config.styleOverrides && !config.variants)
     return resolveDefaultProps(config, props, Boolean(values?.mergeClassNameAndStyle));
   return props;
+}
+export function useDefaultProps<P>({ props, name }: { props: P; name: string }): P {
+  return providedProps(props, name, useContext(DefaultsContext));
+}
+/** @internal Native-only presentation updates must not resolve source defaults again. */
+export function useNativeSourceDefaultProps<P>({
+  props,
+  name,
+  sourceState,
+}: {
+  props: P;
+  name: string;
+  sourceState?: unknown;
+}): P {
+  const values = useContext(DefaultsContext);
+  return useMemo(() => providedProps(props, name, values), [props, name, values, sourceState]);
 }
 export type SlotProps<P, OwnerState> = P | ((ownerState: OwnerState) => P);
 export function resolveSlotProps<P, OwnerState>(

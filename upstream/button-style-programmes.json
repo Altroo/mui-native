@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "description": "Pinned original ButtonGroup, Button and ButtonBase constructor programmes and override resolver shape, retained independently of native geometry.",
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Button/Button.js": "ff23554ae2eac98863f24c29ec04ab07c7903bc489ffbaf81a31f5979149a515",
+      "ButtonGroup/ButtonGroup.js": "d1bc4fd08001d1d0513576e5b79cf72509bbac3eacd9530d83c253191c668289",
+      "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
+      "utils/createSimplePaletteValueFilter.js": "8c972b662713b932faaa79541132caf57ad7dcdb5278b99e65c1aebe2c3a51a5",
+      "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+      "styles/reducedMotion.js": "3a80a30b233bb4ab252fd858b921992ca072e015cae638b79d71e7f281795394",
+      "styles/focusVisible.js": "b6996091f3b6a882e22eb1f03fa6151655eaa3f02d1986cc0f2de5173ffbe484"
+    }
+  },
+  "generator": {
+    "source": "scripts/reference/button-style-programmes.mjs",
+    "sha256": "4fef9e75d947d06c6b89e5ca0c8993247a302db5e4e357bc06a1fdd56f1cf9b0"
+  },
+  "localFiles": ["packages/material/src/nativeButtonCss.ts"]
+}

@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { createRef, forwardRef, useState } from 'react';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 import {
@@ -20,6 +21,7 @@ import {
   cardClasses,
   getCardUtilityClass,
   configureDiagnostics,
+  type SharedComponentStyleArgs,
   type ComponentStyleArgs,
 } from '../packages/material/src';
 import Canonical, {
@@ -68,7 +70,7 @@ test.each(original.fixtures)(
     if (input.sx) expect(style).toMatchObject({ padding: 16, paddingLeft: 7 });
   },
 );
-const args = (a: ComponentStyleArgs) => ({
+const args = nativeStyleCallback((a: ComponentStyleArgs) => ({
   className: a.className ?? '',
   rootHasRaised: Object.hasOwn(a, 'raised'),
   rootElevation: a.elevation ?? null,
@@ -80,7 +82,7 @@ const args = (a: ComponentStyleArgs) => ({
   ownerStyle: a.ownerState.style ?? null,
   rootStyle: a.style ?? null,
   direction: a.theme.direction,
-});
+}));
 test.each(original.themed)(
   'original Card/Paper callback props, unused slot and variant order: $input',
   ({ input, calls: expected }) => {
@@ -89,35 +91,35 @@ test.each(original.themed)(
       components: {
         MuiCard: {
           styleOverrides: {
-            root: (a) => {
+            root: nativeStyleCallback((a) => {
               calls.push({ name: 'card-root', ...args(a) });
               return { padding: 2 };
-            },
-            unused: (a) => {
+            }),
+            unused: nativeStyleCallback((a) => {
               calls.push({ name: 'card-unused', ...args(a) });
               return { unsupportedUnused: 'resolved-only' };
-            },
+            }),
           },
           variants: [
             {
-              props: (a) => {
+              props: nativeStyleCallback((a) => {
                 calls.push({ name: 'card-predicate', ...args(a) });
                 return a.raised === true;
-              },
-              style: (a) => {
+              }),
+              style: nativeStyleCallback((a) => {
                 calls.push({ name: 'card-variant', ...args(a) });
                 return { marginTop: 3 };
-              },
+              }),
             },
           ],
         },
         MuiPaper: {
           defaultProps: { elevation: 5 },
           styleOverrides: {
-            root: (a) => {
+            root: nativeStyleCallback((a) => {
               calls.push({ name: 'paper-root', ...args(a) });
               return { padding: 1 };
-            },
+            }),
           },
         },
       },
@@ -556,18 +558,24 @@ test.each(original.reserved.production)(
             : name === 'owner-style-only'
               ? { marker: 'authored', style: { paddingLeft: 7 } }
               : { marker: 'authored' };
-    const capture = (layer: string, a: ComponentStyleArgs) => ({
-      layer,
-      ownerIdentity: a.ownerState === authored,
-      ownerNull: a.ownerState === null,
-      ownerUndefined: a.ownerState === undefined,
-      marker: a.ownerState?.marker ?? null,
-      raised: a.ownerState?.raised ?? null,
-      rootHasStyle: Object.hasOwn(a, 'style'),
-      rootStyle: a.style ?? null,
-      ownerHasStyle: a.ownerState != null && Object.hasOwn(a.ownerState, 'style'),
-      ownerStyle: a.ownerState?.style ?? null,
-    });
+    const capture = (layer: string, a: SharedComponentStyleArgs) => {
+      const owner =
+        a.ownerState && typeof a.ownerState === 'object'
+          ? (a.ownerState as Record<string, unknown>)
+          : undefined;
+      return {
+        layer,
+        ownerIdentity: a.ownerState === authored,
+        ownerNull: a.ownerState === null,
+        ownerUndefined: a.ownerState === undefined,
+        marker: owner?.marker ?? null,
+        raised: owner?.raised ?? null,
+        rootHasStyle: Object.hasOwn(a, 'style'),
+        rootStyle: a.style ?? null,
+        ownerHasStyle: a.ownerState != null && Object.hasOwn(a.ownerState, 'style'),
+        ownerStyle: owner?.style ?? null,
+      };
+    };
     let Custom: React.ComponentType<any>;
     const host = (kind: string) =>
       forwardRef<

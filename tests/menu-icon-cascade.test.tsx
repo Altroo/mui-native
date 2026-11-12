@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback, nativeOwnerState } from './helpers/nativeStyleCallback';
 import { forwardRef, useState } from 'react';
 import { View } from 'react-native';
 import { nativeStyleTree } from '../packages/material/src/nativeStyleAncestry';
@@ -192,9 +193,11 @@ test('nested participating Icon root does not style its ancestor or unrelated si
 
 test('styled MenuItem keeps genuine theme/default inline props and final-root descendant CSS', () => {
   const native = Object.freeze({ opacity: 0.3 });
-  const observer = jest.fn((_args: { ownerState: Record<string, unknown> }) => ({
-    '& .MuiListItemIcon-root': { minWidth: 63 },
-  }));
+  const observer = jest.fn(
+    nativeStyleCallback((_args: { ownerState: Record<string, unknown> }) => ({
+      '& .MuiListItemIcon-root': { minWidth: 63 },
+    })),
+  );
   const theme = createTheme({
     components: {
       MuiMenuItem: { defaultProps: { style: native }, styleOverrides: { root: observer } },
@@ -217,7 +220,7 @@ test('styled MenuItem keeps genuine theme/default inline props and final-root de
   expect(tree.getByTestId('icon')).toHaveStyle({ minWidth: 67 });
   expect(observer.mock.calls).toHaveLength(1);
   const config = theme.components.MuiMenuItem;
-  expect(observer.mock.calls[0][0].ownerState.style).toBe(
+  expect(nativeOwnerState(observer.mock.calls[0][0].ownerState).style).toBe(
     config && typeof config === 'object' ? config.defaultProps?.style : undefined,
   );
   expect(ref).toHaveBeenCalledTimes(1);
@@ -226,9 +229,11 @@ test('a prepared MenuItem preserves native default callback state and runs it on
   const callback = jest.fn((state: { pressed: boolean }) => ({
     opacity: state.pressed ? 0.25 : 0.4,
   }));
-  const observer = jest.fn((_args: { ownerState: Record<string, unknown> }) => ({
-    '& .MuiListItemIcon-root': { minWidth: 63 },
-  }));
+  const observer = jest.fn(
+    nativeStyleCallback((_args: { ownerState: Record<string, unknown> }) => ({
+      '& .MuiListItemIcon-root': { minWidth: 63 },
+    })),
+  );
   const theme = createTheme({
     components: {
       MuiMenuItem: { defaultProps: { style: callback }, styleOverrides: { root: observer } },
@@ -252,7 +257,7 @@ test('a prepared MenuItem preserves native default callback state and runs it on
   expect(tree.getByTestId('item')).toHaveStyle({ opacity: 0.25 });
   expect(callback).toHaveBeenCalledTimes(1);
   expect(callback.mock.calls[0][0].pressed).toBe(true);
-  expect(observer.mock.calls[0][0].ownerState.style).toBe(callback);
+  expect(nativeOwnerState(observer.mock.calls[0][0].ownerState).style).toBe(callback);
   expect(tree.UNSAFE_getAllByType(Svg).map((icon) => icon.props.width)).toEqual([31, 31]);
 });
 
@@ -312,13 +317,13 @@ function originalCase(input: unknown) {
       MuiMenuItem: {
         defaultProps: Object.hasOwn(value, 'defaultStyle') ? { style: value.defaultStyle } : {},
         styleOverrides: {
-          root: ({ ownerState }) => {
+          root: nativeStyleCallback(({ ownerState }) => {
             owner = {
               hasStyle: Object.hasOwn(ownerState, 'style'),
               style: ownerState.style ?? null,
             };
             return value.override ?? {};
-          },
+          }),
         },
         variants: value.variant ? [{ props: { selected: true }, style: value.variant }] : [],
       },

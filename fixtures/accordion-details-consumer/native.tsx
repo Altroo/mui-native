@@ -58,7 +58,12 @@ export const theme = createTheme({
   components: {
     MuiAccordionDetails: {
       defaultProps: { className: 'default', classes },
-      styleOverrides: { root: ({ ownerState }) => ({ opacity: ownerState.id ? 1 : 0.9 }) },
+      styleOverrides: {
+        root: ({ ownerState }) => ({
+          opacity:
+            ownerState && typeof ownerState === 'object' && Reflect.get(ownerState, 'id') ? 1 : 0.9,
+        }),
+      },
     },
   },
 });

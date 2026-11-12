@@ -1,4 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
+import { defaultNativeStyleCache } from '../packages/system/src/nativeStyleCache';
 import React, { useContext } from 'react';
 import { StyleSheet, processColor } from 'react-native';
 import { render, cleanup, fireEvent } from '@testing-library/react-native';
@@ -51,10 +53,10 @@ test.each(reference.fixtures)('original ButtonGroup contract: $input.name', (fix
       MuiButton: {
         ...input.theme?.components?.MuiButton,
         styleOverrides: {
-          root: ({ ownerState }) => {
+          root: nativeStyleCallback(({ ownerState }) => {
             owners[Number(String(ownerState.testID).split('-')[1])] = ownerState;
             return {};
-          },
+          }),
         },
       },
     },
@@ -92,7 +94,7 @@ test.each(reference.fixtures)('original ButtonGroup contract: $input.name', (fix
     </ThemeProvider>,
   );
   if (typeof input.hoverIndex === 'number')
-    fireEvent(tree.UNSAFE_getAllByType(ButtonBase)[input.hoverIndex], 'hoverIn', {});
+    fireEvent(tree.getAllByRole('button')[input.hoverIndex], 'hoverIn', {});
   expect(normalized(contexts)).toEqual(fixture.contexts);
   const root = StyleSheet.flatten(tree.getByTestId('group').props.style);
   if (input.name === 'root selector')
@@ -237,7 +239,7 @@ test('outlined hover borders bind currentColor to the final authored foreground'
       <Button>B</Button>
     </ButtonGroup>,
   );
-  fireEvent(tree.UNSAFE_getAllByType(ButtonBase)[0], 'hoverIn', {});
+  fireEvent(tree.getAllByRole('button')[0], 'hoverIn', {});
   const base = tree.UNSAFE_getAllByType(ButtonBase)[0].props;
   const style = StyleSheet.flatten(base.style({ pressed: false, focusVisible: false }));
   expect(style.color).toBe('red');
@@ -292,3 +294,6 @@ test('inline native shorthands replace grouped corners and divider edges', () =>
   expect(style.borderTopRightRadius ?? style.borderRadius).toBe(7);
   expect(style.borderRightWidth ?? style.borderWidth).toBe(0);
 });
+
+// Each reference row starts with an independent original stylesheet cache.
+beforeEach(() => defaultNativeStyleCache.reset());

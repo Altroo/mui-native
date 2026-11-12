@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { createRef, forwardRef, useState } from 'react';
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native';
 import {
@@ -252,14 +253,14 @@ test('root and wrapper theme callbacks receive source owner/root args and scoped
       MuiDivider: {
         defaultProps: { className: 'default-root' },
         styleOverrides: {
-          root: (args) => {
+          root: nativeStyleCallback((args) => {
             calls.push({ slot: 'root', args });
             return { opacity: 0.7, '& .MuiDivider-wrapper': { paddingLeft: '19px' } };
-          },
-          wrapper: (args) => {
+          }),
+          wrapper: nativeStyleCallback((args) => {
             calls.push({ slot: 'wrapper', args });
             return { paddingLeft: 13 };
-          },
+          }),
         },
       },
     },
@@ -324,11 +325,11 @@ test('native custom root filters private props and preserves attributes/events/r
     components: {
       MuiDivider: {
         styleOverrides: {
-          root: (args) => {
+          root: nativeStyleCallback((args) => {
             raw = args.style;
             owner = args.ownerState.style;
             return { paddingLeft: 15 };
-          },
+          }),
         },
       },
     },
@@ -513,11 +514,13 @@ test('callback ref cleanups are retained without a native host replacement on su
 test.each(original.unrelatedSlotErrors)(
   'unused $configuredSlot callback throws while rendering $renderedSlot like the source',
   ({ configuredSlot, error }) => {
-    const unused = jest.fn((args: ComponentStyleArgs) => {
-      if (configuredSlot === 'wrapper' || String(args.className).startsWith('MuiDivider-wrapper'))
-        throw new Error(error);
-      return {};
-    });
+    const unused = jest.fn(
+      nativeStyleCallback((args: ComponentStyleArgs) => {
+        if (configuredSlot === 'wrapper' || String(args.className).startsWith('MuiDivider-wrapper'))
+          throw new Error(error);
+        return {};
+      }),
+    );
     expect(() =>
       render(
         <ThemeProvider

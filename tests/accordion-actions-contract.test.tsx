@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { createRef, forwardRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, type ViewInstance, type ViewProps } from 'react-native';
 import { fireEvent, render } from '@testing-library/react-native';
@@ -39,11 +40,11 @@ test.each(reference.observations)(
         MuiAccordionActions: {
           ...('defaults' in input ? { defaultProps: { disableSpacing: input.defaults } } : {}),
           styleOverrides: {
-            root: ({ ownerState, ...rootProps }) => {
+            root: nativeStyleCallback(({ ownerState, ...rootProps }) => {
               nativeOwner = ownerState.disableSpacing;
               nativeRootHasSpacing = Object.hasOwn(rootProps, 'disableSpacing');
               return { opacity: 0.8 };
-            },
+            }),
             spacing: { paddingBottom: 9 },
           },
         },

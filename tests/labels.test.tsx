@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { forwardRef, useImperativeHandle } from 'react';
 import {
   Text,
@@ -37,7 +38,7 @@ test.each(reference.fixtures)(
       components: {
         [`Mui${item.component}`]: {
           styleOverrides: {
-            root: ({ ownerState }) => {
+            root: nativeStyleCallback(({ ownerState }) => {
               const keys =
                 item.component === 'InputLabel'
                   ? ['focused', 'required', 'shrink', 'size', 'variant']
@@ -57,7 +58,7 @@ test.each(reference.fixtures)(
               if (item.component === 'InputLabel')
                 (output as Record<string, unknown>).formControl = Boolean(ownerState.formControl);
               return {};
-            },
+            }),
           },
         },
       },

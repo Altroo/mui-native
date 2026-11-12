@@ -23,7 +23,14 @@ import {
   type SxProps,
   type SxObject,
 } from '@altroo/mui-native-system';
-import { rebaseNativeComponentStyle } from '@altroo/mui-native-system/internal/prepared-style';
+import { buttonGroupConstructorCss, buttonGroupOverrideCss } from './nativeButtonCss';
+import {
+  rebaseNativeComponentStyle,
+  refreshNativeStyle,
+  NativeCssInsertionScope,
+  useNativeStyleCache,
+  useNativeStyleCacheRevision,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { useTheme } from './themeProvider';
 import { useForkRef } from './utils';
 import { nativeStyleTree } from './nativeStyleAncestry';
@@ -225,6 +232,8 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
       parent = useNativeTextContext(),
       rawAncestry = useContext(NativeButtonGroupRules),
       { width } = useWindowDimensions();
+    const styleCache = useNativeStyleCache();
+    useNativeStyleCacheRevision();
     const providerDirection = rtl ? 'rtl' : 'ltr';
     const ancestryInputs = useShallowStable(rawAncestry.flatMap((rule) => [rule, rule.cascade]));
     const ancestry = useMemo(() => rawAncestry, [ancestryInputs]);
@@ -253,6 +262,9 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
           ...(orientation === 'vertical' ? ['vertical'] : []),
         ],
         baseStyle: baseRules(theme, owner, providerDirection),
+        baseProgramme: buttonGroupConstructorCss(theme, owner),
+        styleCache,
+        overrideProgramme: buttonGroupOverrideCss,
         overrideSelectors: {
           grouped: select('grouped'),
           firstButton: select('firstButton'),
@@ -263,13 +275,13 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
         rootProps,
         ancestors: ancestry.map((rule) => rule.cascade(rootClass.split(/\s+/))),
       }),
-      [theme, parent, width, owner, rootProps, ancestry, providerDirection],
+      [theme, parent, width, owner, rootProps, ancestry, providerDirection, styleCache],
     );
     const resolved = useMemo(
       () => componentRootStyle(theme, 'MuiButtonGroup', { ...owner }, sx, style, common),
       [theme, owner, sx, style, common],
     );
-    const computed = resolved.computed;
+    const computed = refreshNativeStyle(resolved.computed);
     const direction = directionOf(
       StyleSheet.flatten(resolved.authored)?.direction,
       computed.direction,
@@ -349,42 +361,44 @@ export const ButtonGroup = forwardRef<ViewInstance, ButtonGroupProps>(
     const valid = React.Children.toArray(children).filter(React.isValidElement),
       Root = component === 'div' ? View : component;
     return (
-      <NativeTextScope theme={theme} style={scopeStyle} rootRef={groupRoot} content={valid}>
-        {(native, content) => (
-          <Root
-            role="group"
-            {...other}
-            nativeID={id ?? other.nativeID}
-            testID={other.testID ?? dataID}
-            ref={handleRef}
-            {...(Root === View ? {} : { className: rootClass })}
-            style={native}
-          >
-            <ButtonGroupContext.Provider value={context}>
-              <NativeButtonGroupRules.Provider value={rules}>
-                {React.Children.toArray(content)
-                  .filter(React.isValidElement)
-                  .map((child, index) => (
-                    <ButtonGroupButtonContext.Provider
-                      key={index}
-                      value={
-                        valid.length === 1
-                          ? ''
-                          : index === 0
-                            ? token('firstButton')
-                            : index === valid.length - 1
-                              ? token('lastButton')
-                              : token('middleButton')
-                      }
-                    >
-                      {child}
-                    </ButtonGroupButtonContext.Provider>
-                  ))}
-              </NativeButtonGroupRules.Provider>
-            </ButtonGroupContext.Provider>
-          </Root>
-        )}
-      </NativeTextScope>
+      <NativeCssInsertionScope style={resolved.computed} registerClass={Root !== View}>
+        <NativeTextScope theme={theme} style={scopeStyle} rootRef={groupRoot} content={valid}>
+          {(native, content) => (
+            <Root
+              role="group"
+              {...other}
+              nativeID={id ?? other.nativeID}
+              testID={other.testID ?? dataID}
+              ref={handleRef}
+              {...(Root === View ? {} : { className: rootClass })}
+              style={native}
+            >
+              <ButtonGroupContext.Provider value={context}>
+                <NativeButtonGroupRules.Provider value={rules}>
+                  {React.Children.toArray(content)
+                    .filter(React.isValidElement)
+                    .map((child, index) => (
+                      <ButtonGroupButtonContext.Provider
+                        key={index}
+                        value={
+                          valid.length === 1
+                            ? ''
+                            : index === 0
+                              ? token('firstButton')
+                              : index === valid.length - 1
+                                ? token('lastButton')
+                                : token('middleButton')
+                        }
+                      >
+                        {child}
+                      </ButtonGroupButtonContext.Provider>
+                    ))}
+                </NativeButtonGroupRules.Provider>
+              </ButtonGroupContext.Provider>
+            </Root>
+          )}
+        </NativeTextScope>
+      </NativeCssInsertionScope>
     );
   },
 ) as NativeButtonGroupComponent;

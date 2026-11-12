@@ -2,7 +2,18 @@
  * Copyright (c) MUI contributors. See NOTICE,
  * upstream/reuse.json and upstream/button-group.json.
  * Native implementation: Copyright (c) 2026 Altroo and contributors. */
-import React, { forwardRef, useId, useState, useContext, useRef } from 'react';
+import {
+  refreshNativeStyle,
+  prepareNativeCompositeSource,
+  nativeInlineStyle,
+  NativeCssInsertionScope,
+  useNativeDefaultPropsSource,
+  useNativeSourceDefaultProps,
+  useNativeStyleCache,
+  useNativeStyleCacheRevision,
+} from '@altroo/mui-native-system/internal/prepared-style';
+import { buttonConstructorCss, buttonOverrideCss } from './nativeButtonCss';
+import React, { forwardRef, useId, useContext, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -22,6 +33,9 @@ import {
   applyNativeTextMetrics,
   isNativeTextStyleProperty,
   componentStyle,
+  componentRootStyle,
+  separateNativeRootProps,
+  restoreNativeRootStyle,
   alpha,
   diagnostic,
   type NativeStyle,
@@ -42,7 +56,6 @@ import {
   resolveButtonGroupDefaults,
 } from './buttonGroupContext';
 import { getButtonUtilityClass, type ButtonClassKey } from './buttonClasses';
-import { listSlotStyle } from './listStyles';
 import type {
   ButtonOwnProps,
   IconButtonOwnProps,
@@ -176,9 +189,54 @@ function classDiagnostic(classes: unknown, className: unknown, generated?: strin
       'Native button class helpers identify slots; use sx, native styles and theme overrides for styling.',
     );
 }
-function slot(theme: Theme, name: string, key: string, owner: object, width: number) {
-  return listSlotStyle(theme, name, key, owner, width);
+// A slot owns its CSS even when native presentation changes above it. Retain
+// only source inputs; color/layout supplied by the current native frame stays
+// in the ordinary NativeTextScope presentation layer.
+function NativeButtonSlotScope({
+  name,
+  slots,
+  owner,
+  width,
+  style,
+  ...props
+}: React.ComponentProps<typeof NativeTextScope> & {
+  name: string;
+  slots: readonly string[];
+  owner: object;
+  width: number;
+}) {
+  const keys = slots.join('|');
+  const styleCache = useNativeStyleCache();
+  const parent = useNativeTextContext();
+  useNativeStyleCacheRevision();
+  const sources = useMemo(
+    () =>
+      slots.map((key) =>
+        componentRootStyle(props.theme, name, { ...owner }, undefined, undefined, {
+          styleCache,
+          slot: key,
+          rootSlot: key,
+          width,
+          skipVariants: true,
+        }),
+      ),
+    [props.theme, name, keys, owner, width, styleCache],
+  );
+  const css = sources.map((source) =>
+    componentStyle(props.theme, name, { ...owner }, undefined, {
+      preparedRoot: source.prepared,
+      styleCache,
+      width,
+      ...nativeTextStyleContext(parent, style, props.theme),
+    }),
+  );
+  return (
+    <NativeCssInsertionScope style={sources.map((source) => source.computed)} registerClass={false}>
+      <NativeTextScope {...props} style={[style, ...css]} />
+    </NativeCssInsertionScope>
+  );
 }
+
 function readableButtonName(
   children: React.ReactNode,
   defaultComponent: unknown,
@@ -228,11 +286,16 @@ function DefaultProgress({ color, label, id }: { color: string; label?: string; 
   );
 }
 export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(inProps, ref) {
+  const rootInput = useMemo(() => separateNativeRootProps(inProps), [inProps]);
   const group = useContext(ButtonGroupContext),
     groupPosition = useContext(ButtonGroupButtonContext),
     groupRules = useContext(NativeButtonGroupRules);
-  const props = useDefaultProps({
-    props: resolveButtonGroupDefaults(group, inProps),
+  const groupProps = useMemo(
+    () => resolveButtonGroupDefaults(group, rootInput.props),
+    [group, rootInput.props],
+  );
+  const props = useNativeSourceDefaultProps({
+    props: groupProps,
     name: 'MuiButton',
   });
   const typographyDefaults = useDefaultProps({
@@ -242,7 +305,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
   const {
     children,
     sx,
-    style,
+    style: _style,
     color = 'primary',
     variant = 'text',
     size = 'medium',
@@ -265,6 +328,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     onHoverOut,
     ...other
   } = props;
+  const style = restoreNativeRootStyle(rootInput, props);
   if (!groupRules.length || Object.keys(classes ?? {}).some((key) => !buttonRootClassKeys.has(key)))
     classDiagnostic(
       classes,
@@ -275,7 +339,6 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     parent = useNativeTextContext(),
     { width } = useWindowDimensions(),
     generated = useId();
-  const [hovered, setHovered] = useState(false);
   const startIconTextRoot = useRef<ViewInstance | null>(null),
     endIconTextRoot = useRef<ViewInstance | null>(null),
     startLoadingTextRoot = useRef<ViewInstance | null>(null),
@@ -309,64 +372,160 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     disableFocusRipple,
     loadingIndicator: indicator,
   };
+  const styleCache = useNativeStyleCache();
+  const defaultsSource = useNativeDefaultPropsSource();
   let baseSheet: NativeButtonBaseStyleSheet | undefined;
   let cache:
     | {
         pressed: boolean;
         focusVisible: boolean;
+        hovered: boolean;
         sheet?: NativeButtonBaseStyleSheet;
         computed: NativeStyle;
         authored: StyleProp<NativeStyle>;
         style: NativeStyle;
       }
     | undefined;
-  const styled = (state: ButtonBaseState, sheet = baseSheet): NativeStyle => {
-    baseSheet = sheet;
-    if (
-      cache &&
-      cache.pressed === state.pressed &&
-      cache.focusVisible === state.focusVisible &&
-      cache.sheet === sheet
-    )
-      return cache.style;
-    const activeHover = hovered && !inactive;
-    const primary = variant === 'contained' ? colors.contrastText : colors.main;
-    const foreground = inactive ? theme.palette.action.disabled : primary;
-    const inheritBg =
-      theme.palette.mode === 'light' ? theme.palette.grey[300] : theme.palette.grey[800];
-    const background =
-      variant === 'contained'
-        ? inactive
-          ? theme.palette.action.disabledBackground
-          : color === 'inherit'
-            ? inheritBg
-            : activeHover
-              ? colors.dark
-              : colors.main
-        : activeHover
-          ? alpha(
-              color === 'inherit' ? theme.palette.text.primary : colors.main,
-              theme.palette.action.hoverOpacity,
-            )
-          : 'transparent';
-    const vertical = size === 'small' ? 4 : size === 'large' ? 8 : 6;
-    const horizontal =
-      variant === 'text'
-        ? size === 'small'
-          ? 5
-          : size === 'large'
-            ? 11
-            : 8
-        : size === 'small'
-          ? 10
-          : size === 'large'
-            ? 22
-            : 16;
-    const outlined = variant === 'outlined';
-    const actualOwner = { ...owner, pressed: state.pressed, focusVisible: state.focusVisible };
-    const authored = typeof style === 'function' ? style(state) : style;
+  const primary = variant === 'contained' ? colors.contrastText : colors.main;
+  const foreground = inactive ? theme.palette.action.disabled : primary;
+  const inheritBg =
+    theme.palette.mode === 'light' ? theme.palette.grey[300] : theme.palette.grey[800];
+  const background =
+    variant === 'contained'
+      ? inactive
+        ? theme.palette.action.disabledBackground
+        : color === 'inherit'
+          ? inheritBg
+          : colors.main
+      : 'transparent';
+  const vertical = size === 'small' ? 4 : size === 'large' ? 8 : 6;
+  const horizontal =
+    variant === 'text'
+      ? size === 'small'
+        ? 5
+        : size === 'large'
+          ? 11
+          : 8
+      : size === 'small'
+        ? 10
+        : size === 'large'
+          ? 22
+          : 16;
+  const outlined = variant === 'outlined';
+  const nativeBase = [
+    theme.typography.button,
+    {
+      minHeight: 44,
+      minWidth: 64,
+      paddingLeft: horizontal - (outlined ? 1 : 0),
+      paddingRight: horizontal - (outlined ? 1 : 0),
+      paddingTop: vertical - (outlined ? 1 : 0),
+      paddingBottom: vertical - (outlined ? 1 : 0),
+      ...(size === 'small' || size === 'large'
+        ? { fontSize: theme.typography.pxToRem(size === 'small' ? 13 : 15) }
+        : {}),
+      flexDirection: 'row',
+      gap: 8,
+      justifyContent: 'center',
+      alignItems: 'center',
+
+      ...(fullWidth ? { width: '100%' } : {}),
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: background,
+      borderWidth: outlined ? 1 : 0,
+      borderColor: inactive
+        ? theme.palette.action.disabledBackground
+        : outlined
+          ? alpha(colors.main, 0.5)
+          : colors.main,
+      color: foreground,
+      ...(variant === 'contained'
+        ? {
+            boxShadow: 2,
+            '&.Mui-hover': { boxShadow: 4 },
+            '&.Mui-active': { boxShadow: 8 },
+            '&.Mui-focusVisible': {
+              ...(theme.focusVisible || {}),
+              boxShadow:
+                theme.focusVisible && theme.focusVisible.boxShadow
+                  ? `${theme.shadows[6]}, ${theme.focusVisible.boxShadow}`
+                  : 6,
+            },
+          }
+        : {}),
+      '&.Mui-hover': {
+        backgroundColor:
+          variant === 'contained'
+            ? color === 'inherit'
+              ? theme.palette.grey[400]
+              : colors.dark
+            : alpha(
+                color === 'inherit' ? theme.palette.text.primary : colors.main,
+                theme.palette.action.hoverOpacity,
+              ),
+        ...(outlined ? { borderColor: colors.main } : {}),
+        ...(variant === 'contained' ? { boxShadow: 4 } : {}),
+      },
+      '&.Mui-disabled': {
+        color: theme.palette.action.disabled,
+        ...(variant === 'contained'
+          ? { backgroundColor: theme.palette.action.disabledBackground, boxShadow: 0 }
+          : {}),
+        ...(outlined
+          ? { borderWidth: 1, borderColor: theme.palette.action.disabledBackground }
+          : {}),
+      },
+      ...(hide ? { '&.MuiButton-loading': { color: 'transparent' } } : {}),
+    },
+    ...(disableElevation
+      ? [
+          {
+            boxShadow: 'none',
+            '&.Mui-hover': { boxShadow: 'none' },
+            '&.Mui-focusVisible': {
+              boxShadow: (theme.focusVisible ? theme.focusVisible.boxShadow : undefined) ?? 'none',
+            },
+            '&.Mui-active': { boxShadow: 'none' },
+            '&.Mui-disabled': { boxShadow: 'none' },
+          },
+        ]
+      : []),
+  ];
+  const staticStyle =
+    typeof style === 'function'
+      ? restoreNativeRootStyle(
+          { props: { style: undefined }, prepared: rootInput.prepared },
+          { style: undefined },
+        )
+      : style;
+  const source = useMemo(
+    () => ({
+      ...componentRootStyle(theme, 'MuiButton', owner, sx, staticStyle, {
+        sourceClass: true,
+        baseProgramme: buttonConstructorCss(theme, owner),
+        styleCache,
+        overrideProgramme: buttonOverrideCss,
+        ...nativeTextStyleContext(parent, staticStyle, theme),
+        width,
+        rootProps: { ...props, ...owner, disabled: inactive },
+        overrideKeys: [
+          variant,
+          `size${cap(size)}`,
+          ...(color === 'inherit' ? ['colorInherit'] : []),
+          ...(disableElevation ? ['disableElevation'] : []),
+          ...(fullWidth ? ['fullWidth'] : []),
+          ...(loading ? ['loading'] : []),
+        ],
+        baseStyle: nativeBase,
+      }),
+      owner,
+    }),
+    [inProps, group, groupPosition, theme, parent, width, styleCache, defaultsSource],
+  );
+  const frameClasses = (state: ButtonBaseState, hovered: boolean) => {
     // Match the original Button and ButtonBase root utility slots. These finite
     // identities let an owning group target classes without a global CSS engine.
+    const activeHover = hovered && !inactive;
     const rootSlots: (ButtonClassKey | false)[] = [
       'root',
       variant,
@@ -379,7 +538,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
       inactive && 'disabled',
       state.focusVisible && 'focusVisible',
     ];
-    const groupTokens = [
+    return [
       ...(group.className ?? '').split(/\s+/),
       ...(className ?? '').split(/\s+/),
       ...(groupPosition ?? '').split(/\s+/),
@@ -393,10 +552,23 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     ]
       .flatMap((token) => token.split(/\s+/))
       .filter(Boolean);
-    const computed = componentStyle(theme, 'MuiButton', actualOwner, sx, {
+  };
+  const compile = (
+    state: ButtonBaseState,
+    sheet: NativeButtonBaseStyleSheet | undefined,
+    authored?: StyleProp<NativeStyle>,
+    hovered = false,
+  ) => {
+    const groupTokens = frameClasses(state, hovered);
+    return componentStyle(theme, 'MuiButton', owner, undefined, {
+      preparedRoot: sheet?.sourcePrepared ?? source.prepared,
+      nativeLayout: groupRules.length
+        ? { flexShrink: 1 }
+        : { alignSelf: fullWidth ? 'stretch' : 'flex-start' },
+      styleCache,
       classes: groupTokens,
       ancestors: [
-        ...(sheet ? [sheet] : []),
+        ...(sheet && !sheet.sourcePrepared ? [sheet] : []),
         ...groupRules.map((rule) => rule.cascade(groupTokens)),
       ],
       ...nativeTextStyleContext(parent, authored, theme),
@@ -405,95 +577,45 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
         ...(inactive ? ['disabled'] : []),
         ...(loading ? ['loading'] : []),
         ...(state.focusVisible ? ['focusVisible'] : []),
-        ...(activeHover ? ['hover'] : []),
+        ...(hovered && !inactive ? ['hover'] : []),
         ...(state.pressed && !inactive ? ['active'] : []),
       ],
-      overrideKeys: [
-        variant,
-        `size${cap(size)}`,
-        ...(color === 'inherit' ? ['colorInherit'] : []),
-        ...(disableElevation ? ['disableElevation'] : []),
-        ...(fullWidth ? ['fullWidth'] : []),
-        ...(loading ? ['loading'] : []),
-      ],
-      baseStyle: [
-        theme.typography.button,
-        {
-          minHeight: 44,
-          minWidth: 64,
-          paddingLeft: horizontal - (outlined ? 1 : 0),
-          paddingRight: horizontal - (outlined ? 1 : 0),
-          paddingTop: vertical - (outlined ? 1 : 0),
-          paddingBottom: vertical - (outlined ? 1 : 0),
-          ...(size === 'small' || size === 'large'
-            ? { fontSize: theme.typography.pxToRem(size === 'small' ? 13 : 15) }
-            : {}),
-          flexDirection: 'row',
-          gap: 8,
-          justifyContent: 'center',
-          alignItems: 'center',
-          ...(groupRules.length
-            ? { flexShrink: 1 }
-            : { alignSelf: fullWidth ? 'stretch' : 'flex-start' }),
-          ...(fullWidth ? { width: '100%' } : {}),
-          borderRadius: theme.shape.borderRadius,
-          backgroundColor: background,
-          borderWidth: outlined ? 1 : 0,
-          borderColor: inactive
-            ? theme.palette.action.disabledBackground
-            : outlined
-              ? activeHover
-                ? colors.main
-                : alpha(colors.main, 0.5)
-              : colors.main,
-          color: foreground,
-          ...(variant === 'contained'
-            ? {
-                boxShadow: 2,
-                '&.Mui-hover': { boxShadow: 4 },
-                '&.Mui-active': { boxShadow: 8 },
-                '&.Mui-focusVisible': {
-                  ...(theme.focusVisible || {}),
-                  boxShadow:
-                    theme.focusVisible && theme.focusVisible.boxShadow
-                      ? `${theme.shadows[6]}, ${theme.focusVisible.boxShadow}`
-                      : 6,
-                },
-              }
-            : {}),
-          '&.Mui-disabled': {
-            color: theme.palette.action.disabled,
-            ...(variant === 'contained'
-              ? { backgroundColor: theme.palette.action.disabledBackground, boxShadow: 0 }
-              : {}),
-            ...(outlined
-              ? { borderWidth: 1, borderColor: theme.palette.action.disabledBackground }
-              : {}),
-          },
-          ...(hide ? { '&.MuiButton-loading': { color: 'transparent' } } : {}),
-        },
-        ...(disableElevation
-          ? [
-              {
-                boxShadow: 'none',
-                '&.Mui-hover': { boxShadow: 'none' },
-                '&.Mui-focusVisible': {
-                  boxShadow:
-                    (theme.focusVisible ? theme.focusVisible.boxShadow : undefined) ?? 'none',
-                },
-                '&.Mui-active': { boxShadow: 'none' },
-                '&.Mui-disabled': { boxShadow: 'none' },
-              },
-            ]
-          : []),
-      ],
     });
-    // Shared cascade resolves currentColor against the final native foreground.
-    // Retain the computed object that owns inherited relative text metrics.
+  };
+  const sourceFor = useMemo(
+    () => (sheet: NativeButtonBaseStyleSheet) =>
+      prepareNativeCompositeSource(sheet.prepared!, source.prepared, styleCache),
+    [source],
+  );
+  let nativeHovered = false;
+  const styled = (
+    state: ButtonBaseState,
+    sheet = baseSheet,
+    hovered = nativeHovered,
+  ): NativeStyle => {
+    baseSheet = sheet;
+    nativeHovered = hovered;
+    if (
+      cache &&
+      cache.pressed === state.pressed &&
+      cache.focusVisible === state.focusVisible &&
+      cache.hovered === hovered &&
+      cache.sheet === sheet
+    ) {
+      const computed = refreshNativeStyle(cache.computed);
+      if (computed !== cache.computed) {
+        cache.computed = computed;
+        cache.style = mergeNativeButtonStyle(computed, cache.authored);
+      }
+      return cache.style;
+    }
+    const authored = nativeInlineStyle(typeof style === 'function' ? style(state) : style);
+    const computed = compile(state, sheet, authored, hovered);
     const value = mergeNativeButtonStyle(computed, authored);
     cache = {
       pressed: state.pressed,
       focusVisible: state.focusVisible,
+      hovered,
       sheet,
       computed,
       authored,
@@ -506,7 +628,6 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
     const has = Boolean(node) && typeof node !== 'boolean';
     if (!has && !replace) return null;
     const iconSize = size === 'small' ? 18 : size === 'large' ? 22 : 20;
-    const actualOwner = { ...owner, pressed: state.pressed, focusVisible: state.focusVisible };
     const key = position === 'start' ? 'startIcon' : 'endIcon';
     return (
       <View
@@ -517,7 +638,11 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
           alignItems: 'center',
         }}
       >
-        <NativeTextScope
+        <NativeButtonSlotScope
+          name="MuiButton"
+          slots={[key, ...(loading ? [`${key}Loading${cap(position)}`] : [])]}
+          owner={source.owner}
+          width={width}
           rootRef={position === 'start' ? startIconTextRoot : endIconTextRoot}
           theme={theme}
           style={[
@@ -530,21 +655,21 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
               justifyContent: 'center',
               opacity: replace || hide ? 0 : 1,
             },
-            slot(theme, 'MuiButton', key, actualOwner, width),
-            ...(loading
-              ? [slot(theme, 'MuiButton', `${key}Loading${cap(position)}`, actualOwner, width)]
-              : []),
           ]}
           content={
             has ? (
               node
             ) : (
-              <View
-                style={[
-                  { width: iconSize, height: iconSize },
-                  slot(theme, 'MuiButton', 'loadingIconPlaceholder', actualOwner, width),
-                ]}
-              />
+              <NativeButtonSlotScope
+                name="MuiButton"
+                slots={['loadingIconPlaceholder']}
+                owner={source.owner}
+                width={width}
+                theme={theme}
+                style={{ width: iconSize, height: iconSize }}
+              >
+                {(native) => <View style={native} />}
+              </NativeButtonSlotScope>
             )
           }
         >
@@ -553,7 +678,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
               {content}
             </View>
           )}
-        </NativeTextScope>
+        </NativeButtonSlotScope>
         {replace ? (
           <View
             pointerEvents="none"
@@ -567,13 +692,14 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
               justifyContent: 'center',
             }}
           >
-            <NativeTextScope
+            <NativeButtonSlotScope
+              name="MuiButton"
+              slots={['loadingIndicator']}
+              owner={source.owner}
+              width={width}
               rootRef={position === 'start' ? startLoadingTextRoot : endLoadingTextRoot}
               theme={theme}
-              style={[
-                { color: styled(state).color },
-                slot(theme, 'MuiButton', 'loadingIndicator', actualOwner, width),
-              ]}
+              style={[{ color: styled(state).color }]}
               content={indicator}
             >
               {(native, content) => (
@@ -584,7 +710,7 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
                   {content}
                 </View>
               )}
-            </NativeTextScope>
+            </NativeButtonSlotScope>
           </View>
         ) : null}
       </View>
@@ -592,8 +718,12 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
   };
   const loader = (_state: ButtonBaseState) =>
     typeof loading === 'boolean' ? (
-      <View
-        pointerEvents="none"
+      <NativeButtonSlotScope
+        name="MuiButton"
+        slots={['loadingWrapper']}
+        owner={source.owner}
+        width={width}
+        theme={theme}
         style={[
           {
             position: 'absolute',
@@ -606,94 +736,97 @@ export const Button = forwardRef<ViewInstance, ButtonOwnProps>(function Button(i
           },
         ]}
       >
-        {loading && loadingPosition === 'center' ? (
-          <NativeTextScope
-            rootRef={centerLoadingTextRoot}
-            theme={theme}
-            style={[
-              { color: theme.palette.action.disabled },
-              slot(theme, 'MuiButton', 'loadingIndicator', owner, width),
-            ]}
-            content={indicator}
-          >
-            {(native, content) => (
-              <View ref={centerLoadingTextRoot} style={native}>
-                {content}
-              </View>
-            )}
-          </NativeTextScope>
-        ) : null}
-      </View>
+        {(wrapperStyle) => (
+          <View pointerEvents="none" style={wrapperStyle}>
+            {loading && loadingPosition === 'center' ? (
+              <NativeButtonSlotScope
+                name="MuiButton"
+                slots={['loadingIndicator']}
+                owner={source.owner}
+                width={width}
+                rootRef={centerLoadingTextRoot}
+                theme={theme}
+                style={[{ color: theme.palette.action.disabled }]}
+                content={indicator}
+              >
+                {(native, content) => (
+                  <View ref={centerLoadingTextRoot} style={native}>
+                    {content}
+                  </View>
+                )}
+              </NativeButtonSlotScope>
+            ) : null}
+          </View>
+        )}
+      </NativeButtonSlotScope>
     ) : null;
   return (
-    <ButtonBase
-      {...other}
-      ref={ref}
-      nativeID={nativeID}
-      accessibilityLabel={label}
-      accessibilityState={{
-        ...other.accessibilityState,
-        disabled: inactive,
-        busy: loading === true,
-      }}
-      disabled={inactive}
-      // The original inherited Mui-disabled class blocks pointer targeting even
-      // when a child explicitly retains disabled=false and keyboard eligibility.
-      pointerEvents={
-        [group.className, className, classes?.root].some((value) =>
-          value?.split(/\s+/).includes('Mui-disabled'),
-        )
-          ? 'none'
-          : other.pointerEvents
-      }
-      focusRipple={other.focusRipple ?? !disableFocusRipple}
-      sx={undefined}
-      style={styled}
-      _muiNativeStyle={(state, sheet) => {
-        styled(state, sheet);
-        return { computed: cache!.computed, authored: cache!.authored };
-      }}
-      onHoverIn={(event) => {
-        setHovered(true);
-        onHoverIn?.(event);
-      }}
-      onHoverOut={(event) => {
-        setHovered(false);
-        onHoverOut?.(event);
-      }}
-    >
-      {(state) => {
-        const resolved = styled(state),
-          text = Object.fromEntries(
-            Object.entries(resolved).filter(([key]) => isNativeTextStyleProperty(key)),
-          ) as TextStyle;
-        return (
-          <>
-            {icon(startIcon, 'start', state)}
-            {loadingPosition !== 'end' ? loader(state) : null}
-            <Content
-              defaultTypographyComponent={typographyDefaults.component}
-              theme={theme}
-              style={[
-                { flexShrink: 1 },
-                applyNativeTextMetrics(text, resolved, nativeStyleTextMetrics(resolved)),
-              ]}
-              hidden={hide}
-            >
-              {children}
-            </Content>
-            {loadingPosition === 'end' ? loader(state) : null}
-            {icon(endIcon, 'end', state)}
-          </>
-        );
-      }}
-    </ButtonBase>
+    <NativeCssInsertionScope style={source.computed}>
+      <ButtonBase
+        {...other}
+        ref={ref}
+        nativeID={nativeID}
+        accessibilityLabel={label}
+        accessibilityState={{
+          ...other.accessibilityState,
+          disabled: inactive,
+          busy: loading === true,
+        }}
+        disabled={inactive}
+        // The original inherited Mui-disabled class blocks pointer targeting even
+        // when a child explicitly retains disabled=false and keyboard eligibility.
+        pointerEvents={
+          [group.className, className, classes?.root].some((value) =>
+            value?.split(/\s+/).includes('Mui-disabled'),
+          )
+            ? 'none'
+            : other.pointerEvents
+        }
+        focusRipple={other.focusRipple ?? !disableFocusRipple}
+        sx={undefined}
+        style={styled}
+        _muiNativeSourceStyle={sourceFor}
+        _muiNativeStyle={(state, sheet, hovered) => {
+          styled(state, sheet, hovered);
+          return { computed: cache!.computed, authored: cache!.authored };
+        }}
+        onHoverIn={onHoverIn}
+        onHoverOut={onHoverOut}
+      >
+        {(state) => {
+          const resolved = styled(state),
+            text = Object.fromEntries(
+              Object.entries(resolved).filter(([key]) => isNativeTextStyleProperty(key)),
+            ) as TextStyle;
+          return (
+            <>
+              {icon(startIcon, 'start', state)}
+              {loadingPosition !== 'end' ? loader(state) : null}
+              <Content
+                defaultTypographyComponent={typographyDefaults.component}
+                theme={theme}
+                style={[
+                  { flexShrink: 1 },
+                  applyNativeTextMetrics(text, resolved, nativeStyleTextMetrics(resolved)),
+                ]}
+                hidden={hide}
+              >
+                {children}
+              </Content>
+              {loadingPosition === 'end' ? loader(state) : null}
+              {icon(endIcon, 'end', state)}
+            </>
+          );
+        }}
+      </ButtonBase>
+    </NativeCssInsertionScope>
   );
 }) as NativeButtonComponent;
 
 export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
   function IconButton(inProps, ref) {
-    const props = useDefaultProps({ props: inProps, name: 'MuiIconButton' });
+    const rootInput = useMemo(() => separateNativeRootProps(inProps), [inProps]);
+    const props = useNativeSourceDefaultProps({ props: rootInput.props, name: 'MuiIconButton' });
     const typographyDefaults = useDefaultProps({
       props: {} as { component?: unknown },
       name: 'MuiTypography',
@@ -701,7 +834,7 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
     const {
       children,
       sx,
-      style,
+      style: _style,
       color = 'default',
       size = 'medium',
       edge = false,
@@ -719,6 +852,7 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
       onHoverOut,
       ...other
     } = props;
+    const style = restoreNativeRootStyle(rootInput, props);
     classDiagnostic(
       classes,
       className ?? focusVisibleClassName,
@@ -728,7 +862,8 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
       parent = useNativeTextContext(),
       { width } = useWindowDimensions(),
       generated = useId();
-    const [hovered, setHovered] = useState(false);
+    const styleCache = useNativeStyleCache();
+    const defaultsSource = useNativeDefaultPropsSource();
     const loadingTextRoot = useRef<ViewInstance | null>(null);
     const colors =
         color === 'default'
@@ -757,44 +892,21 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
       loading,
       loadingIndicator: indicator,
     };
-    let baseSheet: NativeButtonBaseStyleSheet | undefined;
-    let cache:
-      | {
-          pressed: boolean;
-          focusVisible: boolean;
-          sheet?: NativeButtonBaseStyleSheet;
-          computed: NativeStyle;
-          authored: StyleProp<NativeStyle>;
-          style: NativeStyle;
-        }
-      | undefined;
-    const styled = (state: ButtonBaseState, sheet = baseSheet) => {
-      baseSheet = sheet;
-      if (
-        cache &&
-        cache.pressed === state.pressed &&
-        cache.focusVisible === state.focusVisible &&
-        cache.sheet === sheet
-      )
-        return cache.style;
-      const activeHover = hovered && !inactive && !other.disableRipple,
-        padding = size === 'small' ? 5 : size === 'large' ? 12 : 8;
-      const authored = typeof style === 'function' ? style(state) : style;
-      const computed = componentStyle(
-        theme,
-        'MuiIconButton',
-        { ...owner, pressed: state.pressed, focusVisible: state.focusVisible },
-        sx,
-        {
-          ancestors: sheet ? [sheet] : [],
-          ...nativeTextStyleContext(parent, authored, theme),
+    const padding = size === 'small' ? 5 : size === 'large' ? 12 : 8;
+    const staticStyle =
+      typeof style === 'function'
+        ? restoreNativeRootStyle(
+            { props: { style: undefined }, prepared: rootInput.prepared },
+            { style: undefined },
+          )
+        : style;
+    const source = useMemo(
+      () => ({
+        ...componentRootStyle(theme, 'MuiIconButton', owner, sx, staticStyle, {
+          sourceClass: true,
+          styleCache,
+          ...nativeTextStyleContext(parent, staticStyle, theme),
           width,
-          states: [
-            ...(inactive ? ['disabled'] : []),
-            ...(loading ? ['loading'] : []),
-            ...(state.focusVisible ? ['focusVisible'] : []),
-            ...(activeHover ? ['hover'] : []),
-          ],
           overrideKeys: [
             ...(loading ? ['loading'] : []),
             ...(color !== 'default' ? [`color${cap(color)}`] : []),
@@ -810,9 +922,14 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
             paddingBottom: padding,
             flexShrink: 0,
             borderRadius: 9999,
-            backgroundColor: activeHover
-              ? alpha(colors.main, theme.palette.action.hoverOpacity)
-              : 'transparent',
+            backgroundColor: 'transparent',
+            ...(!other.disableRipple
+              ? {
+                  '&.Mui-hover': {
+                    backgroundColor: alpha(colors.main, theme.palette.action.hoverOpacity),
+                  },
+                }
+              : {}),
             color: inactive ? theme.palette.action.disabled : colors.main,
             fontSize: theme.typography.pxToRem(size === 'small' ? 18 : size === 'large' ? 28 : 24),
             lineHeight: 1,
@@ -820,12 +937,87 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
               ? { [edge === 'start' ? 'marginStart' : 'marginEnd']: size === 'small' ? -3 : -12 }
               : {}),
           },
-        },
-      );
+        }),
+        owner,
+      }),
+      [inProps, theme, parent, width, styleCache, defaultsSource],
+    );
+    const compile = (
+      state: ButtonBaseState,
+      sheet: NativeButtonBaseStyleSheet | undefined,
+      hovered: boolean,
+      authored?: StyleProp<NativeStyle>,
+    ) =>
+      componentStyle(theme, 'MuiIconButton', source.owner, undefined, {
+        preparedRoot: sheet?.sourcePrepared ?? source.prepared,
+        styleCache,
+        ancestors: sheet && !sheet.sourcePrepared ? [sheet] : [],
+        ...nativeTextStyleContext(parent, authored, theme),
+        width,
+        classes: [
+          'MuiButtonBase-root',
+          'MuiIconButton-root',
+          `MuiIconButton-size${cap(size)}`,
+          ...(color !== 'default' ? [`MuiIconButton-color${cap(color)}`] : []),
+          ...(edge ? [`MuiIconButton-edge${cap(edge)}`] : []),
+          ...(inactive ? ['Mui-disabled'] : []),
+          ...(loading ? ['MuiIconButton-loading'] : []),
+          ...(state.focusVisible ? ['Mui-focusVisible'] : []),
+          ...(hovered && !inactive ? ['Mui-hover'] : []),
+          ...(state.pressed && !inactive ? ['Mui-active'] : []),
+          ...(className ?? '').split(/\s+/),
+          ...(classes?.root ?? '').split(/\s+/),
+        ].filter(Boolean),
+        states: [
+          ...(inactive ? ['disabled'] : []),
+          ...(loading ? ['loading'] : []),
+          ...(state.focusVisible ? ['focusVisible'] : []),
+          ...(hovered && !inactive ? ['hover'] : []),
+          ...(state.pressed && !inactive ? ['active'] : []),
+        ],
+      });
+    const sourceFor = useMemo(
+      () => (sheet: NativeButtonBaseStyleSheet) =>
+        prepareNativeCompositeSource(sheet.prepared!, source.prepared, styleCache),
+      [source],
+    );
+    let baseSheet: NativeButtonBaseStyleSheet | undefined;
+    let nativeHovered = false;
+    let cache:
+      | {
+          pressed: boolean;
+          focusVisible: boolean;
+          hovered: boolean;
+          sheet?: NativeButtonBaseStyleSheet;
+          computed: NativeStyle;
+          authored: StyleProp<NativeStyle>;
+          style: NativeStyle;
+        }
+      | undefined;
+    const styled = (state: ButtonBaseState, sheet = baseSheet, hovered = nativeHovered) => {
+      baseSheet = sheet;
+      nativeHovered = hovered;
+      if (
+        cache &&
+        cache.pressed === state.pressed &&
+        cache.focusVisible === state.focusVisible &&
+        cache.hovered === hovered &&
+        cache.sheet === sheet
+      ) {
+        const computed = refreshNativeStyle(cache.computed);
+        if (computed !== cache.computed) {
+          cache.computed = computed;
+          cache.style = mergeNativeButtonStyle(computed, cache.authored);
+        }
+        return cache.style;
+      }
+      const authored = nativeInlineStyle(typeof style === 'function' ? style(state) : style);
+      const computed = compile(state, sheet, hovered, authored);
       const value = mergeNativeButtonStyle(computed, authored);
       cache = {
         pressed: state.pressed,
         focusVisible: state.focusVisible,
+        hovered,
         sheet,
         computed,
         authored,
@@ -834,77 +1026,77 @@ export const IconButton = forwardRef<ViewInstance, IconButtonOwnProps>(
       return value;
     };
     return (
-      <ButtonBase
-        {...other}
-        ref={ref}
-        nativeID={nativeID}
-        accessibilityLabel={label}
-        accessibilityState={{
-          ...other.accessibilityState,
-          disabled: inactive,
-          busy: loading === true,
-        }}
-        disabled={inactive}
-        focusRipple={other.focusRipple ?? !disableFocusRipple}
-        sx={undefined}
-        style={styled}
-        _muiNativeStyle={(state, sheet) => {
-          styled(state, sheet);
-          return { computed: cache!.computed, authored: cache!.authored };
-        }}
-        onHoverIn={(event) => {
-          setHovered(true);
-          onHoverIn?.(event);
-        }}
-        onHoverOut={(event) => {
-          setHovered(false);
-          onHoverOut?.(event);
-        }}
-      >
-        {(state) => (
-          <>
-            {typeof loading === 'boolean' ? (
-              <View
-                pointerEvents="none"
-                style={[
-                  { position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 },
-                  { alignItems: 'center', justifyContent: 'center' },
-                ]}
-              >
-                <NativeTextScope
-                  rootRef={loadingTextRoot}
-                  theme={theme}
+      <NativeCssInsertionScope style={source.computed}>
+        <ButtonBase
+          {...other}
+          ref={ref}
+          nativeID={nativeID}
+          accessibilityLabel={label}
+          accessibilityState={{
+            ...other.accessibilityState,
+            disabled: inactive,
+            busy: loading === true,
+          }}
+          disabled={inactive}
+          focusRipple={other.focusRipple ?? !disableFocusRipple}
+          sx={undefined}
+          style={styled}
+          _muiNativeSourceStyle={sourceFor}
+          _muiNativeStyle={(state, sheet, hovered) => {
+            styled(state, sheet, hovered);
+            return { computed: cache!.computed, authored: cache!.authored };
+          }}
+          onHoverIn={onHoverIn}
+          onHoverOut={onHoverOut}
+        >
+          {(state) => (
+            <>
+              {typeof loading === 'boolean' ? (
+                <View
+                  pointerEvents="none"
                   style={[
-                    { display: loading ? 'flex' : 'none', color: theme.palette.action.disabled },
-                    slot(theme, 'MuiIconButton', 'loadingIndicator', owner, width),
+                    { position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 },
+                    { alignItems: 'center', justifyContent: 'center' },
                   ]}
-                  content={loading ? indicator : null}
                 >
-                  {(native, content) => (
-                    <View ref={loadingTextRoot} style={native}>
-                      {content}
-                    </View>
-                  )}
-                </NativeTextScope>
-              </View>
-            ) : null}
-            <Content
-              defaultTypographyComponent={typographyDefaults.component}
-              theme={theme}
-              style={applyNativeTextMetrics(
-                Object.fromEntries(
-                  Object.entries(styled(state)).filter(([key]) => isNativeTextStyleProperty(key)),
-                ),
-                styled(state),
-                nativeStyleTextMetrics(styled(state)),
-              )}
-              hidden={loading === true}
-            >
-              {children}
-            </Content>
-          </>
-        )}
-      </ButtonBase>
+                  <NativeButtonSlotScope
+                    name="MuiIconButton"
+                    slots={['loadingIndicator']}
+                    owner={source.owner}
+                    width={width}
+                    rootRef={loadingTextRoot}
+                    theme={theme}
+                    style={[
+                      { display: loading ? 'flex' : 'none', color: theme.palette.action.disabled },
+                    ]}
+                    content={loading ? indicator : null}
+                  >
+                    {(native, content) => (
+                      <View ref={loadingTextRoot} style={native}>
+                        {content}
+                      </View>
+                    )}
+                  </NativeButtonSlotScope>
+                </View>
+              ) : null}
+              <Content
+                defaultTypographyComponent={typographyDefaults.component}
+                theme={theme}
+                style={applyNativeTextMetrics(
+                  Object.fromEntries(
+                    Object.entries(styled(state)).filter(([key]) => isNativeTextStyleProperty(key)),
+                  ),
+                  styled(state),
+                  nativeStyleTextMetrics(styled(state)),
+                )}
+                hidden={loading === true}
+              >
+                {children}
+              </Content>
+            </>
+          )}
+        </ButtonBase>
+      </NativeCssInsertionScope>
     );
   },
 ) as NativeIconButtonComponent;

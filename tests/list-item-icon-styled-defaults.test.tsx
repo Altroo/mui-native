@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { render } from '@testing-library/react-native';
 import { ListItemIcon, ThemeProvider, createTheme, styled } from '../packages/material/src';
 import original from './fixtures/mui-list-item-icon-9.5.0.json';
@@ -21,7 +22,7 @@ function observeNative(input: unknown) {
           ...(Object.hasOwn(value, 'defaultSx') ? { sx: value.defaultSx } : {}),
         },
         styleOverrides: {
-          root: ({ ownerState }) => {
+          root: nativeStyleCallback(({ ownerState }) => {
             actual = {
               hasStyle: Object.hasOwn(ownerState, 'style'),
               style: ownerState.style ?? null,
@@ -29,7 +30,7 @@ function observeNative(input: unknown) {
               sx: ownerState.sx ?? null,
             };
             return {};
-          },
+          }),
         },
       },
     },

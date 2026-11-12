@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { createRef, forwardRef, useEffect } from 'react';
 import {
   I18nManager,
@@ -45,10 +46,10 @@ test('unscoped owner state preserves the original absent error value', () => {
     components: {
       MuiFormGroup: {
         styleOverrides: {
-          root: ({ ownerState }: { ownerState: Record<string, unknown> }) => {
+          root: nativeStyleCallback(({ ownerState }: { ownerState: Record<string, unknown> }) => {
             observed.push(ownerState.error);
             return {};
-          },
+          }),
         },
       },
     },
@@ -69,10 +70,10 @@ test('inherited and explicit error states update without replacing the native ro
     components: {
       MuiFormGroup: {
         styleOverrides: {
-          root: ({ ownerState }: { ownerState: Record<string, unknown> }) => {
+          root: nativeStyleCallback(({ ownerState }: { ownerState: Record<string, unknown> }) => {
             observed.push(ownerState.error);
             return { opacity: ownerState.error ? 0.4 : 1 };
-          },
+          }),
         },
       },
     },
@@ -257,13 +258,13 @@ test.each(originalCases)(
         MuiFormGroup: {
           defaultProps: input.defaults,
           styleOverrides: {
-            root: ({ ownerState }: { ownerState: Record<string, unknown> }) => {
+            root: nativeStyleCallback(({ ownerState }: { ownerState: Record<string, unknown> }) => {
               observed.push({
                 row: ownerState.row,
                 error: ownerState.error === undefined ? '$undefined' : ownerState.error,
               });
               return {};
-            },
+            }),
           },
         },
       },

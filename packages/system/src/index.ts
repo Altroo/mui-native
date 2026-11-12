@@ -62,3 +62,7 @@ export {
   applyNativeBorderStyle,
   nativeStyleBorderStyle,
 } from './borders';
+
+export { createNativeStyleCache } from './nativeStyleCache';
+export type { NativeStyleCache } from './nativeStyleCache';
+export { NativeStyleCacheProvider } from './nativeStyleCacheScope';

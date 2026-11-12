@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { componentStyle, configureDiagnostics, createTheme } from '../packages/system/src';
 
 test('embedded variants resolve inside override arrays before component variants and sx', () => {
@@ -41,7 +42,7 @@ test('embedded predicates and styles use merged root props and owner state with 
                   },
                   style: (input) => {
                     seen.push(['style', input]);
-                    return [{ padding: input.spacing(1) }, { opacity: input.active ? 0.5 : 1 }];
+                    return [{ padding: input.spacing!(1) }, { opacity: input.active ? 0.5 : 1 }];
                   },
                 },
                 { props: { color: 'root' }, style: { margin: 2 } },
@@ -236,10 +237,10 @@ test('callback members of variant style arrays receive the merged variant argume
               {
                 props: { active: true },
                 style: [
-                  ({ ownerState, theme, rootOnly }) => ({
+                  nativeStyleCallback(({ ownerState, theme, rootOnly }) => ({
                     opacity: ownerState.active ? 0.5 : 1,
                     padding: theme.spacing(Number(rootOnly)),
-                  }),
+                  })),
                 ],
               },
             ],

@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { createRef, forwardRef, useEffect, useState } from 'react';
 import { I18nManager, View, Text, StyleSheet, type ViewInstance } from 'react-native';
 import { cleanup, render, fireEvent } from '@testing-library/react-native';
@@ -148,7 +149,7 @@ test.each(reference.fixtures)('original complete wrapper composition: $input.nam
       MuiListItemAvatar: {
         defaultProps: input.defaults,
         styleOverrides: {
-          root: ({ ownerState, className, id, classes, ...rootProps }) => {
+          root: nativeStyleCallback(({ ownerState, className, id, classes, ...rootProps }) => {
             actual = {
               alignItems: ownerState.alignItems ?? null,
               hasAlignment: Object.hasOwn(ownerState, 'alignItems'),
@@ -158,7 +159,7 @@ test.each(reference.fixtures)('original complete wrapper composition: $input.nam
               hasAs: Object.hasOwn(rootProps, 'as'),
             };
             return input.edges ?? {};
-          },
+          }),
         },
       },
     },
@@ -199,19 +200,19 @@ test('root/alignment overrides, embedded variants, component variants, sx and na
     components: {
       MuiListItemAvatar: {
         styleOverrides: {
-          root: ({ ownerState }) => [
+          root: nativeStyleCallback(({ ownerState }) => [
             { minWidth: 57, opacity: 0.1 },
             {
               variants: [
                 {
                   props: { alignItems: 'flex-start' },
-                  style: ({ ownerState: state }) => ({
+                  style: nativeStyleCallback(({ ownerState: state }) => ({
                     opacity: state.alignItems === ownerState.alignItems ? 0.2 : 0,
-                  }),
+                  })),
                 },
               ],
             },
-          ],
+          ]),
           alignItemsFlexStart: { minWidth: 58, opacity: 0.3 },
         },
         variants: [
@@ -219,7 +220,9 @@ test('root/alignment overrides, embedded variants, component variants, sx and na
             props: { alignItems: 'flex-start' },
             style: [
               { minWidth: 59, opacity: 0.4 },
-              ({ ownerState }) => ({ opacity: ownerState.alignItems === 'flex-start' ? 0.5 : 0 }),
+              nativeStyleCallback(({ ownerState }) => ({
+                opacity: ownerState.alignItems === 'flex-start' ? 0.5 : 0,
+              })),
             ],
           },
         ],

@@ -143,8 +143,9 @@ test('preparation evaluates outer callbacks and variants once, preserving outer 
     return { '&.Mui-error': { opacity: 0.4 } };
   });
   const predicate = jest.fn((props) => {
-    expect(props.ownerState.row).toBe(true);
-    expect(props.ownerState.error).toBeUndefined();
+    expect(props.row).toBe(true);
+    expect(props.ownerState).toBeUndefined();
+    expect(props.error).toBeUndefined();
     return true;
   });
   const variant = jest.fn(() => ({ '&.MuiProbe-row': { marginTop: 5 } }));
@@ -232,7 +233,7 @@ test('unsupported selectors diagnose once per prepared sheet', () => {
       '',
       {},
       undefined,
-      { baseStyle: { '&:hover': { opacity: 0.4 }, '&.MuiProbe-row': { paddingLeft: 8 } } },
+      { baseStyle: { '&:visited': { opacity: 0.4 }, '&.MuiProbe-row': { paddingLeft: 8 } } },
       undefined,
     );
     expect(diagnostics).toHaveBeenCalledTimes(1);

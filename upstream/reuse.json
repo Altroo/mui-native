@@ -3814,6 +3814,39 @@
       "adaptations": [
         "Nested React and nonplain Theme identity handling is recorded in upstream/theme-react-identities.json. Pinned plain-object eligibility is applied only to nested recursion; existing native top-level/array/undefined/key-filter policy remains. No public API or support-status change."
       ]
+    },
+    {
+      "localFile": "packages/system/src/nativeStyledPreprocessing.ts",
+      "reference": {
+        "name": "@mui/system",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "preprocessStyles.js": "7fe7289ec7d4c8a7061dbbcea35b120efb5efbe8812e36da54840b9f521fd661",
+          "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+        }
+      },
+      "adaptations": [
+        "Static native styled constructors retain original preprocessing timing, serialized expression boundaries and shared processed variant identity. Owned CSS data feeds native conversion without rereading authored getters."
+      ]
+    },
+    {
+      "localFile": "packages/system/src/nativeStyledPreprocessing.ts",
+      "reference": {
+        "name": "@mui/utils",
+        "version": "9.5.0",
+        "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+        "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+        "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+        "sourceFiles": {
+          "deepmerge/deepmerge.js": "e0b2e6bfbe587a6da60a7f95954ff1cb2a7a5a3fb1a2af01524d2ae4281cef9e"
+        }
+      },
+      "adaptations": [
+        "Pinned plain-object eligibility selects static preprocessing. This does not advance verified component coverage."
+      ]
     }
   ]
 }

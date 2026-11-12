@@ -50,6 +50,10 @@ Nested objects, callback replacement and scoped native providers are documented 
 
 For callback slots, the default callback receives owner state; the external callback receives owner state extended with the default slot values. This differs from theme-default callback resolution, where both callbacks receive the original owner state. Absent callback results resolve safely to empty props. The helper does not merge refs or implement slot mounting; consumers remain responsible for using native slot components and supported props.
 
+## Shared theme callback arguments
+
+In development source after `0.0.8-prealpha.0`, shared theme override and variant callbacks describe genuine styled props. Access the theme through `args.theme`. A named generic `styled` component can omit `ownerState` or provide an application-defined value, so narrow that value before reading its members. `SharedComponentStyleArgs` reflects this boundary; the native `ComponentStyleArgs` shape remains available for preparations that own a native component state record. Direct theme fields on native variant callbacks remain a native extension and are optional in the shared callback type.
+
 ## Evidence and maintenance
 
 The reference fixture covers 20 default cases, four deferred callback combinations and four explicit slot-merge combinations against Material UI/System/Utils 9.5.0. The reference generator verifies npm integrity, license hashes and executed source bytes. Use the isolated setup in [theming](theming.md), then run `node scripts/reference/default-props.mjs --check`. Normal tests use committed data.

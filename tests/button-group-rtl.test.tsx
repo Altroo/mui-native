@@ -683,7 +683,7 @@ test('RTL hover paint and disabled divider colors stay on the joined physical ed
       </ButtonGroup>
     </RtlProvider>,
   );
-  fireEvent(tree.UNSAFE_getAllByType(ButtonBase)[0], 'hoverIn', {});
+  fireEvent(tree.getAllByRole('button')[0], 'hoverIn', {});
   expect(actionStyle(tree).borderLeftColor).toBe('red');
   tree.rerender(
     <RtlProvider>

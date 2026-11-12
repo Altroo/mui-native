@@ -1,3 +1,4 @@
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import React, { forwardRef, useState } from 'react';
 import { StyleSheet, processColor } from 'react-native';
 import Svg, {
@@ -66,7 +67,9 @@ function native(input: Observation['input']) {
       components: {
         MuiSvgIcon: {
           styleOverrides: {
-            root: ({ ownerState }) => ({ opacity: ownerState.component === 'svg' ? 0.4 : 1 }),
+            root: nativeStyleCallback(({ ownerState }) => ({
+              opacity: ownerState.component === 'svg' ? 0.4 : 1,
+            })),
           },
         },
       },
@@ -76,9 +79,9 @@ function native(input: Observation['input']) {
       components: {
         MuiSvgIcon: {
           styleOverrides: {
-            root: ({ color, ownerState }) => ({
+            root: nativeStyleCallback(({ color, ownerState }) => ({
               fontSize: color === 'secondary' && ownerState.color === 'primary' ? 17 : 30,
-            }),
+            })),
           },
         },
       },
@@ -89,8 +92,10 @@ function native(input: Observation['input']) {
         MuiSvgIcon: {
           variants: [
             {
-              props: ({ component, color, ownerState }) =>
-                component === 'svg' && color === 'primary' && ownerState.color === 'primary',
+              props: nativeStyleCallback(
+                ({ component, color, ownerState }) =>
+                  component === 'svg' && color === 'primary' && ownerState.color === 'primary',
+              ),
               style: { fontSize: 22, opacity: 0.6 },
             },
           ],
@@ -104,13 +109,13 @@ function native(input: Observation['input']) {
           variants: [
             {
               props: { color: 'secondary' },
-              style: ({ theme, color, ownerState }) => ({
+              style: nativeStyleCallback(({ theme, color, ownerState }) => ({
                 fontSize: 26,
                 color:
                   color === 'primary' && ownerState.color === 'primary'
                     ? theme.palette.success.main
                     : theme.palette.error.main,
-              }),
+              })),
             },
           ],
         },

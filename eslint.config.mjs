@@ -43,6 +43,8 @@ export default defineConfig([
       'scripts/reference/svg-icon-browser.mjs',
       'scripts/reference/button-group-browser.mjs',
       'scripts/reference/button-group-preparation-browser.mjs',
+      'scripts/reference/button-group-cache-browser.mjs',
+      'scripts/reference/styled-cache-classes-browser.mjs',
     ],
     languageOptions: { globals: globals.browser },
   },

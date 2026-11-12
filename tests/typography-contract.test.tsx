@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import {
   forwardRef,
   useEffect,
@@ -35,7 +36,7 @@ const publicClass = (value: unknown) =>
         .split(/\s+/)
         .filter((token) => token && !token.startsWith('css-'))
         .join(' ') || null;
-const observe = (args: ComponentStyleArgs) => ({
+const observe = nativeStyleCallback((args: ComponentStyleArgs) => ({
   ownerClass: publicClass(args.ownerState.className),
   rootClass: publicClass(args.className),
   ownerStyle: args.ownerState.style ?? null,
@@ -54,7 +55,7 @@ const observe = (args: ComponentStyleArgs) => ({
   rootStyle: args.style,
   rootAs: args.as,
   id: args.id,
-});
+}));
 const decode = (props: object = {}) =>
   Object.fromEntries(
     Object.entries(props).map(([key, value]) => [key, value === '$undefined' ? undefined : value]),
@@ -100,10 +101,10 @@ test.each(reference.cases)(
         MuiTypography: {
           defaultProps: value.defaults,
           styleOverrides: {
-            root: (args) => {
+            root: nativeStyleCallback((args) => {
               actual = observe(args);
               return {};
-            },
+            }),
           },
         },
       },
@@ -144,10 +145,10 @@ test.each(reference.styledDefaults)(
         MuiTypography: {
           defaultProps: input.defaults,
           styleOverrides: {
-            root: (args) => {
+            root: nativeStyleCallback((args) => {
               actual = observe(args);
               return {};
-            },
+            }),
           },
         },
       },

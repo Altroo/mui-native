@@ -15,14 +15,31 @@ import {
   nativeStyleTextMetrics,
   resolveSlotProps,
   componentRootStyle,
+  componentStyle,
   type NativeStyle,
   type SxProps,
 } from '@altroo/mui-native-system';
+import {
+  NativeCssInsertionScope,
+  refreshNativeStyle,
+  prepareNativeCompositeSource,
+  nativeInlineStyle,
+  useNativeStyleCache,
+  useNativeStyleCacheRevision,
+  useNativeDefaultPropsSource,
+} from '@altroo/mui-native-system/internal/prepared-style';
+import { NativeButtonGroupRules } from './buttonGroupContext';
+import { nativeStyleAncestors } from './nativeStyleScope';
 import { Paper } from './layout';
-import { ButtonBase, type ButtonBaseState, type ButtonBaseActivationEvent } from './buttonBase';
+import {
+  ButtonBase,
+  type ButtonBaseState,
+  type NativeButtonBaseStyleSheet,
+  type ButtonBaseActivationEvent,
+} from './buttonBase';
 import { Collapse } from './collapse';
 import { useControlled } from './formState';
-import { useTheme, useComponentStyle, useComponentRootStyle } from './themeProvider';
+import { useTheme, useComponentRootStyle } from './themeProvider';
 import { useForkRef } from './utils';
 import {
   getAccordionActionsUtilityClass,
@@ -85,13 +102,14 @@ interface FrameProps {
   overrideKeys?: string[];
   children?: React.ReactNode;
 }
+const EMPTY_SLOT_PROPS: NonNullable<FrameProps['resolved']> = Object.freeze({});
 const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
   {
     name,
     className,
     slot = 'root',
     owner,
-    resolved = {},
+    resolved = EMPTY_SLOT_PROPS,
     component: Component = View,
     base,
     states,
@@ -118,34 +136,76 @@ const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
   const Element = Component === View ? (component ?? as ?? View) : Component;
   const fullClassName = joinClassNames(className, slotClassName);
-  const computed = useComponentStyle(name, { ...owner }, sx, {
-    ...nativeTextStyleContext(parent, style, theme),
-    slot,
-    rootSlot: slot,
+  const styleCache = useNativeStyleCache();
+  const { width } = useWindowDimensions();
+  useNativeStyleCacheRevision();
+  // Source slot CSS is independent of inherited native presentation text.
+  // Retain its callbacks once, then normalize the same source against each frame.
+  const source = useMemo(
+    () =>
+      componentRootStyle(theme, name, { ...owner }, sx, style, {
+        styleCache,
+        slot,
+        rootSlot: slot,
+        width,
+        classes: fullClassName.split(/\s+/).filter(Boolean),
+        rootProps: { ...resolved, className: fullClassName, ownerState: owner },
+        skipVariants: slot !== 'root',
+        states,
+        overrideKeys,
+        baseStyle: base,
+      }),
+    [
+      theme,
+      name,
+      owner,
+      sx,
+      style,
+      styleCache,
+      slot,
+      width,
+      fullClassName,
+      resolved,
+      states,
+      overrideKeys,
+      base,
+    ],
+  );
+  const computed = componentStyle(theme, name, { ...owner }, undefined, {
+    preparedRoot: source.prepared,
+    styleCache,
+    width,
     classes: fullClassName.split(/\s+/).filter(Boolean),
-    rootProps: { ...resolved, className: fullClassName, ownerState: owner },
-    skipVariants: slot !== 'root',
     states,
-    overrideKeys,
-    baseStyle: base,
+    ...nativeTextStyleContext(parent, source.authored, theme),
   });
   return (
-    <NativeTextScope rootRef={scopeRoot} theme={theme} style={[computed, style]} content={children}>
-      {(viewStyle, content) => (
-        <Element
-          {...native}
-          nativeID={id ?? native.nativeID}
-          ref={scopeRef}
-          {...(Element === View || Element === Text
-            ? {}
-            : { ownerState: owner, className: fullClassName })}
-          {...(Component !== View && (component ?? as) ? { as: component ?? as } : {})}
-          style={viewStyle}
-        >
-          {content}
-        </Element>
-      )}
-    </NativeTextScope>
+    <NativeCssInsertionScope
+      style={source.computed}
+      registerClass={Element !== View && Element !== Text}
+    >
+      <NativeTextScope
+        rootRef={scopeRoot}
+        theme={theme}
+        style={[computed, source.authored]}
+        content={children}
+      >
+        {(viewStyle, content) => (
+          <Element
+            {...native}
+            nativeID={id ?? native.nativeID}
+            ref={scopeRef}
+            {...(Element === View || Element === Text
+              ? {}
+              : { ownerState: owner, className: fullClassName })}
+            {...(Component !== View && (component ?? as) ? { as: component ?? as } : {})}
+            style={viewStyle}
+          >
+            {content}
+          </Element>
+        )}
+      </NativeTextScope>
+    </NativeCssInsertionScope>
   );
 });
 
@@ -347,6 +407,7 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
     ...other
   } = props;
   const context = useContext(AccordionContext);
+  const ancestry = useContext(NativeButtonGroupRules);
   const owner: AccordionSummaryOwnerState = {
     ...props,
     expanded: context?.expanded,
@@ -405,155 +466,246 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
   const focusClass = Object.hasOwn(root, 'focusVisibleClassName')
     ? rootFocusClass
     : joinClassNames(composed.focusVisible, focusVisibleClassName);
+  const Root = slots.root ?? (ButtonBase as React.ComponentType<AccordionSummaryRootSlotProps>);
+  const styleCache = useNativeStyleCache();
+  const defaultsSource = useNativeDefaultPropsSource();
+  const source = useMemo(
+    () =>
+      componentRootStyle(
+        theme,
+        'MuiAccordionSummary',
+        { ...owner },
+        Object.hasOwn(root, 'sx') ? rootSx : sx,
+        [
+          typeof preparedStyle === 'function' ? undefined : preparedStyle,
+          typeof rootStyle === 'function' ? undefined : rootStyle,
+        ],
+        {
+          sourceClass: true,
+          styleCache,
+          classes: joinClassNames(rootClass, Root === ButtonBase && 'MuiButtonBase-root')
+            .split(/\s+/)
+            .filter(Boolean),
+          rootProps: {
+            ...props,
+            ...root,
+            className: rootClass,
+            focusVisibleClassName: focusClass,
+            disabled,
+            'aria-expanded': ariaExpanded,
+            ownerState: owner,
+          },
+          ...nativeTextStyleContext(parent, typeof style === 'function' ? undefined : style, theme),
+          width,
+          states,
+          overrideKeys: gutters ? ['gutters'] : [],
+          baseStyle: {
+            width: '100%',
+            minHeight: expanded && gutters ? 64 : 48,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            padding: theme.spacing(0, 2),
+            direction: theme.direction,
+            ...(owner.disabled || disabled
+              ? { opacity: theme.palette.action.disabledOpacity }
+              : {}),
+            '&.Mui-focusVisible': { backgroundColor: theme.palette.action.focus },
+          },
+        },
+      ),
+    [inProps, context, theme, parent, width, styleCache, defaultsSource],
+  );
+  const frame = (
+    state: ButtonBaseState,
+    sheet: NativeButtonBaseStyleSheet | undefined,
+    inline: StyleProp<NativeStyle>,
+    hovered = false,
+  ) =>
+    componentRootStyle(theme, 'MuiAccordionSummary', { ...owner }, undefined, inline, {
+      preparedRoot: sheet?.sourcePrepared ?? source.prepared,
+      styleCache,
+      classes: joinClassNames(
+        rootClass,
+        Root === ButtonBase && 'MuiButtonBase-root',
+        state.focusVisible && focusClass,
+        state.pressed && 'Mui-active',
+        hovered && !state.disabled && 'Mui-hover',
+      )
+        .split(/\s+/)
+        .filter(Boolean),
+      ancestors: [
+        ...(sheet && !sheet.sourcePrepared ? [sheet] : []),
+        ...nativeStyleAncestors(ancestry, {
+          classes: joinClassNames(
+            rootClass,
+            Root === ButtonBase && 'MuiButtonBase-root',
+            state.focusVisible && focusClass,
+            state.pressed && 'Mui-active',
+            hovered && !state.disabled && 'Mui-hover',
+          )
+            .split(/\s+/)
+            .filter(Boolean),
+        }),
+      ],
+      ...nativeTextStyleContext(parent, inline, theme),
+      width,
+      states: [
+        ...states,
+        ...(state.disabled ? ['disabled'] : []),
+        ...(state.focusVisible ? ['focusVisible'] : []),
+        ...(state.pressed ? ['active'] : []),
+        ...(hovered && !state.disabled ? ['hover'] : []),
+      ],
+    });
+  const sourceFor = useMemo(
+    () => (sheet: NativeButtonBaseStyleSheet) =>
+      prepareNativeCompositeSource(sheet.prepared!, source.prepared, styleCache),
+    [source],
+  );
+  let nativeHovered = false;
+  let baseSheet: NativeButtonBaseStyleSheet | undefined;
+  const nativeStyle = (computed: NativeStyle, inline: StyleProp<NativeStyle>) => {
+    const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, computed, inline);
+    return (
+      applyNativeTextMetrics(merged, computed, nativeStyleTextMetrics([computed, inline])) ?? merged
+    );
+  };
   let cache:
-    | { pressed: boolean; focused: boolean; disabled: boolean; style: StyleProp<NativeStyle> }
+    | {
+        pressed: boolean;
+        focused: boolean;
+        disabled: boolean;
+        hovered: boolean;
+        sheet?: NativeButtonBaseStyleSheet;
+        style: StyleProp<NativeStyle>;
+        computed: NativeStyle;
+        authored: StyleProp<NativeStyle>;
+      }
     | undefined;
-  const styled = (state: ButtonBaseState): StyleProp<NativeStyle> => {
+  const styled = (
+    state: ButtonBaseState,
+    sheet = baseSheet,
+    hovered = nativeHovered,
+  ): StyleProp<NativeStyle> => {
+    baseSheet = sheet;
+    nativeHovered = hovered;
     if (
       cache &&
       cache.pressed === state.pressed &&
       cache.focused === state.focusVisible &&
-      cache.disabled === state.disabled
-    )
+      cache.disabled === state.disabled &&
+      cache.hovered === hovered &&
+      cache.sheet === sheet
+    ) {
+      const computed = refreshNativeStyle(cache.computed);
+      if (computed !== cache.computed) {
+        cache.computed = computed;
+        cache.style = nativeStyle(computed, cache.authored);
+      }
       return cache.style;
-    const result = componentRootStyle(
-      theme,
-      'MuiAccordionSummary',
-      { ...owner },
-      Object.hasOwn(root, 'sx') ? rootSx : sx,
-      typeof preparedStyle === 'function' ? preparedStyle(state) : preparedStyle,
-      {
-        classes: joinClassNames(rootClass, state.focusVisible && focusClass)
-          .split(/\s+/)
-          .filter(Boolean),
-        rootProps: {
-          ...props,
-          ...root,
-          className: rootClass,
-          focusVisibleClassName: focusClass,
-          disabled,
-          'aria-expanded': ariaExpanded,
-          ownerState: owner,
-        },
-        ...nativeTextStyleContext(parent, typeof style === 'function' ? undefined : style, theme),
-        width,
-        states: [
-          ...states,
-          ...(state.disabled ? ['disabled'] : []),
-          ...(state.focusVisible ? ['focusVisible'] : []),
-        ],
-        overrideKeys: gutters ? ['gutters'] : [],
-        baseStyle: {
-          width: '100%',
-          minHeight: expanded && gutters ? 64 : 48,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          padding: theme.spacing(0, 2),
-          direction: theme.direction,
-          ...(owner.disabled || state.disabled
-            ? { opacity: theme.palette.action.disabledOpacity }
-            : {}),
-          ...(state.focusVisible ? { backgroundColor: theme.palette.action.focus } : {}),
-        },
-      },
-      true,
-    );
-    const slotInline = typeof rootStyle === 'function' ? rootStyle(state) : rootStyle;
-    const inline = [result.authored, slotInline];
-    const merged = mergeNativeRootStyle(
-      parent?.direction ?? theme.direction,
-      result.computed,
-      inline,
-    );
-    const resolvedStyle =
-      applyNativeTextMetrics(
-        merged,
-        result.computed,
-        nativeStyleTextMetrics([result.computed, inline]),
-      ) ?? merged;
-    // Base adds its own classes before resolving these sheets; authored native layers stay separate.
-    const output = Root === ButtonBase ? [result.programme, slotInline] : resolvedStyle;
+    }
+    const authored =
+      typeof preparedStyle === 'function' ? preparedStyle(state) : nativeInlineStyle(preparedStyle);
+    const slotInline =
+      typeof rootStyle === 'function' ? rootStyle(state) : nativeInlineStyle(rootStyle);
+    const inline = [authored, slotInline];
+    const result = frame(state, sheet, inline, hovered);
+    const output = nativeStyle(result.computed, inline);
     cache = {
       pressed: state.pressed,
       focused: state.focusVisible,
       disabled: state.disabled,
+      hovered,
+      sheet,
       style: output,
+      computed: result.computed,
+      authored: inline,
     };
     return output;
   };
-  const Root = slots.root ?? (ButtonBase as React.ComponentType<AccordionSummaryRootSlotProps>);
   return (
-    <Root
-      focusRipple={false}
-      disableRipple
-      {...other}
-      {...rootNative}
-      ref={ref}
-      component={rootComponent ?? other.component ?? rootAs}
-      className={rootClass}
-      {...(Root === ButtonBase
-        ? {
-            _muiNativeClassName: rootClass,
-            _muiNativeClassMetadata: { root: rootClass, focusVisible: focusClass },
-          }
-        : { focusVisibleClassName: focusClass })}
-      {...(Root === ButtonBase ? {} : { ownerState: owner })}
-      disabled={disabled}
-      aria-expanded={ariaExpanded}
-      accessibilityState={{
-        ...other.accessibilityState,
-        ...rootNative.accessibilityState,
-        ...(ariaExpanded !== undefined ? { expanded: ariaExpanded } : {}),
-        ...(disabled !== undefined ? { disabled } : {}),
-      }}
-      style={styled}
-      onClick={(event) => {
-        if (disabled) return;
-        // Slot callbacks precede expansion and authored callbacks, including when prevented.
-        (rootPress ?? rootClick)?.(event);
-        context?.toggle(event);
-        (onPress ?? onClick)?.(event);
-      }}
-    >
-      <Frame
-        name="MuiAccordionSummary"
-        slot="content"
-        className={composed.content}
-        owner={owner}
-        resolved={content}
-        component={slots.content}
-        states={states}
-        base={{
-          flexDirection: 'row',
-          flexGrow: 1,
-          flexShrink: 1,
-          minWidth: 0,
-          marginTop: expanded && gutters ? 20 : 12,
-          marginBottom: expanded && gutters ? 20 : 12,
+    <NativeCssInsertionScope style={source.computed}>
+      <Root
+        focusRipple={false}
+        disableRipple
+        {...other}
+        {...rootNative}
+        ref={ref}
+        component={rootComponent ?? other.component ?? rootAs}
+        className={rootClass}
+        {...(Root === ButtonBase
+          ? {
+              _muiNativeSourceStyle: sourceFor,
+              _muiNativeStyle: (
+                state: ButtonBaseState,
+                sheet: NativeButtonBaseStyleSheet,
+                hovered?: boolean,
+              ) => {
+                styled(state, sheet, hovered);
+                return { computed: cache!.computed, authored: cache!.authored };
+              },
+              _muiNativeClassName: rootClass,
+              _muiNativeClassMetadata: { root: rootClass, focusVisible: focusClass },
+            }
+          : { focusVisibleClassName: focusClass })}
+        {...(Root === ButtonBase ? {} : { ownerState: owner })}
+        disabled={disabled}
+        aria-expanded={ariaExpanded}
+        accessibilityState={{
+          ...other.accessibilityState,
+          ...rootNative.accessibilityState,
+          ...(ariaExpanded !== undefined ? { expanded: ariaExpanded } : {}),
+          ...(disabled !== undefined ? { disabled } : {}),
+        }}
+        style={styled}
+        onClick={(event) => {
+          if (disabled) return;
+          // Slot callbacks precede expansion and authored callbacks, including when prevented.
+          (rootPress ?? rootClick)?.(event);
+          context?.toggle(event);
+          (onPress ?? onClick)?.(event);
         }}
       >
-        {children}
-      </Frame>
-      {expandIcon && (
         <Frame
           name="MuiAccordionSummary"
-          slot="expandIconWrapper"
-          className={composed.expandIconWrapper}
+          slot="content"
+          className={composed.content}
           owner={owner}
-          resolved={icon}
-          component={slots.expandIconWrapper}
+          resolved={content}
+          component={slots.content}
           states={states}
           base={{
-            flexShrink: 0,
-            color: theme.palette.action.active,
-            transform: [{ rotate: expanded ? '180deg' : '0deg' }],
+            flexDirection: 'row',
+            flexGrow: 1,
+            flexShrink: 1,
+            minWidth: 0,
+            marginTop: expanded && gutters ? 20 : 12,
+            marginBottom: expanded && gutters ? 20 : 12,
           }}
         >
-          {expandIcon}
+          {children}
         </Frame>
-      )}
-    </Root>
+        {expandIcon && (
+          <Frame
+            name="MuiAccordionSummary"
+            slot="expandIconWrapper"
+            className={composed.expandIconWrapper}
+            owner={owner}
+            resolved={icon}
+            component={slots.expandIconWrapper}
+            states={states}
+            base={{
+              flexShrink: 0,
+              color: theme.palette.action.active,
+              transform: [{ rotate: expanded ? '180deg' : '0deg' }],
+            }}
+          >
+            {expandIcon}
+          </Frame>
+        )}
+      </Root>
+    </NativeCssInsertionScope>
   );
 });
 

@@ -262,6 +262,89 @@ export function NativeTextScope({
     </NativeTextStyleContext.Provider>
   );
 }
+// An outer wrapper can prepare children before its selected native root renders.
+// Keep only our own cloned props so the nearest scope can rebind inheritance;
+// a consumer clone or changed style/children remains an authored native layer.
+type EmittedStyle = {
+  prototype: object | null;
+  descriptors: PropertyDescriptorMap;
+  keys: readonly (string | symbol)[];
+};
+function snapshotEmission(style: unknown): EmittedStyle | undefined {
+  if (!style || typeof style !== 'object') return undefined;
+  const prototype = Object.getPrototypeOf(style) as object | null;
+  if (prototype !== Object.prototype && prototype !== null) return undefined;
+  const descriptors = Object.getOwnPropertyDescriptors(style);
+  const keys = Reflect.ownKeys(descriptors);
+  if (
+    keys.some((key) => !Object.hasOwn(Reflect.get(descriptors, key) as PropertyDescriptor, 'value'))
+  )
+    return undefined;
+  return { prototype, descriptors, keys };
+}
+function unchangedEmission(
+  props: object,
+  style: unknown,
+  content: React.ReactNode,
+  saved: EmittedStyle | undefined,
+) {
+  if (
+    !saved ||
+    !style ||
+    typeof style !== 'object' ||
+    Object.getPrototypeOf(style) !== saved.prototype
+  )
+    return false;
+  const propStyle = Object.getOwnPropertyDescriptor(props, 'style');
+  const propChildren = Object.getOwnPropertyDescriptor(props, 'children');
+  if (
+    !propStyle ||
+    !Object.hasOwn(propStyle, 'value') ||
+    propStyle.value !== style ||
+    !propChildren ||
+    !Object.hasOwn(propChildren, 'value') ||
+    propChildren.value !== content
+  )
+    return false;
+  const current = Object.getOwnPropertyDescriptors(style),
+    keys = Reflect.ownKeys(current);
+  return (
+    keys.length === saved.keys.length &&
+    keys.every((key, index) => {
+      if (key !== saved.keys[index]) return false;
+      const before = Reflect.get(saved.descriptors, key) as PropertyDescriptor;
+      const after = Reflect.get(current, key) as PropertyDescriptor;
+      return (
+        Object.hasOwn(after, 'value') &&
+        Object.is(after.value, before.value) &&
+        after.enumerable === before.enumerable &&
+        after.configurable === before.configurable &&
+        after.writable === before.writable
+      );
+    })
+  );
+}
+const childInputs = new WeakMap<
+  object,
+  {
+    style: StyleProp<NativeStyle>;
+    content: React.ReactNode;
+    emittedStyle: StyleProp<NativeStyle>;
+    emittedContent: React.ReactNode;
+    emission: EmittedStyle | undefined;
+  }
+>();
+const literalInputs = new WeakMap<
+  object,
+  { style: StyleProp<TextStyle>; content: string; emission: EmittedStyle | undefined }
+>();
+function originalChildInput(props: object) {
+  const saved = childInputs.get(props);
+  return saved && unchangedEmission(props, saved.emittedStyle, saved.emittedContent, saved.emission)
+    ? saved
+    : undefined;
+}
+
 // Only library-created literal runs use this wrapper. Explicit consumer Text
 // keeps its own nativeID/id, refs and props. The namespace identifies origin;
 // it does not authenticate callers or add another native host.
@@ -306,6 +389,11 @@ export function renderNativeTextChildren(
           {run.join('')}
         </GeneratedParagraph>
       );
+      literalInputs.set(element.props, {
+        style,
+        content: run.join(''),
+        emission: snapshotEmission(style),
+      });
       bindNativeTextEmission(element.props, style, provenance);
       result.push(element);
       run = [];
@@ -316,6 +404,20 @@ export function renderNativeTextChildren(
     // surrogates, without allowing a child key to impersonate a path separator.
     const segment = React.isValidElement(child) ? (child.key ?? index) : index;
     const key = parentKey + '/' + JSON.stringify(String(segment));
+    const literal =
+      React.isValidElement<{ style?: StyleProp<TextStyle>; children?: React.ReactNode }>(child) &&
+      child.type === GeneratedParagraph
+        ? literalInputs.get(child.props)
+        : undefined;
+    if (
+      literal &&
+      React.isValidElement<{ style?: StyleProp<TextStyle>; children?: React.ReactNode }>(child) &&
+      unchangedEmission(child.props, literal.style, literal.content, literal.emission)
+    ) {
+      if (scope.nativeText) result.push(literal.content);
+      else if (literal.content) run.push(literal.content);
+      continue;
+    }
     if (typeof child === 'string' || typeof child === 'number' || typeof child === 'bigint') {
       if (scope.nativeText) {
         result.push(child);
@@ -341,13 +443,16 @@ export function renderNativeTextChildren(
           ),
         );
       else if (child.type === Text || child.type === View) {
+        const input = originalChildInput(child.props);
+        const sourceStyle = input ? input.style : child.props.style;
         const resolved = resolveScope(
           theme,
           scope,
-          child.props.style,
+          sourceStyle,
           child.type === Text ? 'text' : 'view',
           child.type === Text ? scope.paragraphDirection : undefined,
         );
+        const sourceContent = input ? input.content : child.props.children;
         const element = React.cloneElement(
           child,
           {
@@ -356,7 +461,7 @@ export function renderNativeTextChildren(
           },
           <NativeTextStyleContext.Provider value={resolved.value}>
             {renderNativeTextChildren(
-              child.props.children,
+              sourceContent,
               theme,
               resolved.value,
               track,
@@ -365,6 +470,13 @@ export function renderNativeTextChildren(
             )}
           </NativeTextStyleContext.Provider>,
         );
+        childInputs.set(element.props, {
+          style: sourceStyle,
+          content: sourceContent,
+          emittedStyle: resolved.native,
+          emittedContent: element.props.children,
+          emission: snapshotEmission(resolved.native),
+        });
         result.push(
           child.type === Text
             ? sealNativeTextElement(element, resolved.native, resolved.provenance)

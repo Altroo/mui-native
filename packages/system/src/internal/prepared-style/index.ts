@@ -2,6 +2,7 @@
 // Canonical metadata identity for first-party candidate compilation. No new map.
 export {
   nativeStyledStyles,
+  nativeInlineStyle,
   retainNativeRootCss,
   sameNativeRootCss,
   snapshotNativeRootCss,
@@ -18,6 +19,8 @@ export {
   nativeCooperatingRootTarget,
   useNativeRootHandoff,
   useNativeRootHandoffForward,
+  retainNativeRootPreparation,
+  refreshNativeRootPreparation,
 } from '../../nativeRootHandoff';
 export type {
   NativeRootHandoff,
@@ -40,4 +43,30 @@ export { normalizeTextStyle } from '../../nativeText';
 export { nativeTextElementProvenance } from '../../nativeTextProvenance';
 export type { NativeTextProvenance, NativeTextNormalization } from '../../nativeTextProvenance';
 
-export { rebaseNativeComponentStyle } from '../../nativePreparedComponent';
+export {
+  rebaseNativeComponentStyle,
+  prepareNativeCompositeSource,
+} from '../../nativePreparedComponent';
+
+export {
+  nativeCssProgram,
+  serializeNativeCss,
+  nativeCssProgramTree,
+  retainNativeCssProgram,
+} from '../../nativeCssProgram';
+
+export {
+  reevaluateNativeStyle,
+  refreshNativeStyle,
+  retainNativeStyleTransform,
+  nativeStyleInsertions,
+} from '../../nativeStyleEvaluation';
+
+export {
+  NativeCssRootBoundary,
+  NativeCssInsertionScope,
+  useNativeStyleCache,
+  useNativeStyleCacheRevision,
+} from '../../nativeStyleCacheScope';
+
+export { useNativeDefaultPropsSource, useNativeSourceDefaultProps } from '../../defaultProps';

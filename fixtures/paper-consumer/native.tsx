@@ -75,7 +75,12 @@ export const theme = createTheme({
     MuiPaper: {
       defaultProps: defaults,
       styleOverrides: {
-        root: ({ ownerState }) => ({ opacity: ownerState.square ? 0.8 : 1 }),
+        root: ({ ownerState }) => ({
+          opacity:
+            ownerState && typeof ownerState === 'object' && Reflect.get(ownerState, 'square')
+              ? 0.8
+              : 1,
+        }),
         rounded: { padding: 2 },
       },
       variants: [{ props: { variant: 'glass' }, style: { opacity: 0.9 } }],

@@ -37,7 +37,13 @@ type SelectorAtom = { classes: string[]; tag?: string };
 function parseSelectors(key: string) {
   const selectors = key.split(',').map((selector) => selector.trim());
   const parsed = selectors.map((selector) => {
-    const [head, ...parts] = selector.split(/\s+/);
+    // Native interaction state supplies the same specificity as these CSS
+    // pseudo-classes. Keep the original selector in the emitted programme.
+    const normalized = selector.replace(
+      /:(hover|active|focus-visible)(?![a-zA-Z0-9_-])/g,
+      (_match, state: string) => '.Mui-' + (state === 'focus-visible' ? 'focusVisible' : state),
+    );
+    const [head, ...parts] = normalized.split(/\s+/);
     const match = head.match(/^&((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)*)(:last-child)?$/);
     if (!match) return undefined;
     const atoms: SelectorAtom[] = [];

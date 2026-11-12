@@ -22,10 +22,15 @@ const options: ThemeOptions = {
             color: theme.palette.primary.main,
             variants: [
               {
-                props: (input) => input.disabled === ownerState.disabled,
+                props: (input) =>
+                  input.disabled ===
+                  (ownerState && typeof ownerState === 'object' && 'disabled' in ownerState
+                    ? ownerState.disabled
+                    : undefined),
                 style: (input) => [
                   { padding: input.theme.spacing(1) },
-                  { color: input.palette.primary.main },
+                  // Styled variant callbacks expose the theme through their genuine theme prop.
+                  { color: input.theme.palette.primary.main },
                 ],
               },
             ],
