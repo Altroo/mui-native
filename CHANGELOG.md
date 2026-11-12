@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-- Prepare ButtonGroup theme/variant/sx callbacks once at their owning styled root and reuse the sheets during child updates. Preserve source getter order, deferred root arguments, native direction geometry and the established native recursive-slot extension. The shared insertion-history gate in [#127](https://github.com/Altroo/mui-native/issues/127) remains open.
+- Add dedicated native CardActions defaults, classes, spacing controls, root/ref typing, theme composition and original class-helper imports. Normal/enlarged iOS and Android checks retain the row and real action state. Native column-gap behavior remains an explicit browser-layout adaptation.
+- **Breaking for earlier native previews:** the `@mui/material/CardActions` deep entry no longer re-exports unrelated layout components. Import those components from the Material root or their own paths. The native `component="div"` alias remains supported.
+- Prepare ButtonGroup theme/variant/sx callbacks once at their owning styled root and reuse the sheets during child updates. Preserve source getter order, deferred root arguments, native direction geometry and the established native recursive-slot extension. The shared insertion-history fix is tracked in [#127](https://github.com/Altroo/mui-native/issues/127); broader CSS and release-performance gates remain separate.
 
 ## 0.0.8-prealpha.0
 

@@ -405,3 +405,49 @@ test('retained prepared ancestor sheets do not resolve unused callbacks again fo
   componentRootStyle(theme, 'MuiInner', {}, undefined, style);
   expect(styledUnused).toHaveBeenCalledTimes(1);
 });
+
+test('deferred override selection runs once after every configured slot resolves', () => {
+  const trace: string[] = [];
+  const theme = createTheme();
+  theme.components.MuiSlotProbe = {
+    styleOverrides: {
+      root: () => {
+        trace.push('root');
+        return { opacity: 0.2 };
+      },
+      active: () => {
+        trace.push('active');
+        return { opacity: 0.6 };
+      },
+      unused: () => {
+        trace.push('unused');
+        return {};
+      },
+    },
+  };
+  const select = jest.fn(() => {
+    trace.push('select');
+    return ['active'];
+  });
+  const result = componentRootStyle(theme, 'MuiSlotProbe', {}, undefined, undefined, {
+    baseStyle: () => {
+      trace.push('base');
+      return { opacity: 0.1 };
+    },
+    overrideKeys: select,
+  });
+  expect(trace).toEqual(['base', 'root', 'active', 'unused', 'select']);
+  expect(select).toHaveBeenCalledTimes(1);
+  expect(result.computed.opacity).toBe(0.6);
+});
+test('deferred override selection is skipped without configured style overrides', () => {
+  const select = jest.fn(() => {
+    throw Error('No resolver without overrides');
+  });
+  const result = componentRootStyle(createTheme(), 'MuiSlotProbe', {}, undefined, undefined, {
+    baseStyle: { opacity: 0.4 },
+    overrideKeys: select,
+  });
+  expect(select).not.toHaveBeenCalled();
+  expect(result.computed.opacity).toBe(0.4);
+});

@@ -1,0 +1,196 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "package.json": "acf625bc2bcc8fd35032975dfbb1a8271f70c36f77afc50e982c4e2e4b3f79b5",
+      "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
+      "CardActions/index.js": "d4d4d7ab054fa4f44eeea02895c1cfb42bc02e371a4de14b17a21da32c56894d",
+      "CardActions/index.d.ts": "ddec04cd05ab7614a2d51c3fbafa772b47cec4d7d6be80c1de8d37e4366692d1",
+      "CardActions/CardActions.js": "0ebcb4e8ef06658d6ee43fe167fb53985f1981434dab84f182202559f1f996c5",
+      "CardActions/CardActions.d.ts": "4a42853bde0c734cab8c5194afa6e78a6875090d310d472127c84110b8468870",
+      "CardActions/cardActionsClasses.js": "af466e0b9e898195869db5f3481048b6af5e050bac5ceab4270b6de225a45bfc",
+      "CardActions/cardActionsClasses.d.ts": "522651983601a3d0a24eb8104086714d8e9a958810503275e45cd6ff263cf416"
+    }
+  },
+  "utilitiesReference": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "ClassNameGenerator/index.js": "0c39c4bf9fb30edc3e30c45b86d594cae57f1f3b841030dcb0a46b522fa84c6e",
+      "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0",
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+      "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574"
+    }
+  },
+  "observations": [
+    {
+      "input": { "name": "stock", "prop": "absent" },
+      "accesses": ["root", "root", "spacing", "spacing"],
+      "ownerDisableSpacing": false,
+      "rootHasDisableSpacing": false,
+      "className": "MuiCardActions-root own-root MuiCardActions-spacing own-spacing authored",
+      "siblingMargin": true,
+      "spacingOverride": true,
+      "liveRoot": "MuiCardActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiCardActions-root"
+    },
+    {
+      "input": { "name": "authored disabled", "prop": true },
+      "accesses": ["root", "root"],
+      "ownerDisableSpacing": true,
+      "rootHasDisableSpacing": false,
+      "className": "MuiCardActions-root own-root authored",
+      "siblingMargin": false,
+      "spacingOverride": false,
+      "liveRoot": "MuiCardActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiCardActions-root"
+    },
+    {
+      "input": { "name": "default disables spacing", "prop": "absent", "defaults": true },
+      "accesses": ["root", "root"],
+      "ownerDisableSpacing": true,
+      "rootHasDisableSpacing": false,
+      "className": "MuiCardActions-root own-root authored",
+      "siblingMargin": false,
+      "spacingOverride": false,
+      "liveRoot": "MuiCardActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiCardActions-root"
+    },
+    {
+      "input": {
+        "name": "explicit undefined inherits theme default",
+        "prop": "undefined",
+        "defaults": true
+      },
+      "accesses": ["root", "root"],
+      "ownerDisableSpacing": true,
+      "rootHasDisableSpacing": false,
+      "className": "MuiCardActions-root own-root authored",
+      "siblingMargin": false,
+      "spacingOverride": false,
+      "liveRoot": "MuiCardActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiCardActions-root"
+    },
+    {
+      "input": { "name": "explicit false restores spacing", "prop": false, "defaults": true },
+      "accesses": ["root", "root", "spacing", "spacing"],
+      "ownerDisableSpacing": false,
+      "rootHasDisableSpacing": false,
+      "className": "MuiCardActions-root own-root MuiCardActions-spacing own-spacing authored",
+      "siblingMargin": true,
+      "spacingOverride": true,
+      "liveRoot": "MuiCardActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiCardActions-root"
+    },
+    {
+      "input": { "name": "configured active classes", "prop": false, "configured": true },
+      "accesses": ["root", "root", "spacing", "spacing"],
+      "ownerDisableSpacing": false,
+      "rootHasDisableSpacing": false,
+      "className": "ConsumerMuiCardActions-root own-root ConsumerMuiCardActions-spacing own-spacing authored",
+      "siblingMargin": true,
+      "spacingOverride": true,
+      "liveRoot": "ConsumerMuiCardActions-root",
+      "globalState": "Mui-disabled",
+      "classMapRoot": "MuiCardActions-root"
+    }
+  ],
+  "reservedObservations": [
+    {
+      "name": "owner-on",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": true,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": true,
+      "siblingMargin": false,
+      "spacingOverride": false
+    },
+    {
+      "name": "owner-off",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": false,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": false,
+      "siblingMargin": true,
+      "spacingOverride": true
+    },
+    {
+      "name": "owner-empty",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": null,
+      "ownerHasDisableSpacing": false,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": false,
+      "siblingMargin": false,
+      "spacingOverride": true
+    },
+    {
+      "name": "owner-undefined",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": null,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": false,
+      "siblingMargin": false,
+      "spacingOverride": true
+    },
+    {
+      "name": "theme-plain",
+      "ownerIdentity": false,
+      "ownerDisableSpacing": false,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 12,
+      "sxThemeRadius": 12,
+      "spacingClass": true,
+      "siblingMargin": true,
+      "spacingOverride": true
+    },
+    {
+      "name": "theme-scoped",
+      "ownerIdentity": false,
+      "ownerDisableSpacing": false,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 12,
+      "sxThemeRadius": 12,
+      "spacingClass": true,
+      "siblingMargin": true,
+      "spacingOverride": true
+    }
+  ],
+  "nullableOwnerObservations": [
+    { "input": "null", "spacingClass": true, "siblingMargin": false },
+    { "input": "undefined", "spacingClass": true, "siblingMargin": false }
+  ],
+  "ownerGetterObservations": [
+    {
+      "first": false,
+      "trace": ["read:false", "root", "spacing", "read:true"],
+      "siblingMargin": true,
+      "spacingOverride": false
+    },
+    {
+      "first": true,
+      "trace": ["read:true", "root", "spacing", "read:false"],
+      "siblingMargin": false,
+      "spacingOverride": true
+    }
+  ]
+}

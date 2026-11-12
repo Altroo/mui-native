@@ -54,6 +54,7 @@ test('rejects contradictory native frames, dead ref and stale tap state', () => 
   for (const mutate of [
     (report) => (report.states[2].keep.x -= 20),
     (report) => (report.states[3].gap = 8),
+    (report) => (report.states[0].save.width = 300),
     (report) => (report.states[1].save.y += 5),
     (report) => (report.states[4].saveLabel = 'Saved notes 0'),
     (report) => (report.states[4].metadata.refs.cleaned = 1),

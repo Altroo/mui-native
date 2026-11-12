@@ -21,7 +21,7 @@ I started MUI Native to address that gap: preserve familiar MUI component APIs a
 
 ## Status
 
-Updated: **11 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
+Updated: **12 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
 
 These tables describe development on `main`. Check the [release changelog](CHANGELOG.md) for version-specific package contents; development on `main` can precede npm publication.
 
@@ -75,7 +75,7 @@ Expand a family to see individual entries. Percentages link to the implementatio
 | 🔧    | **ButtonGroup**             |                      [75%](docs/button-group.md) | Shared defaults, positions, classes, scoped styles and native roots have source/consumer and scoped iOS/Android interaction evidence. Development after 0.0.7; full native matrices remain.                                                                 |
 | 🔧    | **Card**                    |                              [75%](docs/card.md) | Pinned Paper-backed props/classes, raised/default ordering, native roots and reserved styled inputs pass source/archive checks and thirteen-state normal/enlarged iOS/Android scenes. Development after 0.0.7; broader native and performance gates remain. |
 | 🗺️    | **CardActionArea**          |          [0%](ROADMAP.md#4-complete-material-ui) | Specialized card interaction, header/media and slot contracts are not implemented.                                                                                                                                                                          |
-| 🔧    | **CardActions**             | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                                                                                                            |
+| 🔧    | **CardActions**             |                      [75%](docs/card-actions.md) | Dedicated defaults, classes, native roots, scoped imports and strict consumers pass; five-stage iOS/Android checks pass at normal/enlarged text. Unreleased; complete matrices and release gates remain.                                                    |
 | 🔧    | **CardContent**             | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                                                                                                            |
 | 🗺️    | **CardHeader**              |          [0%](ROADMAP.md#4-complete-material-ui) | Specialized card interaction, header/media and slot contracts are not implemented.                                                                                                                                                                          |
 | 🗺️    | **CardMedia**               |          [0%](ROADMAP.md#4-complete-material-ui) | Specialized card interaction, header/media and slot contracts are not implemented.                                                                                                                                                                          |
