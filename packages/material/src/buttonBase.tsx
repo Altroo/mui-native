@@ -1,5 +1,17 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Activation/style contracts adapt MIT Material UI 9.5.0. See NOTICE and upstream/reuse.json.
+import {
+  nativeCssProgramTree,
+  retainNativeCssProgram,
+  retainNativeStyleTransform,
+  refreshNativeStyle,
+  nativeInlineStyle,
+  NativeCssRootBoundary,
+  useNativeStyleCache,
+  useNativeDefaultPropsSource,
+  useNativeSourceDefaultProps,
+} from '@altroo/mui-native-system/internal/prepared-style';
+import { buttonBaseConstructorCss, buttonBaseOverrideCss } from './nativeButtonCss';
 import React, {
   forwardRef,
   useImperativeHandle,
@@ -7,6 +19,7 @@ import React, {
   useState,
   useContext,
   useLayoutEffect,
+  useMemo,
 } from 'react';
 import {
   Pressable,
@@ -26,7 +39,6 @@ import {
   nativeStyleBorderDeclarations,
   copyNativeBorderStyle,
   applyNativeBorderStyle,
-  useDefaultProps,
   separateNativeRootProps,
   restoreNativeRootStyle,
   joinClassNames,
@@ -38,8 +50,10 @@ import {
   isNativeTextStyleProperty,
   diagnostic,
   componentRootStyle,
+  componentStyle,
   type SxProps,
   type NativeStyle,
+  type NativePreparedStyle,
   type StyleContext,
 } from '@altroo/mui-native-system';
 import { useTheme } from './themeProvider';
@@ -74,7 +88,10 @@ export interface ButtonBaseState extends PressableStateCallbackType {
   disabled: boolean;
 }
 /** @internal Shared sheets preserve specificity across native styled wrappers. */
-export type NativeButtonBaseStyleSheet = NonNullable<StyleContext['ancestors']>[number];
+export type NativeButtonBaseStyleSheet = NonNullable<StyleContext['ancestors']>[number] & {
+  /** Immutable complete CSS prepared at the genuine Base source render. */
+  readonly sourcePrepared?: NativePreparedStyle;
+};
 export interface NativeButtonBaseStyleResult {
   computed: NativeStyle;
   authored: StyleProp<NativeStyle>;
@@ -98,9 +115,12 @@ export interface ButtonBaseOwnProps {
   /** @internal A composing control can own its theme focus ring. */
   internalDisabledThemeFocusVisible?: boolean;
   /** @internal Keep wrapper CSS in the same cascade, separately from native inline styles. */
+  /** @internal Source CSS is prepared independently of native presentation callbacks. */
+  _muiNativeSourceStyle?: (base: NativeButtonBaseStyleSheet) => NativePreparedStyle;
   _muiNativeStyle?: (
     state: ButtonBaseState,
     base: NativeButtonBaseStyleSheet,
+    hovered?: boolean,
   ) => NativeButtonBaseStyleResult;
   disabled?: boolean;
   autoFocus?: boolean;
@@ -194,21 +214,40 @@ export function mergeNativeButtonStyle(
           if (nativeSide(side, false) === nativeSide(other, false)) delete value[`margin${other}`];
     Object.assign(value, inline);
   }
-  return (
+  const result =
     applyNativeTextMetrics(
       applyNativeBorderStyle(nativeStyleBorderDeclarations([value, inline])),
       computed,
       nativeStyleTextMetrics([computed, authored]),
-    ) ?? value
+    ) ?? value;
+  return retainNativeStyleTransform(result, computed, (next) =>
+    mergeNativeButtonStyle(next, authored, feedback),
   );
+}
+// Hover belongs to native presentation. Keeping it below the source owner
+// avoids replaying default getters and CSS callbacks on a host-only update.
+function NativeButtonHover({
+  children,
+}: {
+  children: (hovered: boolean, setHovered: (value: boolean) => void) => React.ReactNode;
+}) {
+  const [hovered, setHovered] = useState(false);
+  return children(hovered, setHovered);
 }
 export const ButtonBase: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<ButtonBaseProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, ButtonBaseProps>(function ButtonBase(inProps, forwarded) {
-  const rootInput = separateNativeRootProps(inProps);
-  const props = useDefaultProps({ props: rootInput.props, name: 'MuiButtonBase' });
+  const [focused, setFocused] = useState(false);
+  const rootInput = useMemo(() => separateNativeRootProps(inProps), [inProps]);
+  const props = useNativeSourceDefaultProps({
+    props: rootInput.props,
+    name: 'MuiButtonBase',
+    sourceState: focused,
+  });
   const preparedStyle = restoreNativeRootStyle(rootInput, props);
   const compositeKeys = useContext(NativeCompositeKeys);
+  const styleCache = useNativeStyleCache();
+  const defaultsSource = useNativeDefaultPropsSource();
   const activationKeys = useContext(NativeButtonActivationKeys);
   const {
     classes,
@@ -229,6 +268,7 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     suppressFocusVisible = false,
     internalDisabledThemeFocusVisible = false,
     _muiNativeStyle,
+    _muiNativeSourceStyle,
     _muiNativeItemState,
     _muiNativeClassName,
     _muiNativeClassMetadata,
@@ -257,7 +297,6 @@ export const ButtonBase: React.ForwardRefExoticComponent<
       mounted.current = false;
     };
   }, []);
-  const [focused, setFocused] = useState(false);
   const focusVisible = focused && !disabled && !suppressFocusVisible;
   // Virtual option highlight must not move the editor's focus, invoke focus
   // callbacks, or grant activation to disabled rows. It only affects styling.
@@ -330,6 +369,9 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     className ?? _muiNativeClassMetadata?.root ?? _muiNativeClassName,
   );
   const styleContext = {
+    styleCache,
+    baseProgramme: buttonBaseConstructorCss(theme, ownerState),
+    overrideProgramme: buttonBaseOverrideCss,
     classes: composedClassName.split(/\s+/).filter(Boolean),
     rootProps: { ...props, className: composedClassName, ownerState },
     ...nativeTextStyleContext(parent, staticStyle, theme),
@@ -358,10 +400,16 @@ export const ButtonBase: React.ForwardRefExoticComponent<
   };
   // Composite controls consume Base CSS on this same physical host. Prepare
   // it once without invoking the composite's genuine native style callback.
-  const basePrepared = _muiNativeStyle
-    ? componentRootStyle(theme, 'MuiButtonBase', ownerState, sx, undefined, styleContext).prepared
-    : undefined;
-  const baseSheet: NativeButtonBaseStyleSheet = {
+  const sourceKey = _muiNativeSourceStyle ?? inProps;
+  const basePrepared = useMemo(
+    () =>
+      _muiNativeStyle
+        ? componentRootStyle(theme, 'MuiButtonBase', ownerState, sx, undefined, styleContext)
+            .prepared
+        : undefined,
+    [sourceKey, theme, parent, width, styleCache, defaultsSource, visualFocusVisible],
+  );
+  const basePrefix: NativeButtonBaseStyleSheet = {
     theme,
     name: 'MuiButtonBase',
     props: ownerState,
@@ -371,29 +419,59 @@ export const ButtonBase: React.ForwardRefExoticComponent<
       ? {
           sameRoot: true,
           prepared: {
-            sheets: [
-              ...basePrepared!.sheets,
-              ...(rootInput.prepared?.sheets ?? []).map((sheet) =>
-                sheet.ancestor
-                  ? sheet
-                  : {
-                      ...sheet,
-                      context: {
-                        ...sheet.context,
-                        classes: styleContext.classes,
-                        states: styleContext.states,
+            sheets: retainNativeCssProgram(
+              [
+                ...basePrepared!.sheets,
+                ...(rootInput.prepared?.sheets ?? []).map((sheet) =>
+                  sheet.ancestor
+                    ? sheet
+                    : {
+                        ...sheet,
+                        context: {
+                          ...sheet.context,
+                          classes: styleContext.classes,
+                          states: styleContext.states,
+                        },
                       },
-                    },
-              ),
-            ],
+                ),
+              ],
+              nativeCssProgramTree(basePrepared!.sheets),
+            ),
           },
         }
       : {}),
   };
-  const rootStyle =
-    _muiNativeStyle || typeof preparedStyle === 'function'
-      ? undefined
-      : componentRootStyle(theme, 'MuiButtonBase', ownerState, sx, preparedStyle, styleContext);
+  const sourceAuthored =
+    typeof preparedStyle === 'function'
+      ? restoreNativeRootStyle(
+          { props: { style: undefined }, prepared: rootInput.prepared },
+          { style: undefined },
+        )
+      : preparedStyle;
+  const rootStyle = useMemo(
+    () =>
+      _muiNativeStyle
+        ? undefined
+        : componentRootStyle(theme, 'MuiButtonBase', ownerState, sx, sourceAuthored, styleContext),
+    [sourceKey, theme, parent, width, styleCache, defaultsSource, visualFocusVisible],
+  );
+  const sourcePrepared = useMemo(
+    () => _muiNativeSourceStyle?.(basePrefix),
+    [sourceKey, theme, parent, width, styleCache, defaultsSource, visualFocusVisible],
+  );
+  const baseSheet: NativeButtonBaseStyleSheet = sourcePrepared
+    ? { ...basePrefix, sourcePrepared }
+    : basePrefix;
+  const sourceStyle = sourcePrepared
+    ? componentStyle(theme, 'MuiButtonBase', ownerState, undefined, {
+        ...styleContext,
+        preparedRoot: sourcePrepared,
+      })
+    : (rootStyle?.computed ??
+      componentStyle(theme, 'MuiButtonBase', ownerState, undefined, {
+        ...styleContext,
+        preparedRoot: basePrepared,
+      }));
   useImperativeHandle(
     action,
     () => ({
@@ -422,35 +500,61 @@ export const ButtonBase: React.ForwardRefExoticComponent<
     focusVisible: visualFocusVisible,
     disabled,
   });
-  let styleCache:
-    | { input: StyleProp<NativeStyle>; authored: StyleProp<NativeStyle>; computed: NativeStyle }
+  let stateStyleCache:
+    | {
+        authored: StyleProp<NativeStyle>;
+        computed: NativeStyle;
+        pressed: boolean;
+        focusVisible: boolean;
+        hovered: boolean;
+      }
     | undefined;
-  const effectiveStyle = (state: PressableStateCallbackType): StyleProp<NativeStyle> => {
+  const effectiveStyle = (
+    state: PressableStateCallbackType,
+    hovered: boolean,
+  ): StyleProp<NativeStyle> => {
     let authored: StyleProp<NativeStyle>;
     let resolved: NativeStyle;
     if (_muiNativeStyle) {
-      ({ computed: resolved, authored } = _muiNativeStyle(stateFor(state), baseSheet));
-    } else if (typeof preparedStyle === 'function') {
-      const input = preparedStyle(stateFor(state));
-      if (styleCache && styleCache.input === input) {
-        resolved = styleCache.computed;
-        authored = styleCache.authored;
-      } else {
-        const root = componentRootStyle(
-          theme,
-          'MuiButtonBase',
-          ownerState,
-          sx,
-          input,
-          styleContext,
-        );
-        resolved = root.computed;
-        authored = root.authored;
-        styleCache = { input, authored, computed: resolved };
-      }
+      ({ computed: resolved, authored } = _muiNativeStyle(stateFor(state), baseSheet, hovered));
     } else {
-      authored = rootStyle!.authored;
-      resolved = rootStyle!.computed;
+      const current = stateFor(state);
+      if (
+        stateStyleCache &&
+        stateStyleCache.pressed === current.pressed &&
+        stateStyleCache.focusVisible === current.focusVisible &&
+        stateStyleCache.hovered === hovered
+      ) {
+        resolved = refreshNativeStyle(stateStyleCache.computed);
+        authored = stateStyleCache.authored;
+      } else {
+        const input =
+          typeof preparedStyle === 'function' ? preparedStyle(current) : rootStyle!.authored;
+        // Native callback output is presentation, never a new CSS programme.
+        authored = rootInput.prepared ? nativeInlineStyle(input) : input;
+        resolved = componentStyle(theme, 'MuiButtonBase', ownerState, undefined, {
+          ...styleContext,
+          preparedRoot: rootStyle!.prepared,
+          ...nativeTextStyleContext(parent, authored, theme),
+          states: [
+            ...styleContext.states,
+            ...(current.pressed && !disabled ? ['active'] : []),
+            ...(hovered && !disabled ? ['hover'] : []),
+          ],
+          classes: [
+            ...styleContext.classes,
+            ...(current.pressed && !disabled ? ['Mui-active'] : []),
+            ...(hovered && !disabled ? ['Mui-hover'] : []),
+          ],
+        });
+        stateStyleCache = {
+          authored,
+          computed: resolved,
+          pressed: current.pressed,
+          focusVisible: current.focusVisible,
+          hovered,
+        };
+      }
     }
     return mergeNativeButtonStyle(resolved, authored, {
       ...(focusVisible && focusRipple && !disableRipple && !theme.focusVisible
@@ -534,75 +638,94 @@ export const ButtonBase: React.ForwardRefExoticComponent<
       activate(buttonActivationEvent(key));
   });
   return (
-    <Root
-      {...host}
-      {...(Root === NativePressable || Root === View || Root === Text
-        ? {}
-        : {
-            className: composedClassName,
-          })}
-      {...(Root === NativePressable ? {} : { href, to })}
-      ref={ref}
-      accessibilityRole={native.accessibilityRole ?? (isLink ? 'link' : 'button')}
-      accessibilityState={{ ...native.accessibilityState, disabled }}
-      aria-disabled={disabled || native['aria-disabled']}
-      disabled={disabled && focusableWhenDisabled ? undefined : disabled}
-      // The shared host's disabled class blocks pointer targeting even when a
-      // slot keeps disabled=false and native keyboard activation enabled.
-      pointerEvents={
-        disabled || composedClassName.split(/\s+/).includes('Mui-disabled')
-          ? 'none'
-          : native.pointerEvents
-      }
-      onLongPress={(event) => {
-        if (!disabled) native.onLongPress?.(event);
-      }}
-      focusable={disabled ? focusableWhenDisabled : (native.focusable ?? true)}
-      tabIndex={disabled && !focusableWhenDisabled ? -1 : tabIndex}
-      android_ripple={
-        disabled || disableRipple || disableTouchRipple
-          ? undefined
-          : (native.android_ripple ?? { color: theme.palette.action.focus })
-      }
-      onPress={activate}
-      onPointerDownCapture={(event) => {
-        nativeButtonModality.pointer();
-        onPointerDownCapture?.(event);
-      }}
-      onTouchStart={(event) => {
-        nativeButtonModality.pointer();
-        onTouchStart?.(event);
-      }}
-      onPressIn={(event) => {
-        nativeButtonModality.pointer();
-        onPressIn?.(event);
-      }}
-      onFocus={(event) => {
-        const visible = !suppressFocusVisible && nativeButtonModality.isKeyboard();
-        if (visible) {
-          setFocused(true);
-          onFocusVisible?.(event);
-        }
-        onFocus?.(event);
-      }}
-      onBlur={(event) => {
-        setFocused(false);
-        onBlur?.(event);
-      }}
-      onKeyDown={handleKeyDown}
-      onKeyUp={handleKeyUp}
-      style={(state) => viewStyle(effectiveStyle(state))}
-    >
-      {(state) => (
-        <NativeTextScope
-          rootRef={node}
-          theme={theme}
-          style={effectiveStyle(state)}
-          content={typeof children === 'function' ? children(stateFor(state)) : children}
-        >
-          {(_style, content) => content}
-        </NativeTextScope>
+    <NativeCssRootBoundary style={sourceStyle} registerClass={Root !== NativePressable}>
+      {() => (
+        <NativeButtonHover>
+          {(hovered, setHovered) => (
+            <Root
+              {...host}
+              {...(Root === NativePressable || Root === View || Root === Text
+                ? {}
+                : {
+                    className: composedClassName,
+                  })}
+              {...(Root === NativePressable ? {} : { href, to })}
+              ref={ref}
+              accessibilityRole={native.accessibilityRole ?? (isLink ? 'link' : 'button')}
+              accessibilityState={{ ...native.accessibilityState, disabled }}
+              aria-disabled={disabled || native['aria-disabled']}
+              disabled={disabled && focusableWhenDisabled ? undefined : disabled}
+              // The shared host's disabled class blocks pointer targeting even when a
+              // slot keeps disabled=false and native keyboard activation enabled.
+              pointerEvents={
+                disabled || composedClassName.split(/\s+/).includes('Mui-disabled')
+                  ? 'none'
+                  : native.pointerEvents
+              }
+              onLongPress={(event) => {
+                if (!disabled) native.onLongPress?.(event);
+              }}
+              focusable={disabled ? focusableWhenDisabled : (native.focusable ?? true)}
+              tabIndex={disabled && !focusableWhenDisabled ? -1 : tabIndex}
+              android_ripple={
+                disabled || disableRipple || disableTouchRipple
+                  ? undefined
+                  : (native.android_ripple ?? { color: theme.palette.action.focus })
+              }
+              onPress={activate}
+              onPointerDownCapture={(event) => {
+                nativeButtonModality.pointer();
+                onPointerDownCapture?.(event);
+              }}
+              onTouchStart={(event) => {
+                nativeButtonModality.pointer();
+                onTouchStart?.(event);
+              }}
+              onPressIn={(event) => {
+                nativeButtonModality.pointer();
+                onPressIn?.(event);
+              }}
+              onFocus={(event) => {
+                const visible = !suppressFocusVisible && nativeButtonModality.isKeyboard();
+                if (visible) {
+                  setFocused(true);
+                  onFocusVisible?.(event);
+                }
+                onFocus?.(event);
+              }}
+              onBlur={(event) => {
+                setFocused(false);
+                onBlur?.(event);
+              }}
+              onHoverIn={(event) => {
+                setHovered(true);
+                native.onHoverIn?.(event);
+              }}
+              onHoverOut={(event) => {
+                setHovered(false);
+                native.onHoverOut?.(event);
+              }}
+              onKeyDown={handleKeyDown}
+              onKeyUp={handleKeyUp}
+              style={(state) => viewStyle(effectiveStyle(state, hovered))}
+            >
+              {(state) => {
+                const resolved = effectiveStyle(state, hovered);
+                return (
+                  <NativeTextScope
+                    rootRef={node}
+                    theme={theme}
+                    style={resolved}
+                    content={typeof children === 'function' ? children(stateFor(state)) : children}
+                  >
+                    {(_style, content) => content}
+                  </NativeTextScope>
+                );
+              }}
+            </Root>
+          )}
+        </NativeButtonHover>
       )}
-    </Root>
+    </NativeCssRootBoundary>
   );
 });

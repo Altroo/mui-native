@@ -1,6 +1,11 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { StyleSheet } from 'react-native';
-import { nativeStyledStyles } from '@altroo/mui-native-system/internal/prepared-style';
+import {
+  nativeStyledStyles,
+  retainNativeRootPreparation,
+  refreshNativeStyle,
+  retainNativeStyleTransform,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import type {
   NativeRootPreparation,
   NativeRootStyleInput,
@@ -185,33 +190,47 @@ export function compileCooperatingCandidates(
       {},
       undefined,
       programme,
-      {
-        ...context,
-        classes,
-        ...(lastChild === undefined ? {} : { lastChild }),
-      },
+      { ...context, classes, ...(lastChild === undefined ? {} : { lastChild }) },
     );
-    const merged = mergeNativeRootStyle(root.parentDirection, computed, authored);
-    const metrics = nativeStyleTextMetrics([computed, authored]);
-    const presentation = applyNativeTextMetrics(merged, computed, metrics) ?? merged;
+    const paint = (next: NativeStyle) => {
+      const merged = mergeNativeRootStyle(root.parentDirection, next, authored);
+      const metrics = nativeStyleTextMetrics([next, authored]);
+      return applyNativeTextMetrics(merged, next, metrics) ?? merged;
+    };
     return {
-      presentation,
       prepared,
-      text: textFacet(presentation, metrics, root.parentDirection),
-      view: Object.fromEntries(
-        Object.entries(presentation).filter(([key]) => !isNativeTextStyleProperty(key)),
-      ),
+      read() {
+        const current = refreshNativeStyle(computed);
+        const presentation = retainNativeStyleTransform(paint(current), computed, paint);
+        const metrics = nativeStyleTextMetrics([current, authored]);
+        return {
+          presentation,
+          text: textFacet(presentation, metrics, root.parentDirection),
+          view: Object.fromEntries(
+            Object.entries(presentation).filter(([key]) => !isNativeTextStyleProperty(key)),
+          ),
+        };
+      },
     };
   };
   const ordinary = resolve(),
     normal = resolve(false),
     last = resolve(true);
-  if (!sameTextFacet(normal.text, last.text) || !sameTextFacet(normal.text, ordinary.text))
-    throw Error('Conditional cooperating-root text is unsupported');
-  return {
-    presentation: ordinary.presentation,
-    normal: normal.view,
-    last: last.view,
-    prepared: ordinary.prepared,
+  const project = (): NativeRootPreparation => {
+    const a = ordinary.read(),
+      b = normal.read(),
+      c = last.read();
+    if (!sameTextFacet(b.text, c.text) || !sameTextFacet(b.text, a.text))
+      throw Error('Conditional cooperating-root text is unsupported');
+    return retainNativeRootPreparation(
+      {
+        presentation: a.presentation,
+        normal: b.view,
+        last: c.view,
+        prepared: ordinary.prepared,
+      },
+      project,
+    );
   };
+  return project();
 }

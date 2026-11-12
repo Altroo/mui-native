@@ -2,7 +2,7 @@
  * Copyright (c) MUI contributors. See NOTICE and upstream/box.json.
  * Native adaptation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 import { forwardRef, useContext } from 'react';
-import { View, useWindowDimensions, type ViewInstance } from 'react-native';
+import { View, Text, useWindowDimensions, type ViewInstance } from 'react-native';
 import {
   useTheme as useSystemTheme,
   separateNativeRootProps,
@@ -17,6 +17,7 @@ import {
   nativeStyleTextMetrics,
   applyNativeTextMetrics,
   type Theme,
+  type NativeStyle,
 } from '@altroo/mui-native-system';
 import {
   NativeRootHandoffContext,
@@ -25,6 +26,11 @@ import {
   retainNativeRootCss,
   registerNativeRoot,
   useNativeRootHandoff,
+  useNativeStyleCache,
+  NativeCssRootBoundary,
+  retainNativeStyleTransform,
+  refreshNativeStyle,
+  refreshNativeRootPreparation,
 } from '@altroo/mui-native-system/internal/prepared-style';
 import { THEME_ID } from './themeProvider';
 import { mergeNativeRootStyle } from './nativeControlStyles';
@@ -47,6 +53,7 @@ const defaultClassName = boxClasses.root;
 const generateClassName = unstable_ClassNameGenerator.generate;
 export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootProps>(
   function Box(inProps, forwarded) {
+    const styleCache = useNativeStyleCache();
     const handoff = useNativeRootHandoff(boxRoot, inProps.className);
     const forwardedStyle = useNativeRootStyleForward(boxRoot, inProps.className);
     const { root, ref } = useNativeTextRootRef(forwarded),
@@ -82,6 +89,7 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
         'Use a custom native component for Box roots other than the div alias.',
       );
     const Root = typeof chosen === 'string' ? View : chosen;
+    const terminal = Root === View || Root === Text;
     const rootClass = joinClassNames(className, generateClassName(defaultClassName)),
       classes = rootClass.split(/\s+/).filter(Boolean);
     const parent = useNativeTextContext(),
@@ -98,21 +106,27 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
       sx,
       authoredStyle,
       {
+        sourceClass: true,
+        styleCache,
         ...nativeTextStyleContext(parent, style, theme),
         width,
         classes,
         ancestors: nativeStyleAncestors(rules, { classes }),
         protectPhysicalGeometry: true,
       },
-      handoff !== null,
+      handoff !== null || !terminal,
     );
-    const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, computed, authored);
-    const finalStyle =
-      applyNativeTextMetrics(merged, computed, nativeStyleTextMetrics([computed, authored])) ??
-      merged;
+    const paint = (next: NativeStyle) => {
+      const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, next, authored);
+      return (
+        applyNativeTextMetrics(merged, next, nativeStyleTextMetrics([next, authored])) ?? merged
+      );
+    };
+    const finalStyle = retainNativeStyleTransform(paint(computed), computed, paint);
     if (handoff) {
       if (chosen !== View && chosen !== 'div') throw Error('Cooperating Box requires View/div');
       const context = {
+        styleCache,
         ...nativeTextStyleContext(parent, style, theme),
         width,
         classes,
@@ -126,45 +140,70 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
       });
       return clearNativeRootStyleForward(
         forwardedStyle,
-        <NativeTextScope
-          rootRef={root}
-          theme={theme}
-          style={preparation.presentation}
-          content={children}
-        >
-          {(presentation, content) => (
-            <NativeRootHandoffContext.Provider value={null}>
-              {handoff.render({
-                preparation,
-                hostProps: native,
-                nativeRef,
-                children: content,
-                presentation,
-                theme,
-                classes,
-              })}
-            </NativeRootHandoffContext.Provider>
-          )}
-        </NativeTextScope>,
+        <NativeCssRootBoundary style={preparation.presentation} registerClass={false}>
+          {() => {
+            const current = refreshNativeRootPreparation(preparation);
+            return (
+              <NativeTextScope
+                rootRef={root}
+                theme={theme}
+                style={current.presentation}
+                content={children}
+              >
+                {(presentation, content) => (
+                  <NativeRootHandoffContext.Provider value={null}>
+                    {handoff.render({
+                      preparation: current,
+                      hostProps: native,
+                      nativeRef,
+                      children: content,
+                      presentation,
+                      theme,
+                      classes,
+                    })}
+                  </NativeRootHandoffContext.Provider>
+                )}
+              </NativeTextScope>
+            );
+          }}
+        </NativeCssRootBoundary>,
         handoff?.retained,
       );
     }
     return clearNativeRootStyleForward(
       forwardedStyle,
-      <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
-        <NativeTextScope rootRef={root} theme={theme} style={finalStyle} content={children}>
-          {(style, content) => (
-            <Root
-              {...native}
-              {...(Root === View ? {} : { className: rootClass })}
-              ref={nativeRef}
-              style={style}
+      <NativeCssRootBoundary style={computed} registerClass={!terminal}>
+        {() => (
+          <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
+            <NativeTextScope
+              rootRef={root}
+              theme={theme}
+              style={refreshNativeStyle(finalStyle)}
+              content={children}
             >
-              {content}
-            </Root>
-          )}
-        </NativeTextScope>
-      </NativeStyleScope>,
+              {(style, content) => (
+                <Root
+                  {...native}
+                  {...(Root === View ? {} : { className: rootClass })}
+                  ref={nativeRef}
+                  style={
+                    terminal
+                      ? style
+                      : retainNativeRootCss(
+                          authored,
+                          programme,
+                          Object.hasOwn(props, 'style'),
+                          style,
+                        )
+                  }
+                >
+                  {content}
+                </Root>
+              )}
+            </NativeTextScope>
+          </NativeStyleScope>
+        )}
+      </NativeCssRootBoundary>,
     );
   },
 ) as NativeBoxComponent;
