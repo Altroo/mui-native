@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "ab56d8daf1e66cd3d4be27831922d0737c445f393184ee527effc4f16282dfc7",
+  "nativeSourceSha256": "d9e7fb8480c03128420085261818dca058317d35a01f289704d48d36644e1b34",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -11491,7 +11491,7 @@
           "line": 9
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11510,7 +11510,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11529,7 +11529,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -11548,7 +11548,7 @@
           "line": 6
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17096,7 +17096,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -57776,7 +57776,7 @@
           "line": 14,
           "kind": "property",
           "type": "Partial<CardActionsClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -57802,7 +57802,7 @@
           "line": 23,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -57817,7 +57817,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CardActionsProps",
+          "file": "src/cardActions.tsx",
+          "line": 20,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CardActionsProps",
@@ -57848,7 +57855,7 @@
           "line": 14,
           "kind": "property",
           "type": "Partial<CardActionsClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -57874,7 +57881,7 @@
           "line": 23,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -57889,7 +57896,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CardActionsProps",
+          "file": "src/cardActions.tsx",
+          "line": 20,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CardActionsClasses",
@@ -57907,7 +57921,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -57920,13 +57934,20 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CardActionsClasses",
+          "file": "src/cardActionsClasses.ts",
+          "line": 6,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CardActionsClassKey",
@@ -57938,7 +57959,14 @@
         "CardActionsClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CardActionsClassKey",
+          "file": "src/cardActionsClasses.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CardActionsClasses",
@@ -57956,7 +57984,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -57969,13 +57997,20 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CardActionsClasses",
+          "file": "src/cardActionsClasses.ts",
+          "line": 6,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CardActionsClassKey",
@@ -57987,7 +58022,14 @@
         "CardActionsClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CardActionsClassKey",
+          "file": "src/cardActionsClasses.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CardContentOwnProps",
@@ -171891,7 +171933,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 101,
+          "line": 103,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173576,7 +173618,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 98,
+          "line": 100,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173597,7 +173639,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 101,
+          "line": 103,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175282,7 +175324,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 98,
+          "line": 100,
           "package": "@altroo/mui-native"
         }
       ]
@@ -188020,6 +188062,328 @@
       "members": [],
       "references": [
         "ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CardActionsProps",
+      "file": "src/cardActions.tsx",
+      "line": 20,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: BoxProps['component'];",
+          "line": 21,
+          "kind": "property",
+          "type": "BoxProps['component']"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<import('./cardActionsClasses').CardActionsClasses> | undefined;",
+          "line": 22,
+          "kind": "property",
+          "type": "Partial<import('./cardActionsClasses').CardActionsClasses> | undefined"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string | undefined;",
+          "line": 23,
+          "kind": "property",
+          "type": "string | undefined"
+        },
+        {
+          "name": "disableSpacing",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableSpacing?: boolean | undefined;",
+          "line": 24,
+          "kind": "property",
+          "type": "boolean | undefined"
+        }
+      ],
+      "references": [
+        "BoxProps",
+        "Omit",
+        "Partial"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CardActionsNativeRootProps",
+      "file": "src/cardActions.tsx",
+      "line": 26,
+      "kind": "type",
+      "members": [
+        {
+          "name": "as",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "as?: BoxProps['component'];",
+          "line": 27,
+          "kind": "property",
+          "type": "BoxProps['component']"
+        },
+        {
+          "name": "ownerState",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ownerState?: object;",
+          "line": 28,
+          "kind": "property",
+          "type": "object"
+        }
+      ],
+      "references": [
+        "BoxProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ActionRoot",
+      "file": "src/cardActions.tsx",
+      "line": 30,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeActionRoot",
+      "file": "src/cardActions.tsx",
+      "line": 31,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ActionRoot",
+        "R",
+        "React.ComponentRef",
+        "React.ComponentType",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PropsForRoot",
+      "file": "src/cardActions.tsx",
+      "line": 40,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: (R & NativeActionRoot<R>) | undefined;",
+          "line": 42,
+          "kind": "property",
+          "type": "(R & NativeActionRoot<R>) | undefined"
+        }
+      ],
+      "references": [
+        "ActionRoot",
+        "BoxProps",
+        "CardActionsProps",
+        "NativeActionRoot",
+        "Omit",
+        "R"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DefaultActionsProps",
+      "file": "src/cardActions.tsx",
+      "line": 44,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: undefined",
+          "line": 44,
+          "kind": "property",
+          "type": "undefined"
+        }
+      ],
+      "references": [
+        "CardActionsProps",
+        "Omit"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "InferredActionsProps",
+      "file": "src/cardActions.tsx",
+      "line": 45,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ActionRoot",
+        "CardActionsProps",
+        "DefaultActionsProps",
+        "NonNullable",
+        "P",
+        "PropsForRoot",
+        "R"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "InferredActionsKeys",
+      "file": "src/cardActions.tsx",
+      "line": 52,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "CardActionsProps",
+        "InferredActionsProps",
+        "P"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeCardActionsComponent",
+      "file": "src/cardActions.tsx",
+      "line": 57,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<R extends ActionRoot>(\n    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },\n  ): React.JSX.Element;",
+          "line": 58,
+          "kind": "signature",
+          "type": "<R extends ActionRoot>(\n    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },\n  ): React.JSX.Element;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: DefaultActionsProps): React.JSX.Element;",
+          "line": 61,
+          "kind": "signature",
+          "type": "(props: DefaultActionsProps): React.JSX.Element;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<P extends CardActionsProps>(\n    props: P &\n      NoInfer<InferredActionsProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,\n  ): React.JSX.Element;",
+          "line": 62,
+          "kind": "signature",
+          "type": "<P extends CardActionsProps>(\n    props: P &\n      NoInfer<InferredActionsProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,\n  ): React.JSX.Element;"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string | undefined;",
+          "line": 67,
+          "kind": "property",
+          "type": "string | undefined"
+        }
+      ],
+      "references": [
+        "ActionRoot",
+        "CardActionsProps",
+        "DefaultActionsProps",
+        "Exclude",
+        "InferredActionsKeys",
+        "InferredActionsProps",
+        "NativeActionRoot",
+        "NoInfer",
+        "P",
+        "PropsForRoot",
+        "R",
+        "React.JSX.Element",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CardActionsClasses",
+      "file": "src/cardActionsClasses.ts",
+      "line": 6,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: string;",
+          "line": 7,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "spacing",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "spacing: string;",
+          "line": 8,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CardActionsClassKey",
+      "file": "src/cardActionsClasses.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "CardActionsClasses"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -209215,7 +209579,7 @@
     {
       "name": "MaterialExports",
       "file": "src/styles/props.ts",
-      "line": 16,
+      "line": 17,
       "kind": "type",
       "members": [],
       "references": [],
@@ -209225,7 +209589,7 @@
     {
       "name": "ComponentName",
       "file": "src/styles/props.ts",
-      "line": 18,
+      "line": 19,
       "kind": "type",
       "members": [],
       "references": [],
@@ -209235,7 +209599,7 @@
     {
       "name": "ExistingComponentProps",
       "file": "src/styles/props.ts",
-      "line": 79,
+      "line": 80,
       "kind": "type",
       "members": [],
       "references": [
@@ -209250,7 +209614,7 @@
     {
       "name": "GenericComponentProps",
       "file": "src/styles/props.ts",
-      "line": 84,
+      "line": 85,
       "kind": "type",
       "members": [
         {
@@ -209260,7 +209624,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiAutocomplete: AutocompleteProps<any, any, any, any, any, any>;",
-          "line": 85,
+          "line": 86,
           "kind": "property",
           "type": "AutocompleteProps<any, any, any, any, any, any>"
         },
@@ -209271,7 +209635,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButton: ButtonProps;",
-          "line": 86,
+          "line": 87,
           "kind": "property",
           "type": "ButtonProps"
         },
@@ -209282,7 +209646,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiIconButton: IconButtonProps;",
-          "line": 87,
+          "line": 88,
           "kind": "property",
           "type": "IconButtonProps"
         },
@@ -209293,7 +209657,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButtonGroup: ButtonGroupProps;",
-          "line": 88,
+          "line": 89,
           "kind": "property",
           "type": "ButtonGroupProps"
         },
@@ -209304,7 +209668,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiChip: ChipProps;",
-          "line": 89,
+          "line": 90,
           "kind": "property",
           "type": "ChipProps"
         },
@@ -209315,7 +209679,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSvgIcon: SvgIconProps;",
-          "line": 90,
+          "line": 91,
           "kind": "property",
           "type": "SvgIconProps"
         },
@@ -209326,7 +209690,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSelect: SelectProps;",
-          "line": 91,
+          "line": 92,
           "kind": "property",
           "type": "SelectProps"
         },
@@ -209337,7 +209701,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiTextField: TextFieldProps;",
-          "line": 92,
+          "line": 93,
           "kind": "property",
           "type": "TextFieldProps"
         },
@@ -209348,7 +209712,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPopper: PopperProps;",
-          "line": 93,
+          "line": 94,
           "kind": "property",
           "type": "PopperProps"
         },
@@ -209359,7 +209723,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDivider: DividerProps;",
-          "line": 94,
+          "line": 95,
           "kind": "property",
           "type": "DividerProps"
         },
@@ -209370,7 +209734,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPaper: PaperProps;",
-          "line": 95,
+          "line": 96,
           "kind": "property",
           "type": "PaperProps"
         },
@@ -209381,15 +209745,27 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiCard: CardProps;",
-          "line": 96,
+          "line": 97,
           "kind": "property",
           "type": "CardProps"
+        },
+        {
+          "name": "MuiCardActions",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiCardActions: CardActionsProps;",
+          "line": 98,
+          "kind": "property",
+          "type": "CardActionsProps"
         }
       ],
       "references": [
         "AutocompleteProps",
         "ButtonGroupProps",
         "ButtonProps",
+        "CardActionsProps",
         "CardProps",
         "ChipProps",
         "DividerProps",
@@ -209406,7 +209782,7 @@
     {
       "name": "ComponentsPropsList",
       "file": "src/styles/props.ts",
-      "line": 98,
+      "line": 100,
       "kind": "type",
       "members": [],
       "references": [
@@ -209420,7 +209796,7 @@
     {
       "name": "ComponentsProps",
       "file": "src/styles/props.ts",
-      "line": 101,
+      "line": 103,
       "kind": "type",
       "members": [],
       "references": [

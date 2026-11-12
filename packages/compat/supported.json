@@ -12,6 +12,7 @@
       "Card",
       "CardContent",
       "CardActions",
+      "CardActions/cardActionsClasses",
       "DialogTitle",
       "DialogContent",
       "DialogActions",

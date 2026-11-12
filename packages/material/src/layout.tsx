@@ -52,20 +52,7 @@ export const CardContent: React.ForwardRefExoticComponent<
 
   return <Box {...props} ref={ref} style={[{ padding: 16, paddingBottom: 24 }, props.style]} />;
 });
-export const CardActions: React.ForwardRefExoticComponent<
-  React.PropsWithoutRef<BoxProps> & React.RefAttributes<ViewInstance>
-> = forwardRef<ViewInstance, BoxProps>(function CardActions(inProps, ref) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiCardActions' });
-
-  return (
-    <Stack
-      {...props}
-      ref={ref}
-      direction="row"
-      style={[{ padding: 8, alignItems: 'center' }, props.style]}
-    />
-  );
-});
+export * from './cardActions';
 export * from './divider';
 export function DialogTitle(inProps: TypographyProps) {
   const props = useDefaultProps({ props: inProps, name: 'MuiDialogTitle' });

@@ -562,6 +562,11 @@
       "types": "./dist/internal/card-content/index.d.ts",
       "react-native": "./src/internal/card-content/index.ts",
       "default": "./dist/internal/card-content/index.js"
+    },
+    "./CardActions/cardActionsClasses": {
+      "types": "./dist/CardActions/cardActionsClasses/index.d.ts",
+      "react-native": "./src/CardActions/cardActionsClasses/index.ts",
+      "default": "./dist/CardActions/cardActionsClasses/index.js"
     }
   },
   "dependencies": {

@@ -8,7 +8,7 @@
       ".prettierrc.json": "f583ff6d8ba542b76af46c4c024a0941b77aee51133bb0f69ec6eb1fa613de7e",
       "package.json": "bd84271b3c097ea1803f56db0b9a5957ffa3bece27ab8d2f062c1dc4cd3efa13",
       "packages/compat/package.json": "049ac029bc52613045990c28d46257def1858f621c72312b732e91e4e0804249",
-      "packages/compat/supported.json": "f3debed5ca60fd087376dde2cb334de6300fcafc6354b447c7e8c431f081a216",
+      "packages/compat/supported.json": "7464e89867ab20f5a9f38de8bfa5821a8a41a2ada4ec62d6c48c084a0e9ace41",
       "packages/icons/package.json": "f0f7ffe3b890f4ac7fa734f00188f16962b21c899fdc0b66b2c3a71e6280b8b1",
       "packages/icons/src/Abc/index.ts": "0d44a0a6067e199f396979729c7b5e2f16e4c248643355cef946b1ad84f2fc95",
       "packages/icons/src/AbcOutlined/index.ts": "1ee1fe409d533715a78b1443ac481f31b90720a1a70ccef157c46869ce1242b4",
@@ -10764,7 +10764,7 @@
       "packages/icons/src/ZoomOutRounded/index.ts": "6bab767818689809fd54ef47298aa80180b6ef9e70568fe86551f50725a5be63",
       "packages/icons/src/ZoomOutSharp/index.ts": "9cddbf3cd084349d582f124b3fcd68a23fa75ccad808f14f84cda4bab2428eed",
       "packages/icons/src/ZoomOutTwoTone/index.ts": "c66203f5be3a21bc0de38541d8537b8227b743f60129dca75feff78e65c8ba32",
-      "packages/material/package.json": "5f98c6b0c47662c792de0b327f1b29a1036217334969203ad34fa432308e13f0",
+      "packages/material/package.json": "849d7ae02efe5404ff62ab1908472f96ff260e937cdaf28b340ef73f041f8e44",
       "packages/material/src/accordion.tsx": "f4b768493e564526d96e63b23ca6479ac9cc80cc7e94960b90312f1f780b26d9",
       "packages/material/src/Accordion/accordionClasses/index.ts": "7bd64e00bf10c8bb5b05ecba5fa2b85e18eb8eab54de23cd011038d951a9ed4c",
       "packages/material/src/Accordion/index.ts": "9639db89ce8b969ce9d85cef78ac49d12dad8cdba505a74ba477e621cf102fac",
@@ -10806,7 +10806,10 @@
       "packages/material/src/buttonTypes.ts": "da8530f9cd3a5a85459cfdcd2d66e8a819e98eec4b97666cb87186877d5532ba",
       "packages/material/src/card.tsx": "b1afcafcf4ba4b9f2ec56699ddd14e0c686db511b7a6f07dc4428535262d2bdb",
       "packages/material/src/Card/index.ts": "5c6cee6682bac89582a3fbf5c81d63b60672436a92038d7985a3277b061e6c42",
-      "packages/material/src/CardActions/index.ts": "eef2c705901a2db5a074095e57ee593586785264c96d0938e441307e21889116",
+      "packages/material/src/cardActions.tsx": "8e324025b321a376f4e9fe26e912140f8e59d10e98c7f760e7810ed9540348fb",
+      "packages/material/src/CardActions/cardActionsClasses/index.ts": "e738b6e6a458187a8ba689e08503058653b54b6f938934c212a37fc55d700f80",
+      "packages/material/src/CardActions/index.ts": "22b6d70f1f62c0e5cfc0d6756283e3d5ab6ab7c7daf303d944a422bd3c40e5ac",
+      "packages/material/src/cardActionsClasses.ts": "645e08837d4d9a02f0087a3eeeb393b87b12ac1cd09ae00df6f7c68a30b69c39",
       "packages/material/src/cardClasses.ts": "cf3434dd55c06099023dd8710307bf85be0b3b9b7828eaa4924aa2ddfe14ed25",
       "packages/material/src/CardContent/index.ts": "63a9523f7a59d89b71d11e2189189073b7c5e6aa0980252e436c9c9109e1e633",
       "packages/material/src/cardContentCandidates.ts": "f783dc20a21d6299d1d676179355ca7bd73d50ec4308774222af2f094441b067",
@@ -10872,7 +10875,7 @@
       "packages/material/src/internal/card-content/index.ts": "19d649d6b8081a1f7f13063d6fffb687a4f1949fd814fa05a3fcb51ddf7044bc",
       "packages/material/src/labelMotion.ts": "1ddb867129697dd04bb0fe62a6fda9608cee9c0b060bec14da7fd17947fead4d",
       "packages/material/src/labels.tsx": "f8aed365ff9d5ee43281df7dc0ac2f5cf84b9a9c467047f2594e3967384b2df8",
-      "packages/material/src/layout.tsx": "19ef027c25ef4094dbf86410807146065c331b078ffadf73c8f8dae075aa36da",
+      "packages/material/src/layout.tsx": "95f4b6ccfd4dd3c8ed6bbec87d93a1eed9c7558e6ad7357a096874edd1d84a09",
       "packages/material/src/LinearProgress/index.ts": "4f87ce0228b08ef37823e8097d356fe03d7d7ad99ba7dafffe95148b114cee34",
       "packages/material/src/List/index.ts": "5e359662a1bac78e517b954711470b7056cb6be5cc7d36d309efc6db4d29d3a4",
       "packages/material/src/listContext.ts": "549148e0d97ff8c054aacb193178ad6be2228cc0f37bd2f3cea6faded49bedc4",
@@ -10971,7 +10974,7 @@
       "packages/material/src/styles/createTransitions/index.ts": "c194875c31cc7a291c80d66cadbc721a6ab81fe6eb9074ac7f49711e6542fd49",
       "packages/material/src/styles/identifier/index.ts": "3c138bc59db94e7158aa4047595b7294f3f778e2eccbe9f914f03b4122131dcf",
       "packages/material/src/styles/index.ts": "e97fd5ed5dc0d584e8d2c15cf1df328f5d740a5f3e070e53d14e90dc66b4101b",
-      "packages/material/src/styles/props.ts": "2ea8310f2004c6a673056252e0defe855c03e02448b9a30d06715662afd3f0ab",
+      "packages/material/src/styles/props.ts": "4b8ac1541d2bef1cdff1c53f6747f469a78ed4dcfe0f1dea39b290012a52066d",
       "packages/material/src/styles/styled/index.ts": "85f2f0b03c95630497dacce93af42fa1f9d99c0fe657703e0388d6b0b8afdfa1",
       "packages/material/src/styles/ThemeProvider/index.ts": "1c4f6f7a0819dba07717bd541b1ee25bb9342f17a11f3f70d097b63c3ce8e62d",
       "packages/material/src/styles/useTheme/index.ts": "a481e21cb98b9b158197e539630f0f388e739c36fc19769cff815ba4e34c1d98",
@@ -11162,7 +11165,7 @@
   },
   "documentation": {
     "path": "docs/coverage.md",
-    "sha256": "3c644d868eec5cd14cba525d167f0c1b3d51ae4e724de6c5a0ab828bbe46fd1d"
+    "sha256": "b19b5d1a7924df78b4f30f16c9096ea83f22a6747afa70660fbc93ee2b9bc9b5"
   },
   "referenceDependencies": [
     {
@@ -11184,11 +11187,11 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "ab56d8daf1e66cd3d4be27831922d0737c445f393184ee527effc4f16282dfc7",
+      "nativeSourceSha256": "d9e7fb8480c03128420085261818dca058317d35a01f289704d48d36644e1b34",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
-      "locallyDeclaredRootNames": 497,
+      "locallyDeclaredRootNames": 502,
       "directMembers": 4046,
       "eventDeclarations": 112,
       "slotDeclarations": 219,
@@ -11196,7 +11199,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "e174b51cd240ffdf49aec1bd6a1c7c64d7354994d4bb9db10843c824d9cfe97f"
+      "sha256": "edd4b18dee30b47052374d53990b1ca0c79f353113a85b2db020fa505c055a7b"
     },
     {
       "package": "@mui/system",
