@@ -57,6 +57,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 - Native [Autocomplete](autocomplete.md) input/listbox composition, mapped and multiple selections, renderValue, grouping, all slots and headless imports have source-backed checks and scoped emulator evidence. Physical/tag keyboard completeness, screen readers, large-option performance and full parity remain open.
 
+- Native [CardActions](card-actions.md) root/classes/defaults, scoped original imports and strict installed consumers, with retained action rows checked on iOS/Android at normal and enlarged OS text. Native column-gap adaptation and remaining release gates are explicit.
+
 ## Unsupported or not yet verified
 
 Do not assume unlisted props work. Public TypeScript interfaces describe the implemented subset. JavaScript callers should run migration diagnostics and review source usage before adoption.
