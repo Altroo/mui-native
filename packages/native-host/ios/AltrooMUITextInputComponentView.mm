@@ -1,5 +1,6 @@
 /* Native editor adaptation of React Native 0.88.1. See NOTICE and upstream/native-text-input.json.
- * Altroo changes keep core text/ref behavior and replace only host identity and backed editor classes. */
+ * Altroo changes keep core text/ref behavior, observe editing commands and preserve metadata across backed editor replacements.
+ * Native changes: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 /*
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -10,6 +11,7 @@
 #import "AltrooMUITextInputComponentView.h"
 
 #import <react/featureflags/ReactNativeFeatureFlags.h>
+#import <react/renderer/components/view/accessibilityPropsConversions.h>
 #import <AltrooNativeTextInputDescriptor.h>
 #import <react/renderer/textlayoutmanager/RCTAttributedTextUtils.h>
 #import <react/renderer/textlayoutmanager/TextLayoutManager.h>
@@ -878,6 +880,32 @@ static NSSet<NSNumber *> *returnKeyTypesSet;
   UIView<RCTBackedTextInputViewProtocol> *backedTextInputView = multiline ? [AltrooMUIManagedTextView new] : [AltrooMUIManagedTextField new];
   backedTextInputView.frame = _backedTextInputView.frame;
   RCTCopyBackedTextInput(_backedTextInputView, backedTextInputView);
+  // The base View updater diffs props, so unchanged accessibility props will not
+  // be replayed after the UIKit editor is replaced. Restore the authored metadata
+  // before it applies changed props. Do not copy UIKit's derived text value: that
+  // would turn the current text into a stale explicit accessibilityValue.
+  const auto &viewProps = static_cast<const TextInputProps &>(*_props);
+  backedTextInputView.accessibilityIdentifier = RCTNSStringFromString(viewProps.testId);
+  backedTextInputView.accessibilityLabel = RCTNSStringFromStringNilIfEmpty(viewProps.accessibilityLabel);
+  backedTextInputView.accessibilityHint = RCTNSStringFromStringNilIfEmpty(viewProps.accessibilityHint);
+  backedTextInputView.accessibilityLanguage = RCTNSStringFromStringNilIfEmpty(viewProps.accessibilityLanguage);
+  backedTextInputView.isAccessibilityElement = viewProps.accessible;
+  backedTextInputView.accessibilityElementsHidden = viewProps.accessibilityElementsHidden;
+  backedTextInputView.accessibilityViewIsModal = viewProps.accessibilityViewIsModal;
+  backedTextInputView.accessibilityRespondsToUserInteraction = viewProps.accessibilityRespondsToUserInteraction;
+  if (viewProps.accessibilityTraits != AccessibilityTraits::None) {
+    backedTextInputView.accessibilityTraits = RCTUIAccessibilityTraitsFromAccessibilityTraits(viewProps.accessibilityTraits);
+  }
+  const auto &accessibilityValue = viewProps.accessibilityValue;
+  if (accessibilityValue.text.has_value()) {
+    backedTextInputView.accessibilityValue = RCTNSStringFromStringNilIfEmpty(accessibilityValue.text.value());
+  } else if (accessibilityValue.now.has_value() && accessibilityValue.min.has_value() &&
+             accessibilityValue.max.has_value()) {
+    CGFloat value = (CGFloat)(accessibilityValue.now.value()) /
+        (accessibilityValue.max.value() - accessibilityValue.min.value());
+    backedTextInputView.accessibilityValue =
+        [NSNumberFormatter localizedStringFromNumber:@(value) numberStyle:NSNumberFormatterPercentStyle];
+  }
   _backedTextInputView = backedTextInputView;
   [self addSubview:_backedTextInputView];
 }
