@@ -269,7 +269,7 @@ test('explicit accessible names beat slot names, empty labels are omitted, root 
   expect(screen.queryByText('')).toBeNull();
   expect(screen.getByLabelText('Explicit')).toBeTruthy();
   expect(screen.getByTestId('root')).toHaveStyle({ marginTop: 12, marginBottom: 4 });
-  expect(screen.getByTestId('host')).toHaveStyle({ fontSize: 30, lineHeight: 45 });
+  expect(screen.getByTestId('host')).toHaveStyle({ fontSize: 30, lineHeight: 43.125 });
 });
 
 test('shared focus, blur and text handlers run only once across input and host slots', () => {

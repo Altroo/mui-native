@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import type {
   NativeSelectChangeEvent,
   NativeSelectInputHandle,
@@ -339,17 +340,21 @@ export interface NativeTextFieldInputProps
 }
 export type TextFieldInputSlotProps = NativeTextFieldInputProps & React.RefAttributes<ViewInstance>;
 export interface NativeTextFieldProps
-  extends Omit<TextInputProps, 'onChange' | 'value' | 'defaultValue' | 'style'> {
+  extends Omit<TextInputProps, 'onChange' | 'value' | 'defaultValue' | 'style' | 'rows'> {
   sx?: SxProps;
   style?: StyleProp<ViewStyle>;
   label?: React.ReactNode;
   helperText?: React.ReactNode;
+  focused?: boolean | undefined;
   error?: boolean;
   disabled?: boolean;
   required?: boolean;
   fullWidth?: boolean;
   labelDisplay?: 'floating' | 'stacked';
   variant?: 'outlined' | 'filled' | 'standard';
+  rows?: number | string | undefined;
+  minRows?: number | string | undefined;
+  maxRows?: number | string | undefined;
   size?: 'small' | 'medium';
   value?: string | number;
   defaultValue?: string | number;
@@ -496,6 +501,7 @@ const TextFieldImpl = forwardRef<ViewInstance, TextFieldImplementationProps>(
       style,
       label,
       helperText,
+      focused: focusedProp,
       error = form.error ?? false,
       disabled = form.disabled ?? false,
       required = form.required ?? false,
@@ -524,7 +530,7 @@ const TextFieldImpl = forwardRef<ViewInstance, TextFieldImplementationProps>(
     const hostInstance = useRef<TextInputInstance>(null);
     const [rootWidth, setRootWidth] = useState<number>();
     const [focusedLocal, setFocused] = useState(false);
-    const focused = !disabled && focusedLocal;
+    const focused = !disabled && (focusedProp ?? focusedLocal);
     const ownerState = {
       ...props,
       select,
@@ -723,7 +729,16 @@ const TextFieldImpl = forwardRef<ViewInstance, TextFieldImplementationProps>(
           {...rootProps}
           {...(Root !== FormControl && Root !== View ? { ownerState } : {})}
           {...(Root !== View
-            ? { disabled, error, required, fullWidth, variant, size, labelDisplay }
+            ? {
+                disabled,
+                error,
+                required,
+                fullWidth,
+                variant,
+                size,
+                labelDisplay,
+                ...(focusedProp !== undefined ? { focused: focusedProp } : {}),
+              }
             : {})}
           ref={rootRef}
           onLayout={(event) => {

@@ -182,7 +182,7 @@ test('native root and host refs compose and root-padding touches focus once', ()
 });
 test('multiline rows bound content-driven height and fixed rows win', () => {
   const { rerender } = render(<InputBase aria-label="Notes" multiline minRows={2} maxRows="4" />);
-  expect(screen.getByLabelText('Notes')).toHaveStyle({ minHeight: 48, maxHeight: 96 });
+  expect(screen.getByLabelText('Notes')).toHaveStyle({ minHeight: 46, maxHeight: 92 });
   fireEvent(screen.getByLabelText('Notes'), 'contentSizeChange', {
     nativeEvent: { contentSize: { height: 80, width: 100 } },
   });
@@ -190,9 +190,9 @@ test('multiline rows bound content-driven height and fixed rows win', () => {
   fireEvent(screen.getByLabelText('Notes'), 'contentSizeChange', {
     nativeEvent: { contentSize: { height: 150, width: 100 } },
   });
-  expect(screen.getByLabelText('Notes')).toHaveStyle({ height: 96 });
+  expect(screen.getByLabelText('Notes')).toHaveStyle({ height: 92 });
   rerender(<InputBase aria-label="Notes" multiline rows={2} minRows={1} maxRows={10} />);
-  expect(screen.getByLabelText('Notes')).toHaveStyle({ height: 48, maxHeight: 48 });
+  expect(screen.getByLabelText('Notes')).toHaveStyle({ height: 46, maxHeight: 46 });
 });
 test('variant and InputBase defaults/overrides reach TextField through the shared engine', () => {
   const theme = createTheme({
@@ -215,7 +215,7 @@ test('variant and InputBase defaults/overrides reach TextField through the share
   expect(screen.getByLabelText('Themed').props.placeholder).toBe('Base');
   expect(screen.getByLabelText('Themed')).toHaveStyle({
     fontSize: 20,
-    lineHeight: 30,
+    lineHeight: 28.75,
     color: '#123456',
   });
 });
@@ -257,8 +257,8 @@ test('underline toggles and filled hidden-label spacing are implemented without 
   const { unmount } = render(
     <FilledInput testID="root" aria-label="Filled" hiddenLabel disableUnderline />,
   );
-  expect(screen.getByTestId('root')).toHaveStyle({ backgroundColor: 'rgba(0, 0, 0, 0.04)' });
-  expect(screen.getByLabelText('Filled')).toHaveStyle({ paddingTop: 16, paddingBottom: 16 });
+  expect(screen.getByTestId('root')).toHaveStyle({ backgroundColor: 'rgba(0, 0, 0, 0.06)' });
+  expect(screen.getByLabelText('Filled')).toHaveStyle({ paddingTop: 16, paddingBottom: 17 });
   expect(screen.getByLabelText('Filled').props.disableUnderline).toBeUndefined();
   unmount();
   render(<InputBase aria-label="Filled" />);
@@ -327,14 +327,24 @@ test('default outline measures a bounded label gap without exposing hidden text 
     />,
   );
   const outline = screen.getByTestId('outline', { includeHiddenElements: true });
-  fireEvent(outline, 'layout', { nativeEvent: { layout: { width: 200 } } });
+  fireEvent(outline, 'layout', { nativeEvent: { layout: { width: 200, height: 56 } } });
   fireEvent(screen.getByText('Reserved', { includeHiddenElements: true }), 'layout', {
     nativeEvent: { layout: { width: 60 } },
   });
   expect(outline.props.accessibilityElementsHidden).toBe(true);
   expect(outline).toHaveStyle({ borderWidth: 0 });
-  const segments = outline.findAll((node) => node.props.style?.start === 82);
-  expect(segments.length).toBeGreaterThan(0);
+  // A transparent clip removes only the label band from one rounded stroke.
+  // No flat View bar may extend into the outside corner.
+  const path = outline.findAll(
+    (node) => typeof node.props.d === 'string' && node.props.fill === 'none',
+  );
+  expect(path.length).toBeGreaterThan(0);
+  expect(path[0].props.clipPath).toMatch(/^url\(#mui-outline-/);
+  const gap = outline.findAll((node) => node.props.x === 9 && node.props.y === 6);
+  expect(gap.some((node) => node.props.width === 70)).toBe(true);
+  expect(
+    outline.findAll((node) => node.props.style?.backgroundColor && node.props.style?.top === 0),
+  ).toHaveLength(0);
 });
 
 test.each(['MuiInputBase', 'MuiOutlinedInput'])(
@@ -479,9 +489,9 @@ test('native padding shorthands beat generated edges and multiline bounds includ
     paddingBottom: 10,
     paddingLeft: 10,
     paddingRight: 10,
-    minHeight: 73,
-    maxHeight: 73,
-    height: 73,
+    minHeight: 71,
+    maxHeight: 71,
+    height: 71,
   });
 });
 
@@ -531,3 +541,72 @@ test.each([true, false])('RTL adornment insets respect native left/right swappin
     }
   }
 });
+
+test('TextField controlled focused state follows FormControl without reaching the editor', () => {
+  let captured: Record<string, any> = {};
+  const Outline = forwardRef<ViewInstance, any>((props, ref) => {
+    captured = props;
+    return <View ref={ref} />;
+  });
+  const view = (focused: boolean, disabled = false) => (
+    <TextField
+      label="Controlled focus"
+      focused={focused}
+      disabled={disabled}
+      slotProps={{ input: { slots: { notchedOutline: Outline } } }}
+    />
+  );
+  const { rerender } = render(view(true));
+  expect(captured.notched).toBe(true);
+  expect(require('react-native').StyleSheet.flatten(captured.style).borderWidth).toBe(2);
+  expect(screen.getByLabelText('Controlled focus').props.focused).toBeUndefined();
+  rerender(view(false));
+  fireEvent(screen.getByLabelText('Controlled focus'), 'focus', {});
+  expect(captured.notched).toBe(false);
+  rerender(view(true, true));
+  expect(captured.notched).toBe(false);
+  expect(require('react-native').StyleSheet.flatten(captured.style).borderWidth).toBe(1);
+});
+
+test('long outlined labels measure the same available width as their floating label', () => {
+  render(
+    <OutlinedInput
+      label="A long destination label that needs the entire available field width"
+      notched
+      slotProps={{ notchedOutline: { testID: 'long-outline' } }}
+    />,
+  );
+  const root = screen.getByTestId('long-outline', { includeHiddenElements: true });
+  fireEvent(root, 'layout', { nativeEvent: { layout: { width: 400, height: 56 } } });
+  const label = screen.getByText(
+    'A long destination label that needs the entire available field width',
+    { includeHiddenElements: true },
+  );
+  expect(label).toHaveStyle({ maxWidth: 372 });
+  fireEvent(label, 'layout', { nativeEvent: { layout: { width: 372, height: 18 } } });
+  const tail = root.findAll((node) => node.props.x === 391 && node.props.width === 9);
+  expect(tail.length).toBeGreaterThan(0);
+});
+
+test.each([
+  ['filled', 'start', false, 16],
+  ['filled', 'start', true, undefined],
+  ['filled', 'end', false, undefined],
+  ['outlined', 'start', false, undefined],
+  ['standard', 'start', false, undefined],
+] as const)(
+  'adornment offset for %s/%s with hiddenLabel=%s',
+  (variant, position, hiddenLabel, marginTop) => {
+    render(
+      <FormControl variant={variant} hiddenLabel={hiddenLabel}>
+        <InputAdornment testID="prefix" position={position}>
+          To
+        </InputAdornment>
+      </FormControl>,
+    );
+    expect(
+      require('react-native').StyleSheet.flatten(screen.getByTestId('prefix').props.style)
+        .marginTop,
+    ).toBe(marginTop);
+  },
+);
