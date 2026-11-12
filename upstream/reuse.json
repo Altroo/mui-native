@@ -148,7 +148,7 @@
       },
       "adaptations": [
         "Typed standalone helpers without Babel or MUI runtime dependencies.",
-        "Original string-only declarations and parsed-object runtime reuse are retained, including source getter order and HSL channel writes.",
+        "Original declared input signatures and parsed-object runtime reuse are retained, including source getter order and HSL channel writes.",
         "Diagnostic wording identifies MUI Native and remains readable in production instead of using browser error URLs."
       ]
     },
