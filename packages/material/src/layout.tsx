@@ -70,15 +70,4 @@ export function DialogContent(inProps: BoxProps) {
 
   return <Box {...props} style={[{ paddingHorizontal: 24, paddingBottom: 20 }, props.style]} />;
 }
-export function DialogActions(inProps: BoxProps) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiDialogActions' });
-
-  return (
-    <Stack
-      {...props}
-      direction="row"
-      spacing={1}
-      style={[{ justifyContent: 'flex-end', padding: 8 }, props.style]}
-    />
-  );
-}
+export * from './dialogActions';

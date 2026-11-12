@@ -382,6 +382,7 @@ for (const [contract, fixture] of [
   ['accordion-details', 'native.tsx'],
   ['accordion-actions', 'native.tsx'],
   ['card-actions', 'native.tsx'],
+  ['dialog-actions', 'native.tsx'],
   ['accordion-classes', 'native.tsx'],
   ['button-base-classes', 'native.tsx'],
   ['typography', 'native.tsx'],
@@ -411,7 +412,7 @@ for (const [contract, fixture] of [
   });
 }
 console.log(
-  'Installed strict FormGroup, Avatar, Icon, AccordionDetails, AccordionActions, CardActions, Typography, Paper, Box, Card, Theme reading and Theme props contracts passed independently.',
+  'Installed strict FormGroup, Avatar, Icon, AccordionDetails, AccordionActions, CardActions, DialogActions, Typography, Paper, Box, Card, Theme reading and Theme props contracts passed independently.',
 );
 execFileSync(process.execPath, ['scripts/check-consumer-default-props.cjs', consumer], {
   stdio: 'inherit',

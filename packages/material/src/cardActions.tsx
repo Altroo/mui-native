@@ -1,7 +1,7 @@
 /* CardActions props, defaults and class composition adapt MIT Material UI 9.5.0.
  * Copyright (c) MUI contributors. See NOTICE and upstream/card-actions.json.
  * Native adaptation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useContext } from 'react';
 import { View, useWindowDimensions, type ViewInstance } from 'react-native';
 import {
   NativeTextScope,
@@ -15,6 +15,8 @@ import {
 } from '@altroo/mui-native-system';
 import { useTheme, THEME_ID } from './themeProvider';
 import { useForkRef } from './utils/refs';
+import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
+import { NativeButtonGroupRules } from './buttonGroupContext';
 import type { BoxProps } from './boxTypes';
 import { getCardActionsUtilityClass } from './cardActionsClasses';
 export * from './cardActionsClasses';
@@ -96,8 +98,10 @@ export const CardActions: NativeCardActionsComponent = forwardRef<ViewInstance, 
     const Root = (selectedRoot === 'div' ? View : selectedRoot) as React.ComponentType<any>;
     const mergedRef = useForkRef(ref, slotRef);
     const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(mergedRef);
+    const nativeRef = useNativeStyleRef(scopeRoot, scopeRef);
     const providerTheme = useTheme(),
       parent = useNativeTextContext(),
+      rules = useContext(NativeButtonGroupRules),
       { width } = useWindowDimensions();
     // A root-local theme selects this styled layer without changing provider
     // defaults or the context seen by independently themed descendants.
@@ -112,12 +116,17 @@ export const CardActions: NativeCardActionsComponent = forwardRef<ViewInstance, 
       return value;
     };
     const rootClass = joinClassNames(token('root'), !disableSpacing && token('spacing'), className);
+    const tokens = rootClass.split(/\s+/).filter(Boolean);
     const generatedOwner = { ...props, disableSpacing };
     // Original JSX spreads other after ownerState. Class composition still uses
     // generated component state; named styling receives the authored object.
     const owner = Object.hasOwn(props, 'ownerState') ? authoredOwner : generatedOwner;
     const { disableSpacing: _disableSpacing, ...styledProps } = props;
-    const { computed: resolved, authored } = componentRootStyle(
+    const {
+      computed: resolved,
+      authored,
+      prepared,
+    } = componentRootStyle(
       theme,
       'MuiCardActions',
       owner as Record<string, unknown>,
@@ -130,7 +139,9 @@ export const CardActions: NativeCardActionsComponent = forwardRef<ViewInstance, 
         // Source overridesResolver observes owner state after every slot resolves.
         overrideKeys: () =>
           (owner as { disableSpacing?: boolean }).disableSpacing ? [] : ['spacing'],
-        classes: rootClass.split(/\s+/).filter(Boolean),
+        classes: tokens,
+        ancestors: nativeStyleAncestors(rules, { classes: tokens }),
+        protectPhysicalGeometry: true,
         rootProps: {
           ...styledProps,
           ...(Object.hasOwn(props, 'as') ? { as } : Component !== View ? { as: Component } : {}),
@@ -150,24 +161,26 @@ export const CardActions: NativeCardActionsComponent = forwardRef<ViewInstance, 
     );
     // Keep native array precedence: an inline gap does not erase a named columnGap.
     return (
-      <NativeTextScope
-        rootRef={scopeRoot}
-        theme={theme}
-        style={[resolved, authored]}
-        content={children}
-      >
-        {(rootStyle, content) => (
-          <Root
-            {...native}
-            nativeID={id ?? native.nativeID}
-            {...(Root === View ? {} : { className: rootClass, ownerState: owner })}
-            ref={scopeRef}
-            style={rootStyle}
-          >
-            {content}
-          </Root>
-        )}
-      </NativeTextScope>
+      <NativeStyleScope root={scopeRoot} theme={theme} classes={tokens} prepared={prepared}>
+        <NativeTextScope
+          rootRef={scopeRoot}
+          theme={theme}
+          style={[resolved, authored]}
+          content={children}
+        >
+          {(rootStyle, content) => (
+            <Root
+              {...native}
+              nativeID={id ?? native.nativeID}
+              {...(Root === View ? {} : { className: rootClass, ownerState: owner })}
+              ref={nativeRef}
+              style={rootStyle}
+            >
+              {content}
+            </Root>
+          )}
+        </NativeTextScope>
+      </NativeStyleScope>
     );
   },
 ) as NativeCardActionsComponent;

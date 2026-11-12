@@ -59,6 +59,8 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 
 - Native [CardActions](card-actions.md) root/classes/defaults, scoped original imports and strict installed consumers, with retained action rows checked on iOS/Android at normal and enlarged OS text. Native column-gap adaptation and remaining release gates are explicit.
 
+- Native [DialogActions](dialog-actions.md) defaults/classes, root/ref contracts and strict consumers, with retained eight-stage iOS/Android checks for spacing, RTL and both flex styling paths. Largest-text sample truncation and remaining release gates are explicit.
+
 ## Unsupported or not yet verified
 
 Do not assume unlisted props work. Public TypeScript interfaces describe the implemented subset. JavaScript callers should run migration diagnostics and review source usage before adoption.

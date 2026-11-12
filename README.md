@@ -21,7 +21,7 @@ I started MUI Native to address that gap: preserve familiar MUI component APIs a
 
 ## Status
 
-Updated: **12 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
+Updated: **13 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
 
 These tables describe development on `main`. Check the [release changelog](CHANGELOG.md) for version-specific package contents; development on `main` can precede npm publication.
 
@@ -88,7 +88,7 @@ Expand a family to see individual entries. Percentages link to the implementatio
 | 🗺️    | **CssBaseline**             |          [0%](ROADMAP.md#4-complete-material-ui) | DOM/CSS-specific API: native policy or migration behavior is unresolved; browser CSS parity is not implied.                                                                                                                                                 |
 | ✅    | **DefaultPropsProvider**    |           [100%](docs/default-props-provider.md) | Complete finite native context, defaults, public types and canonical imports; independent source and fresh installed-consumer checks pass. Broader theming and consuming components are separate.                                                           |
 | 🔧    | **Dialog**                  |                            [50%](docs/modals.md) | Native overlay coordination, dismissal, slots, refs and transitions have contract/consumer coverage; wider native matrices remain.                                                                                                                          |
-| 🔧    | **DialogActions**           | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                                                                                                            |
+| 🔧    | **DialogActions**           |                    [75%](docs/dialog-actions.md) | Dedicated defaults, classes, native roots and strict consumers pass; eight-stage iOS/Android checks cover retained actions, RTL, spacing and sizing. Unreleased; large-text presentation and release gates remain.                                          |
 | 🔧    | **DialogContent**           | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                                                                                                            |
 | 🗺️    | **DialogContentText**       |          [0%](ROADMAP.md#4-complete-material-ui) | Dedicated composition, styling and slot contracts are not implemented.                                                                                                                                                                                      |
 | 🔧    | **DialogTitle**             | [25%](docs/compatibility.md#currently-exercised) | Native prototype/subset exists; full props, slots, events and validation remain.                                                                                                                                                                            |

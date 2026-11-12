@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "2950a36c1cdb380281d0f0dd9f729c50468a0a46aedbd414365a50d6fb0293aa",
+  "nativeSourceSha256": "ccfa200799f7ce9dab3a5fdd0e9da72d098ed145f601b40c2f4dce329be33e74",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -14113,7 +14113,7 @@
           "line": 9
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14132,7 +14132,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14151,7 +14151,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14170,7 +14170,7 @@
           "line": 6
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17305,7 +17305,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -57821,7 +57821,7 @@
         {
           "name": "CardActionsProps",
           "file": "src/cardActions.tsx",
-          "line": 22,
+          "line": 24,
           "package": "@altroo/mui-native"
         }
       ]
@@ -57900,7 +57900,7 @@
         {
           "name": "CardActionsProps",
           "file": "src/cardActions.tsx",
-          "line": 22,
+          "line": 24,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66174,7 +66174,7 @@
           "line": 14,
           "kind": "property",
           "type": "Partial<DialogActionsClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -66200,7 +66200,7 @@
           "line": 23,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -66215,7 +66215,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogActionsProps",
+          "file": "src/dialogActions.tsx",
+          "line": 24,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogActionsProps",
@@ -66246,7 +66253,7 @@
           "line": 14,
           "kind": "property",
           "type": "Partial<DialogActionsClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -66272,7 +66279,7 @@
           "line": 23,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -66287,7 +66294,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogActionsProps",
+          "file": "src/dialogActions.tsx",
+          "line": 24,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogActionsClasses",
@@ -66305,7 +66319,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -66318,13 +66332,20 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogActionsClasses",
+          "file": "src/dialogActionsClasses.ts",
+          "line": 6,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogActionsClassKey",
@@ -66336,7 +66357,14 @@
         "DialogActionsClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogActionsClassKey",
+          "file": "src/dialogActionsClasses.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogActionsClasses",
@@ -66354,7 +66382,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -66367,13 +66395,20 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogActionsClasses",
+          "file": "src/dialogActionsClasses.ts",
+          "line": 6,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogActionsClassKey",
@@ -66385,7 +66420,14 @@
         "DialogActionsClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogActionsClassKey",
+          "file": "src/dialogActionsClasses.ts",
+          "line": 10,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogContentProps",
@@ -171933,7 +171975,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 103,
+          "line": 105,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173618,7 +173660,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 100,
+          "line": 102,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173639,7 +173681,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 103,
+          "line": 105,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175324,7 +175366,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 100,
+          "line": 102,
           "package": "@altroo/mui-native"
         }
       ]
@@ -188069,7 +188111,7 @@
     {
       "name": "CardActionsProps",
       "file": "src/cardActions.tsx",
-      "line": 22,
+      "line": 24,
       "kind": "type",
       "members": [
         {
@@ -188079,7 +188121,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: BoxProps['component'];",
-          "line": 23,
+          "line": 25,
           "kind": "property",
           "type": "BoxProps['component']"
         },
@@ -188090,7 +188132,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<import('./cardActionsClasses').CardActionsClasses> | undefined;",
-          "line": 24,
+          "line": 26,
           "kind": "property",
           "type": "Partial<import('./cardActionsClasses').CardActionsClasses> | undefined"
         },
@@ -188101,7 +188143,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 25,
+          "line": 27,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -188112,7 +188154,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableSpacing?: boolean | undefined;",
-          "line": 26,
+          "line": 28,
           "kind": "property",
           "type": "boolean | undefined"
         }
@@ -188128,7 +188170,7 @@
     {
       "name": "CardActionsNativeRootProps",
       "file": "src/cardActions.tsx",
-      "line": 28,
+      "line": 30,
       "kind": "type",
       "members": [
         {
@@ -188138,7 +188180,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "as?: BoxProps['component'];",
-          "line": 29,
+          "line": 31,
           "kind": "property",
           "type": "BoxProps['component']"
         },
@@ -188149,7 +188191,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: Record<string, unknown> | null | undefined;",
-          "line": 30,
+          "line": 32,
           "kind": "property",
           "type": "Record<string, unknown> | null | undefined"
         },
@@ -188160,7 +188202,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme?: Theme | null | undefined;",
-          "line": 31,
+          "line": 33,
           "kind": "property",
           "type": "Theme | null | undefined"
         }
@@ -188176,7 +188218,7 @@
     {
       "name": "ActionRoot",
       "file": "src/cardActions.tsx",
-      "line": 33,
+      "line": 35,
       "kind": "type",
       "members": [],
       "references": [
@@ -188188,7 +188230,7 @@
     {
       "name": "NativeActionRoot",
       "file": "src/cardActions.tsx",
-      "line": 34,
+      "line": 36,
       "kind": "type",
       "members": [],
       "references": [
@@ -188204,7 +188246,7 @@
     {
       "name": "PropsForRoot",
       "file": "src/cardActions.tsx",
-      "line": 43,
+      "line": 45,
       "kind": "type",
       "members": [
         {
@@ -188214,7 +188256,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: (R & NativeActionRoot<R>) | undefined;",
-          "line": 45,
+          "line": 47,
           "kind": "property",
           "type": "(R & NativeActionRoot<R>) | undefined"
         }
@@ -188233,7 +188275,7 @@
     {
       "name": "DefaultActionsProps",
       "file": "src/cardActions.tsx",
-      "line": 47,
+      "line": 49,
       "kind": "type",
       "members": [
         {
@@ -188243,7 +188285,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: undefined",
-          "line": 47,
+          "line": 49,
           "kind": "property",
           "type": "undefined"
         }
@@ -188258,7 +188300,7 @@
     {
       "name": "InferredActionsProps",
       "file": "src/cardActions.tsx",
-      "line": 48,
+      "line": 50,
       "kind": "type",
       "members": [],
       "references": [
@@ -188276,7 +188318,7 @@
     {
       "name": "InferredActionsKeys",
       "file": "src/cardActions.tsx",
-      "line": 55,
+      "line": 57,
       "kind": "type",
       "members": [],
       "references": [
@@ -188290,7 +188332,7 @@
     {
       "name": "NativeCardActionsComponent",
       "file": "src/cardActions.tsx",
-      "line": 60,
+      "line": 62,
       "kind": "type",
       "members": [
         {
@@ -188300,7 +188342,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "<R extends ActionRoot>(\n    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },\n  ): React.JSX.Element;",
-          "line": 61,
+          "line": 63,
           "kind": "signature",
           "type": "<R extends ActionRoot>(\n    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },\n  ): React.JSX.Element;"
         },
@@ -188311,7 +188353,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: DefaultActionsProps): React.JSX.Element;",
-          "line": 64,
+          "line": 66,
           "kind": "signature",
           "type": "(props: DefaultActionsProps): React.JSX.Element;"
         },
@@ -188322,7 +188364,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "<P extends CardActionsProps>(\n    props: P &\n      NoInfer<InferredActionsProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,\n  ): React.JSX.Element;",
-          "line": 65,
+          "line": 67,
           "kind": "signature",
           "type": "<P extends CardActionsProps>(\n    props: P &\n      NoInfer<InferredActionsProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,\n  ): React.JSX.Element;"
         },
@@ -188333,7 +188375,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "displayName?: string | undefined;",
-          "line": 70,
+          "line": 72,
           "kind": "property",
           "type": "string | undefined"
         }
@@ -193631,6 +193673,341 @@
         "React.ComponentType",
         "StyleProp",
         "ViewStyle"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogActionsProps",
+      "file": "src/dialogActions.tsx",
+      "line": 24,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: BoxProps['component'];",
+          "line": 25,
+          "kind": "property",
+          "type": "BoxProps['component']"
+        },
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<import('./dialogActionsClasses').DialogActionsClasses> | undefined;",
+          "line": 26,
+          "kind": "property",
+          "type": "Partial<import('./dialogActionsClasses').DialogActionsClasses> | undefined"
+        },
+        {
+          "name": "className",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className?: string | undefined;",
+          "line": 27,
+          "kind": "property",
+          "type": "string | undefined"
+        },
+        {
+          "name": "disableSpacing",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableSpacing?: boolean | undefined;",
+          "line": 28,
+          "kind": "property",
+          "type": "boolean | undefined"
+        }
+      ],
+      "references": [
+        "BoxProps",
+        "Omit",
+        "Partial"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogActionsNativeRootProps",
+      "file": "src/dialogActions.tsx",
+      "line": 30,
+      "kind": "type",
+      "members": [
+        {
+          "name": "as",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "as?: BoxProps['component'];",
+          "line": 31,
+          "kind": "property",
+          "type": "BoxProps['component']"
+        },
+        {
+          "name": "ownerState",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ownerState?: Record<string, unknown> | null | undefined;",
+          "line": 32,
+          "kind": "property",
+          "type": "Record<string, unknown> | null | undefined"
+        },
+        {
+          "name": "theme",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "theme?: Theme | null | undefined;",
+          "line": 33,
+          "kind": "property",
+          "type": "Theme | null | undefined"
+        }
+      ],
+      "references": [
+        "BoxProps",
+        "Record",
+        "Theme"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ActionRoot",
+      "file": "src/dialogActions.tsx",
+      "line": 35,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeActionRoot",
+      "file": "src/dialogActions.tsx",
+      "line": 36,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ActionRoot",
+        "R",
+        "React.ComponentRef",
+        "React.ComponentType",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PropsForRoot",
+      "file": "src/dialogActions.tsx",
+      "line": 45,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: (R & NativeActionRoot<R>) | undefined;",
+          "line": 47,
+          "kind": "property",
+          "type": "(R & NativeActionRoot<R>) | undefined"
+        }
+      ],
+      "references": [
+        "ActionRoot",
+        "BoxProps",
+        "DialogActionsProps",
+        "NativeActionRoot",
+        "Omit",
+        "R"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DefaultActionsProps",
+      "file": "src/dialogActions.tsx",
+      "line": 49,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: undefined",
+          "line": 49,
+          "kind": "property",
+          "type": "undefined"
+        }
+      ],
+      "references": [
+        "DialogActionsProps",
+        "Omit"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "InferredActionsProps",
+      "file": "src/dialogActions.tsx",
+      "line": 50,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "ActionRoot",
+        "DefaultActionsProps",
+        "DialogActionsProps",
+        "NonNullable",
+        "P",
+        "PropsForRoot",
+        "R"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "InferredActionsKeys",
+      "file": "src/dialogActions.tsx",
+      "line": 57,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "DialogActionsProps",
+        "InferredActionsProps",
+        "P"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeDialogActionsComponent",
+      "file": "src/dialogActions.tsx",
+      "line": 62,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<R extends ActionRoot>(\n    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },\n  ): React.JSX.Element;",
+          "line": 63,
+          "kind": "signature",
+          "type": "<R extends ActionRoot>(\n    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },\n  ): React.JSX.Element;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: DefaultActionsProps): React.JSX.Element;",
+          "line": 66,
+          "kind": "signature",
+          "type": "(props: DefaultActionsProps): React.JSX.Element;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<P extends DialogActionsProps>(\n    props: P &\n      NoInfer<InferredActionsProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,\n  ): React.JSX.Element;",
+          "line": 67,
+          "kind": "signature",
+          "type": "<P extends DialogActionsProps>(\n    props: P &\n      NoInfer<InferredActionsProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,\n  ): React.JSX.Element;"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string | undefined;",
+          "line": 72,
+          "kind": "property",
+          "type": "string | undefined"
+        }
+      ],
+      "references": [
+        "ActionRoot",
+        "DefaultActionsProps",
+        "DialogActionsProps",
+        "Exclude",
+        "InferredActionsKeys",
+        "InferredActionsProps",
+        "NativeActionRoot",
+        "NoInfer",
+        "P",
+        "PropsForRoot",
+        "R",
+        "React.JSX.Element",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogActionsClasses",
+      "file": "src/dialogActionsClasses.ts",
+      "line": 6,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: string;",
+          "line": 7,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "spacing",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "spacing: string;",
+          "line": 8,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogActionsClassKey",
+      "file": "src/dialogActionsClasses.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "DialogActionsClasses"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -209592,7 +209969,7 @@
     {
       "name": "MaterialExports",
       "file": "src/styles/props.ts",
-      "line": 17,
+      "line": 18,
       "kind": "type",
       "members": [],
       "references": [],
@@ -209602,7 +209979,7 @@
     {
       "name": "ComponentName",
       "file": "src/styles/props.ts",
-      "line": 19,
+      "line": 20,
       "kind": "type",
       "members": [],
       "references": [],
@@ -209612,7 +209989,7 @@
     {
       "name": "ExistingComponentProps",
       "file": "src/styles/props.ts",
-      "line": 80,
+      "line": 81,
       "kind": "type",
       "members": [],
       "references": [
@@ -209627,7 +210004,7 @@
     {
       "name": "GenericComponentProps",
       "file": "src/styles/props.ts",
-      "line": 85,
+      "line": 86,
       "kind": "type",
       "members": [
         {
@@ -209637,7 +210014,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiAutocomplete: AutocompleteProps<any, any, any, any, any, any>;",
-          "line": 86,
+          "line": 87,
           "kind": "property",
           "type": "AutocompleteProps<any, any, any, any, any, any>"
         },
@@ -209648,7 +210025,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButton: ButtonProps;",
-          "line": 87,
+          "line": 88,
           "kind": "property",
           "type": "ButtonProps"
         },
@@ -209659,7 +210036,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiIconButton: IconButtonProps;",
-          "line": 88,
+          "line": 89,
           "kind": "property",
           "type": "IconButtonProps"
         },
@@ -209670,7 +210047,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButtonGroup: ButtonGroupProps;",
-          "line": 89,
+          "line": 90,
           "kind": "property",
           "type": "ButtonGroupProps"
         },
@@ -209681,7 +210058,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiChip: ChipProps;",
-          "line": 90,
+          "line": 91,
           "kind": "property",
           "type": "ChipProps"
         },
@@ -209692,7 +210069,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSvgIcon: SvgIconProps;",
-          "line": 91,
+          "line": 92,
           "kind": "property",
           "type": "SvgIconProps"
         },
@@ -209703,7 +210080,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSelect: SelectProps;",
-          "line": 92,
+          "line": 93,
           "kind": "property",
           "type": "SelectProps"
         },
@@ -209714,7 +210091,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiTextField: TextFieldProps;",
-          "line": 93,
+          "line": 94,
           "kind": "property",
           "type": "TextFieldProps"
         },
@@ -209725,7 +210102,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPopper: PopperProps;",
-          "line": 94,
+          "line": 95,
           "kind": "property",
           "type": "PopperProps"
         },
@@ -209736,7 +210113,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDivider: DividerProps;",
-          "line": 95,
+          "line": 96,
           "kind": "property",
           "type": "DividerProps"
         },
@@ -209747,7 +210124,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPaper: PaperProps;",
-          "line": 96,
+          "line": 97,
           "kind": "property",
           "type": "PaperProps"
         },
@@ -209758,7 +210135,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiCard: CardProps;",
-          "line": 97,
+          "line": 98,
           "kind": "property",
           "type": "CardProps"
         },
@@ -209769,9 +210146,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiCardActions: CardActionsProps;",
-          "line": 98,
+          "line": 99,
           "kind": "property",
           "type": "CardActionsProps"
+        },
+        {
+          "name": "MuiDialogActions",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiDialogActions: DialogActionsProps;",
+          "line": 100,
+          "kind": "property",
+          "type": "DialogActionsProps"
         }
       ],
       "references": [
@@ -209781,6 +210169,7 @@
         "CardActionsProps",
         "CardProps",
         "ChipProps",
+        "DialogActionsProps",
         "DividerProps",
         "IconButtonProps",
         "PaperProps",
@@ -209795,7 +210184,7 @@
     {
       "name": "ComponentsPropsList",
       "file": "src/styles/props.ts",
-      "line": 100,
+      "line": 102,
       "kind": "type",
       "members": [],
       "references": [
@@ -209809,7 +210198,7 @@
     {
       "name": "ComponentsProps",
       "file": "src/styles/props.ts",
-      "line": 103,
+      "line": 105,
       "kind": "type",
       "members": [],
       "references": [

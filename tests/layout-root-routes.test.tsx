@@ -40,9 +40,28 @@ test('direct Details, Menu and Typography scenes share the contract scroll viewp
     ['paper', 'paper-contract-receipt'],
     ['card', 'card-contract-receipt'],
     ['box', 'box-contract-receipt'],
+    ['card-actions', 'card-actions-preview-receipt'],
+    ['dialog-actions', 'dialog-actions-preview-receipt'],
   ]) {
     fireEvent.press(tree.getByTestId('root-layout-' + route));
     expect(tree.getByTestId('root-layout-scroll')).toBeTruthy();
     expect(tree.getByTestId(receipt)).toBeTruthy();
+  }
+});
+
+test('DialogActions controls retain saved state through sx and native sizing modes', () => {
+  const tree = render(<RootLayoutExamples />);
+  fireEvent.press(tree.getByTestId('root-layout-dialog-actions'));
+  fireEvent.press(tree.getByTestId('dialog-actions-preview-save'));
+  for (const mode of [1, 2, 0]) {
+    fireEvent.press(tree.getByTestId('dialog-actions-preview-sizing'));
+    const receipt = JSON.parse(
+      tree.getByTestId('dialog-actions-preview-receipt').props.accessibilityLabel,
+    );
+    expect(receipt.growMode).toBe(mode);
+    expect(receipt.refs).toEqual({ attached: 1, cleaned: 0 });
+    expect(tree.getByTestId('dialog-actions-preview-save').props.accessibilityLabel).toBe(
+      'Saved changes 1',
+    );
   }
 });
