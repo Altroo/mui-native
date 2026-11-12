@@ -381,4 +381,94 @@ final class RootLayoutCatalogUITests: XCTestCase {
     attachment.lifetime = .keepAlways
     add(attachment)
   }
+  func testDialogActionsGapAndRetainedChild() throws {
+    try runDialogActions(enlarged: false)
+  }
+
+  func testDialogActionsNormalPreview() throws {
+    try chooseWrapper("root-layout-dialog-actions")
+    try dialogActionsState("normal-preview", disable: false, roomy: false, rtl: false, gap: 8, count: 0, enlarged: false)
+    capture("dialog-actions-normal-preview")
+  }
+
+  func testDialogActionsAtEnlargedOSTextSize() throws {
+    try runDialogActions(enlarged: true)
+  }
+
+  private func runDialogActions(enlarged: Bool) throws {
+    try chooseWrapper("root-layout-dialog-actions")
+    try dialogActionsState("standard", disable: false, roomy: false, rtl: false, gap: 8, count: 0, enlarged: enlarged)
+    reveal("dialog-actions-preview-save").tap()
+    reveal("dialog-actions-preview-theme").tap()
+    try dialogActionsState("roomy", disable: false, roomy: true, rtl: false, gap: 16, count: 1, enlarged: enlarged)
+    reveal("dialog-actions-preview-direction").tap()
+    try dialogActionsState("rtl", disable: false, roomy: true, rtl: true, gap: 16, count: 1, enlarged: enlarged)
+    capture("dialog-actions-rtl")
+    reveal("dialog-actions-preview-spacing").tap()
+    try dialogActionsState("no-gap", disable: true, roomy: true, rtl: true, gap: 0, count: 1, enlarged: enlarged)
+    for id in ["spacing", "theme", "direction"] { reveal("dialog-actions-preview-" + id).tap() }
+    let baseline = try dialogActionsState("restored", disable: false, roomy: false, rtl: false, gap: 8, count: 1, enlarged: enlarged)
+    capture("dialog-actions-restored")
+    reveal("dialog-actions-preview-sizing").tap()
+    let sxHeight = try dialogActionsState("sx-grow", disable: false, roomy: false, rtl: false, gap: 8, count: 1, enlarged: enlarged, mode: 1, minimumHeight: baseline + 40)
+    XCTAssertGreaterThan(sxHeight, baseline + 40)
+    reveal("dialog-actions-preview-sizing").tap()
+    let nativeHeight = try dialogActionsState("native-grow", disable: false, roomy: false, rtl: false, gap: 8, count: 1, enlarged: enlarged, mode: 2, minimumHeight: baseline + 40)
+    XCTAssertGreaterThan(nativeHeight, baseline + 40)
+    capture("dialog-actions-sizing")
+    reveal("dialog-actions-preview-sizing").tap()
+    let restoredHeight = try dialogActionsState("size-restored", disable: false, roomy: false, rtl: false, gap: 8, count: 1, enlarged: enlarged, restoredHeight: baseline)
+    XCTAssertEqual(restoredHeight, baseline, accuracy: 1.5)
+    capture("dialog-actions-size-restored")
+  }
+
+  @discardableResult
+  private func dialogActionsState(
+    _ stage: String, disable: Bool, roomy: Bool, rtl: Bool, gap: CGFloat, count: Int, enlarged: Bool, mode: Int = 0, minimumHeight: CGFloat? = nil, restoredHeight: CGFloat? = nil
+  ) throws -> CGFloat {
+    let receipt = "dialog-actions-preview-receipt"
+    let row = node("dialog-actions-preview-row")
+    let cancel = reveal("dialog-actions-preview-cancel"), save = reveal("dialog-actions-preview-save")
+    func childGap(_ first: CGRect, _ second: CGRect) -> CGFloat {
+      rtl ? first.minX - second.maxX : second.minX - first.maxX
+    }
+    // React state alone cannot acknowledge the new Yoga layout. Require actual
+    // accessible button frames to reach the expected gap and physical order.
+    waitFor("Native action row must settle: " + stage) {
+      guard let value = self.metadata(receipt),
+        value["disableSpacing"] as? Bool == disable,
+        value["roomy"] as? Bool == roomy, value["rtl"] as? Bool == rtl, value["growMode"] as? Int == mode,
+        let refs = value["refs"] as? [String: Int], refs["attached"] == 1, refs["cleaned"] == 0,
+        let font = value["fontScale"] as? Double, (enlarged ? font >= 1.6 : abs(font - 1) < 0.01),
+        cancel.exists, save.exists, row.exists else { return false }
+      let first = cancel.frame, second = save.frame, parent = row.frame
+      return !first.isEmpty && !second.isEmpty && !parent.isEmpty
+        && abs(first.midY - second.midY) <= 1
+        && abs(first.midY - parent.midY) <= 1
+        && (minimumHeight.map { parent.height > $0 } ?? true)
+        && (restoredHeight.map { abs(parent.height - $0) <= 1.5 } ?? true)
+        && parent.insetBy(dx: -1.5, dy: -1.5).contains(first)
+        && parent.insetBy(dx: -1.5, dy: -1.5).contains(second)
+        && (rtl ? first.midX > second.midX : first.midX < second.midX)
+        && abs(childGap(first, second) - gap) <= 1
+        && abs((rtl ? second.minX - parent.minX : parent.maxX - second.maxX) - 8) <= 1
+        && save.label == "Saved changes " + String(count)
+    }
+    let rowFrame = row.frame, cancelFrame = cancel.frame, saveFrame = save.frame
+    func rectangle(_ frame: CGRect) -> [Double] {
+      [Double(frame.minX), Double(frame.minY), Double(frame.width), Double(frame.height)]
+    }
+    let observation: [String: Any] = [
+      "stage": stage, "gap": Double(childGap(cancelFrame, saveFrame)),
+      "rowFrame": rectangle(rowFrame), "cancelFrame": rectangle(cancelFrame),
+      "saveFrame": rectangle(saveFrame), "saveLabel": save.label,
+      "state": try XCTUnwrap(metadata(receipt)),
+    ]
+    let data = try JSONSerialization.data(withJSONObject: observation, options: [.sortedKeys])
+    let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+    attachment.name = "dialog-actions-" + stage
+    attachment.lifetime = .keepAlways
+    add(attachment)
+    return rowFrame.height
+  }
 }

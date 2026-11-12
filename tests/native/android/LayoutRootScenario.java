@@ -49,7 +49,8 @@ public final class LayoutRootScenario {
     FORM_GROUP_ACCESSIBILITY("form-group-accessibility", "formGroupAccessibility"),
     AVATAR_ACCESSIBILITY("list-item-avatar-accessibility", "avatarAccessibility"),
     ACCORDION_ACTIONS_LAYOUT("accordion-actions-layout", "accordionActionsLayout"),
-    CARD_ACTIONS_LAYOUT("card-actions-layout", "cardActionsLayout");
+    CARD_ACTIONS_LAYOUT("card-actions-layout", "cardActionsLayout"),
+    DIALOG_ACTIONS_LAYOUT("dialog-actions-layout", "dialogActionsLayout");
     final String label, key;
     Scenario(String label, String key) { this.label = label; this.key = key; }
   }
@@ -78,6 +79,7 @@ public final class LayoutRootScenario {
   public static void runAvatarAccessibility(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.AVATAR_ACCESSIBILITY, null).run(); }
   public static void runAccordionActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.ACCORDION_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   public static void runCardActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.CARD_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
+  public static void runDialogActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.DIALOG_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
@@ -94,7 +96,7 @@ public final class LayoutRootScenario {
       require(launch != null, "Catalog must be installed");
       launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity = driver.startActivitySync(launch);
-      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT || scenario == Scenario.CARD_ACTIONS_LAYOUT) {
+      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT || scenario == Scenario.CARD_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_ACTIONS_LAYOUT) {
         require("normal".equals(fontProfile) || "enlarged".equals(fontProfile), "Layout root checks require an explicit normal/enlarged font profile");
         float actualFontScale = activity.getResources().getConfiguration().fontScale;
         report.put("fontProfile", fontProfile);
@@ -119,7 +121,9 @@ public final class LayoutRootScenario {
       } while (!wrappersReady && navigationAttempts < 2);
       report.put("navigationAttempts", navigationAttempts);
       require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
-      if (scenario == Scenario.CARD_ACTIONS_LAYOUT) {
+      if (scenario == Scenario.DIALOG_ACTIONS_LAYOUT) {
+        dialogActionsLayout();
+      } else if (scenario == Scenario.CARD_ACTIONS_LAYOUT) {
         cardActionsLayout();
       } else if (scenario == Scenario.ACCORDION_ACTIONS_LAYOUT) {
         accordionActionsLayout();
@@ -874,7 +878,7 @@ public final class LayoutRootScenario {
       double secondY = second.getDouble("y") + second.getDouble("height") / 2;
       require(Math.abs(firstY - secondY) <= 1, "Actions must share the same native row");
       String label = String.valueOf(save.getContentDescription());
-      require(label.equals("Saved notes " + count), "Actual saved note count differs: " + label);
+      require(label.equals("Saved notes " + count), "Actual saved action count differs: " + label);
       return new JSONObject().put("name", stage).put("metadata", value).put("rootTag", row.getId())
         .put("gap", gap).put("row", parent).put("keep", first).put("save", second)
         .put("saveLabel", label).put("physical", physical);
@@ -928,12 +932,83 @@ public final class LayoutRootScenario {
       double secondY = second.getDouble("y") + second.getDouble("height") / 2;
       require(Math.abs(firstY - secondY) <= 1, "Actions must share the same native row");
       String label = String.valueOf(save.getContentDescription());
-      require(label.equals("Saved articles " + count), "Actual saved note count differs: " + label);
+      require(label.equals("Saved articles " + count), "Actual saved action count differs: " + label);
       return new JSONObject().put("name", stage).put("metadata", value).put("rootTag", row.getId())
         .put("gap", gap).put("row", parent).put("share", first).put("save", second)
         .put("saveLabel", label).put("physical", physical);
     }, stage);
     states.put(state); stage(stage);
+  }
+
+  /** Real Android action frames and touch state at the requested system text scale. */
+  private void dialogActionsLayout() throws Exception {
+    revealComplete("root-layout-dialog-actions"); tap("root-layout-dialog-actions");
+    dialogActionsState("standard", false, false, false, 8, 0, 0);
+    tap("dialog-actions-preview-save");
+    tap("dialog-actions-preview-theme");
+    dialogActionsState("roomy", false, true, false, 16, 1, 0);
+    tap("dialog-actions-preview-direction");
+    dialogActionsState("rtl", false, true, true, 16, 1, 0);
+    capture("dialog-actions-rtl.png");
+    tap("dialog-actions-preview-spacing");
+    dialogActionsState("no-gap", true, true, true, 0, 1, 0);
+    for (String control : new String[]{"spacing", "theme", "direction"}) tap("dialog-actions-preview-" + control);
+    double baseline = dialogActionsState("restored", false, false, false, 8, 1, 0);
+    capture("dialog-actions-restored.png");
+    tap("dialog-actions-preview-sizing");
+    require(dialogActionsState("sx-grow", false, false, false, 8, 1, 1, baseline + 40, null) > baseline + 40, "sx flex must grow the footer");
+    tap("dialog-actions-preview-sizing");
+    require(dialogActionsState("native-grow", false, false, false, 8, 1, 2, baseline + 40, null) > baseline + 40, "Native flex must grow the footer");
+    capture("dialog-actions-sizing.png");
+    tap("dialog-actions-preview-sizing");
+    require(Math.abs(dialogActionsState("size-restored", false, false, false, 8, 1, 0, null, baseline) - baseline) <= 1.5, "Footer size must restore");
+    capture("dialog-actions-size-restored.png");
+  }
+
+  private double dialogActionsState(String stage, boolean disabled, boolean roomy, boolean rtl, int expectedGap, int count, int mode) throws Exception {
+    return dialogActionsState(stage, disabled, roomy, rtl, expectedGap, count, mode, null, null);
+  }
+
+  private double dialogActionsState(String stage, boolean disabled, boolean roomy, boolean rtl, int expectedGap, int count, int mode, Double minimumHeight, Double restoredHeight) throws Exception {
+    JSONObject state = settled(() -> {
+      JSONObject value = metadata("dialog-actions-preview-receipt");
+      require(value.getBoolean("disableSpacing") == disabled && value.getBoolean("roomy") == roomy
+        && value.getBoolean("rtl") == rtl && value.getInt("growMode") == mode, "Action row controls have not committed");
+      scale(value);
+      JSONObject refs = value.getJSONObject("refs");
+      require(refs.getInt("attached") == 1 && refs.getInt("cleaned") == 0, "The action root must retain its original ref");
+      View row = retained("dialog-actions-preview-row");
+      View cancel = retained("dialog-actions-preview-cancel"), save = retained("dialog-actions-preview-save");
+      // Fabric may materialize the measured row and its two actions as siblings.
+      JSONObject physical = physicalChildren(row, new String[]{"cancel", "save"}, new View[]{cancel, save});
+      JSONObject parent = bounds(row), first = bounds(cancel), second = bounds(save);
+      double height = parent.getDouble("height");
+      require(minimumHeight == null || height > minimumHeight, "Native footer growth must settle");
+      require(restoredHeight == null || Math.abs(height - restoredHeight) <= 1.5, "Native footer restoration must settle");
+      double firstX = first.getDouble("x"), secondX = second.getDouble("x");
+      double gap = rtl ? firstX - secondX - second.getDouble("width") : secondX - firstX - first.getDouble("width");
+      require(rtl ? centerX(first) > centerX(second) : centerX(first) < centerX(second), "Action order must follow native RTL");
+      require(Math.abs(gap - expectedGap) <= 1, "Native action gap differs: " + gap + " expected=" + expectedGap);
+      double endInset = rtl ? secondX - parent.getDouble("x") : parent.getDouble("x") + parent.getDouble("width") - secondX - second.getDouble("width");
+      require(Math.abs(endInset - 8) <= 1, "Dialog actions must align to the native end padding: " + endInset);
+      for (JSONObject child : new JSONObject[]{first, second}) {
+        double x = centerX(child), y = child.getDouble("y") + child.getDouble("height") / 2;
+        require(x >= parent.getDouble("x") && x < parent.getDouble("x") + parent.getDouble("width")
+          && y >= parent.getDouble("y") && y < parent.getDouble("y") + parent.getDouble("height"),
+          "Actual action center must remain inside the retained native row");
+      }
+      double firstY = first.getDouble("y") + first.getDouble("height") / 2;
+      double secondY = second.getDouble("y") + second.getDouble("height") / 2;
+      require(Math.abs(firstY - secondY) <= 1, "Actions must share the same native row");
+      require(Math.abs(firstY - parent.getDouble("y") - parent.getDouble("height") / 2) <= 1, "Actions must remain centered in the footer");
+      String label = String.valueOf(save.getContentDescription());
+      require(label.equals("Saved changes " + count), "Actual saved action count differs: " + label);
+      return new JSONObject().put("name", stage).put("metadata", value).put("rootTag", row.getId())
+        .put("gap", gap).put("row", parent).put("cancel", first).put("save", second)
+        .put("saveLabel", label).put("physical", physical);
+    }, stage);
+    states.put(state); stage(stage);
+    return state.getJSONObject("row").getDouble("height");
   }
 
   private void avatarAccessibility(JSONObject report) throws Exception {
