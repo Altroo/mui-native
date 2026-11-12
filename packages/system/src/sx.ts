@@ -100,7 +100,8 @@ export type StyleContext = NativeTextContext & {
     styles: Readonly<Record<string, unknown>>,
   ) => unknown;
   baseStyle?: SxProps;
-  overrideKeys?: readonly string[];
+  /** @internal Deferred selection runs once after slots resolve, only for configured overrides. */
+  overrideKeys?: readonly string[] | (() => readonly string[]);
   /** @internal Scope resolved named slots before selecting root overrides. */
   overrideSelectors?: Readonly<Record<string, string>>;
   width?: number;
@@ -1088,7 +1089,10 @@ function componentSheets(
   const scopedLayers = Object.entries(context.overrideSelectors ?? {}).map(([key, selector]) =>
     prepareLayers(resolvedOverrides.get(key) ?? [], selector),
   );
-  const rootLayers = [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].map((key) =>
+  const selection = context.overrideKeys;
+  const selectedKeys =
+    typeof selection === 'function' ? (styleOverrides ? selection() : []) : (selection ?? []);
+  const rootLayers = [context.rootSlot ?? 'root', ...selectedKeys].map((key) =>
     prepareLayers(resolvedOverrides.get(key) ?? []),
   );
   const scopedOverrides = scopedLayers.flat();
@@ -1108,7 +1112,7 @@ function componentSheets(
   Object.entries(context.overrideSelectors ?? {}).forEach(([key, selector], index) => {
     selectOccurrence(key, snapshotOf(scopedLayers[index], selector));
   });
-  [context.rootSlot ?? 'root', ...(context.overrideKeys ?? [])].forEach((key, index) => {
+  [context.rootSlot ?? 'root', ...selectedKeys].forEach((key, index) => {
     selectOccurrence(key, snapshots.get(rootLayers[index]));
   });
   const selectedOverrides: Record<string, unknown> = Object.create(null);

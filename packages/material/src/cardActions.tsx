@@ -2,7 +2,7 @@
  * Copyright (c) MUI contributors. See NOTICE and upstream/card-actions.json.
  * Native adaptation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 import React, { forwardRef } from 'react';
-import { View, type ViewInstance } from 'react-native';
+import { View, useWindowDimensions, type ViewInstance } from 'react-native';
 import {
   NativeTextScope,
   useNativeTextRootRef,
@@ -10,8 +10,10 @@ import {
   nativeTextStyleContext,
   useNativeRootProps,
   joinClassNames,
+  componentRootStyle,
+  type Theme,
 } from '@altroo/mui-native-system';
-import { useTheme, useComponentRootStyle } from './themeProvider';
+import { useTheme, THEME_ID } from './themeProvider';
 import { useForkRef } from './utils/refs';
 import type { BoxProps } from './boxTypes';
 import { getCardActionsUtilityClass } from './cardActionsClasses';
@@ -25,7 +27,8 @@ export interface CardActionsProps extends Omit<BoxProps, 'component'> {
 }
 type CardActionsNativeRootProps = {
   as?: BoxProps['component'];
-  ownerState?: object;
+  ownerState?: Record<string, unknown> | null | undefined;
+  theme?: Theme | null | undefined;
 };
 type ActionRoot = React.ComponentType<any> | 'div';
 type NativeActionRoot<R extends ActionRoot> = R extends 'div'
@@ -78,7 +81,8 @@ export const CardActions: NativeCardActionsComponent = forwardRef<ViewInstance, 
       component: Component = View,
       as,
       ref: slotRef,
-      ownerState: _ownerState,
+      ownerState: authoredOwner,
+      theme: explicitTheme,
       children,
       disableSpacing = false,
       id,
@@ -86,13 +90,21 @@ export const CardActions: NativeCardActionsComponent = forwardRef<ViewInstance, 
       style,
       ...native
     } = props as CardActionsProps & CardActionsNativeRootProps;
-    const componentRoot = Component === 'div' ? View : Component;
-    const selectedRoot = componentRoot === View ? (as ?? View) : componentRoot;
+    // The earlier Box-backed native entry gives a present as prop precedence,
+    // including undefined selecting the default View rather than component.
+    const selectedRoot = Object.hasOwn(props, 'as') ? as || View : Component;
     const Root = (selectedRoot === 'div' ? View : selectedRoot) as React.ComponentType<any>;
     const mergedRef = useForkRef(ref, slotRef);
     const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(mergedRef);
-    const theme = useTheme(),
-      parent = useNativeTextContext();
+    const providerTheme = useTheme(),
+      parent = useNativeTextContext(),
+      { width } = useWindowDimensions();
+    // A root-local theme selects this styled layer without changing provider
+    // defaults or the context seen by independently themed descendants.
+    const theme =
+      explicitTheme && typeof explicitTheme === 'object'
+        ? (explicitTheme as Theme & Record<string, Theme>)[THEME_ID] || explicitTheme
+        : providerTheme;
     const token = (slot: 'root' | 'spacing') => {
       let value = getCardActionsUtilityClass(slot);
       // Match composeClasses: a truthy active entry is read once again when appended.
@@ -100,21 +112,28 @@ export const CardActions: NativeCardActionsComponent = forwardRef<ViewInstance, 
       return value;
     };
     const rootClass = joinClassNames(token('root'), !disableSpacing && token('spacing'), className);
-    const owner = { ...props, disableSpacing };
+    const generatedOwner = { ...props, disableSpacing };
+    // Original JSX spreads other after ownerState. Class composition still uses
+    // generated component state; named styling receives the authored object.
+    const owner = Object.hasOwn(props, 'ownerState') ? authoredOwner : generatedOwner;
     const { disableSpacing: _disableSpacing, ...styledProps } = props;
-    const { computed: resolved, authored } = useComponentRootStyle(
+    const { computed: resolved, authored } = componentRootStyle(
+      theme,
       'MuiCardActions',
-      owner,
+      owner as Record<string, unknown>,
       sx,
       preparedStyle,
       {
         ...nativeTextStyleContext(parent, style, theme),
+        width,
         slot: 'root',
-        overrideKeys: disableSpacing ? [] : ['spacing'],
+        // Source overridesResolver observes owner state after every slot resolves.
+        overrideKeys: () =>
+          (owner as { disableSpacing?: boolean }).disableSpacing ? [] : ['spacing'],
         classes: rootClass.split(/\s+/).filter(Boolean),
         rootProps: {
           ...styledProps,
-          ...(as || Component !== View ? { as: as ?? Component } : {}),
+          ...(Object.hasOwn(props, 'as') ? { as } : Component !== View ? { as: Component } : {}),
           className: rootClass,
         },
         baseStyle: {
@@ -122,8 +141,10 @@ export const CardActions: NativeCardActionsComponent = forwardRef<ViewInstance, 
           alignItems: 'center',
           justifyContent: 'flex-start',
           padding: 8,
-          // Yoga gap preserves caller-owned children and mirrors with the native row direction.
-          columnGap: disableSpacing ? 0 : 8,
+          // Preserve the constructor predicate at its source preparation stage.
+          // Yoga gap keeps caller-owned native hosts and children intact.
+          columnGap: 0,
+          variants: [{ props: { disableSpacing: false }, style: { columnGap: 8 } }],
         },
       },
     );
@@ -140,7 +161,6 @@ export const CardActions: NativeCardActionsComponent = forwardRef<ViewInstance, 
             {...native}
             nativeID={id ?? native.nativeID}
             {...(Root === View ? {} : { className: rootClass, ownerState: owner })}
-            {...(componentRoot !== View && as ? { as } : {})}
             ref={scopeRef}
             style={rootStyle}
           >

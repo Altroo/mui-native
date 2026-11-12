@@ -106,5 +106,91 @@
       "globalState": "Mui-disabled",
       "classMapRoot": "MuiCardActions-root"
     }
+  ],
+  "reservedObservations": [
+    {
+      "name": "owner-on",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": true,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": true,
+      "siblingMargin": false,
+      "spacingOverride": false
+    },
+    {
+      "name": "owner-off",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": false,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": false,
+      "siblingMargin": true,
+      "spacingOverride": true
+    },
+    {
+      "name": "owner-empty",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": null,
+      "ownerHasDisableSpacing": false,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": false,
+      "siblingMargin": false,
+      "spacingOverride": true
+    },
+    {
+      "name": "owner-undefined",
+      "ownerIdentity": true,
+      "ownerDisableSpacing": null,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 4,
+      "sxThemeRadius": 4,
+      "spacingClass": false,
+      "siblingMargin": false,
+      "spacingOverride": true
+    },
+    {
+      "name": "theme-plain",
+      "ownerIdentity": false,
+      "ownerDisableSpacing": false,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 12,
+      "sxThemeRadius": 12,
+      "spacingClass": true,
+      "siblingMargin": true,
+      "spacingOverride": true
+    },
+    {
+      "name": "theme-scoped",
+      "ownerIdentity": false,
+      "ownerDisableSpacing": false,
+      "ownerHasDisableSpacing": true,
+      "themeRadius": 12,
+      "sxThemeRadius": 12,
+      "spacingClass": true,
+      "siblingMargin": true,
+      "spacingOverride": true
+    }
+  ],
+  "nullableOwnerObservations": [
+    { "input": "null", "spacingClass": true, "siblingMargin": false },
+    { "input": "undefined", "spacingClass": true, "siblingMargin": false }
+  ],
+  "ownerGetterObservations": [
+    {
+      "first": false,
+      "trace": ["read:false", "root", "spacing", "read:true"],
+      "siblingMargin": true,
+      "spacingOverride": false
+    },
+    {
+      "first": true,
+      "trace": ["read:true", "root", "spacing", "read:false"],
+      "siblingMargin": false,
+      "spacingOverride": true
+    }
   ]
 }

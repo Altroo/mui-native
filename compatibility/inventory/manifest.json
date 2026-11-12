@@ -10806,7 +10806,7 @@
       "packages/material/src/buttonTypes.ts": "da8530f9cd3a5a85459cfdcd2d66e8a819e98eec4b97666cb87186877d5532ba",
       "packages/material/src/card.tsx": "b1afcafcf4ba4b9f2ec56699ddd14e0c686db511b7a6f07dc4428535262d2bdb",
       "packages/material/src/Card/index.ts": "5c6cee6682bac89582a3fbf5c81d63b60672436a92038d7985a3277b061e6c42",
-      "packages/material/src/cardActions.tsx": "8e324025b321a376f4e9fe26e912140f8e59d10e98c7f760e7810ed9540348fb",
+      "packages/material/src/cardActions.tsx": "6b79a83a1cc41fc693d74dc11a01ef411fcf0a112e76bd9478850e58988cc94b",
       "packages/material/src/CardActions/cardActionsClasses/index.ts": "e738b6e6a458187a8ba689e08503058653b54b6f938934c212a37fc55d700f80",
       "packages/material/src/CardActions/index.ts": "22b6d70f1f62c0e5cfc0d6756283e3d5ab6ab7c7daf303d944a422bd3c40e5ac",
       "packages/material/src/cardActionsClasses.ts": "645e08837d4d9a02f0087a3eeeb393b87b12ac1cd09ae00df6f7c68a30b69c39",
@@ -11083,7 +11083,7 @@
       "packages/system/src/RtlProvider/index.tsx": "b69eb42a9148e815c75cb9c53d7d233ac80c2bef973cde0bd1d4f690fa8cbc62",
       "packages/system/src/shadows.ts": "e4d9c61d568e7f14e3ccac7b60298c84c1ddc590531564990977a406db787f7e",
       "packages/system/src/spacing.ts": "e4751abd448354e69a065d9115834b7a2de9e7bf183c99b63785e623fd611b31",
-      "packages/system/src/sx.ts": "39b9af6a052800be53f8fa290c64592280f7caedb1da2d0f06aa64f368ec64a7",
+      "packages/system/src/sx.ts": "6445202fe4c09e66b1200b3498dc7f3c6e09304a2a90e07ec9189cfa5b3e370b",
       "packages/system/src/textScope.tsx": "6a2e22e400515279e2eedab22c18e7773605606b587ab363c71605f3779395b7",
       "packages/system/src/theme.ts": "b3a7c59a2adcc723d222d0d000b69544065348c1fa49661fadb5662dcaf644a9",
       "packages/system/src/ThemeProvider/index.ts": "ab3008c2fe41aee2a32d75c3d7b9d353f41d7f922e286275f428b24ff8257c2b",
@@ -11187,7 +11187,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "d9e7fb8480c03128420085261818dca058317d35a01f289704d48d36644e1b34",
+      "nativeSourceSha256": "2950a36c1cdb380281d0f0dd9f729c50468a0a46aedbd414365a50d6fb0293aa",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11199,7 +11199,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "edd4b18dee30b47052374d53990b1ca0c79f353113a85b2db020fa505c055a7b"
+      "sha256": "1a2898f175a68791ad0d2f8350f9bbbbf6de07b93a3d957d237939cb48879e27"
     },
     {
       "package": "@mui/system",
@@ -11209,7 +11209,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "a51782bca23827f3647c1f1b7045d7d5c342ce7fb4a48de73ef9a94becb1b353",
+      "nativeSourceSha256": "c5b256c285e307b4eedd10e1d00a2fd98bd8247c262c637e8366b5cf9a5f23aa",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -11221,7 +11221,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "f466a4253e2c95b3415b8d3b5063b500dac86fc2f582b9409be42a869fd251dc"
+      "sha256": "170b08a3ef2102494071988d13779139ea33b84bb0f82ccd03e735dd1e80e889"
     },
     {
       "package": "@mui/icons-material",

@@ -7,7 +7,7 @@ import Actions, {
   type CardActionsClassKey,
   cardActionsClasses,
 } from '@mui/material/CardActions';
-import { CardActions as RootActions } from '@mui/material';
+import { CardActions as RootActions, createTheme } from '@mui/material';
 import { styled, type ComponentsPropsList } from '@mui/material/styles';
 import DirectActions from '@altroo/mui-native/CardActions';
 import DirectClasses from '@altroo/mui-native/CardActions/cardActionsClasses';
@@ -75,3 +75,27 @@ const browserProps = { component: BrowserRoot };
 // @ts-expect-error Spreading props must retain the configured root's native ref requirement.
 export const browserSpread = <Actions {...browserProps} />;
 export const nativeSpread = <Actions {...{ component: Custom, classes }} />;
+
+const declaredState = { disableSpacing: true, marker: 'caller' };
+const declaredTheme = createTheme();
+const ReservedRoot = forwardRef<
+  ViewInstance,
+  ViewProps & {
+    ownerState?: typeof declaredState;
+    theme?: typeof declaredTheme;
+    as?: typeof Custom | undefined;
+  }
+>(({ ownerState: _state, theme: _theme, as: _as, ...native }, ref) => (
+  <View {...native} ref={ref} />
+));
+export const reservedRoot = (
+  <Actions component={ReservedRoot} ownerState={declaredState} theme={declaredTheme} as={Custom} />
+);
+export const undefinedAsRoot = <Actions component={ReservedRoot} as={undefined} />;
+
+const NullableRoot = forwardRef<
+  ViewInstance,
+  ViewProps & { ownerState?: object | null | undefined }
+>(({ ownerState: _state, ...native }, ref) => <View {...native} ref={ref} />);
+export const nullableOwner = <Actions component={NullableRoot} ownerState={null} />;
+export const undefinedOwner = <Actions component={NullableRoot} ownerState={undefined} />;

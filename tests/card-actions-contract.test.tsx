@@ -1,3 +1,4 @@
+import { THEME_ID } from '../packages/material/src/themeProvider';
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import { createRef, forwardRef, useState } from 'react';
@@ -10,6 +11,7 @@ import {
   createTheme,
   getCardActionsUtilityClass,
   styled,
+  useTheme,
 } from '@altroo/mui-native';
 import { unstable_ClassNameGenerator } from '../packages/material/src/className';
 import reference from './fixtures/mui-card-actions-9.5.0.json';
@@ -139,7 +141,7 @@ test('styled class updates preserve a custom root, caller state and the native s
   expect(ref.current).toBeNull();
 });
 
-test('retains native as routing, reserves owner state and honors an explicit empty id', () => {
+test('retains native as precedence, authored owner state and an explicit empty id', () => {
   const Alternate = forwardRef<ViewInstance, ViewProps>((props, ref) => (
     <View {...props} ref={ref} />
   ));
@@ -150,13 +152,15 @@ test('retains native as routing, reserves owner state and honors an explicit emp
   const oldProps = { as: Alternate, ownerState: { disableSpacing: true } };
   const tree = render(<CardActions {...oldProps} id="" nativeID="fallback" testID="route" />);
   expect(tree.UNSAFE_getByType(Alternate).props.nativeID).toBe('');
-  expect(tree.UNSAFE_getByType(Alternate).props.ownerState.disableSpacing).toBe(false);
+  expect(tree.UNSAFE_getByType(Alternate).props.ownerState.disableSpacing).toBe(true);
   tree.rerender(<CardActions {...oldProps} component={View} testID="route" />);
   expect(tree.UNSAFE_getByType(Alternate)).toBeTruthy();
   tree.rerender(<CardActions {...oldProps} component={LegacyRoot} testID="route" />);
+  expect(tree.UNSAFE_getByType(Alternate)).toBeTruthy();
+  expect(tree.UNSAFE_queryByType(LegacyRoot)).toBeNull();
+  tree.rerender(<CardActions component={LegacyRoot} as={undefined} testID="route" />);
+  expect(tree.UNSAFE_queryByType(LegacyRoot)).toBeNull();
   expect(tree.UNSAFE_queryByType(Alternate)).toBeNull();
-  expect(tree.UNSAFE_getByType(LegacyRoot).props.as).toBe(Alternate);
-  expect(tree.UNSAFE_getByType(LegacyRoot).props.ownerState.disableSpacing).toBe(false);
   const stockProps = { ownerState: oldProps.ownerState };
   tree.rerender(<CardActions {...stockProps} testID="route" />);
   const stock = tree.getByTestId('route');
@@ -282,3 +286,203 @@ test('the existing div component alias remains a native View', () => {
   expect(tree.getByTestId('alias')).toHaveStyle({ flexDirection: 'row', columnGap: 8 });
   expect(tree.UNSAFE_queryByType('div' as any)).toBeNull();
 });
+
+test.each(reference.reservedObservations.filter((item) => item.name.startsWith('owner-')))(
+  'authored owner state $name selects styling without replacing class ownership',
+  (observation) => {
+    const disabled = observation.ownerDisableSpacing;
+    const authored = observation.ownerHasDisableSpacing
+      ? { disableSpacing: disabled ?? undefined, marker: 'caller' }
+      : { marker: 'caller' };
+    const Custom = forwardRef<
+      ViewInstance,
+      ViewProps & { ownerState?: typeof authored; className?: string }
+    >(({ ownerState: _owner, className: _class, ...native }, ref) => (
+      <View {...native} ref={ref} />
+    ));
+    let seen: unknown;
+    const theme = createTheme({
+      components: {
+        MuiCardActions: {
+          styleOverrides: {
+            root: nativeStyleCallback(({ ownerState }) => {
+              seen = ownerState;
+              return { opacity: 0.6 };
+            }),
+            spacing: { paddingBottom: '13px' },
+          },
+        },
+      },
+    });
+    const tree = render(
+      <ThemeProvider theme={theme}>
+        <CardActions
+          component={Custom}
+          ownerState={authored}
+          disableSpacing={!disabled}
+          testID="authored-state"
+        />
+      </ThemeProvider>,
+    );
+    expect(seen).toBe(authored);
+    expect(tree.UNSAFE_getByType(Custom).props.ownerState).toBe(authored);
+    const classes = tree.UNSAFE_getByType(Custom).props.className.split(/\s+/);
+    expect(classes.includes('MuiCardActions-spacing')).toBe(observation.spacingClass);
+    expect(tree.getByTestId('authored-state')).toHaveStyle({
+      columnGap: observation.siblingMargin ? 8 : 0,
+    });
+    const style = StyleSheet.flatten(tree.getByTestId('authored-state').props.style);
+    expect(style.paddingBottom ?? style.padding).toBe(observation.spacingOverride ? 13 : 8);
+  },
+);
+
+test.each(reference.reservedObservations.filter((item) => item.name.startsWith('theme-')))(
+  'explicit native root $name styles locally while defaults and descendants retain provider context',
+  (observation) => {
+    let seen: unknown, sxTheme: unknown, descendantTheme: unknown, providerContext: unknown;
+    const explicit = createTheme({
+      shape: { borderRadius: 12 },
+      components: {
+        MuiCardActions: {
+          defaultProps: { disableSpacing: true },
+          styleOverrides: {
+            root: nativeStyleCallback(({ theme }) => {
+              seen = theme;
+              return { opacity: 0.7 };
+            }),
+          },
+        },
+      },
+    });
+    const provider = createTheme({
+      components: {
+        MuiCardActions: {
+          defaultProps: { disableSpacing: false },
+          styleOverrides: { root: { opacity: 0.2 } },
+        },
+      },
+    });
+    const supplied =
+      observation.name === 'theme-scoped' ? { ...provider, [THEME_ID]: explicit } : explicit;
+    const Custom = forwardRef<
+      ViewInstance,
+      ViewProps & { theme?: typeof explicit; ownerState?: object; className?: string }
+    >(({ theme: _theme, ownerState: _owner, className: _class, ...native }, ref) => (
+      <View {...native} ref={ref} />
+    ));
+    function ProviderProbe() {
+      providerContext = useTheme();
+      return null;
+    }
+    function Descendant() {
+      descendantTheme = useTheme();
+      return <Text>Theme context</Text>;
+    }
+    const tree = render(
+      <ThemeProvider theme={provider}>
+        <ProviderProbe />
+        <CardActions
+          component={Custom}
+          theme={supplied}
+          testID="explicit-theme"
+          sx={(theme) => {
+            sxTheme = theme;
+            return { paddingTop: '10px' };
+          }}
+        >
+          <Descendant />
+        </CardActions>
+      </ThemeProvider>,
+    );
+    expect(seen).toBe(explicit);
+    expect(sxTheme).toBe(explicit);
+    expect((sxTheme as typeof explicit).shape.borderRadius).toBe(observation.sxThemeRadius);
+    expect(descendantTheme).toBe(providerContext);
+    expect(descendantTheme).not.toBe(explicit);
+    expect(tree.getByTestId('explicit-theme')).toHaveStyle({
+      opacity: 0.7,
+      columnGap: 8,
+      paddingTop: 10,
+    });
+    expect(tree.UNSAFE_getByType(Custom).props).not.toHaveProperty('theme');
+  },
+);
+
+test.each(reference.nullableOwnerObservations)(
+  'explicit $input owner state renders without overrides, preserving the original variant decision',
+  (observation) => {
+    const owner = observation.input === 'null' ? null : undefined;
+    const NullableRoot = forwardRef<
+      ViewInstance,
+      ViewProps & { ownerState?: object | null | undefined; className?: string }
+    >(({ ownerState: _owner, className: _class, ...native }, ref) => (
+      <View {...native} ref={ref} />
+    ));
+    const tree = render(
+      <ThemeProvider theme={createTheme()}>
+        <CardActions component={NullableRoot} ownerState={owner} testID="nullable-owner" />
+      </ThemeProvider>,
+    );
+    const root = tree.UNSAFE_getByType(NullableRoot);
+    expect(root.props.ownerState).toBe(owner);
+    expect(root.props.className.split(/\s+/).includes('MuiCardActions-spacing')).toBe(
+      observation.spacingClass,
+    );
+    expect(tree.getByTestId('nullable-owner')).toHaveStyle({
+      columnGap: observation.siblingMargin ? 8 : 0,
+    });
+  },
+);
+
+test.each(reference.ownerGetterObservations)(
+  'selected-owner getter stages begin with $first',
+  (observation) => {
+    const trace: string[] = [];
+    let reads = 0;
+    const owner = {
+      get disableSpacing() {
+        const value = reads++ === 0 ? observation.first : !observation.first;
+        trace.push('read:' + value);
+        return value;
+      },
+    };
+    const Custom = forwardRef<
+      ViewInstance,
+      ViewProps & { ownerState?: typeof owner; className?: string }
+    >(({ ownerState: _owner, className: _class, ...native }, ref) => (
+      <View {...native} ref={ref} />
+    ));
+    const theme = createTheme({
+      components: {
+        MuiCardActions: {
+          styleOverrides: {
+            root: () => {
+              trace.push('root');
+              return { opacity: 0.7 };
+            },
+            spacing: () => {
+              trace.push('spacing');
+              return { paddingBottom: '13px' };
+            },
+          },
+        },
+      },
+    });
+    const tree = render(
+      <ThemeProvider theme={theme}>
+        <CardActions
+          component={Custom}
+          ownerState={owner}
+          disableSpacing={false}
+          testID="owner-getter"
+        />
+      </ThemeProvider>,
+    );
+    expect(trace).toEqual(observation.trace);
+    expect(tree.getByTestId('owner-getter')).toHaveStyle({
+      columnGap: observation.siblingMargin ? 8 : 0,
+    });
+    const style = StyleSheet.flatten(tree.getByTestId('owner-getter').props.style);
+    expect(style.paddingBottom ?? style.padding).toBe(observation.spacingOverride ? 13 : 8);
+  },
+);
