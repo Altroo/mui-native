@@ -28,6 +28,8 @@ iOS Space/A keyboard interactions now have 30 scoped cases across all five roots
 
 [ButtonGroup scrolling](performance-button-group.md#scrolling-behavior-12-november-2026) now has four Release native gesture cases with retained root-ref/state and complete 200-action counter checks. The recorded simulator supplies only scroll-duration samples; missing hitch/frame telemetry and input latency remain explicit performance gaps. The report reader rejects duration-only data when hitch telemetry is required. This does not advance the evidence stage.
 
+The existing [pure color helpers](theming.md) have source-derived calculation and boundary checks against all eighteen pinned exports, including strict optional color-space declarations, malformed-input fallback, diagnostics, getter order and HSL channel writes. This finite helper work does not close the broader createTheme/palette or native color-rendering row.
+
 ## Retained closure gates: ButtonGroup and required existing styling
 
 The normal-text iOS screenshot review exposed concatenated adjacent mixed-label fragments under the global RTL host. The focused correction preserves anonymous boundary spaces while retaining independent authored text roots. The maintained native test retains mixed-label screenshots separately because frame/counter assertions alone do not establish boundary-space paint; full browser paragraph shaping remains outside this adaptation.
