@@ -48,7 +48,8 @@ public final class LayoutRootScenario {
     FORM_GROUP_FOCUS("form-group-focus", "formGroupFocus"), FORM_GROUP_EDITOR("form-group-editor", "formGroupEditor"),
     FORM_GROUP_ACCESSIBILITY("form-group-accessibility", "formGroupAccessibility"),
     AVATAR_ACCESSIBILITY("list-item-avatar-accessibility", "avatarAccessibility"),
-    ACCORDION_ACTIONS_LAYOUT("accordion-actions-layout", "accordionActionsLayout");
+    ACCORDION_ACTIONS_LAYOUT("accordion-actions-layout", "accordionActionsLayout"),
+    CARD_ACTIONS_LAYOUT("card-actions-layout", "cardActionsLayout");
     final String label, key;
     Scenario(String label, String key) { this.label = label; this.key = key; }
   }
@@ -76,6 +77,7 @@ public final class LayoutRootScenario {
   public static void runFormGroupAccessibility(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.FORM_GROUP_ACCESSIBILITY, null).run(); }
   public static void runAvatarAccessibility(Instrumentation driver) { new LayoutRootScenario(driver, Scenario.AVATAR_ACCESSIBILITY, null).run(); }
   public static void runAccordionActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.ACCORDION_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
+  public static void runCardActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.CARD_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
@@ -92,7 +94,7 @@ public final class LayoutRootScenario {
       require(launch != null, "Catalog must be installed");
       launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity = driver.startActivitySync(launch);
-      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT) {
+      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT || scenario == Scenario.CARD_ACTIONS_LAYOUT) {
         require("normal".equals(fontProfile) || "enlarged".equals(fontProfile), "Layout root checks require an explicit normal/enlarged font profile");
         float actualFontScale = activity.getResources().getConfiguration().fontScale;
         report.put("fontProfile", fontProfile);
@@ -117,7 +119,9 @@ public final class LayoutRootScenario {
       } while (!wrappersReady && navigationAttempts < 2);
       report.put("navigationAttempts", navigationAttempts);
       require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
-      if (scenario == Scenario.ACCORDION_ACTIONS_LAYOUT) {
+      if (scenario == Scenario.CARD_ACTIONS_LAYOUT) {
+        cardActionsLayout();
+      } else if (scenario == Scenario.ACCORDION_ACTIONS_LAYOUT) {
         accordionActionsLayout();
       } else if (scenario == Scenario.AVATAR_ACCESSIBILITY) {
         avatarAccessibility(report);
@@ -873,6 +877,60 @@ public final class LayoutRootScenario {
       require(label.equals("Saved notes " + count), "Actual saved note count differs: " + label);
       return new JSONObject().put("name", stage).put("metadata", value).put("rootTag", row.getId())
         .put("gap", gap).put("row", parent).put("keep", first).put("save", second)
+        .put("saveLabel", label).put("physical", physical);
+    }, stage);
+    states.put(state); stage(stage);
+  }
+
+  /** Real Android action frames and touch state at the requested system text scale. */
+  private void cardActionsLayout() throws Exception {
+    revealComplete("root-layout-card-actions"); tap("root-layout-card-actions");
+    cardActionsState("standard", false, false, false, 8, 0);
+    tap("card-actions-preview-save");
+    tap("card-actions-preview-theme");
+    cardActionsState("roomy", false, true, false, 16, 1);
+    tap("card-actions-preview-direction");
+    cardActionsState("rtl", false, true, true, 16, 1);
+    capture("card-actions-rtl.png");
+    tap("card-actions-preview-spacing");
+    cardActionsState("no-gap", true, true, true, 0, 1);
+    for (String control : new String[]{"spacing", "theme", "direction"}) tap("card-actions-preview-" + control);
+    cardActionsState("restored", false, false, false, 8, 1);
+    capture("card-actions-restored.png");
+  }
+
+  private void cardActionsState(String stage, boolean disabled, boolean roomy, boolean rtl, int expectedGap, int count) throws Exception {
+    JSONObject state = settled(() -> {
+      JSONObject value = metadata("card-actions-preview-receipt");
+      require(value.getBoolean("disableSpacing") == disabled && value.getBoolean("roomy") == roomy
+        && value.getBoolean("rtl") == rtl, "Action row controls have not committed");
+      scale(value);
+      JSONObject refs = value.getJSONObject("refs");
+      require(refs.getInt("attached") == 1 && refs.getInt("cleaned") == 0, "The action root must share its original ref");
+      View row = retained("card-actions-preview-row");
+      View share = retained("card-actions-preview-share"), save = retained("card-actions-preview-save");
+      // Fabric may materialize the measured row and its two actions as siblings.
+      JSONObject physical = physicalChildren(row, new String[]{"share", "save"}, new View[]{share, save});
+      JSONObject parent = bounds(row), first = bounds(share), second = bounds(save);
+      double firstX = first.getDouble("x"), secondX = second.getDouble("x");
+      double gap = rtl ? firstX - secondX - second.getDouble("width") : secondX - firstX - first.getDouble("width");
+      require(rtl ? centerX(first) > centerX(second) : centerX(first) < centerX(second), "Action order must follow native RTL");
+      require(Math.abs(gap - expectedGap) <= 1, "Native action gap differs: " + gap + " expected=" + expectedGap);
+      double startInset = rtl ? parent.getDouble("x") + parent.getDouble("width") - firstX - first.getDouble("width") : firstX - parent.getDouble("x");
+      require(Math.abs(startInset - 8) <= 1, "Card actions must align to the native start padding: " + startInset);
+      for (JSONObject child : new JSONObject[]{first, second}) {
+        double x = centerX(child), y = child.getDouble("y") + child.getDouble("height") / 2;
+        require(x >= parent.getDouble("x") && x < parent.getDouble("x") + parent.getDouble("width")
+          && y >= parent.getDouble("y") && y < parent.getDouble("y") + parent.getDouble("height"),
+          "Actual action center must remain inside the retained native row");
+      }
+      double firstY = first.getDouble("y") + first.getDouble("height") / 2;
+      double secondY = second.getDouble("y") + second.getDouble("height") / 2;
+      require(Math.abs(firstY - secondY) <= 1, "Actions must share the same native row");
+      String label = String.valueOf(save.getContentDescription());
+      require(label.equals("Saved articles " + count), "Actual saved note count differs: " + label);
+      return new JSONObject().put("name", stage).put("metadata", value).put("rootTag", row.getId())
+        .put("gap", gap).put("row", parent).put("share", first).put("save", second)
         .put("saveLabel", label).put("physical", physical);
     }, stage);
     states.put(state); stage(stage);

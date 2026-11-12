@@ -11,6 +11,7 @@ import { LayoutRootBenchmarkExample } from './LayoutRootBenchmarkExample';
 import { ListItemIconContractExample } from './ListItemIconContractExample';
 import { AccordionDetailsContractExample } from './AccordionDetailsContractExample';
 import { AccordionActionsContractExample } from './AccordionActionsContractExample';
+import { CardActionsContractExample } from './CardActionsContractExample';
 import { MenuIconCascadeExample } from './MenuIconCascadeExample';
 import { TypographyContractExample } from './TypographyContractExample';
 import { DividerContractExample } from './DividerContractExample';
@@ -31,6 +32,7 @@ export function RootLayoutExamples() {
     | 'icon'
     | 'details'
     | 'actions'
+    | 'card-actions'
     | 'menu-styles'
     | 'typography'
     | 'divider'
@@ -130,6 +132,16 @@ export function RootLayoutExamples() {
           onClick={() => setExample('actions')}
         >
           Actions
+        </Button>
+        <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
+          testID="root-layout-card-actions"
+          accessibilityState={{ selected: example === 'card-actions' }}
+          variant={example === 'card-actions' ? 'contained' : 'text'}
+          onClick={() => setExample('card-actions')}
+        >
+          Card actions
         </Button>
         <Button
           size="small"
@@ -248,6 +260,8 @@ export function RootLayoutExamples() {
             <AccordionDetailsContractExample />
           ) : example === 'actions' ? (
             <AccordionActionsContractExample />
+          ) : example === 'card-actions' ? (
+            <CardActionsContractExample />
           ) : example === 'divider' ? (
             <DividerContractExample />
           ) : example === 'paper' ? (

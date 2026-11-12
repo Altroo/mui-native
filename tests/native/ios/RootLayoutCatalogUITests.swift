@@ -307,4 +307,78 @@ final class RootLayoutCatalogUITests: XCTestCase {
     attachment.lifetime = .keepAlways
     add(attachment)
   }
+  func testCardActionsGapAndRetainedChild() throws {
+    try runCardActions(enlarged: false)
+  }
+
+  func testCardActionsNormalPreview() throws {
+    try chooseWrapper("root-layout-card-actions")
+    try cardActionsState("normal-preview", disable: false, roomy: false, rtl: false, gap: 8, count: 0, enlarged: false)
+    capture("card-actions-normal-preview")
+  }
+
+  func testCardActionsAtEnlargedOSTextSize() throws {
+    try runCardActions(enlarged: true)
+  }
+
+  private func runCardActions(enlarged: Bool) throws {
+    try chooseWrapper("root-layout-card-actions")
+    try cardActionsState("standard", disable: false, roomy: false, rtl: false, gap: 8, count: 0, enlarged: enlarged)
+    reveal("card-actions-preview-save").tap()
+    reveal("card-actions-preview-theme").tap()
+    try cardActionsState("roomy", disable: false, roomy: true, rtl: false, gap: 16, count: 1, enlarged: enlarged)
+    reveal("card-actions-preview-direction").tap()
+    try cardActionsState("rtl", disable: false, roomy: true, rtl: true, gap: 16, count: 1, enlarged: enlarged)
+    capture("card-actions-rtl")
+    reveal("card-actions-preview-spacing").tap()
+    try cardActionsState("no-gap", disable: true, roomy: true, rtl: true, gap: 0, count: 1, enlarged: enlarged)
+    for id in ["spacing", "theme", "direction"] { reveal("card-actions-preview-" + id).tap() }
+    try cardActionsState("restored", disable: false, roomy: false, rtl: false, gap: 8, count: 1, enlarged: enlarged)
+    capture("card-actions-restored")
+  }
+
+  private func cardActionsState(
+    _ stage: String, disable: Bool, roomy: Bool, rtl: Bool, gap: CGFloat, count: Int, enlarged: Bool
+  ) throws {
+    let receipt = "card-actions-preview-receipt"
+    let row = node("card-actions-preview-row")
+    let share = reveal("card-actions-preview-share"), save = reveal("card-actions-preview-save")
+    func childGap(_ first: CGRect, _ second: CGRect) -> CGFloat {
+      rtl ? first.minX - second.maxX : second.minX - first.maxX
+    }
+    // React state alone cannot acknowledge the new Yoga layout. Require actual
+    // accessible button frames to reach the expected gap and physical order.
+    waitFor("Native action row must settle: " + stage) {
+      guard let value = self.metadata(receipt),
+        value["disableSpacing"] as? Bool == disable,
+        value["roomy"] as? Bool == roomy, value["rtl"] as? Bool == rtl,
+        let refs = value["refs"] as? [String: Int], refs["attached"] == 1, refs["cleaned"] == 0,
+        let font = value["fontScale"] as? Double, (enlarged ? font >= 1.6 : abs(font - 1) < 0.01),
+        share.exists, save.exists, row.exists else { return false }
+      let first = share.frame, second = save.frame, parent = row.frame
+      return !first.isEmpty && !second.isEmpty && !parent.isEmpty
+        && abs(first.midY - second.midY) <= 1
+        && parent.insetBy(dx: -1.5, dy: -1.5).contains(first)
+        && parent.insetBy(dx: -1.5, dy: -1.5).contains(second)
+        && (rtl ? first.midX > second.midX : first.midX < second.midX)
+        && abs(childGap(first, second) - gap) <= 1
+        && abs((rtl ? parent.maxX - first.maxX : first.minX - parent.minX) - 8) <= 1
+        && save.label == "Saved articles " + String(count)
+    }
+    let rowFrame = row.frame, shareFrame = share.frame, saveFrame = save.frame
+    func rectangle(_ frame: CGRect) -> [Double] {
+      [Double(frame.minX), Double(frame.minY), Double(frame.width), Double(frame.height)]
+    }
+    let observation: [String: Any] = [
+      "stage": stage, "gap": Double(childGap(shareFrame, saveFrame)),
+      "rowFrame": rectangle(rowFrame), "shareFrame": rectangle(shareFrame),
+      "saveFrame": rectangle(saveFrame), "saveLabel": save.label,
+      "state": try XCTUnwrap(metadata(receipt)),
+    ]
+    let data = try JSONSerialization.data(withJSONObject: observation, options: [.sortedKeys])
+    let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+    attachment.name = "card-actions-" + stage
+    attachment.lifetime = .keepAlways
+    add(attachment)
+  }
 }

@@ -48,10 +48,13 @@ function rect(value) {
 const centerX = (frame) => frame.x + frame.width / 2;
 const centerY = (frame) => frame.y + frame.height / 2;
 function inside(child, parent) {
-  const x = centerX(child);
-  const y = centerY(child);
+  // Match the native collector: whole action frames, with DIP rounding tolerance.
+  const tolerance = 1.5;
   return (
-    x >= parent.x && x < parent.x + parent.width && y >= parent.y && y < parent.y + parent.height
+    child.x >= parent.x - tolerance &&
+    child.y >= parent.y - tolerance &&
+    child.x + child.width <= parent.x + parent.width + tolerance &&
+    child.y + child.height <= parent.y + parent.height + tolerance
   );
 }
 
