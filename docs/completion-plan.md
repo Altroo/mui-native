@@ -100,7 +100,7 @@ The entries below enumerate the 81 current partial status rows and the separatel
 | Collapse                |                    75% | [Scope and remaining work](../docs/collapse.md)                          |
 | DefaultPropsProvider    |                   100% | [Scope and remaining work](../docs/default-props-provider.md)            |
 | Dialog                  |                    50% | [Scope and remaining work](../docs/modals.md)                            |
-| DialogActions           |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
+| DialogActions           |                    75% | [Native contract and remaining release gates](../docs/dialog-actions.md) |
 | DialogContent           |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | DialogTitle             |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | Divider                 |                    75% | [Scope and remaining work](../docs/divider.md)                           |
@@ -199,7 +199,7 @@ The [complete catalog](material-icons.md) retains every supplied artwork/name an
 - Accordion still needs sibling grouping/rounding, margin and expand-icon motion policies; these are software work.
 - Portal/container policies, direct picker presentation/dismissal, List/MenuList geometry/navigation and Popper benchmark repeatability/iOS tooling can be exercised locally.
 - Autocomplete's default ScrollView mounts all filtered options. Large-list/listbox contracts and unresolved input failures remain implementation or local verification work.
-- Existing layout types still omit contracts such as Stack responsive direction/useFlexGap. CardActions now has dedicated defaults/classes/native-root typing, strict consumers and retained normal/enlarged iOS/Android checks; its native gap policy and remaining release gates are documented. Divider now has source-backed variants/text alignment, strict consumers and scoped normal/enlarged iOS/Android evidence; its wider native RTL, physical accessibility and performance gates remain explicit in the guide. Dialog content/action wrappers and feedback controls also need dedicated type/API coverage.
+- Existing layout types still omit contracts such as Stack responsive direction/useFlexGap. CardActions now has dedicated defaults/classes/native-root typing, strict consumers and retained normal/enlarged iOS/Android checks; its native gap policy and remaining release gates are documented. Divider now has source-backed variants/text alignment, strict consumers and scoped normal/enlarged iOS/Android evidence; its wider native RTL, physical accessibility and performance gates remain explicit in the guide. DialogActions now has dedicated native props/classes, strict consumers and eight-stage retained iOS/Android checks, including both flex styling paths. Its large-text presentation and release gates remain explicit. Dialog content wrappers and feedback controls still need dedicated type/API coverage.
 - Community X entries retain substantial software gaps: grid editing/sizing/virtualization/apiRef/keyboard/operators; tree APIs/loading/roles; chart axes/composition/scales/tooltips/interactions; picker sections/adapter/lifecycle/locales/timezones.
 
 No percentage changes to 100% are made by this planning document. Completed contract items need source, consumer and runtime evidence; remaining external gates keep their own truthful status.
