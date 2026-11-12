@@ -1,3 +1,6 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import Svg, { ClipPath, Defs, Path, Rect } from 'react-native-svg';
+import { notchedOutlineGeometry } from './notchedOutlineGeometry';
 import { NativeTextInput as TextInput } from '@altroo/mui-native-host';
 import { useTheme, useSx, useComponentStyle } from './themeProvider';
 import React, {
@@ -8,6 +11,7 @@ import React, {
   useLayoutEffect,
   useRef,
   useState,
+  useId,
 } from 'react';
 import {
   View,
@@ -170,17 +174,23 @@ const NotchedOutline = forwardRef<ViewInstance, NotchedOutlineProps>(function No
   { label, notched, style, sx, ...props },
   ref,
 ) {
-  const [width, setWidth] = useState(0);
-  const [labelWidth, setLabelWidth] = useState(0);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  const clipId = `mui-outline-${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`;
+  const { width, height } = size;
+  const [labelWidth, setLabelWidth] = useState<number | null>(null);
   const resolved = useSx(sx);
   const border = StyleSheet.flatten([resolved, style]) ?? {};
   const metrics = useSx({ typography: 'body1' });
+  const geometry = notchedOutlineGeometry(width, height, border, I18nManager.isRTL);
+  const legendInset = 8 + geometry.thickness;
   const gap =
-    notched && label != null && label !== '' && labelWidth > 0
-      ? Math.min(labelWidth + 8, Math.max(0, width - 28))
+    notched && label != null && label !== '' && labelWidth !== null
+      ? Math.min(labelWidth + 10, Math.max(0, width - legendInset * 2))
       : 0;
-  // A horizontal outline segment uses border width as its vertical thickness.
-  const horizontalThickness = border.borderWidth;
+  // Original fieldset starts at -5px; its 11px legend clears 6px inside the root.
+  // Clear that band as well as thick strokes so rounded arcs cannot cross the label.
+  const notchDepth = Math.min(height, Math.max(6, geometry.thickness));
+  const notchStart = I18nManager.isRTL ? width - legendInset - gap : legendInset;
   return (
     <View
       {...props}
@@ -190,7 +200,10 @@ const NotchedOutline = forwardRef<ViewInstance, NotchedOutlineProps>(function No
       accessibilityElementsHidden
       importantForAccessibility="no-hide-descendants"
       onLayout={(e) => {
-        setWidth(e.nativeEvent.layout.width);
+        const { width, height } = e.nativeEvent.layout;
+        setSize((previous) =>
+          previous.width === width && previous.height === height ? previous : { width, height },
+        );
         props.onLayout?.(e);
       }}
       style={[
@@ -206,43 +219,46 @@ const NotchedOutline = forwardRef<ViewInstance, NotchedOutlineProps>(function No
         },
       ]}
     >
-      <View
-        style={[
-          StyleSheet.absoluteFill,
-          {
-            borderColor: border.borderColor,
-            borderWidth: border.borderWidth,
-            borderRadius: border.borderRadius,
-            borderStyle: border.borderStyle,
-            borderTopWidth: gap ? 0 : border.borderWidth,
-          },
-        ]}
-      />
-      {gap ? (
-        <>
-          <View
-            style={{
-              position: 'absolute',
-              top: 0,
-              start: 0,
-              width: 14,
-              height: horizontalThickness,
-              backgroundColor: border.borderColor,
-            }}
+      {width > 0 &&
+      height > 0 &&
+      !(notched && label != null && label !== '' && labelWidth === null) ? (
+        <Svg width={width} height={height} style={StyleSheet.absoluteFill} pointerEvents="none">
+          {gap > 0 ? (
+            <Defs>
+              <ClipPath id={clipId}>
+                <Rect x={0} y={0} width={notchStart} height={height} />
+                <Rect
+                  x={notchStart + gap}
+                  y={0}
+                  width={Math.max(0, width - notchStart - gap)}
+                  height={height}
+                />
+                <Rect
+                  x={notchStart}
+                  y={notchDepth}
+                  width={gap}
+                  height={Math.max(0, height - notchDepth)}
+                />
+              </ClipPath>
+            </Defs>
+          ) : null}
+          <Path
+            d={geometry.path}
+            fill="none"
+            stroke={border.borderColor}
+            strokeWidth={geometry.thickness}
+            strokeDasharray={
+              border.borderStyle === 'dashed'
+                ? [geometry.thickness * 3, geometry.thickness * 3]
+                : border.borderStyle === 'dotted'
+                  ? [geometry.thickness, geometry.thickness]
+                  : undefined
+            }
+            clipPath={gap > 0 ? `url(#${clipId})` : undefined}
           />
-          <View
-            style={{
-              position: 'absolute',
-              top: 0,
-              start: 14 + gap,
-              end: 0,
-              height: horizontalThickness,
-              backgroundColor: border.borderColor,
-            }}
-          />
-        </>
+        </Svg>
       ) : null}
-      {label != null && label !== '' ? (
+      {width > 0 && label != null && label !== '' ? (
         <Typography
           variant="body1"
           noWrap
@@ -250,7 +266,7 @@ const NotchedOutline = forwardRef<ViewInstance, NotchedOutlineProps>(function No
           style={{
             position: 'absolute',
             start: 14,
-            maxWidth: '85%',
+            maxWidth: Math.max(0, width - 28),
             opacity: 0,
             fontSize: Number(metrics.fontSize ?? 16) * 0.75,
           }}
@@ -390,7 +406,7 @@ function InputEngine({
   };
   const typography = useSx(
     [
-      { typography: 'body1' },
+      { typography: 'body1', lineHeight: 1.4375 },
       inputOverride('MuiInputBase'),
       variant !== 'base' ? inputOverride(names[variant]) : undefined,
       host.sx,
@@ -434,27 +450,37 @@ function InputEngine({
   const paddingTop =
     variant === 'base'
       ? 0
-      : variant === 'filled' && !hiddenLabel
-        ? size === 'small'
-          ? 21
-          : 25
+      : variant === 'filled'
+        ? hiddenLabel
+          ? size === 'small'
+            ? 8
+            : 16
+          : size === 'small'
+            ? 21
+            : 25
         : variant === 'standard'
           ? size === 'small'
             ? 1
             : 4
           : size === 'small'
-            ? 10
-            : 16;
+            ? 8.5
+            : 16.5;
   const paddingBottom =
-    variant === 'filled' && !hiddenLabel
-      ? 8
+    variant === 'filled'
+      ? hiddenLabel
+        ? size === 'small'
+          ? 9
+          : 17
+        : size === 'small'
+          ? 4
+          : 8
       : variant === 'base'
         ? 0
         : variant === 'standard'
           ? 5
           : size === 'small'
-            ? 10
-            : 16;
+            ? 8.5
+            : 16.5;
   const themedPadding = paddingEdges(typography);
   const callerPadding = paddingEdges(StyleSheet.flatten(host.style) ?? undefined);
   const framed = variant === 'outlined' || variant === 'filled';
@@ -499,7 +525,13 @@ function InputEngine({
       ? theme.palette.error.main
       : focused
         ? activeColor
-        : theme.palette.divider;
+        : variant === 'outlined'
+          ? theme.palette.mode === 'dark'
+            ? 'rgba(255, 255, 255, 0.23)'
+            : 'rgba(0, 0, 0, 0.23)'
+          : theme.palette.mode === 'dark'
+            ? 'rgba(255, 255, 255, 0.7)'
+            : 'rgba(0, 0, 0, 0.42)';
   const Root = slots?.root ?? component ?? View;
   const Host = slots?.input ?? inputComponent ?? TextInput;
   const Outline = slots?.notchedOutline ?? NotchedOutline;
@@ -545,8 +577,8 @@ function InputEngine({
       color: disabled ? theme.palette.text.disabled : theme.palette.text.primary,
       paddingTop,
       paddingBottom,
-      paddingLeft: framed && !leftAdornment ? 14 : 0,
-      paddingRight: framed && !rightAdornment ? 14 : 0,
+      paddingLeft: framed && !leftAdornment ? (variant === 'filled' ? 12 : 14) : 0,
+      paddingRight: framed && !rightAdornment ? (variant === 'filled' ? 12 : 14) : 0,
       ...(control
         ? {
             [mapPhysicalSides ? 'paddingLeft' : 'paddingRight']: selectionEndAdornment
@@ -559,6 +591,7 @@ function InputEngine({
       maxHeight,
       height,
       textAlignVertical: multiline ? 'top' : 'center',
+      textAlign: theme.direction === 'rtl' ? 'right' : 'left',
     },
     typography,
     themedPadding,
@@ -585,12 +618,21 @@ function InputEngine({
             marginTop:
               variant === 'standard' && form && form.labelDisplay !== 'stacked' ? 16 : undefined,
             alignSelf: fullWidth ? 'stretch' : undefined,
-            paddingLeft: framed && leftAdornment ? 14 : 0,
-            paddingRight: framed && rightAdornment ? 14 : 0,
+            paddingLeft: framed && leftAdornment ? (variant === 'filled' ? 12 : 14) : 0,
+            paddingRight: framed && rightAdornment ? (variant === 'filled' ? 12 : 14) : 0,
             ...(selectionEndAdornment
               ? { [mapPhysicalSides ? 'paddingLeft' : 'paddingRight']: selectionCaret }
               : {}),
-            backgroundColor: variant === 'filled' ? theme.palette.action.hover : 'transparent',
+            backgroundColor:
+              variant === 'filled'
+                ? theme.palette.mode === 'dark'
+                  ? disabled
+                    ? 'rgba(255, 255, 255, 0.12)'
+                    : 'rgba(255, 255, 255, 0.09)'
+                  : disabled
+                    ? 'rgba(0, 0, 0, 0.12)'
+                    : 'rgba(0, 0, 0, 0.06)'
+                : 'transparent',
             borderTopLeftRadius: variant === 'filled' ? shapeRadius : undefined,
             borderTopRightRadius: variant === 'filled' ? shapeRadius : undefined,
           },
@@ -820,7 +862,8 @@ export const InputAdornment: React.ForwardRefExoticComponent<
     style,
     ...native
   } = props;
-  const resolved = useComponentStyle('MuiInputAdornment', { ...props, variant }, sx);
+  const ownerState = { ...props, variant, hiddenLabel: form?.hiddenLabel, size: form?.size };
+  const resolved = useComponentStyle('MuiInputAdornment', ownerState, sx);
   return (
     <Component
       {...native}
@@ -831,6 +874,9 @@ export const InputAdornment: React.ForwardRefExoticComponent<
           flexDirection: 'row',
           alignItems: 'center',
           flexShrink: 0,
+          // Filled start adornments align with the text below a floating label.
+          marginTop:
+            variant === 'filled' && position === 'start' && !form?.hiddenLabel ? 16 : undefined,
           marginEnd: position === 'start' ? 8 : 0,
           marginStart: position === 'end' ? 8 : 0,
         },

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 import { useState } from 'react';
+import { InputAppearanceExamples } from './InputAppearanceExamples';
 import { ScrollView, Text, TextInput, View } from 'react-native';
 import { Autocomplete, Button, TextField, Typography, useTheme } from '@mui/material';
 
@@ -115,10 +116,31 @@ function InputTrial({ mode, generation }: { mode: Mode; generation: number }) {
 
 /** Developer comparison fixture, with the same text policy and no input retries. */
 export function InputExamples() {
+  const [appearance, setAppearance] = useState(false);
   const [scene, setScene] = useState<{ mode: Mode; generation: number }>({
     mode: 'native',
     generation: 0,
   });
+  if (appearance)
+    return (
+      <ScrollView keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets>
+        <View style={{ gap: 18, paddingBottom: 24 }}>
+          <View
+            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
+          >
+            <Typography variant="h5">Text fields</Typography>
+            <Button
+              testID="typing-mode-delivery"
+              variant="outlined"
+              onClick={() => setAppearance(false)}
+            >
+              Typing checks
+            </Button>
+          </View>
+          <InputAppearanceExamples />
+        </View>
+      </ScrollView>
+    );
   return (
     <ScrollView keyboardShouldPersistTaps="handled" automaticallyAdjustKeyboardInsets>
       <View style={{ gap: 20, paddingBottom: 24 }}>
@@ -134,13 +156,21 @@ export function InputExamples() {
               key={mode}
               testID={'typing-mode-' + mode}
               variant={scene.mode === mode ? 'contained' : 'outlined'}
-              onClick={() =>
-                setScene((previous) => ({ mode, generation: previous.generation + 1 }))
-              }
+              onClick={() => {
+                setAppearance(false);
+                setScene((previous) => ({ mode, generation: previous.generation + 1 }));
+              }}
             >
               {labels[mode]}
             </Button>
           ))}
+          <Button
+            testID="typing-mode-appearance"
+            variant="outlined"
+            onClick={() => setAppearance(true)}
+          >
+            Appearance
+          </Button>
         </View>
         <InputTrial key={scene.generation} {...scene} />
       </View>

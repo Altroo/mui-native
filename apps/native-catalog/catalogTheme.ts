@@ -14,7 +14,7 @@ export function createCatalogTheme(dark: boolean) {
       divider: dark ? '#475569' : '#e2e8f0',
       action: { selected: dark ? '#263c58' : '#e7f1fb' },
     },
-    shape: { borderRadius: 16 },
+    shape: { borderRadius: 4 },
     typography: {
       h5: { fontSize: 26, lineHeight: '34px', fontWeight: '600', letterSpacing: -0.5 },
       h6: { fontSize: 20, lineHeight: '28px', fontWeight: '600' },

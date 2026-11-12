@@ -10857,7 +10857,7 @@
       "packages/material/src/FormGroup/index.ts": "8c168d9ce6fe841ef95cfe1fd2bb9e6ad01038116690bbc7c5acce0eed7a9467",
       "packages/material/src/FormHelperText/index.ts": "5815ed5b6f543a3064ec5c080901759359228554f127ccb3dcdee8ae3447b76e",
       "packages/material/src/FormLabel/index.ts": "d8c2df23bf3189fc2a06beebdf1cea7bb944c09dad85e48355d67982f3423475",
-      "packages/material/src/forms.tsx": "74d19f5dfa72a77f2a6145fee9779de456d4fedac15f10111a1ee71978a6495f",
+      "packages/material/src/forms.tsx": "64663c20bad800ac170227b326c965243a3db3335befe3c6213c6a2ee84455dd",
       "packages/material/src/formState.ts": "306d198468d185b4835f13f25ad220a08f0fd2b74dc48152200e034dc5e0a5cf",
       "packages/material/src/grow.tsx": "5bf581f88c7d18ba6480c81ae4979acbc2850b80021e66e0f1c92e0c39421c2f",
       "packages/material/src/Grow/index.ts": "7e747efc5a2eed3c1a6762294ea9600bce4aeb7bce21521ddfee59ae34b5d8a8",
@@ -10868,7 +10868,7 @@
       "packages/material/src/InputAdornment/index.ts": "8ee899763437210b3027f092a116ffd21c58f26e142d931f23199ad9837a5bbb",
       "packages/material/src/InputBase/index.ts": "b0034ca1d11f85b615c3518f0c23a2d99c8442a2f194c4ca42cc73e310cb6fbc",
       "packages/material/src/InputLabel/index.ts": "8a2e790da65944139756176f14208b69936b143b0e24685c7677004626b040c1",
-      "packages/material/src/inputs.tsx": "c60697ca1559ef99f5b7232ebba13b00a09546a297e18c7220f00c371c725179",
+      "packages/material/src/inputs.tsx": "6fd791034f17b029e9d6c018559b5cd9adabbe47a5b44ff8d4fb45e742acb777",
       "packages/material/src/internal/card-content/index.ts": "19d649d6b8081a1f7f13063d6fffb687a4f1949fd814fa05a3fcb51ddf7044bc",
       "packages/material/src/labelMotion.ts": "1ddb867129697dd04bb0fe62a6fda9608cee9c0b060bec14da7fd17947fead4d",
       "packages/material/src/labels.tsx": "f8aed365ff9d5ee43281df7dc0ac2f5cf84b9a9c467047f2594e3967384b2df8",
@@ -10934,6 +10934,7 @@
       "packages/material/src/NativeTransition.tsx": "213c35b11fd81534a05ad0329fa472fd26b3272b5913a2cf0ead1f31cd57d0b7",
       "packages/material/src/NativeTransitionSurface.tsx": "8b6ec86f054fb7702a3439da34bed48a9fdfba80985c6ae9fac2aac27a445391",
       "packages/material/src/nativeTransitionTiming.ts": "07119db63150b9534554632406e6419fdbf50f21c08e8fefb9396598407021ff",
+      "packages/material/src/notchedOutlineGeometry.ts": "5444da512fd4193836ac51a75c7afd37235b3b25c1defb4fc533f01aa0e9579c",
       "packages/material/src/OutlinedInput/index.ts": "def45dc15be298ea7eb34c3573df021ad1b653d5d8e1933d958beb3edae46375",
       "packages/material/src/paper.tsx": "923708c0b8a2d2857c14e0b2edc1b672549f3b9f7403ac52c98bb545c915f743",
       "packages/material/src/Paper/index.ts": "ae99719013b91bd66d37804347cb68e1bfeac6248afd83879d69fad440958c68",
@@ -11183,7 +11184,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "5d7059e22bd3c094b41b495bc9d42d389d066209625a8a628c37fd32105c7de6",
+      "nativeSourceSha256": "ab56d8daf1e66cd3d4be27831922d0737c445f393184ee527effc4f16282dfc7",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11195,7 +11196,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "40c770f82f165c8668c857af7ac0987f3403309d4e8ac408477863d857d740b9"
+      "sha256": "e174b51cd240ffdf49aec1bd6a1c7c64d7354994d4bb9db10843c824d9cfe97f"
     },
     {
       "package": "@mui/system",

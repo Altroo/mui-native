@@ -242,7 +242,7 @@ test('Button and TextField consume normalized theme typography', () => {
   });
   expect(screen.getByTestId('input')).toHaveStyle({
     fontSize: 24,
-    lineHeight: 36,
+    lineHeight: 34.5,
     fontFamily: 'Inter',
   });
 });
@@ -305,7 +305,7 @@ test('TextField native input slot font sizes participate in theme relative line 
       slotProps={{ htmlInput: { style: { fontSize: 30 } } }}
     />,
   );
-  expect(screen.getByTestId('slot-text')).toHaveStyle({ fontSize: 30, lineHeight: 45 });
+  expect(screen.getByTestId('slot-text')).toHaveStyle({ fontSize: 30, lineHeight: 43.125 });
 });
 
 test('inherited unitless heights recompute while inherited percentages and native lengths stay absolute', () => {
