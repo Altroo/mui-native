@@ -2,7 +2,7 @@
 
 The current priority is to finish the easiest existing unfinished component or API to its full agreed native contract before moving to another family. The partial-row inventory retains the 7 November 2026 audit, including the merged Divider contract and finite native validation at `6e223c98`; completion priorities and theme-reading evidence were updated on 10 November 2026.
 
-There are **64 rows at 50% or 75%**: 57 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **17 rows at 25%**: seven Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
+There are **65 rows at 50% or 75%**: 58 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **16 rows at 25%**: six Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
 
 ## Completion rules
 
@@ -19,6 +19,8 @@ The finite source, utility/type, import, defaults/style and installed-consumer c
 iOS Space/A keyboard interactions now have 30 scoped cases across all five roots and three policies. Its independent UIKit prerequisite cannot deliver raw Return/keypad Enter; that remainder stays explicitly unverified. Android editable NativeTextInput/TextField command and ordinary-event forwarding now has 54 cases in each of the default-disabled and enabled profiles, 108 total, with an independent original RN baseline; actual phase capabilities remain explicit. iOS editable descendants passed 36 ArrowDown command and ordinary A cases across the six roots/inputs and three policies. UIKit command key-up and Return/keypad Enter remain outside that evidence. The current optimized iOS FormGroup workload passed both the Native View comparison and MUI variant with 100 retained roots, sixteen acknowledged updates and three measured cohorts per mode. The iOS and Android accessibility checks each passed twelve group observations across initial, updated and restored states, with separately addressable controls and retained state. These checks cover native tree exposure and touch activation in the stated simulator profiles. Root-self hardware keys when the framework flag is disabled remain a separate runtime capability. Physical keyboard/IME, screen-reader usability and representative physical performance remain external evidence. The row stays at its existing 75% evidence stage until its remaining gates are satisfied.
 
 ## Recent wrapper validation
+
+CircularProgress now replaces its ActivityIndicator prototype with four source-ordered styled stages, native SVG geometry/motion, determinate ranges, optional tracks, classes and a retained public View ref. Source and installed consumers pass. Normal, enlarged and restored iOS/Android checks and actual pixel comparisons pass, including correct iOS relative announcements and settled Android arcs. Its [remaining inherited styling, physical accessibility and release-performance gates](circular-progress.md) remain explicit; this is not a 100% compatibility claim.
 
 [ListItemAvatar](list-item-avatar.md) now has separate iOS and Android checks for the inline and portaled images, a distinct button and its real touch state. Its class helper also honors the canonical class-name generator. The native observations are scoped to the tested accessibility tree and do not certify screen reader traversal.
 
@@ -96,7 +98,7 @@ The entries below enumerate the 81 current partial status rows and the separatel
 | CardContent             |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | Checkbox                |                    50% | [Scope and remaining work](../docs/check-controls.md)                    |
 | Chip                    |                    50% | [Scope and remaining work](../docs/chip.md)                              |
-| CircularProgress        |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
+| CircularProgress        |                    75% | [Contract and remaining gates](../docs/circular-progress.md)             |
 | Collapse                |                    75% | [Scope and remaining work](../docs/collapse.md)                          |
 | DefaultPropsProvider    |                   100% | [Scope and remaining work](../docs/default-props-provider.md)            |
 | Dialog                  |                    50% | [Scope and remaining work](../docs/modals.md)                            |

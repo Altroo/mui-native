@@ -100,6 +100,8 @@ Early preview packages may be published under the `prealpha` dist-tag for consum
 
 Native [DialogTitle](docs/dialog-title.md) now has dedicated Typography composition, utility classes, typed native Text roots/refs, scoped imports and strict installed consumers. Dialog paper and titles share stable IDs with explicit caller/slot precedence. Normal/enlarged/restored iOS and Android checks exercise seven retained root states and two real confirmation dialogs; Android verifies the native label target. Genuine styled inputs and sequential scoped-theme attachment have original-source traces. This development is unreleased. Complete inherited contracts, catalog navigation at the largest text size, physical accessibility, viewport/custom-root matrices and optimized performance remain open.
 
+Native [CircularProgress](docs/circular-progress.md) now covers its dedicated range, geometry, track, class, styling and View-ref contracts with native SVG motion and supported transitions. Normal/enlarged/restored iOS and Android checks and original-reference paint comparisons pass. The implementation corrects the pinned iOS peer percentage calculation and validates settled Android arcs before capture; broader CSS interpolation, physical accessibility and release performance remain open.
+
 ## 3. Verified alpha
 
 Core scope: Box, Stack, Typography, Divider, Paper, Card, Button, IconButton, initial icons, TextField/FormControl parts, Checkbox, Radio, Switch, Dialog, Alert, progress and Snackbar.
