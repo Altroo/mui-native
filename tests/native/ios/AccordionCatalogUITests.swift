@@ -183,3 +183,77 @@ final class AccordionCatalogUITests: XCTestCase {
     capture("accordion-ios-help-closed")
   }
 }
+
+
+/// Isolated optimized-build checks of public native bounds during finite motion.
+@MainActor
+final class AccordionMotionProbeUITests: XCTestCase {
+  private let app = XCUIApplication(bundleIdentifier: "dev.altroo.muinative.catalog")
+  private func node(_ id: String) -> XCUIElement {
+    app.descendants(matching: .any).matching(identifier: id).firstMatch
+  }
+  private func receipt() -> [String: Any]? {
+    guard node("accordion-motion-receipt").exists,
+      let data = node("accordion-motion-receipt").label.data(using: .utf8) else { return nil }
+    return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+  }
+  private func waitFor(_ message: String, _ condition: @escaping () -> Bool) {
+    let expectation = XCTNSPredicateExpectation(
+      predicate: NSPredicate { _, _ in condition() }, object: nil)
+    XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: 12), .completed, message)
+  }
+  override func setUp() async throws {
+    continueAfterFailure = false
+    app.launchArguments = []
+    app.launch()
+    XCTAssertTrue(node("accordion-motion-run").waitForExistence(timeout: 20))
+  }
+  private func run(_ mode: String) throws {
+    node("accordion-motion-mode-" + mode).tap()
+    waitFor("The selected native case must start idle") {
+      self.receipt()?["mode"] as? String == mode
+        && self.receipt()?["phase"] as? String == "idle"
+    }
+    let initial = XCTAttachment(screenshot: app.screenshot())
+    initial.name = "accordion-motion-" + mode + "-initial"
+    initial.lifetime = .keepAlways
+    add(initial)
+    node("accordion-motion-run").tap()
+    waitFor("Native measurement sampling must complete") {
+      self.receipt()?["phase"] as? String == "complete"
+    }
+    let report = try XCTUnwrap(receipt())
+    XCTAssertEqual(report["schemaVersion"] as? Int, 1)
+    XCTAssertEqual(report["development"] as? Bool, false, "An optimized standalone build is required")
+    XCTAssertEqual(try XCTUnwrap(report["fontScale"] as? Double), 1, accuracy: 0.01)
+    let samples = try XCTUnwrap(report["samples"] as? [[String: Double]])
+    XCTAssertGreaterThanOrEqual(samples.count, 8)
+    let first = try XCTUnwrap(samples.first), last = try XCTUnwrap(samples.last)
+    XCTAssertEqual(try XCTUnwrap(first["height"]), 48, accuracy: 1)
+    XCTAssertEqual(try XCTUnwrap(last["height"]), 64, accuracy: 1)
+    XCTAssertEqual(Double(node("accordion-motion-summary").frame.height), 64, accuracy: 1)
+    let startOffset = try XCTUnwrap(first["contentTop"])
+    XCTAssertEqual(try XCTUnwrap(last["contentTop"]), startOffset + 8, accuracy: 1)
+    XCTAssertTrue(samples.contains { sample in
+      guard let elapsed = sample["elapsed"], let height = sample["height"],
+        let offset = sample["contentTop"] else { return false }
+      return elapsed >= 100 && elapsed <= 350 && height > 49 && height < 56
+        && offset > startOffset + 0.25 && offset < startOffset + 4
+    }, "Both height and content margin must have intermediate native geometry")
+    let startIcon = try XCTUnwrap(first["iconHeight"])
+    XCTAssertTrue(samples.contains { ($0["iconHeight"] ?? 0) > startIcon + 2 },
+      "The native icon bounds must reflect an intermediate rotation")
+    XCTAssertEqual(try XCTUnwrap(last["iconHeight"]), startIcon, accuracy: 1)
+    let data = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys])
+    let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+    attachment.name = "accordion-motion-" + mode + "-native-bounds"
+    attachment.lifetime = .keepAlways
+    add(attachment)
+    let end = XCTAttachment(screenshot: app.screenshot())
+    end.name = "accordion-motion-" + mode + "-endpoint"
+    end.lifetime = .keepAlways
+    add(end)
+  }
+  func testDefaultNativeGeometry() throws { try run("default") }
+  func testForwardedNativeGeometry() throws { try run("forwarded") }
+}
