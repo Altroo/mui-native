@@ -60,6 +60,7 @@ Current status: prototypes. All implemented components are **adapted subsets**, 
 - Native [CardActions](card-actions.md) root/classes/defaults, scoped original imports and strict installed consumers, with retained action rows checked on iOS/Android at normal and enlarged OS text. Native column-gap adaptation and remaining release gates are explicit.
 
 - Native [DialogActions](dialog-actions.md) defaults/classes, root/ref contracts and strict consumers, with retained eight-stage iOS/Android checks for spacing, RTL and both flex styling paths. Largest-text sample truncation and remaining release gates are explicit.
+- Native [DialogTitle](dialog-title.md) Typography composition, dedicated classes/defaults, native Text roots/refs, scoped imports and strict installed consumers. Normal/enlarged/restored iOS/Android runs check seven retained root states and real dialog actions; Android resolves the native label target. Complete inherited/physical accessibility and release gates remain open.
 
 ## Unsupported or not yet verified
 

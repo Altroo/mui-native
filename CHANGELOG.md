@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Add dedicated native DialogTitle defaults, Text roots/refs, utility classes, source-ordered Typography composition and scoped imports. Dialog paper and titles share stable IDs with explicit caller/slot precedence. Normal/enlarged/restored iOS and Android development checks verify retained title geometry, native refs, real dialog actions and Android label targets; physical accessibility and full release gates remain open.
+- **Breaking for earlier native previews:** the `@mui/material/DialogTitle` deep entry exports only Title, its types and class helpers. Import unrelated layout components from the Material root or their own paths.
+- Preserve genuine styles through styled title composition, honor explicit/inherited themes and sequential theme attachment, and apply the canonical class-name generator to Typography's utility classes.
+
 - Add dedicated native DialogActions defaults, utility classes, typed roots/refs, theme composition and scoped original imports. Retained iOS/Android checks exercise spacing, RTL and both `sx`/native-style flex sizing paths. Largest-text presentation and full release gates remain open.
 - **Breaking for earlier native previews:** the `@mui/material/DialogActions` deep entry no longer re-exports unrelated layout components. Import those components from the Material root or their own paths.
 - Restore supported incoming and descendant class selectors for CardActions through the existing native physical style scope, without adding action wrappers.
