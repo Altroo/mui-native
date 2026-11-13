@@ -2,10 +2,19 @@
  * See NOTICE and upstream/paper.json.
  * Native adaptation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 import { forwardRef, useContext } from 'react';
-import { Platform, StyleSheet, View, type ViewInstance } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+  type ViewInstance,
+  type StyleProp,
+} from 'react-native';
 import {
   useNativeRootProps,
   NativeTextScope,
+  NativeTextStyleContext,
+  componentRootStyle,
   useNativeTextRootRef,
   useNativeTextContext,
   nativeTextStyleContext,
@@ -17,8 +26,20 @@ import {
   resolveSx,
   type NativeStyle,
 } from '@altroo/mui-native-system';
-import { useTheme, useComponentRootStyle } from './themeProvider';
+import {
+  useNativeStructuralFacts,
+  nativeInlineStyle,
+  retainNativeRootCss,
+  useNativeStyleCache,
+  NativeCssRootBoundary,
+  refreshNativeStyle,
+  retainNativeStyleTransform,
+} from '@altroo/mui-native-system/internal/prepared-style';
+import { NativeRootTextBoundary } from './nativeRootTextBoundary';
+import { paperConstructorCss, paperOverrideCss } from './nativeAccordionCss';
+import { useTheme } from './themeProvider';
 import { mergeNativeRootStyle } from './nativeControlStyles';
+import { useAccordionRootMotion, renderAccordionRootMotion } from './accordionRootMotion';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
 import { NativeButtonGroupRules } from './buttonGroupContext';
 import { getPaperUtilityClass, type PaperClasses } from './paperClasses';
@@ -46,10 +67,23 @@ function classNames(slots: readonly string[], classes?: Partial<PaperClasses>, c
     className,
   );
 }
+// This retained callback must not share the component render's lexical scope:
+// that scope also contains children and source prop callbacks.
+function paperPainter(direction: 'ltr' | 'rtl', inline: StyleProp<NativeStyle>) {
+  return (computed: NativeStyle) => {
+    const merged = mergeNativeRootStyle(direction, computed, inline);
+    return (
+      applyNativeTextMetrics(merged, computed, nativeStyleTextMetrics([computed, inline])) ?? merged
+    );
+  };
+}
+
 export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperRootProps>(
   function Paper(inProps, forwarded) {
     const { root, ref } = useNativeTextRootRef(forwarded);
     const nativeRef = useNativeStyleRef(root, ref);
+    const structuralFacts = useNativeStructuralFacts(root);
+    const rootMotion = useAccordionRootMotion();
     const { props, style: preparedStyle } = useNativeRootProps({
       props: inProps,
       name: 'MuiPaper',
@@ -66,6 +100,8 @@ export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperR
       children,
       ...native
     } = props;
+    const styleCache = useNativeStyleCache();
+    const { width } = useWindowDimensions();
     const theme = useTheme(),
       parent = useNativeTextContext(),
       rules = useContext(NativeButtonGroupRules);
@@ -116,6 +152,23 @@ export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperR
       variant === 'elevation' && theme.palette.mode === 'dark'
         ? alpha('#fff', getOverlayAlpha(elevation))
         : undefined;
+    // Generated paint belongs to Paper's constructor CSS. Keeping it in the
+    // prepared sheet lets a custom styling-aware root apply normal specificity.
+    // Genuine native image declarations, including explicit resets, stay last.
+    const inlineImage = StyleSheet.flatten(nativeInlineStyle(preparedStyle));
+    const nativeOverlay =
+      overlayColor &&
+      !Object.hasOwn(inlineImage ?? {}, 'backgroundImage') &&
+      !Object.hasOwn(inlineImage ?? {}, 'experimental_backgroundImage')
+        ? {
+            backgroundImage: [
+              {
+                type: 'linear-gradient' as const,
+                colorStops: [{ color: overlayColor }, { color: overlayColor }],
+              },
+            ],
+          }
+        : undefined;
     // These source style variables are callback arguments only. Native hosts get
     // concrete shadow/gradient values, never unresolved browser custom properties.
     const rootStyle = {
@@ -132,14 +185,21 @@ export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperR
     const rootProps = { ...props, as: component, className: rootClass, style: rootStyle };
     for (const key of ['component', 'elevation', 'square', 'variant'])
       Reflect.deleteProperty(rootProps, key);
-    const { computed, authored, prepared } = useComponentRootStyle(
+    const { computed, authored, prepared, programme } = componentRootStyle(
+      theme,
       'MuiPaper',
       ownerState,
       sx,
       preparedStyle,
       {
+        styleCache,
+        sourceClass: true,
+        baseProgramme: paperConstructorCss(theme, ownerState),
+        overrideProgramme: paperOverrideCss,
+        width,
         ...nativeTextStyleContext(parent, style, theme),
         classes: tokens,
+        ...structuralFacts,
         rootProps,
         ancestors: nativeStyleAncestors(rules, { classes: tokens }),
         overrideKeys: slots.slice(1),
@@ -150,48 +210,60 @@ export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperR
           ...(!square ? { borderRadius: theme.shape.borderRadius } : {}),
           ...(variant === 'outlined' ? { border: `1px solid ${theme.palette.divider}` } : {}),
           ...shadowStyle,
+          ...nativeOverlay,
         },
       },
+      true,
     );
-    // RN0.88.1 accepts this typed gradient through its public View attribute.
-    // Keep it below genuine native styles, including the older image alias and
-    // explicit resets, without cloning away native border/text provenance.
-    const inline = StyleSheet.flatten(authored);
-    const nativeOverlay: NativeStyle | undefined =
-      overlayColor &&
-      !Object.hasOwn(inline ?? {}, 'backgroundImage') &&
-      !Object.hasOwn(inline ?? {}, 'experimental_backgroundImage')
-        ? {
-            backgroundImage: [
-              {
-                type: 'linear-gradient',
-                colorStops: [{ color: overlayColor }, { color: overlayColor }],
-              },
-            ],
-          }
-        : undefined;
-    const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, computed, [
-      nativeOverlay,
-      authored,
-    ]);
-    const finalStyle =
-      applyNativeTextMetrics(merged, computed, nativeStyleTextMetrics([computed, authored])) ??
-      merged;
+    const inlineLayers = authored;
+    const paint = paperPainter(parent?.direction ?? theme.direction, inlineLayers);
+    const finalStyle = retainNativeStyleTransform(paint(computed), computed, paint);
     return (
-      <NativeStyleScope root={root} theme={theme} classes={tokens} prepared={prepared}>
-        <NativeTextScope rootRef={root} theme={theme} style={finalStyle} content={children}>
-          {(nativeStyle, content) => (
-            <Root
-              {...native}
-              {...(Root === View ? {} : { className: rootClass })}
-              ref={nativeRef}
-              style={nativeStyle}
+      <NativeCssRootBoundary style={computed} registerClass={Root !== View}>
+        {() => (
+          <NativeStyleScope root={root} theme={theme} classes={tokens} prepared={prepared}>
+            <NativeTextScope
+              rootRef={Root === View ? root : undefined}
+              theme={theme}
+              style={refreshNativeStyle(finalStyle)}
+              content={Root === View ? children : undefined}
             >
-              {content}
-            </Root>
-          )}
-        </NativeTextScope>
-      </NativeStyleScope>
+              {(resolvedStyle, content, fallback) =>
+                renderAccordionRootMotion(rootMotion, root, resolvedStyle, (nativeStyle) =>
+                  Root === View ? (
+                    <Root {...native} ref={nativeRef} style={nativeStyle}>
+                      {content}
+                    </Root>
+                  ) : (
+                    <NativeTextStyleContext.Provider value={parent}>
+                      <Root
+                        {...native}
+                        {...{ className: rootClass }}
+                        ref={nativeRef}
+                        style={retainNativeRootCss(
+                          inlineLayers,
+                          programme,
+                          Object.hasOwn(props, 'style'),
+                          nativeStyle,
+                        )}
+                      >
+                        <NativeRootTextBoundary
+                          parent={parent}
+                          fallback={fallback}
+                          rootRef={root}
+                          theme={theme}
+                        >
+                          {children}
+                        </NativeRootTextBoundary>
+                      </Root>
+                    </NativeTextStyleContext.Provider>
+                  ),
+                )
+              }
+            </NativeTextScope>
+          </NativeStyleScope>
+        )}
+      </NativeCssRootBoundary>
     );
   },
 ) as NativePaperComponent;

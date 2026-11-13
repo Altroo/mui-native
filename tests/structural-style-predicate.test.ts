@@ -122,3 +122,146 @@ test('ordinary selectors do not observe an unrelated structural-fact accessor', 
   expect(resolveSx({ '&.chosen': { paddingBottom: 2 } }, theme, context).paddingBottom).toBe(16);
   expect(lastChild).not.toHaveBeenCalled();
 });
+
+// Accordion uses root-type boundaries, which are different from last-child:
+// an intervening Text has a native type of its own but remains an element.
+describe.each([
+  ['first-of-type', 'firstOfType'],
+  ['last-of-type', 'lastOfType'],
+] as const)('%s physical predicate', (pseudo, key) => {
+  test.each([undefined, false, true])('matches only a verified true fact: %s', (value) => {
+    const result = resolveSx({ [`&:${pseudo}`]: { opacity: 0.3 } }, theme, { [key]: value });
+    expect(result.opacity).toBe(value === true ? 0.3 : undefined);
+  });
+  test('contributes specificity and leaves genuine inline declarations last', () => {
+    const input = {
+      [`&.chosen:${pseudo}`]: { marginTop: '3px' },
+      [`&:${pseudo}`]: { marginTop: '8px' },
+    };
+    const computed = resolveSx(input, theme, { classes: ['chosen'], [key]: true });
+    expect(computed.marginTop).toBe(3);
+    expect(mergeNativeRootStyle('ltr', computed, { margin: 7 }).margin).toBe(7);
+    expect(mergeNativeRootStyle('ltr', computed, { margin: 7 }).marginTop).toBeUndefined();
+  });
+  test('a descendant uses its own type boundary, never the owner fact', () => {
+    const input = { '& .Target': { [`&:${pseudo}`]: { opacity: 0.3 } } };
+    expect(
+      resolveSx(input, theme, {
+        [key]: false,
+        descendantPath: [{ classes: ['Target'], [key]: true }],
+      }).opacity,
+    ).toBe(0.3);
+    expect(
+      resolveSx(input, theme, {
+        [key]: true,
+        descendantPath: [{ classes: ['Target'] }],
+      }).opacity,
+    ).toBeUndefined();
+  });
+  test('rebinds retained CSS without replaying source callbacks', () => {
+    const rule = jest.fn(() => ({ [`&:${pseudo}`]: { opacity: 0.3 } }));
+    const carrier = createNativeStyledStyle(theme, '', {}, rule, { [key]: false }, undefined);
+    expect(rule).toHaveBeenCalledTimes(1);
+    expect(
+      componentRootStyle(theme, '', {}, undefined, carrier, { [key]: false }).computed.opacity,
+    ).toBeUndefined();
+    expect(
+      componentRootStyle(theme, '', {}, undefined, carrier, { [key]: true }).computed.opacity,
+    ).toBe(0.3);
+    expect(rule).toHaveBeenCalledTimes(1);
+  });
+  test('binds the current ancestor fact instead of the child fact', () => {
+    const prepared = componentRootStyle(theme, '', {}, undefined, undefined, {
+      [key]: true,
+      baseStyle: { [`&:${pseudo} .Target`]: { opacity: 0.3 } },
+    });
+    const child = componentRootStyle(theme, '', {}, undefined, undefined, {
+      ancestors: [
+        {
+          theme,
+          name: '',
+          props: {},
+          prepared: prepared.prepared,
+          context: {
+            [key]: true,
+            descendantClasses: ['Target'],
+            descendantPath: [{ classes: ['Target'] }],
+          },
+          sameRoot: false,
+        },
+      ],
+    });
+    expect(child.computed.opacity).toBe(0.3);
+  });
+});
+test('a singleton can be first and last of its type without being the last child', () => {
+  expect(
+    resolveSx(
+      {
+        '&:first-of-type:last-of-type': { opacity: 0.2 },
+        '&:last-child': { opacity: 0.9 },
+      },
+      theme,
+      { firstOfType: true, lastOfType: true, lastChild: false },
+    ).opacity,
+  ).toBe(0.2);
+});
+test('repeated structural predicates preserve CSS specificity', () => {
+  expect(
+    resolveSx(
+      {
+        '&:first-of-type:first-of-type': { opacity: 0.2 },
+        '&:first-of-type': { opacity: 0.9 },
+      },
+      theme,
+      { firstOfType: true },
+    ).opacity,
+  ).toBe(0.2);
+});
+test('unused type facts are lazy, and matching reads each requested fact once', () => {
+  const firstOfType = jest.fn(() => true);
+  const lastOfType = jest.fn(() => {
+    throw Error('unrelated last-of-type read');
+  });
+  const context = Object.defineProperties(
+    {},
+    {
+      firstOfType: { get: firstOfType },
+      lastOfType: { get: lastOfType },
+    },
+  );
+  const rootContext = Object.create(null, {
+    ...Object.getOwnPropertyDescriptors(context),
+    baseStyle: {
+      value: {
+        '&:first-of-type': { opacity: 0.3 },
+        '&:first-of-type:first-of-type': { height: 5 },
+      },
+      enumerable: true,
+    },
+  });
+  expect(
+    componentRootStyle(theme, '', {}, undefined, undefined, rootContext).computed,
+  ).toMatchObject({ opacity: 0.3, height: 5 });
+  expect(firstOfType).toHaveBeenCalledTimes(1);
+  expect(lastOfType).not.toHaveBeenCalled();
+});
+
+test('before declarations target the ornament without leaking into root geometry', () => {
+  const input = {
+    padding: 2,
+    '&::before': { top: '-1px', height: '1px', opacity: 1 },
+    '&:first-of-type': { '&::before': { display: 'none' } },
+  };
+  expect(resolveSx(input, theme)).toMatchObject({ padding: 16 });
+  expect(resolveSx(input, theme).height).toBeUndefined();
+  expect(
+    resolveSx(input, theme, {
+      firstOfType: true,
+      descendantPath: [{ classes: [], tag: '::before' }],
+    }),
+  ).toMatchObject({ top: -1, height: 1, display: 'none' });
+  expect(
+    resolveSx(input, theme, { descendantPath: [{ classes: [], tag: '::before' }] }).padding,
+  ).toBeUndefined();
+});

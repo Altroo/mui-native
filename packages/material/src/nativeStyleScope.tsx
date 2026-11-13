@@ -1,13 +1,18 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { useContext, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import type { ViewInstance } from 'react-native';
+import { useNativeStructuralFacts } from '@altroo/mui-native-system/internal/prepared-style';
 import type {
   NativePreparedStyle,
   NativeStyleTarget,
   StyleContext,
   Theme,
 } from '@altroo/mui-native-system';
-import { NativeButtonGroupRules, type NativeButtonGroupRule } from './buttonGroupContext';
+import {
+  NativeButtonGroupRules,
+  type NativeButtonGroupRule,
+  type NativeStyleClassIdentity,
+} from './buttonGroupContext';
 import { nativeStyleTree } from './nativeStyleAncestry';
 
 /** The existing physical registry serves all participating finite descendant sheets. */
@@ -70,6 +75,33 @@ function equalData(a: unknown, b: unknown, seen = new WeakMap<object, object>())
     })
   );
 }
+// Decode only owned immutable programme data during preparation. Physical
+// peer refreshes consume these snapshots without evaluating CSS callbacks.
+function emittedClasses(prepared: NativePreparedStyle): readonly NativeStyleClassIdentity[] {
+  const own = prepared.sheets.find(
+    (sheet) => !sheet.ancestor && !sheet.emissionForeign,
+  )?.emissionProgramme;
+  const tokens = prepared.classTokens ?? (own ? [own] : []);
+  return Object.freeze(
+    tokens.map((token) => {
+      const sourceOwners: string[] = [];
+      const visit = (programme: typeof token.programme) => {
+        if (programme.kind === 'owner') sourceOwners.push(programme.owner.css);
+        else if (programme.kind === 'sequence') programme.parts.forEach(visit);
+        else {
+          visit(programme.own);
+          programme.classes.forEach(visit);
+        }
+      };
+      visit(token.programme);
+      return Object.freeze({
+        cacheKey: token.insertion.cache.key,
+        css: token.insertion.css,
+        sourceOwners: Object.freeze(sourceOwners),
+      });
+    }),
+  );
+}
 /** Publish exact host replacement even when a custom root updates internally. */
 export function useNativeStyleRef<T>(
   root: React.RefObject<T | null>,
@@ -107,31 +139,40 @@ interface ScopeProps {
 /** Renderless ownership boundary; Portal resets this same context at its destination. */
 export function NativeStyleScope({ root, theme, classes, prepared, children }: ScopeProps) {
   const inherited = useContext(NativeButtonGroupRules);
-  const current = useRef({ theme, classes, prepared });
+  const structure = useNativeStructuralFacts(root);
+  const current = useRef({ theme, classes, prepared, structure });
   if (
     current.current.theme !== theme ||
     !equalData(current.current.classes, classes) ||
-    !equalData(current.current.prepared, prepared)
+    !equalData(current.current.prepared, prepared) ||
+    !equalData(current.current.structure, structure)
   )
-    current.current = { theme, classes, prepared };
+    current.current = { theme, classes, prepared, structure };
   const value = current.current;
   const own = useMemo<NativeButtonGroupRule>(
     () => ({
       get element() {
         return root.current;
       },
-      selector: { classes: value.classes },
+      selector: { classes: value.classes, ...value.structure },
+      scopeDepth: inherited.length,
+      sourceClasses: emittedClasses(value.prepared),
       cascade(target, path) {
         return {
           theme: value.theme,
           name: '',
           props: {},
           prepared: value.prepared,
-          context: { descendantOnly: true, descendantClasses: target, descendantPath: path },
+          context: {
+            ...value.structure,
+            descendantOnly: true,
+            descendantClasses: target,
+            descendantPath: path,
+          },
         };
       },
     }),
-    [root, value],
+    [root, value, inherited.length],
   );
   const committed = useRef(own);
   const registered = useMemo<NativeButtonGroupRule>(
@@ -144,6 +185,12 @@ export function NativeStyleScope({ root, theme, classes, prepared, children }: S
       },
       get cascade() {
         return committed.current.cascade;
+      },
+      get sourceClasses() {
+        return committed.current.sourceClasses;
+      },
+      get scopeDepth() {
+        return committed.current.scopeDepth;
       },
     }),
     [root],

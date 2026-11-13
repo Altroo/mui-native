@@ -529,13 +529,13 @@ test.each(['2em', '200%'])(
   'shared Accordion root uses one inherited font basis for %s',
   (fontSize) => {
     const Custom = forwardRef<ViewInstance, Record<string, any>>(function Custom(
-      { style, children, testID },
+      { style, children, testID, sx },
       ref,
     ) {
       return (
-        <View ref={ref} testID={testID} style={style}>
+        <Box ref={ref} testID={testID} style={style} sx={sx}>
           {children}
-        </View>
+        </Box>
       );
     });
     const tree = (custom: boolean) => (
@@ -555,6 +555,46 @@ test.each(['2em', '200%'])(
     expect(screen.getByTestId('relative-child')).toHaveStyle({ fontSize: 20, lineHeight: 30 });
     result.rerender(tree(true));
     expect(screen.getByTestId('relative-child')).toHaveStyle({ fontSize: 20, lineHeight: 30 });
+  },
+);
+
+test.each(['paper', 'alias', 'wrapper', 'box'] as const)(
+  'Accordion %s roots retain ancestor selectors without multiplying relative text',
+  (kind) => {
+    const Wrapper = forwardRef<ViewInstance, Record<string, any>>(function Wrapper(
+      { children, ...props },
+      ref,
+    ) {
+      return (
+        <View {...props} ref={ref}>
+          {children}
+        </View>
+      );
+    });
+    const root = kind === 'alias' ? 'div' : kind === 'box' ? Box : Wrapper;
+    render(
+      <Box
+        sx={{
+          fontSize: 10,
+          '& .MuiAccordion-root': {
+            paddingLeft: '21px',
+            fontSize: '2em',
+            lineHeight: 1.5,
+          },
+        }}
+      >
+        <Accordion
+          expanded
+          testID="ancestor-panel"
+          slotProps={kind === 'paper' ? undefined : { root: { as: root } }}
+        >
+          <AccordionSummary>Summary</AccordionSummary>
+          <Text testID="ancestor-body">Body</Text>
+        </Accordion>
+      </Box>,
+    );
+    expect(screen.getByTestId('ancestor-panel')).toHaveStyle({ paddingLeft: 21 });
+    expect(screen.getByTestId('ancestor-body')).toHaveStyle({ fontSize: 20, lineHeight: 30 });
   },
 );
 

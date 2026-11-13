@@ -40,6 +40,7 @@ export {
 
 export { nativeTextIntentStyleServices } from '../../nativeTextConditions';
 export { normalizeTextStyle } from '../../nativeText';
+export { useNativeTextScopeRoot } from '../../nativeTextRegistry';
 export { nativeTextElementProvenance } from '../../nativeTextProvenance';
 export type { NativeTextProvenance, NativeTextNormalization } from '../../nativeTextProvenance';
 
@@ -70,3 +71,9 @@ export {
 } from '../../nativeStyleCacheScope';
 
 export { useNativeDefaultPropsSource, useNativeSourceDefaultProps } from '../../defaultProps';
+
+export {
+  NativeStructuralFactsContext,
+  useNativeStructuralFacts,
+} from '../../nativeStructuralFacts';
+export type { NativeStructuralFacts } from '../../nativeStructuralFacts';

@@ -43,7 +43,7 @@ function prepared(structural: boolean) {
     lastChild: true,
     baseStyle: structural ? { '&:last-child': { opacity: 0.3 } } : { opacity: 0.3 },
   });
-  return { weak: new WeakRef(value), prepared: result.prepared };
+  return { weak: new WeakRef(value), prepared: result.prepared, computed: result.computed };
 }
 function sentinel() {
   return new WeakRef(token());
@@ -78,19 +78,36 @@ test('prepared scopes release obsolete caller content while their native roots s
   const control = sentinel(),
     ordinary = prepared(false),
     resolved = prepared(true);
-  const paper = mountPaper(),
+  let paper: ReturnType<typeof mountPaper>;
+  let card: ReturnType<typeof mountCard>;
+  // React's development-only _debugStack captures render call frames, including
+  // old children in the RN Jest host mock. Exclude those diagnostic traces from
+  // this runtime ownership check; restore normal error reporting immediately.
+  const stackTraceLimit = Object.getOwnPropertyDescriptor(Error, 'stackTraceLimit')!;
+  try {
+    // React explicitly requests ten frames, so hold the diagnostic limit at
+    // zero in this isolated GC child instead of replacing any runtime data.
+    Object.defineProperty(Error, 'stackTraceLimit', {
+      configurable: true,
+      get: () => 0,
+      set: () => undefined,
+    });
+    paper = mountPaper();
     card = mountCard();
-  for (let index = 0; index < 8; index++) {
-    paper.view.rerender(
-      <Paper>
-        <Text>{String(index)}</Text>
-      </Paper>,
-    );
-    card.view.rerender(
-      <Card>
-        <Text>{String(index)}</Text>
-      </Card>,
-    );
+    for (let index = 0; index < 8; index++) {
+      paper.view.rerender(
+        <Paper>
+          <Text>{String(index)}</Text>
+        </Paper>,
+      );
+      card.view.rerender(
+        <Card>
+          <Text>{String(index)}</Text>
+        </Card>,
+      );
+    }
+  } finally {
+    Object.defineProperty(Error, 'stackTraceLimit', stackTraceLimit);
   }
   for (let index = 0; index < 8; index++) {
     await new Promise<void>((resolve) => nextJob(resolve));
@@ -106,6 +123,10 @@ test('prepared scopes release obsolete caller content while their native roots s
     expect([name, weak.deref() === undefined]).toEqual([name, true]);
   // Keep the owned prepared contexts alive across the complete GC check.
   expect(ordinary.prepared.sheets.length).toBeGreaterThan(0);
+  // Keep evaluated styles alive too, so their cache refresh closures cannot
+  // retain caller props even after prepared sheets have released lazy readers.
+  expect(ordinary.computed.opacity).toBe(0.3);
+  expect(resolved.computed.opacity).toBe(0.3);
   expect(resolved.prepared.sheets.length).toBeGreaterThan(0);
 }, 60000);
 

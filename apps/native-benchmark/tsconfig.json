@@ -18,6 +18,12 @@
       ],
       "@altroo/mui-native-system/internal/generated-paragraph": [
         "../../packages/system/src/internal/generated-paragraph/index.ts"
+      ],
+      "@altroo/mui-native-host/internal/structural-observation": [
+        "../../packages/native-host/src/internal/structural-observation/index.ts"
+      ],
+      "@altroo/mui-native-host/internal/pressable-presentation": [
+        "../../packages/native-host/src/internal/pressable-presentation/index.ts"
       ]
     },
     "noUnusedLocals": true,

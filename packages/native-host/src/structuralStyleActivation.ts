@@ -152,8 +152,8 @@ export function structuralStyleActivation(native: Native): StructuralStyleActiva
     }
     if (failed) throw failure;
   };
-  // Construct the native-held closure outside acquire's reporter environment.
-  // Otherwise its lexical outer context can retain a released reporter.
+  // Construct the native-held closure outside the reporter environment of acquire.
+  // Otherwise, its lexical outer context can retain a released reporter.
   const notificationFor = (session: Session) => () => notifyError(session);
   const result: StructuralStyleActivation = Object.freeze({
     getStatus: () => read(native),

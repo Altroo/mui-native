@@ -11,6 +11,7 @@ import type { TextFieldProps } from '../forms';
 import type { PopperProps } from '../popper';
 import type { DividerProps } from '../dividerTypes';
 import type { PaperProps } from '../paperTypes';
+import type { AccordionProps } from '../accordionTypes';
 import type { CardProps } from '../cardTypes';
 import type { CardActionsProps } from '../cardActions';
 import type { DialogActionsProps } from '../dialogActions';
@@ -99,6 +100,7 @@ interface GenericComponentProps {
   MuiDivider: DividerProps;
   MuiPaper: PaperProps;
   MuiCard: CardProps;
+  MuiAccordion: AccordionProps;
   MuiCardActions: CardActionsProps;
   MuiDialogActions: DialogActionsProps;
   MuiDialogTitle: DialogTitleProps;

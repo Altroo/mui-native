@@ -77,6 +77,8 @@ export interface NativeStyleTarget {
   readonly tag?: string | undefined;
   /** @internal A verified structural fact for this physical target. */
   readonly lastChild?: boolean | undefined;
+  readonly firstOfType?: boolean | undefined;
+  readonly lastOfType?: boolean | undefined;
 }
 export type { NativePreparedStyle } from './nativeStyledMetadata';
 export type StyleContext = NativeTextContext & {
@@ -109,6 +111,8 @@ export type StyleContext = NativeTextContext & {
   slot?: string;
   rootSlot?: string;
   skipVariants?: boolean;
+  /** @internal This renderer has no own native pseudo target; retain explicit diagnostics. */
+  rejectPseudoElements?: boolean;
   /** SVG-backed components bind paint declarations as SVG props, never View styles. */
   svg?: boolean;
   /** Final root props may match a source variant independently of owner state. */
@@ -125,6 +129,9 @@ export type StyleContext = NativeTextContext & {
   classes?: readonly string[];
   /** @internal Unknown is unmatched; native structure must supply this fact. */
   lastChild?: boolean | undefined;
+  /** @internal Verified physical root-type facts. Unknown predicates do not match. */
+  firstOfType?: boolean | undefined;
+  lastOfType?: boolean | undefined;
   /** Ancestor component sheets precede this component in the same specificity cascade. */
   ancestors?: readonly {
     theme: Theme;
@@ -437,7 +444,8 @@ function prepareStyle(
         if (capture) source(node)[key] = arrays.get(branches);
         // Validate once while preparing the sheet. Rebinding a supported root
         // selector later must not evaluate callbacks or duplicate diagnostics.
-        if (key.startsWith('&') && !parseSelectors(key)) {
+        const selectors = key.startsWith('&') ? parseSelectors(key) : undefined;
+        if (key.startsWith('&') && !selectors) {
           diagnostic(
             'selector',
             `Unsupported selector ${key}; use native slots or supported Mui state selectors.`,
@@ -450,6 +458,8 @@ function prepareStyle(
       const responsive =
         key !== 'transform' &&
         key !== 'shadowOffset' &&
+        key !== 'backgroundImage' &&
+        key !== 'experimental_backgroundImage' &&
         (Array.isArray(original) ||
           (typeof original === 'object' &&
             Object.keys(original).some((name) => Object.hasOwn(theme.breakpoints.values, name))));
@@ -483,51 +493,67 @@ function prepareStyle(
 }
 // Owned cells expose only cache DATA to prepared-style equality. A shared getter
 // avoids callback-identity churn; its source/reader stays private in the WeakMap.
-type LastChildCell = { resolved: boolean; value: boolean | undefined };
-type LastChildReader = (() => boolean | undefined) & {
-  readonly cell: LastChildCell;
-  captureCopied(copy: Pick<StyleContext, 'lastChild'>): void;
+const structuralKeys = ['lastChild', 'firstOfType', 'lastOfType'] as const;
+type StructuralKey = (typeof structuralKeys)[number];
+type StructuralCell = { resolved: boolean; value: boolean | undefined };
+type StructuralReader = {
+  read(key: StructuralKey): boolean | undefined;
+  readonly cells: Record<StructuralKey, StructuralCell>;
+  captureCopied(copy: Pick<StyleContext, StructuralKey>): void;
   release(): void;
 };
-const lastChildCell = Symbol('nativeLastChildCell');
-const lastChildReaders = new WeakMap<object, LastChildReader>();
+const structuralCells = Symbol('nativeStructuralCells');
+const structuralReaders = new WeakMap<object, StructuralReader>();
 function readBoundLastChild(this: SelectorContext) {
-  return lastChildReaders.get(this)?.();
+  return structuralReaders.get(this)?.read('lastChild');
 }
-// Snapshot only when a matching predicate needs the fact, or an existing
-// context spread has already copied it. Never force an unused caller getter.
-function deferredLastChild(source: Pick<StyleContext, 'lastChild'> | undefined): LastChildReader {
-  const cell: LastChildCell = { resolved: false, value: undefined };
-  const read = () => {
-    if (!cell.resolved && source !== undefined) {
-      cell.value = source.lastChild;
-      cell.resolved = true;
-      source = undefined;
-    }
-    return cell.value;
-  };
-  return Object.assign(read, {
-    cell,
-    // A retained sheet needs the snapshot, never its caller's obsolete props.
+function readBoundFirstOfType(this: SelectorContext) {
+  return structuralReaders.get(this)?.read('firstOfType');
+}
+function readBoundLastOfType(this: SelectorContext) {
+  return structuralReaders.get(this)?.read('lastOfType');
+}
+// A physical predicate is snapshotted only if matching needs it, or a normal
+// context spread already copied it. Other facts remain unobserved. Once a sheet
+// has been evaluated, release the caller without discarding resolved values.
+function deferredStructure(
+  source: Pick<StyleContext, StructuralKey> | undefined,
+): StructuralReader {
+  const cells = Object.fromEntries(
+    structuralKeys.map((key) => [key, { resolved: false, value: undefined }]),
+  ) as Record<StructuralKey, StructuralCell>;
+  return {
+    cells,
+    read(key) {
+      const cell = cells[key];
+      if (!cell.resolved && source !== undefined) {
+        cell.value = source[key];
+        cell.resolved = true;
+      }
+      return cell.value;
+    },
     release() {
       source = undefined;
     },
-    // Inspect only library-owned copies, preserving their first observed value.
-    captureCopied(copy: Pick<StyleContext, 'lastChild'>) {
-      const descriptor = Object.getOwnPropertyDescriptor(copy, 'lastChild');
-      if (!cell.resolved && descriptor && 'value' in descriptor) {
-        cell.value = descriptor.value;
-        cell.resolved = true;
-        source = undefined;
+    captureCopied(copy) {
+      for (const key of structuralKeys) {
+        const cell = cells[key];
+        const descriptor = Object.getOwnPropertyDescriptor(copy, key);
+        if (!cell.resolved && descriptor && 'value' in descriptor) {
+          cell.value = descriptor.value;
+          cell.resolved = true;
+        }
       }
     },
-  });
+  };
 }
-function bindLastChild<T extends SelectorContext>(context: T, read: LastChildReader): T {
-  lastChildReaders.set(context, read);
+function bindStructure<T extends SelectorContext>(context: T, read: StructuralReader): T {
+  structuralReaders.set(context, read);
   Object.defineProperties(context, {
     lastChild: { get: readBoundLastChild, enumerable: false },
-    [lastChildCell]: { value: read.cell, enumerable: false },
+    firstOfType: { get: readBoundFirstOfType, enumerable: false },
+    lastOfType: { get: readBoundLastOfType, enumerable: false },
+    [structuralCells]: { value: read.cells, enumerable: false },
   });
   return context;
 }
@@ -600,23 +626,32 @@ function collectRules(nodes: readonly PreparedNode[], context: SelectorContext):
           if (!selector.self.every((name) => available.includes(name))) continue;
           // A pseudo-class contributes class specificity. Never infer an absent
           // structural fact from authored React children or a default boolean.
-          if (selector.lastChild) {
-            const lastChild = path
-              ? position >= 0
-                ? path[position].lastChild
-                : context.lastChild
-              : descendant
-                ? undefined
-                : context.lastChild;
-            if (lastChild !== true) continue;
-          }
-          const selfSpecificity = selector.self.length + Number(selector.lastChild);
+          const target = path
+            ? position >= 0
+              ? path[position]
+              : context
+            : descendant
+              ? undefined
+              : context;
+          const predicateKeys = {
+            'last-child': 'lastChild',
+            'first-of-type': 'firstOfType',
+            'last-of-type': 'lastOfType',
+          } as const;
+          if (
+            !selector.predicates.every((predicate) => target?.[predicateKeys[predicate]] === true)
+          )
+            continue;
+          const selfSpecificity = selector.self.length + selector.predicates.length;
           if (path) {
             let positions = [position];
             for (const atom of selector.atoms) {
               positions = positions.flatMap((previous) =>
                 path.flatMap((target, index) =>
                   index > previous &&
+                  // A pseudo-element belongs to its selected host. Unlike a
+                  // descendant element, it cannot jump over another root.
+                  (atom.tag !== '::before' || index === previous + 1) &&
                   (!atom.tag || atom.tag === target.tag) &&
                   atom.classes.every((name) => target.classes.includes(name))
                     ? [index]
@@ -878,7 +913,7 @@ function componentSheets(
   sx?: SxProps,
   context: StyleContext = {},
 ): PreparedSheet[] {
-  const readLastChild = deferredLastChild(context);
+  const readLastChild = deferredStructure(context);
   const snapshots = new WeakMap<readonly PreparedSheet[], unknown>();
   const prepare = (input: SxProps | undefined, context: StyleContext): PreparedSheet[] => {
     let snapshot: unknown;
@@ -887,7 +922,7 @@ function componentSheets(
         nodes: prepareStyle(input, theme, context, (value) => {
           snapshot = value;
         }),
-        context: bindLastChild(
+        context: bindStructure(
           {
             classes: context.classes?.slice(),
             states: context.states?.slice(),
@@ -1168,18 +1203,18 @@ function retainedAncestorContext<T extends SelectorContext>(
           },
         }),
   }) as T;
-  const reader = lastChildReaders.get(original);
-  if (reader) lastChildReaders.set(clone, reader);
+  const reader = structuralReaders.get(original);
+  if (reader) structuralReaders.set(clone, reader);
   return clone;
 }
 function bindPreparedRoot(
   prepared: import('./nativeStyledMetadata').NativePreparedStyle,
   context: StyleContext,
 ): PreparedSheet[] {
-  const read = deferredLastChild(context);
+  const read = deferredStructure(context);
   const sheets = prepared.sheets.map((sheet) => ({
     ...sheet,
-    context: bindLastChild(
+    context: bindStructure(
       {
         ...sheet.context,
         classes: sheet.retainSourceContext
@@ -1209,7 +1244,7 @@ function prepareComponent(
 ): PreparedSheet[] {
   const prefixes: NativeCssProgramNode[] = [];
   const ancestors = (context.ancestors ?? []).flatMap((sheet) => {
-    const readLastChild = deferredLastChild(sheet.context);
+    const readLastChild = deferredStructure(sheet.context);
     if (sheet.sameRoot && sheet.prepared)
       prefixes.push(nativeCssProgramTree(sheet.prepared.sheets));
     const prepareAncestor = () => {
@@ -1237,7 +1272,7 @@ function prepareComponent(
                 }
               : {
                   ...prepared,
-                  context: bindLastChild(
+                  context: bindStructure(
                     {
                       ...prepared.context,
                       ...(sheet.sameRoot && !prepared.ancestor
@@ -1293,6 +1328,78 @@ function prepareComponent(
     ancestors.length + base.end,
   );
 }
+// A precompiled styled wrapper can reach a renderer that does not paint its
+// own pseudo target. Filter owned data at that boundary, retaining child-target
+// rules and the original source CSS identity. Never replay caller callbacks or
+// mutate a shared wrapper's prepared nodes.
+function withoutOwnPseudos(sheets: readonly PreparedSheet[]): PreparedSheet[] {
+  const empty = Object.freeze({});
+  const filter = (nodes: readonly PreparedNode[], descendant: boolean): readonly PreparedNode[] => {
+    let changed = false;
+    const next: PreparedNode[] = [];
+    for (const node of nodes) {
+      if (!node.conditions) {
+        next.push(node);
+        continue;
+      }
+      let updated = false;
+      const fragments: PreparedNode[] = [];
+      const emit = (key: string, branches: readonly PreparedNode[] | undefined) => {
+        // Separate occurrences preserve cascade order when a split selector
+        // repeats an authored key elsewhere in this same condition list.
+        fragments.push(Object.freeze({ base: empty, conditions: new Map([[key, branches]]) }));
+      };
+      for (const [key, branches] of node.conditions) {
+        const selectors = key.startsWith('&') ? parseSelectors(key) : undefined;
+        if (!selectors) {
+          const value = branches ? filter(branches, descendant) : branches;
+          if (value !== branches) updated = true;
+          emit(key, value);
+          continue;
+        }
+        const clauses = key.split(',').map((clause) => clause.trim());
+        const groups = new Map<boolean, string[]>();
+        let rejected = false;
+        selectors.forEach((selector, index) => {
+          if (!descendant && selector.atoms.some((atom) => atom.tag === '::before')) {
+            rejected = true;
+            return;
+          }
+          const nested = descendant || selector.atoms.some((atom) => atom.tag !== '::before');
+          const list = groups.get(nested) ?? [];
+          list.push(clauses[index]);
+          groups.set(nested, list);
+        });
+        if (rejected) {
+          diagnostic(
+            'selector',
+            `Unsupported selector ${key}; use native slots or supported Mui state selectors.`,
+          );
+          updated = true;
+        }
+        if (groups.size > 1) updated = true;
+        for (const [nested, list] of groups) {
+          const value = branches ? filter(branches, nested) : branches;
+          if (value !== branches) updated = true;
+          emit(!rejected && groups.size === 1 ? key : list.join(', '), value);
+        }
+      }
+      if (!updated) {
+        next.push(node);
+        continue;
+      }
+      changed = true;
+      next.push(Object.freeze({ base: node.base }), ...fragments);
+    }
+    return changed ? Object.freeze(next) : nodes;
+  };
+  return sheets.map((sheet) => {
+    if (sheet.ancestor) return sheet;
+    const nodes = filter(sheet.nodes, false);
+    return nodes === sheet.nodes ? sheet : { ...sheet, nodes };
+  });
+}
+
 function collectSheets(sheets: readonly PreparedSheet[]): StyleRule[] {
   try {
     return sheets.flatMap((sheet) => {
@@ -1310,7 +1417,7 @@ function collectSheets(sheets: readonly PreparedSheet[]): StyleRule[] {
   } finally {
     // Retained wrappers/ancestors rebind to their current owner before reuse.
     // Unused predicates must not retain the original caller subtree either.
-    for (const sheet of sheets) lastChildReaders.get(sheet.context)?.release();
+    for (const sheet of sheets) structuralReaders.get(sheet.context)?.release();
   }
 }
 
@@ -1494,7 +1601,7 @@ export function componentRootStyle(
 ): NativeRootStyleResult {
   const wrappers: PreparedSheet[] = [];
   const native: StyleProp<NativeStyle>[] = [];
-  const readLastChild = deferredLastChild(context);
+  const readLastChild = deferredStructure(context);
   const visit = (style: StyleProp<NativeStyle>) => {
     const descriptor =
       style && typeof style === 'object' ? nativeStyledStyles.get(style) : undefined;
@@ -1505,7 +1612,7 @@ export function componentRootStyle(
             ? sheet
             : {
                 ...sheet,
-                context: bindLastChild(
+                context: bindStructure(
                   {
                     ...sheet.context,
                     classes: context.classes,
@@ -1528,7 +1635,7 @@ export function componentRootStyle(
     nativeTextMetrics: nativeStyleTextMetrics(native),
   };
   readLastChild.captureCopied(copiedContext);
-  const finalContext = bindLastChild(copiedContext, readLastChild);
+  const finalContext = bindStructure(copiedContext, readLastChild);
   const component = prepareComponent(
     theme,
     name,
@@ -1537,9 +1644,25 @@ export function componentRootStyle(
     finalContext,
     registeredNativeCssProgrammes(authored, context.styleCache ?? defaultNativeStyleCache),
   );
+  // Preparation has consumed prop/variant callbacks. The retained evaluator
+  // needs only selector and native normalization data, never caller children,
+  // callbacks, or the original ancestor prop records. This is our owned copy.
+  for (const key of [
+    'rootProps',
+    'styledProps',
+    'baseStyle',
+    'overrideKeys',
+    'overrideProgramme',
+    'ancestors',
+    'preparedRoot',
+    'registeredStyles',
+  ])
+    Reflect.deleteProperty(finalContext, key);
   const base = nativeComponentBaseRange(component);
   const sheets = retainNativeCssProgram(
-    [...component, ...wrappers],
+    context.rejectPseudoElements
+      ? withoutOwnPseudos([...component, ...wrappers])
+      : [...component, ...wrappers],
     nativeCssProgramTree(component),
     context.styleCache ?? defaultNativeStyleCache,
   );
@@ -1548,8 +1671,17 @@ export function componentRootStyle(
   for (let i = 0; i < base.start; i++) if (!component[i].ancestor) ownBaseStart++;
   retainNativeComponentBase(ownSheets, ownBaseStart, ownBaseStart + base.end - base.start);
   for (const sheet of ownSheets) retainPreparedNodes(sheet.nodes);
+  let computed: NativeStyle;
+  try {
+    computed = evaluatePrepared(sheets, theme, finalContext);
+  } finally {
+    // This outer reader belongs to finalContext, not a collected sheet. The
+    // sheet readers have released their sources; release its original caller
+    // too, including when no structural predicate was ever requested.
+    readLastChild.release();
+  }
   const result: NativeRootStyleResult = {
-    computed: evaluatePrepared(sheets, theme, finalContext),
+    computed,
     authored: native,
     prepared: Object.freeze({
       sheets: Object.freeze(ownSheets),

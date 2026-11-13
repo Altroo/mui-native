@@ -1,7 +1,8 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import React, { forwardRef, useState, useRef, useImperativeHandle } from 'react';
 import { I18nManager, View, Text, TextInput, StyleSheet, type ViewInstance } from 'react-native';
-import { act, cleanup, fireEvent, render, screen } from '@testing-library/react-native';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import {
   Accordion,
   AccordionSummary,
@@ -407,11 +408,12 @@ test('native root/content/region styles, gutter states and theme defaults compos
       </Accordion>
     </ThemeProvider>,
   );
-  expect(StyleSheet.flatten(screen.getByTestId('root').props.style)).toMatchObject({
-    paddingTop: 16,
-    marginTop: 0,
-    marginBottom: 0,
-  });
+  const rootStyle = StyleSheet.flatten(screen.getByTestId('root').props.style);
+  expect(rootStyle).toMatchObject({ paddingTop: 16 });
+  // An absent native margin uses Yoga's zero default and leaves inherited
+  // Paper CSS free to supply one, as the source constructor does.
+  expect(rootStyle.marginTop ?? 0).toBe(0);
+  expect(rootStyle.marginBottom ?? 0).toBe(0);
   expect(StyleSheet.flatten(screen.getByTestId('summary').props.style)).toMatchObject({
     minHeight: 48,
   });
@@ -459,7 +461,7 @@ test('actions spacing can be removed and literal children render through native 
   });
   expect(screen.getByText('Save')).toBeTruthy();
 });
-test('summary icon wrapper tracks expansion and slot overrides', () => {
+test('summary icon wrapper tracks expansion and slot overrides', async () => {
   render(
     <Accordion>
       <AccordionSummary
@@ -477,10 +479,12 @@ test('summary icon wrapper tracks expansion and slot overrides', () => {
     padding: 3,
   });
   fireEvent.press(screen.getByTestId('summary'), event());
-  expect(StyleSheet.flatten(screen.getByTestId('icon').props.style)).toMatchObject({
-    transform: [{ rotate: '180deg' }],
-    padding: 3,
-  });
+  await waitFor(() =>
+    expect(StyleSheet.flatten(screen.getByTestId('icon').props.style)).toMatchObject({
+      transform: [{ rotate: '180deg' }],
+      padding: 3,
+    }),
+  );
 });
 class AccordionModel extends NativeButtonModel {
   summaryProps: Partial<AccordionSummaryProps> = {};
@@ -624,12 +628,197 @@ test('root, slot and part refs preserve one instance and React 19 cleanup across
   expect(events).toEqual(['old attach', 'old cleanup', 'new attach', 'new cleanup']);
   for (const ref of [root, summary, details, actions]) expect(ref.current).toBeNull();
 });
+test('a polymorphic native root receives its required props and retains the composed ref', () => {
+  const observed: Array<{ tracking: string; className?: string }> = [];
+  const Leaf = forwardRef<
+    ViewInstance,
+    React.ComponentProps<typeof View> & { tracking: string; className?: string }
+  >(function Leaf({ tracking, className, ...native }, ref) {
+    const node = useRef({} as ViewInstance);
+    useImperativeHandle(ref, () => node.current, []);
+    observed.push({ tracking, className });
+    return <View {...native} nativeID={tracking} />;
+  });
+  const componentRef = React.createRef<ViewInstance>();
+  const slotRef = React.createRef<ViewInstance>();
+  const changed = jest.fn();
+  render(
+    <ThemeProvider theme={theme}>
+      <Accordion
+        component={Leaf}
+        tracking="custom-panel"
+        ref={componentRef}
+        onChange={changed}
+        slotProps={{ root: { ref: slotRef } }}
+      >
+        <AccordionSummary testID="custom-summary">Settings</AccordionSummary>
+        <AccordionDetails>Body</AccordionDetails>
+      </Accordion>
+    </ThemeProvider>,
+  );
+  const host = componentRef.current;
+  expect(host).not.toBeNull();
+  expect(slotRef.current).toBe(host);
+  expect(observed.at(-1)).toMatchObject({ tracking: 'custom-panel' });
+  expect(observed.at(-1)!.className).toContain('MuiAccordion-root');
+  expect(observed.at(-1)!.className).toContain('MuiPaper-root');
+  fireEvent.press(screen.getByTestId('custom-summary'), event());
+  expect(changed).toHaveBeenLastCalledWith(expect.anything(), true);
+  expect(componentRef.current).toBe(host);
+  expect(slotRef.current).toBe(host);
+});
+
+test('the div alias maps the polymorphic root to one native surface', () => {
+  render(
+    <ThemeProvider theme={theme}>
+      <Accordion component="div" testID="alias-panel">
+        <AccordionSummary>Settings</AccordionSummary>
+        <AccordionDetails>Body</AccordionDetails>
+      </Accordion>
+    </ThemeProvider>,
+  );
+  expect(screen.getAllByTestId('alias-panel')).toHaveLength(1);
+  expect(screen.UNSAFE_queryAllByType('div' as any)).toHaveLength(0);
+});
+
+test('the root slot component overrides the outer polymorphic component', () => {
+  const Outer = forwardRef<ViewInstance, React.ComponentProps<typeof View>>(
+    function Outer(props, ref) {
+      return <View {...props} ref={ref} testID="outer-leaf" />;
+    },
+  );
+  const Inner = forwardRef<ViewInstance, React.ComponentProps<typeof View>>(
+    function Inner(props, ref) {
+      return <View {...props} ref={ref} testID="slot-leaf" />;
+    },
+  );
+  render(
+    <ThemeProvider theme={theme}>
+      <Accordion component={Outer} slotProps={{ root: { component: Inner } }}>
+        <AccordionSummary>Settings</AccordionSummary>
+        <AccordionDetails>Body</AccordionDetails>
+      </Accordion>
+    </ThemeProvider>,
+  );
+  expect(screen.queryByTestId('outer-leaf')).toBeNull();
+  expect(screen.getByTestId('slot-leaf')).toBeTruthy();
+});
+
+test('an alternate styled root skips Paper while retaining Accordion styles and component', () => {
+  const seen: Array<Record<string, any>> = [];
+  const Alternate = forwardRef<ViewInstance, any>(function Alternate({ children, ...props }, ref) {
+    seen.push(props);
+    return (
+      <View {...props} ref={ref}>
+        {children}
+      </View>
+    );
+  });
+  const Component = forwardRef<ViewInstance, React.ComponentProps<typeof View>>(
+    function Component(props, ref) {
+      return <View {...props} ref={ref} />;
+    },
+  );
+  const paperStyle = jest.fn(() => ({ paddingTop: 29 }));
+  const configured = createTheme({
+    motion: { reducedMotion: 'always' },
+    components: {
+      MuiAccordion: { styleOverrides: { root: { paddingTop: 13 } } },
+      MuiPaper: { styleOverrides: { root: nativeStyleCallback(paperStyle) } },
+    },
+  });
+  render(
+    <ThemeProvider theme={configured}>
+      <Accordion component={Component} slotProps={{ root: { as: Alternate } }}>
+        <AccordionSummary>Summary</AccordionSummary>
+        <AccordionDetails>Body</AccordionDetails>
+      </Accordion>
+    </ThemeProvider>,
+  );
+  expect(paperStyle).not.toHaveBeenCalled();
+  expect(seen.at(-1)!.component).toBe(Component);
+  expect(seen.at(-1)!.className).toContain('MuiAccordion-root');
+  expect(seen.at(-1)!.className).not.toContain('MuiPaper-root');
+  expect(seen.at(-1)!.ownerState).toBeUndefined();
+  expect(StyleSheet.flatten(seen.at(-1)!.style)).toMatchObject({ paddingTop: 13 });
+});
+
+test('a custom root slot does not execute the replaced styled constructor', () => {
+  const rootStyle = jest.fn((_args: Record<string, unknown>) => ({ paddingTop: 13 }));
+  const Leaf = forwardRef<ViewInstance, any>(function Leaf({ children, ...props }, ref) {
+    return (
+      <View {...props} ref={ref}>
+        {children}
+      </View>
+    );
+  });
+  render(
+    <ThemeProvider
+      theme={createTheme({
+        motion: { reducedMotion: 'always' },
+        components: {
+          MuiAccordion: { styleOverrides: { root: nativeStyleCallback(rootStyle) } },
+        },
+      })}
+    >
+      <Accordion
+        defaultExpanded
+        sx={{ paddingTop: 99 }}
+        slots={{ root: Leaf }}
+        testID="replaced-root"
+        style={{ paddingBottom: 21 }}
+        slotProps={{ root: { style: { paddingBottom: 23 } } }}
+      >
+        <AccordionSummary>Summary</AccordionSummary>
+        <AccordionDetails>Body</AccordionDetails>
+      </Accordion>
+    </ThemeProvider>,
+  );
+  // Other default slots may evaluate the complete override map. The replaced
+  // root itself must never execute its old constructor's override callback.
+  expect(
+    rootStyle.mock.calls.filter(([args]) =>
+      String(args.className).split(/\s+/).includes('MuiAccordion-root'),
+    ),
+  ).toHaveLength(0);
+  const style = StyleSheet.flatten(screen.getByTestId('replaced-root').props.style);
+  expect(style).toMatchObject({ paddingBottom: 23 });
+  expect(style.marginTop).toBeUndefined();
+  expect(style.paddingTop).toBeUndefined();
+});
+
+test('a custom root slot receives its own alternate root without changing component', () => {
+  const observed: Array<Record<string, any>> = [];
+  const Leaf = forwardRef<ViewInstance, any>(function Leaf({ children, ...props }, ref) {
+    observed.push(props);
+    return <View ref={ref}>{children}</View>;
+  });
+  const Alternate = forwardRef<ViewInstance, React.ComponentProps<typeof View>>(
+    function Alternate(props, ref) {
+      return <View {...props} ref={ref} />;
+    },
+  );
+  render(
+    <ThemeProvider theme={theme}>
+      <Accordion slots={{ root: Leaf }} slotProps={{ root: { as: Alternate } }}>
+        <AccordionSummary>Summary</AccordionSummary>
+        <AccordionDetails>Body</AccordionDetails>
+      </Accordion>
+    </ThemeProvider>,
+  );
+  expect(observed.at(-1)!.as).toBe(Alternate);
+  expect(observed.at(-1)!.component).toBeUndefined();
+  expect(observed.at(-1)!.ownerState).toMatchObject({ expanded: false, disabled: false });
+});
+
 test('summary action focus styling and disabled cleanup use ButtonBase state', async () => {
   const action = React.createRef<import('@altroo/mui-native').ButtonBaseActions>();
   const model = new AccordionModel();
   model.summaryProps = { action };
   await model.mount();
   act(() => action.current!.focusVisible());
+  // Summary follows the source background transition before reaching focus paint.
+  act(() => jest.advanceTimersByTime(200));
   expect(StyleSheet.flatten(model.native().style)).toMatchObject({
     backgroundColor: theme.palette.action.focus,
   });
@@ -639,5 +828,19 @@ test('summary action focus styling and disabled cleanup use ButtonBase state', a
   expect(StyleSheet.flatten(model.native().style)).toMatchObject({
     opacity: theme.palette.action.disabledOpacity,
   });
+  await act(async () => model.tree!.unmount());
+});
+
+test('theme focus styling replaces the default Summary focus background', async () => {
+  const selected = createTheme({ focusVisible: true, motion: { reducedMotion: 'always' } });
+  const action = React.createRef<import('@altroo/mui-native').ButtonBaseActions>();
+  const model = new AccordionModel();
+  const element = model.element.bind(model);
+  model.element = () => <ThemeProvider theme={selected}>{element()}</ThemeProvider>;
+  model.summaryProps = { action };
+  await model.mount();
+  const background = StyleSheet.flatten(model.native().style).backgroundColor;
+  act(() => action.current!.focusVisible());
+  expect(StyleSheet.flatten(model.native().style).backgroundColor).toBe(background);
   await act(async () => model.tree!.unmount());
 });

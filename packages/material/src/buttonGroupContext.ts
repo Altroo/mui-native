@@ -1,6 +1,6 @@
 /* Context/default contracts adapt MIT-licensed Material UI 9.5.0.
  * Copyright (c) MUI contributors. See NOTICE and upstream/button-group.json.
- * Native implementation: Copyright (c) 2026 Altroo and contributors. */
+ * Native implementation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 import React from 'react';
 import type { ButtonGroupOwnProps } from './buttonGroupTypes';
 import type { ViewInstance } from 'react-native';
@@ -24,9 +24,17 @@ if (process.env.NODE_ENV !== 'production') {
   ButtonGroupContext.displayName = 'ButtonGroupContext';
   ButtonGroupButtonContext.displayName = 'ButtonGroupButtonContext';
 }
+export type NativeStyleClassIdentity = Readonly<{
+  cacheKey: string;
+  css: string;
+  sourceOwners: readonly string[];
+}>;
 export interface NativeButtonGroupRule {
   /** Actual participating native root, used only for physical styling ownership. */
   readonly element?: ViewInstance | null;
+  /** Committed source classes on this exact host, independent of native paint. */
+  readonly sourceClasses?: readonly NativeStyleClassIdentity[];
+  readonly scopeDepth?: number;
   readonly selector?: NativeStyleTarget | undefined;
   cascade: (
     classes: readonly string[],

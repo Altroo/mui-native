@@ -32,9 +32,10 @@ final class AccordionCatalogUITests: XCTestCase {
         && self.node("accordion-phases").label.contains("Delivery: open")
     }
   }
-  private func tap(_ id: String) {
+  @discardableResult
+  private func reveal(_ id: String) -> XCUIElement {
     let control = node(id)
-    for _ in 0..<5 {
+    for _ in 0..<12 {
       if control.exists && control.isHittable { break }
       let scroll = node("accordion-scroll")
       if control.exists && control.frame.midY < scroll.frame.minY {
@@ -44,9 +45,20 @@ final class AccordionCatalogUITests: XCTestCase {
       }
     }
     XCTAssertTrue(control.exists && control.isHittable, "Native target must be hittable: \(id)")
-    control.tap()
+    return control
   }
+  private func tap(_ id: String) { reveal(id).tap() }
   private func capture(_ name: String) {
+    let scroll = node("accordion-scroll").frame
+    for id in ["accordion-status", "accordion-changes", "accordion-subtotal-label",
+      "accordion-subtotal-value", "accordion-delivery-label", "accordion-delivery-value",
+      "accordion-total-label", "accordion-total-value"] {
+      let label = node(id)
+      if label.exists && label.frame.width > 0 {
+        XCTAssertGreaterThanOrEqual(label.frame.minX, scroll.minX - 1, id)
+        XCTAssertLessThanOrEqual(label.frame.maxX, scroll.maxX + 1, id)
+      }
+    }
     let attachment = XCTAttachment(screenshot: app.screenshot())
     attachment.name = name
     attachment.lifetime = .keepAlways
@@ -56,8 +68,8 @@ final class AccordionCatalogUITests: XCTestCase {
     capture("accordion-ios-initial")
     // TextField forwards this identifier to its editable host.
     let editor = node("accordion-note")
-    XCTAssertTrue(editor.exists && editor.isHittable)
-    editor.tap()
+    XCTAssertTrue(editor.exists)
+    tap("accordion-note")
     editor.typeText("8472")
     waitFor("Native text events must update body-local note") {
       self.node("accordion-note-value").label.contains("8472")
@@ -83,6 +95,66 @@ final class AccordionCatalogUITests: XCTestCase {
       self.node("accordion-status").label == "Note saved"
     }
     capture("accordion-ios-retained")
+  }
+  func testDarkModeAndSummaryAccessibility() {
+    let delivery = app.buttons.matching(identifier: "accordion-delivery-summary").firstMatch
+    let payment = app.buttons.matching(identifier: "accordion-payment-summary").firstMatch
+    XCTAssertTrue(delivery.exists)
+    XCTAssertTrue(payment.exists)
+    XCTAssertTrue(delivery.label.contains("Delivery instructions"))
+    XCTAssertTrue(payment.label.contains("Payment & receipt"))
+    // Changing the provider exercises live retained CSS, including the native
+    // Paper overlay and separator color, without rebuilding the component tree.
+    tap("catalog-appearance")
+    waitFor("Dark mode must preserve the expanded body and named controls") {
+      self.node("accordion-note").exists && delivery.exists && payment.exists
+    }
+    capture("accordion-ios-dark-delivery")
+    tap("accordion-payment-summary")
+    waitFor("Dark mode must keep expansion and descendant accessibility coherent") {
+      !self.node("accordion-note").exists
+        && self.node("accordion-phases").label == "Delivery: closed · Payment: open"
+        && self.node("accordion-changes").label == "Section changes: 1"
+    }
+    capture("accordion-ios-dark-payment")
+    tap("catalog-appearance")
+    waitFor("Returning to light mode must retain the selected panel") {
+      self.node("accordion-phases").label == "Delivery: closed · Payment: open"
+    }
+    capture("accordion-ios-light-payment")
+  }
+  func testSummaryAccessibilityAudit() throws {
+    guard #available(iOS 17.0, *) else {
+      throw XCTSkip("XCTest accessibility auditing requires iOS 17 or later")
+    }
+    // Native traits and control descriptions complement the touch/geometry
+    // checks. This audit does not replace real screen-reader traversal.
+    reveal("accordion-delivery-summary")
+    try app.performAccessibilityAudit(for: [.sufficientElementDescription, .trait])
+    tap("accordion-payment-summary")
+    waitFor("The selected payment body must finish entering before auditing") {
+      self.node("accordion-phases").label == "Delivery: closed · Payment: open"
+    }
+    try app.performAccessibilityAudit(for: [.sufficientElementDescription, .trait])
+  }
+  func testLocalRTLReversesSummaryAndRetainsBody() {
+    let content = node("accordion-delivery-content")
+    let icon = node("accordion-delivery-icon")
+    XCTAssertTrue(content.exists && icon.exists)
+    XCTAssertGreaterThanOrEqual(icon.frame.minX + 1, content.frame.maxX)
+    let note = node("accordion-note-value").label
+    tap("accordion-direction")
+    waitFor("An authored RTL ancestor must reverse the actual Summary row") {
+      icon.frame.maxX <= content.frame.minX + 1
+    }
+    XCTAssertEqual(node("accordion-note-value").label, note)
+    XCTAssertEqual(node("accordion-changes").label, "Section changes: 0")
+    capture("accordion-ios-local-rtl")
+    tap("accordion-direction")
+    waitFor("Returning to LTR must preserve the original row order") {
+      icon.frame.minX + 1 >= content.frame.maxX
+    }
+    XCTAssertEqual(node("accordion-note-value").label, note)
   }
   func testDisabledSummaryAndIndependentUnmounting() {
     tap("accordion-disabled-summary")

@@ -97,6 +97,15 @@ export function mergeNativeRootStyle(
     ? nativeStyleBorderDeclarations([computed, { direction }])
     : computed;
   const base = nativeInlineBorderBase(matching, inline, direction);
+  // RN prefers the modern image field over its legacy alias. A genuine
+  // legacy declaration must still replace lower-priority generated CSS paint,
+  // including an empty array or an explicit native reset.
+  if (
+    inline &&
+    Object.hasOwn(inline, 'experimental_backgroundImage') &&
+    !Object.hasOwn(inline, 'backgroundImage')
+  )
+    Reflect.deleteProperty(base, 'backgroundImage');
   if (inline?.gap != null) {
     delete base.rowGap;
     delete base.columnGap;

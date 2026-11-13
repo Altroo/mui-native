@@ -301,6 +301,7 @@ test.each(['MuiIconButton', 'MuiMenuItem', 'MuiAccordionSummary'] as const)(
     const owners: unknown[] = [];
     let sxCalls = 0;
     const theme = createTheme({
+      motion: { reducedMotion: 'always' },
       components: {
         [name]: {
           styleOverrides: {

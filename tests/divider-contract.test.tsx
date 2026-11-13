@@ -650,3 +650,21 @@ test.each(borderOrientations)(
     expectDecorativePaint(tree, orientation, false);
   },
 );
+
+test('a prepared styled wrapper retains Divider pseudo diagnostics without rereading authored values', () => {
+  const messages: { code: string; message: string }[] = [];
+  const read = jest.fn(() => 7);
+  const before = Object.defineProperty({}, 'borderTopWidth', { enumerable: true, get: read });
+  const Styled = styled(Divider)({ '&::before': before });
+  const restore = configureDiagnostics((message) => messages.push(message));
+  try {
+    const tree = render(<Styled>Notes</Styled>);
+    expect(messages.filter((message) => message.code === 'selector')).toHaveLength(1);
+    expect(read).toHaveBeenCalledTimes(1);
+    expect(decoration(tree).every((node) => flat(node.props.style).borderTopWidth === 1)).toBe(
+      true,
+    );
+  } finally {
+    restore();
+  }
+});

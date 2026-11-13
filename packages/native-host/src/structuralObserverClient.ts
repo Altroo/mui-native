@@ -181,5 +181,58 @@ export function createStructuralObserverClient(injected?: ObservationModule) {
       return () => release(entry);
     },
     dispose: invalidate,
+    get disposed() {
+      return disposed;
+    },
+  };
+}
+
+// All first-party observers share the module's one native callback/record queue.
+// Each returned facade owns only its watches, so a diagnostic fixture cannot
+// disconnect another mounted component when it disposes its own subscriptions.
+const sharedClients = new WeakMap<
+  ObservationModule,
+  ReturnType<typeof createStructuralObserverClient>
+>();
+export function createNativeStructuralObservation(injected?: ObservationModule | null) {
+  const native =
+    injected === undefined
+      ? (require('./NativeAltrooStructuralObserver').default as ObservationModule | null)
+      : injected;
+  if (!native) return undefined;
+  let shared = sharedClients.get(native);
+  if (!shared || shared.disposed) {
+    shared = createStructuralObserverClient(native);
+    sharedClients.set(native, shared);
+  }
+  const owned = new Set<() => void>();
+  let disposed = false;
+  return {
+    watch(...args: Parameters<NonNullable<typeof shared>['watch']>) {
+      if (disposed) throw Error('Structural observation owner is disposed');
+      const release = shared!.watch(...args);
+      let active = true;
+      const stop = () => {
+        if (!active) return;
+        active = false;
+        owned.delete(stop);
+        release();
+      };
+      owned.add(stop);
+      return stop;
+    },
+    dispose() {
+      if (disposed) return;
+      disposed = true;
+      const errors: unknown[] = [];
+      for (const stop of [...owned]) {
+        try {
+          stop();
+        } catch (error) {
+          errors.push(error);
+        }
+      }
+      if (errors.length) throw new AggregateError(errors, 'Structural observation cleanup failed');
+    },
   };
 }

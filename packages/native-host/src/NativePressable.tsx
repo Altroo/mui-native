@@ -1,5 +1,7 @@
-import React, { forwardRef, useRef, useState, useCallback, useMemo } from 'react';
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import React, { forwardRef, useRef, useState, useCallback, useMemo, useContext } from 'react';
 import { usePressability, type PressableProps, type ViewInstance } from 'react-native';
+import { NativePressablePresentationContext } from './pressablePresentation';
 import { InteractiveView, setInteractiveHotspot, setInteractivePressed } from './interactiveView';
 export const NativePressable: React.ForwardRefExoticComponent<
   PressableProps & React.RefAttributes<ViewInstance>
@@ -32,6 +34,7 @@ export const NativePressable: React.ForwardRefExoticComponent<
   },
   forwarded,
 ) {
+  const presentation = useContext(NativePressablePresentationContext);
   const local = useRef<ViewInstance | null>(null);
   const [pressed, setPressed] = useState(false);
   const state = { pressed: testOnly_pressed === true || pressed };
@@ -122,7 +125,12 @@ export const NativePressable: React.ForwardRefExoticComponent<
     ],
   );
   const handlers = usePressability(config);
-  return (
+  // Resolve style before children, matching Pressable's normal evaluation order.
+  // The optional boundary receives owned values and the actual host ref, so a
+  // transparent custom root keeps native state and animation in the same place.
+  const resolvedStyle = typeof style === 'function' ? style(state) : style;
+  const content = typeof children === 'function' ? children(state) : children;
+  const render = (nativeStyle: typeof resolvedStyle) => (
     <InteractiveView
       {...props}
       {...handlers}
@@ -139,9 +147,12 @@ export const NativePressable: React.ForwardRefExoticComponent<
       rippleRadius={android_ripple?.radius}
       rippleBorderless={android_ripple?.borderless}
       rippleForeground={android_ripple?.foreground}
-      style={typeof style === 'function' ? style(state) : style}
+      style={nativeStyle}
     >
-      {typeof children === 'function' ? children(state) : children}
+      {content}
     </InteractiveView>
   );
+  return presentation
+    ? presentation({ root: local, style: resolvedStyle, children: render })
+    : render(resolvedStyle);
 });

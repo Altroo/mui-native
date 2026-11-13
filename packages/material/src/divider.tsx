@@ -83,6 +83,7 @@ function DividerLabel({
     authored,
     prepared,
   } = useComponentRootStyle('MuiDivider', ownerState, undefined, undefined, {
+    rejectPseudoElements: true,
     ...nativeTextStyleContext(parent, undefined, theme),
     classes,
     slot: 'wrapper',
@@ -239,6 +240,7 @@ export const Divider: NativeDividerComponent = forwardRef<ViewInstance, NativeDi
       authored,
       prepared,
     } = useComponentRootStyle('MuiDivider', ownerState, sx, preparedStyle, {
+      rejectPseudoElements: true,
       ...nativeTextStyleContext(parent, style, theme),
       classes: tokens,
       rootProps,

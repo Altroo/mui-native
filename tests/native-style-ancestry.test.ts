@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import {
   nativeStyleContains,
   nativeStyleTree,
@@ -92,4 +93,44 @@ test('self-container targets are invalid even before the reparented edge is regi
   } finally {
     remove();
   }
+});
+
+test('populated exact-host class lookup follows retargeting and removes unmounted scopes', () => {
+  const first = {},
+    second = {};
+  let target = first;
+  const classes = [{ cacheKey: 'css', css: 'source-root', sourceOwners: ['owner'] }];
+  const outer = {
+    element: first as any,
+    scopeDepth: 0,
+    sourceClasses: classes,
+    cascade: jest.fn(),
+  };
+  const inner = {
+    get element() {
+      return target as any;
+    },
+    scopeDepth: 1,
+    sourceClasses: classes,
+    cascade: jest.fn(),
+  };
+  const removeInner = nativeStyleTree.registerGroup(inner);
+  const removeOuter = nativeStyleTree.registerGroup(outer);
+  try {
+    expect(nativeStyleTree.exactHostStyle(first)).toBe(inner);
+    expect(nativeStyleTree.groupRulesAt(first)).toEqual([inner, outer]);
+    target = second;
+    nativeStyleTree.changed();
+    expect(nativeStyleTree.exactHostStyle(first)).toBe(outer);
+    expect(nativeStyleTree.exactHostStyle(second)).toBe(inner);
+    removeInner();
+    expect(nativeStyleTree.exactHostStyle(second)).toBeUndefined();
+    expect(nativeStyleTree.groupRulesAt(first)).toEqual([outer]);
+    expect(outer.cascade).not.toHaveBeenCalled();
+    expect(inner.cascade).not.toHaveBeenCalled();
+  } finally {
+    removeInner();
+    removeOuter();
+  }
+  expect(nativeStyleTree.exactHostStyle(first)).toBeUndefined();
 });

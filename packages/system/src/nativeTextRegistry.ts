@@ -1,5 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
-import { useLayoutEffect, useEffect, useRef, useMemo } from 'react';
+import { useLayoutEffect, useEffect, useRef, useMemo, useCallback } from 'react';
 import type { RefObject, Ref, RefCallback } from 'react';
 import type { NativeTextScopeValue } from './textScope';
 type Node = {
@@ -9,6 +9,22 @@ type Node = {
 };
 type Entry = { value: NativeTextScopeValue; depth: number };
 const roots = new WeakMap<object, Map<symbol, Entry>>();
+// Ref changes can commit inside an opaque wrapper whose children bail out.
+// Owned refs notify their registered scopes without forcing a React rerender.
+const rootListeners = new WeakMap<object, Set<() => void>>();
+function notifyRoot(root: object) {
+  for (const listener of [...(rootListeners.get(root) ?? [])]) listener();
+}
+function subscribeRoot(root: object, listener: () => void) {
+  const listeners = rootListeners.get(root) ?? new Set<() => void>();
+  rootListeners.set(root, listeners);
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+    if (!listeners.size && rootListeners.get(root) === listeners) rootListeners.delete(root);
+  };
+}
+
 const depths = new WeakMap<NativeTextScopeValue, number>();
 const listeners = new Set<() => void>();
 let revision = 0;
@@ -116,14 +132,21 @@ export function useNativeTextScopeRoot(
   const active = useRef<
     { node: object; lease: ReturnType<typeof nativeTextScopes.register> } | undefined
   >(undefined);
-  const synchronize = () => {
+  const committed = useRef(value);
+  const synchronize = useCallback(() => {
     const node = root?.current;
     if (active.current?.node !== node) {
       active.current?.lease.remove();
-      active.current = node ? { node, lease: nativeTextScopes.register(node, value) } : undefined;
-    } else active.current?.lease.update(value);
-  };
-  useLayoutEffect(synchronize);
+      active.current = node
+        ? { node, lease: nativeTextScopes.register(node, committed.current) }
+        : undefined;
+    } else active.current?.lease.update(committed.current);
+  }, [root]);
+  useLayoutEffect(() => {
+    committed.current = value;
+    synchronize();
+  });
+  useLayoutEffect(() => (root ? subscribeRoot(root, synchronize) : undefined), [root, synchronize]);
   // A scope may render inside its own ancestor host (ButtonBase). Its layout
   // effect precedes that host ref, so verify once more after all refs attach.
   useEffect(synchronize);
@@ -152,6 +175,7 @@ export function useNativeTextRootRef<T>(forwarded?: Ref<T>) {
         else if (forwarded) forwarded.current = instance;
       } catch (error) {
         root.current = null;
+        notifyRoot(root);
         throw error;
       }
       let detached = false;
@@ -159,12 +183,19 @@ export function useNativeTextRootRef<T>(forwarded?: Ref<T>) {
         if (detached) return;
         detached = true;
         if (detach === cleanup) detach = undefined;
-        if (root.current === instance) root.current = null;
-        if (typeof release === 'function') release();
-        else if (typeof forwarded === 'function') forwarded(null);
-        else if (forwarded?.current === instance) forwarded.current = null;
+        const changed = root.current === instance;
+        if (changed) root.current = null;
+        try {
+          if (typeof release === 'function') release();
+          else if (typeof forwarded === 'function') forwarded(null);
+          else if (forwarded?.current === instance) forwarded.current = null;
+        } finally {
+          if (changed) notifyRoot(root);
+        }
       };
       detach = cleanup;
+      // Keep cleanup installed before observers see the committed host.
+      notifyRoot(root);
       return cleanup;
     };
   }, [forwarded]);

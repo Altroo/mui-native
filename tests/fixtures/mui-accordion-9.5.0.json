@@ -28,9 +28,11 @@
       "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
       "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
       "Paper/paperClasses.js": "a1018d4c7cdc4390e25ef889da1889eb7c13d19111d3465f25320dc1f5550f01",
+      "Box/Box.js": "306d78c5254c68f321b72999149d084a76903e4b45797999cc9f71eea80b79ce",
       "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
       "ButtonBase/buttonBaseClasses.js": "f670c87c82a17f16c18a6b79e01f09976d61026b6005d07cd6e9526672e3abcf",
-      "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa"
+      "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa",
+      "styles/slotShouldForwardProp.js": "94273fe410b5da39daf022f286c2d746538878d094694eab5307d0eb6bd3501c"
     }
   },
   "classes": {
@@ -67,7 +69,9 @@
     "sourceFiles": {
       "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
       "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0",
-      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+      "mergeSlotProps/mergeSlotProps.js": "e5b9e904c10645212f6a7e58eaf4616acfe924ce6945e6705568fb018a84f54d",
+      "appendOwnerState/appendOwnerState.js": "5f3e28895ab6fb9d6eacf3d0919554c02c81884b3abd6bcc4ee86a6f70fbb75e"
     }
   },
   "classUtility": {
@@ -415,6 +419,522 @@
         "MuiAccordionSummary.expandIconWrapper": "MuiAccordionSummary-expandIconWrapper Mui-expanded",
         "MuiAccordion.region": "MuiAccordion-region"
       }
+    }
+  ],
+  "rootArguments": [
+    {
+      "mode": "defaults",
+      "seen": [
+        {
+          "keys": ["children", "className", "ownerState", "ref", "theme"],
+          "scalar": {
+            "disabled": { "present": false, "value": null },
+            "expanded": { "present": false, "value": null },
+            "disableGutters": { "present": false, "value": null },
+            "defaultExpanded": { "present": false, "value": null },
+            "onChange": { "present": false, "value": null },
+            "classes": { "present": false, "value": null },
+            "component": { "present": false, "value": null },
+            "style": { "present": false, "value": null },
+            "sx": { "present": false, "value": null },
+            "slots": { "present": false, "value": null },
+            "slotProps": { "present": false, "value": null }
+          },
+          "children": [
+            {
+              "className": "MuiAccordion-heading",
+              "expanded": null,
+              "timeout": null,
+              "ownerExpanded": false
+            },
+            { "className": null, "expanded": false, "timeout": "auto", "ownerExpanded": false }
+          ],
+          "owner": { "expanded": false, "extra": null }
+        }
+      ]
+    },
+    {
+      "mode": "authored",
+      "seen": [
+        {
+          "keys": [
+            "children",
+            "className",
+            "classes",
+            "component",
+            "ownerState",
+            "ref",
+            "style",
+            "sx",
+            "theme"
+          ],
+          "scalar": {
+            "disabled": { "present": false, "value": null },
+            "expanded": { "present": false, "value": null },
+            "disableGutters": { "present": false, "value": null },
+            "defaultExpanded": { "present": false, "value": null },
+            "onChange": { "present": false, "value": null },
+            "classes": { "present": true, "value": { "root": "authored-root" } },
+            "component": { "present": true, "value": "Component" },
+            "style": { "present": true, "value": { "paddingTop": 7, "paddingBottom": 11 } },
+            "sx": { "present": true, "value": { "opacity": 0.8 } },
+            "slots": { "present": false, "value": null },
+            "slotProps": { "present": false, "value": null }
+          },
+          "children": [
+            {
+              "className": "MuiAccordion-heading",
+              "expanded": null,
+              "timeout": null,
+              "ownerExpanded": true
+            },
+            { "className": null, "expanded": true, "timeout": "auto", "ownerExpanded": true }
+          ],
+          "owner": { "expanded": true, "extra": null }
+        }
+      ]
+    },
+    {
+      "mode": "slot-overrides",
+      "seen": [
+        {
+          "keys": [
+            "children",
+            "className",
+            "classes",
+            "component",
+            "disabled",
+            "ownerState",
+            "ref",
+            "style",
+            "sx",
+            "theme"
+          ],
+          "scalar": {
+            "disabled": { "present": true, "value": false },
+            "expanded": { "present": false, "value": null },
+            "disableGutters": { "present": false, "value": null },
+            "defaultExpanded": { "present": false, "value": null },
+            "onChange": { "present": false, "value": null },
+            "classes": { "present": true, "value": { "root": "slot-root" } },
+            "component": { "present": true, "value": "Component" },
+            "style": { "present": true, "value": { "paddingTop": 7, "paddingBottom": 13 } },
+            "sx": { "present": true, "value": null },
+            "slots": { "present": false, "value": null },
+            "slotProps": { "present": false, "value": null }
+          },
+          "children": [
+            {
+              "className": "MuiAccordion-heading",
+              "expanded": null,
+              "timeout": null,
+              "ownerExpanded": true
+            },
+            { "className": null, "expanded": true, "timeout": "auto", "ownerExpanded": true }
+          ],
+          "owner": { "expanded": true, "extra": "kept" }
+        }
+      ]
+    }
+  ],
+  "slotConstructorContracts": [
+    { "slot": "heading", "mode": "default", "calls": 1, "forwarded": null },
+    {
+      "slot": "heading",
+      "mode": "as",
+      "calls": 1,
+      "forwarded": {
+        "sxPresent": false,
+        "sx": null,
+        "ownerPresent": false,
+        "ownerExpanded": null,
+        "asPresent": false,
+        "as": null,
+        "classes": ["MuiAccordion-heading"]
+      }
+    },
+    {
+      "slot": "heading",
+      "mode": "slot",
+      "calls": 0,
+      "forwarded": {
+        "sxPresent": true,
+        "sx": { "paddingBottom": 2 },
+        "ownerPresent": true,
+        "ownerExpanded": true,
+        "asPresent": false,
+        "as": null,
+        "classes": ["MuiAccordion-heading"]
+      }
+    },
+    {
+      "slot": "heading",
+      "mode": "slot-component",
+      "calls": 0,
+      "forwarded": {
+        "sxPresent": true,
+        "sx": { "paddingBottom": 2 },
+        "ownerPresent": true,
+        "ownerExpanded": true,
+        "asPresent": true,
+        "as": "Leaf",
+        "classes": ["MuiAccordion-heading"]
+      }
+    },
+    { "slot": "region", "mode": "default", "calls": 1, "forwarded": null },
+    {
+      "slot": "region",
+      "mode": "as",
+      "calls": 1,
+      "forwarded": {
+        "sxPresent": false,
+        "sx": null,
+        "ownerPresent": false,
+        "ownerExpanded": null,
+        "asPresent": false,
+        "as": null,
+        "classes": ["MuiAccordion-region"]
+      }
+    },
+    {
+      "slot": "region",
+      "mode": "slot",
+      "calls": 0,
+      "forwarded": {
+        "sxPresent": true,
+        "sx": { "paddingBottom": 2 },
+        "ownerPresent": true,
+        "ownerExpanded": true,
+        "asPresent": false,
+        "as": null,
+        "classes": ["MuiAccordion-region"]
+      }
+    },
+    {
+      "slot": "region",
+      "mode": "slot-component",
+      "calls": 0,
+      "forwarded": {
+        "sxPresent": true,
+        "sx": { "paddingBottom": 2 },
+        "ownerPresent": true,
+        "ownerExpanded": true,
+        "asPresent": true,
+        "as": "Leaf",
+        "classes": ["MuiAccordion-region"]
+      }
+    }
+  ],
+  "slotReadContracts": [
+    {
+      "slot": "root",
+      "trace": [
+        "className:1",
+        "sx:1",
+        "component:1",
+        "ownerState:1",
+        "className:2",
+        "style:1",
+        "ref:1",
+        "style:2",
+        "style:3",
+        "ref:2"
+      ],
+      "forwarded": {
+        "className": "MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters slot-class-1",
+        "sx": { "opacity": 0.8 },
+        "component": "Leaf",
+        "as": null,
+        "extra": "kept",
+        "paddingTop": 3
+      }
+    },
+    {
+      "slot": "heading",
+      "trace": [
+        "className:1",
+        "sx:1",
+        "component:1",
+        "ownerState:1",
+        "className:2",
+        "style:1",
+        "ref:1",
+        "style:2",
+        "style:3",
+        "ref:2"
+      ],
+      "forwarded": {
+        "className": "MuiAccordion-heading slot-class-1",
+        "sx": { "opacity": 0.8 },
+        "component": null,
+        "as": "Leaf",
+        "extra": "kept",
+        "paddingTop": 3
+      }
+    },
+    {
+      "slot": "region",
+      "trace": [
+        "className:1",
+        "sx:1",
+        "component:1",
+        "ownerState:1",
+        "className:2",
+        "style:1",
+        "ref:1",
+        "style:2",
+        "style:3",
+        "ref:2"
+      ],
+      "forwarded": {
+        "className": "MuiAccordion-region slot-class-1",
+        "sx": { "opacity": 0.8 },
+        "component": null,
+        "as": "Leaf",
+        "extra": "kept",
+        "paddingTop": 3
+      }
+    }
+  ],
+  "transitionClassContracts": [
+    { "kind": "absent", "reads": 0, "observed": { "present": false, "value": null } },
+    { "kind": "empty-first", "reads": 2, "observed": { "present": true, "value": "selected" } },
+    { "kind": "undefined-first", "reads": 2, "observed": { "present": true, "value": "selected" } },
+    { "kind": "explicit-undefined", "reads": 2, "observed": { "present": true, "value": null } }
+  ],
+  "refOrderContracts": [
+    { "family": "Accordion", "trace": ["outer-attach:true", "outer-cleanup:true"] },
+    { "family": "AccordionSummary", "trace": ["outer-attach:true", "outer-cleanup:true"] }
+  ],
+  "styleValueReadContracts": [
+    { "slot": "root", "reads": 1, "selected": 17 },
+    { "slot": "heading", "reads": 1, "selected": 17 },
+    { "slot": "region", "reads": 1, "selected": 17 }
+  ],
+  "sourceClassContracts": [
+    {
+      "name": "same source class",
+      "a": {},
+      "b": {},
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": true
+    },
+    {
+      "name": "elevation is inline source paint",
+      "a": { "props": { "elevation": 1 } },
+      "b": { "props": { "elevation": 5 } },
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": true
+    },
+    {
+      "name": "square changes constructor CSS",
+      "a": {},
+      "b": { "props": { "square": true } },
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-tb54pk-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-tb54pk-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-tb54pk-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": false
+    },
+    {
+      "name": "gutters change constructor CSS",
+      "a": {},
+      "b": { "props": { "disableGutters": true } },
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-drglwa-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-drglwa-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-drglwa-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": false
+    },
+    {
+      "name": "sx changes emitted CSS",
+      "a": {},
+      "b": { "props": { "sx": { "paddingTop": "3px" } } },
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-858vpu-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-858vpu-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-858vpu-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": false
+    },
+    {
+      "name": "inline paint keeps CSS identity",
+      "a": { "props": { "style": { "opacity": 0.4 } } },
+      "b": { "props": { "style": { "opacity": 0.8 } } },
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": true
+    },
+    {
+      "name": "direction is inherited source CSS",
+      "a": { "theme": { "direction": "ltr" } },
+      "b": { "theme": { "direction": "rtl" } },
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": true
+    },
+    {
+      "name": "dark palette changes constructor CSS",
+      "a": {},
+      "b": { "theme": { "palette": { "mode": "dark" } } },
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-rt3rb2-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-rt3rb2-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-rt3rb2-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": false
+    },
+    {
+      "name": "authored expanded class participates",
+      "a": { "props": { "expanded": false, "className": "Mui-expanded" } },
+      "b": {},
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": true
+    },
+    {
+      "name": "collapsed current class does not participate",
+      "a": {},
+      "b": { "props": { "expanded": false } },
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": false,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": false
+    },
+    {
+      "name": "same Box terminals",
+      "a": { "root": "Box" },
+      "b": { "root": "Box" },
+      "left": {
+        "cssClass": "css-k1bujo-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-k1bujo-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-k1bujo-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-k1bujo-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-k1bujo-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-k1bujo-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": true
+    },
+    {
+      "name": "Box changes the final constructor",
+      "a": {},
+      "b": { "root": "Box" },
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-k1bujo-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-k1bujo-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-k1bujo-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": false
+    },
+    {
+      "name": "opaque Box keeps the final Box identity",
+      "a": { "root": "Box" },
+      "b": { "root": "ForwardedBox" },
+      "left": {
+        "cssClass": "css-k1bujo-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-k1bujo-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-k1bujo-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-k1bujo-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-k1bujo-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-k1bujo-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": true
+    },
+    {
+      "name": "opaque View keeps Paper identity",
+      "a": {},
+      "b": { "root": "ForwardedView" },
+      "left": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "right": {
+        "cssClass": "css-196353q-MuiPaper-root-MuiAccordion-root",
+        "expanded": true,
+        "selector": ".css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded+.css-196353q-MuiPaper-root-MuiAccordion-root.Mui-expanded::before"
+      },
+      "hidesBefore": true
     }
   ],
   "fixtures": [
