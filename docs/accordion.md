@@ -1,6 +1,6 @@
 # Native Accordion
 
-`Accordion`, `AccordionSummary`, `AccordionDetails` and `AccordionActions` compose native views, the shared ButtonBase activation host and the retained Collapse transition. They are implementations included in `0.0.8-prealpha.0`.
+`Accordion`, `AccordionSummary`, `AccordionDetails` and `AccordionActions` compose native views, the shared ButtonBase activation host and the retained Collapse transition. This guide describes development on `main`. Published `0.0.8-prealpha.0` includes the earlier subset recorded in the [changelog](../CHANGELOG.md).
 
 ```tsx
 import {
@@ -43,6 +43,8 @@ The body remains mounted while collapsed by default, preserving local editor sta
 
 Accordion exposes `root`, `heading`, `transition` and `region` slots. Summary exposes `root`, `content` and `expandIconWrapper`. Slot props accept objects or owner-state callbacks. Native root/slot refs use React Native View instances, with composed cleanup. Custom summary roots must implement the ButtonBase activation/ref/style contract; a plain layout View does not provide keyboard activation.
 
+`component` and a slot's `as`/`component` change its native terminal while retaining the named constructor. Replacing a slot through `slots` transfers styling to that constructor: it receives the selected raw `sx`, native styles and owner state. An explicit `slots.root={ButtonBase}` also replaces Summary's constructor. Root-slot refs attach before the forwarded ref, and both receive cleanup.
+
 Summary `id` and `aria-controls` map to the region's native ID and `aria-labelledby`. Explicit region slot props replace those defaults. Summary exposes native expanded/disabled accessibility state. Complete VoiceOver/TalkBack behavior and heading semantics still require a device matrix.
 
 ## Styling and boundaries
@@ -51,7 +53,11 @@ Native theme defaults, variants, named slot overrides, supported state selectors
 
 Accordion and Summary compose the original utility identifiers with supplied class maps and className. Generated and authored slot tokens match supported native self selectors; custom roots receive composed className metadata. Summary focus classes activate with the actual native focus-visible state. Utility helpers read the canonical class-name generator live, global state names stay fixed, and exported maps retain their module-load names. The class interfaces support augmentation without adding unimplemented runtime slots.
 
-External browser stylesheets, HTML element roots and DOM refs require native equivalents. Browser sibling pseudo-elements, automatic first/last sibling rounding, CSS margin animation and animated icon rotation are not implemented. Native grouping/animation policies, inherited Paper/polymorphic contracts, physical accessibility, RTL/font matrices and calibrated performance remain open. No full compatibility or completion claim is made.
+Panels derive rounded edges and expansion margins from actual native sibling order and type. The divider follows MUI's separator rules, including adjacent expanded panels sharing the same generated root styles. Paper/Box terminals and transparent ref-forwarding wrappers retain their own final CSS and inline precedence.
+
+Outer margins, Summary minimum height/content margins, icon rotation and separator opacity/color use theme transition timing. Rapid reversal continues from the presented value; reduced motion applies the endpoint. Changing gutters preserves Summary content state and refs. A theme `focusVisible` policy replaces the default Summary focus background.
+
+External browser stylesheets, HTML element roots and DOM refs require native equivalents. The native API includes Paper-compatible polymorphic roots; native refs intentionally differ from DOM refs. First-frame paint, broader grouping/motion matrices, screen-reader traversal and calibrated release performance remain completion gates. No full compatibility or completion claim is made.
 
 ## AccordionActions
 
@@ -65,10 +71,12 @@ The [iOS native gap check](../tests/native/ios/RootLayoutCatalogUITests.swift) p
 
 ## Validation
 
-The [pinned source record](../upstream/accordion.json) fingerprints MIT-licensed Material UI 9.5.0. `node scripts/reference/accordion.mjs` integrity-checks the original runtime and regenerates the comparison fixtures. The focused native tests cover its controlled/uncontrolled defaults, slot overrides, callback ordering and utility identifiers, plus native activation, retention and composition. The [consumer fixture](../fixtures/native-consumer/accordion.tsx) covers root/deep imports and native type boundaries.
+The [pinned source record](../upstream/accordion.json) fingerprints MIT-licensed Material UI 9.5.0. `node scripts/reference/accordion.mjs` integrity-checks the original runtime and regenerates the comparison fixtures. `node scripts/reference/accordion-style-programmes.mjs --check` verifies the generated original constructor CSS and its [provenance](../upstream/accordion-style-programmes.json). The focused native tests cover its controlled/uncontrolled defaults, slot overrides, callback ordering and utility identifiers, plus native activation, retention and composition. The [consumer fixture](../fixtures/native-consumer/accordion.tsx) covers root/deep imports and native type boundaries.
 
 Scoped checks on the existing iPhone 18 Pro / iOS 27 and Android API 37 emulator exercise a real note editor whose state is owned inside the body, controlled panel switching, action activation and disabled interaction. The Android scenario compares actual/native natural heights and retained editor identity. The iOS scenario waits for transition receipts and proves optional unmounting by changing local help state, closing, then requiring it to reset after reopening. Accessibility absence alone is insufficient proof of unmounting.
 
 The maintained scenarios are [Android](../tests/native/android/AccordionScenario.java) and [iOS](../tests/native/ios/AccordionCatalogUITests.swift). Prepare the existing generated Android project with `node scripts/native-catalog/android-accordion.mjs prepare PROJECT`, build/install its test APK, then run `node scripts/native-catalog/android-accordion.mjs run SERIAL OUTPUT` with the Android SDK tools available. The runner targets that explicit device, retains native receipts/screenshots and restores only the catalog. Add the maintained Swift file to the catalog UI test target to run `AccordionCatalogUITests` on an existing simulator.
+
+The maintained iOS scenario also checks actual Summary content/icon positions when an authored parent switches RTL, retaining body state and restoring LTR. Normal and largest accessibility text sizes pass, including payment/footer bounds and visible-control description/trait audits. These automated audits complement touch checks; they do not establish VoiceOver traversal. Renderer regressions cover interruption, reduced motion, constructor replacement and state/ref retention when gutters change. Fresh tarball consumers compile native root/deep imports and strict polymorphic/optional contracts.
 
 For flat bordered panels, set `elevation={0}` explicitly; `shadowOpacity: 0` alone does not remove Android elevation. Source, renderer and emulator checks do not establish full physical-device accessibility, visual or release-performance behavior.
