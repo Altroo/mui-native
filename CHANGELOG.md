@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Port the LinearProgress source contract to native horizontal bars, four variants, ranges, RTL context, palette shades, classes, theme styling and native refs. Six normal/enlarged/restored iOS/Android profiles and 90 actual paint comparisons pass.
+- Scope `LinearProgress` deep imports to their documented component, types and class helpers. Import unrelated feedback components from their own entries or the package root.
+
 - Replace the CircularProgress ActivityIndicator prototype with a native SVG/View component: determinate ranges, original circle geometry, optional tracks, palette colors, separate styled slots, classes and native View refs. Retain native rotation/dash motion, reduced-motion policy and supported transition timing. Correct iOS relative-percentage announcements and safe transform resets when pausing motion.
 - **Breaking for earlier native previews:** the `@mui/material/CircularProgress` deep entry no longer re-exports unrelated feedback components. Import those from their own entries or the Material root.
 
