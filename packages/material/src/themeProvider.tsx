@@ -22,6 +22,16 @@ import {
 export const THEME_ID = '$$material';
 // Material and System own separate fallback singletons, including without a provider.
 const materialDefaultTheme = createTheme();
+/** @internal Attach a component's styled theme without changing descendant context. */
+export function useNativeStyledTheme(explicit?: Theme | null): Theme {
+  const context = useSystemTheme(materialDefaultTheme);
+  const theme = explicit ?? context;
+  if (theme != null) {
+    // The original emptiness check includes enumerable prototype keys.
+    for (const _key in theme) return (theme as Theme & Record<string, Theme>)[THEME_ID] || theme;
+  }
+  return materialDefaultTheme;
+}
 export interface ThemeProviderProps<T = Theme>
   extends Omit<SystemThemeProviderProps<T>, 'themeId'> {}
 export function ThemeProvider<T = Theme>({ theme, children }: ThemeProviderProps<T>) {

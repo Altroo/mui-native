@@ -1,6 +1,10 @@
 // Copyright (c) 2026 Altroo and contributors.
 // SPDX-License-Identifier: MIT
 import {
+  inspectCircularProgress,
+  summarizeCircularProgress,
+} from './android-circular-progress-report.mjs';
+import {
   inspectDialogTitleLayout,
   summarizeDialogTitleLayout,
 } from './android-dialog-title-report.mjs';
@@ -256,7 +260,7 @@ function executeFile(file, args, options) {
 
 /**
  * Run on one explicitly selected device and restore only the catalog.
- * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'form-group-events' | 'form-group-keyboard' | 'form-group-focus' | 'form-group-editor' | 'form-group-accessibility' | 'list-item-avatar-accessibility' | 'accordion-actions-layout' | 'card-actions-layout' | 'dialog-actions-layout' | 'dialog-title-layout' | 'text-alignment' | 'divider' | 'paper' | 'box' | 'card' | 'structure' | 'structure-children', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
+ * @param {{adb: string, serial: string, output: string, signal?: AbortSignal, scenario?: 'popper' | 'accordion' | 'svg-icon' | 'button-group' | 'button-group-reading' | 'layout-roots' | 'form-group-events' | 'form-group-keyboard' | 'form-group-focus' | 'form-group-editor' | 'form-group-accessibility' | 'list-item-avatar-accessibility' | 'accordion-actions-layout' | 'card-actions-layout' | 'dialog-actions-layout' | 'dialog-title-layout' | 'circular-progress' | 'text-alignment' | 'divider' | 'paper' | 'box' | 'card' | 'structure' | 'structure-children', globalRTL?: boolean, fontProfile?: 'normal' | 'enlarged'}} options
  * @param {(file: string, args: string[], options: import('node:child_process').ExecFileOptionsWithBufferEncoding) => Promise<Uint8Array | string> | Uint8Array | string} [execute]
  */
 export async function run(
@@ -281,6 +285,7 @@ export async function run(
       'card-actions-layout',
       'dialog-actions-layout',
       'dialog-title-layout',
+      'circular-progress',
       'text-alignment',
       'divider',
       'paper',
@@ -303,12 +308,14 @@ export async function run(
     'card-actions-layout',
     'dialog-actions-layout',
     'dialog-title-layout',
+    'circular-progress',
   ].includes(scenario);
   const selectedFontProfile = [
     'accordion-actions-layout',
     'card-actions-layout',
     'dialog-actions-layout',
     'dialog-title-layout',
+    'circular-progress',
   ].includes(scenario)
     ? (fontProfile ?? 'normal')
     : fontProfile;
@@ -318,23 +325,25 @@ export async function run(
       : selectedFontProfile !== undefined
   )
     throw Error(
-      (scenario === 'dialog-title-layout'
-        ? 'DialogTitle'
-        : scenario === 'dialog-actions-layout'
-          ? 'DialogActions'
-          : scenario === 'card-actions-layout'
-            ? 'CardActions'
-            : scenario === 'accordion-actions-layout'
-              ? 'AccordionActions'
-              : scenario === 'layout-roots'
-                ? 'Layout root'
-                : scenario === 'card'
-                  ? 'Card'
-                  : scenario === 'box'
-                    ? 'Box'
-                    : scenario === 'paper'
-                      ? 'Paper'
-                      : 'Divider') + ' checks require an explicit normal/enlarged font profile',
+      (scenario === 'circular-progress'
+        ? 'CircularProgress'
+        : scenario === 'dialog-title-layout'
+          ? 'DialogTitle'
+          : scenario === 'dialog-actions-layout'
+            ? 'DialogActions'
+            : scenario === 'card-actions-layout'
+              ? 'CardActions'
+              : scenario === 'accordion-actions-layout'
+                ? 'AccordionActions'
+                : scenario === 'layout-roots'
+                  ? 'Layout root'
+                  : scenario === 'card'
+                    ? 'Card'
+                    : scenario === 'box'
+                      ? 'Box'
+                      : scenario === 'paper'
+                        ? 'Paper'
+                        : 'Divider') + ' checks require an explicit normal/enlarged font profile',
     );
   if (typeof serial !== 'string' || !serial.trim())
     throw Error('Choose one explicit --serial; devices are never selected automatically');
@@ -420,13 +429,15 @@ export async function run(
                                       ? inspectButtonGroupReport(text)
                                       : scenario === 'dialog-title-layout'
                                         ? inspectDialogTitleLayout(text)
-                                        : scenario === 'dialog-actions-layout'
-                                          ? inspectDialogActionsLayout(text)
-                                          : scenario === 'card-actions-layout'
-                                            ? inspectCardActionsLayout(text)
-                                            : scenario === 'accordion-actions-layout'
-                                              ? inspectAccordionActionsLayout(text)
-                                              : inspectReport(text);
+                                        : scenario === 'circular-progress'
+                                          ? inspectCircularProgress(text)
+                                          : scenario === 'dialog-actions-layout'
+                                            ? inspectDialogActionsLayout(text)
+                                            : scenario === 'card-actions-layout'
+                                              ? inspectCardActionsLayout(text)
+                                              : scenario === 'accordion-actions-layout'
+                                                ? inspectAccordionActionsLayout(text)
+                                                : inspectReport(text);
     await writeFile(join(output, 'report.json'), JSON.stringify(report, null, 2) + '\n');
     for (const file of report.screenshots) {
       const bytes = await call([
@@ -453,6 +464,8 @@ export async function run(
     else if (scenario === 'form-group-editor') summarizeFormGroupEditor(text);
     else if (scenario === 'form-group-accessibility') summarizeFormGroupAccessibility(text);
     else if (scenario === 'list-item-avatar-accessibility') summarizeAvatarAccessibility(text);
+    else if (scenario === 'circular-progress')
+      summarizeCircularProgress(text, { fontProfile: selectedFontProfile });
     else if (scenario === 'dialog-title-layout')
       summarizeDialogTitleLayout(text, { fontProfile: selectedFontProfile });
     else if (scenario === 'dialog-actions-layout')

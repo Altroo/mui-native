@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Replace the CircularProgress ActivityIndicator prototype with a native SVG/View component: determinate ranges, original circle geometry, optional tracks, palette colors, separate styled slots, classes and native View refs. Retain native rotation/dash motion, reduced-motion policy and supported transition timing. Correct iOS relative-percentage announcements and safe transform resets when pausing motion.
+- **Breaking for earlier native previews:** the `@mui/material/CircularProgress` deep entry no longer re-exports unrelated feedback components. Import those from their own entries or the Material root.
+
 - Add dedicated native DialogTitle defaults, Text roots/refs, utility classes, source-ordered Typography composition and scoped imports. Dialog paper and titles share stable IDs with explicit caller/slot precedence. Normal/enlarged/restored iOS and Android development checks verify retained title geometry, native refs, real dialog actions and Android label targets; physical accessibility and full release gates remain open.
 - **Breaking for earlier native previews:** the `@mui/material/DialogTitle` deep entry exports only Title, its types and class helpers. Import unrelated layout components from the Material root or their own paths.
 - Preserve genuine styles through styled title composition, honor explicit/inherited themes and sequential theme attachment, and apply the canonical class-name generator to Typography's utility classes.

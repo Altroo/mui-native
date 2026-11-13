@@ -84,12 +84,12 @@ export interface NativeOpacityTiming {
   delay: number;
   easing: string;
 }
-// Translate only the owned opacity/transform or all clause. Preserve theme
+// Translate only the supported native property or all clause. Preserve theme
 // factory timing overrides without claiming a general CSS engine.
 export function nativePropertyTiming(
   declaration: string,
   fallback: NativeOpacityTiming,
-  property: 'opacity' | 'transform' | 'height' | 'width',
+  property: 'opacity' | 'transform' | 'height' | 'width' | 'stroke-dashoffset',
 ): NativeOpacityTiming {
   if (declaration.trim() === 'none') return { duration: 0, delay: 0, easing: 'linear' };
   const clauses = declaration.split(/,(?![^()]*\))/);
@@ -99,7 +99,7 @@ export function nativePropertyTiming(
   const match = clause
     ?.trim()
     .match(
-      /^(?:opacity|transform|height|width|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
+      /^(?:opacity|transform|height|width|stroke-dashoffset|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
     );
   if (!match) {
     diagnostic('transition-create', `Unsupported native ${property} transition: ${declaration}`);

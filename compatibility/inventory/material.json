@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "08217eb20083d4de631f914e68ba889899a14b6161d9d6cc9945cbd462361132",
+  "nativeSourceSha256": "a96e348b87518db8873016161ba3d1f7ba22c9775e4fb02114bc710924bdd3d2",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -12821,7 +12821,7 @@
           "line": 23
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12840,7 +12840,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12859,7 +12859,7 @@
           "line": 21
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12878,7 +12878,7 @@
           "line": 9
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12897,7 +12897,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -12916,7 +12916,7 @@
           "line": 8
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17229,7 +17229,7 @@
           "line": 22
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -37726,7 +37726,7 @@
           "module": "@altroo/mui-native:src/themeProvider.tsx",
           "name": "useComponentStyle",
           "kind": "value",
-          "line": 74
+          "line": 84
         }
       ]
     },
@@ -37814,7 +37814,7 @@
           "module": "@altroo/mui-native:src/themeProvider.tsx",
           "name": "useSx",
           "kind": "value",
-          "line": 71
+          "line": 81
         }
       ]
     },
@@ -62577,7 +62577,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CircularProgressPropsColorOverrides",
+          "file": "src/circularProgressTypes.ts",
+          "line": 7,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CircularProgressPropsVariantOverrides",
@@ -62587,7 +62594,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CircularProgressPropsVariantOverrides",
+          "file": "src/circularProgressTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CircularProgressProps",
@@ -62605,7 +62619,7 @@
           "line": 13,
           "kind": "property",
           "type": "Partial<CircularProgressClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62618,7 +62632,7 @@
           "line": 20,
           "kind": "property",
           "type": "OverridableStringUnion<'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'inherit', CircularProgressPropsColorOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62631,7 +62645,7 @@
           "line": 26,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62644,7 +62658,7 @@
           "line": 32,
           "kind": "slot",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62657,7 +62671,7 @@
           "line": 37,
           "kind": "property",
           "type": "number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62670,7 +62684,7 @@
           "line": 42,
           "kind": "property",
           "type": "number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62683,7 +62697,7 @@
           "line": 49,
           "kind": "property",
           "type": "number | string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62709,7 +62723,7 @@
           "line": 58,
           "kind": "property",
           "type": "number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62722,7 +62736,7 @@
           "line": 64,
           "kind": "property",
           "type": "number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62735,7 +62749,7 @@
           "line": 70,
           "kind": "property",
           "type": "OverridableStringUnion<'determinate' | 'indeterminate', CircularProgressPropsVariantOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -62752,7 +62766,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CircularProgressProps",
+          "file": "src/circularProgressTypes.ts",
+          "line": 23,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CircularProgressPropsColorOverrides",
@@ -62762,7 +62783,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CircularProgressPropsColorOverrides",
+          "file": "src/circularProgressTypes.ts",
+          "line": 7,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CircularProgressPropsVariantOverrides",
@@ -62772,7 +62800,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CircularProgressPropsVariantOverrides",
+          "file": "src/circularProgressTypes.ts",
+          "line": 8,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CircularProgressProps",
@@ -62790,7 +62825,7 @@
           "line": 13,
           "kind": "property",
           "type": "Partial<CircularProgressClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62803,7 +62838,7 @@
           "line": 20,
           "kind": "property",
           "type": "OverridableStringUnion<'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'inherit', CircularProgressPropsColorOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62816,7 +62851,7 @@
           "line": 26,
           "kind": "property",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62829,7 +62864,7 @@
           "line": 32,
           "kind": "slot",
           "type": "boolean | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62842,7 +62877,7 @@
           "line": 37,
           "kind": "property",
           "type": "number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62855,7 +62890,7 @@
           "line": 42,
           "kind": "property",
           "type": "number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62868,7 +62903,7 @@
           "line": 49,
           "kind": "property",
           "type": "number | string | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62894,7 +62929,7 @@
           "line": 58,
           "kind": "property",
           "type": "number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62907,7 +62942,7 @@
           "line": 64,
           "kind": "property",
           "type": "number | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62920,7 +62955,7 @@
           "line": 70,
           "kind": "property",
           "type": "OverridableStringUnion<'determinate' | 'indeterminate', CircularProgressPropsVariantOverrides> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -62937,7 +62972,14 @@
         "Theme"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CircularProgressProps",
+          "file": "src/circularProgressTypes.ts",
+          "line": 23,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CircularProgressClasses",
@@ -62955,7 +62997,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62968,7 +63010,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62981,7 +63023,7 @@
           "line": 7,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -62994,7 +63036,7 @@
           "line": 9,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63007,7 +63049,7 @@
           "line": 11,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63020,7 +63062,7 @@
           "line": 13,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63033,7 +63075,7 @@
           "line": 15,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63046,7 +63088,7 @@
           "line": 17,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63059,13 +63101,20 @@
           "line": 19,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CircularProgressClasses",
+          "file": "src/circularProgressClasses.ts",
+          "line": 6,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CircularProgressClassKey",
@@ -63077,7 +63126,14 @@
         "CircularProgressClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CircularProgressClassKey",
+          "file": "src/circularProgressClasses.ts",
+          "line": 17,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CircularProgressClasses",
@@ -63095,7 +63151,7 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63108,7 +63164,7 @@
           "line": 5,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63121,7 +63177,7 @@
           "line": 7,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63134,7 +63190,7 @@
           "line": 9,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63147,7 +63203,7 @@
           "line": 11,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63160,7 +63216,7 @@
           "line": 13,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63173,7 +63229,7 @@
           "line": 15,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63186,7 +63242,7 @@
           "line": 17,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -63199,13 +63255,20 @@
           "line": 19,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CircularProgressClasses",
+          "file": "src/circularProgressClasses.ts",
+          "line": 6,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "CircularProgressClassKey",
@@ -63217,7 +63280,14 @@
         "CircularProgressClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "CircularProgressClassKey",
+          "file": "src/circularProgressClasses.ts",
+          "line": 17,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "ClickAwayMouseEventHandler",
@@ -112924,7 +112994,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "Axis",
+          "file": "src/circularProgressTransform.ts",
+          "line": 7,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "AxisProps",
@@ -113806,7 +113883,14 @@
       "members": [],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "Axis",
+          "file": "src/circularProgressTransform.ts",
+          "line": 7,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "AxisProps",
@@ -114452,7 +114536,7 @@
         {
           "name": "SnackbarProps",
           "file": "src/feedback.tsx",
-          "line": 110,
+          "line": 101,
           "package": "@altroo/mui-native"
         }
       ]
@@ -114843,7 +114927,7 @@
         {
           "name": "SnackbarProps",
           "file": "src/feedback.tsx",
-          "line": 110,
+          "line": 101,
           "package": "@altroo/mui-native"
         }
       ]
@@ -143108,7 +143192,7 @@
         {
           "name": "ThemeProviderProps",
           "file": "src/themeProvider.tsx",
-          "line": 25,
+          "line": 35,
           "package": "@altroo/mui-native"
         }
       ]
@@ -143278,7 +143362,7 @@
         {
           "name": "ThemeProviderProps",
           "file": "src/themeProvider.tsx",
-          "line": 25,
+          "line": 35,
           "package": "@altroo/mui-native"
         }
       ]
@@ -172057,7 +172141,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 107,
+          "line": 109,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173742,7 +173826,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 104,
+          "line": 106,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173763,7 +173847,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 107,
+          "line": 109,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175448,7 +175532,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 104,
+          "line": 106,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175651,7 +175735,7 @@
         {
           "name": "ThemeWithProps",
           "file": "src/themeProvider.tsx",
-          "line": 49,
+          "line": 59,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175673,7 +175757,7 @@
         {
           "name": "ThemedProps",
           "file": "src/themeProvider.tsx",
-          "line": 52,
+          "line": 62,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175708,7 +175792,7 @@
         {
           "name": "ThemeWithProps",
           "file": "src/themeProvider.tsx",
-          "line": 49,
+          "line": 59,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175730,7 +175814,7 @@
         {
           "name": "ThemedProps",
           "file": "src/themeProvider.tsx",
-          "line": 52,
+          "line": 62,
           "package": "@altroo/mui-native"
         }
       ]
@@ -181782,6 +181866,12 @@
       "nativeCandidates": [
         {
           "name": "SlotProps",
+          "file": "src/circularProgress.tsx",
+          "line": 150,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "SlotProps",
           "file": "src/defaultProps.tsx",
           "line": 170,
           "package": "@altroo/mui-native-system"
@@ -181888,6 +181978,12 @@
       ],
       "inheritanceResolved": false,
       "nativeCandidates": [
+        {
+          "name": "SlotProps",
+          "file": "src/circularProgress.tsx",
+          "line": 150,
+          "package": "@altroo/mui-native"
+        },
         {
           "name": "SlotProps",
           "file": "src/defaultProps.tsx",
@@ -191867,6 +191963,640 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "Owner",
+      "file": "src/circularProgress.tsx",
+      "line": 39,
+      "kind": "type",
+      "members": [
+        {
+          "name": "color",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "color: string;",
+          "line": 40,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "variant",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant: string;",
+          "line": 41,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "size",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "size: number | string;",
+          "line": 42,
+          "kind": "property",
+          "type": "number | string"
+        },
+        {
+          "name": "thickness",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "thickness: number;",
+          "line": 43,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "value",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "value: number;",
+          "line": 44,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "disableShrink",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableShrink: boolean;",
+          "line": 45,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "enableTrackSlot",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "enableTrackSlot: boolean;",
+          "line": 46,
+          "kind": "slot",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "CircularProgressProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ConstructorStyle",
+      "file": "src/circularProgress.tsx",
+      "line": 100,
+      "kind": "type",
+      "members": [
+        {
+          "name": "base",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "base: SxProps",
+          "line": 100,
+          "kind": "property",
+          "type": "SxProps"
+        }
+      ],
+      "references": [
+        "CircularProgressMotionStyle",
+        "SxProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "SlotProps",
+      "file": "src/circularProgress.tsx",
+      "line": 150,
+      "kind": "type",
+      "members": [
+        {
+          "name": "ownerState",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ownerState: Owner;",
+          "line": 151,
+          "kind": "slot",
+          "type": "Owner"
+        },
+        {
+          "name": "className",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "className: string;",
+          "line": 152,
+          "kind": "slot",
+          "type": "string"
+        },
+        {
+          "name": "style",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style?: Record<string, unknown>;",
+          "line": 153,
+          "kind": "slot",
+          "type": "Record<string, unknown>"
+        },
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "children?: React.ReactNode;",
+          "line": 154,
+          "kind": "slot",
+          "type": "React.ReactNode"
+        },
+        {
+          "name": "viewBox",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "viewBox?: string;",
+          "line": 155,
+          "kind": "slot",
+          "type": "string"
+        },
+        {
+          "name": "aria-hidden",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "'aria-hidden'?: string;",
+          "line": 156,
+          "kind": "slot",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "CircleProps",
+        "Owner",
+        "Pick",
+        "React.ReactNode",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CircularProgressClasses",
+      "file": "src/circularProgressClasses.ts",
+      "line": 6,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: string;",
+          "line": 7,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "determinate",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "determinate: string;",
+          "line": 8,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "indeterminate",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "indeterminate: string;",
+          "line": 9,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "colorPrimary",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "colorPrimary: string;",
+          "line": 10,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "colorSecondary",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "colorSecondary: string;",
+          "line": 11,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "svg",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "svg: string;",
+          "line": 12,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "track",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "track: string;",
+          "line": 13,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "circle",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "circle: string;",
+          "line": 14,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "circleDisableShrink",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "circleDisableShrink: string;",
+          "line": 15,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CircularProgressClassKey",
+      "file": "src/circularProgressClasses.ts",
+      "line": 17,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "CircularProgressClasses"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CircularProgressMotionStyle",
+      "file": "src/circularProgressFrames.tsx",
+      "line": 36,
+      "kind": "type",
+      "members": [
+        {
+          "name": "motion",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "motion?: ReducedMotionMode | undefined;",
+          "line": 37,
+          "kind": "property",
+          "type": "ReducedMotionMode | undefined"
+        },
+        {
+          "name": "transitionMotion",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "transitionMotion?: ReducedMotionMode | undefined;",
+          "line": 38,
+          "kind": "property",
+          "type": "ReducedMotionMode | undefined"
+        },
+        {
+          "name": "transition",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "transition?: string | undefined;",
+          "line": 39,
+          "kind": "property",
+          "type": "string | undefined"
+        }
+      ],
+      "references": [
+        "ReducedMotionMode"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Axis",
+      "file": "src/circularProgressTransform.ts",
+      "line": 7,
+      "kind": "type",
+      "members": [
+        {
+          "name": "key",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "key: string;",
+          "line": 7,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "value: number;",
+          "line": 7,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "angle",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "angle: boolean",
+          "line": 7,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Graph",
+      "file": "src/circularProgressTransform.ts",
+      "line": 8,
+      "kind": "type",
+      "members": [
+        {
+          "name": "from",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "from: Axis[];",
+          "line": 8,
+          "kind": "property",
+          "type": "Axis[]"
+        },
+        {
+          "name": "to",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "to: Axis[];",
+          "line": 8,
+          "kind": "property",
+          "type": "Axis[]"
+        },
+        {
+          "name": "raw",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "raw: NativeStyle['transform'];",
+          "line": 8,
+          "kind": "property",
+          "type": "NativeStyle['transform']"
+        },
+        {
+          "name": "key",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "key: string",
+          "line": 8,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [
+        "Axis",
+        "NativeStyle"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CircularProgressPropsColorOverrides",
+      "file": "src/circularProgressTypes.ts",
+      "line": 7,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CircularProgressPropsVariantOverrides",
+      "file": "src/circularProgressTypes.ts",
+      "line": 8,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "OverrideUnion",
+      "file": "src/circularProgressTypes.ts",
+      "line": 9,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Base",
+        "Extract",
+        "K",
+        "Omit",
+        "Overrides",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CircularProgressProps",
+      "file": "src/circularProgressTypes.ts",
+      "line": 23,
+      "kind": "type",
+      "members": [
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<CircularProgressClasses> | undefined;",
+          "line": 24,
+          "kind": "property",
+          "type": "Partial<CircularProgressClasses> | undefined"
+        },
+        {
+          "name": "color",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "color?:\n    | OverrideUnion<\n        'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'inherit',\n        CircularProgressPropsColorOverrides\n      >\n    | undefined;",
+          "line": 25,
+          "kind": "property",
+          "type": "| OverrideUnion<\n        'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning' | 'inherit',\n        CircularProgressPropsColorOverrides\n      >\n    | undefined"
+        },
+        {
+          "name": "disableShrink",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableShrink?: boolean | undefined;",
+          "line": 31,
+          "kind": "property",
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "enableTrackSlot",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "enableTrackSlot?: boolean | undefined;",
+          "line": 32,
+          "kind": "slot",
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "min",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "min?: number | undefined;",
+          "line": 33,
+          "kind": "property",
+          "type": "number | undefined"
+        },
+        {
+          "name": "max",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "max?: number | undefined;",
+          "line": 34,
+          "kind": "property",
+          "type": "number | undefined"
+        },
+        {
+          "name": "size",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "size?: number | string | undefined;",
+          "line": 35,
+          "kind": "property",
+          "type": "number | string | undefined"
+        },
+        {
+          "name": "thickness",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "thickness?: number | undefined;",
+          "line": 36,
+          "kind": "property",
+          "type": "number | undefined"
+        },
+        {
+          "name": "value",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "value?: number | undefined;",
+          "line": 37,
+          "kind": "property",
+          "type": "number | undefined"
+        },
+        {
+          "name": "variant",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant?:\n    | OverrideUnion<'determinate' | 'indeterminate', CircularProgressPropsVariantOverrides>\n    | undefined;",
+          "line": 38,
+          "kind": "property",
+          "type": "| OverrideUnion<'determinate' | 'indeterminate', CircularProgressPropsVariantOverrides>\n    | undefined"
+        }
+      ],
+      "references": [
+        "BoxProps",
+        "CircularProgressClasses",
+        "CircularProgressPropsColorOverrides",
+        "CircularProgressPropsVariantOverrides",
+        "Omit",
+        "OverrideUnion",
+        "Partial"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "CollapseRootSlotPropsOverrides",
       "file": "src/collapse.tsx",
       "line": 51,
@@ -195069,7 +195799,7 @@
     {
       "name": "SnackbarProps",
       "file": "src/feedback.tsx",
-      "line": 110,
+      "line": 101,
       "kind": "type",
       "members": [
         {
@@ -195079,7 +195809,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "open: boolean;",
-          "line": 111,
+          "line": 102,
           "kind": "property",
           "type": "boolean"
         },
@@ -195090,7 +195820,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "message?: React.ReactNode;",
-          "line": 112,
+          "line": 103,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -195101,7 +195831,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "action?: React.ReactNode;",
-          "line": 113,
+          "line": 104,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -195112,7 +195842,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "autoHideDuration?: number | null;",
-          "line": 114,
+          "line": 105,
           "kind": "property",
           "type": "number | null"
         },
@@ -195123,7 +195853,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onClose?: (event: null, reason: 'timeout') => void;",
-          "line": 115,
+          "line": 106,
           "kind": "event",
           "type": "(event: null, reason: 'timeout') => void"
         },
@@ -195134,7 +195864,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 116,
+          "line": 107,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -210291,7 +211021,7 @@
     {
       "name": "MaterialExports",
       "file": "src/styles/props.ts",
-      "line": 19,
+      "line": 20,
       "kind": "type",
       "members": [],
       "references": [],
@@ -210301,7 +211031,7 @@
     {
       "name": "ComponentName",
       "file": "src/styles/props.ts",
-      "line": 21,
+      "line": 22,
       "kind": "type",
       "members": [],
       "references": [],
@@ -210311,7 +211041,7 @@
     {
       "name": "ExistingComponentProps",
       "file": "src/styles/props.ts",
-      "line": 82,
+      "line": 83,
       "kind": "type",
       "members": [],
       "references": [
@@ -210326,7 +211056,7 @@
     {
       "name": "GenericComponentProps",
       "file": "src/styles/props.ts",
-      "line": 87,
+      "line": 88,
       "kind": "type",
       "members": [
         {
@@ -210336,7 +211066,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiAutocomplete: AutocompleteProps<any, any, any, any, any, any>;",
-          "line": 88,
+          "line": 89,
           "kind": "property",
           "type": "AutocompleteProps<any, any, any, any, any, any>"
         },
@@ -210347,7 +211077,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButton: ButtonProps;",
-          "line": 89,
+          "line": 90,
           "kind": "property",
           "type": "ButtonProps"
         },
@@ -210358,7 +211088,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiIconButton: IconButtonProps;",
-          "line": 90,
+          "line": 91,
           "kind": "property",
           "type": "IconButtonProps"
         },
@@ -210369,7 +211099,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButtonGroup: ButtonGroupProps;",
-          "line": 91,
+          "line": 92,
           "kind": "property",
           "type": "ButtonGroupProps"
         },
@@ -210380,7 +211110,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiChip: ChipProps;",
-          "line": 92,
+          "line": 93,
           "kind": "property",
           "type": "ChipProps"
         },
@@ -210391,7 +211121,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSvgIcon: SvgIconProps;",
-          "line": 93,
+          "line": 94,
           "kind": "property",
           "type": "SvgIconProps"
         },
@@ -210402,7 +211132,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSelect: SelectProps;",
-          "line": 94,
+          "line": 95,
           "kind": "property",
           "type": "SelectProps"
         },
@@ -210413,7 +211143,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiTextField: TextFieldProps;",
-          "line": 95,
+          "line": 96,
           "kind": "property",
           "type": "TextFieldProps"
         },
@@ -210424,7 +211154,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPopper: PopperProps;",
-          "line": 96,
+          "line": 97,
           "kind": "property",
           "type": "PopperProps"
         },
@@ -210435,7 +211165,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDivider: DividerProps;",
-          "line": 97,
+          "line": 98,
           "kind": "property",
           "type": "DividerProps"
         },
@@ -210446,7 +211176,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPaper: PaperProps;",
-          "line": 98,
+          "line": 99,
           "kind": "property",
           "type": "PaperProps"
         },
@@ -210457,7 +211187,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiCard: CardProps;",
-          "line": 99,
+          "line": 100,
           "kind": "property",
           "type": "CardProps"
         },
@@ -210468,7 +211198,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiCardActions: CardActionsProps;",
-          "line": 100,
+          "line": 101,
           "kind": "property",
           "type": "CardActionsProps"
         },
@@ -210479,7 +211209,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDialogActions: DialogActionsProps;",
-          "line": 101,
+          "line": 102,
           "kind": "property",
           "type": "DialogActionsProps"
         },
@@ -210490,9 +211220,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDialogTitle: DialogTitleProps;",
-          "line": 102,
+          "line": 103,
           "kind": "property",
           "type": "DialogTitleProps"
+        },
+        {
+          "name": "MuiCircularProgress",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiCircularProgress: CircularProgressProps;",
+          "line": 104,
+          "kind": "property",
+          "type": "CircularProgressProps"
         }
       ],
       "references": [
@@ -210502,6 +211243,7 @@
         "CardActionsProps",
         "CardProps",
         "ChipProps",
+        "CircularProgressProps",
         "DialogActionsProps",
         "DialogTitleProps",
         "DividerProps",
@@ -210518,7 +211260,7 @@
     {
       "name": "ComponentsPropsList",
       "file": "src/styles/props.ts",
-      "line": 104,
+      "line": 106,
       "kind": "type",
       "members": [],
       "references": [
@@ -210532,7 +211274,7 @@
     {
       "name": "ComponentsProps",
       "file": "src/styles/props.ts",
-      "line": 107,
+      "line": 109,
       "kind": "type",
       "members": [],
       "references": [
@@ -211650,7 +212392,7 @@
     {
       "name": "ThemeProviderProps",
       "file": "src/themeProvider.tsx",
-      "line": 25,
+      "line": 35,
       "kind": "type",
       "members": [],
       "references": [
@@ -211665,7 +212407,7 @@
     {
       "name": "ThemeWithProps",
       "file": "src/themeProvider.tsx",
-      "line": 49,
+      "line": 59,
       "kind": "type",
       "members": [
         {
@@ -211675,7 +212417,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "components?: Components | undefined;",
-          "line": 50,
+          "line": 60,
           "kind": "property",
           "type": "Components | undefined"
         }
@@ -211689,7 +212431,7 @@
     {
       "name": "ThemedProps",
       "file": "src/themeProvider.tsx",
-      "line": 52,
+      "line": 62,
       "kind": "type",
       "members": [],
       "references": [
