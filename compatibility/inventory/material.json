@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "442ea9a047d4248268a08d7852a3b9f62d2e2907145d2783c815b5e1926e53a5",
+  "nativeSourceSha256": "a96e348b87518db8873016161ba3d1f7ba22c9775e4fb02114bc710924bdd3d2",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {

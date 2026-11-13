@@ -3,7 +3,7 @@
 jest.mock('../packages/material/src/motionPreference', () => ({
   useNativeReducedMotion: () => true,
 }));
-import type React from 'react';
+import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
 import { Circle, G } from 'react-native-svg';
 import { render, cleanup } from '@testing-library/react-native';
@@ -26,6 +26,22 @@ afterEach(() => {
   jest.restoreAllMocks();
   unstable_ClassNameGenerator.reset();
 });
+
+function childrenShape(value: unknown): unknown[] {
+  return React.Children.toArray(value as React.ReactNode).map((child) => {
+    if (!React.isValidElement<Record<string, unknown>>(child))
+      return { kind: typeof child, value: child };
+    const props = child.props;
+    return {
+      className: props.className ?? null,
+      viewBox: props.viewBox ?? null,
+      r: props.r ?? null,
+      strokeWidth: props.strokeWidth ?? null,
+      style: props.style ?? null,
+      children: childrenShape(props.children),
+    };
+  });
+}
 
 test('CircularProgress retains all nine source classes and utility edge cases', () => {
   expect(circularProgressClasses).toEqual(reference.classes);
@@ -57,6 +73,7 @@ test.each(reference.observations)('original static slot contract: $input.name', 
     defaults?: object;
     configured?: boolean;
     mutateRoot?: boolean;
+    inspectChildren?: boolean;
   };
   if (input.configured) unstable_ClassNameGenerator.configure((name) => 'Configured' + name);
   const trace: Array<Record<string, unknown>> = [];
@@ -113,6 +130,8 @@ test.each(reference.observations)('original static slot contract: $input.name', 
             fill: args.fill ?? null,
             strokeWidth: args.strokeWidth ?? null,
             hidden: args['aria-hidden'] ?? null,
+            children: childrenShape(args.children),
+            ownerChildren: owner.children ?? null,
           },
         });
         if (input.mutateRoot && slot === 'root') owner.thickness = 8;
@@ -127,7 +146,33 @@ test.each(reference.observations)('original static slot contract: $input.name', 
       Parameters<typeof createTheme>[0]
     >['palette'],
     components: {
-      MuiCircularProgress: { defaultProps: input.defaults, styleOverrides: overrides },
+      MuiCircularProgress: {
+        defaultProps: input.defaults,
+        styleOverrides: overrides,
+        variants: input.inspectChildren
+          ? [
+              {
+                props: (args: Record<string, unknown>) => {
+                  const owner = args.ownerState as Record<string, unknown>;
+                  trace.push({
+                    slot: 'variant-predicate',
+                    children: childrenShape(args.children),
+                    ownerChildren: owner.children ?? null,
+                  });
+                  return true;
+                },
+                style: nativeStyleCallback((args) => {
+                  trace.push({
+                    slot: 'variant-style',
+                    children: childrenShape(args.children),
+                    ownerChildren: args.ownerState.children ?? null,
+                  });
+                  return {};
+                }),
+              },
+            ]
+          : undefined,
+      },
     },
   });
   const tree = render(

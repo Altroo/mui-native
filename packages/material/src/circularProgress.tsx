@@ -361,6 +361,34 @@ export const CircularProgress: React.ForwardRefExoticComponent<
     rootAria['aria-valuemax'] = max;
   }
   const inline = { width: size, height: size, ...rootTransform, ...StyleSheet.flatten(style) };
+  // Styled callbacks observe the generated child, while ownerState retains
+  // authored props. Build presentation attributes before those callbacks run.
+  const graphic = (
+    <ProgressSvg className={names.svg} ownerState={owner} viewBox="22 22 44 44">
+      {enableTrackSlot ? (
+        <ProgressTrack
+          className={names.track}
+          ownerState={owner}
+          cx={SIZE}
+          cy={SIZE}
+          r={(SIZE - thickness) / 2}
+          fill="none"
+          strokeWidth={thickness}
+          aria-hidden="true"
+        />
+      ) : null}
+      <ProgressCircle
+        className={names.circle}
+        ownerState={owner}
+        style={circleStyle}
+        cx={SIZE}
+        cy={SIZE}
+        r={(SIZE - thickness) / 2}
+        fill="none"
+        strokeWidth={thickness}
+      />
+    </ProgressSvg>
+  );
   const rootProps = {
     ...(Object.hasOwn(props, 'classes') ? { classes } : {}),
     ...(Object.hasOwn(props, 'sx') ? { sx } : {}),
@@ -372,6 +400,7 @@ export const CircularProgress: React.ForwardRefExoticComponent<
     role: 'progressbar',
     ...rootAria,
     ...other,
+    children: graphic,
   };
   const actualOwner = rootProps.ownerState as unknown as Record<string, unknown>;
   const tokens = names.root.split(/\s+/).filter(Boolean);
@@ -436,30 +465,7 @@ export const CircularProgress: React.ForwardRefExoticComponent<
               accessibilityValue: accessibleValue(rootProps),
             }}
           >
-            <ProgressSvg className={names.svg} ownerState={owner} viewBox="22 22 44 44">
-              {enableTrackSlot ? (
-                <ProgressTrack
-                  className={names.track}
-                  ownerState={owner}
-                  cx={SIZE}
-                  cy={SIZE}
-                  r={(SIZE - thickness) / 2}
-                  fill="none"
-                  strokeWidth={thickness}
-                  aria-hidden="true"
-                />
-              ) : null}
-              <ProgressCircle
-                className={names.circle}
-                ownerState={owner}
-                style={circleStyle}
-                cx={SIZE}
-                cy={SIZE}
-                r={(SIZE - thickness) / 2}
-                fill="none"
-                strokeWidth={thickness}
-              />
-            </ProgressSvg>
+            {graphic}
           </ProgressRootFrame>
         )}
       </NativeTextScope>

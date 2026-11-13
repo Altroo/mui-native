@@ -149,6 +149,22 @@ const clean = (attrs) => ({
     .filter((name) => !name.startsWith('css-'))
     .join(' '),
 });
+for (const name of ['default', 'track', 'authored-children'])
+  inputs.find((input) => input.name === name).inspectChildren = true;
+function childrenShape(value) {
+  return React.Children.toArray(value).map((child) => {
+    if (!React.isValidElement(child)) return { kind: typeof child, value: child };
+    const props = child.props;
+    return {
+      className: props.className ?? null,
+      viewBox: props.viewBox ?? null,
+      r: props.r ?? null,
+      strokeWidth: props.strokeWidth ?? null,
+      style: props.style ?? null,
+      children: childrenShape(props.children),
+    };
+  });
+}
 const observations = [];
 for (const input of inputs) {
   generator.reset();
@@ -188,6 +204,8 @@ for (const input of inputs) {
           fill: args.fill ?? null,
           strokeWidth: args.strokeWidth ?? null,
           hidden: args['aria-hidden'] ?? null,
+          children: childrenShape(args.children),
+          ownerChildren: owner.children ?? null,
         },
       });
       if (input.mutateRoot && slot === 'root') owner.thickness = 8;
@@ -198,6 +216,28 @@ for (const input of inputs) {
       components: {
         MuiCircularProgress: {
           defaultProps: input.defaults,
+          variants: input.inspectChildren
+            ? [
+                {
+                  props: (args) => {
+                    trace.push({
+                      slot: 'variant-predicate',
+                      children: childrenShape(args.children),
+                      ownerChildren: args.ownerState.children ?? null,
+                    });
+                    return true;
+                  },
+                  style: (args) => {
+                    trace.push({
+                      slot: 'variant-style',
+                      children: childrenShape(args.children),
+                      ownerChildren: args.ownerState.children ?? null,
+                    });
+                    return {};
+                  },
+                },
+              ]
+            : undefined,
           styleOverrides: Object.fromEntries(
             [
               'root',

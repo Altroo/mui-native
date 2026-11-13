@@ -22,7 +22,7 @@ Determinate dash-offset updates and matching native numeric/angle transform list
 
 ## Styling and imports
 
-Root, SVG, track and circle keep their separate `MuiCircularProgress` named styling stages. Theme defaults, root variants, supported class selectors, `sx`, genuine callback arguments and owner state follow the pinned source order. Circle inline geometry takes precedence over named styles. The root supports native style arrays and native View attributes and events. SVG paint inheritance is resolved before crossing the native peer boundary.
+Root, SVG, track and circle keep their separate `MuiCircularProgress` named styling stages. Root override callbacks receive the generated SVG child; authored children remain in owner state. Variant predicate and style callbacks preserve the original merged-prop precedence. The same generated element is rendered after styling, with its presentation attributes prepared before callbacks run. Theme defaults, root variants, supported class selectors, `sx`, genuine callback arguments and owner state follow the pinned source order. Circle inline geometry takes precedence over named styles. The root supports native style arrays and native View attributes and events. SVG paint inheritance is resolved before crossing the native peer boundary.
 
 The captured classes are `root`, `determinate`, `indeterminate`, `colorPrimary`, `colorSecondary`, `svg`, `track`, `circle` and `circleDisableShrink`. Utilities follow the current canonical class-name generator. Class-interface augmentation extends declarations without inventing rendered slots.
 
