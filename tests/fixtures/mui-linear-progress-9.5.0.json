@@ -1,0 +1,4749 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "LinearProgress/index.js": "9a461e111d85fd42a230bc90d4b06ee51d4eda4eead79c2b8f4a8b92603ffdca",
+      "LinearProgress/index.d.ts": "09c6639e5622dc1693276f4c7684b0f0f4992d5c4e5c0769dd576e95c50635f7",
+      "LinearProgress/LinearProgress.js": "b3ffc4e099676187f14eba573b101700f861f8413a0cd010e0c2224a20f529c6",
+      "LinearProgress/LinearProgress.d.ts": "d6af52520b0bf7b6023e076705734fc8466164ec3d0cbaec3c72759d3042083d",
+      "LinearProgress/linearProgressClasses.js": "48b8a467dd8013f0af9370fcc87602a70b0a0e7c51b04c2ea65a30e5774d2886",
+      "LinearProgress/linearProgressClasses.d.ts": "a96085e1205b76e32e7650b24e3c94ace3f8509ffd508623260ea4fc5a7b83d8",
+      "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+      "styles/reducedMotion.js": "3a80a30b233bb4ab252fd858b921992ca072e015cae638b79d71e7f281795394",
+      "utils/memoTheme.js": "ba795253c43a4fd740281e725b4fe0b77a25bf0c1a26e3f12b5f89a790a8a497",
+      "utils/createSimplePaletteValueFilter.js": "8c972b662713b932faaa79541132caf57ad7dcdb5278b99e65c1aebe2c3a51a5"
+    }
+  },
+  "utilitiesReference": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+      "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574"
+    }
+  },
+  "classes": {
+    "root": "MuiLinearProgress-root",
+    "colorPrimary": "MuiLinearProgress-colorPrimary",
+    "colorSecondary": "MuiLinearProgress-colorSecondary",
+    "determinate": "MuiLinearProgress-determinate",
+    "indeterminate": "MuiLinearProgress-indeterminate",
+    "buffer": "MuiLinearProgress-buffer",
+    "query": "MuiLinearProgress-query",
+    "dashed": "MuiLinearProgress-dashed",
+    "bar": "MuiLinearProgress-bar",
+    "bar1": "MuiLinearProgress-bar1",
+    "bar2": "MuiLinearProgress-bar2"
+  },
+  "utilities": {
+    "root": "MuiLinearProgress-root",
+    "bar": "MuiLinearProgress-bar",
+    "dashed": "MuiLinearProgress-dashed",
+    "disabled": "Mui-disabled",
+    "constructor": "Mui-function Object() { [native code] }",
+    "toString": "Mui-function toString() { [native code] }",
+    "__proto__": "Mui-[object Object]",
+    "": "MuiLinearProgress-"
+  },
+  "observations": [
+    {
+      "input": {
+        "name": "rtl-context-on",
+        "rtlContext": true,
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "rtl-context-off",
+        "rtl": true,
+        "rtlContext": false,
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "light-receiver",
+        "receiver": true,
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "dark-receiver",
+        "receiver": true,
+        "dark": true,
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(72, 101, 124)",
+        "secondary": "rgb(103, 73, 108)",
+        "error": "rgb(122, 33, 27)",
+        "info": "rgb(20, 91, 123)",
+        "success": "rgb(51, 93, 53)",
+        "warning": "rgb(127, 83, 19)",
+        "brand": "rgb(10, 53, 47)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": { "name": "default" },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate",
+          "role": "progressbar"
+        },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar1" },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar2" }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["color", "variant"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": {},
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+                "style": {},
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["color", "variant"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["color", "variant"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "determinate",
+        "props": { "variant": "determinate", "value": 25, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "determinate",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "determinate",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "buffer",
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": { "name": "query", "props": { "variant": "query", "value": 25, "valueBuffer": 65 } },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-query",
+          "role": "progressbar"
+        },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar1" },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar2" }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "query",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-query",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": {},
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+                "style": {},
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "query",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "query",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "indeterminate",
+        "props": { "variant": "indeterminate", "value": 25, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate",
+          "role": "progressbar"
+        },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar1" },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar2" }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": {},
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+                "style": {},
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "custom-range",
+        "props": { "variant": "buffer", "min": 20, "max": 80, "value": 35, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "35",
+          "aria-valuemin": "20",
+          "aria-valuemax": "80"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(-25%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(-25%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-25%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "rtl",
+        "rtl": true,
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "color-primary",
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65, "color": "primary" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "color-secondary",
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65, "color": "secondary" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorSecondary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorSecondary",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "secondary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorSecondary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorSecondary",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "secondary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "secondary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "secondary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorSecondary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "color-error",
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65, "color": "error" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorError MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorError",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "error",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorError MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorError",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "error",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "error",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "error",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorError",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "color-info",
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65, "color": "info" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorInfo MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorInfo",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "info",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorInfo MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorInfo",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "info",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "info",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "info",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorInfo",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "color-success",
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65, "color": "success" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorSuccess MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorSuccess",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "success",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorSuccess MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorSuccess",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "success",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "success",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "success",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorSuccess",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "color-warning",
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65, "color": "warning" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorWarning MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorWarning",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "warning",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorWarning MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorWarning",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "warning",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "warning",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "warning",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorWarning",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "color-inherit",
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65, "color": "inherit" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorInherit MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorInherit",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "inherit",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorInherit MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorInherit",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "inherit",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "inherit",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "inherit",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorInherit",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "color-brand",
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65, "color": "brand" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorBrand MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorBrand",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "brand",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorBrand MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorBrand",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "brand",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "brand",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "brand",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorBrand",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "color-",
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65, "color": "" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-color MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-color",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-color MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-color",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-color",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": { "name": "custom-variant", "props": { "variant": "paused" } },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-paused",
+          "role": "progressbar"
+        },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar1" },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar2" }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "color"],
+            "color": "primary",
+            "variant": "paused",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-paused",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": {},
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+                "style": {},
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "color"],
+            "color": "primary",
+            "variant": "paused",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "color"],
+            "color": "primary",
+            "variant": "paused",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": { "name": "missing-value", "props": { "variant": "determinate" } },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate",
+          "role": "progressbar"
+        },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar1" }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "color"],
+            "color": "primary",
+            "variant": "determinate",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": {},
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "color"],
+            "color": "primary",
+            "variant": "determinate",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "level": "error",
+          "args": [
+            "MUI: You need to provide a value prop when using the determinate or buffer variant of LinearProgress."
+          ]
+        }
+      ],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": { "name": "missing-buffer", "props": { "variant": "buffer", "value": 25 } },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary" }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": {},
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "level": "error",
+          "args": [
+            "MUI: You need to provide a valueBuffer prop when using the buffer variant of LinearProgress."
+          ]
+        }
+      ],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "invalid-range",
+        "props": { "variant": "buffer", "min": 50, "max": 20, "value": 30, "valueBuffer": 10 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "30",
+          "aria-valuemin": "50",
+          "aria-valuemax": "20"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-100%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(-100%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-100%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(-100%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-100%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-100%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "level": "error",
+          "args": [
+            "MUI: The min, max, and value props in LinearProgress should be numbers where min < max and min <= value <= max. Received min=50, max=20, value=30."
+          ]
+        },
+        {
+          "level": "error",
+          "args": [
+            "MUI: The min, max, value, and valueBuffer props in LinearProgress should be numbers where min < max and min <= value <= valueBuffer <= max. Received min=50, max=20, value=30, valueBuffer=10."
+          ]
+        }
+      ],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "out-of-range",
+        "props": { "variant": "buffer", "value": 125, "valueBuffer": 110 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "125",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(25%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(10.000000000000014%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(25%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(10.000000000000014%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(25%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(10.000000000000014%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "level": "error",
+          "args": [
+            "MUI: The min, max, and value props in LinearProgress should be numbers where min < max and min <= value <= max. Received min=0, max=100, value=125."
+          ]
+        },
+        {
+          "level": "error",
+          "args": [
+            "MUI: The min, max, value, and valueBuffer props in LinearProgress should be numbers where min < max and min <= value <= valueBuffer <= max. Received min=0, max=100, value=125, valueBuffer=110."
+          ]
+        }
+      ],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": { "name": "indeterminate-range", "props": { "min": 20, "max": 80 } },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate",
+          "role": "progressbar"
+        },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar1" },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar2" }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["min", "max", "color", "variant"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": {},
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+                "style": {},
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["min", "max", "color", "variant"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["min", "max", "color", "variant"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "level": "warn",
+          "args": [
+            "MUI: You have provided the `min` or `max` props with an 'indeterminate' or 'query' variant. These props will have no effect."
+          ]
+        }
+      ],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": { "name": "query-range", "props": { "variant": "query", "min": 20, "max": 80 } },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-query",
+          "role": "progressbar"
+        },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar1" },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar2" }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "color"],
+            "color": "primary",
+            "variant": "query",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-query",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": {},
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+                "style": {},
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "color"],
+            "color": "primary",
+            "variant": "query",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "min", "max", "color"],
+            "color": "primary",
+            "variant": "query",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [
+        {
+          "level": "warn",
+          "args": [
+            "MUI: You have provided the `min` or `max` props with an 'indeterminate' or 'query' variant. These props will have no effect."
+          ]
+        }
+      ],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "defaults",
+        "defaults": { "variant": "buffer", "value": 25, "valueBuffer": 65, "color": "secondary" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorSecondary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorSecondary",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "secondary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorSecondary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorSecondary",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "secondary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "secondary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "secondary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorSecondary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "undefined-defaults",
+        "defaults": { "variant": "buffer", "value": 25, "valueBuffer": 65 },
+        "props": { "variant": "$undefined", "value": "$undefined" }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "aria-overrides",
+        "props": {
+          "variant": "determinate",
+          "value": 25,
+          "aria-valuenow": 30,
+          "aria-valuemin": 20,
+          "aria-valuemax": 80,
+          "aria-valuetext": "Thirty",
+          "role": "meter",
+          "id": "progress"
+        }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate",
+          "role": "meter",
+          "aria-valuenow": "30",
+          "aria-valuemin": "20",
+          "aria-valuemax": "80",
+          "aria-valuetext": "Thirty",
+          "id": "progress"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": [
+              "variant",
+              "value",
+              "aria-valuenow",
+              "aria-valuemin",
+              "aria-valuemax",
+              "aria-valuetext",
+              "role",
+              "id",
+              "color"
+            ],
+            "color": "primary",
+            "variant": "determinate",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-determinate",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": [
+              "variant",
+              "value",
+              "aria-valuenow",
+              "aria-valuemin",
+              "aria-valuemax",
+              "aria-valuetext",
+              "role",
+              "id",
+              "color"
+            ],
+            "color": "primary",
+            "variant": "determinate",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "authored-classes",
+        "props": {
+          "variant": "buffer",
+          "value": 25,
+          "valueBuffer": 65,
+          "classes": {
+            "root": "own-root",
+            "bar": "own-bar",
+            "bar1": "own-first",
+            "bar2": "own-second",
+            "dashed": "own-dashed",
+            "buffer": "own-buffer",
+            "colorPrimary": "own-color"
+          },
+          "className": "authored"
+        }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root own-root MuiLinearProgress-colorPrimary own-color MuiLinearProgress-buffer own-buffer authored",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed own-dashed" },
+        {
+          "class": "MuiLinearProgress-bar own-bar MuiLinearProgress-bar1 own-first",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar own-bar MuiLinearProgress-bar2 own-second MuiLinearProgress-colorPrimary own-color",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "classes", "className", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root own-root MuiLinearProgress-colorPrimary own-color MuiLinearProgress-buffer own-buffer authored",
+            "children": [
+              { "className": "MuiLinearProgress-dashed own-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar own-bar MuiLinearProgress-bar1 own-first",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar own-bar MuiLinearProgress-bar2 own-second MuiLinearProgress-colorPrimary own-color",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "classes", "className", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed own-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "classes", "className", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar own-bar MuiLinearProgress-bar1 own-first",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "classes", "className", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar own-bar MuiLinearProgress-bar2 own-second MuiLinearProgress-colorPrimary own-color",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": { "name": "authored-children", "props": { "children": "Ignored child" } },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate",
+          "role": "progressbar"
+        },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar1" },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar2" }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["children", "color", "variant"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-indeterminate",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": {},
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+                "style": {},
+                "children": []
+              }
+            ],
+            "ownerChildren": "Ignored child"
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["children", "color", "variant"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": "Ignored child"
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["children", "color", "variant"],
+            "color": "primary",
+            "variant": "indeterminate",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+            "children": [],
+            "ownerChildren": "Ignored child"
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "configured",
+        "configured": true,
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "ConfiguredMuiLinearProgress-root ConfiguredMuiLinearProgress-colorPrimary ConfiguredMuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "ConfiguredMuiLinearProgress-dashed" },
+        {
+          "class": "ConfiguredMuiLinearProgress-bar ConfiguredMuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "ConfiguredMuiLinearProgress-bar ConfiguredMuiLinearProgress-bar2 ConfiguredMuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "ConfiguredMuiLinearProgress-root ConfiguredMuiLinearProgress-colorPrimary ConfiguredMuiLinearProgress-buffer",
+            "children": [
+              { "className": "ConfiguredMuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "ConfiguredMuiLinearProgress-bar ConfiguredMuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "ConfiguredMuiLinearProgress-bar ConfiguredMuiLinearProgress-bar2 ConfiguredMuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "ConfiguredMuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "ConfiguredMuiLinearProgress-bar ConfiguredMuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "ConfiguredMuiLinearProgress-bar ConfiguredMuiLinearProgress-bar2 ConfiguredMuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": {
+        "name": "dark",
+        "dark": true,
+        "props": { "variant": "buffer", "value": 25, "valueBuffer": 65 }
+      },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+          "role": "progressbar",
+          "aria-valuenow": "25",
+          "aria-valuemin": "0",
+          "aria-valuemax": "100"
+        },
+        { "class": "MuiLinearProgress-dashed" },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+          "style": "transform:translateX(-75%)"
+        },
+        {
+          "class": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+          "style": "transform:translateX(-35%)"
+        }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-buffer",
+            "children": [
+              { "className": "MuiLinearProgress-dashed", "style": null, "children": [] },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": { "transform": "translateX(-75%)" },
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+                "style": { "transform": "translateX(-35%)" },
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": null,
+            "className": "MuiLinearProgress-dashed",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-75%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "value", "valueBuffer", "color"],
+            "color": "primary",
+            "variant": "buffer",
+            "style": { "transform": "translateX(-35%)" },
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2 MuiLinearProgress-colorPrimary",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(72, 101, 124)",
+        "secondary": "rgb(103, 73, 108)",
+        "error": "rgb(122, 33, 27)",
+        "info": "rgb(20, 91, 123)",
+        "success": "rgb(51, 93, 53)",
+        "warning": "rgb(127, 83, 19)",
+        "brand": "rgb(10, 53, 47)"
+      },
+      "containsAuthoredChild": false
+    },
+    {
+      "input": { "name": "reduced", "reduced": true, "props": { "variant": "query" } },
+      "elements": [
+        {
+          "class": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-query",
+          "role": "progressbar"
+        },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar1" },
+        { "class": "MuiLinearProgress-bar MuiLinearProgress-bar2" }
+      ],
+      "trace": [
+        {
+          "context": {
+            "ownerKeys": ["variant", "color"],
+            "color": "primary",
+            "variant": "query",
+            "style": null,
+            "className": "MuiLinearProgress-root MuiLinearProgress-colorPrimary MuiLinearProgress-query",
+            "children": [
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+                "style": {},
+                "children": []
+              },
+              {
+                "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+                "style": {},
+                "children": []
+              }
+            ],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "color"],
+            "color": "primary",
+            "variant": "query",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar1",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        },
+        {
+          "context": {
+            "ownerKeys": ["variant", "color"],
+            "color": "primary",
+            "variant": "query",
+            "style": {},
+            "className": "MuiLinearProgress-bar MuiLinearProgress-bar2",
+            "children": [],
+            "ownerChildren": null
+          },
+          "slots": [
+            "root",
+            "colorPrimary",
+            "colorSecondary",
+            "determinate",
+            "indeterminate",
+            "buffer",
+            "query",
+            "dashed",
+            "bar",
+            "bar1",
+            "bar2"
+          ]
+        }
+      ],
+      "warnings": [],
+      "shades": {
+        "primary": "rgb(167, 202, 237)",
+        "secondary": "rgb(217, 172, 224)",
+        "error": "rgb(238, 175, 175)",
+        "info": "rgb(158, 209, 237)",
+        "success": "rgb(175, 205, 177)",
+        "warning": "rgb(248, 199, 158)",
+        "brand": "rgb(166, 198, 194)"
+      },
+      "containsAuthoredChild": false
+    }
+  ]
+}

@@ -582,6 +582,11 @@
       "types": "./dist/CircularProgress/circularProgressClasses/index.d.ts",
       "react-native": "./src/CircularProgress/circularProgressClasses/index.ts",
       "default": "./dist/CircularProgress/circularProgressClasses/index.js"
+    },
+    "./LinearProgress/linearProgressClasses": {
+      "types": "./dist/LinearProgress/linearProgressClasses/index.d.ts",
+      "react-native": "./src/LinearProgress/linearProgressClasses/index.ts",
+      "default": "./dist/LinearProgress/linearProgressClasses/index.js"
     }
   },
   "dependencies": {
