@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "ccfa200799f7ce9dab3a5fdd0e9da72d098ed145f601b40c2f4dce329be33e74",
+  "nativeSourceSha256": "08217eb20083d4de631f914e68ba889899a14b6161d9d6cc9945cbd462361132",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -14645,7 +14645,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14664,7 +14664,7 @@
           "line": 1
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14683,7 +14683,7 @@
           "line": 5
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14702,7 +14702,7 @@
           "line": 7
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14721,7 +14721,7 @@
           "line": 38
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -14740,7 +14740,7 @@
           "line": 21
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -17362,7 +17362,7 @@
           "line": 6
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35427,7 +35427,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentRootStyle",
           "kind": "value",
-          "line": 1481
+          "line": 1486
         }
       ]
     },
@@ -36604,7 +36604,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeRootStyleResult",
           "kind": "type",
-          "line": 1468
+          "line": 1473
         }
       ]
     },
@@ -37517,7 +37517,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "systemDefaultTheme",
           "kind": "value",
-          "line": 65
+          "line": 66
         }
       ]
     },
@@ -37715,7 +37715,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentRootStyle",
           "kind": "value",
-          "line": 151
+          "line": 164
         }
       ]
     },
@@ -37748,7 +37748,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useNativeRootProps",
           "kind": "value",
-          "line": 172
+          "line": 185
         }
       ]
     },
@@ -37825,7 +37825,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useThemeWithoutDefault",
           "kind": "value",
-          "line": 99
+          "line": 100
         }
       ]
     }
@@ -64457,7 +64457,7 @@
         {
           "name": "ContainerProps",
           "file": "src/dialog.tsx",
-          "line": 39,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64536,7 +64536,7 @@
         {
           "name": "ContainerProps",
           "file": "src/dialog.tsx",
-          "line": 39,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64639,7 +64639,7 @@
         {
           "name": "ContainerProps",
           "file": "src/dialog.tsx",
-          "line": 39,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64718,7 +64718,7 @@
         {
           "name": "ContainerProps",
           "file": "src/dialog.tsx",
-          "line": 39,
+          "line": 41,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64883,7 +64883,7 @@
         {
           "name": "DialogSlots",
           "file": "src/dialog.tsx",
-          "line": 41,
+          "line": 43,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64900,7 +64900,7 @@
         {
           "name": "DialogTransitionSlotPropsOverrides",
           "file": "src/dialog.tsx",
-          "line": 31,
+          "line": 33,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64917,7 +64917,7 @@
         {
           "name": "DialogPaperSlotPropsOverrides",
           "file": "src/dialog.tsx",
-          "line": 27,
+          "line": 29,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64934,7 +64934,7 @@
         {
           "name": "DialogContainerSlotPropsOverrides",
           "file": "src/dialog.tsx",
-          "line": 28,
+          "line": 30,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64951,7 +64951,7 @@
         {
           "name": "DialogBackdropSlotPropsOverrides",
           "file": "src/dialog.tsx",
-          "line": 29,
+          "line": 31,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64968,7 +64968,7 @@
         {
           "name": "DialogRootSlotPropsOverrides",
           "file": "src/dialog.tsx",
-          "line": 30,
+          "line": 32,
           "package": "@altroo/mui-native"
         }
       ]
@@ -65220,7 +65220,7 @@
         {
           "name": "DialogProps",
           "file": "src/dialog.tsx",
-          "line": 48,
+          "line": 50,
           "package": "@altroo/mui-native"
         }
       ]
@@ -65240,7 +65240,7 @@
         {
           "name": "DialogOwnerState",
           "file": "src/dialog.tsx",
-          "line": 32,
+          "line": 34,
           "package": "@altroo/mui-native"
         }
       ]
@@ -65325,7 +65325,7 @@
         {
           "name": "DialogSlots",
           "file": "src/dialog.tsx",
-          "line": 41,
+          "line": 43,
           "package": "@altroo/mui-native"
         }
       ]
@@ -65342,7 +65342,7 @@
         {
           "name": "DialogTransitionSlotPropsOverrides",
           "file": "src/dialog.tsx",
-          "line": 31,
+          "line": 33,
           "package": "@altroo/mui-native"
         }
       ]
@@ -65359,7 +65359,7 @@
         {
           "name": "DialogPaperSlotPropsOverrides",
           "file": "src/dialog.tsx",
-          "line": 27,
+          "line": 29,
           "package": "@altroo/mui-native"
         }
       ]
@@ -65376,7 +65376,7 @@
         {
           "name": "DialogContainerSlotPropsOverrides",
           "file": "src/dialog.tsx",
-          "line": 28,
+          "line": 30,
           "package": "@altroo/mui-native"
         }
       ]
@@ -65393,7 +65393,7 @@
         {
           "name": "DialogBackdropSlotPropsOverrides",
           "file": "src/dialog.tsx",
-          "line": 29,
+          "line": 31,
           "package": "@altroo/mui-native"
         }
       ]
@@ -65410,7 +65410,7 @@
         {
           "name": "DialogRootSlotPropsOverrides",
           "file": "src/dialog.tsx",
-          "line": 30,
+          "line": 32,
           "package": "@altroo/mui-native"
         }
       ]
@@ -65662,7 +65662,7 @@
         {
           "name": "DialogProps",
           "file": "src/dialog.tsx",
-          "line": 48,
+          "line": 50,
           "package": "@altroo/mui-native"
         }
       ]
@@ -65682,7 +65682,7 @@
         {
           "name": "DialogOwnerState",
           "file": "src/dialog.tsx",
-          "line": 32,
+          "line": 34,
           "package": "@altroo/mui-native"
         }
       ]
@@ -67006,7 +67006,7 @@
           "line": 15,
           "kind": "property",
           "type": "Partial<DialogTitleClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67033,7 +67033,20 @@
         "TypographyTypeMap"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogTitleOwnProps",
+          "file": "src/dialogTitle.tsx",
+          "line": 13,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "DialogTitleProps",
+          "file": "src/dialogTitle.tsx",
+          "line": 41,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTitleTypeMap",
@@ -67051,7 +67064,7 @@
           "line": 22,
           "kind": "property",
           "type": "AdditionalProps & DialogTitleOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67064,7 +67077,7 @@
           "line": 23,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -67076,7 +67089,14 @@
         "TypographyTypeMap"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogTitleTypeMap",
+          "file": "src/dialogTitle.tsx",
+          "line": 34,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTitleProps",
@@ -67094,7 +67114,7 @@
           "line": 41,
           "kind": "property",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -67106,7 +67126,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogTitleProps",
+          "file": "src/dialogTitle.tsx",
+          "line": 41,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTitleOwnProps",
@@ -67137,7 +67164,7 @@
           "line": 15,
           "kind": "property",
           "type": "Partial<DialogTitleClasses> | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67164,7 +67191,20 @@
         "TypographyTypeMap"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogTitleOwnProps",
+          "file": "src/dialogTitle.tsx",
+          "line": 13,
+          "package": "@altroo/mui-native"
+        },
+        {
+          "name": "DialogTitleProps",
+          "file": "src/dialogTitle.tsx",
+          "line": 41,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTitleTypeMap",
@@ -67182,7 +67222,7 @@
           "line": 22,
           "kind": "property",
           "type": "AdditionalProps & DialogTitleOwnProps",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         },
         {
@@ -67195,7 +67235,7 @@
           "line": 23,
           "kind": "property",
           "type": "RootComponent",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -67207,7 +67247,14 @@
         "TypographyTypeMap"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogTitleTypeMap",
+          "file": "src/dialogTitle.tsx",
+          "line": 34,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTitleProps",
@@ -67225,7 +67272,7 @@
           "line": 41,
           "kind": "property",
           "type": "React.ElementType | undefined",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
@@ -67237,7 +67284,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogTitleProps",
+          "file": "src/dialogTitle.tsx",
+          "line": 41,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTitleClasses",
@@ -67255,13 +67309,20 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogTitleClasses",
+          "file": "src/dialogTitleClasses.ts",
+          "line": 6,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTitleClassKey",
@@ -67273,7 +67334,14 @@
         "DialogTitleClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogTitleClassKey",
+          "file": "src/dialogTitleClasses.ts",
+          "line": 9,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTitleClasses",
@@ -67291,13 +67359,20 @@
           "line": 3,
           "kind": "property",
           "type": "string",
-          "native": "not-declared-directly",
+          "native": "declared-unverified",
           "verified": false
         }
       ],
       "references": [],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogTitleClasses",
+          "file": "src/dialogTitleClasses.ts",
+          "line": 6,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DialogTitleClassKey",
@@ -67309,7 +67384,14 @@
         "DialogTitleClasses"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "DialogTitleClassKey",
+          "file": "src/dialogTitleClasses.ts",
+          "line": 9,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "DividerPropsVariantOverrides",
@@ -117777,7 +117859,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 14,
+          "line": 13,
           "package": "@altroo/mui-native"
         }
       ]
@@ -117856,7 +117938,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 14,
+          "line": 13,
           "package": "@altroo/mui-native"
         }
       ]
@@ -117957,7 +118039,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 14,
+          "line": 13,
           "package": "@altroo/mui-native"
         }
       ]
@@ -118036,7 +118118,7 @@
         {
           "name": "StackProps",
           "file": "src/layout.tsx",
-          "line": 14,
+          "line": 13,
           "package": "@altroo/mui-native"
         }
       ]
@@ -140087,7 +140169,7 @@
         {
           "name": "TypographyClasses",
           "file": "src/typographyClasses.ts",
-          "line": 4,
+          "line": 6,
           "package": "@altroo/mui-native"
         }
       ]
@@ -140106,7 +140188,7 @@
         {
           "name": "TypographyClassKey",
           "file": "src/typographyClasses.ts",
-          "line": 27,
+          "line": 29,
           "package": "@altroo/mui-native"
         }
       ]
@@ -140397,7 +140479,7 @@
         {
           "name": "TypographyClasses",
           "file": "src/typographyClasses.ts",
-          "line": 4,
+          "line": 6,
           "package": "@altroo/mui-native"
         }
       ]
@@ -140416,7 +140498,7 @@
         {
           "name": "TypographyClassKey",
           "file": "src/typographyClasses.ts",
-          "line": 27,
+          "line": 29,
           "package": "@altroo/mui-native"
         }
       ]
@@ -171975,7 +172057,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 105,
+          "line": 107,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173660,7 +173742,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 102,
+          "line": 104,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173681,7 +173763,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 105,
+          "line": 107,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175366,7 +175448,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 102,
+          "line": 104,
           "package": "@altroo/mui-native"
         }
       ]
@@ -193229,7 +193311,7 @@
     {
       "name": "DialogPaperSlotPropsOverrides",
       "file": "src/dialog.tsx",
-      "line": 27,
+      "line": 29,
       "kind": "type",
       "members": [],
       "references": [],
@@ -193239,7 +193321,7 @@
     {
       "name": "DialogContainerSlotPropsOverrides",
       "file": "src/dialog.tsx",
-      "line": 28,
+      "line": 30,
       "kind": "type",
       "members": [],
       "references": [],
@@ -193249,7 +193331,7 @@
     {
       "name": "DialogBackdropSlotPropsOverrides",
       "file": "src/dialog.tsx",
-      "line": 29,
+      "line": 31,
       "kind": "type",
       "members": [],
       "references": [],
@@ -193259,7 +193341,7 @@
     {
       "name": "DialogRootSlotPropsOverrides",
       "file": "src/dialog.tsx",
-      "line": 30,
+      "line": 32,
       "kind": "type",
       "members": [],
       "references": [],
@@ -193269,7 +193351,7 @@
     {
       "name": "DialogTransitionSlotPropsOverrides",
       "file": "src/dialog.tsx",
-      "line": 31,
+      "line": 33,
       "kind": "type",
       "members": [],
       "references": [],
@@ -193279,7 +193361,7 @@
     {
       "name": "DialogOwnerState",
       "file": "src/dialog.tsx",
-      "line": 32,
+      "line": 34,
       "kind": "type",
       "members": [
         {
@@ -193289,7 +193371,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullWidth: boolean;",
-          "line": 33,
+          "line": 35,
           "kind": "property",
           "type": "boolean"
         },
@@ -193300,7 +193382,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullScreen: boolean;",
-          "line": 34,
+          "line": 36,
           "kind": "property",
           "type": "boolean"
         },
@@ -193311,7 +193393,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "maxWidth: Breakpoint | false;",
-          "line": 35,
+          "line": 37,
           "kind": "property",
           "type": "Breakpoint | false"
         }
@@ -193326,7 +193408,7 @@
     {
       "name": "PaperSlotProps",
       "file": "src/dialog.tsx",
-      "line": 37,
+      "line": 39,
       "kind": "type",
       "members": [
         {
@@ -193336,7 +193418,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>",
-          "line": 38,
+          "line": 40,
           "kind": "slot",
           "type": "React.Ref<ViewInstance>"
         }
@@ -193353,7 +193435,7 @@
     {
       "name": "ContainerProps",
       "file": "src/dialog.tsx",
-      "line": 39,
+      "line": 41,
       "kind": "type",
       "members": [
         {
@@ -193363,7 +193445,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>;",
-          "line": 40,
+          "line": 42,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         },
@@ -193374,7 +193456,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps",
-          "line": 40,
+          "line": 42,
           "kind": "property",
           "type": "SxProps"
         }
@@ -193392,7 +193474,7 @@
     {
       "name": "DialogSlots",
       "file": "src/dialog.tsx",
-      "line": 41,
+      "line": 43,
       "kind": "type",
       "members": [
         {
@@ -193402,7 +193484,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: React.ComponentType<ModalProps>;",
-          "line": 42,
+          "line": 44,
           "kind": "slot",
           "type": "React.ComponentType<ModalProps>"
         },
@@ -193413,7 +193495,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "paper?: React.ComponentType<PaperSlotProps>;",
-          "line": 43,
+          "line": 45,
           "kind": "slot",
           "type": "React.ComponentType<PaperSlotProps>"
         },
@@ -193424,7 +193506,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "container?: React.ComponentType<ContainerProps>;",
-          "line": 44,
+          "line": 46,
           "kind": "slot",
           "type": "React.ComponentType<ContainerProps>"
         },
@@ -193435,7 +193517,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "backdrop?: React.ComponentType<BackdropProps & React.RefAttributes<ViewInstance>>;",
-          "line": 45,
+          "line": 47,
           "kind": "slot",
           "type": "React.ComponentType<BackdropProps & React.RefAttributes<ViewInstance>>"
         },
@@ -193446,7 +193528,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transition?: React.ComponentType<FadeProps>;",
-          "line": 46,
+          "line": 48,
           "kind": "slot",
           "type": "React.ComponentType<FadeProps>"
         }
@@ -193467,7 +193549,7 @@
     {
       "name": "DialogProps",
       "file": "src/dialog.tsx",
-      "line": 48,
+      "line": 50,
       "kind": "type",
       "members": [
         {
@@ -193477,7 +193559,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: ModalProps['component'];",
-          "line": 49,
+          "line": 51,
           "kind": "property",
           "type": "ModalProps['component']"
         },
@@ -193488,7 +193570,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullWidth?: boolean;",
-          "line": 50,
+          "line": 52,
           "kind": "property",
           "type": "boolean"
         },
@@ -193499,7 +193581,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "fullScreen?: boolean;",
-          "line": 51,
+          "line": 53,
           "kind": "property",
           "type": "boolean"
         },
@@ -193510,7 +193592,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "maxWidth?: Breakpoint | false;",
-          "line": 52,
+          "line": 54,
           "kind": "property",
           "type": "Breakpoint | false"
         },
@@ -193521,7 +193603,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transitionDuration?: TransitionProps['timeout'];",
-          "line": 53,
+          "line": 55,
           "kind": "property",
           "type": "TransitionProps['timeout']"
         },
@@ -193532,7 +193614,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: DialogSlots;",
-          "line": 54,
+          "line": 56,
           "kind": "slot",
           "type": "DialogSlots"
         },
@@ -193543,7 +193625,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: {\n    transition?: SlotProps<\n      Partial<FadeProps> & DialogTransitionSlotPropsOverrides,\n      DialogOwnerState\n    >;\n    root?: SlotProps<\n      Partial<ModalProps> & DialogRootSlotPropsOverrides & { ref?: React.Ref<ViewInstance> },\n      DialogOwnerState\n    >;\n    paper?: SlotProps<PaperSlotProps, DialogOwnerState>;\n    container?: SlotProps<ContainerProps, DialogOwnerState>;\n    backdrop?: SlotProps<\n      Partial<BackdropProps> & DialogBackdropSlotPropsOverrides,\n      DialogOwnerState\n    >;\n  };",
-          "line": 55,
+          "line": 57,
           "kind": "slot",
           "type": "{\n    transition?: SlotProps<\n      Partial<FadeProps> & DialogTransitionSlotPropsOverrides,\n      DialogOwnerState\n    >;\n    root?: SlotProps<\n      Partial<ModalProps> & DialogRootSlotPropsOverrides & { ref?: React.Ref<ViewInstance> },\n      DialogOwnerState\n    >;\n    paper?: SlotProps<PaperSlotProps, DialogOwnerState>;\n    container?: SlotProps<ContainerProps, DialogOwnerState>;\n    backdrop?: SlotProps<\n      Partial<BackdropProps> & DialogBackdropSlotPropsOverrides,\n      DialogOwnerState\n    >;\n  }"
         },
@@ -193554,7 +193636,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transition?: SlotProps<\n      Partial<FadeProps> & DialogTransitionSlotPropsOverrides,\n      DialogOwnerState\n    >;",
-          "line": 56,
+          "line": 58,
           "kind": "slot",
           "type": "SlotProps<\n      Partial<FadeProps> & DialogTransitionSlotPropsOverrides,\n      DialogOwnerState\n    >"
         },
@@ -193565,7 +193647,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: SlotProps<\n      Partial<ModalProps> & DialogRootSlotPropsOverrides & { ref?: React.Ref<ViewInstance> },\n      DialogOwnerState\n    >;",
-          "line": 60,
+          "line": 62,
           "kind": "slot",
           "type": "SlotProps<\n      Partial<ModalProps> & DialogRootSlotPropsOverrides & { ref?: React.Ref<ViewInstance> },\n      DialogOwnerState\n    >"
         },
@@ -193576,7 +193658,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "paper?: SlotProps<PaperSlotProps, DialogOwnerState>;",
-          "line": 64,
+          "line": 66,
           "kind": "slot",
           "type": "SlotProps<PaperSlotProps, DialogOwnerState>"
         },
@@ -193587,7 +193669,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "container?: SlotProps<ContainerProps, DialogOwnerState>;",
-          "line": 65,
+          "line": 67,
           "kind": "slot",
           "type": "SlotProps<ContainerProps, DialogOwnerState>"
         },
@@ -193598,7 +193680,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "backdrop?: SlotProps<\n      Partial<BackdropProps> & DialogBackdropSlotPropsOverrides,\n      DialogOwnerState\n    >;",
-          "line": 66,
+          "line": 68,
           "kind": "slot",
           "type": "SlotProps<\n      Partial<BackdropProps> & DialogBackdropSlotPropsOverrides,\n      DialogOwnerState\n    >"
         }
@@ -193630,7 +193712,7 @@
     {
       "name": "NativeContainerProps",
       "file": "src/dialog.tsx",
-      "line": 74,
+      "line": 76,
       "kind": "type",
       "members": [
         {
@@ -193640,7 +193722,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "surface: React.ComponentType<ContainerProps>;",
-          "line": 75,
+          "line": 77,
           "kind": "property",
           "type": "React.ComponentType<ContainerProps>"
         },
@@ -193651,7 +193733,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeBaseStyle: StyleProp<ViewStyle>;",
-          "line": 76,
+          "line": 78,
           "kind": "property",
           "type": "StyleProp<ViewStyle>"
         },
@@ -193662,7 +193744,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState: DialogOwnerState;",
-          "line": 77,
+          "line": 79,
           "kind": "property",
           "type": "DialogOwnerState"
         }
@@ -194008,6 +194090,246 @@
       "members": [],
       "references": [
         "DialogActionsClasses"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogTitleOwnProps",
+      "file": "src/dialogTitle.tsx",
+      "line": 13,
+      "kind": "type",
+      "members": [
+        {
+          "name": "classes",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "classes?: Partial<DialogTitleClasses> | undefined;",
+          "line": 14,
+          "kind": "property",
+          "type": "Partial<DialogTitleClasses> | undefined"
+        }
+      ],
+      "references": [
+        "DialogTitleClasses",
+        "Omit",
+        "Partial",
+        "TypographyOwnProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "TitleRoot",
+      "file": "src/dialogTitle.tsx",
+      "line": 16,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.JSXElementConstructor"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RootProps",
+      "file": "src/dialogTitle.tsx",
+      "line": 17,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ComponentPropsWithRef",
+        "React.ElementType",
+        "Root",
+        "TitleRoot"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RefCompatibleRoot",
+      "file": "src/dialogTitle.tsx",
+      "line": 22,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Instance",
+        "React.Ref",
+        "Root",
+        "RootProps",
+        "TextInstance",
+        "TitleRoot"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CompatibleRoot",
+      "file": "src/dialogTitle.tsx",
+      "line": 28,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "RefCompatibleRoot",
+        "Root",
+        "RootProps",
+        "Style",
+        "TextProps",
+        "TitleRoot"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogTitleTypeMap",
+      "file": "src/dialogTitle.tsx",
+      "line": 34,
+      "kind": "type",
+      "members": [
+        {
+          "name": "props",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "props: AdditionalProps & DialogTitleOwnProps;",
+          "line": 38,
+          "kind": "property",
+          "type": "AdditionalProps & DialogTitleOwnProps"
+        },
+        {
+          "name": "defaultComponent",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultComponent: RootComponent;",
+          "line": 39,
+          "kind": "property",
+          "type": "RootComponent"
+        }
+      ],
+      "references": [
+        "AdditionalProps",
+        "DialogTitleOwnProps",
+        "RootComponent",
+        "TitleRoot"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogTitleProps",
+      "file": "src/dialogTitle.tsx",
+      "line": 41,
+      "kind": "type",
+      "members": [
+        {
+          "name": "component",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "component?: TypographyProps<RootComponent>['component'];",
+          "line": 50,
+          "kind": "property",
+          "type": "TypographyProps<RootComponent>['component']"
+        }
+      ],
+      "references": [
+        "AdditionalProps",
+        "DialogTitleOwnProps",
+        "Omit",
+        "RootComponent",
+        "RootProps",
+        "TitleRoot",
+        "TypographyProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeDialogTitleComponent",
+      "file": "src/dialogTitle.tsx",
+      "line": 52,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<Root extends TitleRoot>(\n    props: DialogTitleProps<Root> & { component: Root & CompatibleRoot<Root> },\n  ): React.JSX.Element | null;",
+          "line": 53,
+          "kind": "signature",
+          "type": "<Root extends TitleRoot>(\n    props: DialogTitleProps<Root> & { component: Root & CompatibleRoot<Root> },\n  ): React.JSX.Element | null;"
+        },
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "(props: DialogTitleProps): React.JSX.Element | null;",
+          "line": 56,
+          "kind": "signature",
+          "type": "(props: DialogTitleProps): React.JSX.Element | null;"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string | undefined;",
+          "line": 57,
+          "kind": "property",
+          "type": "string | undefined"
+        }
+      ],
+      "references": [
+        "CompatibleRoot",
+        "DialogTitleProps",
+        "React.JSX.Element",
+        "Root",
+        "TitleRoot"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogTitleClasses",
+      "file": "src/dialogTitleClasses.ts",
+      "line": 6,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: string;",
+          "line": 7,
+          "kind": "property",
+          "type": "string"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DialogTitleClassKey",
+      "file": "src/dialogTitleClasses.ts",
+      "line": 9,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "DialogTitleClasses"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -197993,7 +198315,7 @@
     {
       "name": "StackProps",
       "file": "src/layout.tsx",
-      "line": 14,
+      "line": 13,
       "kind": "type",
       "members": [
         {
@@ -198003,7 +198325,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'row' | 'column' | 'row-reverse' | 'column-reverse';",
-          "line": 15,
+          "line": 14,
           "kind": "property",
           "type": "'row' | 'column' | 'row-reverse' | 'column-reverse'"
         },
@@ -198014,7 +198336,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "spacing?: ResponsiveStyleValue<SpacingArgument>;",
-          "line": 16,
+          "line": 15,
           "kind": "property",
           "type": "ResponsiveStyleValue<SpacingArgument>"
         },
@@ -198025,7 +198347,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "divider?: React.ReactNode;",
-          "line": 17,
+          "line": 16,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -209969,7 +210291,7 @@
     {
       "name": "MaterialExports",
       "file": "src/styles/props.ts",
-      "line": 18,
+      "line": 19,
       "kind": "type",
       "members": [],
       "references": [],
@@ -209979,7 +210301,7 @@
     {
       "name": "ComponentName",
       "file": "src/styles/props.ts",
-      "line": 20,
+      "line": 21,
       "kind": "type",
       "members": [],
       "references": [],
@@ -209989,7 +210311,7 @@
     {
       "name": "ExistingComponentProps",
       "file": "src/styles/props.ts",
-      "line": 81,
+      "line": 82,
       "kind": "type",
       "members": [],
       "references": [
@@ -210004,7 +210326,7 @@
     {
       "name": "GenericComponentProps",
       "file": "src/styles/props.ts",
-      "line": 86,
+      "line": 87,
       "kind": "type",
       "members": [
         {
@@ -210014,7 +210336,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiAutocomplete: AutocompleteProps<any, any, any, any, any, any>;",
-          "line": 87,
+          "line": 88,
           "kind": "property",
           "type": "AutocompleteProps<any, any, any, any, any, any>"
         },
@@ -210025,7 +210347,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButton: ButtonProps;",
-          "line": 88,
+          "line": 89,
           "kind": "property",
           "type": "ButtonProps"
         },
@@ -210036,7 +210358,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiIconButton: IconButtonProps;",
-          "line": 89,
+          "line": 90,
           "kind": "property",
           "type": "IconButtonProps"
         },
@@ -210047,7 +210369,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButtonGroup: ButtonGroupProps;",
-          "line": 90,
+          "line": 91,
           "kind": "property",
           "type": "ButtonGroupProps"
         },
@@ -210058,7 +210380,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiChip: ChipProps;",
-          "line": 91,
+          "line": 92,
           "kind": "property",
           "type": "ChipProps"
         },
@@ -210069,7 +210391,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSvgIcon: SvgIconProps;",
-          "line": 92,
+          "line": 93,
           "kind": "property",
           "type": "SvgIconProps"
         },
@@ -210080,7 +210402,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSelect: SelectProps;",
-          "line": 93,
+          "line": 94,
           "kind": "property",
           "type": "SelectProps"
         },
@@ -210091,7 +210413,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiTextField: TextFieldProps;",
-          "line": 94,
+          "line": 95,
           "kind": "property",
           "type": "TextFieldProps"
         },
@@ -210102,7 +210424,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPopper: PopperProps;",
-          "line": 95,
+          "line": 96,
           "kind": "property",
           "type": "PopperProps"
         },
@@ -210113,7 +210435,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDivider: DividerProps;",
-          "line": 96,
+          "line": 97,
           "kind": "property",
           "type": "DividerProps"
         },
@@ -210124,7 +210446,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPaper: PaperProps;",
-          "line": 97,
+          "line": 98,
           "kind": "property",
           "type": "PaperProps"
         },
@@ -210135,7 +210457,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiCard: CardProps;",
-          "line": 98,
+          "line": 99,
           "kind": "property",
           "type": "CardProps"
         },
@@ -210146,7 +210468,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiCardActions: CardActionsProps;",
-          "line": 99,
+          "line": 100,
           "kind": "property",
           "type": "CardActionsProps"
         },
@@ -210157,9 +210479,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDialogActions: DialogActionsProps;",
-          "line": 100,
+          "line": 101,
           "kind": "property",
           "type": "DialogActionsProps"
+        },
+        {
+          "name": "MuiDialogTitle",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiDialogTitle: DialogTitleProps;",
+          "line": 102,
+          "kind": "property",
+          "type": "DialogTitleProps"
         }
       ],
       "references": [
@@ -210170,6 +210503,7 @@
         "CardProps",
         "ChipProps",
         "DialogActionsProps",
+        "DialogTitleProps",
         "DividerProps",
         "IconButtonProps",
         "PaperProps",
@@ -210184,7 +210518,7 @@
     {
       "name": "ComponentsPropsList",
       "file": "src/styles/props.ts",
-      "line": 102,
+      "line": 104,
       "kind": "type",
       "members": [],
       "references": [
@@ -210198,7 +210532,7 @@
     {
       "name": "ComponentsProps",
       "file": "src/styles/props.ts",
-      "line": 105,
+      "line": 107,
       "kind": "type",
       "members": [],
       "references": [
@@ -212207,7 +212541,7 @@
     {
       "name": "TypographyClasses",
       "file": "src/typographyClasses.ts",
-      "line": 4,
+      "line": 6,
       "kind": "type",
       "members": [
         {
@@ -212217,7 +212551,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root: string;",
-          "line": 5,
+          "line": 7,
           "kind": "property",
           "type": "string"
         },
@@ -212228,7 +212562,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "h1: string;",
-          "line": 6,
+          "line": 8,
           "kind": "property",
           "type": "string"
         },
@@ -212239,7 +212573,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "h2: string;",
-          "line": 7,
+          "line": 9,
           "kind": "property",
           "type": "string"
         },
@@ -212250,7 +212584,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "h3: string;",
-          "line": 8,
+          "line": 10,
           "kind": "property",
           "type": "string"
         },
@@ -212261,7 +212595,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "h4: string;",
-          "line": 9,
+          "line": 11,
           "kind": "property",
           "type": "string"
         },
@@ -212272,7 +212606,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "h5: string;",
-          "line": 10,
+          "line": 12,
           "kind": "property",
           "type": "string"
         },
@@ -212283,7 +212617,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "h6: string;",
-          "line": 11,
+          "line": 13,
           "kind": "property",
           "type": "string"
         },
@@ -212294,7 +212628,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "subtitle1: string;",
-          "line": 12,
+          "line": 14,
           "kind": "property",
           "type": "string"
         },
@@ -212305,7 +212639,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "subtitle2: string;",
-          "line": 13,
+          "line": 15,
           "kind": "property",
           "type": "string"
         },
@@ -212316,7 +212650,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "body1: string;",
-          "line": 14,
+          "line": 16,
           "kind": "property",
           "type": "string"
         },
@@ -212327,7 +212661,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "body2: string;",
-          "line": 15,
+          "line": 17,
           "kind": "property",
           "type": "string"
         },
@@ -212338,7 +212672,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inherit: string;",
-          "line": 16,
+          "line": 18,
           "kind": "property",
           "type": "string"
         },
@@ -212349,7 +212683,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "button: string;",
-          "line": 17,
+          "line": 19,
           "kind": "property",
           "type": "string"
         },
@@ -212360,7 +212694,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "caption: string;",
-          "line": 18,
+          "line": 20,
           "kind": "property",
           "type": "string"
         },
@@ -212371,7 +212705,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overline: string;",
-          "line": 19,
+          "line": 21,
           "kind": "property",
           "type": "string"
         },
@@ -212382,7 +212716,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "alignLeft: string;",
-          "line": 20,
+          "line": 22,
           "kind": "property",
           "type": "string"
         },
@@ -212393,7 +212727,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "alignRight: string;",
-          "line": 21,
+          "line": 23,
           "kind": "property",
           "type": "string"
         },
@@ -212404,7 +212738,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "alignCenter: string;",
-          "line": 22,
+          "line": 24,
           "kind": "property",
           "type": "string"
         },
@@ -212415,7 +212749,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "alignJustify: string;",
-          "line": 23,
+          "line": 25,
           "kind": "property",
           "type": "string"
         },
@@ -212426,7 +212760,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "noWrap: string;",
-          "line": 24,
+          "line": 26,
           "kind": "property",
           "type": "string"
         },
@@ -212437,7 +212771,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "gutterBottom: string;",
-          "line": 25,
+          "line": 27,
           "kind": "property",
           "type": "string"
         }
@@ -212449,7 +212783,7 @@
     {
       "name": "TypographyClassKey",
       "file": "src/typographyClasses.ts",
-      "line": 27,
+      "line": 29,
       "kind": "type",
       "members": [],
       "references": [
@@ -215507,7 +215841,7 @@
     {
       "name": "NativeRootStyleResult",
       "file": "src/sx.ts",
-      "line": 1468,
+      "line": 1473,
       "kind": "type",
       "members": [
         {
@@ -215517,7 +215851,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "programme?: StyleProp<NativeStyle>;",
-          "line": 1470,
+          "line": 1475,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -215528,7 +215862,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 1471,
+          "line": 1476,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -215539,7 +215873,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 1472,
+          "line": 1477,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -215550,7 +215884,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 1474,
+          "line": 1479,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         }

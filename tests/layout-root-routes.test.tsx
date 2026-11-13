@@ -42,6 +42,7 @@ test('direct Details, Menu and Typography scenes share the contract scroll viewp
     ['box', 'box-contract-receipt'],
     ['card-actions', 'card-actions-preview-receipt'],
     ['dialog-actions', 'dialog-actions-preview-receipt'],
+    ['dialog-title', 'dialog-title-preview-receipt'],
   ]) {
     fireEvent.press(tree.getByTestId('root-layout-' + route));
     expect(tree.getByTestId('root-layout-scroll')).toBeTruthy();

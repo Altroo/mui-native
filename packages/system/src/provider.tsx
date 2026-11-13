@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Styled theme attachment adapts MIT MUI System/Utils 9.5.0; see NOTICE and upstream/dialog-title.json.
 import React, { createContext, useContext, useMemo, forwardRef } from 'react';
 import { useWindowDimensions, View, Text, type StyleProp } from 'react-native';
 import { createTheme, type Theme, type SharedComponentStyleArgs } from './theme';
@@ -105,6 +106,18 @@ export function useTheme<T = Theme>(fallback: T = systemDefaultTheme as T): T {
 }
 function scopedTheme(theme: Theme, themeId?: string): Theme {
   return (themeId && (theme as unknown as Record<string, Theme>)[themeId]) || theme;
+}
+/** Match each styled constructor's attachTheme stage without changing context. */
+function attachStyledTheme(
+  theme: Theme | null | undefined,
+  fallback: Theme,
+  themeId?: string,
+): Theme {
+  if (theme == null) return fallback;
+  // The pinned emptiness check includes enumerable prototype properties.
+  for (const _key in theme)
+    return (theme as unknown as Record<string, Theme>)[themeId as string] || theme;
+  return fallback;
 }
 export function useThemeProps<ThemeInput extends ThemeWithProps, Props, Name extends PropertyKey>({
   props,
@@ -268,7 +281,11 @@ export function styled<P extends object>(
     const known = Component === (View as unknown) || isNativeCooperatingRoot(Component);
     const layer: NativeStyledLayer = {
       prepare(props, rawTheme, parent, width, last, genuine) {
-        const theme = scopedTheme(rawTheme, options.themeId);
+        const theme = attachStyledTheme(
+          (genuine ? genuine.theme : rawTheme) as Theme | null | undefined,
+          fallback,
+          options.themeId,
+        );
         const callbackProps = genuine ?? { ...props, theme };
         if (genuine) genuine.theme = theme;
         const resolved =
@@ -315,7 +332,14 @@ export function styled<P extends object>(
         ownerState?: unknown;
         as?: Exclude<React.ElementType, string>;
       }
-    >((props, ref) => {
+    >((inProps, ref) => {
+      // A first-party composite can carry incoming CSS separately from its real
+      // authored style. Public callbacks must never observe that private carrier.
+      const input = separateNativeRootProps(inProps);
+      const props = input.props;
+      const carrierStyle = (
+        input.prepared ? input.prepared.fallback : props.style
+      ) as StyleProp<NativeStyle>;
       const styleCache = useNativeStyleCache();
       const rootClassName = (props as Record<string, unknown>).className;
       const classes =
@@ -324,22 +348,25 @@ export function styled<P extends object>(
       const forwarded = useNativeRootStyleForward(Styled, rootClassName);
       const forwarding = useForwarding();
       const { root, ref: rootRef } = useNativeTextRootRef(ref);
-      const rawTheme = useTheme(fallback),
-        theme = scopedTheme(rawTheme, options.themeId);
+      const contextTheme = useTheme(fallback);
+      const rawTheme = (props as { theme?: Theme | null }).theme ?? contextTheme;
+      // Adjacent constructors attach in their retained inner-to-outer sequence.
+      // An eager outer attachment would observe a scoped-theme getter twice.
+      let theme = inherited ? fallback : attachStyledTheme(rawTheme, fallback, options.themeId);
       const parent = useNativeTextContext();
       const { width } = useWindowDimensions();
       const { sx, style, ownerState, ...rest } = props;
       let filtered: Record<string, unknown>;
       let finalStyle: StyleProp<NativeStyle>;
       if (inherited) {
-        const genuine = { ...props };
+        const genuine = { ...props, theme: rawTheme };
         finalStyle = createNativeStyledStyle(
           theme,
           '',
           props,
           undefined,
           { ...nativeTextStyleContext(parent, style, theme), width, classes },
-          style,
+          carrierStyle,
           undefined,
           {
             layers: layers.map((own, index) => () => {
@@ -351,6 +378,7 @@ export function styled<P extends object>(
                 index === layers.length - 1,
                 genuine,
               );
+              theme = layer.theme;
               return { ...layer, context: { ...layer.context, styleCache, classes } };
             }),
             forwarded: forwarded?.programme,
@@ -380,7 +408,7 @@ export function styled<P extends object>(
             classes,
             styleCache,
           },
-          style,
+          carrierStyle,
           undefined,
           { forwarded: forwarded?.programme, renderedClass: true },
         );

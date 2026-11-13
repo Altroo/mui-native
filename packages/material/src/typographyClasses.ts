@@ -1,6 +1,8 @@
 /* Utility vocabulary adapts MIT Material UI 9.5.0.
  * Copyright (c) MUI contributors. See NOTICE and upstream/typography-contract.json.
  * Native implementation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
+import { unstable_ClassNameGenerator } from './classNameGenerator';
+
 export interface TypographyClasses {
   root: string;
   h1: string;
@@ -41,7 +43,9 @@ const globalStates: Record<string, unknown> = {
 };
 export function getTypographyUtilityClass(slot: string): string {
   const state = globalStates[slot];
-  return state ? `Mui-${state}` : `MuiTypography-${slot}`;
+  return state
+    ? `Mui-${state}`
+    : `${unstable_ClassNameGenerator.generate('MuiTypography')}-${slot}`;
 }
 export const typographyClasses: TypographyClasses = {
   root: getTypographyUtilityClass('root'),

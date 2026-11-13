@@ -2,7 +2,7 @@
 
 Current priority: [finish the easiest existing unfinished component or API](docs/completion-plan.md) to its full agreed native contract, one family at a time, before adding new components. The queue separates software work, locally executable verification and external validation.
 
-Updated: 2026-11-11. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
+Updated: 2026-11-13. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
 
 ## Decisions
 
@@ -97,6 +97,8 @@ Native [DialogActions](docs/dialog-actions.md) now has dedicated defaults/classe
 ## Early public pre-alpha channel
 
 Early preview packages may be published under the `prealpha` dist-tag for consumer feedback before family certification. They must contain real implementations, clear compatibility/native-build limits, MIT/upstream notices and aligned dependency versions. Require local checks, clean archive-consumer installation, package-content inspection, a publish dry run and independent review. Keep verified/released upstream-support state unchanged. This channel does not complete the verified-alpha checklist.
+
+Native [DialogTitle](docs/dialog-title.md) now has dedicated Typography composition, utility classes, typed native Text roots/refs, scoped imports and strict installed consumers. Dialog paper and titles share stable IDs with explicit caller/slot precedence. Normal/enlarged/restored iOS and Android checks exercise seven retained root states and two real confirmation dialogs; Android verifies the native label target. Genuine styled inputs and sequential scoped-theme attachment have original-source traces. This development is unreleased. Complete inherited contracts, catalog navigation at the largest text size, physical accessibility, viewport/custom-root matrices and optimized performance remain open.
 
 ## 3. Verified alpha
 

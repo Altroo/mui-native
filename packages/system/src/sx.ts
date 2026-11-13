@@ -1383,6 +1383,11 @@ export function createNativeStyledStyle(
           layer.sx,
           layer.context,
         );
+        // Each deferred constructor owns its theme attachment and text inputs.
+        // Final native projection uses the last prepared layer without reading
+        // the caller's raw scoped theme or replaying any source callback.
+        theme = layer.theme;
+        context = { ...context, ...layer.context };
         programmes.push(nativeCssProgramTree(prepared));
         return prepared;
       })
