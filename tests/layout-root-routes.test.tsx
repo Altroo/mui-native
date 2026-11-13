@@ -43,6 +43,7 @@ test('direct Details, Menu and Typography scenes share the contract scroll viewp
     ['card-actions', 'card-actions-preview-receipt'],
     ['dialog-actions', 'dialog-actions-preview-receipt'],
     ['dialog-title', 'dialog-title-preview-receipt'],
+    ['circular-progress', 'circular-progress-preview-receipt'],
   ]) {
     fireEvent.press(tree.getByTestId('root-layout-' + route));
     expect(tree.getByTestId('root-layout-scroll')).toBeTruthy();
@@ -64,5 +65,22 @@ test('DialogActions controls retain saved state through sx and native sizing mod
     expect(tree.getByTestId('dialog-actions-preview-save').props.accessibilityLabel).toBe(
       'Saved changes 1',
     );
+  }
+});
+
+test('public progress retains one ref through value, range, track and motion changes', () => {
+  const tree = render(<RootLayoutExamples />);
+  fireEvent.press(tree.getByTestId('root-layout-circular-progress'));
+  for (const control of ['value', 'range', 'track', 'pause', 'pause']) {
+    fireEvent.press(tree.getByTestId('circular-progress-' + control));
+    const receipt = JSON.parse(
+      tree.getByTestId('circular-progress-preview-receipt').props.accessibilityLabel,
+    );
+    expect(receipt.refs).toEqual({ attached: 1, cleaned: 0 });
+    expect(tree.getByTestId('circular-progress-determinate')).toHaveAccessibilityValue({
+      min: receipt.min,
+      max: receipt.max,
+      now: receipt.value,
+    });
   }
 });

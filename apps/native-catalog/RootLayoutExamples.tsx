@@ -14,6 +14,7 @@ import { AccordionActionsContractExample } from './AccordionActionsContractExamp
 import { CardActionsContractExample } from './CardActionsContractExample';
 import { DialogActionsContractExample } from './DialogActionsContractExample';
 import { DialogTitleContractExample } from './DialogTitleContractExample';
+import { CircularProgressContractExample } from './CircularProgressContractExample';
 import { MenuIconCascadeExample } from './MenuIconCascadeExample';
 import { TypographyContractExample } from './TypographyContractExample';
 import { DividerContractExample } from './DividerContractExample';
@@ -37,6 +38,7 @@ export function RootLayoutExamples() {
     | 'card-actions'
     | 'dialog-actions'
     | 'dialog-title'
+    | 'circular-progress'
     | 'menu-styles'
     | 'typography'
     | 'divider'
@@ -170,6 +172,16 @@ export function RootLayoutExamples() {
         <Button
           size="small"
           style={{ maxWidth: '100%', minHeight: 44 }}
+          testID="root-layout-circular-progress"
+          accessibilityState={{ selected: example === 'circular-progress' }}
+          variant={example === 'circular-progress' ? 'contained' : 'text'}
+          onClick={() => setExample('circular-progress')}
+        >
+          Progress
+        </Button>
+        <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-menu-styles"
           accessibilityState={{ selected: example === 'menu-styles' }}
           variant={example === 'menu-styles' ? 'contained' : 'text'}
@@ -290,6 +302,8 @@ export function RootLayoutExamples() {
             <DialogActionsContractExample />
           ) : example === 'dialog-title' ? (
             <DialogTitleContractExample />
+          ) : example === 'circular-progress' ? (
+            <CircularProgressContractExample />
           ) : example === 'divider' ? (
             <DividerContractExample />
           ) : example === 'paper' ? (

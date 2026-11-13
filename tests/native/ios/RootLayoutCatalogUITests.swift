@@ -476,6 +476,82 @@ final class RootLayoutCatalogUITests: XCTestCase {
     return rowFrame.height
   }
 
+  func testCircularProgressContract() throws { try runCircularProgress(enlarged: false) }
+  func testCircularProgressAtEnlargedOSTextSize() throws { try runCircularProgress(enlarged: true) }
+  func testCircularProgressNormalPreview() throws { try runCircularProgress(enlarged: false) }
+
+  /// Inspect the actual public component and native View ref, then capture paint.
+  private func runCircularProgress(enlarged: Bool) throws {
+    try chooseWrapper("root-layout-circular-progress")
+    let receipt = "circular-progress-preview-receipt"
+    func state(_ name: String, percent: Int, paused: Bool, track: Bool, range: Bool) throws {
+      let expectedMin = range ? 20.0 : 0.0, expectedMax = range ? 80.0 : 100.0
+      let expectedValue = range ? 65.0 : Double(percent)
+      let expectedAnnouncement = NumberFormatter.localizedString(from: NSNumber(value: Double(percent) / 100), number: .percent)
+      _ = reveal("circular-progress-determinate")
+      var diagnostic: String?
+      waitFor("Circular progress controls and native ref must settle") {
+        guard let value = self.metadata(receipt), let scale = value["fontScale"] as? Double,
+          let refs = value["refs"] as? [String: Int] else { return false }
+        let announcement = self.node("circular-progress-determinate").value as? String
+        let currentDiagnostic = "Circular announcement: actual=\(String(reflecting: announcement)) expected=\(String(reflecting: expectedAnnouncement)) state=\(value)"
+        if diagnostic != currentDiagnostic { print(currentDiagnostic); diagnostic = currentDiagnostic }
+        // Intl and Foundation may use different Unicode percent spacing for the
+        // same locale. Compare the known value while retaining raw diagnostics.
+        let compact = { (text: String) in text.components(separatedBy: .whitespacesAndNewlines).joined() }
+        return value["percent"] as? Int == percent && value["paused"] as? Bool == paused
+          && value["track"] as? Bool == track && value["customRange"] as? Bool == range
+          && value["min"] as? Double == expectedMin && value["max"] as? Double == expectedMax
+          && value["value"] as? Double == expectedValue
+          && announcement.map(compact) == compact(expectedAnnouncement)
+          && refs["attached"] == 1 && refs["cleaned"] == 0
+          && (enlarged ? scale >= 1.6 : abs(scale - 1) < 0.01)
+      }
+      try measured(receipt, roots: ["progress": "circular-progress-determinate"])
+      let root = node("circular-progress-determinate")
+      XCTAssertEqual(root.frame.width, 64, accuracy: 1)
+      XCTAssertEqual(root.frame.height, 64, accuracy: 1)
+      XCTAssertTrue(root.label.contains("Upload progress"))
+      for kind in ["loading", "determinate", "fixed"] { _ = reveal("circular-sample-" + kind) }
+      func recordFrame(_ stage: String) throws {
+        var frames: [String: [Double]] = [:]
+        for kind in ["loading", "determinate", "fixed"] {
+          let frame = node("circular-sample-" + kind).frame
+          XCTAssertEqual(frame.width, 80, accuracy: 1)
+          XCTAssertEqual(frame.height, 80, accuracy: 1)
+          XCTAssertTrue(node("root-layout-scroll").frame.intersection(app.frame).insetBy(dx: -0.5, dy: -0.5).contains(frame))
+          frames[kind] = [Double(frame.minX), Double(frame.minY), Double(frame.width), Double(frame.height)]
+        }
+        let payload: [String: Any] = ["stage": stage, "state": try XCTUnwrap(metadata(receipt)), "frames": frames,
+          "screenSize": [Double(app.frame.width), Double(app.frame.height)], "nativeValue": root.value ?? NSNull()]
+        let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys]), uniformTypeIdentifier: "public.json")
+        attachment.name = "circular-progress-" + stage; attachment.lifetime = .keepAlways; add(attachment)
+        capture("circular-progress-" + stage)
+      }
+      try recordFrame(name)
+      if name == "quarter" || name == "paused" {
+        // Uneven timing avoids aliasing the native 1.4-second motion cycle.
+        for (index, interval) in [0.05, 0.17, 0.49, 0.83].enumerated() {
+          let delay = expectation(description: "Progress paint cadence")
+          DispatchQueue.main.asyncAfter(deadline: .now() + interval) { delay.fulfill() }
+          wait(for: [delay], timeout: 2)
+          try recordFrame(name + "-paint-" + String(index))
+        }
+      }
+    }
+    try state("quarter", percent: 25, paused: false, track: true, range: false)
+    reveal("circular-progress-value").tap()
+    try state("three-quarter", percent: 75, paused: false, track: true, range: false)
+    reveal("circular-progress-range").tap()
+    try state("custom-range", percent: 75, paused: false, track: true, range: true)
+    reveal("circular-progress-track").tap()
+    try state("no-track", percent: 75, paused: false, track: false, range: true)
+    reveal("circular-progress-pause").tap()
+    try state("paused", percent: 75, paused: true, track: false, range: true)
+    for control in ["value", "range", "track", "pause"] { reveal("circular-progress-" + control).tap() }
+    try state("restored", percent: 25, paused: false, track: true, range: false)
+  }
+
   func testDialogTitleGeometryAndDialogContext() throws {
     try runDialogTitle(enlarged: false)
   }
@@ -528,7 +604,7 @@ final class RootLayoutCatalogUITests: XCTestCase {
 
   @discardableResult
   private func dialogTitleState(_ stage: String, roomy: Bool, reading: Bool, rtl: Bool, identified: Bool, saved: Int, enlarged: Bool, expectedHeight: CGFloat? = nil, maximumHeight: CGFloat? = nil) throws -> CGFloat {
-    reveal("dialog-title-preview")
+    _ = reveal("dialog-title-preview")
     let title = node("dialog-title-preview"), receipt = "dialog-title-preview-receipt"
     waitFor("The retained native title and measured ref must settle: " + stage) {
       guard let value = self.metadata(receipt),

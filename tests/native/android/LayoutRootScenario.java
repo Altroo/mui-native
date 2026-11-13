@@ -51,7 +51,8 @@ public final class LayoutRootScenario {
     ACCORDION_ACTIONS_LAYOUT("accordion-actions-layout", "accordionActionsLayout"),
     CARD_ACTIONS_LAYOUT("card-actions-layout", "cardActionsLayout"),
     DIALOG_ACTIONS_LAYOUT("dialog-actions-layout", "dialogActionsLayout"),
-    DIALOG_TITLE_LAYOUT("dialog-title-layout", "dialogTitleLayout");
+    DIALOG_TITLE_LAYOUT("dialog-title-layout", "dialogTitleLayout"),
+    CIRCULAR_PROGRESS("circular-progress", "circularProgress");
     final String label, key;
     Scenario(String label, String key) { this.label = label; this.key = key; }
   }
@@ -82,6 +83,7 @@ public final class LayoutRootScenario {
   public static void runCardActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.CARD_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   public static void runDialogActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.DIALOG_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   public static void runDialogTitleLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.DIALOG_TITLE_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
+  public static void runCircularProgress(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.CIRCULAR_PROGRESS, fontProfile == null ? "normal" : fontProfile).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
@@ -98,7 +100,7 @@ public final class LayoutRootScenario {
       require(launch != null, "Catalog must be installed");
       launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity = driver.startActivitySync(launch);
-      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT || scenario == Scenario.CARD_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_TITLE_LAYOUT) {
+      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT || scenario == Scenario.CARD_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_TITLE_LAYOUT || scenario == Scenario.CIRCULAR_PROGRESS) {
         require("normal".equals(fontProfile) || "enlarged".equals(fontProfile), "Layout root checks require an explicit normal/enlarged font profile");
         float actualFontScale = activity.getResources().getConfiguration().fontScale;
         report.put("fontProfile", fontProfile);
@@ -123,7 +125,9 @@ public final class LayoutRootScenario {
       } while (!wrappersReady && navigationAttempts < 2);
       report.put("navigationAttempts", navigationAttempts);
       require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
-      if (scenario == Scenario.DIALOG_TITLE_LAYOUT) {
+      if (scenario == Scenario.CIRCULAR_PROGRESS) {
+        circularProgress();
+      } else if (scenario == Scenario.DIALOG_TITLE_LAYOUT) {
         dialogTitleLayout();
       } else if (scenario == Scenario.DIALOG_ACTIONS_LAYOUT) {
         dialogActionsLayout();
@@ -945,6 +949,82 @@ public final class LayoutRootScenario {
   }
 
   /** Real Android action frames and touch state at the requested system text scale. */
+  private void circularProgress() throws Exception {
+    revealComplete("root-layout-circular-progress"); tap("root-layout-circular-progress");
+    circularState("quarter", 25, false, true, false);
+    tap("circular-progress-value"); circularState("three-quarter", 75, false, true, false);
+    tap("circular-progress-range"); circularState("custom-range", 75, false, true, true);
+    tap("circular-progress-track"); circularState("no-track", 75, false, false, true);
+    tap("circular-progress-pause"); circularState("paused", 75, true, false, true);
+    for (String control : new String[]{"value", "range", "track", "pause"}) tap("circular-progress-" + control);
+    circularState("restored", 25, false, true, false);
+  }
+
+  private void circularState(String name, int percent, boolean paused, boolean track, boolean customRange) throws Exception {
+    for (String kind : new String[]{"loading", "determinate", "fixed"}) revealComplete("circular-sample-" + kind);
+    JSONObject value = settled(() -> {
+      JSONObject meta = metadata("circular-progress-preview-receipt"); scale(meta);
+      require(meta.getInt("percent") == percent && meta.getBoolean("paused") == paused && meta.getBoolean("track") == track && meta.getBoolean("customRange") == customRange, "Progress controls have not settled");
+      double expectedMin = customRange ? 20 : 0, expectedMax = customRange ? 80 : 100, expectedValue = customRange ? 65 : percent;
+      require(meta.getDouble("min") == expectedMin && meta.getDouble("max") == expectedMax && meta.getDouble("value") == expectedValue, "The scene must use the independently expected range and value");
+      JSONObject refs = meta.getJSONObject("refs");
+      require(refs.getInt("attached") == 1 && refs.getInt("cleaned") == 0, "Progress must retain its public View ref");
+      View root = retained("circular-progress-determinate");
+      JSONObject frame = bounds(root), measured = meta.getJSONObject("receipts").getJSONObject("progress").getJSONObject("window");
+      require(Math.abs(frame.getDouble("width") - 64) <= 1.5 && Math.abs(frame.getDouble("height") - 64) <= 1.5, "Native progress must retain its explicit size");
+      require(Math.abs(frame.getDouble("width") - measured.getDouble("width")) <= 1.5 && Math.abs(frame.getDouble("height") - measured.getDouble("height")) <= 1.5, "Public progress ref must measure the same native host");
+      com.horcrux.svg.RenderableView arc = circularArc(root);
+      require(arc != null, "The real native SVG progress arc must exist");
+      double arcDashOffset = arc.strokeDashoffset / com.facebook.react.uimanager.DisplayMetricsHolder.getScreenDisplayMetrics().density;
+      double expectedOffset = percent == 25 ? 95.190 : 31.730;
+      require(Math.abs(arcDashOffset - expectedOffset) < .02, "Native dash-offset transition must settle before capture: " + arcDashOffset);
+      AccessibilityNodeInfo info = root.createAccessibilityNodeInfo();
+      AccessibilityNodeInfo.RangeInfo range = info.getRangeInfo();
+      require(range != null && Math.abs(range.getMin() - expectedMin) < .01 && Math.abs(range.getMax() - expectedMax) < .01 && Math.abs(range.getCurrent() - expectedValue) < .01, "Native accessibility must expose the current progress range");
+      JSONObject frames = circularFrames(false), pixelFrames = circularFrames(true);
+      return new JSONObject().put("name", name).put("metadata", meta).put("rootTag", root.getId()).put("frame", frame).put("frames", frames).put("pixelFrames", pixelFrames).put("arcDashOffset", arcDashOffset).put("range", new JSONArray().put(range.getMin()).put(range.getMax()).put(range.getCurrent()));
+    }, name);
+    states.put(value); stage(name); capture("circular-progress-" + name + ".png");
+    if (name.equals("quarter") || name.equals("paused")) {
+      JSONArray paint = new JSONArray(); value.put("paint", paint);
+      int index = 0;
+      for (long interval : new long[]{50, 170, 490, 830}) {
+        SystemClock.sleep(interval);
+        JSONObject current = ui(() -> new JSONObject().put("frames", circularFrames(false)).put("pixelFrames", circularFrames(true)));
+        String picture = "circular-progress-" + name + "-paint-" + index++ + ".png";
+        paint.put(current.put("screenshot", picture));
+        capture(picture);
+      }
+    }
+  }
+
+  /** Track is mounted first, so the final native CircleView is the actual arc. */
+  private com.horcrux.svg.RenderableView circularArc(View root) {
+    com.horcrux.svg.RenderableView found = root.getClass().getName().equals("com.horcrux.svg.CircleView") ? (com.horcrux.svg.RenderableView)root : null;
+    if (root instanceof ViewGroup) {
+      ViewGroup group = (ViewGroup)root;
+      for (int index = 0; index < group.getChildCount(); index++) {
+        com.horcrux.svg.RenderableView nested = circularArc(group.getChildAt(index));
+        if (nested != null) found = nested;
+      }
+    }
+    return found;
+  }
+
+  /** Screenshot pixels use screen coordinates, independently of window/density geometry. */
+  private JSONObject circularFrames(boolean pixels) throws Exception {
+    JSONObject frames = new JSONObject();
+    for (String kind : new String[]{"loading", "determinate", "fixed"}) {
+      View sample = view("circular-sample-" + kind); Rect visible = new Rect();
+      require(sample.getGlobalVisibleRect(visible) && visible.width() == sample.getWidth() && visible.height() == sample.getHeight(), "Every current paint crop must fit: " + kind);
+      if (pixels) {
+        int[] origin = new int[2]; sample.getLocationOnScreen(origin);
+        frames.put(kind, new JSONArray().put(origin[0]).put(origin[1]).put(sample.getWidth()).put(sample.getHeight()));
+      } else frames.put(kind, bounds(sample));
+    }
+    return frames;
+  }
+
   private void dialogTitleLayout() throws Exception {
     revealComplete("root-layout-dialog-title"); tap("root-layout-dialog-title");
     double baseline = dialogTitleState("standard", false, false, false, false, 0, null, null);
