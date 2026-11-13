@@ -50,7 +50,8 @@ public final class LayoutRootScenario {
     AVATAR_ACCESSIBILITY("list-item-avatar-accessibility", "avatarAccessibility"),
     ACCORDION_ACTIONS_LAYOUT("accordion-actions-layout", "accordionActionsLayout"),
     CARD_ACTIONS_LAYOUT("card-actions-layout", "cardActionsLayout"),
-    DIALOG_ACTIONS_LAYOUT("dialog-actions-layout", "dialogActionsLayout");
+    DIALOG_ACTIONS_LAYOUT("dialog-actions-layout", "dialogActionsLayout"),
+    DIALOG_TITLE_LAYOUT("dialog-title-layout", "dialogTitleLayout");
     final String label, key;
     Scenario(String label, String key) { this.label = label; this.key = key; }
   }
@@ -80,6 +81,7 @@ public final class LayoutRootScenario {
   public static void runAccordionActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.ACCORDION_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   public static void runCardActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.CARD_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   public static void runDialogActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.DIALOG_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
+  public static void runDialogTitleLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.DIALOG_TITLE_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
     try {
@@ -96,7 +98,7 @@ public final class LayoutRootScenario {
       require(launch != null, "Catalog must be installed");
       launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity = driver.startActivitySync(launch);
-      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT || scenario == Scenario.CARD_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_ACTIONS_LAYOUT) {
+      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT || scenario == Scenario.CARD_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_TITLE_LAYOUT) {
         require("normal".equals(fontProfile) || "enlarged".equals(fontProfile), "Layout root checks require an explicit normal/enlarged font profile");
         float actualFontScale = activity.getResources().getConfiguration().fontScale;
         report.put("fontProfile", fontProfile);
@@ -121,7 +123,9 @@ public final class LayoutRootScenario {
       } while (!wrappersReady && navigationAttempts < 2);
       report.put("navigationAttempts", navigationAttempts);
       require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
-      if (scenario == Scenario.DIALOG_ACTIONS_LAYOUT) {
+      if (scenario == Scenario.DIALOG_TITLE_LAYOUT) {
+        dialogTitleLayout();
+      } else if (scenario == Scenario.DIALOG_ACTIONS_LAYOUT) {
         dialogActionsLayout();
       } else if (scenario == Scenario.CARD_ACTIONS_LAYOUT) {
         cardActionsLayout();
@@ -941,6 +945,125 @@ public final class LayoutRootScenario {
   }
 
   /** Real Android action frames and touch state at the requested system text scale. */
+  private void dialogTitleLayout() throws Exception {
+    revealComplete("root-layout-dialog-title"); tap("root-layout-dialog-title");
+    double baseline = dialogTitleState("standard", false, false, false, false, 0, null, null);
+    capture("dialog-title-standard.png");
+    dialogTitleModal(false);
+    dialogTitleState("after-cancel", false, false, false, false, 0, baseline, null);
+    tap("dialog-title-preview-spacing");
+    double spacious = dialogTitleState("roomy", true, false, false, false, 0, baseline + 16, null);
+    tap("dialog-title-preview-variant");
+    dialogTitleState("reading", true, true, false, false, 0, null, spacious - 2);
+    tap("dialog-title-preview-direction"); tap("dialog-title-preview-identifier");
+    dialogTitleState("identified-rtl", true, true, true, true, 0, null, spacious - 2);
+    capture("dialog-title-rtl.png");
+    dialogTitleModal(true);
+    dialogTitleState("after-save", true, true, true, true, 1, null, spacious - 2);
+    for (String control : new String[]{"spacing", "variant", "direction", "identifier"}) tap("dialog-title-preview-" + control);
+    dialogTitleState("restored", false, false, false, false, 1, baseline, null);
+    capture("dialog-title-restored.png");
+  }
+
+  private double dialogTitleState(String name, boolean roomy, boolean reading, boolean rtl, boolean identified, int saved, Double expectedHeight, Double maximumHeight) throws Exception {
+    revealComplete("dialog-title-preview");
+    JSONObject result = settled(() -> {
+      JSONObject value = metadata("dialog-title-preview-receipt");
+      require(value.getBoolean("roomy") == roomy && value.getBoolean("reading") == reading && value.getBoolean("rtl") == rtl && value.getBoolean("explicitId") == identified && !value.getBoolean("open") && value.getInt("saved") == saved, "Title controls have not committed");
+      scale(value);
+      JSONObject refs = value.getJSONObject("refs");
+      require(refs.getInt("attached") == 1 && refs.getInt("cleaned") == 0, "Title must retain its native Text ref");
+      View title = retained("dialog-title-preview");
+      JSONObject frame = bounds(title), measured = value.getJSONObject("receipts").getJSONObject("title").getJSONObject("window");
+      require(Math.abs(frame.getDouble("width") - measured.getDouble("width")) <= 1.5 && Math.abs(frame.getDouble("height") - measured.getDouble("height")) <= 1.5, "The public Text ref must measure the same native host");
+      double height = frame.getDouble("height");
+      require(expectedHeight == null || Math.abs(height - expectedHeight) <= 1.5, "Title padding/restoration has not settled");
+      require(maximumHeight == null || height < maximumHeight, "The reading typography must settle before acknowledgment");
+      require(title.createAccessibilityNodeInfo().isHeading(), "The native Text must retain heading semantics across typography changes");
+      NativeText text = nativeText(title);
+      require(text.text.toString().contains("Workspace settings"), "The native title glyph run must retain its content");
+      // Layout's base paint can differ from the span-adjusted paint actually
+      // drawn by RN 0.88. Reuse the existing glyph probe and pinned peer conversion.
+      TextPaint paint = text.glyphPaint();
+      float expectedPx = (float)Math.ceil(PixelUtil.toPixelFromSP(reading ? 16 : 20));
+      float platformPx = (float)Math.ceil(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, reading ? 16 : 20, title.getResources().getDisplayMetrics()));
+      require(Math.abs(paint.getTextSize() - expectedPx) <= 1.5, "Native title font differs: glyphPx=" + paint.getTextSize() + " peerPx=" + expectedPx + " platformPx=" + platformPx + " basePx=" + text.layout.getPaint().getTextSize());
+      return new JSONObject().put("name", name).put("metadata", value).put("rootTag", title.getId()).put("frame", frame).put("fontPx", paint.getTextSize()).put("expectedFontPx", expectedPx).put("platformExpectedFontPx", platformPx).put("basePaintPx", text.layout.getPaint().getTextSize()).put("backend", text.backend).put("heading", title.createAccessibilityNodeInfo().isHeading());
+    }, name);
+    states.put(result); stage(name);
+    return result.getJSONObject("frame").getDouble("height");
+  }
+
+  private void dialogTitleModal(boolean save) throws Exception {
+    tap("dialog-title-preview-open");
+    final AccessibilityNodeInfo[][] ready = {null};
+    final String[] previousGeometry = {null}; final long[] stableSince = {0};
+    String actionId = save ? "dialog-title-modal-save" : "dialog-title-modal-cancel";
+    await(() -> {
+      AccessibilityNodeInfo title = currentDialogTitleNode("dialog-title-modal-title");
+      AccessibilityNodeInfo paper = currentDialogTitleNode("dialog-title-preview-paper");
+      AccessibilityNodeInfo action = currentDialogTitleNode(actionId);
+      if (title == null || paper == null || action == null || !action.isEnabled()) return false;
+      AccessibilityNodeInfo label = dialogTitleLabel(paper);
+      if (label == null || !label.equals(title) || !title.isHeading() || !accessibilityLabel(title).contains("Review changes")) return false;
+      Rect titleBounds = new Rect(), paperBounds = new Rect(), actionBounds = new Rect();
+      title.getBoundsInScreen(titleBounds); paper.getBoundsInScreen(paperBounds); action.getBoundsInScreen(actionBounds);
+      if (titleBounds.isEmpty() || actionBounds.isEmpty() || !paperBounds.contains(titleBounds)) return false;
+      String geometry = titleBounds.toShortString() + "|" + paperBounds.toShortString() + "|" + actionBounds.toShortString();
+      if (!geometry.equals(previousGeometry[0])) { previousGeometry[0] = geometry; stableSince[0] = SystemClock.uptimeMillis(); return false; }
+      if (SystemClock.uptimeMillis() - stableSince[0] < 100) return false;
+      ready[0] = new AccessibilityNodeInfo[]{title, paper, label}; return true;
+    }, "The native modal title, label and action must settle in the active window");
+    AccessibilityNodeInfo title = ready[0][0], paper = ready[0][1], label = ready[0][2];
+    Rect titleBounds = new Rect(), paperBounds = new Rect(); title.getBoundsInScreen(titleBounds); paper.getBoundsInScreen(paperBounds);
+    String name = save ? "modal-explicit" : "modal-automatic";
+    JSONObject observation = new JSONObject().put("name", name).put("titleIdentifier", title.getViewIdResourceName()).put("labeledByIdentifier", label.getViewIdResourceName()).put("sameLabelNode", label.equals(title)).put("heading", title.isHeading()).put("titleBounds", screenRectangle(titleBounds)).put("paperBounds", screenRectangle(paperBounds));
+    states.put(observation); stage(name); capture("dialog-title-" + name + ".png");
+    // Reacquire stable action coordinates after capture rather than retaining an
+    // entrance-animation snapshot or retrying an already injected click.
+    final Rect[] previous = {null};
+    final Rect[] touch = {null};
+    await(() -> {
+      AccessibilityNodeInfo action = currentDialogTitleNode(actionId);
+      if (action == null || !action.isEnabled()) return false;
+      Rect bounds = new Rect(); action.getBoundsInScreen(bounds);
+      if (bounds.isEmpty()) return false;
+      if (!bounds.equals(previous[0])) { previous[0] = bounds; stableSince[0] = SystemClock.uptimeMillis(); return false; }
+      if (SystemClock.uptimeMillis() - stableSince[0] < 100) return false;
+      touch[0] = bounds; return true;
+    }, "The current modal action bounds must be stable before the native tap");
+    long down = SystemClock.uptimeMillis();
+    for (int type : new int[]{MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP}) {
+      MotionEvent event = MotionEvent.obtain(down, SystemClock.uptimeMillis(), type, touch[0].exactCenterX(), touch[0].exactCenterY(), 0); event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+      try { require(automation.injectInputEvent(event, true), "Native dialog touch injection failed"); } finally { event.recycle(); }
+      SystemClock.sleep(30);
+    }
+    // Wait for the real active window, not just React's open=false receipt.
+    eventAccessibilityNode("dialog-title-preview");
+  }
+
+  private AccessibilityNodeInfo currentDialogTitleNode(String id) {
+    AccessibilityNodeInfo root = automation.getRootInActiveWindow();
+    if (root == null || !PACKAGE.contentEquals(root.getPackageName())) return null;
+    java.util.ArrayDeque<AccessibilityNodeInfo> queue = new java.util.ArrayDeque<>(); queue.add(root);
+    for (int count = 0; !queue.isEmpty() && count < 2048; count++) {
+      AccessibilityNodeInfo node = queue.removeFirst();
+      if (id.equals(node.getViewIdResourceName()) && PACKAGE.contentEquals(node.getPackageName()) && node.isVisibleToUser()) return node;
+      for (int index = 0; index < node.getChildCount(); index++) { AccessibilityNodeInfo child = node.getChild(index); if (child != null) queue.addLast(child); }
+    }
+    return null;
+  }
+
+  @SuppressWarnings("deprecation")
+  private AccessibilityNodeInfo dialogTitleLabel(AccessibilityNodeInfo paper) {
+    // API 36+ supports multiple labels. Keep the older native QA API floor.
+    if (Build.VERSION.SDK_INT >= 36) {
+      java.util.List<AccessibilityNodeInfo> labels = paper.getLabeledByList();
+      return labels != null && labels.size() == 1 ? labels.get(0) : null;
+    }
+    return paper.getLabeledBy();
+  }
+
   private void dialogActionsLayout() throws Exception {
     revealComplete("root-layout-dialog-actions"); tap("root-layout-dialog-actions");
     dialogActionsState("standard", false, false, false, 8, 0, 0);

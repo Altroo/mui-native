@@ -57,6 +57,7 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean accordionActionsLayoutScenario;
   private boolean cardActionsLayoutScenario;
   private boolean dialogActionsLayoutScenario;
+  private boolean dialogTitleLayoutScenario;
   private boolean textAlignmentScenario;
   private boolean dividerScenario;
   private boolean paperScenario;
@@ -85,6 +86,7 @@ public final class PopperInstrumentation extends Instrumentation {
     avatarAccessibilityScenario = "list-item-avatar-accessibility".equals(arguments.getString("scenario"));
     cardActionsLayoutScenario = "card-actions-layout".equals(arguments.getString("scenario"));
     dialogActionsLayoutScenario = "dialog-actions-layout".equals(arguments.getString("scenario"));
+    dialogTitleLayoutScenario = "dialog-title-layout".equals(arguments.getString("scenario"));
     accordionActionsLayoutScenario = "accordion-actions-layout".equals(arguments.getString("scenario"));
     formGroupFocusScenario = "form-group-focus".equals(arguments.getString("scenario"));
     textAlignmentScenario = "text-alignment".equals(arguments.getString("scenario"));
@@ -107,6 +109,7 @@ public final class PopperInstrumentation extends Instrumentation {
     if (paperScenario) { PaperScenario.run(this, dividerFontProfile); return; }
     if (cardActionsLayoutScenario) { LayoutRootScenario.runCardActionsLayout(this, dividerFontProfile); return; }
     if (dialogActionsLayoutScenario) { LayoutRootScenario.runDialogActionsLayout(this, dividerFontProfile); return; }
+    if (dialogTitleLayoutScenario) { LayoutRootScenario.runDialogTitleLayout(this, dividerFontProfile); return; }
     if (accordionActionsLayoutScenario) { LayoutRootScenario.runAccordionActionsLayout(this, dividerFontProfile); return; }
     if (avatarAccessibilityScenario) { LayoutRootScenario.runAvatarAccessibility(this); return; }
     if (formGroupAccessibilityScenario) { LayoutRootScenario.runFormGroupAccessibility(this); return; }

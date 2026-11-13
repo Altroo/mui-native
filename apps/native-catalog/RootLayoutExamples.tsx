@@ -13,6 +13,7 @@ import { AccordionDetailsContractExample } from './AccordionDetailsContractExamp
 import { AccordionActionsContractExample } from './AccordionActionsContractExample';
 import { CardActionsContractExample } from './CardActionsContractExample';
 import { DialogActionsContractExample } from './DialogActionsContractExample';
+import { DialogTitleContractExample } from './DialogTitleContractExample';
 import { MenuIconCascadeExample } from './MenuIconCascadeExample';
 import { TypographyContractExample } from './TypographyContractExample';
 import { DividerContractExample } from './DividerContractExample';
@@ -35,6 +36,7 @@ export function RootLayoutExamples() {
     | 'actions'
     | 'card-actions'
     | 'dialog-actions'
+    | 'dialog-title'
     | 'menu-styles'
     | 'typography'
     | 'divider'
@@ -158,6 +160,16 @@ export function RootLayoutExamples() {
         <Button
           size="small"
           style={{ maxWidth: '100%', minHeight: 44 }}
+          testID="root-layout-dialog-title"
+          accessibilityState={{ selected: example === 'dialog-title' }}
+          variant={example === 'dialog-title' ? 'contained' : 'text'}
+          onClick={() => setExample('dialog-title')}
+        >
+          Dialog title
+        </Button>
+        <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-menu-styles"
           accessibilityState={{ selected: example === 'menu-styles' }}
           variant={example === 'menu-styles' ? 'contained' : 'text'}
@@ -276,6 +288,8 @@ export function RootLayoutExamples() {
             <CardActionsContractExample />
           ) : example === 'dialog-actions' ? (
             <DialogActionsContractExample />
+          ) : example === 'dialog-title' ? (
+            <DialogTitleContractExample />
           ) : example === 'divider' ? (
             <DividerContractExample />
           ) : example === 'paper' ? (

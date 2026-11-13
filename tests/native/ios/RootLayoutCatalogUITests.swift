@@ -135,7 +135,8 @@ final class RootLayoutCatalogUITests: XCTestCase {
   }
   private func chooseWrapper(_ id: String) throws {
     let route = node(id), navigation = node("root-layout-navigation")
-    for _ in 0..<16 {
+    // At the largest font, every earlier route can consume a full viewport.
+    for step in 0..<64 {
       let frame = route.exists ? route.frame : .zero
       let viewport = navigation.frame.intersection(app.frame).insetBy(dx: 12, dy: 3)
       XCTAssertGreaterThan(viewport.width, 48, "A visible wrapper navigation viewport is required")
@@ -143,6 +144,7 @@ final class RootLayoutCatalogUITests: XCTestCase {
         route.tap()
         return
       }
+      if step % 8 == 0 { print("Wrapper navigation \(id): step=\(step), target=\(frame), viewport=\(viewport)") }
       let delta = frame.isEmpty ? viewport.width : frame.midX - viewport.midX
       let distance = min(max(abs(delta), 24), viewport.width * 0.4)
       let origin = app.coordinate(withNormalizedOffset: .zero)
@@ -152,6 +154,8 @@ final class RootLayoutCatalogUITests: XCTestCase {
       let end = origin.withOffset(CGVector(dx: x - (delta >= 0 ? distance : -distance), dy: y))
       start.press(forDuration: 0.1, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.2)
     }
+    capture("unreachable-" + id)
+    print("Wrapper navigation failed: target=\(route.frame), navigation=\(navigation.frame)")
     throw NSError(domain: "RootLayoutCatalogUITests", code: 1, userInfo: [NSLocalizedDescriptionKey: "Wrapper route is not visible: " + id])
   }
 
@@ -471,4 +475,88 @@ final class RootLayoutCatalogUITests: XCTestCase {
     add(attachment)
     return rowFrame.height
   }
+
+  func testDialogTitleGeometryAndDialogContext() throws {
+    try runDialogTitle(enlarged: false)
+  }
+
+  func testDialogTitleAtEnlargedOSTextSize() throws {
+    try runDialogTitle(enlarged: true)
+  }
+
+  func testDialogTitleNormalPreview() throws {
+    try chooseWrapper("root-layout-dialog-title")
+    try dialogTitleState("normal-preview", roomy: false, reading: false, rtl: false, identified: false, saved: 0, enlarged: false)
+    capture("dialog-title-normal-preview")
+  }
+
+  private func runDialogTitle(enlarged: Bool) throws {
+    try chooseWrapper("root-layout-dialog-title")
+    let baseline = try dialogTitleState("standard", roomy: false, reading: false, rtl: false, identified: false, saved: 0, enlarged: enlarged)
+    capture("dialog-title-standard")
+    try dialogTitleModal(save: false)
+    try dialogTitleState("after-cancel", roomy: false, reading: false, rtl: false, identified: false, saved: 0, enlarged: enlarged, expectedHeight: baseline)
+    reveal("dialog-title-preview-spacing").tap()
+    let spacious = try dialogTitleState("roomy", roomy: true, reading: false, rtl: false, identified: false, saved: 0, enlarged: enlarged, expectedHeight: baseline + 16)
+    reveal("dialog-title-preview-variant").tap()
+    try dialogTitleState("reading", roomy: true, reading: true, rtl: false, identified: false, saved: 0, enlarged: enlarged, maximumHeight: spacious - 2)
+    reveal("dialog-title-preview-direction").tap()
+    reveal("dialog-title-preview-identifier").tap()
+    try dialogTitleState("identified-rtl", roomy: true, reading: true, rtl: true, identified: true, saved: 0, enlarged: enlarged, maximumHeight: spacious - 2)
+    capture("dialog-title-rtl")
+    try dialogTitleModal(save: true)
+    try dialogTitleState("after-save", roomy: true, reading: true, rtl: true, identified: true, saved: 1, enlarged: enlarged, maximumHeight: spacious - 2)
+    for id in ["spacing", "variant", "direction", "identifier"] { reveal("dialog-title-preview-" + id).tap() }
+    try dialogTitleState("restored", roomy: false, reading: false, rtl: false, identified: false, saved: 1, enlarged: enlarged, expectedHeight: baseline)
+    capture("dialog-title-restored")
+  }
+
+  private func dialogTitleModal(save: Bool) throws {
+    reveal("dialog-title-preview-open").tap()
+    let title = node("dialog-title-modal-title"), paper = node("dialog-title-preview-paper")
+    waitFor("The native dialog must present its title inside the paper") {
+      title.exists && title.isHittable && title.label.contains("Review changes")
+        && !title.frame.isEmpty && paper.exists
+        && paper.frame.insetBy(dx: -1.5, dy: -1.5).contains(title.frame)
+    }
+    capture(save ? "dialog-title-modal-explicit" : "dialog-title-modal-automatic")
+    node(save ? "dialog-title-modal-save" : "dialog-title-modal-cancel").tap()
+    waitFor("The selected native dialog action must dismiss its title") {
+      !title.exists || !title.isHittable
+    }
+  }
+
+  @discardableResult
+  private func dialogTitleState(_ stage: String, roomy: Bool, reading: Bool, rtl: Bool, identified: Bool, saved: Int, enlarged: Bool, expectedHeight: CGFloat? = nil, maximumHeight: CGFloat? = nil) throws -> CGFloat {
+    reveal("dialog-title-preview")
+    let title = node("dialog-title-preview"), receipt = "dialog-title-preview-receipt"
+    waitFor("The retained native title and measured ref must settle: " + stage) {
+      guard let value = self.metadata(receipt),
+        value["roomy"] as? Bool == roomy, value["reading"] as? Bool == reading,
+        value["rtl"] as? Bool == rtl, value["explicitId"] as? Bool == identified,
+        value["open"] as? Bool == false, value["saved"] as? Int == saved,
+        let scale = value["fontScale"] as? Double,
+        (enlarged ? scale >= 1.6 : abs(scale - 1) < 0.01),
+        let refs = value["refs"] as? [String: Int], refs["attached"] == 1, refs["cleaned"] == 0,
+        let receipts = value["receipts"] as? [String: [String: Any]],
+        let window = receipts["title"]?["window"] as? [String: Double],
+        let width = window["width"], let height = window["height"], width > 0, height > 0,
+        title.exists && title.isHittable && title.label.contains("Workspace settings")
+      else { return false }
+      if let expectedHeight, abs(title.frame.height - expectedHeight) > 1.5 { return false }
+      if let maximumHeight, title.frame.height >= maximumHeight { return false }
+      return abs(title.frame.width - width) <= 1 && abs(title.frame.height - height) <= 1
+    }
+    let frame = title.frame
+    let observation: [String: Any] = [
+      "stage": stage, "frame": [Double(frame.minX), Double(frame.minY), Double(frame.width), Double(frame.height)],
+      "label": title.label, "state": try XCTUnwrap(metadata(receipt)),
+    ]
+    let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: observation, options: [.sortedKeys]), uniformTypeIdentifier: "public.json")
+    attachment.name = "dialog-title-" + stage
+    attachment.lifetime = .keepAlways
+    add(attachment)
+    return frame.height
+  }
+
 }
