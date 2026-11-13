@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastSuccessfulCheck": "2026-11-13T00:32:20.597Z",
+  "lastSuccessfulCheck": "2026-11-13T15:27:31.648Z",
   "packages": {
     "@mui/material": {
       "latestDetected": "9.5.0",
@@ -575,7 +575,7 @@
       ]
     },
     "@mui/x-data-grid": {
-      "latestDetected": "9.17.0",
+      "latestDetected": "9.18.0",
       "observedVersions": [
         "9.15.0",
         "4.0.0",
@@ -838,11 +838,13 @@
         "9.13.0",
         "9.14.0",
         "9.16.0",
-        "9.17.0"
+        "9.17.0",
+        "8.29.6",
+        "9.18.0"
       ]
     },
     "@mui/x-date-pickers": {
-      "latestDetected": "9.17.0",
+      "latestDetected": "9.18.0",
       "observedVersions": [
         "9.15.0",
         "5.0.0",
@@ -1042,11 +1044,13 @@
         "9.13.0",
         "9.14.0",
         "9.16.0",
-        "9.17.0"
+        "9.17.0",
+        "8.29.6",
+        "9.18.0"
       ]
     },
     "@mui/x-charts": {
-      "latestDetected": "9.17.0",
+      "latestDetected": "9.18.0",
       "observedVersions": [
         "9.15.0",
         "6.18.0",
@@ -1178,11 +1182,12 @@
         "9.13.0",
         "9.14.0",
         "9.16.0",
-        "9.17.0"
+        "9.17.0",
+        "9.18.0"
       ]
     },
     "@mui/x-tree-view": {
-      "latestDetected": "9.17.0",
+      "latestDetected": "9.18.0",
       "observedVersions": [
         "9.15.0",
         "6.17.0",
@@ -1292,11 +1297,12 @@
         "9.13.0",
         "9.14.0",
         "9.16.0",
-        "9.17.0"
+        "9.17.0",
+        "9.18.0"
       ]
     },
     "@mui/x-scheduler": {
-      "latestDetected": "9.0.0-beta.15",
+      "latestDetected": "9.0.0-beta.16",
       "observedVersions": [
         "9.0.0-beta.13",
         "0.0.1",
@@ -1322,11 +1328,12 @@
         "9.0.0-beta.11",
         "9.0.0-beta.12",
         "9.0.0-beta.14",
-        "9.0.0-beta.15"
+        "9.0.0-beta.15",
+        "9.0.0-beta.16"
       ]
     },
     "@mui/x-chat": {
-      "latestDetected": "9.0.0-alpha.21",
+      "latestDetected": "9.0.0-alpha.22",
       "observedVersions": [
         "9.0.0-alpha.19",
         "0.0.1",
@@ -1348,7 +1355,8 @@
         "9.0.0-alpha.17",
         "9.0.0-alpha.18",
         "9.0.0-alpha.20",
-        "9.0.0-alpha.21"
+        "9.0.0-alpha.21",
+        "9.0.0-alpha.22"
       ]
     },
     "@mui/utils": {
