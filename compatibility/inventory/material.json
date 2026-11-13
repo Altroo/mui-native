@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "2a26e95792f3d113ff70c628962eb0a3fb266915c8614ba70e1b3d28205fc246",
+  "nativeSourceSha256": "224316095811a11f6883ff8c5b3d5c97801059b6fa3ae5c3fbdaa759c9dff571",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -7539,7 +7539,7 @@
           "line": 99
         }
       ],
-      "native": "not-declared",
+      "native": "declared-unverified",
       "verified": false
     },
     {
@@ -35196,7 +35196,7 @@
           "module": "@altroo/mui-native:src/accordionTypes.ts",
           "name": "AccordionRootSlotProps",
           "kind": "type",
-          "line": 28
+          "line": 29
         }
       ]
     },
@@ -35207,7 +35207,7 @@
           "module": "@altroo/mui-native:src/accordionTypes.ts",
           "name": "AccordionSummaryRootSlotProps",
           "kind": "type",
-          "line": 82
+          "line": 144
         }
       ]
     },
@@ -35383,7 +35383,7 @@
           "module": "@altroo/mui-native:src/chipTypes.ts",
           "name": "ChipDeleteEvent",
           "kind": "type",
-          "line": 38
+          "line": 39
         }
       ]
     },
@@ -35427,7 +35427,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentRootStyle",
           "kind": "value",
-          "line": 1486
+          "line": 1593
         }
       ]
     },
@@ -35438,7 +35438,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "componentStyle",
           "kind": "value",
-          "line": 1330
+          "line": 1437
         }
       ]
     },
@@ -35570,7 +35570,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "createNativeStyledStyle",
           "kind": "value",
-          "line": 1352
+          "line": 1459
         }
       ]
     },
@@ -35960,13 +35960,24 @@
       ]
     },
     {
+      "name": "NativeAccordionComponent",
+      "origins": [
+        {
+          "module": "@altroo/mui-native:src/accordionTypes.ts",
+          "name": "NativeAccordionComponent",
+          "kind": "type",
+          "line": 122
+        }
+      ]
+    },
+    {
       "name": "NativeAccordionSlotProps",
       "origins": [
         {
           "module": "@altroo/mui-native:src/accordionTypes.ts",
           "name": "NativeAccordionSlotProps",
           "kind": "type",
-          "line": 17
+          "line": 18
         }
       ]
     },
@@ -36296,7 +36307,7 @@
           "module": "@altroo/mui-native:src/chipTypes.ts",
           "name": "NativeChipComponent",
           "kind": "type",
-          "line": 88
+          "line": 89
         }
       ]
     },
@@ -36307,7 +36318,7 @@
           "module": "@altroo/mui-native:src/chipTypes.ts",
           "name": "NativeChipLabelProps",
           "kind": "type",
-          "line": 27
+          "line": 28
         }
       ]
     },
@@ -36318,7 +36329,7 @@
           "module": "@altroo/mui-native:src/chipTypes.ts",
           "name": "NativeChipRootProps",
           "kind": "type",
-          "line": 24
+          "line": 25
         }
       ]
     },
@@ -36593,7 +36604,7 @@
           "module": "@altroo/mui-native-system:src/nativeStyledMetadata.ts",
           "name": "NativePreparedStyle",
           "kind": "type",
-          "line": 44
+          "line": 46
         }
       ]
     },
@@ -36604,7 +36615,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "NativeRootStyleResult",
           "kind": "type",
-          "line": 1473
+          "line": 1580
         }
       ]
     },
@@ -36945,7 +36956,7 @@
           "module": "@altroo/mui-native-system:src/nativeTextRegistry.ts",
           "name": "nativeTextScopes",
           "kind": "value",
-          "line": 53
+          "line": 69
         }
       ]
     },
@@ -37275,7 +37286,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "resolveSx",
           "kind": "value",
-          "line": 867
+          "line": 902
         }
       ]
     },
@@ -37297,7 +37308,7 @@
           "module": "@altroo/mui-native-system:src/nativeStyledMetadata.ts",
           "name": "restoreNativeRootStyle",
           "kind": "value",
-          "line": 209
+          "line": 211
         }
       ]
     },
@@ -37407,7 +37418,7 @@
           "module": "@altroo/mui-native-system:src/nativeStyledMetadata.ts",
           "name": "separateNativeRootProps",
           "kind": "value",
-          "line": 159
+          "line": 161
         }
       ]
     },
@@ -37418,7 +37429,7 @@
           "module": "@altroo/mui-native-system:src/nativeTextRegistry.ts",
           "name": "setNativeTextScopeParent",
           "kind": "value",
-          "line": 47
+          "line": 63
         }
       ]
     },
@@ -37473,7 +37484,7 @@
           "module": "@altroo/mui-native-system:src/sx.ts",
           "name": "StyleContext",
           "kind": "type",
-          "line": 82
+          "line": 84
         }
       ]
     },
@@ -37759,7 +37770,7 @@
           "module": "@altroo/mui-native-system:src/nativeTextRegistry.ts",
           "name": "useNativeTextChildRoots",
           "kind": "value",
-          "line": 182
+          "line": 213
         }
       ]
     },
@@ -37781,7 +37792,7 @@
           "module": "@altroo/mui-native-system:src/nativeTextRegistry.ts",
           "name": "useNativeTextRootRef",
           "kind": "value",
-          "line": 140
+          "line": 163
         }
       ]
     },
@@ -37792,7 +37803,7 @@
           "module": "@altroo/mui-native-system:src/nativeTextRegistry.ts",
           "name": "useNativeTextScopeRoot",
           "kind": "value",
-          "line": 112
+          "line": 128
         }
       ]
     },
@@ -37898,7 +37909,7 @@
         {
           "name": "AccordionSlots",
           "file": "src/accordionTypes.ts",
-          "line": 35,
+          "line": 36,
           "package": "@altroo/mui-native"
         }
       ]
@@ -37915,7 +37926,7 @@
         {
           "name": "AccordionRootSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 24,
+          "line": 25,
           "package": "@altroo/mui-native"
         }
       ]
@@ -37932,7 +37943,7 @@
         {
           "name": "AccordionHeadingSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 25,
+          "line": 26,
           "package": "@altroo/mui-native"
         }
       ]
@@ -37949,7 +37960,7 @@
         {
           "name": "AccordionTransitionSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 26,
+          "line": 27,
           "package": "@altroo/mui-native"
         }
       ]
@@ -37966,7 +37977,7 @@
         {
           "name": "AccordionRegionSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 27,
+          "line": 28,
           "package": "@altroo/mui-native"
         }
       ]
@@ -37996,7 +38007,7 @@
         {
           "name": "AccordionSlotsAndSlotProps",
           "file": "src/accordionTypes.ts",
-          "line": 41,
+          "line": 42,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38126,13 +38137,13 @@
         {
           "name": "AccordionOwnProps",
           "file": "src/accordionTypes.ts",
-          "line": 59,
+          "line": 60,
           "package": "@altroo/mui-native"
         },
         {
           "name": "AccordionProps",
           "file": "src/accordionTypes.ts",
-          "line": 69,
+          "line": 108,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38152,7 +38163,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "AccordionTypeMap",
+          "file": "src/accordionTypes.ts",
+          "line": 101,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "AccordionProps",
@@ -38170,7 +38188,7 @@
           "line": 117,
           "kind": "property",
           "type": "React.ElementType | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         }
       ],
@@ -38186,7 +38204,7 @@
         {
           "name": "AccordionProps",
           "file": "src/accordionTypes.ts",
-          "line": 69,
+          "line": 108,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38205,7 +38223,7 @@
         {
           "name": "AccordionOwnerState",
           "file": "src/accordionTypes.ts",
-          "line": 74,
+          "line": 136,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38277,7 +38295,7 @@
         {
           "name": "AccordionSlots",
           "file": "src/accordionTypes.ts",
-          "line": 35,
+          "line": 36,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38294,7 +38312,7 @@
         {
           "name": "AccordionRootSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 24,
+          "line": 25,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38311,7 +38329,7 @@
         {
           "name": "AccordionHeadingSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 25,
+          "line": 26,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38328,7 +38346,7 @@
         {
           "name": "AccordionTransitionSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 26,
+          "line": 27,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38345,7 +38363,7 @@
         {
           "name": "AccordionRegionSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 27,
+          "line": 28,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38375,7 +38393,7 @@
         {
           "name": "AccordionSlotsAndSlotProps",
           "file": "src/accordionTypes.ts",
-          "line": 41,
+          "line": 42,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38505,13 +38523,13 @@
         {
           "name": "AccordionOwnProps",
           "file": "src/accordionTypes.ts",
-          "line": 59,
+          "line": 60,
           "package": "@altroo/mui-native"
         },
         {
           "name": "AccordionProps",
           "file": "src/accordionTypes.ts",
-          "line": 69,
+          "line": 108,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38531,7 +38549,14 @@
         "RootComponent"
       ],
       "inheritanceResolved": false,
-      "nativeCandidates": []
+      "nativeCandidates": [
+        {
+          "name": "AccordionTypeMap",
+          "file": "src/accordionTypes.ts",
+          "line": 101,
+          "package": "@altroo/mui-native"
+        }
+      ]
     },
     {
       "name": "AccordionProps",
@@ -38549,7 +38574,7 @@
           "line": 117,
           "kind": "property",
           "type": "React.ElementType | undefined",
-          "native": "declared-unverified",
+          "native": "not-declared-directly",
           "verified": false
         }
       ],
@@ -38565,7 +38590,7 @@
         {
           "name": "AccordionProps",
           "file": "src/accordionTypes.ts",
-          "line": 69,
+          "line": 108,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38584,7 +38609,7 @@
         {
           "name": "AccordionOwnerState",
           "file": "src/accordionTypes.ts",
-          "line": 74,
+          "line": 136,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38919,7 +38944,7 @@
         {
           "name": "AccordionActionsProps",
           "file": "src/accordionTypes.ts",
-          "line": 141,
+          "line": 203,
           "package": "@altroo/mui-native"
         }
       ]
@@ -38998,7 +39023,7 @@
         {
           "name": "AccordionActionsProps",
           "file": "src/accordionTypes.ts",
-          "line": 141,
+          "line": 203,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39190,7 +39215,7 @@
         {
           "name": "AccordionDetailsProps",
           "file": "src/accordionTypes.ts",
-          "line": 131,
+          "line": 193,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39256,7 +39281,7 @@
         {
           "name": "AccordionDetailsProps",
           "file": "src/accordionTypes.ts",
-          "line": 131,
+          "line": 193,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39415,7 +39440,7 @@
         {
           "name": "AccordionSummarySlots",
           "file": "src/accordionTypes.ts",
-          "line": 89,
+          "line": 151,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39432,7 +39457,7 @@
         {
           "name": "AccordionSummaryRootSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 79,
+          "line": 141,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39449,7 +39474,7 @@
         {
           "name": "AccordionSummaryContentSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 80,
+          "line": 142,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39466,7 +39491,7 @@
         {
           "name": "AccordionSummaryExpandIconWrapperSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 81,
+          "line": 143,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39493,7 +39518,7 @@
         {
           "name": "AccordionSummarySlotsAndSlotProps",
           "file": "src/accordionTypes.ts",
-          "line": 94,
+          "line": 156,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39557,13 +39582,13 @@
         {
           "name": "AccordionSummaryOwnProps",
           "file": "src/accordionTypes.ts",
-          "line": 113,
+          "line": 175,
           "package": "@altroo/mui-native"
         },
         {
           "name": "AccordionSummaryProps",
           "file": "src/accordionTypes.ts",
-          "line": 120,
+          "line": 182,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39599,7 +39624,7 @@
         {
           "name": "AccordionSummaryOwnerState",
           "file": "src/accordionTypes.ts",
-          "line": 125,
+          "line": 187,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39636,7 +39661,7 @@
         {
           "name": "AccordionSummaryProps",
           "file": "src/accordionTypes.ts",
-          "line": 120,
+          "line": 182,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39695,7 +39720,7 @@
         {
           "name": "AccordionSummarySlots",
           "file": "src/accordionTypes.ts",
-          "line": 89,
+          "line": 151,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39712,7 +39737,7 @@
         {
           "name": "AccordionSummaryRootSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 79,
+          "line": 141,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39729,7 +39754,7 @@
         {
           "name": "AccordionSummaryContentSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 80,
+          "line": 142,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39746,7 +39771,7 @@
         {
           "name": "AccordionSummaryExpandIconWrapperSlotPropsOverrides",
           "file": "src/accordionTypes.ts",
-          "line": 81,
+          "line": 143,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39773,7 +39798,7 @@
         {
           "name": "AccordionSummarySlotsAndSlotProps",
           "file": "src/accordionTypes.ts",
-          "line": 94,
+          "line": 156,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39837,13 +39862,13 @@
         {
           "name": "AccordionSummaryOwnProps",
           "file": "src/accordionTypes.ts",
-          "line": 113,
+          "line": 175,
           "package": "@altroo/mui-native"
         },
         {
           "name": "AccordionSummaryProps",
           "file": "src/accordionTypes.ts",
-          "line": 120,
+          "line": 182,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39879,7 +39904,7 @@
         {
           "name": "AccordionSummaryOwnerState",
           "file": "src/accordionTypes.ts",
-          "line": 125,
+          "line": 187,
           "package": "@altroo/mui-native"
         }
       ]
@@ -39916,7 +39941,7 @@
         {
           "name": "AccordionSummaryProps",
           "file": "src/accordionTypes.ts",
-          "line": 120,
+          "line": 182,
           "package": "@altroo/mui-native"
         }
       ]
@@ -60989,7 +61014,7 @@
         {
           "name": "ChipRootSlotPropsOverrides",
           "file": "src/chipTypes.ts",
-          "line": 10,
+          "line": 11,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61006,7 +61031,7 @@
         {
           "name": "ChipLabelSlotPropsOverrides",
           "file": "src/chipTypes.ts",
-          "line": 11,
+          "line": 12,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61052,7 +61077,7 @@
         {
           "name": "ChipSlots",
           "file": "src/chipTypes.ts",
-          "line": 34,
+          "line": 35,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61076,7 +61101,7 @@
         {
           "name": "ChipSlotsAndSlotProps",
           "file": "src/chipTypes.ts",
-          "line": 87,
+          "line": 88,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61096,7 +61121,7 @@
         {
           "name": "ChipOwnerState",
           "file": "src/chipTypes.ts",
-          "line": 76,
+          "line": 77,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61113,7 +61138,7 @@
         {
           "name": "ChipPropsVariantOverrides",
           "file": "src/chipTypes.ts",
-          "line": 7,
+          "line": 8,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61130,7 +61155,7 @@
         {
           "name": "ChipPropsSizeOverrides",
           "file": "src/chipTypes.ts",
-          "line": 8,
+          "line": 9,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61147,7 +61172,7 @@
         {
           "name": "ChipPropsColorOverrides",
           "file": "src/chipTypes.ts",
-          "line": 9,
+          "line": 10,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61385,13 +61410,13 @@
         {
           "name": "ChipOwnProps",
           "file": "src/chipTypes.ts",
-          "line": 41,
+          "line": 42,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ChipProps",
           "file": "src/chipTypes.ts",
-          "line": 65,
+          "line": 66,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61471,7 +61496,7 @@
         {
           "name": "ChipProps",
           "file": "src/chipTypes.ts",
-          "line": 65,
+          "line": 66,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61488,7 +61513,7 @@
         {
           "name": "ChipRootSlotPropsOverrides",
           "file": "src/chipTypes.ts",
-          "line": 10,
+          "line": 11,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61505,7 +61530,7 @@
         {
           "name": "ChipLabelSlotPropsOverrides",
           "file": "src/chipTypes.ts",
-          "line": 11,
+          "line": 12,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61551,7 +61576,7 @@
         {
           "name": "ChipSlots",
           "file": "src/chipTypes.ts",
-          "line": 34,
+          "line": 35,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61575,7 +61600,7 @@
         {
           "name": "ChipSlotsAndSlotProps",
           "file": "src/chipTypes.ts",
-          "line": 87,
+          "line": 88,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61595,7 +61620,7 @@
         {
           "name": "ChipOwnerState",
           "file": "src/chipTypes.ts",
-          "line": 76,
+          "line": 77,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61612,7 +61637,7 @@
         {
           "name": "ChipPropsVariantOverrides",
           "file": "src/chipTypes.ts",
-          "line": 7,
+          "line": 8,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61629,7 +61654,7 @@
         {
           "name": "ChipPropsSizeOverrides",
           "file": "src/chipTypes.ts",
-          "line": 8,
+          "line": 9,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61646,7 +61671,7 @@
         {
           "name": "ChipPropsColorOverrides",
           "file": "src/chipTypes.ts",
-          "line": 9,
+          "line": 10,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61884,13 +61909,13 @@
         {
           "name": "ChipOwnProps",
           "file": "src/chipTypes.ts",
-          "line": 41,
+          "line": 42,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ChipProps",
           "file": "src/chipTypes.ts",
-          "line": 65,
+          "line": 66,
           "package": "@altroo/mui-native"
         }
       ]
@@ -61970,7 +61995,7 @@
         {
           "name": "ChipProps",
           "file": "src/chipTypes.ts",
-          "line": 65,
+          "line": 66,
           "package": "@altroo/mui-native"
         }
       ]
@@ -172223,7 +172248,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 111,
+          "line": 113,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173908,7 +173933,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 108,
+          "line": 110,
           "package": "@altroo/mui-native"
         }
       ]
@@ -173929,7 +173954,7 @@
         {
           "name": "ComponentsProps",
           "file": "src/styles/props.ts",
-          "line": 111,
+          "line": 113,
           "package": "@altroo/mui-native"
         }
       ]
@@ -175614,7 +175639,7 @@
         {
           "name": "ComponentsPropsList",
           "file": "src/styles/props.ts",
-          "line": 108,
+          "line": 110,
           "package": "@altroo/mui-native"
         }
       ]
@@ -182576,7 +182601,7 @@
     {
       "name": "ExpansionContext",
       "file": "src/accordion.tsx",
-      "line": 65,
+      "line": 95,
       "kind": "type",
       "members": [
         {
@@ -182586,7 +182611,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "expanded: boolean;",
-          "line": 66,
+          "line": 96,
           "kind": "property",
           "type": "boolean"
         },
@@ -182597,7 +182622,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 67,
+          "line": 97,
           "kind": "property",
           "type": "boolean"
         },
@@ -182608,7 +182633,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableGutters: boolean;",
-          "line": 68,
+          "line": 98,
           "kind": "property",
           "type": "boolean"
         },
@@ -182619,7 +182644,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "toggle: (event: ButtonBaseActivationEvent) => void;",
-          "line": 69,
+          "line": 99,
           "kind": "property",
           "type": "(event: ButtonBaseActivationEvent) => void"
         }
@@ -182633,7 +182658,7 @@
     {
       "name": "FrameProps",
       "file": "src/accordion.tsx",
-      "line": 93,
+      "line": 173,
       "kind": "type",
       "members": [
         {
@@ -182643,7 +182668,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name: string;",
-          "line": 94,
+          "line": 174,
           "kind": "property",
           "type": "string"
         },
@@ -182654,7 +182679,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string;",
-          "line": 95,
+          "line": 175,
           "kind": "property",
           "type": "string"
         },
@@ -182665,18 +182690,18 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slot?: string;",
-          "line": 96,
+          "line": 176,
           "kind": "slot",
           "type": "string"
         },
         {
-          "name": "owner",
+          "name": "ownerState",
           "optional": false,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "owner: object;",
-          "line": 97,
+          "declaration": "ownerState: object;",
+          "line": 177,
           "kind": "property",
           "type": "object"
         },
@@ -182687,7 +182712,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "resolved?: NativeAccordionSlotProps<any>;",
-          "line": 98,
+          "line": 178,
           "kind": "property",
           "type": "NativeAccordionSlotProps<any>"
         },
@@ -182698,7 +182723,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<any>;",
-          "line": 99,
+          "line": 179,
           "kind": "property",
           "type": "React.ComponentType<any>"
         },
@@ -182709,7 +182734,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "base?: SxProps;",
-          "line": 100,
+          "line": 180,
           "kind": "property",
           "type": "SxProps"
         },
@@ -182720,7 +182745,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "states?: string[];",
-          "line": 101,
+          "line": 181,
           "kind": "property",
           "type": "string[]"
         },
@@ -182731,7 +182756,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideKeys?: string[];",
-          "line": 102,
+          "line": 182,
           "kind": "property",
           "type": "string[]"
         },
@@ -182742,7 +182767,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 103,
+          "line": 183,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -182759,7 +182784,7 @@
     {
       "name": "NativeAccordionDetailsComponent",
       "file": "src/accordion.tsx",
-      "line": 712,
+      "line": 1251,
       "kind": "type",
       "members": [
         {
@@ -182769,7 +182794,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;",
-          "line": 719,
+          "line": 1258,
           "kind": "signature",
           "type": "(props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;"
         }
@@ -182789,7 +182814,7 @@
     {
       "name": "NativeAccordionActionsComponent",
       "file": "src/accordion.tsx",
-      "line": 774,
+      "line": 1313,
       "kind": "type",
       "members": [
         {
@@ -182799,7 +182824,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: AccordionActionsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;",
-          "line": 778,
+          "line": 1317,
           "kind": "signature",
           "type": "(props: AccordionActionsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;"
         }
@@ -183095,9 +183120,336 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "AccordionMotionProperty",
+      "file": "src/accordionMotion.ts",
+      "line": 14,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Property",
+      "file": "src/accordionMotion.ts",
+      "line": 15,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AccordionMotionProperty"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Coordinate",
+      "file": "src/accordionMotion.ts",
+      "line": 16,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Vector",
+      "file": "src/accordionMotion.ts",
+      "line": 26,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Coordinate",
+        "Partial",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Candidate",
+      "file": "src/accordionRootMotion.tsx",
+      "line": 21,
+      "kind": "type",
+      "members": [
+        {
+          "name": "root",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "root: RefObject<ViewInstance | null>;",
+          "line": 21,
+          "kind": "property",
+          "type": "RefObject<ViewInstance | null>"
+        },
+        {
+          "name": "depth",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "depth: number",
+          "line": 21,
+          "kind": "property",
+          "type": "number"
+        }
+      ],
+      "references": [
+        "RefObject",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Scope",
+      "file": "src/accordionRootMotion.tsx",
+      "line": 66,
+      "kind": "type",
+      "members": [
+        {
+          "name": "owner",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "owner: ReturnType<typeof createOwner>;",
+          "line": 67,
+          "kind": "property",
+          "type": "ReturnType<typeof createOwner>"
+        },
+        {
+          "name": "theme",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "theme: Theme;",
+          "line": 68,
+          "kind": "property",
+          "type": "Theme"
+        },
+        {
+          "name": "ready",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ready: boolean;",
+          "line": 69,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "property",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "property: AccordionMotionProperty;",
+          "line": 70,
+          "kind": "property",
+          "type": "AccordionMotionProperty"
+        },
+        {
+          "name": "timing",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "timing: Readonly<{ declaration: unknown }> | undefined;",
+          "line": 71,
+          "kind": "property",
+          "type": "Readonly<{ declaration: unknown }> | undefined"
+        }
+      ],
+      "references": [
+        "AccordionMotionProperty",
+        "Readonly",
+        "ReturnType",
+        "Theme"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "AccordionHost",
+      "file": "src/accordionStructure.ts",
+      "line": 11,
+      "kind": "type",
+      "members": [
+        {
+          "name": "parentElement",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly parentElement?: AccordionHost | null;",
+          "line": 12,
+          "kind": "property",
+          "type": "AccordionHost | null"
+        },
+        {
+          "name": "children",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly children?: ArrayLike<AccordionHost>;",
+          "line": 13,
+          "kind": "property",
+          "type": "ArrayLike<AccordionHost>"
+        },
+        {
+          "name": "tagName",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly tagName?: string;",
+          "line": 14,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly id?: string;",
+          "line": 15,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "isConnected",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly isConnected?: boolean;",
+          "line": 16,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "AccordionHost",
+        "ArrayLike"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "AccordionStructure",
+      "file": "src/accordionStructure.ts",
+      "line": 18,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AccordionHost",
+        "NativeStructuralFacts",
+        "Readonly"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Entry",
+      "file": "src/accordionStructure.ts",
+      "line": 30,
+      "kind": "type",
+      "members": [
+        {
+          "name": "element",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "element: AccordionHost | null;",
+          "line": 31,
+          "kind": "property",
+          "type": "AccordionHost | null"
+        },
+        {
+          "name": "expanded",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "expanded: boolean;",
+          "line": 32,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "sourceCss",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "sourceCss: string | undefined;",
+          "line": 33,
+          "kind": "property",
+          "type": "string | undefined"
+        },
+        {
+          "name": "snapshot",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "snapshot: AccordionStructure;",
+          "line": 34,
+          "kind": "property",
+          "type": "AccordionStructure"
+        },
+        {
+          "name": "publish",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "publish(value: AccordionStructure): void;",
+          "line": 35,
+          "kind": "property",
+          "type": "publish(value: AccordionStructure): void;"
+        },
+        {
+          "name": "readElement",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "readElement(): AccordionHost | null;",
+          "line": 36,
+          "kind": "property",
+          "type": "readElement(): AccordionHost | null;"
+        },
+        {
+          "name": "stop",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "stop?: (() => void) | undefined;",
+          "line": 37,
+          "kind": "property",
+          "type": "(() => void) | undefined"
+        }
+      ],
+      "references": [
+        "AccordionHost",
+        "AccordionStructure"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "NativeAccordionSlotProps",
       "file": "src/accordionTypes.ts",
-      "line": 17,
+      "line": 18,
       "kind": "type",
       "members": [
         {
@@ -183107,7 +183459,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<any>;",
-          "line": 20,
+          "line": 21,
           "kind": "slot",
           "type": "React.ComponentType<any>"
         },
@@ -183118,7 +183470,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "as?: React.ComponentType<any>;",
-          "line": 21,
+          "line": 22,
           "kind": "slot",
           "type": "React.ComponentType<any>"
         },
@@ -183129,7 +183481,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: Owner;",
-          "line": 22,
+          "line": 23,
           "kind": "slot",
           "type": "Owner"
         }
@@ -183149,7 +183501,7 @@
     {
       "name": "AccordionRootSlotPropsOverrides",
       "file": "src/accordionTypes.ts",
-      "line": 24,
+      "line": 25,
       "kind": "type",
       "members": [],
       "references": [],
@@ -183159,7 +183511,7 @@
     {
       "name": "AccordionHeadingSlotPropsOverrides",
       "file": "src/accordionTypes.ts",
-      "line": 25,
+      "line": 26,
       "kind": "type",
       "members": [],
       "references": [],
@@ -183169,7 +183521,7 @@
     {
       "name": "AccordionTransitionSlotPropsOverrides",
       "file": "src/accordionTypes.ts",
-      "line": 26,
+      "line": 27,
       "kind": "type",
       "members": [],
       "references": [],
@@ -183179,7 +183531,7 @@
     {
       "name": "AccordionRegionSlotPropsOverrides",
       "file": "src/accordionTypes.ts",
-      "line": 27,
+      "line": 28,
       "kind": "type",
       "members": [],
       "references": [],
@@ -183189,7 +183541,7 @@
     {
       "name": "AccordionRootSlotProps",
       "file": "src/accordionTypes.ts",
-      "line": 28,
+      "line": 29,
       "kind": "type",
       "members": [
         {
@@ -183198,10 +183550,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "component?: React.ComponentType<any>;",
-          "line": 31,
+          "declaration": "component?: ConfiguredAccordionRoot | undefined;",
+          "line": 32,
           "kind": "slot",
-          "type": "React.ComponentType<any>"
+          "type": "ConfiguredAccordionRoot | undefined"
         },
         {
           "name": "as",
@@ -183209,10 +183561,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "as?: React.ComponentType<any>;",
-          "line": 32,
+          "declaration": "as?: ConfiguredAccordionRoot | undefined;",
+          "line": 33,
           "kind": "slot",
-          "type": "React.ComponentType<any>"
+          "type": "ConfiguredAccordionRoot | undefined"
         },
         {
           "name": "ownerState",
@@ -183221,16 +183573,16 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: AccordionOwnerState;",
-          "line": 33,
+          "line": 34,
           "kind": "slot",
           "type": "AccordionOwnerState"
         }
       ],
       "references": [
         "AccordionOwnerState",
+        "ConfiguredAccordionRoot",
         "Omit",
         "PaperProps",
-        "React.ComponentType",
         "React.RefAttributes",
         "ViewInstance"
       ],
@@ -183240,7 +183592,7 @@
     {
       "name": "AccordionSlots",
       "file": "src/accordionTypes.ts",
-      "line": 35,
+      "line": 36,
       "kind": "type",
       "members": [
         {
@@ -183250,7 +183602,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: React.ComponentType<AccordionRootSlotProps>;",
-          "line": 36,
+          "line": 37,
           "kind": "slot",
           "type": "React.ComponentType<AccordionRootSlotProps>"
         },
@@ -183261,7 +183613,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "heading?: React.ComponentType<NativeAccordionSlotProps>;",
-          "line": 37,
+          "line": 38,
           "kind": "slot",
           "type": "React.ComponentType<NativeAccordionSlotProps>"
         },
@@ -183272,7 +183624,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transition?: React.ComponentType<CollapseProps & { ownerState?: AccordionOwnerState }>;",
-          "line": 38,
+          "line": 39,
           "kind": "slot",
           "type": "React.ComponentType<CollapseProps & { ownerState?: AccordionOwnerState }>"
         },
@@ -183283,7 +183635,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "region?: React.ComponentType<NativeAccordionSlotProps>;",
-          "line": 39,
+          "line": 40,
           "kind": "slot",
           "type": "React.ComponentType<NativeAccordionSlotProps>"
         }
@@ -183301,7 +183653,7 @@
     {
       "name": "AccordionSlotsAndSlotProps",
       "file": "src/accordionTypes.ts",
-      "line": 41,
+      "line": 42,
       "kind": "type",
       "members": [
         {
@@ -183311,7 +183663,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: AccordionSlots;",
-          "line": 42,
+          "line": 43,
           "kind": "slot",
           "type": "AccordionSlots"
         },
@@ -183321,10 +183673,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "slotProps?: {\n    root?: SlotProps<AccordionRootSlotProps & AccordionRootSlotPropsOverrides, AccordionOwnerState>;\n    heading?: SlotProps<\n      NativeAccordionSlotProps & AccordionHeadingSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n    transition?: SlotProps<\n      CollapseProps & AccordionTransitionSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n    region?: SlotProps<\n      NativeAccordionSlotProps & AccordionRegionSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n  };",
-          "line": 43,
+          "declaration": "slotProps?: {\n    root?: SlotProps<AccordionRootSlotProps & AccordionRootSlotPropsOverrides, AccordionOwnerState>;\n    heading?: SlotProps<\n      NativeAccordionSlotProps & AccordionHeadingSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n    transition?: SlotProps<\n      CollapseProps & { ownerState?: AccordionOwnerState } & AccordionTransitionSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n    region?: SlotProps<\n      NativeAccordionSlotProps & AccordionRegionSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n  };",
+          "line": 44,
           "kind": "slot",
-          "type": "{\n    root?: SlotProps<AccordionRootSlotProps & AccordionRootSlotPropsOverrides, AccordionOwnerState>;\n    heading?: SlotProps<\n      NativeAccordionSlotProps & AccordionHeadingSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n    transition?: SlotProps<\n      CollapseProps & AccordionTransitionSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n    region?: SlotProps<\n      NativeAccordionSlotProps & AccordionRegionSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n  }"
+          "type": "{\n    root?: SlotProps<AccordionRootSlotProps & AccordionRootSlotPropsOverrides, AccordionOwnerState>;\n    heading?: SlotProps<\n      NativeAccordionSlotProps & AccordionHeadingSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n    transition?: SlotProps<\n      CollapseProps & { ownerState?: AccordionOwnerState } & AccordionTransitionSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n    region?: SlotProps<\n      NativeAccordionSlotProps & AccordionRegionSlotPropsOverrides,\n      AccordionOwnerState\n    >;\n  }"
         },
         {
           "name": "slotProps.root",
@@ -183333,7 +183685,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: SlotProps<AccordionRootSlotProps & AccordionRootSlotPropsOverrides, AccordionOwnerState>;",
-          "line": 44,
+          "line": 45,
           "kind": "slot",
           "type": "SlotProps<AccordionRootSlotProps & AccordionRootSlotPropsOverrides, AccordionOwnerState>"
         },
@@ -183344,7 +183696,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "heading?: SlotProps<\n      NativeAccordionSlotProps & AccordionHeadingSlotPropsOverrides,\n      AccordionOwnerState\n    >;",
-          "line": 45,
+          "line": 46,
           "kind": "slot",
           "type": "SlotProps<\n      NativeAccordionSlotProps & AccordionHeadingSlotPropsOverrides,\n      AccordionOwnerState\n    >"
         },
@@ -183354,10 +183706,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "transition?: SlotProps<\n      CollapseProps & AccordionTransitionSlotPropsOverrides,\n      AccordionOwnerState\n    >;",
-          "line": 49,
+          "declaration": "transition?: SlotProps<\n      CollapseProps & { ownerState?: AccordionOwnerState } & AccordionTransitionSlotPropsOverrides,\n      AccordionOwnerState\n    >;",
+          "line": 50,
           "kind": "slot",
-          "type": "SlotProps<\n      CollapseProps & AccordionTransitionSlotPropsOverrides,\n      AccordionOwnerState\n    >"
+          "type": "SlotProps<\n      CollapseProps & { ownerState?: AccordionOwnerState } & AccordionTransitionSlotPropsOverrides,\n      AccordionOwnerState\n    >"
         },
         {
           "name": "slotProps.region",
@@ -183366,7 +183718,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "region?: SlotProps<\n      NativeAccordionSlotProps & AccordionRegionSlotPropsOverrides,\n      AccordionOwnerState\n    >;",
-          "line": 53,
+          "line": 54,
           "kind": "slot",
           "type": "SlotProps<\n      NativeAccordionSlotProps & AccordionRegionSlotPropsOverrides,\n      AccordionOwnerState\n    >"
         }
@@ -183389,7 +183741,7 @@
     {
       "name": "AccordionOwnProps",
       "file": "src/accordionTypes.ts",
-      "line": 59,
+      "line": 60,
       "kind": "type",
       "members": [
         {
@@ -183399,7 +183751,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: NonNullable<React.ReactNode>;",
-          "line": 60,
+          "line": 63,
           "kind": "property",
           "type": "NonNullable<React.ReactNode>"
         },
@@ -183410,7 +183762,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<AccordionClasses> | undefined;",
-          "line": 61,
+          "line": 64,
           "kind": "property",
           "type": "Partial<AccordionClasses> | undefined"
         },
@@ -183421,7 +183773,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 62,
+          "line": 65,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -183432,7 +183784,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "defaultExpanded?: boolean | undefined;",
-          "line": 63,
+          "line": 66,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -183443,7 +183795,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled?: boolean | undefined;",
-          "line": 64,
+          "line": 67,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -183454,7 +183806,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableGutters?: boolean | undefined;",
-          "line": 65,
+          "line": 68,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -183465,7 +183817,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "expanded?: boolean | undefined;",
-          "line": 66,
+          "line": 69,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -183476,7 +183828,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onChange?: ((event: ButtonBaseActivationEvent, expanded: boolean) => void) | undefined;",
-          "line": 67,
+          "line": 70,
           "kind": "event",
           "type": "((event: ButtonBaseActivationEvent, expanded: boolean) => void) | undefined"
         }
@@ -183486,6 +183838,8 @@
         "AccordionSlotsAndSlotProps",
         "ButtonBaseActivationEvent",
         "NonNullable",
+        "Omit",
+        "PaperOwnProps",
         "Partial",
         "React.ReactNode"
       ],
@@ -183493,28 +183847,206 @@
       "package": "@altroo/mui-native"
     },
     {
-      "name": "AccordionProps",
+      "name": "AccordionRoot",
       "file": "src/accordionTypes.ts",
-      "line": 69,
+      "line": 72,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "React.ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ConfiguredAccordionRoot",
+      "file": "src/accordionTypes.ts",
+      "line": 73,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AccordionRoot",
+        "Extract",
+        "NonNullable",
+        "PaperProps",
+        "React.ComponentClass",
+        "ViewInstance"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeRoot",
+      "file": "src/accordionTypes.ts",
+      "line": 78,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AccordionRoot",
+        "PaperTypeMap",
+        "R"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "DistributiveOmit",
+      "file": "src/accordionTypes.ts",
+      "line": 79,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "K",
+        "Omit",
+        "PropertyKey",
+        "T"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RawRootProps",
+      "file": "src/accordionTypes.ts",
+      "line": 80,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AccordionRoot",
+        "R",
+        "React.ComponentPropsWithRef",
+        "React.ComponentType"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "ReservedRootProps",
+      "file": "src/accordionTypes.ts",
+      "line": 87,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AccordionRoot",
+        "Extract",
+        "K",
+        "NativeRoot",
+        "P",
+        "R",
+        "Required",
+        "Theme"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RootProps",
+      "file": "src/accordionTypes.ts",
+      "line": 100,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AccordionRoot",
+        "R",
+        "RawRootProps",
+        "ReservedRootProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "AccordionTypeMap",
+      "file": "src/accordionTypes.ts",
+      "line": 101,
       "kind": "type",
       "members": [
         {
-          "name": "component",
-          "optional": true,
+          "name": "props",
+          "optional": false,
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "component?: React.ComponentType<any>;",
-          "line": 72,
+          "declaration": "props: AdditionalProps & AccordionOwnProps;",
+          "line": 105,
           "kind": "property",
-          "type": "React.ComponentType<any>"
+          "type": "AdditionalProps & AccordionOwnProps"
+        },
+        {
+          "name": "defaultComponent",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "defaultComponent: NativeRoot<RootComponent>;",
+          "line": 106,
+          "kind": "property",
+          "type": "NativeRoot<RootComponent>"
         }
       ],
       "references": [
         "AccordionOwnProps",
-        "Omit",
-        "PaperProps",
-        "React.ComponentType"
+        "AccordionRoot",
+        "AdditionalProps",
+        "NativeRoot",
+        "RootComponent"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "AccordionProps",
+      "file": "src/accordionTypes.ts",
+      "line": 108,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "AccordionOwnProps",
+        "AccordionRoot",
+        "AdditionalProps",
+        "ConfiguredAccordionRoot",
+        "DistributiveOmit",
+        "NativeRoot",
+        "R",
+        "RootProps"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeAccordionComponent",
+      "file": "src/accordionTypes.ts",
+      "line": 122,
+      "kind": "type",
+      "members": [
+        {
+          "name": "[[call]]",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSCallSignatureDeclaration",
+          "declaration": "<R extends ConfiguredAccordionRoot = typeof View>(\n    props: AccordionOwnProps &\n      (\n        | (DistributiveOmit<RootProps<R>, keyof AccordionOwnProps | 'component'> & {\n            component?: R | undefined;\n          })\n        | (DistributiveOmit<RootProps<typeof View>, keyof AccordionOwnProps | 'component'> & {\n            component?: undefined;\n          })\n      ),\n  ): React.JSX.Element;",
+          "line": 123,
+          "kind": "signature",
+          "type": "<R extends ConfiguredAccordionRoot = typeof View>(\n    props: AccordionOwnProps &\n      (\n        | (DistributiveOmit<RootProps<R>, keyof AccordionOwnProps | 'component'> & {\n            component?: R | undefined;\n          })\n        | (DistributiveOmit<RootProps<typeof View>, keyof AccordionOwnProps | 'component'> & {\n            component?: undefined;\n          })\n      ),\n  ): React.JSX.Element;"
+        },
+        {
+          "name": "displayName",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "displayName?: string | undefined;",
+          "line": 134,
+          "kind": "property",
+          "type": "string | undefined"
+        }
+      ],
+      "references": [
+        "AccordionOwnProps",
+        "ConfiguredAccordionRoot",
+        "DistributiveOmit",
+        "R",
+        "React.JSX.Element",
+        "RootProps"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -183522,7 +184054,7 @@
     {
       "name": "AccordionOwnerState",
       "file": "src/accordionTypes.ts",
-      "line": 74,
+      "line": 136,
       "kind": "type",
       "members": [
         {
@@ -183532,7 +184064,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "expanded: boolean;",
-          "line": 75,
+          "line": 137,
           "kind": "property",
           "type": "boolean"
         },
@@ -183543,7 +184075,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 76,
+          "line": 138,
           "kind": "property",
           "type": "boolean"
         },
@@ -183554,7 +184086,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableGutters: boolean;",
-          "line": 77,
+          "line": 139,
           "kind": "property",
           "type": "boolean"
         }
@@ -183568,7 +184100,7 @@
     {
       "name": "AccordionSummaryRootSlotPropsOverrides",
       "file": "src/accordionTypes.ts",
-      "line": 79,
+      "line": 141,
       "kind": "type",
       "members": [],
       "references": [],
@@ -183578,7 +184110,7 @@
     {
       "name": "AccordionSummaryContentSlotPropsOverrides",
       "file": "src/accordionTypes.ts",
-      "line": 80,
+      "line": 142,
       "kind": "type",
       "members": [],
       "references": [],
@@ -183588,7 +184120,7 @@
     {
       "name": "AccordionSummaryExpandIconWrapperSlotPropsOverrides",
       "file": "src/accordionTypes.ts",
-      "line": 81,
+      "line": 143,
       "kind": "type",
       "members": [],
       "references": [],
@@ -183598,7 +184130,7 @@
     {
       "name": "AccordionSummaryRootSlotProps",
       "file": "src/accordionTypes.ts",
-      "line": 82,
+      "line": 144,
       "kind": "type",
       "members": [
         {
@@ -183608,7 +184140,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 83,
+          "line": 145,
           "kind": "slot",
           "type": "string | undefined"
         },
@@ -183619,7 +184151,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusVisibleClassName?: string | undefined;",
-          "line": 84,
+          "line": 146,
           "kind": "slot",
           "type": "string | undefined"
         },
@@ -183630,7 +184162,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 85,
+          "line": 147,
           "kind": "slot",
           "type": "React.ReactNode"
         },
@@ -183641,7 +184173,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: AccordionSummaryOwnerState;",
-          "line": 86,
+          "line": 148,
           "kind": "slot",
           "type": "AccordionSummaryOwnerState"
         },
@@ -183652,7 +184184,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "as?: React.ComponentType<any>;",
-          "line": 87,
+          "line": 149,
           "kind": "slot",
           "type": "React.ComponentType<any>"
         }
@@ -183670,7 +184202,7 @@
     {
       "name": "AccordionSummarySlots",
       "file": "src/accordionTypes.ts",
-      "line": 89,
+      "line": 151,
       "kind": "type",
       "members": [
         {
@@ -183680,7 +184212,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: React.ComponentType<AccordionSummaryRootSlotProps>;",
-          "line": 90,
+          "line": 152,
           "kind": "slot",
           "type": "React.ComponentType<AccordionSummaryRootSlotProps>"
         },
@@ -183691,7 +184223,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "content?: React.ComponentType<NativeAccordionSlotProps<AccordionSummaryOwnerState>>;",
-          "line": 91,
+          "line": 153,
           "kind": "slot",
           "type": "React.ComponentType<NativeAccordionSlotProps<AccordionSummaryOwnerState>>"
         },
@@ -183702,7 +184234,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "expandIconWrapper?: React.ComponentType<NativeAccordionSlotProps<AccordionSummaryOwnerState>>;",
-          "line": 92,
+          "line": 154,
           "kind": "slot",
           "type": "React.ComponentType<NativeAccordionSlotProps<AccordionSummaryOwnerState>>"
         }
@@ -183719,7 +184251,7 @@
     {
       "name": "AccordionSummarySlotsAndSlotProps",
       "file": "src/accordionTypes.ts",
-      "line": 94,
+      "line": 156,
       "kind": "type",
       "members": [
         {
@@ -183729,7 +184261,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: AccordionSummarySlots;",
-          "line": 95,
+          "line": 157,
           "kind": "slot",
           "type": "AccordionSummarySlots"
         },
@@ -183740,7 +184272,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: {\n    root?: SlotProps<\n      AccordionSummaryRootSlotProps & AccordionSummaryRootSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >;\n    content?: SlotProps<\n      NativeAccordionSlotProps<AccordionSummaryOwnerState> &\n        AccordionSummaryContentSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >;\n    expandIconWrapper?: SlotProps<\n      NativeAccordionSlotProps<AccordionSummaryOwnerState> &\n        AccordionSummaryExpandIconWrapperSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >;\n  };",
-          "line": 96,
+          "line": 158,
           "kind": "slot",
           "type": "{\n    root?: SlotProps<\n      AccordionSummaryRootSlotProps & AccordionSummaryRootSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >;\n    content?: SlotProps<\n      NativeAccordionSlotProps<AccordionSummaryOwnerState> &\n        AccordionSummaryContentSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >;\n    expandIconWrapper?: SlotProps<\n      NativeAccordionSlotProps<AccordionSummaryOwnerState> &\n        AccordionSummaryExpandIconWrapperSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >;\n  }"
         },
@@ -183751,7 +184283,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: SlotProps<\n      AccordionSummaryRootSlotProps & AccordionSummaryRootSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >;",
-          "line": 97,
+          "line": 159,
           "kind": "slot",
           "type": "SlotProps<\n      AccordionSummaryRootSlotProps & AccordionSummaryRootSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >"
         },
@@ -183762,7 +184294,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "content?: SlotProps<\n      NativeAccordionSlotProps<AccordionSummaryOwnerState> &\n        AccordionSummaryContentSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >;",
-          "line": 101,
+          "line": 163,
           "kind": "slot",
           "type": "SlotProps<\n      NativeAccordionSlotProps<AccordionSummaryOwnerState> &\n        AccordionSummaryContentSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >"
         },
@@ -183773,7 +184305,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "expandIconWrapper?: SlotProps<\n      NativeAccordionSlotProps<AccordionSummaryOwnerState> &\n        AccordionSummaryExpandIconWrapperSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >;",
-          "line": 106,
+          "line": 168,
           "kind": "slot",
           "type": "SlotProps<\n      NativeAccordionSlotProps<AccordionSummaryOwnerState> &\n        AccordionSummaryExpandIconWrapperSlotPropsOverrides,\n      AccordionSummaryOwnerState\n    >"
         }
@@ -183794,7 +184326,7 @@
     {
       "name": "AccordionSummaryOwnProps",
       "file": "src/accordionTypes.ts",
-      "line": 113,
+      "line": 175,
       "kind": "type",
       "members": [
         {
@@ -183804,7 +184336,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<AccordionSummaryClasses> | undefined;",
-          "line": 114,
+          "line": 176,
           "kind": "property",
           "type": "Partial<AccordionSummaryClasses> | undefined"
         },
@@ -183815,7 +184347,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 115,
+          "line": 177,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -183826,7 +184358,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "focusVisibleClassName?: string | undefined;",
-          "line": 116,
+          "line": 178,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -183837,7 +184369,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "expandIcon?: React.ReactNode;",
-          "line": 117,
+          "line": 179,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -183848,7 +184380,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-controls'?: string | undefined;",
-          "line": 118,
+          "line": 180,
           "kind": "property",
           "type": "string | undefined"
         }
@@ -183865,7 +184397,7 @@
     {
       "name": "AccordionSummaryProps",
       "file": "src/accordionTypes.ts",
-      "line": 120,
+      "line": 182,
       "kind": "type",
       "members": [
         {
@@ -183875,7 +184407,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 123,
+          "line": 185,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -183892,7 +184424,7 @@
     {
       "name": "AccordionSummaryOwnerState",
       "file": "src/accordionTypes.ts",
-      "line": 125,
+      "line": 187,
       "kind": "type",
       "members": [
         {
@@ -183902,7 +184434,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "expanded?: boolean | undefined;",
-          "line": 127,
+          "line": 189,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -183913,7 +184445,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 128,
+          "line": 190,
           "kind": "property",
           "type": "boolean"
         },
@@ -183924,7 +184456,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableGutters?: boolean | undefined;",
-          "line": 129,
+          "line": 191,
           "kind": "property",
           "type": "boolean | undefined"
         }
@@ -183939,7 +184471,7 @@
     {
       "name": "AccordionDetailsProps",
       "file": "src/accordionTypes.ts",
-      "line": 131,
+      "line": 193,
       "kind": "type",
       "members": [
         {
@@ -183949,7 +184481,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<AccordionDetailsClasses> | undefined;",
-          "line": 132,
+          "line": 194,
           "kind": "property",
           "type": "Partial<AccordionDetailsClasses> | undefined"
         },
@@ -183960,7 +184492,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 133,
+          "line": 195,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -183971,7 +184503,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps | undefined;",
-          "line": 134,
+          "line": 196,
           "kind": "property",
           "type": "SxProps | undefined"
         },
@@ -183982,7 +184514,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?:\n    | React.ComponentType<\n        ViewProps & { className?: string | undefined } & React.RefAttributes<ViewInstance>\n      >\n    | undefined;",
-          "line": 135,
+          "line": 197,
           "kind": "property",
           "type": "| React.ComponentType<\n        ViewProps & { className?: string | undefined } & React.RefAttributes<ViewInstance>\n      >\n    | undefined"
         }
@@ -184004,7 +184536,7 @@
     {
       "name": "AccordionActionsProps",
       "file": "src/accordionTypes.ts",
-      "line": 141,
+      "line": 203,
       "kind": "type",
       "members": [
         {
@@ -184014,7 +184546,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<any> | undefined;",
-          "line": 142,
+          "line": 204,
           "kind": "property",
           "type": "React.ComponentType<any> | undefined"
         },
@@ -184025,7 +184557,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<AccordionActionsClasses> | undefined;",
-          "line": 143,
+          "line": 205,
           "kind": "property",
           "type": "Partial<AccordionActionsClasses> | undefined"
         },
@@ -184036,7 +184568,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 144,
+          "line": 206,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -184047,7 +184579,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableSpacing?: boolean | undefined;",
-          "line": 145,
+          "line": 207,
           "kind": "property",
           "type": "boolean | undefined"
         }
@@ -187255,9 +187787,21 @@
       "package": "@altroo/mui-native"
     },
     {
-      "name": "NativeButtonGroupRule",
+      "name": "NativeStyleClassIdentity",
       "file": "src/buttonGroupContext.ts",
       "line": 27,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Readonly"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeButtonGroupRule",
+      "file": "src/buttonGroupContext.ts",
+      "line": 32,
       "kind": "type",
       "members": [
         {
@@ -187267,9 +187811,31 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly element?: ViewInstance | null;",
-          "line": 29,
+          "line": 34,
           "kind": "property",
           "type": "ViewInstance | null"
+        },
+        {
+          "name": "sourceClasses",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly sourceClasses?: readonly NativeStyleClassIdentity[];",
+          "line": 36,
+          "kind": "property",
+          "type": "readonly NativeStyleClassIdentity[]"
+        },
+        {
+          "name": "scopeDepth",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly scopeDepth?: number;",
+          "line": 37,
+          "kind": "property",
+          "type": "number"
         },
         {
           "name": "selector",
@@ -187278,7 +187844,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly selector?: NativeStyleTarget | undefined;",
-          "line": 30,
+          "line": 38,
           "kind": "property",
           "type": "NativeStyleTarget | undefined"
         },
@@ -187289,12 +187855,13 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "cascade: (\n    classes: readonly string[],\n    path?: readonly NativeStyleTarget[],\n  ) => NonNullable<StyleContext['ancestors']>[number];",
-          "line": 31,
+          "line": 39,
           "kind": "property",
           "type": "(\n    classes: readonly string[],\n    path?: readonly NativeStyleTarget[],\n  ) => NonNullable<StyleContext['ancestors']>[number]"
         }
       ],
       "references": [
+        "NativeStyleClassIdentity",
         "NativeStyleTarget",
         "NonNullable",
         "StyleContext",
@@ -189065,18 +189632,17 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "sx?: SxProps<Theme> | undefined;",
+          "declaration": "sx?: SxProps | undefined;",
           "line": 11,
           "kind": "property",
-          "type": "SxProps<Theme> | undefined"
+          "type": "SxProps | undefined"
         }
       ],
       "references": [
         "CardContentClasses",
         "Partial",
         "React.ReactNode",
-        "SxProps",
-        "Theme"
+        "SxProps"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
@@ -191437,7 +192003,7 @@
     {
       "name": "ChipPropsVariantOverrides",
       "file": "src/chipTypes.ts",
-      "line": 7,
+      "line": 8,
       "kind": "type",
       "members": [],
       "references": [],
@@ -191447,7 +192013,7 @@
     {
       "name": "ChipPropsSizeOverrides",
       "file": "src/chipTypes.ts",
-      "line": 8,
+      "line": 9,
       "kind": "type",
       "members": [],
       "references": [],
@@ -191457,7 +192023,7 @@
     {
       "name": "ChipPropsColorOverrides",
       "file": "src/chipTypes.ts",
-      "line": 9,
+      "line": 10,
       "kind": "type",
       "members": [],
       "references": [],
@@ -191467,7 +192033,7 @@
     {
       "name": "ChipRootSlotPropsOverrides",
       "file": "src/chipTypes.ts",
-      "line": 10,
+      "line": 11,
       "kind": "type",
       "members": [],
       "references": [],
@@ -191477,7 +192043,7 @@
     {
       "name": "ChipLabelSlotPropsOverrides",
       "file": "src/chipTypes.ts",
-      "line": 11,
+      "line": 12,
       "kind": "type",
       "members": [],
       "references": [],
@@ -191487,7 +192053,7 @@
     {
       "name": "OverrideUnion",
       "file": "src/chipTypes.ts",
-      "line": 12,
+      "line": 13,
       "kind": "type",
       "members": [],
       "references": [
@@ -191504,7 +192070,7 @@
     {
       "name": "NativeChipRootProps",
       "file": "src/chipTypes.ts",
-      "line": 24,
+      "line": 25,
       "kind": "type",
       "members": [
         {
@@ -191514,7 +192080,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: ChipOwnerState;",
-          "line": 25,
+          "line": 26,
           "kind": "property",
           "type": "ChipOwnerState"
         }
@@ -191529,7 +192095,7 @@
     {
       "name": "NativeChipLabelProps",
       "file": "src/chipTypes.ts",
-      "line": 27,
+      "line": 28,
       "kind": "type",
       "members": [
         {
@@ -191539,7 +192105,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle>;",
-          "line": 30,
+          "line": 31,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -191550,7 +192116,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 31,
+          "line": 32,
           "kind": "property",
           "type": "SxProps"
         },
@@ -191561,7 +192127,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: ChipOwnerState;",
-          "line": 32,
+          "line": 33,
           "kind": "property",
           "type": "ChipOwnerState"
         }
@@ -191582,7 +192148,7 @@
     {
       "name": "ChipSlots",
       "file": "src/chipTypes.ts",
-      "line": 34,
+      "line": 35,
       "kind": "type",
       "members": [
         {
@@ -191592,7 +192158,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: React.ComponentType<ButtonBaseRootProps & { ownerState?: ChipOwnerState }>;",
-          "line": 35,
+          "line": 36,
           "kind": "slot",
           "type": "React.ComponentType<ButtonBaseRootProps & { ownerState?: ChipOwnerState }>"
         },
@@ -191603,7 +192169,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: React.ComponentType<NativeChipLabelProps>;",
-          "line": 36,
+          "line": 37,
           "kind": "slot",
           "type": "React.ComponentType<NativeChipLabelProps>"
         }
@@ -191620,7 +192186,7 @@
     {
       "name": "ChipDeleteEvent",
       "file": "src/chipTypes.ts",
-      "line": 38,
+      "line": 39,
       "kind": "type",
       "members": [],
       "references": [
@@ -191635,7 +192201,7 @@
     {
       "name": "ChipOwnProps",
       "file": "src/chipTypes.ts",
-      "line": 41,
+      "line": 42,
       "kind": "type",
       "members": [
         {
@@ -191645,7 +192211,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: null;",
-          "line": 42,
+          "line": 43,
           "kind": "property",
           "type": "null"
         },
@@ -191656,7 +192222,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id?: string;",
-          "line": 43,
+          "line": 44,
           "kind": "property",
           "type": "string"
         },
@@ -191667,7 +192233,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: React.ReactNode;",
-          "line": 44,
+          "line": 45,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -191677,10 +192243,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "avatar?: React.ReactElement<unknown>;",
-          "line": 45,
+          "declaration": "avatar?: React.ReactElement;",
+          "line": 46,
           "kind": "property",
-          "type": "React.ReactElement<unknown>"
+          "type": "React.ReactElement"
         },
         {
           "name": "icon",
@@ -191688,10 +192254,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "icon?: React.ReactElement<unknown>;",
-          "line": 46,
+          "declaration": "icon?: React.ReactElement;",
+          "line": 47,
           "kind": "property",
-          "type": "React.ReactElement<unknown>"
+          "type": "React.ReactElement"
         },
         {
           "name": "deleteIcon",
@@ -191699,10 +192265,10 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "deleteIcon?: React.ReactElement<unknown>;",
-          "line": 47,
+          "declaration": "deleteIcon?: React.ReactElement;",
+          "line": 48,
           "kind": "property",
-          "type": "React.ReactElement<unknown>"
+          "type": "React.ReactElement"
         },
         {
           "name": "onDelete",
@@ -191711,7 +192277,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onDelete?: (event: ChipDeleteEvent) => void;",
-          "line": 48,
+          "line": 49,
           "kind": "event",
           "type": "(event: ChipDeleteEvent) => void"
         },
@@ -191722,7 +192288,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "clickable?: boolean;",
-          "line": 49,
+          "line": 50,
           "kind": "property",
           "type": "boolean"
         },
@@ -191733,7 +192299,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "skipFocusWhenDisabled?: boolean;",
-          "line": 50,
+          "line": 51,
           "kind": "property",
           "type": "boolean"
         },
@@ -191744,7 +192310,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color?: OverrideUnion<\n    'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',\n    ChipPropsColorOverrides\n  >;",
-          "line": 51,
+          "line": 52,
           "kind": "property",
           "type": "OverrideUnion<\n    'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning',\n    ChipPropsColorOverrides\n  >"
         },
@@ -191755,7 +192321,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size?: OverrideUnion<'small' | 'medium', ChipPropsSizeOverrides>;",
-          "line": 55,
+          "line": 56,
           "kind": "property",
           "type": "OverrideUnion<'small' | 'medium', ChipPropsSizeOverrides>"
         },
@@ -191766,7 +192332,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant?: OverrideUnion<'filled' | 'outlined', ChipPropsVariantOverrides>;",
-          "line": 56,
+          "line": 57,
           "kind": "property",
           "type": "OverrideUnion<'filled' | 'outlined', ChipPropsVariantOverrides>"
         },
@@ -191777,7 +192343,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<ChipClasses>;",
-          "line": 57,
+          "line": 58,
           "kind": "property",
           "type": "Partial<ChipClasses>"
         },
@@ -191788,7 +192354,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string;",
-          "line": 58,
+          "line": 59,
           "kind": "property",
           "type": "string"
         },
@@ -191799,7 +192365,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: ChipSlots;",
-          "line": 59,
+          "line": 60,
           "kind": "slot",
           "type": "ChipSlots"
         },
@@ -191810,7 +192376,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: {\n    root?: SlotProps<NativeChipRootProps & ChipRootSlotPropsOverrides, ChipOwnerState>;\n    label?: SlotProps<NativeChipLabelProps & ChipLabelSlotPropsOverrides, ChipOwnerState>;\n  };",
-          "line": 60,
+          "line": 61,
           "kind": "slot",
           "type": "{\n    root?: SlotProps<NativeChipRootProps & ChipRootSlotPropsOverrides, ChipOwnerState>;\n    label?: SlotProps<NativeChipLabelProps & ChipLabelSlotPropsOverrides, ChipOwnerState>;\n  }"
         },
@@ -191821,7 +192387,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: SlotProps<NativeChipRootProps & ChipRootSlotPropsOverrides, ChipOwnerState>;",
-          "line": 61,
+          "line": 62,
           "kind": "slot",
           "type": "SlotProps<NativeChipRootProps & ChipRootSlotPropsOverrides, ChipOwnerState>"
         },
@@ -191832,7 +192398,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "label?: SlotProps<NativeChipLabelProps & ChipLabelSlotPropsOverrides, ChipOwnerState>;",
-          "line": 62,
+          "line": 63,
           "kind": "slot",
           "type": "SlotProps<NativeChipLabelProps & ChipLabelSlotPropsOverrides, ChipOwnerState>"
         }
@@ -191863,7 +192429,7 @@
     {
       "name": "ChipProps",
       "file": "src/chipTypes.ts",
-      "line": 65,
+      "line": 66,
       "kind": "type",
       "members": [
         {
@@ -191873,7 +192439,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance>",
-          "line": 73,
+          "line": 74,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         }
@@ -191894,7 +192460,7 @@
     {
       "name": "ChipOwnerState",
       "file": "src/chipTypes.ts",
-      "line": 76,
+      "line": 77,
       "kind": "type",
       "members": [
         {
@@ -191904,7 +192470,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 78,
+          "line": 79,
           "kind": "property",
           "type": "boolean"
         },
@@ -191915,7 +192481,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "clickable: boolean | undefined;",
-          "line": 79,
+          "line": 80,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -191926,7 +192492,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onDelete: boolean;",
-          "line": 80,
+          "line": 81,
           "kind": "event",
           "type": "boolean"
         },
@@ -191937,7 +192503,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color: string;",
-          "line": 81,
+          "line": 82,
           "kind": "property",
           "type": "string"
         },
@@ -191948,7 +192514,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size: string;",
-          "line": 82,
+          "line": 83,
           "kind": "property",
           "type": "string"
         },
@@ -191959,7 +192525,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant: string;",
-          "line": 83,
+          "line": 84,
           "kind": "property",
           "type": "string"
         },
@@ -191970,7 +192536,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "iconColor: string;",
-          "line": 84,
+          "line": 85,
           "kind": "property",
           "type": "string"
         },
@@ -191981,7 +192547,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component: React.ElementType;",
-          "line": 85,
+          "line": 86,
           "kind": "property",
           "type": "React.ElementType"
         }
@@ -191997,7 +192563,7 @@
     {
       "name": "ChipSlotsAndSlotProps",
       "file": "src/chipTypes.ts",
-      "line": 87,
+      "line": 88,
       "kind": "type",
       "members": [],
       "references": [
@@ -192010,7 +192576,7 @@
     {
       "name": "NativeChipComponent",
       "file": "src/chipTypes.ts",
-      "line": 88,
+      "line": 89,
       "kind": "type",
       "members": [
         {
@@ -192020,7 +192586,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "<Root extends React.ComponentType<any>>(\n    props: ChipProps<Root> & { component: Root },\n  ): React.ReactNode;",
-          "line": 89,
+          "line": 90,
           "kind": "signature",
           "type": "<Root extends React.ComponentType<any>>(\n    props: ChipProps<Root> & { component: Root },\n  ): React.ReactNode;"
         },
@@ -192031,7 +192597,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: ChipProps): React.ReactNode;",
-          "line": 92,
+          "line": 93,
           "kind": "signature",
           "type": "(props: ChipProps): React.ReactNode;"
         },
@@ -192042,7 +192608,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "displayName?: string;",
-          "line": 93,
+          "line": 94,
           "kind": "property",
           "type": "string"
         }
@@ -202844,6 +203410,280 @@
       "package": "@altroo/mui-native"
     },
     {
+      "name": "CssTheme",
+      "file": "src/nativeAccordionCss.ts",
+      "line": 9,
+      "kind": "type",
+      "members": [
+        {
+          "name": "vars",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "vars?: Theme",
+          "line": 9,
+          "kind": "property",
+          "type": "Theme"
+        }
+      ],
+      "references": [
+        "Theme"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CssOwner",
+      "file": "src/nativeAccordionCss.ts",
+      "line": 10,
+      "kind": "type",
+      "members": [
+        {
+          "name": "square",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "square: boolean;",
+          "line": 11,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "disableGutters",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "disableGutters: boolean;",
+          "line": 12,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "variant",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variant: string;",
+          "line": 13,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "elevation",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "elevation: number;",
+          "line": 14,
+          "kind": "property",
+          "type": "number"
+        }
+      ],
+      "references": [
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CssSlots",
+      "file": "src/nativeAccordionCss.ts",
+      "line": 16,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Readonly",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CssVariantArgs",
+      "file": "src/nativeAccordionCss.ts",
+      "line": 17,
+      "kind": "type",
+      "members": [
+        {
+          "name": "theme",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "theme: CssTheme;",
+          "line": 17,
+          "kind": "property",
+          "type": "CssTheme"
+        },
+        {
+          "name": "ownerState",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "ownerState: CssOwner",
+          "line": 17,
+          "kind": "property",
+          "type": "CssOwner"
+        }
+      ],
+      "references": [
+        "CssOwner",
+        "CssTheme"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CssVariant",
+      "file": "src/nativeAccordionCss.ts",
+      "line": 18,
+      "kind": "type",
+      "members": [
+        {
+          "name": "props",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "props: Record<string, unknown> | ((args: CssVariantArgs) => boolean);",
+          "line": 19,
+          "kind": "property",
+          "type": "Record<string, unknown> | ((args: CssVariantArgs) => boolean)"
+        },
+        {
+          "name": "style",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style: ComponentStyleObject;",
+          "line": 20,
+          "kind": "property",
+          "type": "ComponentStyleObject"
+        }
+      ],
+      "references": [
+        "ComponentStyleObject",
+        "CssVariantArgs",
+        "Record"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "CssConstructorStyle",
+      "file": "src/nativeAccordionCss.ts",
+      "line": 24,
+      "kind": "type",
+      "members": [
+        {
+          "name": "variants",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variants?: readonly CssVariant[];",
+          "line": 25,
+          "kind": "property",
+          "type": "readonly CssVariant[]"
+        }
+      ],
+      "references": [
+        "ComponentStyleObject",
+        "CssVariant",
+        "Omit"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Timing",
+      "file": "src/nativeAccordionCss.ts",
+      "line": 181,
+      "kind": "type",
+      "members": [],
+      "references": [
+        "Readonly"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Prepared",
+      "file": "src/nativeAccordionCss.ts",
+      "line": 182,
+      "kind": "type",
+      "members": [
+        {
+          "name": "style",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "style: { styles: string };",
+          "line": 183,
+          "kind": "property",
+          "type": "{ styles: string }"
+        },
+        {
+          "name": "style.styles",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "styles: string",
+          "line": 183,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "variants",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "variants: readonly { props: CssVariant['props']; style: { styles: string } }[] | undefined;",
+          "line": 184,
+          "kind": "property",
+          "type": "readonly { props: CssVariant['props']; style: { styles: string } }[] | undefined"
+        },
+        {
+          "name": "rootTiming",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "rootTiming: Timing;",
+          "line": 185,
+          "kind": "property",
+          "type": "Timing"
+        },
+        {
+          "name": "beforeTiming",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "beforeTiming: Timing;",
+          "line": 186,
+          "kind": "property",
+          "type": "Timing"
+        }
+      ],
+      "references": [
+        "CssVariant",
+        "Timing"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
       "name": "CssPalette",
       "file": "src/nativeButtonCss.ts",
       "line": 18,
@@ -206385,7 +207225,7 @@
     {
       "name": "ScopeProps",
       "file": "src/nativeStyleScope.tsx",
-      "line": 100,
+      "line": 132,
       "kind": "type",
       "members": [
         {
@@ -206395,7 +207235,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root: React.RefObject<ViewInstance | null>;",
-          "line": 101,
+          "line": 133,
           "kind": "property",
           "type": "React.RefObject<ViewInstance | null>"
         },
@@ -206406,7 +207246,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme: Theme;",
-          "line": 102,
+          "line": 134,
           "kind": "property",
           "type": "Theme"
         },
@@ -206417,7 +207257,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes: readonly string[];",
-          "line": 103,
+          "line": 135,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -206428,7 +207268,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: NativePreparedStyle;",
-          "line": 104,
+          "line": 136,
           "kind": "property",
           "type": "NativePreparedStyle"
         },
@@ -206439,7 +207279,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: React.ReactNode;",
-          "line": 105,
+          "line": 137,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -206840,7 +207680,7 @@
     {
       "name": "NativeOpacityTiming",
       "file": "src/nativeTransitionTiming.ts",
-      "line": 82,
+      "line": 83,
       "kind": "type",
       "members": [
         {
@@ -206850,7 +207690,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "duration: number;",
-          "line": 83,
+          "line": 84,
           "kind": "property",
           "type": "number"
         },
@@ -206861,7 +207701,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "delay: number;",
-          "line": 84,
+          "line": 85,
           "kind": "property",
           "type": "number"
         },
@@ -206872,7 +207712,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "easing: string;",
-          "line": 85,
+          "line": 86,
           "kind": "property",
           "type": "string"
         }
@@ -211579,7 +212419,7 @@
     {
       "name": "MaterialExports",
       "file": "src/styles/props.ts",
-      "line": 21,
+      "line": 22,
       "kind": "type",
       "members": [],
       "references": [],
@@ -211589,7 +212429,7 @@
     {
       "name": "ComponentName",
       "file": "src/styles/props.ts",
-      "line": 23,
+      "line": 24,
       "kind": "type",
       "members": [],
       "references": [],
@@ -211599,7 +212439,7 @@
     {
       "name": "ExistingComponentProps",
       "file": "src/styles/props.ts",
-      "line": 84,
+      "line": 85,
       "kind": "type",
       "members": [],
       "references": [
@@ -211614,7 +212454,7 @@
     {
       "name": "GenericComponentProps",
       "file": "src/styles/props.ts",
-      "line": 89,
+      "line": 90,
       "kind": "type",
       "members": [
         {
@@ -211624,7 +212464,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiAutocomplete: AutocompleteProps<any, any, any, any, any, any>;",
-          "line": 90,
+          "line": 91,
           "kind": "property",
           "type": "AutocompleteProps<any, any, any, any, any, any>"
         },
@@ -211635,7 +212475,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButton: ButtonProps;",
-          "line": 91,
+          "line": 92,
           "kind": "property",
           "type": "ButtonProps"
         },
@@ -211646,7 +212486,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiIconButton: IconButtonProps;",
-          "line": 92,
+          "line": 93,
           "kind": "property",
           "type": "IconButtonProps"
         },
@@ -211657,7 +212497,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiButtonGroup: ButtonGroupProps;",
-          "line": 93,
+          "line": 94,
           "kind": "property",
           "type": "ButtonGroupProps"
         },
@@ -211668,7 +212508,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiChip: ChipProps;",
-          "line": 94,
+          "line": 95,
           "kind": "property",
           "type": "ChipProps"
         },
@@ -211679,7 +212519,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSvgIcon: SvgIconProps;",
-          "line": 95,
+          "line": 96,
           "kind": "property",
           "type": "SvgIconProps"
         },
@@ -211690,7 +212530,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiSelect: SelectProps;",
-          "line": 96,
+          "line": 97,
           "kind": "property",
           "type": "SelectProps"
         },
@@ -211701,7 +212541,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiTextField: TextFieldProps;",
-          "line": 97,
+          "line": 98,
           "kind": "property",
           "type": "TextFieldProps"
         },
@@ -211712,7 +212552,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPopper: PopperProps;",
-          "line": 98,
+          "line": 99,
           "kind": "property",
           "type": "PopperProps"
         },
@@ -211723,7 +212563,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDivider: DividerProps;",
-          "line": 99,
+          "line": 100,
           "kind": "property",
           "type": "DividerProps"
         },
@@ -211734,7 +212574,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiPaper: PaperProps;",
-          "line": 100,
+          "line": 101,
           "kind": "property",
           "type": "PaperProps"
         },
@@ -211745,9 +212585,20 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiCard: CardProps;",
-          "line": 101,
+          "line": 102,
           "kind": "property",
           "type": "CardProps"
+        },
+        {
+          "name": "MuiAccordion",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "MuiAccordion: AccordionProps;",
+          "line": 103,
+          "kind": "property",
+          "type": "AccordionProps"
         },
         {
           "name": "MuiCardActions",
@@ -211756,7 +212607,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiCardActions: CardActionsProps;",
-          "line": 102,
+          "line": 104,
           "kind": "property",
           "type": "CardActionsProps"
         },
@@ -211767,7 +212618,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDialogActions: DialogActionsProps;",
-          "line": 103,
+          "line": 105,
           "kind": "property",
           "type": "DialogActionsProps"
         },
@@ -211778,7 +212629,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiDialogTitle: DialogTitleProps;",
-          "line": 104,
+          "line": 106,
           "kind": "property",
           "type": "DialogTitleProps"
         },
@@ -211789,7 +212640,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiCircularProgress: CircularProgressProps;",
-          "line": 105,
+          "line": 107,
           "kind": "property",
           "type": "CircularProgressProps"
         },
@@ -211800,12 +212651,13 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "MuiLinearProgress: LinearProgressProps;",
-          "line": 106,
+          "line": 108,
           "kind": "property",
           "type": "LinearProgressProps"
         }
       ],
       "references": [
+        "AccordionProps",
         "AutocompleteProps",
         "ButtonGroupProps",
         "ButtonProps",
@@ -211830,7 +212682,7 @@
     {
       "name": "ComponentsPropsList",
       "file": "src/styles/props.ts",
-      "line": 108,
+      "line": 110,
       "kind": "type",
       "members": [],
       "references": [
@@ -211844,7 +212696,7 @@
     {
       "name": "ComponentsProps",
       "file": "src/styles/props.ts",
-      "line": 111,
+      "line": 113,
       "kind": "type",
       "members": [],
       "references": [
@@ -216518,7 +217370,7 @@
     {
       "name": "NativePreparedStyle",
       "file": "src/nativeStyledMetadata.ts",
-      "line": 44,
+      "line": 46,
       "kind": "type",
       "members": [
         {
@@ -216528,7 +217380,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly sheets: readonly NativePreparedSheet[];",
-          "line": 45,
+          "line": 47,
           "kind": "property",
           "type": "readonly NativePreparedSheet[]"
         },
@@ -216539,7 +217391,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly classTokens?: readonly NativeCssProgrammeOccurrence[];",
-          "line": 47,
+          "line": 49,
           "kind": "property",
           "type": "readonly NativeCssProgrammeOccurrence[]"
         }
@@ -216799,6 +217651,28 @@
           "line": 79,
           "kind": "property",
           "type": "boolean | undefined"
+        },
+        {
+          "name": "firstOfType",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly firstOfType?: boolean | undefined;",
+          "line": 80,
+          "kind": "property",
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "lastOfType",
+          "optional": true,
+          "readonly": true,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "readonly lastOfType?: boolean | undefined;",
+          "line": 81,
+          "kind": "property",
+          "type": "boolean | undefined"
         }
       ],
       "references": [],
@@ -216808,7 +217682,7 @@
     {
       "name": "StyleContext",
       "file": "src/sx.ts",
-      "line": 82,
+      "line": 84,
       "kind": "type",
       "members": [
         {
@@ -216818,7 +217692,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "baseProgramme?: string;",
-          "line": 84,
+          "line": 86,
           "kind": "property",
           "type": "string"
         },
@@ -216829,7 +217703,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sourceClass?: boolean;",
-          "line": 86,
+          "line": 88,
           "kind": "property",
           "type": "boolean"
         },
@@ -216840,7 +217714,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeLayout?: Pick<ViewStyle, 'alignSelf' | 'flexShrink'>;",
-          "line": 88,
+          "line": 90,
           "kind": "property",
           "type": "Pick<ViewStyle, 'alignSelf' | 'flexShrink'>"
         },
@@ -216851,7 +217725,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "preparedRoot?: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 90,
+          "line": 92,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         },
@@ -216862,7 +217736,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "styleCache?: NativeStyleCache;",
-          "line": 92,
+          "line": 94,
           "kind": "property",
           "type": "NativeStyleCache"
         },
@@ -216873,7 +217747,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "styledProps?: SharedComponentStyleArgs;",
-          "line": 94,
+          "line": 96,
           "kind": "property",
           "type": "SharedComponentStyleArgs"
         },
@@ -216884,7 +217758,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "registeredStyles?: StyleProp<NativeStyle>;",
-          "line": 96,
+          "line": 98,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -216895,7 +217769,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideProgramme?: (\n    owner: Record<string, unknown>,\n    styles: Readonly<Record<string, unknown>>,\n  ) => unknown;",
-          "line": 98,
+          "line": 100,
           "kind": "property",
           "type": "(\n    owner: Record<string, unknown>,\n    styles: Readonly<Record<string, unknown>>,\n  ) => unknown"
         },
@@ -216906,7 +217780,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "baseStyle?: SxProps;",
-          "line": 102,
+          "line": 104,
           "kind": "property",
           "type": "SxProps"
         },
@@ -216917,7 +217791,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideKeys?: readonly string[] | (() => readonly string[]);",
-          "line": 104,
+          "line": 106,
           "kind": "property",
           "type": "readonly string[] | (() => readonly string[])"
         },
@@ -216928,7 +217802,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideSelectors?: Readonly<Record<string, string>>;",
-          "line": 106,
+          "line": 108,
           "kind": "property",
           "type": "Readonly<Record<string, string>>"
         },
@@ -216939,7 +217813,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "width?: number;",
-          "line": 107,
+          "line": 109,
           "kind": "property",
           "type": "number"
         },
@@ -216950,7 +217824,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "states?: readonly string[];",
-          "line": 108,
+          "line": 110,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -216961,7 +217835,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slot?: string;",
-          "line": 109,
+          "line": 111,
           "kind": "slot",
           "type": "string"
         },
@@ -216972,7 +217846,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootSlot?: string;",
-          "line": 110,
+          "line": 112,
           "kind": "slot",
           "type": "string"
         },
@@ -216983,7 +217857,18 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "skipVariants?: boolean;",
-          "line": 111,
+          "line": 113,
+          "kind": "property",
+          "type": "boolean"
+        },
+        {
+          "name": "rejectPseudoElements",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "rejectPseudoElements?: boolean;",
+          "line": 115,
           "kind": "property",
           "type": "boolean"
         },
@@ -216994,7 +217879,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "svg?: boolean;",
-          "line": 113,
+          "line": 117,
           "kind": "property",
           "type": "boolean"
         },
@@ -217005,7 +217890,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootProps?: Record<string, unknown>;",
-          "line": 115,
+          "line": 119,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -217016,7 +217901,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantClasses?: readonly string[];",
-          "line": 117,
+          "line": 121,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -217027,7 +217912,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantPath?: readonly NativeStyleTarget[];",
-          "line": 119,
+          "line": 123,
           "kind": "property",
           "type": "readonly NativeStyleTarget[]"
         },
@@ -217038,7 +217923,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "descendantOnly?: boolean;",
-          "line": 121,
+          "line": 125,
           "kind": "property",
           "type": "boolean"
         },
@@ -217049,7 +217934,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "protectPhysicalGeometry?: boolean | undefined;",
-          "line": 123,
+          "line": 127,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -217060,7 +217945,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: readonly string[];",
-          "line": 125,
+          "line": 129,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -217071,7 +217956,29 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "lastChild?: boolean | undefined;",
-          "line": 127,
+          "line": 131,
+          "kind": "property",
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "firstOfType",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "firstOfType?: boolean | undefined;",
+          "line": 133,
+          "kind": "property",
+          "type": "boolean | undefined"
+        },
+        {
+          "name": "lastOfType",
+          "optional": true,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "lastOfType?: boolean | undefined;",
+          "line": 134,
           "kind": "property",
           "type": "boolean | undefined"
         },
@@ -217082,7 +217989,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ancestors?: readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n    /** @internal Recollect retained CSS without rerunning owning callbacks. */\n    prepared?: import('./nativeStyledMetadata').NativePreparedStyle;\n    /** @internal A composed implementation sheet shares this physical root. */\n    sameRoot?: boolean;\n  }[];",
-          "line": 129,
+          "line": 136,
           "kind": "property",
           "type": "readonly {\n    theme: Theme;\n    name: string;\n    props: Record<string, unknown>;\n    sx?: SxProps;\n    context: Omit<StyleContext, 'ancestors'>;\n    /** @internal Recollect retained CSS without rerunning owning callbacks. */\n    prepared?: import('./nativeStyledMetadata').NativePreparedStyle;\n    /** @internal A composed implementation sheet shares this physical root. */\n    sameRoot?: boolean;\n  }[]"
         },
@@ -217093,7 +218000,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "logicalInsets?: {\n    parentDirection: 'ltr' | 'rtl';\n    direction?: 'ltr' | 'rtl' | 'inherit';\n  };",
-          "line": 140,
+          "line": 147,
           "kind": "property",
           "type": "{\n    parentDirection: 'ltr' | 'rtl';\n    direction?: 'ltr' | 'rtl' | 'inherit';\n  }"
         },
@@ -217104,7 +218011,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection: 'ltr' | 'rtl';",
-          "line": 141,
+          "line": 148,
           "kind": "property",
           "type": "'ltr' | 'rtl'"
         },
@@ -217115,7 +218022,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "direction?: 'ltr' | 'rtl' | 'inherit';",
-          "line": 142,
+          "line": 149,
           "kind": "property",
           "type": "'ltr' | 'rtl' | 'inherit'"
         },
@@ -217126,7 +218033,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mode?: 'sx' | 'css';",
-          "line": 144,
+          "line": 151,
           "kind": "property",
           "type": "'sx' | 'css'"
         }
@@ -217153,7 +218060,7 @@
     {
       "name": "NativeRootStyleResult",
       "file": "src/sx.ts",
-      "line": 1473,
+      "line": 1580,
       "kind": "type",
       "members": [
         {
@@ -217163,7 +218070,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "programme?: StyleProp<NativeStyle>;",
-          "line": 1475,
+          "line": 1582,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -217174,7 +218081,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "computed: NativeStyle;",
-          "line": 1476,
+          "line": 1583,
           "kind": "property",
           "type": "NativeStyle"
         },
@@ -217185,7 +218092,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "authored: StyleProp<NativeStyle>;",
-          "line": 1477,
+          "line": 1584,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -217196,7 +218103,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: import('./nativeStyledMetadata').NativePreparedStyle;",
-          "line": 1479,
+          "line": 1586,
           "kind": "property",
           "type": "import('./nativeStyledMetadata').NativePreparedStyle"
         }
