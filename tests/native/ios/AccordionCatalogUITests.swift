@@ -257,3 +257,85 @@ final class AccordionMotionProbeUITests: XCTestCase {
   func testDefaultNativeGeometry() throws { try run("default") }
   func testForwardedNativeGeometry() throws { try run("forwarded") }
 }
+
+
+/// Actual sibling mutations must update selectors without remounting keyed rows.
+@MainActor
+final class AccordionGroupingProbeUITests: XCTestCase {
+  private let app = XCUIApplication(bundleIdentifier: "dev.altroo.muinative.catalog")
+  private func node(_ id: String) -> XCUIElement {
+    app.descendants(matching: .any).matching(identifier: id).firstMatch
+  }
+  private func receipt() -> [String: Any]? {
+    guard node("accordion-grouping-receipt").exists,
+      let data = node("accordion-grouping-receipt").label.data(using: .utf8) else { return nil }
+    return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+  }
+  private func waitFor(_ message: String, _ condition: @escaping () -> Bool) {
+    let expectation = XCTNSPredicateExpectation(
+      predicate: NSPredicate { _, _ in condition() }, object: nil)
+    XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: 12), .completed, message)
+  }
+  override func setUp() async throws {
+    continueAfterFailure = false
+    app.launchArguments = []
+    app.launch()
+    XCTAssertTrue(node("accordion-grouping-capture").waitForExistence(timeout: 20))
+  }
+  private func run(_ mode: String) throws {
+    node("accordion-grouping-mode-" + mode).tap()
+    waitFor("The selected grouping case must start idle") {
+      self.receipt()?["mode"] as? String == mode && self.receipt()?["phase"] as? String == "idle"
+    }
+    var tags: [String: Int] = [:]
+    for stage in 0...4 {
+      if stage > 0 {
+        if stage == 1 {
+          node("accordion-grouping-bump").tap()
+          waitFor("The retained counter must update") { self.node("accordion-grouping-counter-b").label == "B 1" }
+        }
+        node("accordion-grouping-next").tap()
+        waitFor("The requested sibling stage must commit") {
+          self.receipt()?["stage"] as? Int == stage && self.receipt()?["phase"] as? String == "idle"
+        }
+      }
+      node("accordion-grouping-capture").tap()
+      waitFor("The native sibling measurements must complete") { self.receipt()?["phase"] as? String == "complete" }
+      let report = try XCTUnwrap(receipt())
+      XCTAssertEqual(report["schemaVersion"] as? Int, 1)
+      XCTAssertEqual(report["development"] as? Bool, false)
+      XCTAssertEqual(try XCTUnwrap(report["fontScale"] as? Double), 1, accuracy: 0.01)
+      let rows = try XCTUnwrap(report["rows"] as? [[String: Any]])
+      XCTAssertEqual(rows.count, 3)
+      let ordered = stage == 0 || stage == 4 ? ["a", "b", "c"] : ["c", "a", "b"]
+      var positions: [String: Double] = [:]
+      for row in rows {
+        let id = try XCTUnwrap(row["id"] as? String)
+        let tag = try XCTUnwrap(row["tag"] as? Int)
+        let height = try XCTUnwrap(row["height"] as? Double)
+        let expected: Double = stage == 2 ? 48 : id == ordered.first ? 80 : id == ordered.last ? 100 : 48
+        XCTAssertEqual(height, expected, accuracy: 1, "Wrong structural style for " + id + " at stage " + String(stage))
+        XCTAssertEqual(Double(node("accordion-grouping-root-" + id).frame.height), height, accuracy: 1)
+        XCTAssertEqual(row["count"] as? Int, id == "b" && stage > 0 ? 1 : 0)
+        if stage == 0 { tags[id] = tag } else { XCTAssertEqual(tag, tags[id], "A keyed native root must be retained") }
+        positions[id] = try XCTUnwrap(row["y"] as? Double)
+      }
+      XCTAssertLessThan(try XCTUnwrap(positions[ordered[0]]), try XCTUnwrap(positions[ordered[1]]))
+      XCTAssertLessThan(try XCTUnwrap(positions[ordered[1]]), try XCTUnwrap(positions[ordered[2]]))
+      if stage > 0 { XCTAssertEqual(node("accordion-grouping-counter-b").label, "B 1") }
+      let data = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys])
+      let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+      attachment.name = "accordion-grouping-" + mode + "-stage-" + String(stage)
+      attachment.lifetime = .keepAlways
+      add(attachment)
+      if stage == 2 || stage == 4 {
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "accordion-grouping-" + mode + "-stage-" + String(stage)
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+      }
+    }
+  }
+  func testDefaultNativeGrouping() throws { try run("default") }
+  func testForwardedNativeGrouping() throws { try run("forwarded") }
+}
