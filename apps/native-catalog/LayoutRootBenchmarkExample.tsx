@@ -32,7 +32,13 @@ export function LayoutRootBenchmarkExample({ rowCount = 100 }: { rowCount?: numb
     {
       id: 'layout-root-controller-family',
       label:
-        family === 'form-group' ? 'Form' : family === 'list-item-avatar' ? 'Avatar' : 'Buttons',
+        family === 'form-group'
+          ? 'Form'
+          : family === 'list-item-avatar'
+            ? 'Avatar'
+            : family === 'button-group'
+              ? 'Buttons'
+              : 'Panels',
       run: () =>
         setSelection((previous) => ({
           ...previous,
@@ -41,7 +47,9 @@ export function LayoutRootBenchmarkExample({ rowCount = 100 }: { rowCount?: numb
               ? 'list-item-avatar'
               : previous.family === 'list-item-avatar'
                 ? 'button-group'
-                : 'form-group',
+                : previous.family === 'button-group'
+                  ? 'accordion'
+                  : 'form-group',
           sample: previous.sample + 1,
         })),
     },

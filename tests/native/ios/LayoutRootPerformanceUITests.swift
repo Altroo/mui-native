@@ -55,9 +55,9 @@ final class LayoutRootPerformanceUITests: XCTestCase {
     try waitFor("Benchmark controller is missing") { self.json(self.node("layout-root-controller-receipt")) != nil }
   }
   private func select(_ field: String, _ value: String, _ control: String) throws {
-    // The family selector cycles through three real workloads. Bound attempts
+    // The family selector cycles through four real workloads. Bound attempts
     // and wait after each selection so a stale receipt cannot skip a family.
-    for _ in 0..<3 {
+    for _ in 0..<4 {
       if json(node("layout-root-controller-receipt"))?[field] as? String == value { break }
       guard node(control).isHittable else { throw Refusal.invalid("Controller is not visible: " + control) }
       let previous = json(node("layout-root-controller-receipt"))?["sample"] as? Int
@@ -77,6 +77,12 @@ final class LayoutRootPerformanceUITests: XCTestCase {
       throw Refusal.invalid("Refusing non-optimized, non-Hermes or unidentified source build")
     }
     guard identity == expectedSourceID else { throw Refusal.invalid("Workload does not match the externally expected source fingerprint") }
+    if family == "accordion" {
+      guard let scale = value["fontScale"] as? Double, scale.isFinite, abs(scale - 1) <= 0.01,
+        value["globalRtl"] as? Bool == false, value["swapInRtl"] is Bool else {
+        throw Refusal.invalid("Accordion endpoint workload requires actual font scale1 and native LTR")
+      }
+    }
     for (key, expected) in ["mounts": 100, "cleanups": 0, "rootAttachments": 100,
       "rootCleanups": 0, "activeRows": 100, "activeRoots": 100, "completedRows": 100,
       "rowEpochCommits": (epoch + 1) * 100, "rowUpdateCommits": epoch * 100] {
@@ -90,7 +96,7 @@ final class LayoutRootPerformanceUITests: XCTestCase {
     // Normal OS text: wrapper roots use44/52pt; grouped actions use48/56pt
     // so both native buttons retain their minimum touch height inside the border.
     // A current native text label + frame acknowledges native application after React's ready flag.
-    let expectedHeight: CGFloat = family == "button-group" ? ((epoch / 8) % 2 == 1 ? 56 : 48) : ((epoch / 8) % 2 == 1 ? 52 : 44)
+    let expectedHeight: CGFloat = family == "accordion" ? (48 + ((epoch / 8) % 2 == 1 ? 16 : 0) + (epoch % 2 == 1 ? 40 : 0)) : family == "button-group" ? ((epoch / 8) % 2 == 1 ? 56 : 48) : ((epoch / 8) % 2 == 1 ? 52 : 44)
     var last: [String: Any] = [:]
     do {
       try waitFor("Ready/native row-zero frame did not acknowledge epoch \(epoch)") {
@@ -132,6 +138,7 @@ final class LayoutRootPerformanceUITests: XCTestCase {
       let action = member(cohort, "layout-root-label-000-action")
       guard action.label == "Row 001 presses 1" else { throw Refusal.invalid("A grouped action lost its local press state") }
     }
+    if family == "accordion" && epoch > 0 { _ = try validateAccordion(cohort: cohort, epoch: epoch) }
     return value
   }
   private func fresh(mode: String, family: String) throws -> XCUIElement {
@@ -153,7 +160,25 @@ final class LayoutRootPerformanceUITests: XCTestCase {
       first.tap()
       try waitFor("Real grouped action activation must commit before measuring") { first.label == "Row 001 presses 1" }
     }
+    if family == "accordion" {
+      let action = member(cohort, "layout-root-row-000-action")
+      guard action.isHittable && action.label == "Row 001 presses 0" else { throw Refusal.invalid("Fresh Accordion action unavailable") }
+      action.tap()
+      try waitFor("A real Summary activation must update local state") { action.label == "Row 001 presses 1" }
+    }
     return cohort
+  }
+  private func validateAccordion(cohort: XCUIElement, epoch: Int, probeDisabled: Bool = false) throws -> [String: Any] {
+    let action = member(cohort, "layout-root-row-000-action")
+    let enabled = (epoch / 2) % 2 == 0
+    let height: CGFloat = (epoch / 8) % 2 == 1 ? 64 : 48
+    guard action.exists, action.isEnabled == enabled, abs(action.frame.height - height) <= 1,
+      action.label == "Row 001 presses 1" else { throw Refusal.invalid("Accordion action geometry, disabled state or local state changed") }
+    if probeDisabled && !enabled {
+      action.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+      guard action.label == "Row 001 presses 1" else { throw Refusal.invalid("Disabled Summary activated") }
+    }
+    return ["epoch": epoch, "enabled": enabled, "summaryHeight": Double(action.frame.height), "label": action.label]
   }
   /// Validate a correctness cohort outside metrics; retain actual native values.
   private func validateGroup(cohort: XCUIElement, epoch: Int, firstPresses: Int = 1, probeDisabled: Bool = false) throws -> [String: Any] {
@@ -214,6 +239,18 @@ final class LayoutRootPerformanceUITests: XCTestCase {
         advance.tap()
         final = try ack(cohort, mode: mode, family: family, epoch: epoch)
         validation.append(try validateGroup(cohort: cohort, epoch: epoch, probeDisabled: true))
+      }
+      try record(final, cohort: cohort, mode: mode, family: family, phase: "native-validation", validation: validation)
+    }
+    if family == "accordion" {
+      let cohort = try fresh(mode: mode, family: family)
+      let advance = member(cohort, "layout-root-advance")
+      var validation = [try validateAccordion(cohort: cohort, epoch: 0)]
+      var final: [String: Any] = [:]
+      for epoch in 1...16 {
+        advance.tap()
+        final = try ack(cohort, mode: mode, family: family, epoch: epoch)
+        validation.append(try validateAccordion(cohort: cohort, epoch: epoch, probeDisabled: true))
       }
       try record(final, cohort: cohort, mode: mode, family: family, phase: "native-validation", validation: validation)
     }
@@ -363,6 +400,17 @@ final class LayoutRootPerformanceUITests: XCTestCase {
   func testButtonGroupMUIScrollTowardEnd() throws { try profileScrolling(mode: "mui", reverse: false) }
   func testButtonGroupRNScrollTowardStart() throws { try profileScrolling(mode: "rn", reverse: true) }
   func testButtonGroupMUIScrollTowardStart() throws { try profileScrolling(mode: "mui", reverse: true) }
+  func testAccordionEnvironmentQualification() throws {
+    try select("mode", "mui", "layout-root-controller-mode")
+    try select("family", "accordion", "layout-root-controller-family")
+    try select("operation", "update", "layout-root-controller-operation")
+    let cohort = try fresh(mode: "mui", family: "accordion")
+    let receipt = try ack(cohort, mode: "mui", family: "accordion", epoch: 0)
+    _ = try validateAccordion(cohort: cohort, epoch: 0)
+    try record(receipt, cohort: cohort, mode: "mui", family: "accordion", phase: "environment-qualification")
+  }
+  func testAccordionRNCPUAndMemory() throws { try profile(mode: "rn", family: "accordion") }
+  func testAccordionMUICPUAndMemory() throws { try profile(mode: "mui", family: "accordion") }
   func testFormGroupRNCPUAndMemory() throws { try profile(mode: "rn", family: "form-group") }
   func testFormGroupMUICPUAndMemory() throws { try profile(mode: "mui", family: "form-group") }
   func testAvatarRNCPUAndMemory() throws { try profile(mode: "rn", family: "list-item-avatar") }
