@@ -21,6 +21,8 @@ import {
   useState,
   startTransition,
   Suspense,
+  type ComponentType,
+  type ComponentProps,
 } from 'react';
 import { View, Text, StyleSheet, type ViewInstance } from 'react-native';
 import { cleanup, render, act } from '@testing-library/react-native';
@@ -405,7 +407,7 @@ test('required custom props remain visible to a registered styled(View) callback
   const m = selected(),
     calls: unknown[] = [];
   const Root = styled(
-    View as React.ComponentType<React.ComponentProps<typeof View> & { requiredToken: string }>,
+    View as ComponentType<ComponentProps<typeof View> & { requiredToken: string }>,
     { shouldForwardProp: (key) => key !== 'requiredToken' },
   )((props) => {
     calls.push(props.requiredToken);

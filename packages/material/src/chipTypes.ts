@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import type React from 'react';
 import type { ViewInstance, ViewProps, StyleProp } from 'react-native';
 import type { NativePressable } from '@altroo/mui-native-host';
@@ -42,9 +43,9 @@ export interface ChipOwnProps extends Omit<ButtonBaseProps, 'children' | 'compon
   children?: null;
   id?: string;
   label?: React.ReactNode;
-  avatar?: React.ReactElement<unknown>;
-  icon?: React.ReactElement<unknown>;
-  deleteIcon?: React.ReactElement<unknown>;
+  avatar?: React.ReactElement;
+  icon?: React.ReactElement;
+  deleteIcon?: React.ReactElement;
   onDelete?: (event: ChipDeleteEvent) => void;
   clickable?: boolean;
   skipFocusWhenDisabled?: boolean;
