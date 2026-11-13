@@ -1,4 +1,5 @@
-import React, { forwardRef, useRef, useImperativeHandle } from 'react';
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import React, { forwardRef, useRef, useImperativeHandle, useId, useMemo } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -24,6 +25,7 @@ import { Modal, type ModalProps, type NativeModalControlProps, type BackdropProp
 import { useForkRef } from './utils';
 import { Fade, type FadeProps } from './fade';
 import type { TransitionProps } from './transitions/types';
+import { DialogContext } from './dialogContext';
 export interface DialogPaperSlotPropsOverrides {}
 export interface DialogContainerSlotPropsOverrides {}
 export interface DialogBackdropSlotPropsOverrides {}
@@ -121,6 +123,7 @@ export const Dialog: React.ForwardRefExoticComponent<
   const {
     open,
     onClose,
+    'aria-labelledby': ariaLabelledByProp,
     fullWidth = false,
     fullScreen = false,
     maxWidth = 'sm' as Breakpoint,
@@ -134,6 +137,11 @@ export const Dialog: React.ForwardRefExoticComponent<
     slotProps = {},
     ...rootNative
   } = props;
+  // Generate unconditionally so changing open state or authored IDs keeps hook
+  // order stable. An explicit empty ID is a source-preserved caller choice.
+  const generatedTitleId = useId();
+  const ariaLabelledBy = ariaLabelledByProp ?? generatedTitleId;
+  const titleContext = useMemo(() => ({ titleId: ariaLabelledBy }), [ariaLabelledBy]);
   const { width } = useWindowDimensions();
   const availableWidth = Math.max(0, width - 48);
   const unit = theme.breakpoints.unit ?? 'px';
@@ -239,6 +247,7 @@ export const Dialog: React.ForwardRefExoticComponent<
           style={containerNativeStyle}
         >
           <PaperSlot
+            aria-labelledby={ariaLabelledBy}
             {...paperRest}
             {...(PaperSlot === Paper ? {} : { ownerState })}
             sx={paperProps.sx}
@@ -256,7 +265,7 @@ export const Dialog: React.ForwardRefExoticComponent<
               paperSlotStyle,
             ]}
           >
-            {children}
+            <DialogContext.Provider value={titleContext}>{children}</DialogContext.Provider>
           </PaperSlot>
         </NativeDialogContainer>
       </Transition>

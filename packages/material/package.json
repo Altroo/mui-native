@@ -78,6 +78,11 @@
       "react-native": "./src/DialogTitle/index.ts",
       "default": "./dist/DialogTitle/index.js"
     },
+    "./DialogTitle/dialogTitleClasses": {
+      "types": "./dist/DialogTitle/dialogTitleClasses/index.d.ts",
+      "react-native": "./src/DialogTitle/dialogTitleClasses/index.ts",
+      "default": "./dist/DialogTitle/dialogTitleClasses/index.js"
+    },
     "./DialogContent": {
       "types": "./dist/DialogContent/index.d.ts",
       "react-native": "./src/DialogContent/index.ts",

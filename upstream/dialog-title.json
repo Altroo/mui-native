@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "description": "Pinned DialogTitle defaults, Typography composition, class filtering, title-ID precedence and source style order.",
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "DialogTitle/index.js": "a5614de0991b185f6e8896ce4b2a85e070ea281ea9aa00ed0675c1826605186a",
+        "DialogTitle/index.d.ts": "3ecd423076cd6107967e1b9187f38919490d790b258df54e8a6572a93ded5f96",
+        "DialogTitle/DialogTitle.js": "d8bdf2ece56b03d5861ab828b4e46d1604848850f920a75089f72feaa274eebd",
+        "DialogTitle/DialogTitle.d.ts": "badf4bd328dba83445227652bc1fc2a2d33eb30090e2dbf94d04844c48f3fe30",
+        "DialogTitle/dialogTitleClasses.js": "d708105c83e5180d04a49e6dc99ad53a9a517ac719cc3725ee91ea38772d7086",
+        "DialogTitle/dialogTitleClasses.d.ts": "06d3015b06f1f22899905d74207c52e54c051f0466975156de9067ceb884ee47",
+        "Dialog/DialogContext.js": "c871177eb109ba2982205a5da7517cb6d4f84119349db5eb2e10a7a4777fc685",
+        "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+        "Typography/Typography.js": "791ce01d7581defa70c9d08c2a9a0eb751719e0bde7fb36719f16b7139154d81",
+        "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "isObjectEmpty/isObjectEmpty.js": "27cfe95a1383106e2991facfc6a1ff9b5d4e2b444ecc8c6495ff0744c736a6b3",
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
+      }
+    }
+  ],
+  "fixture": {
+    "path": "tests/fixtures/mui-dialog-title-9.5.0.json",
+    "producer": "scripts/reference/dialog-title.mjs"
+  },
+  "adaptations": [
+    "Render native Text with header semantics for the default h2 alias; refs and custom roots use native Text contracts.",
+    "Use native zero flex in place of browser 0 0 auto so later native flex shorthand can replace the default.",
+    "Share a stable title ID inside Dialog paper and forward its label relationship; physical screen-reader announcements need independent validation."
+  ]
+}

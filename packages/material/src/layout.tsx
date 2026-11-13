@@ -1,6 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { forwardRef } from 'react';
-import { Typography, type TypographyProps } from './typography';
 export * from './typography';
 export * from './paper';
 import type { ViewInstance } from 'react-native';
@@ -54,17 +53,7 @@ export const CardContent: React.ForwardRefExoticComponent<
 });
 export * from './cardActions';
 export * from './divider';
-export function DialogTitle(inProps: TypographyProps) {
-  const props = useDefaultProps({ props: inProps, name: 'MuiDialogTitle' });
-
-  return (
-    <Typography
-      {...props}
-      variant={props.variant ?? 'h6'}
-      style={[{ padding: 24, paddingBottom: 16 }, props.style]}
-    />
-  );
-}
+export * from './dialogTitle';
 export function DialogContent(inProps: BoxProps) {
   const props = useDefaultProps({ props: inProps, name: 'MuiDialogContent' });
 

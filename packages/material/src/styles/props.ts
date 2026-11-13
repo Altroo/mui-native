@@ -14,6 +14,7 @@ import type { PaperProps } from '../paperTypes';
 import type { CardProps } from '../cardTypes';
 import type { CardActionsProps } from '../cardActions';
 import type { DialogActionsProps } from '../dialogActions';
+import type { DialogTitleProps } from '../dialogTitle';
 
 type MaterialExports = typeof import('../index');
 // Only existing native exports from the pinned ComponentsPropsList participate.
@@ -98,6 +99,7 @@ interface GenericComponentProps {
   MuiCard: CardProps;
   MuiCardActions: CardActionsProps;
   MuiDialogActions: DialogActionsProps;
+  MuiDialogTitle: DialogTitleProps;
 }
 export interface ComponentsPropsList
   extends Omit<ExistingComponentProps, keyof GenericComponentProps>,

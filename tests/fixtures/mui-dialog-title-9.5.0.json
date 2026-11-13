@@ -1,0 +1,974 @@
+{
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "DialogTitle/index.js": "a5614de0991b185f6e8896ce4b2a85e070ea281ea9aa00ed0675c1826605186a",
+      "DialogTitle/index.d.ts": "3ecd423076cd6107967e1b9187f38919490d790b258df54e8a6572a93ded5f96",
+      "DialogTitle/DialogTitle.js": "d8bdf2ece56b03d5861ab828b4e46d1604848850f920a75089f72feaa274eebd",
+      "DialogTitle/DialogTitle.d.ts": "badf4bd328dba83445227652bc1fc2a2d33eb30090e2dbf94d04844c48f3fe30",
+      "DialogTitle/dialogTitleClasses.js": "d708105c83e5180d04a49e6dc99ad53a9a517ac719cc3725ee91ea38772d7086",
+      "DialogTitle/dialogTitleClasses.d.ts": "06d3015b06f1f22899905d74207c52e54c051f0466975156de9067ceb884ee47",
+      "Dialog/DialogContext.js": "c871177eb109ba2982205a5da7517cb6d4f84119349db5eb2e10a7a4777fc685",
+      "Dialog/Dialog.js": "059e9b49ebc4b5054fa32372dfdf5d440fb274f6ce3cf4e782738c124da3e659",
+      "Typography/Typography.js": "791ce01d7581defa70c9d08c2a9a0eb751719e0bde7fb36719f16b7139154d81",
+      "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa"
+    }
+  },
+  "styledReference": {
+    "name": "@mui/system",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+    }
+  },
+  "utilitiesReference": {
+    "name": "@mui/utils",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "isObjectEmpty/isObjectEmpty.js": "27cfe95a1383106e2991facfc6a1ff9b5d4e2b444ecc8c6495ff0744c736a6b3",
+      "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
+    }
+  },
+  "classes": { "root": "MuiDialogTitle-root" },
+  "utilities": {
+    "root": "MuiDialogTitle-root",
+    "disabled": "Mui-disabled",
+    "custom": "MuiDialogTitle-custom",
+    "__proto__": "Mui-[object Object]",
+    "toString": "Mui-function toString() { [native code] }",
+    "constructor": "Mui-function Object() { [native code] }"
+  },
+  "observations": [
+    {
+      "input": { "name": "default" },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "body1", "props": { "variant": "body1" } },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-body1 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": true,
+          "ownerVariant": "body1",
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "body1",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "undefined-variant", "props": { "variant": "$undefined" } },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-body1 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": true,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "body1",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "undefined-component", "props": { "component": "$undefined" } },
+      "tag": "h6",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "own-id", "props": { "id": "authored" } },
+      "tag": "h2",
+      "id": "authored",
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": "authored",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "empty-id", "props": { "id": "" } },
+      "tag": "h2",
+      "id": "",
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": "",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "context-id", "context": { "titleId": "context-title" } },
+      "tag": "h2",
+      "id": "context-title",
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": "context-title",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": {
+        "name": "authored-over-context",
+        "props": { "id": "authored" },
+        "context": { "titleId": "context-title" }
+      },
+      "tag": "h2",
+      "id": "authored",
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": "authored",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": {
+        "name": "empty-over-context",
+        "props": { "id": "" },
+        "context": { "titleId": "context-title" }
+      },
+      "tag": "h2",
+      "id": "",
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": "",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "context-undefined", "context": { "titleId": "$undefined" } },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "context-null", "context": { "titleId": null } },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": {
+        "name": "classes",
+        "props": { "classes": { "root": "title-own" }, "className": "authored" }
+      },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root title-own authored",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": true,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "default-caption", "defaults": { "variant": "caption" } },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-caption MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": true,
+          "ownerVariant": "caption",
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "caption",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": {
+        "name": "undefined-fills-caption",
+        "defaults": { "variant": "caption" },
+        "props": { "variant": "$undefined" }
+      },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-caption MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": true,
+          "ownerVariant": "caption",
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "caption",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "typography-default", "typographyDefaults": { "variant": "body2" } },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": {
+        "name": "undefined-uses-typography-default",
+        "typographyDefaults": { "variant": "body2" },
+        "props": { "variant": "$undefined" }
+      },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-body2 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": true,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "body2",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "configured", "configured": true },
+      "tag": "h2",
+      "id": null,
+      "classes": "ConsumerMuiTypography-root ConsumerMuiTypography-h6 ConsumerMuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "local-theme-complete", "localTheme": "complete" },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#c43a18",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 31,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "local-theme-scoped", "localTheme": "scoped" },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#c43a18",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 31,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "local-theme-inherited", "localTheme": "inherited" },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#c43a18",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 31,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "local-theme-empty", "localTheme": "empty" },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 16,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "local-theme-null", "localTheme": "null" },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "local-theme-undefined", "localTheme": "undefined" },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "styled-absent", "styled": true },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": false,
+          "style": null,
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": false,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": { "name": "styled-undefined", "styled": true, "props": { "style": "$undefined" } },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": null,
+          "ownerHasStyle": true,
+          "ownerStyle": null
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": {},
+          "ownerHasStyle": true,
+          "ownerStyle": null
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": {
+        "name": "styled-authored",
+        "styled": true,
+        "props": { "style": { "paddingBottom": 29 } }
+      },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": { "paddingBottom": 29 },
+          "ownerHasStyle": true,
+          "ownerStyle": { "paddingBottom": 29 }
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": { "paddingBottom": 29 },
+          "ownerHasStyle": true,
+          "ownerStyle": { "paddingBottom": 29 }
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 24
+    },
+    {
+      "input": {
+        "name": "styled-merged-default",
+        "styled": true,
+        "defaults": { "style": { "paddingLeft": 18 } },
+        "props": { "style": { "paddingBottom": 29 } },
+        "mergeStyle": true
+      },
+      "tag": "h2",
+      "id": null,
+      "classes": "MuiTypography-root MuiTypography-h6 MuiDialogTitle-root",
+      "trace": [
+        {
+          "stage": "title",
+          "ownerHasVariant": false,
+          "ownerVariant": null,
+          "id": null,
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": { "paddingLeft": 18, "paddingBottom": 29 },
+          "ownerHasStyle": true,
+          "ownerStyle": { "paddingLeft": 18, "paddingBottom": 29 }
+        },
+        {
+          "stage": "typography",
+          "variant": "h6",
+          "component": "h2",
+          "hasClasses": false,
+          "themePrimary": "#1976d2",
+          "hasStyle": true,
+          "style": { "paddingLeft": 18, "paddingBottom": 29 },
+          "ownerHasStyle": true,
+          "ownerStyle": { "paddingLeft": 18, "paddingBottom": 29 }
+        }
+      ],
+      "paddingTop": 13,
+      "paddingLeft": 18
+    }
+  ],
+  "compositions": [
+    { "input": "scoped-getter", "trace": ["scope", "inner:#c43a18", "outer:#c43a18"] },
+    { "input": "inherited-theme", "trace": ["inner:#c43a18", "outer:#c43a18"] },
+    { "input": "empty", "trace": ["inner:#1976d2", "outer:#1976d2"] },
+    { "input": "null", "trace": ["inner:#2e7d32", "outer:#2e7d32"] },
+    {
+      "input": "mutated-theme",
+      "trace": ["scope", "inner:#c43a18", "next-scope", "outer:#6a1b9a"]
+    },
+    { "input": "mutated-null", "trace": ["scope", "inner:#c43a18", "outer:#1976d2"] },
+    { "input": "mutated-missing", "trace": ["scope", "inner:#c43a18", "outer:#1976d2"] }
+  ]
+}
