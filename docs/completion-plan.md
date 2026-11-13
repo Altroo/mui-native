@@ -2,7 +2,7 @@
 
 The current priority is to finish the easiest existing unfinished component or API to its full agreed native contract before moving to another family. The partial-row inventory retains the 7 November 2026 audit, including the merged Divider contract and finite native validation at `6e223c98`; completion priorities and theme-reading evidence were updated on 10 November 2026.
 
-There are **65 rows at 50% or 75%**: 58 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **16 rows at 25%**: six Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
+There are **66 rows at 50% or 75%**: 59 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **15 rows at 25%**: five Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
 
 ## Completion rules
 
@@ -21,6 +21,8 @@ iOS Space/A keyboard interactions now have 30 scoped cases across all five roots
 ## Recent wrapper validation
 
 CircularProgress now replaces its ActivityIndicator prototype with four source-ordered styled stages, native SVG geometry/motion, determinate ranges, optional tracks, classes and a retained public View ref. Source and installed consumers pass. Normal, enlarged and restored iOS/Android checks and actual pixel comparisons pass, including correct iOS relative announcements and settled Android arcs. Its [remaining inherited styling, physical accessibility and release-performance gates](circular-progress.md) remain explicit; this is not a 100% compatibility claim.
+
+LinearProgress now replaces its spinner prototype with four native variants, custom ranges, source-ordered slots/classes, RTL context, native motion and a retained View ref. Six normal/enlarged/restored iOS/Android profiles and 90 actual screenshot comparisons pass. Stable animation bindings preserve reduced-motion paint, and measured SVG geometry prevents stale buffer rectangles. Its [remaining shared styling, physical accessibility and release-performance gates](linear-progress.md) remain explicit.
 
 [ListItemAvatar](list-item-avatar.md) now has separate iOS and Android checks for the inline and portaled images, a distinct button and its real touch state. Its class helper also honors the canonical class-name generator. The native observations are scoped to the tested accessibility tree and do not certify screen reader traversal.
 
@@ -99,6 +101,7 @@ The entries below enumerate the 81 current partial status rows and the separatel
 | Checkbox                |                    50% | [Scope and remaining work](../docs/check-controls.md)                    |
 | Chip                    |                    50% | [Scope and remaining work](../docs/chip.md)                              |
 | CircularProgress        |                    75% | [Contract and remaining gates](../docs/circular-progress.md)             |
+| LinearProgress          |                    75% | [Contract and remaining gates](../docs/linear-progress.md)               |
 | Collapse                |                    75% | [Scope and remaining work](../docs/collapse.md)                          |
 | DefaultPropsProvider    |                   100% | [Scope and remaining work](../docs/default-props-provider.md)            |
 | Dialog                  |                    50% | [Scope and remaining work](../docs/modals.md)                            |
@@ -119,7 +122,6 @@ The entries below enumerate the 81 current partial status rows and the separatel
 | InputAdornment          |                    50% | [Scope and remaining work](../docs/inputs.md)                            |
 | InputBase               |                    50% | [Scope and remaining work](../docs/inputs.md)                            |
 | InputLabel              |                    50% | [Scope and remaining work](../docs/form-labels.md)                       |
-| LinearProgress          |                    25% | [Scope and remaining work](../docs/compatibility.md#currently-exercised) |
 | List                    |                    50% | [Scope and remaining work](../docs/lists.md)                             |
 | ListItem                |                    50% | [Scope and remaining work](../docs/lists.md)                             |
 | ListItemAvatar          |                    75% | [Scope and remaining work](../docs/list-item-avatar.md)                  |

@@ -59,6 +59,7 @@ public final class PopperInstrumentation extends Instrumentation {
   private boolean dialogActionsLayoutScenario;
   private boolean dialogTitleLayoutScenario;
   private boolean circularProgressScenario;
+  private boolean linearProgressScenario;
   private boolean textAlignmentScenario;
   private boolean dividerScenario;
   private boolean paperScenario;
@@ -88,6 +89,7 @@ public final class PopperInstrumentation extends Instrumentation {
     cardActionsLayoutScenario = "card-actions-layout".equals(arguments.getString("scenario"));
     dialogActionsLayoutScenario = "dialog-actions-layout".equals(arguments.getString("scenario"));
     dialogTitleLayoutScenario = "dialog-title-layout".equals(arguments.getString("scenario"));
+    linearProgressScenario = "linear-progress".equals(arguments.getString("scenario"));
     circularProgressScenario = "circular-progress".equals(arguments.getString("scenario"));
     accordionActionsLayoutScenario = "accordion-actions-layout".equals(arguments.getString("scenario"));
     formGroupFocusScenario = "form-group-focus".equals(arguments.getString("scenario"));
@@ -111,6 +113,7 @@ public final class PopperInstrumentation extends Instrumentation {
     if (paperScenario) { PaperScenario.run(this, dividerFontProfile); return; }
     if (cardActionsLayoutScenario) { LayoutRootScenario.runCardActionsLayout(this, dividerFontProfile); return; }
     if (dialogActionsLayoutScenario) { LayoutRootScenario.runDialogActionsLayout(this, dividerFontProfile); return; }
+    if (linearProgressScenario) { LayoutRootScenario.runLinearProgress(this, dividerFontProfile); return; }
     if (circularProgressScenario) { LayoutRootScenario.runCircularProgress(this, dividerFontProfile); return; }
     if (dialogTitleLayoutScenario) { LayoutRootScenario.runDialogTitleLayout(this, dividerFontProfile); return; }
     if (accordionActionsLayoutScenario) { LayoutRootScenario.runAccordionActionsLayout(this, dividerFontProfile); return; }

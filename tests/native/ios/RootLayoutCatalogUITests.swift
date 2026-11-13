@@ -476,6 +476,95 @@ final class RootLayoutCatalogUITests: XCTestCase {
     return rowFrame.height
   }
 
+  func testLinearProgressContract() throws { try runLinearProgress(enlarged: false) }
+  func testLinearProgressAtEnlargedOSTextSize() throws { try runLinearProgress(enlarged: true) }
+  func testLinearProgressNormalPreview() throws { try runLinearProgress(enlarged: false) }
+
+  /// Check the real public root and capture each variant's current native paint.
+  private func runLinearProgress(enlarged: Bool) throws {
+    try chooseWrapper("root-layout-linear-progress")
+    let receipt = "linear-progress-preview-receipt"
+    func state(_ name: String, percent: Int, range: Bool, rtl: Bool, dark: Bool, paused: Bool) throws {
+      let expectedMin = range ? 20.0 : 0.0, expectedMax = range ? 80.0 : 100.0
+      let expectedValue = range ? 65.0 : Double(percent)
+      let expectedBuffer = range ? 71.0 : 85.0
+      let expectedAnnouncement = NumberFormatter.localizedString(from: NSNumber(value: Double(percent) / 100), number: .percent)
+      _ = reveal("linear-progress-determinate")
+      waitFor("Linear progress controls, native range and retained ref must settle") {
+        guard let value = self.metadata(receipt), let scale = value["fontScale"] as? Double,
+          let refs = value["refs"] as? [String: Int] else { return false }
+        let compact = { (text: String) in text.components(separatedBy: .whitespacesAndNewlines).joined() }
+        let announcement = self.node("linear-progress-determinate").value as? String
+        return value["percent"] as? Int == percent && value["paused"] as? Bool == paused
+          && value["customRange"] as? Bool == range && value["rtl"] as? Bool == rtl && value["dark"] as? Bool == dark
+          && value["min"] as? Double == expectedMin && value["max"] as? Double == expectedMax
+          && value["value"] as? Double == expectedValue && value["valueBuffer"] as? Double == expectedBuffer
+          && announcement.map(compact) == compact(expectedAnnouncement)
+          && refs["attached"] == 1 && refs["cleaned"] == 0
+          && (enlarged ? scale >= 1.6 : abs(scale - 1) < 0.01)
+      }
+      try measured(receipt, roots: ["progress": "linear-progress-determinate"])
+      let root = node("linear-progress-determinate")
+      XCTAssertGreaterThan(root.frame.width, 200)
+      XCTAssertEqual(root.frame.height, 4, accuracy: 1)
+      XCTAssertTrue(root.label.contains("Upload progress"))
+      // The stock source transition is 400ms; inspect the actual settled paint below.
+      let settled = expectation(description: "Linear progress transition")
+      DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) { settled.fulfill() }
+      wait(for: [settled], timeout: 2)
+      for kind in ["indeterminate", "determinate", "buffer", "query"] { _ = reveal("linear-sample-" + kind) }
+      // Hittability alone admits partial rows. Center the complete current union,
+      // then reacquire all frames so enlarged text cannot produce stale crops.
+      for _ in 0..<8 {
+        let scroll = node("root-layout-scroll"), visible = scroll.frame.intersection(app.frame).insetBy(dx: 1, dy: 1)
+        let union = ["indeterminate", "determinate", "buffer", "query"].map { node("linear-sample-" + $0).frame }.reduce(CGRect.null) { $0.union($1) }
+        if visible.contains(union) { break }
+        XCTAssertLessThanOrEqual(union.height, visible.height)
+        let delta = max(-visible.height * 0.4, min(visible.height * 0.4, visible.midY - union.midY))
+        let start = scroll.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        start.press(forDuration: 0.1, thenDragTo: start.withOffset(CGVector(dx: 0, dy: delta)), withVelocity: .slow, thenHoldForDuration: 0.2)
+      }
+
+      func recordFrame(_ stage: String) throws {
+        var frames: [String: [Double]] = [:]
+        for kind in ["indeterminate", "determinate", "buffer", "query"] {
+          let frame = node("linear-sample-" + kind).frame
+          XCTAssertGreaterThan(frame.width, 200)
+          XCTAssertEqual(frame.height, 24, accuracy: 1)
+          XCTAssertTrue(node("root-layout-scroll").frame.intersection(app.frame).insetBy(dx: -0.5, dy: -0.5).contains(frame))
+          frames[kind] = [Double(frame.minX), Double(frame.minY), Double(frame.width), Double(frame.height)]
+        }
+        let payload: [String: Any] = ["stage": stage, "state": try XCTUnwrap(metadata(receipt)), "frames": frames,
+          "screenSize": [Double(app.frame.width), Double(app.frame.height)], "nativeValue": root.value ?? NSNull()]
+        let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys]), uniformTypeIdentifier: "public.json")
+        attachment.name = "linear-progress-" + stage; attachment.lifetime = .keepAlways; add(attachment)
+        capture("linear-progress-" + stage)
+      }
+      try recordFrame(name)
+      if name == "quarter" || name == "paused" {
+        for (index, interval) in [0.08, 0.21, 0.43, 0.77].enumerated() {
+          let delay = expectation(description: "Linear progress paint cadence")
+          DispatchQueue.main.asyncAfter(deadline: .now() + interval) { delay.fulfill() }
+          wait(for: [delay], timeout: 2)
+          try recordFrame(name + "-paint-" + String(index))
+        }
+      }
+    }
+    try state("quarter", percent:25, range:false, rtl:false, dark:false, paused:false)
+    reveal("linear-progress-value").tap()
+    try state("three-quarter", percent:75, range:false, rtl:false, dark:false, paused:false)
+    reveal("linear-progress-range").tap()
+    try state("custom-range", percent:75, range:true, rtl:false, dark:false, paused:false)
+    reveal("linear-progress-direction").tap()
+    try state("rtl", percent:75, range:true, rtl:true, dark:false, paused:false)
+    reveal("linear-progress-theme").tap()
+    try state("dark", percent:75, range:true, rtl:true, dark:true, paused:false)
+    reveal("linear-progress-pause").tap()
+    try state("paused", percent:75, range:true, rtl:true, dark:true, paused:true)
+    for control in ["value", "range", "direction", "theme", "pause"] { reveal("linear-progress-" + control).tap() }
+    try state("restored", percent:25, range:false, rtl:false, dark:false, paused:false)
+  }
+
   func testCircularProgressContract() throws { try runCircularProgress(enlarged: false) }
   func testCircularProgressAtEnlargedOSTextSize() throws { try runCircularProgress(enlarged: true) }
   func testCircularProgressNormalPreview() throws { try runCircularProgress(enlarged: false) }

@@ -1,8 +1,9 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { useTheme, useSx } from './themeProvider';
 import React, { useEffect } from 'react';
-import { View, ActivityIndicator, AppState } from 'react-native';
+import { AppState } from 'react-native';
 import { useDefaultProps, type SxProps } from '@altroo/mui-native-system';
-import { Box, Paper, Typography, Stack, type BoxProps } from './layout';
+import { Paper, Typography, Stack, type BoxProps } from './layout';
 import { Button } from './buttons';
 export { Dialog } from './dialog';
 export type { DialogProps, DialogOwnerState, DialogSlots } from './dialog';
@@ -63,41 +64,13 @@ export type {
   CircularProgressPropsVariantOverrides,
 } from './circularProgressTypes';
 export * from './circularProgressClasses';
-export function LinearProgress(inProps: ProgressProps) {
-  const {
-    variant = 'indeterminate',
-    value = 0,
-    sx,
-    'aria-label': label = 'Loading',
-  } = useDefaultProps({ props: inProps, name: 'MuiLinearProgress' });
-
-  const theme = useTheme();
-  return (
-    <Box
-      sx={sx}
-      accessibilityRole="progressbar"
-      accessibilityLabel={label}
-      accessibilityValue={
-        variant === 'determinate'
-          ? { min: 0, max: 100, now: Math.min(100, Math.max(0, value)) }
-          : undefined
-      }
-      style={{ height: 4, overflow: 'hidden', backgroundColor: theme.palette.primary.light }}
-    >
-      {variant === 'indeterminate' ? (
-        <ActivityIndicator color={theme.palette.primary.main} />
-      ) : (
-        <View
-          style={{
-            height: 4,
-            width: `${Math.min(100, Math.max(0, value))}%`,
-            backgroundColor: theme.palette.primary.main,
-          }}
-        />
-      )}
-    </Box>
-  );
-}
+export { LinearProgress } from './linearProgress';
+export type {
+  LinearProgressProps,
+  LinearProgressPropsColorOverrides,
+  LinearProgressPropsVariantOverrides,
+} from './linearProgressTypes';
+export * from './linearProgressClasses';
 export interface SnackbarProps {
   open: boolean;
   message?: React.ReactNode;

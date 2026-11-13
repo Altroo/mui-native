@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "description": "Pinned LinearProgress four variants, ranges, RTL geometry, eleven class keys, genuine styled children, diagnostic order and source palette shades.",
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "LinearProgress/index.js": "9a461e111d85fd42a230bc90d4b06ee51d4eda4eead79c2b8f4a8b92603ffdca",
+        "LinearProgress/index.d.ts": "09c6639e5622dc1693276f4c7684b0f0f4992d5c4e5c0769dd576e95c50635f7",
+        "LinearProgress/LinearProgress.js": "b3ffc4e099676187f14eba573b101700f861f8413a0cd010e0c2224a20f529c6",
+        "LinearProgress/LinearProgress.d.ts": "d6af52520b0bf7b6023e076705734fc8466164ec3d0cbaec3c72759d3042083d",
+        "LinearProgress/linearProgressClasses.js": "48b8a467dd8013f0af9370fcc87602a70b0a0e7c51b04c2ea65a30e5774d2886",
+        "LinearProgress/linearProgressClasses.d.ts": "a96085e1205b76e32e7650b24e3c94ace3f8509ffd508623260ea4fc5a7b83d8",
+        "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+        "styles/reducedMotion.js": "3a80a30b233bb4ab252fd858b921992ca072e015cae638b79d71e7f281795394",
+        "utils/memoTheme.js": "ba795253c43a4fd740281e725b4fe0b77a25bf0c1a26e3f12b5f89a790a8a497",
+        "utils/createSimplePaletteValueFilter.js": "8c972b662713b932faaa79541132caf57ad7dcdb5278b99e65c1aebe2c3a51a5"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574"
+      }
+    }
+  ],
+  "fixture": {
+    "path": "tests/fixtures/mui-linear-progress-9.5.0.json",
+    "producer": "scripts/reference/linear-progress.mjs"
+  },
+  "adaptations": [
+    "Render real native View bars with native-driver transforms instead of browser positioned spans.",
+    "Render the buffer radial background with an SVG pattern and native-driver translation/opacity.",
+    "Keep impossible numeric accessibility ranges out of Android RangeInfo and supply correct localized relative percentages on iOS."
+  ]
+}

@@ -49,6 +49,16 @@ function axes(raw: NativeStyle['transform']): Axis[] | undefined {
   }
   return output;
 }
+/** Static numeric/angle transforms can also be combined with native progress geometry. */
+export function nativeProgressTransformList(
+  raw: NativeStyle['transform'],
+): Exclude<NativeStyle['transform'], string | undefined> | undefined {
+  if (Array.isArray(raw)) return raw;
+  const parsed = axes(raw);
+  return parsed?.map((axis) => ({ [axis.key]: axis.angle ? `${axis.value}deg` : axis.value })) as
+    | Exclude<NativeStyle['transform'], string | undefined>
+    | undefined;
+}
 const identity = (axis: Axis): Axis => ({ ...axis, value: axis.key.startsWith('scale') ? 1 : 0 });
 function pair(from: Axis[], to: Axis[]): [Axis[], Axis[]] | undefined {
   const left: Axis[] = [],

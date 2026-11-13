@@ -102,6 +102,8 @@ Native [DialogTitle](docs/dialog-title.md) now has dedicated Typography composit
 
 Native [CircularProgress](docs/circular-progress.md) now covers its dedicated range, geometry, track, class, styling and View-ref contracts with native SVG motion and supported transitions. Normal/enlarged/restored iOS and Android checks and original-reference paint comparisons pass. The implementation corrects the pinned iOS peer percentage calculation and validates settled Android arcs before capture; broader CSS interpolation, physical accessibility and release performance remain open.
 
+Native [LinearProgress](docs/linear-progress.md) now covers four variants, custom ranges, source classes/styling, RTL context, buffer dots and retained View refs. Six normal/enlarged/restored iOS/Android profiles and 90 actual paint comparisons pass. Native bindings remain attached through motion changes, and concrete measured SVG rectangles follow resizing. Shared CSS, physical accessibility, wider device matrices and release performance remain open.
+
 ## 3. Verified alpha
 
 Core scope: Box, Stack, Typography, Divider, Paper, Card, Button, IconButton, initial icons, TextField/FormControl parts, Checkbox, Radio, Switch, Dialog, Alert, progress and Snackbar.

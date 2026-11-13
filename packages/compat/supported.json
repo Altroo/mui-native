@@ -35,6 +35,7 @@
       "CircularProgress",
       "CircularProgress/circularProgressClasses",
       "LinearProgress",
+      "LinearProgress/linearProgressClasses",
       "Snackbar",
       "DefaultPropsProvider",
       "utils",
