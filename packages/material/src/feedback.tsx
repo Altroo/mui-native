@@ -56,22 +56,13 @@ export interface ProgressProps {
   sx?: SxProps;
   'aria-label'?: string;
 }
-export function CircularProgress(inProps: Omit<ProgressProps, 'variant' | 'value'>) {
-  const { size = 40, 'aria-label': label = 'Loading' } = useDefaultProps({
-    props: inProps,
-    name: 'MuiCircularProgress',
-  });
-
-  const theme = useTheme();
-  return (
-    <ActivityIndicator
-      size={size}
-      color={theme.palette.primary.main}
-      accessibilityLabel={label}
-      accessibilityRole="progressbar"
-    />
-  );
-}
+export { CircularProgress } from './circularProgress';
+export type {
+  CircularProgressProps,
+  CircularProgressPropsColorOverrides,
+  CircularProgressPropsVariantOverrides,
+} from './circularProgressTypes';
+export * from './circularProgressClasses';
 export function LinearProgress(inProps: ProgressProps) {
   const {
     variant = 'indeterminate',

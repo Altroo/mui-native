@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "description": "Pinned CircularProgress defaults, four styled slots, range geometry, class ownership, root precedence and diagnostics.",
+  "references": [
+    {
+      "name": "@mui/material",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "CircularProgress/index.js": "465512cff50526a0c07236df121603b2e8f446ba225e6537306e1369a48db1c8",
+        "CircularProgress/index.d.ts": "060bc6464f23a8cfe35ff7b91a3ca4ad918b4f760a96e666453ea093b412a336",
+        "CircularProgress/CircularProgress.js": "a831c4cc4c82a5e888315600ae1f25092575f2f68bae9aaced0f202cb6316ea8",
+        "CircularProgress/CircularProgress.d.ts": "9d3fb082103bcd797d209cc98bb4c25e6b46ee84b0ac50a43c66837aa613989f",
+        "CircularProgress/circularProgressClasses.js": "dd2669da72d0848e3fb800579c7c7ca08fae3df86b8b377433b9861a3862f419",
+        "CircularProgress/circularProgressClasses.d.ts": "1b4ea9035e201a32d617f947a5666c6732c77da19d85c36ce12582465e49dfdb",
+        "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+        "utils/createSimplePaletteValueFilter.js": "8c972b662713b932faaa79541132caf57ad7dcdb5278b99e65c1aebe2c3a51a5",
+        "utils/memoTheme.js": "ba795253c43a4fd740281e725b4fe0b77a25bf0c1a26e3f12b5f89a790a8a497",
+        "styles/reducedMotion.js": "3a80a30b233bb4ab252fd858b921992ca072e015cae638b79d71e7f281795394"
+      }
+    },
+    {
+      "name": "@mui/utils",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-8m0LfSgE2pj58znY3kZ+anwRKbnBkcu/7AJPA8L/77wEjN0QnpX4/zRAccyplp1VEUnMsUBADeTRin5Mkf7epA==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0",
+        "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+        "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
+        "isObjectEmpty/isObjectEmpty.js": "27cfe95a1383106e2991facfc6a1ff9b5d4e2b444ecc8c6495ff0744c736a6b3"
+      }
+    },
+    {
+      "name": "@mui/system",
+      "version": "9.5.0",
+      "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+      "integrity": "sha512-OZuAwvoiaaHpvn0a540VH1DUwwmojJubGfNmO2g+nb2ybNDP4/gF7t7aA6AMduELSuJ5yxwlzyFvUO3CfLv1Yg==",
+      "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+      "sourceFiles": {
+        "memoTheme.js": "14bb6dfbed170c74cd2fb5d7c88f321642484b2d2b9858f42c9195747cc68faf",
+        "preprocessStyles.js": "7fe7289ec7d4c8a7061dbbcea35b120efb5efbe8812e36da54840b9f521fd661",
+        "createStyled/createStyled.js": "e45cd1d34443fd614b6fe0c4467756a7c7117e5c1713466c8db75011be7d6ad7"
+      }
+    }
+  ],
+  "fixture": {
+    "path": "tests/fixtures/mui-circular-progress-9.5.0.json",
+    "producer": "scripts/reference/circular-progress.mjs"
+  },
+  "adaptations": [
+    "Render a native View progress root and native SVG circles; native refs and attributes replace browser element contracts.",
+    "Use native Animated rotation, dash growth and supported transitions, retaining source geometry.",
+    "Bind correctly localized relative progress text on iOS to bypass the pinned React Native percentage calculation; authored text takes precedence and Android keeps its numeric range.",
+    "Native font, accessibility, motion and arbitrary CSS behavior require separate verification; reference observations do not certify native compatibility."
+  ]
+}

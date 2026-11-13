@@ -314,7 +314,7 @@ test('feedback components receive their default props and explicit props still w
     </ThemeProvider>,
   );
   expect(screen.getByText('Failure')).toHaveStyle({ color: theme.palette.error.main });
-  expect(screen.getByLabelText('Spinner').props.size).toBe(55);
+  expect(screen.getByLabelText('Spinner')).toHaveStyle({ width: 55, height: 55 });
   expect(screen.getByLabelText('Line').props.accessibilityValue.now).toBe(35);
 });
 

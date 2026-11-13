@@ -577,6 +577,11 @@
       "types": "./dist/CardActions/cardActionsClasses/index.d.ts",
       "react-native": "./src/CardActions/cardActionsClasses/index.ts",
       "default": "./dist/CardActions/cardActionsClasses/index.js"
+    },
+    "./CircularProgress/circularProgressClasses": {
+      "types": "./dist/CircularProgress/circularProgressClasses/index.d.ts",
+      "react-native": "./src/CircularProgress/circularProgressClasses/index.ts",
+      "default": "./dist/CircularProgress/circularProgressClasses/index.js"
     }
   },
   "dependencies": {

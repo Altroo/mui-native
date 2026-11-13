@@ -15,6 +15,7 @@ import type { CardProps } from '../cardTypes';
 import type { CardActionsProps } from '../cardActions';
 import type { DialogActionsProps } from '../dialogActions';
 import type { DialogTitleProps } from '../dialogTitle';
+import type { CircularProgressProps } from '../circularProgressTypes';
 
 type MaterialExports = typeof import('../index');
 // Only existing native exports from the pinned ComponentsPropsList participate.
@@ -100,6 +101,7 @@ interface GenericComponentProps {
   MuiCardActions: CardActionsProps;
   MuiDialogActions: DialogActionsProps;
   MuiDialogTitle: DialogTitleProps;
+  MuiCircularProgress: CircularProgressProps;
 }
 export interface ComponentsPropsList
   extends Omit<ExistingComponentProps, keyof GenericComponentProps>,

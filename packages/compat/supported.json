@@ -33,6 +33,7 @@
       "Dialog",
       "Alert",
       "CircularProgress",
+      "CircularProgress/circularProgressClasses",
       "LinearProgress",
       "Snackbar",
       "DefaultPropsProvider",

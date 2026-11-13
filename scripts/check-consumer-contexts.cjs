@@ -7,7 +7,12 @@ const requireConsumer = createRequire(path.resolve(process.argv[2], 'package.jso
 const load = Module._load;
 // This Node-only identity probe has no Fabric runtime. Native SVG rendering is
 // checked by the maintained renderer and actual catalog scenarios separately.
-const svg = { __esModule: true, default: function Svg() {}, Path: function Path() {} };
+const svg = {
+  __esModule: true,
+  default: function Svg() {},
+  Path: function Path() {},
+  Circle: function Circle() {},
+};
 svg.Svg = svg.default;
 requireConsumer.resolve('react-native-svg/package.json');
 // Only module/export identity is checked here. Native rendering is tested separately.
@@ -16,6 +21,7 @@ Module._load = function (request, parent, main) {
   if (request === 'react-native')
     return {
       Platform: { OS: 'ios' },
+      Animated: { createAnimatedComponent: (component) => component },
       I18nManager: { isRTL: false, doLeftAndRightSwapInRTL: false },
       StyleSheet: {
         flatten: function flatten(value) {
@@ -43,6 +49,7 @@ try {
     ['Paper', 'paperClasses', 'getPaperUtilityClass'],
     ['ButtonBase', 'buttonBaseClasses', 'getButtonBaseUtilityClass'],
     ['Typography', 'typographyClasses', 'getTypographyUtilityClass'],
+    ['CircularProgress', 'circularProgressClasses', 'getCircularProgressUtilityClass'],
   ]) {
     const entry = requireConsumer('@altroo/mui-native/' + name);
     assert.equal(entry.default, material[name]);
@@ -50,6 +57,14 @@ try {
     assert.equal(entry[classes], material[classes]);
     assert.equal(entry[utility], material[utility]);
   }
+  const progressClasses = requireConsumer(
+    '@altroo/mui-native/CircularProgress/circularProgressClasses',
+  );
+  assert.equal(progressClasses.default, material.circularProgressClasses);
+  assert.equal(
+    progressClasses.getCircularProgressUtilityClass,
+    material.getCircularProgressUtilityClass,
+  );
   const details = requireConsumer('@altroo/mui-native/AccordionDetails');
   const detailsClassEntry = requireConsumer(
     '@altroo/mui-native/AccordionDetails/accordionDetailsClasses',
