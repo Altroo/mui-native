@@ -14,6 +14,7 @@ import { AccordionActionsContractExample } from './AccordionActionsContractExamp
 import { CardActionsContractExample } from './CardActionsContractExample';
 import { DialogActionsContractExample } from './DialogActionsContractExample';
 import { DialogTitleContractExample } from './DialogTitleContractExample';
+import { LinearProgressContractExample } from './LinearProgressContractExample';
 import { CircularProgressContractExample } from './CircularProgressContractExample';
 import { MenuIconCascadeExample } from './MenuIconCascadeExample';
 import { TypographyContractExample } from './TypographyContractExample';
@@ -39,6 +40,7 @@ export function RootLayoutExamples() {
     | 'dialog-actions'
     | 'dialog-title'
     | 'circular-progress'
+    | 'linear-progress'
     | 'menu-styles'
     | 'typography'
     | 'divider'
@@ -182,6 +184,16 @@ export function RootLayoutExamples() {
         <Button
           size="small"
           style={{ maxWidth: '100%', minHeight: 44 }}
+          testID="root-layout-linear-progress"
+          accessibilityState={{ selected: example === 'linear-progress' }}
+          variant={example === 'linear-progress' ? 'contained' : 'text'}
+          onClick={() => setExample('linear-progress')}
+        >
+          Linear progress
+        </Button>
+        <Button
+          size="small"
+          style={{ maxWidth: '100%', minHeight: 44 }}
           testID="root-layout-menu-styles"
           accessibilityState={{ selected: example === 'menu-styles' }}
           variant={example === 'menu-styles' ? 'contained' : 'text'}
@@ -302,6 +314,8 @@ export function RootLayoutExamples() {
             <DialogActionsContractExample />
           ) : example === 'dialog-title' ? (
             <DialogTitleContractExample />
+          ) : example === 'linear-progress' ? (
+            <LinearProgressContractExample />
           ) : example === 'circular-progress' ? (
             <CircularProgressContractExample />
           ) : example === 'divider' ? (

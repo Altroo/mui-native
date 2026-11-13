@@ -44,6 +44,7 @@ test('direct Details, Menu and Typography scenes share the contract scroll viewp
     ['dialog-actions', 'dialog-actions-preview-receipt'],
     ['dialog-title', 'dialog-title-preview-receipt'],
     ['circular-progress', 'circular-progress-preview-receipt'],
+    ['linear-progress', 'linear-progress-preview-receipt'],
   ]) {
     fireEvent.press(tree.getByTestId('root-layout-' + route));
     expect(tree.getByTestId('root-layout-scroll')).toBeTruthy();
@@ -83,4 +84,26 @@ test('public progress retains one ref through value, range, track and motion cha
       now: receipt.value,
     });
   }
+});
+
+test('public linear progress retains its native ref and values across theme, range and direction updates', () => {
+  const tree = render(<RootLayoutExamples />);
+  fireEvent.press(tree.getByTestId('root-layout-linear-progress'));
+  fireEvent.press(tree.getByTestId('linear-progress-value'));
+  for (const control of ['range', 'direction', 'theme', 'pause'])
+    fireEvent.press(tree.getByTestId('linear-progress-' + control));
+  const state = JSON.parse(
+    tree.getByTestId('linear-progress-preview-receipt').props.accessibilityLabel,
+  );
+  expect(state).toMatchObject({
+    percent: 75,
+    customRange: true,
+    rtl: true,
+    dark: true,
+    paused: true,
+    min: 20,
+    max: 80,
+    value: 65,
+    valueBuffer: 71,
+  });
 });

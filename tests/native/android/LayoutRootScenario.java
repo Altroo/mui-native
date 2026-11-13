@@ -52,7 +52,8 @@ public final class LayoutRootScenario {
     CARD_ACTIONS_LAYOUT("card-actions-layout", "cardActionsLayout"),
     DIALOG_ACTIONS_LAYOUT("dialog-actions-layout", "dialogActionsLayout"),
     DIALOG_TITLE_LAYOUT("dialog-title-layout", "dialogTitleLayout"),
-    CIRCULAR_PROGRESS("circular-progress", "circularProgress");
+    CIRCULAR_PROGRESS("circular-progress", "circularProgress"),
+    LINEAR_PROGRESS("linear-progress", "linearProgress");
     final String label, key;
     Scenario(String label, String key) { this.label = label; this.key = key; }
   }
@@ -83,6 +84,7 @@ public final class LayoutRootScenario {
   public static void runCardActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.CARD_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   public static void runDialogActionsLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.DIALOG_ACTIONS_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
   public static void runDialogTitleLayout(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.DIALOG_TITLE_LAYOUT, fontProfile == null ? "normal" : fontProfile).run(); }
+  public static void runLinearProgress(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.LINEAR_PROGRESS, fontProfile == null ? "normal" : fontProfile).run(); }
   public static void runCircularProgress(Instrumentation driver, String fontProfile) { new LayoutRootScenario(driver, Scenario.CIRCULAR_PROGRESS, fontProfile == null ? "normal" : fontProfile).run(); }
   private void run() {
     Bundle result = new Bundle(); JSONObject report = new JSONObject(); boolean passed = false;
@@ -100,7 +102,7 @@ public final class LayoutRootScenario {
       require(launch != null, "Catalog must be installed");
       launch.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
       activity = driver.startActivitySync(launch);
-      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT || scenario == Scenario.CARD_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_TITLE_LAYOUT || scenario == Scenario.CIRCULAR_PROGRESS) {
+      if (scenario == Scenario.LAYOUT_ROOTS || scenario == Scenario.ACCORDION_ACTIONS_LAYOUT || scenario == Scenario.CARD_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_ACTIONS_LAYOUT || scenario == Scenario.DIALOG_TITLE_LAYOUT || scenario == Scenario.CIRCULAR_PROGRESS || scenario == Scenario.LINEAR_PROGRESS) {
         require("normal".equals(fontProfile) || "enlarged".equals(fontProfile), "Layout root checks require an explicit normal/enlarged font profile");
         float actualFontScale = activity.getResources().getConfiguration().fontScale;
         report.put("fontProfile", fontProfile);
@@ -125,7 +127,9 @@ public final class LayoutRootScenario {
       } while (!wrappersReady && navigationAttempts < 2);
       report.put("navigationAttempts", navigationAttempts);
       require(wrappersReady, "Catalog Wrappers navigation must acknowledge the native touch");
-      if (scenario == Scenario.CIRCULAR_PROGRESS) {
+      if (scenario == Scenario.LINEAR_PROGRESS) {
+        linearProgress();
+      } else if (scenario == Scenario.CIRCULAR_PROGRESS) {
         circularProgress();
       } else if (scenario == Scenario.DIALOG_TITLE_LAYOUT) {
         dialogTitleLayout();
@@ -949,6 +953,75 @@ public final class LayoutRootScenario {
   }
 
   /** Real Android action frames and touch state at the requested system text scale. */
+  private void linearProgress() throws Exception {
+    revealComplete("root-layout-linear-progress"); tap("root-layout-linear-progress");
+    linearState("quarter",25,false,false,false,false);
+    tap("linear-progress-value"); linearState("three-quarter",75,false,false,false,false);
+    tap("linear-progress-range"); linearState("custom-range",75,true,false,false,false);
+    tap("linear-progress-direction"); linearState("rtl",75,true,true,false,false);
+    tap("linear-progress-theme"); linearState("dark",75,true,true,true,false);
+    tap("linear-progress-pause"); linearState("paused",75,true,true,true,true);
+    for(String control:new String[]{"value","range","direction","theme","pause"})tap("linear-progress-"+control);
+    linearState("restored",25,false,false,false,false);
+  }
+
+  private void linearState(String name,int percent,boolean customRange,boolean rtl,boolean dark,boolean paused) throws Exception {
+    for(String kind:new String[]{"indeterminate","determinate","buffer","query"})revealComplete("linear-sample-"+kind);
+    JSONObject value=settled(()->{
+      JSONObject meta=metadata("linear-progress-preview-receipt");scale(meta);
+      require(meta.getInt("percent")==percent&&meta.getBoolean("paused")==paused&&meta.getBoolean("customRange")==customRange&&meta.getBoolean("rtl")==rtl&&meta.getBoolean("dark")==dark,"Linear progress controls must settle");
+      double min=customRange?20:0,max=customRange?80:100,now=customRange?65:percent,buffer=customRange?71:85;
+      require(meta.getDouble("min")==min&&meta.getDouble("max")==max&&meta.getDouble("value")==now&&meta.getDouble("valueBuffer")==buffer,"Independently expected linear ranges");
+      JSONObject refs=meta.getJSONObject("refs");require(refs.getInt("attached")==1&&refs.getInt("cleaned")==0,"Linear progress must retain its public native ref");
+      View root=retained("linear-progress-determinate");JSONObject frame=bounds(root),measured=meta.getJSONObject("receipts").getJSONObject("progress").getJSONObject("window");
+      require(frame.getDouble("width")>200&&Math.abs(frame.getDouble("height")-4)<=1.5,"Actual native progress track is four points tall");
+      require(Math.abs(frame.getDouble("width")-measured.getDouble("width"))<=1.5&&Math.abs(frame.getDouble("height")-measured.getDouble("height"))<=1.5,"Public ref measures the actual track");
+      require(root instanceof ViewGroup&&((ViewGroup)root).getChildCount()==1,"Determinate progress owns exactly one native bar");
+      View bar=((ViewGroup)root).getChildAt(0);double density=driver.getTargetContext().getResources().getDisplayMetrics().density;
+      double translation=bar.getTranslationX()/density,expected=(percent/100.0-1)*frame.getDouble("width")*(rtl?-1:1);
+      require(Math.abs(translation-expected)<.5,"Actual native bar transition has settled: "+translation+" expected "+expected);
+      AccessibilityNodeInfo info=root.createAccessibilityNodeInfo();AccessibilityNodeInfo.RangeInfo range=info.getRangeInfo();
+      require(range!=null&&Math.abs(range.getMin()-min)<.01&&Math.abs(range.getMax()-max)<.01&&Math.abs(range.getCurrent()-now)<.01,"Native accessibility uses actual custom range");
+      return new JSONObject().put("name",name).put("metadata",meta).put("rootTag",root.getId()).put("frame",frame).put("translation",translation).put("range",new JSONArray().put(range.getMin()).put(range.getMax()).put(range.getCurrent())).put("frames",linearFrames(false)).put("pixelFrames",linearFrames(true)).put("bufferNative",linearBufferNative());
+    },name);
+    states.put(value);stage(name);capture("linear-progress-"+name+".png");
+    if(name.equals("quarter")||name.equals("paused")){
+      JSONArray paint=new JSONArray();value.put("paint",paint);int index=0;
+      for(long interval:new long[]{80,210,430,770}){SystemClock.sleep(interval);JSONObject current=ui(()->new JSONObject().put("frames",linearFrames(false)).put("pixelFrames",linearFrames(true)).put("bufferNative",linearBufferNative()));String picture="linear-progress-"+name+"-paint-"+(index++)+".png";paint.put(current.put("screenshot",picture));capture(picture);}
+    }
+  }
+
+  /** Inspect native drawing inputs independently of the JavaScript receipt. */
+  private JSONObject linearBufferNative() throws Exception {
+    View root=view("linear-progress-buffer");
+    require(root instanceof ViewGroup&&((ViewGroup)root).getChildCount()>0,"Native buffer contains its dashed layer");
+    View layer=((ViewGroup)root).getChildAt(0),svg=linearNativeNamed(layer,"SvgView"),rect=linearNativeNamed(layer,"RectView");
+    require(svg!=null&&rect!=null,"Actual native SVG canvas and rectangle exist");
+    require(Math.abs(svg.getWidth()-layer.getWidth())<=1&&Math.abs(svg.getHeight()-layer.getHeight())<=1,"SVG canvas fills its actual host");
+    require(Math.abs(rect.getWidth()-svg.getWidth())<=1&&Math.abs(rect.getHeight()-svg.getHeight())<=1,"Native buffer rectangle must resize with the canvas");
+    return linearNativeNode(root,0);
+  }
+  private View linearNativeNamed(View root,String name) {
+    if(root.getClass().getSimpleName().equals(name))return root;
+    if(root instanceof ViewGroup){ViewGroup group=(ViewGroup)root;for(int index=0;index<group.getChildCount();index++){View found=linearNativeNamed(group.getChildAt(index),name);if(found!=null)return found;}}
+    return null;
+  }
+  private JSONObject linearNativeNode(View node,int depth) throws Exception {
+    JSONObject data=new JSONObject().put("class",node.getClass().getSimpleName()).put("width",node.getWidth()).put("height",node.getHeight()).put("alpha",node.getAlpha()).put("translationX",node.getTranslationX()).put("visible",node.getVisibility()==View.VISIBLE);
+    if(node instanceof ViewGroup&&depth<4){JSONArray children=new JSONArray();ViewGroup group=(ViewGroup)node;require(group.getChildCount()<=16,"Bound native progress drawing inspection");for(int index=0;index<group.getChildCount();index++)children.put(linearNativeNode(group.getChildAt(index),depth+1));data.put("children",children);}
+    return data;
+  }
+
+  private JSONObject linearFrames(boolean pixels) throws Exception {
+    JSONObject frames=new JSONObject();
+    for(String kind:new String[]{"indeterminate","determinate","buffer","query"}){
+      View sample=view("linear-sample-"+kind);Rect visible=new Rect();
+      require(sample.getGlobalVisibleRect(visible)&&visible.width()==sample.getWidth()&&visible.height()==sample.getHeight(),"Linear paint crops must be fully visible: "+kind);
+      if(pixels){int[] origin=new int[2];sample.getLocationOnScreen(origin);frames.put(kind,new JSONArray().put(origin[0]).put(origin[1]).put(sample.getWidth()).put(sample.getHeight()));}else frames.put(kind,bounds(sample));
+    }
+    return frames;
+  }
+
   private void circularProgress() throws Exception {
     revealComplete("root-layout-circular-progress"); tap("root-layout-circular-progress");
     circularState("quarter", 25, false, true, false);
