@@ -11,6 +11,11 @@ const here = path.dirname(fileURLToPath(import.meta.url)),
   root = process.env.MUI_NATIVE_TEST_ROOT ?? path.resolve(here, '../../..');
 const req = createRequire(root + '/package.json'),
   deps = createRequire(root + '/node_modules/.pnpm/node_modules/package.json');
+/**
+ * Read a TypeScript module as source text for the isolated bootstrap evaluator.
+ * @param {string} name
+ * @returns {string}
+ */
 const source = (name) => fs.readFileSync(path.resolve(here, '../src', name + '.ts'), 'utf8');
 const compile = (name) =>
   req('@babel/core').transformSync(source(name), {

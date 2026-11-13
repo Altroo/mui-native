@@ -4,7 +4,8 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { dirname } from 'node:path';
 import { build } from 'esbuild';
-import { format, resolveConfig } from 'prettier';
+import prettier from 'prettier';
+const { format, resolveConfig } = prettier;
 import { loadReference } from './load.mjs';
 
 const material = await loadReference('@mui/material', [

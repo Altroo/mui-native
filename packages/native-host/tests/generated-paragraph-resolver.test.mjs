@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 const production = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../common/cpp');
 const sources = {
+  // language=TEXT
   'adapter/Framework.h': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Finite scheduling/data double. No RN/Yoga layout or runtime-reference proof.
 #pragma once
@@ -233,6 +234,7 @@ struct LayoutOnly final : ConcreteViewShadowNode<layoutOnlyName>{using ConcreteV
 struct SameNameWrongHandle final : ConcreteViewShadowNode<duplicateName> {using ConcreteViewShadowNode::ConcreteViewShadowNode;};
 } // namespace facebook::react
 `,
+  // language=TEXT
   'adapter/AltrooStructuralViewShadowNode.h': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Bounded typed-props/model only. Does not implement RN conversion/Yoga/layout/state transport.
 #pragma once
@@ -259,15 +261,20 @@ struct AltrooStructuralViewShadowNode final : ConcreteViewShadowNode<ownedName,a
 };
 }
 `,
+  // language=TEXT
   'adapter/react/renderer/core/ShadowNode.h': String.raw`#pragma once
 #include "Framework.h"
 `,
+  // language=TEXT
   'adapter/react/renderer/components/root/RootShadowNode.h': String.raw`#pragma once
 #include "Framework.h"
 `,
+  // language=TEXT
   'adapter/react/renderer/components/view/ViewShadowNode.h': String.raw`#pragma once
 #include "Framework.h"
 `,
+  // C++ is compiled below; this is not a JavaScript code fragment.
+  // language=TEXT
   'ParentControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Exact current production resolver with bounded RN/COW/typed-props doubles.
 // No native RN/Yoga execution, scrolling, RTL or platform state transport proof.
@@ -369,6 +376,7 @@ int main(){try{
 return 0;
 }catch(const std::exception&e){std::cerr<<"source-backed failure: "<<e.what()<<'\n';return 1;}}
 `,
+  // language=TEXT
   'GeneratedParagraphControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Exact production resolver, finite framework doubles only. No native layout/topology proof.
 #include "GeneratedParagraphOrigin.h"
@@ -455,6 +463,7 @@ return 0;
 }catch(const std::exception&e){std::cerr<<"generated paragraph failure: "<<e.what()<<'\n';return 1;}}
 `,
 
+  // language=TEXT
   'SiblingControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Exact production resolver with finite family/props/COW doubles, not RN layout.
 #include "GeneratedParagraphControls.cpp"

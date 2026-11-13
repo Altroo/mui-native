@@ -9,6 +9,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parseArgs, promisify } from 'node:util';
 
 const checkout = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
+/**
+ * @type {(file: string, args: readonly string[], options?: import('node:child_process').ExecFileOptions & {encoding?: BufferEncoding}) => Promise<{stdout: string, stderr: string}>}
+ */
 const execFileAsync = promisify(execFile);
 export const iosTextSizes = Object.freeze([
   'extra-small',
@@ -174,6 +177,11 @@ async function receiptFile(outputDir) {
   };
 }
 
+/**
+ * @param {string} file
+ * @param {readonly string[]} args
+ * @returns {Promise<string>}
+ */
 async function execute(file, args) {
   const { stdout } = await execFileAsync(file, args, {
     encoding: 'utf8',
@@ -183,14 +191,28 @@ async function execute(file, args) {
   return stdout;
 }
 
+/**
+ * @typedef {{code: number | null, signal: NodeJS.Signals | null, error?: string, processGroup?: number, terminationConfirmed: boolean}} OwnedJobResult
+ * @typedef {{completed: Promise<OwnedJobResult>, signal: (signal: NodeJS.Signals) => void}} OwnedJob
+ */
+
 // A private POSIX session owns this group. Descendants must drain before the
 // profile can be restored, even when the direct child has already closed.
+/**
+ * @param {readonly string[]} argv
+ * @param {object} [dependencies]
+ * @param {(file: string, args: readonly string[], options: {stdio: 'inherit', detached: true}) => import('node:events').EventEmitter & {pid?: number}} [dependencies.spawnChild]
+ * @param {(pid: number, signal: NodeJS.Signals | number) => unknown} [dependencies.signalProcess]
+ * @param {() => unknown} [dependencies.wait]
+ * @returns {OwnedJob}
+ */
 export function startOwnedJob(
   argv,
   { spawnChild = spawn, signalProcess = process.kill.bind(process), wait = () => delay(100) } = {},
 ) {
   const child = spawnChild(argv[0], argv.slice(1), { stdio: 'inherit', detached: true });
   let failure;
+  /** @type {Promise<{code: number | null, signal: NodeJS.Signals | null, error?: string}>} */
   const closed = new Promise((done) => {
     child.once('error', (error) => {
       failure = error;
@@ -198,6 +220,7 @@ export function startOwnedJob(
     child.once('close', (code, signal) => done({ code, signal }));
   });
   const group = Number.isInteger(child.pid) && child.pid > 0 ? child.pid : undefined;
+  /** @type {Promise<OwnedJobResult>} */
   const completed = closed.then(async (result) => {
     if (failure) result.error = failure.message;
     if (!group) return { ...result, terminationConfirmed: true };
@@ -272,7 +295,16 @@ function profileAdapter({ platform, device }, exec) {
   };
 }
 
-/** Run a child under a verified OS profile. No font/line-height author units are changed. */
+/**
+ * Run a child under a verified OS profile. No font/line-height author units are changed.
+ * @param input Profile options validated before any device mutation.
+ * @param {object} [dependencies]
+ * @param {(file: string, args: readonly string[]) => Promise<string>} [dependencies.exec]
+ * @param {(argv: readonly string[]) => OwnedJob} [dependencies.job]
+ * @param {Pick<import('node:events').EventEmitter, 'on' | 'removeListener'>} [dependencies.signals]
+ * @param {() => string} [dependencies.now]
+ * @param {string} [dependencies.leaseDirectory]
+ */
 export async function runTextProfile(
   input,
   {

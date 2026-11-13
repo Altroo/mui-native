@@ -2,7 +2,8 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import * as prettier from 'prettier';
+import prettier from 'prettier';
+const { format: prettierFormat, resolveConfig: prettierResolveConfig } = prettier;
 import { loadReference } from './load.mjs';
 const material = await loadReference('@mui/material', [
   ...['Box', 'boxClasses', 'index'].flatMap((name) =>
@@ -173,8 +174,8 @@ const data = {
   styled: { root: observe(styledHtml), inner: observe(styledHtml, 'inner') },
 };
 const fixture = 'tests/fixtures/mui-box-9.5.0.json';
-const format = { ...(await prettier.resolveConfig(fixture)), parser: 'json' };
-const bytes = await prettier.format(JSON.stringify(data), format);
+const format = { ...(await prettierResolveConfig(fixture)), parser: 'json' };
+const bytes = await prettierFormat(JSON.stringify(data), format);
 const provenance = {
   schemaVersion: 1,
   references: data.references,
@@ -243,8 +244,8 @@ for (const [localFile, reference, files] of localReferences)
   });
 for (const [name, value] of [
   [fixture, bytes],
-  ['upstream/box.json', await prettier.format(JSON.stringify(provenance), format)],
-  ['upstream/reuse.json', await prettier.format(JSON.stringify(reuse), format)],
+  ['upstream/box.json', await prettierFormat(JSON.stringify(provenance), format)],
+  ['upstream/reuse.json', await prettierFormat(JSON.stringify(reuse), format)],
 ]) {
   if (process.argv.includes('--check')) assert.equal(await readFile(name, 'utf8'), value);
   else await writeFile(name, value);

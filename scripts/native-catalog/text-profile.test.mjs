@@ -19,12 +19,21 @@ function deferred() {
   });
   return { promise, resolve };
 }
+/**
+ * @param {import('node:test').TestContext} t
+ * @param {object} [options]
+ * @param {'android' | 'ios'} [options.platform]
+ * @param {string | null} [options.initial]
+ * @param {string} [options.size]
+ */
 async function fixture(t, { platform = 'android', initial = '1.0', size = '1.5' } = {}) {
   const outputDir = await mkdtemp(join(tmpdir(), 'mui-text-profile-'));
   t.after(() => rm(outputDir, { recursive: true, force: true }));
   const signals = new EventEmitter(),
-    started = deferred(),
-    finished = deferred();
+    started = deferred();
+  /** @typedef {{code: number | null, signal: NodeJS.Signals | null}} ChildExit */
+  /** @type {{promise: Promise<ChildExit>, resolve: (result: ChildExit) => void}} */
+  const finished = deferred();
   const events = [],
     reads = [],
     writes = [],
@@ -58,6 +67,10 @@ async function fixture(t, { platform = 'android', initial = '1.0', size = '1.5' 
       value = next;
       return '';
     },
+    /**
+     * @param {readonly string[]} argv
+     * @returns {import('./text-profile.mjs').OwnedJob}
+     */
     job(argv) {
       assert.equal(value, size, 'The child must start under the requested, verified profile');
       assert.deepEqual(argv, input.command);
@@ -83,6 +96,7 @@ async function fixture(t, { platform = 'android', initial = '1.0', size = '1.5' 
     writes,
     forwarded,
     started,
+    /** @param {ChildExit} [result] */
     finish(result = { code: 0, signal: null }) {
       finished.resolve(result);
     },
@@ -267,7 +281,9 @@ test('a failing child preserves its exit code and restores the original profile'
   assert.equal(f.value, '1.0');
 });
 
-for (const first of ['SIGINT', 'SIGTERM'])
+/** @type {NodeJS.Signals[]} */
+const terminatingSignals = ['SIGINT', 'SIGTERM'];
+for (const first of terminatingSignals)
   test(`${first} and repeated signals await child cleanup and cannot interrupt restoration`, async (t) => {
     const f = await fixture(t);
     const restoring = deferred(),

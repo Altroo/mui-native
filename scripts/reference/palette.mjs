@@ -2,7 +2,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
-import { format } from 'prettier';
+import prettier from 'prettier';
+const { format } = prettier;
 import { loadReference } from './load.mjs';
 import observeColorContract from './color-contract-cases.cjs';
 

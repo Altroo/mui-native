@@ -67,6 +67,11 @@ export async function catalogIosSourceManifest(workspace, iosProject, options = 
   );
   workspace = await realpath(workspace);
   iosProject = await realpath(iosProject);
+  /**
+   * Read Git metadata as UTF-8 text, never as native binary input.
+   * @param {readonly string[]} args
+   * @returns {string}
+   */
   const git = (args) =>
     execFileSync('git', args, {
       cwd: workspace,
@@ -128,6 +133,12 @@ export async function catalogIosSourceManifest(workspace, iosProject, options = 
     ensure(inside(canonical), 'Build input escapes its resolved anchor: ' + path);
     return canonical;
   }
+  /**
+   * Read exact build-input bytes after resolving the validated anchor.
+   * @param {string} base
+   * @param {string} path
+   * @returns {Promise<import('node:buffer').Buffer>}
+   */
   const readInput = async (base, path) => readFile(await inputPath(base, path));
   async function add(base, path, group) {
     ensure(allowed(path), 'Excluded build input: ' + path);
@@ -138,6 +149,13 @@ export async function catalogIosSourceManifest(workspace, iosProject, options = 
       sha256: sha(await readInput(base, path)),
     });
   }
+  /**
+   * @param {string} base
+   * @param {string} directory
+   * @param {string} group
+   * @param {(path: string) => boolean} [filter]
+   * @returns {Promise<number>}
+   */
   async function walk(base, directory, group, filter = () => true) {
     let count = 0;
     for (const entry of await readdir(await inputPath(base, directory, true), {

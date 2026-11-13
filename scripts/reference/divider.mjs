@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import * as prettier from 'prettier';
+import prettier from 'prettier';
+const { format: prettierFormat } = prettier;
 import { loadReference } from './load.mjs';
 const material = await loadReference('@mui/material', [
   'package.json',
@@ -282,7 +283,7 @@ const data = {
 const target = fileURLToPath(
   new URL('../../tests/fixtures/mui-divider-9.5.0.json', import.meta.url),
 );
-const bytes = await prettier.format(JSON.stringify(data), { parser: 'json' });
+const bytes = await prettierFormat(JSON.stringify(data), { parser: 'json' });
 const provenance = {
   schemaVersion: 1,
   description:
@@ -323,7 +324,7 @@ for (const [file, value] of [
   [target, bytes],
   [
     fileURLToPath(new URL('../../upstream/divider.json', import.meta.url)),
-    await prettier.format(JSON.stringify(provenance), { parser: 'json' }),
+    await prettierFormat(JSON.stringify(provenance), { parser: 'json' }),
   ],
 ]) {
   if (process.argv.includes('--check'))
