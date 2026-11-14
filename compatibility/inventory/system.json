@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "fd08716160bdfad994df5937e6cdb361a2f26f698774cffd6ec7658987bcfd03",
+  "nativeSourceSha256": "79993ca251cf79c50ea847581b8025a8ba93c4521e95550057a2a9e0c3efc171",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -18428,7 +18428,7 @@
     {
       "name": "NativeRootStyleInput",
       "file": "src/nativeRootHandoff.tsx",
-      "line": 49,
+      "line": 47,
       "kind": "type",
       "members": [],
       "references": [
@@ -18444,7 +18444,7 @@
     {
       "name": "NativeRootOutput",
       "file": "src/nativeRootHandoff.tsx",
-      "line": 55,
+      "line": 53,
       "kind": "type",
       "members": [],
       "references": [
@@ -18464,7 +18464,7 @@
     {
       "name": "NativeRootHandoff",
       "file": "src/nativeRootHandoff.tsx",
-      "line": 64,
+      "line": 62,
       "kind": "type",
       "members": [],
       "references": [
@@ -18480,7 +18480,7 @@
     {
       "name": "NativeRootHandoffSnapshot",
       "file": "src/nativeRootHandoff.tsx",
-      "line": 70,
+      "line": 68,
       "kind": "type",
       "members": [],
       "references": [
@@ -18495,7 +18495,7 @@
     {
       "name": "NativeRootHandoffSource",
       "file": "src/nativeRootHandoff.tsx",
-      "line": 75,
+      "line": 73,
       "kind": "type",
       "members": [],
       "references": [

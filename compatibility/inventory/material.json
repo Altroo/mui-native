@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "26a0183e90fa2406a7a76f51b2cb0fb49280fd357e69ee91f7764c882b22a3c1",
+  "nativeSourceSha256": "6ee9150598f7796093afffa504aba32082119ea535c401035cd6f9c22cc7e2c7",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -183275,7 +183275,7 @@
     {
       "name": "Input",
       "file": "src/accordionStructuralRoot.tsx",
-      "line": 53,
+      "line": 54,
       "kind": "type",
       "members": [],
       "references": [

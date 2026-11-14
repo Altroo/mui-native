@@ -10775,7 +10775,7 @@
       "packages/material/src/AccordionDetails/index.ts": "5b3c386a23eaae03678ac3ee4d2bf0b2e6b0cf8e8e8a6eca3f87a61323a3c141",
       "packages/material/src/accordionMotion.ts": "da4f937158f21e4c8446a99251eba69f7598295a859656b68fecfa34c6576acf",
       "packages/material/src/accordionRootMotion.tsx": "d56fbdb9dfc4bc488efec51a5fc97e9a3bc418b1a81204fdbcdf9f5c9801f3dd",
-      "packages/material/src/accordionStructuralRoot.tsx": "390d5f755880105f5412bcf8bbe7b06555354de2d7aaba3583f83ee7a545b44f",
+      "packages/material/src/accordionStructuralRoot.tsx": "2a9f44ec6a47abed524e5b3870d971cf99a3f91ffec5a2a530e3c7da2c7494ab",
       "packages/material/src/accordionStructure.ts": "66f0d863164cb14b0f2f375431e177e1f1aa29a83392fd3afae5f261cdd43263",
       "packages/material/src/AccordionSummary/accordionSummaryClasses/index.ts": "a1ee4f1833e324b76e3a0e29b18cb8a24bb891db3a592c2910155b7d250bbc82",
       "packages/material/src/AccordionSummary/index.ts": "a1e78905c2777f68e7c03205e7280086c1a93cba0567c7977b105a8d954840a9",
@@ -10929,7 +10929,7 @@
       "packages/material/src/Modal/index.ts": "d0b344d62220dd2d50229d63d9f2d58dcee64bceecf019b0f4febbd70b3f6194",
       "packages/material/src/motionPreference.ts": "21fad624bd65d920b1602958be2b8ff03dfe07320de825c3be858e38a96990a4",
       "packages/material/src/nativeAccordionCss.ts": "416eba23fc871645e508cf8ba52a760ff04ac8cf9d396bce6bca6c141ed4cb34",
-      "packages/material/src/nativeBox.tsx": "dd33bf6826d90d1cb1714470a9d13388c22590427d539bafb6f7626b98f4a91a",
+      "packages/material/src/nativeBox.tsx": "556a07c28962c8a2e047844bb1fc9abb3613b49f952903e95feb05a607503517",
       "packages/material/src/nativeButtonActivationKeys.ts": "2ea5f2f0a23ce9a13bae446fbb8f96497e3981b64d4a5da3ea0d98ac9a912323",
       "packages/material/src/nativeButtonCss.ts": "71bc0a1c8fe191c7be4862d939b7969c9069f666b0a090e8e085358b64c34288",
       "packages/material/src/nativeButtonEvents.ts": "ff6f022a27aa67809bf13b16b0e4898d2febc2d72997563f5b135982d17e7eca",
@@ -10965,7 +10965,7 @@
       "packages/material/src/nativeTransitionTiming.ts": "171eda40017f2a630ff1e80f0f43e1247bb5bed2d38f4fb03c129b433ab3936d",
       "packages/material/src/notchedOutlineGeometry.ts": "5444da512fd4193836ac51a75c7afd37235b3b25c1defb4fc533f01aa0e9579c",
       "packages/material/src/OutlinedInput/index.ts": "def45dc15be298ea7eb34c3573df021ad1b653d5d8e1933d958beb3edae46375",
-      "packages/material/src/paper.tsx": "62530f634a47eb5505b302c5d03fc2f85518179625e7ba2cabe52d2656c39744",
+      "packages/material/src/paper.tsx": "94f942ea21cd05b1c7c89b2a7700c14b133c680d44797a245f38df3fbab95501",
       "packages/material/src/Paper/index.ts": "ae99719013b91bd66d37804347cb68e1bfeac6248afd83879d69fad440958c68",
       "packages/material/src/paperClasses.ts": "eed07bcac7513de3cfd10590c8de066b33316519a8511223e46808633d6ba00c",
       "packages/material/src/paperTypes.ts": "e3ea130643808ba8a003ef9d35cecb34437b45190f064d4061b49338c5eefa18",
@@ -11098,7 +11098,7 @@
       "packages/system/src/nativeCssProgram.ts": "53a7a3a64deeff0a5ea080d989a8b4e443c9dda81c84b4b0e972a41a9c38706a",
       "packages/system/src/nativeMemoInterop.ts": "9f180e098495dc8cff9a40219f09ea12e82e392f3fc6da4f1c89e7cff5a7e0ee",
       "packages/system/src/nativePreparedComponent.ts": "1c007152df61c1e70bcbff0ae2ee9ff494337594418e307d52d45c4e209c93ba",
-      "packages/system/src/nativeRootHandoff.tsx": "071d9fce9b7dcf9509cb1beba6ebfe18f397a8fbc9b7e9b9c1e55b8c0f72fbb4",
+      "packages/system/src/nativeRootHandoff.tsx": "1208d8f4eb7b3fd8ee988d7e28024337d3ea7877de0819d3257c4fe52b2d566b",
       "packages/system/src/nativeRootStyleSnapshots.ts": "323fb9b16c63082fb09c01b4de3cbe8b7271ba6bc93afc80139d29b3be0f3231",
       "packages/system/src/nativeStructuralFacts.tsx": "eefb4257dc931d8712457b6ca3392ee502404bd1d0b3d758270e53c4616d882d",
       "packages/system/src/nativeStyleCache.ts": "ccf0d1119765432d4b6dfc85e5e38883767150109b0f6de990c7e3fb138365da",
@@ -11219,7 +11219,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "26a0183e90fa2406a7a76f51b2cb0fb49280fd357e69ee91f7764c882b22a3c1",
+      "nativeSourceSha256": "6ee9150598f7796093afffa504aba32082119ea535c401035cd6f9c22cc7e2c7",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11231,7 +11231,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "a5c30a93e1f86ece80507405b1ea1741d0af187d1e4a8a2b837133a0a0058bfe"
+      "sha256": "b28f443d284d36ef95d7f6e3bf4e848719601902336d67cc3d6c56f41e0aa880"
     },
     {
       "package": "@mui/system",
@@ -11241,7 +11241,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "fd08716160bdfad994df5937e6cdb361a2f26f698774cffd6ec7658987bcfd03",
+      "nativeSourceSha256": "79993ca251cf79c50ea847581b8025a8ba93c4521e95550057a2a9e0c3efc171",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -11253,7 +11253,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "3f497b7cdec790aa1a1c3744fd1033027fc9b3bef6aa5c131f03e8fc96389816"
+      "sha256": "18ddb39fee7a682b6416a0f3d354e56f40d60f0968b8979b95b93d423787f9b8"
     },
     {
       "package": "@mui/icons-material",
