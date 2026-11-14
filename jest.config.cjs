@@ -6,6 +6,8 @@ module.exports = {
   // Unpacked consumer archives must not become duplicate Haste packages.
   modulePathIgnorePatterns: ['<rootDir>/.cache/'],
   moduleNameMapper: {
+    '^@altroo/mui-native-host/internal/css-peer$':
+      '<rootDir>/packages/native-host/src/internal/css-peer',
     '^@altroo/mui-native-host/internal/structural-root$':
       '<rootDir>/packages/native-host/src/internal/structural-root',
     // Internal first-party imports must share source context and style carriers.

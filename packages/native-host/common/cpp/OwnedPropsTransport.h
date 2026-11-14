@@ -146,13 +146,14 @@ inline MountPayloads mountPayloads(const GeneratedShared &baseline, const Pair &
 // BEGIN OWNERSHIP
 // These leaves have the FINAL generated type and cannot be OwnedProps wrappers.
 // The graph is wrapper -> data -> generated leaves, never data -> wrapper.
-enum class Programme { Numeric, ExplicitPair };
+enum class Programme { Numeric, ExplicitPair, PeerOnly };
 struct PreparedData final {
   const GeneratedShared unselected;
   const Pair candidates;
   const Programme programme;
   const bool parentSelector;
   const std::string owner;
+  const std::shared_ptr<const altroo::owned_channel::PeerStyleIdentity> peer;
 #ifdef RN_SERIALIZABLE_STATE
   const PhysicalPayloads physical;
 #if defined(__ANDROID__)
@@ -165,11 +166,23 @@ struct PreparedData final {
     return physicalPayloads(*current, pair, previous ? &previous->physical : nullptr);
   }
 #endif
+  static std::shared_ptr<const altroo::owned_channel::PeerStyleIdentity> sharedPeer(
+      const GeneratedShared &current, const PreparedData *previous) {
+    if (!current || !current->ownedProgramme.isObject() || !current->ownedProgramme.count("peer")) return nullptr;
+    const auto &value = current->ownedProgramme.at("peer");
+    if (previous && previous->peer && previous->unselected->ownedProgramme.isObject() &&
+        previous->unselected->ownedProgramme.count("peer") &&
+        previous->unselected->ownedProgramme.at("peer") == value)
+      return previous->peer;
+    auto snapshot = altroo::owned_channel::peerStyleIdentity(current->ownedProgramme);
+    return snapshot ? std::make_shared<const altroo::owned_channel::PeerStyleIdentity>(std::move(*snapshot)) : nullptr;
+  }
   PreparedData(GeneratedShared current, Pair pair, Programme kind,
                [[maybe_unused]] const PreparedData *previous = nullptr,
                bool parent = false, std::string identity = {})
       : unselected(std::move(current)), candidates(std::move(pair)), programme(kind),
-        parentSelector(parent), owner(std::move(identity))
+        parentSelector(parent), owner(std::move(identity)),
+        peer(sharedPeer(unselected, previous))
 #ifdef RN_SERIALIZABLE_STATE
       , physical(checkedPhysical(unselected, candidates, previous))
 #if defined(__ANDROID__)
@@ -214,7 +227,8 @@ class OwnedProps final : public ViewProps {
       : ViewProps(chosen(data, facts)),
         normalPaddingBottom(data->unselected->normalPaddingBottom),
         lastPaddingBottom(data->unselected->lastPaddingBottom),
-        prepared(std::move(data)), selectedLast(facts & 1), selectedCase(facts) {
+        prepared(std::move(data)),
+        selectedLast(facts != prepared->candidates.ordinaryIndex() && (facts & 1)), selectedCase(facts) {
 #ifdef RN_SERIALIZABLE_STATE
     // Physical payload is complete and already has explicit removals. This
     // copy is native data only; candidate switching never parses/merges JS.
@@ -358,6 +372,12 @@ class OwnedDescriptor final : public ConcreteComponentDescriptor<OwnedShadowNode
     auto baseline = convertCurrent(context, current, std::move(raw));
     if (altroo::owned_channel::fullProgramme(baseline->ownedProgramme)) {
       const auto schema = baseline->ownedProgramme.at("schema").asDouble();
+      if (schema == 4.0) {
+        // Inert metadata carriers reuse one ordinary generated leaf. They do
+        // not parse counterfactual styles or select a structural endpoint.
+        Pair peer;peer.normal = peer.last = baseline;peer.cases = {baseline};
+        return finish(std::move(baseline), std::move(peer), Programme::PeerOnly, current);
+      }
       if (schema == 2.0 || schema == 3.0) {
         auto cases = altroo::owned_adapter_proof::prepareStructural(
             converter_, context, baseline, baseline->ownedProgramme.at("cases"));

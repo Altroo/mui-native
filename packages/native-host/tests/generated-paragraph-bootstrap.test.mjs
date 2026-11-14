@@ -467,6 +467,7 @@ for (const shape of ['base', 'raw', 'origin', 'both']) {
         'requireGeneratedTextOrigin',
         'requireProfile',
         'supportsParentStructuralCases',
+        'supportsPeerStyleIdentity',
         'supportsStructuralCases',
       ]);
       if (shape === 'origin' || shape === 'both') {
@@ -730,7 +731,12 @@ test('global wrapper no longer exposes retired raw readiness', () => {
 });
 
 test('structural case capability is additive and remains native-free after initialization', () => {
-  for (const capability of [undefined, 'unknown', 'first-last-of-type-v1']) {
+  for (const capability of [
+    undefined,
+    'unknown',
+    'first-last-of-type-v1',
+    'first-last-of-type-v2',
+  ]) {
     const data = metadata();
     if (capability !== undefined) data.structuralCases = capability;
     let calls = 0;
@@ -744,8 +750,14 @@ test('structural case capability is additive and remains native-free after initi
       expected,
     );
     boot.requireProfile();
-    assert.equal(boot.supportsStructuralCases(), capability === 'first-last-of-type-v1');
-    assert.equal(boot.supportsStructuralCases(), capability === 'first-last-of-type-v1');
+    assert.equal(
+      boot.supportsStructuralCases(),
+      ['first-last-of-type-v1', 'first-last-of-type-v2'].includes(capability),
+    );
+    assert.equal(
+      boot.supportsStructuralCases(),
+      ['first-last-of-type-v1', 'first-last-of-type-v2'].includes(capability),
+    );
     assert.equal(calls, 1);
   }
   assert.equal(fresh()(() => null, expected).supportsStructuralCases(), false);
@@ -764,4 +776,35 @@ test('parent projection capability is additive and requires supported structural
         base === 'first-last-of-type-v1' && parent === 'parent-structural-facts-v1',
       );
     }
+});
+
+test('CSS peer support is immutable, distinct from v1 and requires parent projection', () => {
+  for (const structuralCases of [
+    undefined,
+    'unknown',
+    'first-last-of-type-v1',
+    'first-last-of-type-v2',
+  ])
+    for (const parentStructuralCases of [undefined, 'unknown', 'parent-structural-facts-v1']) {
+      const data = { ...metadata(), structuralCases, parentStructuralCases };
+      let calls = 0;
+      const boot = fresh()(
+        () => ({
+          getStructuralStyleMetadata() {
+            calls++;
+            return JSON.stringify(data);
+          },
+        }),
+        expected,
+      );
+      const wanted =
+        structuralCases === 'first-last-of-type-v2' &&
+        parentStructuralCases === 'parent-structural-facts-v1';
+      assert.equal(boot.supportsPeerStyleIdentity(), wanted);
+      data.structuralCases = 'unknown';
+      assert.equal(boot.supportsPeerStyleIdentity(), wanted);
+      assert.equal(boot.requireProfile().rn, '0.88.1');
+      assert.equal(calls, 1);
+    }
+  assert.equal(fresh()(() => null, expected).supportsPeerStyleIdentity(), false);
 });

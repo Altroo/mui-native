@@ -7,10 +7,10 @@ Native theme and styling foundations for MUI Native. Experimental pre-alpha.
 ## Install
 
 ```sh
-npm install @altroo/mui-native-system@latest
+npm install @altroo/mui-native-system@latest @altroo/mui-native-host@latest
 ```
 
-The matched development baseline is React 19.3 / React Native 0.88.1 (Expo SDK 58). Review the [installation guide](https://github.com/Altroo/mui-native/blob/main/docs/installation.md) before using another runtime. Keep `@altroo/mui-native-host` as a direct application dependency when using Material or X components. Rebuild the native application after installing/updating native code; Expo Go does not contain these hosts.
+The matched development baseline is React 19.3 / React Native 0.88.1 (Expo SDK 58). Review the [installation guide](https://github.com/Altroo/mui-native/blob/main/docs/installation.md) before using another runtime. Keep `@altroo/mui-native-host` as a direct application dependency for native autolinking, including standalone System applications. System rendering uses the matching host backend when available; its peer requirement follows the host's exact React Native 0.88.1 baseline. Rebuild the native application after installing/updating native code; Expo Go does not contain these hosts.
 
 ## Android system fonts in source development
 

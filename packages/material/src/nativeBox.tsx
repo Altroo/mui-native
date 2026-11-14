@@ -221,10 +221,12 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
                     root,
                     resolvedStyle,
                     (style, presentation) =>
-                      structuralCases ? (
+                      Root === View ? (
                         <AccordionStructuralView
                           {...native}
                           cases={structuralCases}
+                          prepared={prepared}
+                          classNames={classes}
                           nativeRef={nativeRef}
                           presentation={presentation}
                           style={style}

@@ -15,5 +15,15 @@ export interface OwnedStructuralProgramme {
   readonly owner?: string;
   readonly profile: OwnedStyleProfile;
   readonly cases: readonly Record<string, unknown>[];
+  readonly peer?: CSSPeerIdentity | null;
 }
-export type OwnedProgramme = OwnedStylePair | OwnedStructuralProgramme;
+export type CSSPeerIdentity = Readonly<{
+  expanded: boolean;
+  classes: readonly Readonly<{ cacheKey: string; css: string; eligible: boolean }>[];
+}>;
+export interface OwnedPeerProgramme {
+  readonly schema: 4;
+  readonly profile: OwnedStyleProfile;
+  readonly peer: CSSPeerIdentity | null;
+}
+export type OwnedProgramme = OwnedStylePair | OwnedStructuralProgramme | OwnedPeerProgramme;

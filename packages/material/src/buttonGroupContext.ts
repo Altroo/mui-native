@@ -4,6 +4,7 @@
 import React from 'react';
 import type { ButtonGroupOwnProps } from './buttonGroupTypes';
 import type { ViewInstance } from 'react-native';
+import type { NativeStyleClassIdentity } from '@altroo/mui-native-system/internal/prepared-style';
 import type { StyleContext, NativeStyleTarget } from '@altroo/mui-native-system';
 export interface ButtonGroupContextValue
   extends Pick<
@@ -24,13 +25,7 @@ if (process.env.NODE_ENV !== 'production') {
   ButtonGroupContext.displayName = 'ButtonGroupContext';
   ButtonGroupButtonContext.displayName = 'ButtonGroupButtonContext';
 }
-export type NativeStyleClassIdentity = Readonly<{
-  cacheKey: string;
-  css: string;
-  sourceOwners: readonly string[];
-  /** Immutable source occurrences; excluded when comparing emitted class identity. */
-  selectorOwners?: readonly string[];
-}>;
+export type { NativeStyleClassIdentity } from '@altroo/mui-native-system/internal/prepared-style';
 export interface NativeButtonGroupRule {
   /** Actual participating native root, used only for physical styling ownership. */
   readonly element?: ViewInstance | null;

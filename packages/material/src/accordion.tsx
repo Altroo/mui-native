@@ -866,6 +866,8 @@ const AccordionImpl: React.ForwardRefExoticComponent<
               <AccordionStructuralView
                 {...rootNativeProps}
                 cases={structuralCases}
+                prepared={prepared}
+                classNames={rootClass.split(/\s+/).filter(Boolean)}
                 nativeRef={nativeRef}
                 presentation={presentation}
                 style={viewStyle}

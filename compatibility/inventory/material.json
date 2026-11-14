@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "1126f61f95b0d9666dce1a4aca41867ca4f7857e5520d6600c8deeed204aa042",
+  "nativeSourceSha256": "3c77e47606602920fe1814b185d34475f1f91f475037e0d80ebb6d79c10d01ed",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -37528,7 +37528,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "systemDefaultTheme",
           "kind": "value",
-          "line": 66
+          "line": 68
         }
       ]
     },
@@ -37726,7 +37726,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useComponentRootStyle",
           "kind": "value",
-          "line": 164
+          "line": 166
         }
       ]
     },
@@ -37759,7 +37759,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useNativeRootProps",
           "kind": "value",
-          "line": 185
+          "line": 187
         }
       ]
     },
@@ -37836,7 +37836,7 @@
           "module": "@altroo/mui-native-system:src/provider.tsx",
           "name": "useThemeWithoutDefault",
           "kind": "value",
-          "line": 100
+          "line": 102
         }
       ]
     }
@@ -182784,7 +182784,7 @@
     {
       "name": "NativeAccordionDetailsComponent",
       "file": "src/accordion.tsx",
-      "line": 1348,
+      "line": 1350,
       "kind": "type",
       "members": [
         {
@@ -182794,7 +182794,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;",
-          "line": 1355,
+          "line": 1357,
           "kind": "signature",
           "type": "(props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;"
         }
@@ -182814,7 +182814,7 @@
     {
       "name": "NativeAccordionActionsComponent",
       "file": "src/accordion.tsx",
-      "line": 1410,
+      "line": 1412,
       "kind": "type",
       "members": [
         {
@@ -182824,7 +182824,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: AccordionActionsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;",
-          "line": 1414,
+          "line": 1416,
           "kind": "signature",
           "type": "(props: AccordionActionsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;"
         }
@@ -183288,7 +183288,7 @@
     {
       "name": "Input",
       "file": "src/accordionStructuralRoot.tsx",
-      "line": 54,
+      "line": 58,
       "kind": "type",
       "members": [],
       "references": [
@@ -187805,7 +187805,7 @@
     {
       "name": "ButtonGroupContextValue",
       "file": "src/buttonGroupContext.ts",
-      "line": 8,
+      "line": 9,
       "kind": "type",
       "members": [],
       "references": [
@@ -187816,21 +187816,9 @@
       "package": "@altroo/mui-native"
     },
     {
-      "name": "NativeStyleClassIdentity",
-      "file": "src/buttonGroupContext.ts",
-      "line": 27,
-      "kind": "type",
-      "members": [],
-      "references": [
-        "Readonly"
-      ],
-      "inheritanceResolved": false,
-      "package": "@altroo/mui-native"
-    },
-    {
       "name": "NativeButtonGroupRule",
       "file": "src/buttonGroupContext.ts",
-      "line": 34,
+      "line": 29,
       "kind": "type",
       "members": [
         {
@@ -187840,7 +187828,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly element?: ViewInstance | null;",
-          "line": 36,
+          "line": 31,
           "kind": "property",
           "type": "ViewInstance | null"
         },
@@ -187851,7 +187839,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly sourceClasses?: readonly NativeStyleClassIdentity[];",
-          "line": 38,
+          "line": 33,
           "kind": "property",
           "type": "readonly NativeStyleClassIdentity[]"
         },
@@ -187862,7 +187850,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly scopeDepth?: number;",
-          "line": 39,
+          "line": 34,
           "kind": "property",
           "type": "number"
         },
@@ -187873,7 +187861,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "readonly selector?: NativeStyleTarget | undefined;",
-          "line": 40,
+          "line": 35,
           "kind": "property",
           "type": "NativeStyleTarget | undefined"
         },
@@ -187884,7 +187872,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "cascade: (\n    classes: readonly string[],\n    path?: readonly NativeStyleTarget[],\n  ) => NonNullable<StyleContext['ancestors']>[number];",
-          "line": 41,
+          "line": 36,
           "kind": "property",
           "type": "(\n    classes: readonly string[],\n    path?: readonly NativeStyleTarget[],\n  ) => NonNullable<StyleContext['ancestors']>[number]"
         }
@@ -207254,7 +207242,7 @@
     {
       "name": "ScopeProps",
       "file": "src/nativeStyleScope.tsx",
-      "line": 136,
+      "line": 104,
       "kind": "type",
       "members": [
         {
@@ -207264,7 +207252,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root: React.RefObject<ViewInstance | null>;",
-          "line": 137,
+          "line": 105,
           "kind": "property",
           "type": "React.RefObject<ViewInstance | null>"
         },
@@ -207275,7 +207263,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme: Theme;",
-          "line": 138,
+          "line": 106,
           "kind": "property",
           "type": "Theme"
         },
@@ -207286,7 +207274,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes: readonly string[];",
-          "line": 139,
+          "line": 107,
           "kind": "property",
           "type": "readonly string[]"
         },
@@ -207297,7 +207285,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "prepared: NativePreparedStyle;",
-          "line": 140,
+          "line": 108,
           "kind": "property",
           "type": "NativePreparedStyle"
         },
@@ -207308,7 +207296,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: React.ReactNode;",
-          "line": 141,
+          "line": 109,
           "kind": "property",
           "type": "React.ReactNode"
         }

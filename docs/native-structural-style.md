@@ -30,6 +30,14 @@ The native observations use normal text size and LTR fixtures. They do not estab
 
 ## Maintainer checks
 
-Run the standard tests, strict type checks and package consumer checks. The native-host suites compile production adapter/state code where applicable; software doubles are explicitly separate from device evidence. Installed archives must retain the actual native sources, declarations, provider configuration and matching peer-input verifier. The pure System internal entries must share their context/registration identities without loading the native host.
+Run the standard tests, strict type checks and package consumer checks. The native-host suites compile production adapter/state code where applicable; software doubles are explicitly separate from device evidence. Installed archives must retain the actual native sources, declarations, provider configuration and matching peer-input verifier. The renderless DefaultPropsProvider, RtlProvider and createBreakpoints entries must preserve their shared identities without loading a native host. The prepared-style rendering entry also exposes the native peer backend; passive peer Views never activate the resolver.
 
 The internal package subpaths and diagnostic methods are implementation surfaces for this work, not a completed public CardContent migration API. See [native structure observation](native-structure-observation.md) for the separate observation-only transport.
+
+## CSS peer identity in source development
+
+Terminal styled Views, Box and Paper use an immutable backend choice. With the matching peer-capable native binary, ordinary roots carry exact accepted stylesheet-prefix/CSS identities on a stable View host. A foreign retained class does not depend on the receiving root's constructor name. CSS source ownership is metadata and does not alter emitted CSS. Actual selector consumers own the resolver lease; passive peers use one ordinary generated-props leaf and do not activate native tree scanning.
+
+Renderer regressions require changes to class carriers or an opaque root's marker forwarding to preserve the native ref and descendant state. Peer snapshots are memoized in JavaScript; unchanged native peer envelopes share their immutable class data across style updates. An unavailable identity is distinct from a known empty class set. More than 64 classes or 1 MiB of UTF-8 identity data produces explicit unknown identity on the same host, preserving ordinary rendering. Direct malformed native payloads remain rejected. Unknown peer identity needs the retained JavaScript adjacency fallback; it does not establish native first-paint adjacency.
+
+System declares the native-host dependency and matching React Native 0.88.1 peer. Keep the host as a direct app dependency for autolinking and rebuild when native source changes. Renderless utility/provider entries remain host-free. Older binaries retain their supported positional/ordinary path. The peer backend and its native adjacency integration remain under development; the component completion table is unchanged.

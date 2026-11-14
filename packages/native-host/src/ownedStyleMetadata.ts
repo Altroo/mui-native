@@ -25,6 +25,7 @@ type Metadata = Readonly<{
   generatedTextOrigin: GeneratedTextOrigin | undefined;
   structuralCases: boolean;
   parentStructuralCases: boolean;
+  peerStyleIdentity: boolean;
 }>;
 type Outcome = Readonly<{ metadata: Metadata; error?: never } | { error: Error; metadata?: never }>;
 export type OwnedStyleBootstrap = Readonly<{
@@ -32,6 +33,7 @@ export type OwnedStyleBootstrap = Readonly<{
   requireGeneratedTextOrigin(): GeneratedTextOrigin;
   supportsStructuralCases(): boolean;
   supportsParentStructuralCases(): boolean;
+  supportsPeerStyleIdentity(): boolean;
 }>;
 type Expected = Readonly<{ rn: string; platform: string; styleKeys: string }>;
 // One canonical native module object has one immutable read for this JS runtime.
@@ -144,7 +146,11 @@ function parse(raw: unknown): Metadata {
     ownedProgrammeProfile: checked,
     generatedTextOrigin,
     structuralCases:
-      Object.hasOwn(value, 'structuralCases') && value.structuralCases === 'first-last-of-type-v1',
+      Object.hasOwn(value, 'structuralCases') &&
+      (value.structuralCases === 'first-last-of-type-v1' ||
+        value.structuralCases === 'first-last-of-type-v2'),
+    peerStyleIdentity:
+      Object.hasOwn(value, 'structuralCases') && value.structuralCases === 'first-last-of-type-v2',
     parentStructuralCases:
       Object.hasOwn(value, 'parentStructuralCases') &&
       value.parentStructuralCases === 'parent-structural-facts-v1',
@@ -179,6 +185,7 @@ export function createOwnedStyleBootstrap(
   let generatedTextOrigin: GeneratedTextOrigin | undefined;
   let structuralCases = false;
   let parentStructuralCases = false;
+  let peerStyleIdentity = false;
   const originFailure = fail(
     'generated paragraph origin is unavailable or unsupported; rebuild the matching native app',
   );
@@ -197,6 +204,7 @@ export function createOwnedStyleBootstrap(
     profile = observed;
     structuralCases = outcome.metadata.structuralCases;
     parentStructuralCases = structuralCases && outcome.metadata.parentStructuralCases;
+    peerStyleIdentity = parentStructuralCases && outcome.metadata.peerStyleIdentity;
     generatedTextOrigin = outcome.metadata.generatedTextOrigin;
   } catch (error) {
     failure = toFailure(error);
@@ -204,6 +212,7 @@ export function createOwnedStyleBootstrap(
   return Object.freeze({
     supportsStructuralCases: () => structuralCases,
     supportsParentStructuralCases: () => parentStructuralCases,
+    supportsPeerStyleIdentity: () => peerStyleIdentity,
     requireProfile() {
       if (failure) throw failure;
       // The only successful initialization branch publishes this immutable profile.

@@ -261,20 +261,18 @@ export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperR
                     root,
                     resolvedStyle,
                     (nativeStyle, presentation) =>
-                      structuralCases ? (
+                      Root === View ? (
                         <AccordionStructuralView
                           {...native}
                           cases={structuralCases}
+                          prepared={prepared}
+                          classNames={tokens}
                           nativeRef={nativeRef}
                           presentation={presentation}
                           style={nativeStyle}
                         >
                           {content}
                         </AccordionStructuralView>
-                      ) : Root === View ? (
-                        <Root {...native} ref={nativeRef} style={nativeStyle}>
-                          {content}
-                        </Root>
                       ) : (
                         <NativeTextStyleContext.Provider value={parent}>
                           <Root

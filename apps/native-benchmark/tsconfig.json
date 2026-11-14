@@ -27,6 +27,9 @@
       ],
       "@altroo/mui-native-host/internal/structural-root": [
         "../../packages/native-host/src/internal/structural-root/index.ts"
+      ],
+      "@altroo/mui-native-host/internal/css-peer": [
+        "../../packages/native-host/src/internal/css-peer/index.ts"
       ]
     },
     "noUnusedLocals": true,

@@ -1,18 +1,17 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { useContext, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import type { ViewInstance } from 'react-native';
-import { useNativeStructuralFacts } from '@altroo/mui-native-system/internal/prepared-style';
+import {
+  nativeCssClassIdentities,
+  useNativeStructuralFacts,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import type {
   NativePreparedStyle,
   NativeStyleTarget,
   StyleContext,
   Theme,
 } from '@altroo/mui-native-system';
-import {
-  NativeButtonGroupRules,
-  type NativeButtonGroupRule,
-  type NativeStyleClassIdentity,
-} from './buttonGroupContext';
+import { NativeButtonGroupRules, type NativeButtonGroupRule } from './buttonGroupContext';
 import { nativeStyleTree } from './nativeStyleAncestry';
 
 /** The existing physical registry serves all participating finite descendant sheets. */
@@ -75,37 +74,6 @@ function equalData(a: unknown, b: unknown, seen = new WeakMap<object, object>())
     })
   );
 }
-// Decode only owned immutable programme data during preparation. Physical
-// peer refreshes consume these snapshots without evaluating CSS callbacks.
-function emittedClasses(prepared: NativePreparedStyle): readonly NativeStyleClassIdentity[] {
-  const own = prepared.sheets.find(
-    (sheet) => !sheet.ancestor && !sheet.emissionForeign,
-  )?.emissionProgramme;
-  const tokens = prepared.classTokens ?? (own ? [own] : []);
-  return Object.freeze(
-    tokens.map((token) => {
-      const sourceOwners: string[] = [];
-      const selectorOwners: string[] = [];
-      const visit = (programme: typeof token.programme) => {
-        if (programme.kind === 'owner') {
-          sourceOwners.push(programme.owner.css);
-          if (programme.owner.selectorOwner) selectorOwners.push(programme.owner.selectorOwner);
-        } else if (programme.kind === 'sequence') programme.parts.forEach(visit);
-        else {
-          visit(programme.own);
-          programme.classes.forEach(visit);
-        }
-      };
-      visit(token.programme);
-      return Object.freeze({
-        cacheKey: token.insertion.cache.key,
-        css: token.insertion.css,
-        sourceOwners: Object.freeze(sourceOwners),
-        ...(selectorOwners.length ? { selectorOwners: Object.freeze(selectorOwners) } : {}),
-      });
-    }),
-  );
-}
 /** Publish exact host replacement even when a custom root updates internally. */
 export function useNativeStyleRef<T>(
   root: React.RefObject<T | null>,
@@ -160,7 +128,7 @@ export function NativeStyleScope({ root, theme, classes, prepared, children }: S
       },
       selector: { classes: value.classes, ...value.structure },
       scopeDepth: inherited.length,
-      sourceClasses: emittedClasses(value.prepared),
+      sourceClasses: nativeCssClassIdentities(value.prepared),
       cascade(target, path) {
         return {
           theme: value.theme,

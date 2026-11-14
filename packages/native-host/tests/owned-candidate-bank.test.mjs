@@ -17,15 +17,19 @@ const framework = String.raw`
 #include <cstddef>
 namespace folly {
 struct dynamic {
-  bool array{}, null{}; int number{}; std::string text; std::vector<dynamic> values; std::map<std::string,dynamic> fields;
+  bool array{}, null{}, boolean{}; int kind{}; int number{}; std::string text; std::vector<dynamic> values; std::map<std::string,dynamic> fields;
   dynamic()=default; dynamic(std::nullptr_t):null(true){}
   bool isNull()const{return null;} double asDouble()const{return number;}
+  bool isObject()const{return !array&&!null&&kind==0;}
+  bool isBool()const{return kind==1;} bool isString()const{return kind==2;}
+  bool asBool()const{return boolean;}
   const std::string& getString()const{return text;}
   std::size_t count(const char* key)const{return fields.count(key);}
   const dynamic& at(const char* key)const{return fields.at(key);}
-  bool isArray()const{return array;} std::size_t size()const{return values.size();}
+  bool isArray()const{return array;} std::size_t size()const{return array?values.size():fields.size();}
   const dynamic& operator[](std::size_t i)const{return values.at(i);}
   dynamic& operator[](const char* key){return fields[key];}
+  auto begin()const{return values.begin();} auto end()const{return values.end();}
   bool operator==(const dynamic&)const=default;
 };
 }
@@ -135,7 +139,7 @@ namespace altroo::owned_channel {inline bool fullProgramme(const folly::dynamic&
 using Generated=AltrooMUIStructuralViewProps;
 using GeneratedShared=std::shared_ptr<const Generated>;
 using Pair=altroo::owned_adapter_proof::PreparedViewCandidates;
-enum class Programme {Numeric,ExplicitPair};
+enum class Programme {Numeric,ExplicitPair,PeerOnly};
 struct Prepared {Programme programme;GeneratedShared unselected;Pair candidates;};
 struct OwnedProps:Props {using Shared=std::shared_ptr<const OwnedProps>;std::shared_ptr<const Prepared> prepared;bool selectedLast{};};
 struct Descriptor {
@@ -151,13 +155,13 @@ struct Descriptor {
 __METHOD__
 };
 int main(){try{
-  for(const int schema:{1,2,3}){
+  for(const int schema:{1,2,3,4}){
     auto baseline=std::make_shared<Generated>(999);auto& p=baseline->ownedProgramme;p.null=false;p["schema"].number=schema;
     if(schema==1){p["normal"].number=16;p["last"].number=24;}
-    else {auto& cases=p["cases"];cases.array=true;cases.values.resize(schema==3?16:8);for(std::size_t i=0;i<cases.size();++i)cases.values[i].number=int(i);}
+    else if(schema!=4) {auto& cases=p["cases"];cases.array=true;cases.values.resize(schema==3?16:8);for(std::size_t i=0;i<cases.size();++i)cases.values[i].number=int(i);}
     Descriptor descriptor;descriptor.incoming=baseline;
     auto result=std::static_pointer_cast<const OwnedProps>(descriptor.cloneProps({},nullptr,RawProps(folly::dynamic{})));
-    if(!result->prepared||result->prepared->candidates.structural()!=(schema!=1)||result->prepared->candidates.count()!=std::size_t(schema==3?16:8))throw std::runtime_error("wrong descriptor structural dispatch");
+    if(!result->prepared||result->prepared->candidates.structural()!=(schema!=1)||result->prepared->candidates.count()!=std::size_t(schema==4?1:schema==3?16:8))throw std::runtime_error("wrong descriptor structural dispatch");
   }
   std::cout<<"PASS exact descriptor schema dispatch; finite conversion/validation doubles\n";
 }catch(const std::exception&e){std::cerr<<e.what()<<'\n';return 1;}}
@@ -198,4 +202,95 @@ int main(){try{
         /PASS exact descriptor schema dispatch/,
       );
   }
+});
+
+// Exact parser/reuse functions, with a finite JSON carrier. SDK validation is separate.
+test('native peer identity validates bounds, distinguishes unknown, and shares immutable snapshots', async (t) => {
+  const scratch = await mkdtemp(join(tmpdir(), 'mui-peer-identity-'));
+  t.after(() => rm(scratch, { recursive: true, force: true }));
+  const programme = await readFile(
+    new URL('../common/cpp/OwnedProgramme.h', import.meta.url),
+    'utf8',
+  );
+  const transport = await readFile(
+    new URL('../common/cpp/OwnedPropsTransport.h', import.meta.url),
+    'utf8',
+  );
+  const begin = programme.indexOf('struct PeerClassIdentity');
+  const end = programme.indexOf('inline bool fullProgramme(', begin);
+  const sharedBegin = transport.indexOf(
+    '  static std::shared_ptr<const altroo::owned_channel::PeerStyleIdentity> sharedPeer(',
+  );
+  const sharedEnd = transport.indexOf('  PreparedData(GeneratedShared current', sharedBegin);
+  assert(begin > 0 && end > begin && sharedBegin > 0 && sharedEnd > sharedBegin);
+  const model = String.raw`
+#include "GeneratedConversion.h"
+#include <optional>
+#include <stdexcept>
+#include <iostream>
+namespace altroo::owned_channel {
+__PARSER__
+}
+using GeneratedShared=std::shared_ptr<const facebook::react::AltrooMUIStructuralViewProps>;
+struct PreparedData {
+  GeneratedShared unselected;
+  std::shared_ptr<const altroo::owned_channel::PeerStyleIdentity> peer;
+__SHARED__
+};
+void check(bool value){if(!value)throw std::runtime_error("peer identity assertion failed");}
+folly::dynamic boolean(bool value){folly::dynamic out;out.kind=1;out.boolean=value;return out;}
+folly::dynamic text(std::string value){folly::dynamic out;out.kind=2;out.text=std::move(value);return out;}
+folly::dynamic peer(std::size_t count,std::string css="height:4px;"){
+  folly::dynamic out;out["expanded"]=boolean(true);out["classes"].array=true;
+  for(std::size_t i=0;i<count;++i){folly::dynamic token;token["cacheKey"]=text("css");token["css"]=text(css);token["eligible"]=boolean(i==0);out["classes"].values.push_back(std::move(token));}
+  return out;
+}
+GeneratedShared baseline(folly::dynamic identity){
+  auto out=std::make_shared<facebook::react::AltrooMUIStructuralViewProps>(999);out->ownedProgramme.null=false;out->ownedProgramme["peer"]=std::move(identity);return out;
+}
+int main(){try{
+  auto input=baseline(peer(2));auto first=PreparedData::sharedPeer(input,nullptr);
+  check(first&&first->expanded&&first->classes.size()==2&&first->classes[0].eligible&&!first->classes[1].eligible);
+  PreparedData previous{input,first};
+  auto same=PreparedData::sharedPeer(baseline(peer(2)),&previous);check(same==first);
+  auto changed=PreparedData::sharedPeer(baseline(peer(2,"height:8px;")),&previous);
+  check(changed!=first&&changed->classes[0].css=="height:8px;"&&first->classes[0].css=="height:4px;");
+  check(!PreparedData::sharedPeer(baseline(folly::dynamic(nullptr)),&previous));
+  check(!PreparedData::sharedPeer(nullptr,&previous));
+  auto empty=PreparedData::sharedPeer(baseline(peer(0)),nullptr);check(empty&&empty->classes.empty());
+  check(PreparedData::sharedPeer(baseline(peer(64)),nullptr)->classes.size()==64);
+  bool countRejected=false;try{PreparedData::sharedPeer(baseline(peer(65)),nullptr);}catch(const std::invalid_argument&){countRejected=true;}check(countRejected);
+  const std::size_t limit=1024*1024;
+  check(PreparedData::sharedPeer(baseline(peer(1,std::string(limit-3,'a'))),nullptr)!=nullptr);
+  bool bytesRejected=false;try{PreparedData::sharedPeer(baseline(peer(1,std::string(limit-2,'a'))),nullptr);}catch(const std::length_error&){bytesRejected=true;}check(bytesRejected);
+  auto malformed=peer(1);malformed["expanded"]=text("true");bool typeRejected=false;
+  try{PreparedData::sharedPeer(baseline(malformed),nullptr);}catch(const std::invalid_argument&){typeRejected=true;}check(typeRejected);
+  std::cout<<"PASS exact native peer parser and shared lifetime controls\n";
+}catch(const std::exception&e){std::cerr<<e.what()<<'\n';return 1;}}
+`;
+  await writeFile(join(scratch, 'GeneratedConversion.h'), framework);
+  await writeFile(
+    join(scratch, 'peer.cpp'),
+    model
+      .replace('__PARSER__', programme.slice(begin, end))
+      .replace('__SHARED__', transport.slice(sharedBegin, sharedEnd)),
+  );
+  await execute(
+    process.env.CXX || 'clang++',
+    [
+      '-std=c++20',
+      '-Wall',
+      '-Wextra',
+      '-Werror',
+      '-fsanitize=address,undefined',
+      '-fno-omit-frame-pointer',
+      '-I' + scratch,
+      join(scratch, 'peer.cpp'),
+      '-o',
+      join(scratch, 'peer'),
+    ],
+    { timeout: 30000 },
+  );
+  const result = await execute(join(scratch, 'peer'), [], { timeout: 10000 });
+  assert.match(result.stdout, /PASS exact native peer parser/);
 });

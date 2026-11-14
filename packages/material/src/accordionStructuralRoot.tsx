@@ -12,6 +12,7 @@ import {
   type NativeStyle,
   type StyleContext,
   type Theme,
+  type NativePreparedStyle,
 } from '@altroo/mui-native-system';
 import {
   OwnedStructuralHost,
@@ -19,7 +20,10 @@ import {
 } from '@altroo/mui-native-host/internal/structural-root';
 import { mergeNativeRootStyle } from './nativeControlStyles';
 import { snapshotNativeStyleProgramme } from './cardContentCandidates';
-import { retainNativeRootPreparation } from '@altroo/mui-native-system/internal/prepared-style';
+import {
+  NativeCssPeerView,
+  retainNativeRootPreparation,
+} from '@altroo/mui-native-system/internal/prepared-style';
 
 const reportRuntimeError: Parameters<
   NonNullable<typeof ownedStructuralCases>['activation']['acquire']
@@ -133,26 +137,69 @@ export function AccordionStructuralView({
   style,
   nativeRef,
   children,
+  prepared,
+  classNames,
   ...props
 }: ViewProps & {
-  cases: readonly NativeStyle[];
+  cases?: readonly NativeStyle[] | undefined;
+  prepared?: NativePreparedStyle | undefined;
+  classNames?: readonly string[] | undefined;
   basis?: 'parent' | undefined;
   presentation?: NativeStyle | undefined;
   nativeRef: Ref<ViewInstance>;
   children: ReactNode;
 }) {
-  if (!ownedStructuralCases || !activation)
-    throw Error('Native Accordion selector support is unavailable');
   const marker = useContext(AccordionStructuralRootContext);
-  const owner = ownedStructuralCases.parentSelectors && marker ? marker : undefined;
+  if (cases && (!ownedStructuralCases || !activation))
+    throw Error('Native Accordion selector support is unavailable');
+  const owner = ownedStructuralCases?.parentSelectors && marker ? marker : undefined;
   if (basis && !owner) throw Error('Native Accordion parent selection requires its source owner');
   // The source clock owns its animated fields even at a resting endpoint.
   // Deferring them avoids a native endpoint followed by a delayed JS snap-back.
   // Non-animated structural fields remain eligible for pre-layout selection.
-  const encoded = ownedStructuralCases.encode(
-    ownedStructuralCases.profile,
-    cases.map((value) => ({ ...value, ...presentation })),
-  );
+  const encoded =
+    cases && ownedStructuralCases
+      ? ownedStructuralCases.encode(
+          ownedStructuralCases.profile,
+          cases.map((value) => ({ ...value, ...presentation })),
+        )
+      : undefined;
+  const programme =
+    encoded && ownedStructuralCases
+      ? {
+          schema: 2 as const,
+          profile: ownedStructuralCases.profile,
+          cases: encoded,
+          ...(basis ? { basis } : {}),
+          ...(owner ? { owner } : {}),
+        }
+      : undefined;
+  // A constant leaf component preserves body state if an opaque root changes
+  // which classes it forwards. Mode changes are props on the same v2 host.
+  if (prepared)
+    return (
+      <NativeCssPeerView
+        {...props}
+        ref={nativeRef}
+        style={style}
+        prepared={prepared}
+        classNames={classNames ?? []}
+        selector={
+          programme && ownedStructuralCases && activation
+            ? {
+                Host: OwnedStructuralHost,
+                Native: ownedStructuralCases.Native,
+                activation,
+                programme,
+              }
+            : undefined
+        }
+      >
+        {children}
+      </NativeCssPeerView>
+    );
+  if (!programme || !ownedStructuralCases || !activation)
+    throw Error('A selector-only native root requires its cases');
   return (
     <OwnedStructuralHost
       {...props}
@@ -162,13 +209,7 @@ export function AccordionStructuralView({
       style={style}
       normalPaddingBottom={0}
       lastPaddingBottom={0}
-      ownedProgramme={{
-        schema: 2,
-        profile: ownedStructuralCases.profile,
-        cases: encoded,
-        ...(basis ? { basis } : {}),
-        ...(owner ? { owner } : {}),
-      }}
+      ownedProgramme={programme}
     >
       {children}
     </OwnedStructuralHost>

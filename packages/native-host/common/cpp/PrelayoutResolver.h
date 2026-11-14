@@ -184,52 +184,58 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
     throw std::invalid_argument("Duplicate candidate family/tag");
   if (const auto *target =
           dynamic_cast<const AltrooStructuralViewShadowNode *>(node.get())) {
-    ++plan.counts.targets;
-    if (!parent)
-      throw std::invalid_argument("Probe requires a parent");
-    const auto &props = target->getConcreteProps();
-    if (!props.prepared)
-      throw std::invalid_argument("Owned host requires ordinary prepared props");
-    const bool structural = props.prepared->candidates.structural();
-    const bool projected = props.prepared->parentSelector;
-    const ShadowNode *subject = projected ? parent : node.get();
-    const ShadowNode *subjectParent = projected ? grandparent : parent;
-    // Only the exact source-owned immediate parent can supply pseudo facts.
-    // Opaque roots may nest children in another View; retain ordinary presentation
-    // at that boundary rather than applying the inner wrapper's position.
-    const auto *source = projected
-        ? dynamic_cast<const AltrooStructuralViewShadowNode *>(subject) : nullptr;
-    const bool matchingOwner = source && source->getConcreteProps().prepared &&
-        !props.prepared->owner.empty() &&
-        !source->getConcreteProps().prepared->parentSelector &&
-        source->getConcreteProps().prepared->owner == props.prepared->owner;
-    const bool selectable = subjectParent && (!projected || matchingOwner) &&
-        (controlledParent(*subjectParent) || (structural && elementSibling(*subjectParent)));
-    if (!selectable && !structural)
-      throw std::invalid_argument("Probe requires a controlled View/root parent");
-    const auto ordinary = props.prepared->candidates.ordinaryIndex();
-    std::uint8_t facts = selectable ? selectorFacts(*subject, subjectParent, plan) : ordinary;
-    if (!structural) facts &= 1;
-    const bool last = facts != ordinary && (facts & 1);
-    if (props.prepared->programme == altroo::owned_transport_proof::Programme::Numeric &&
-        (!std::isfinite(props.normalPaddingBottom) ||
-        !std::isfinite(props.lastPaddingBottom) ||
-        props.normalPaddingBottom < 0 || props.lastPaddingBottom < 0 ||
-        props.normalPaddingBottom > std::numeric_limits<float>::max() ||
-        props.lastPaddingBottom > std::numeric_limits<float>::max()))
-      throw std::invalid_argument(
-          "Padding candidates must fit finite nonnegative Yoga float");
-    // Yoga StyleLength::points encodes float, including on iOS where RN Float
-    // is CGFloat/double. Ordinary in-range Double rounding is intentional.
-    const auto &chosen = facts == ordinary ? props.prepared->unselected
-                                     : props.prepared->candidates.at(facts);
-    const auto selectedBottom = bottomPadding(chosen->yogaStyle);
-    const float bottom = selectedBottom.isPoints() ? selectedBottom.value().unwrap() : 0;
-    const bool changed = props.selectedCase != facts;
-    plan.decisions.push_back({node->getTag(), last, bottom, changed});
-    if (changed) {
-      plan.changed.emplace(node.get(), Choice{facts});
-      ++plan.counts.changedTargets;
+    if (target->getConcreteProps().prepared &&
+        target->getConcreteProps().prepared->programme == altroo::owned_transport_proof::Programme::PeerOnly) {
+      // Peer carriers remain part of physical order; only selector consumers
+      // require a style choice or a native runtime lease.
+    } else {
+      ++plan.counts.targets;
+      if (!parent)
+        throw std::invalid_argument("Probe requires a parent");
+      const auto &props = target->getConcreteProps();
+      if (!props.prepared)
+        throw std::invalid_argument("Owned host requires ordinary prepared props");
+      const bool structural = props.prepared->candidates.structural();
+      const bool projected = props.prepared->parentSelector;
+      const ShadowNode *subject = projected ? parent : node.get();
+      const ShadowNode *subjectParent = projected ? grandparent : parent;
+      // Only the exact source-owned immediate parent can supply pseudo facts.
+      // Opaque roots may nest children in another View; retain ordinary presentation
+      // at that boundary rather than applying the inner wrapper's position.
+      const auto *source = projected
+          ? dynamic_cast<const AltrooStructuralViewShadowNode *>(subject) : nullptr;
+      const bool matchingOwner = source && source->getConcreteProps().prepared &&
+          !props.prepared->owner.empty() &&
+          !source->getConcreteProps().prepared->parentSelector &&
+          source->getConcreteProps().prepared->owner == props.prepared->owner;
+      const bool selectable = subjectParent && (!projected || matchingOwner) &&
+          (controlledParent(*subjectParent) || (structural && elementSibling(*subjectParent)));
+      if (!selectable && !structural)
+        throw std::invalid_argument("Probe requires a controlled View/root parent");
+      const auto ordinary = props.prepared->candidates.ordinaryIndex();
+      std::uint8_t facts = selectable ? selectorFacts(*subject, subjectParent, plan) : ordinary;
+      if (!structural) facts &= 1;
+      const bool last = facts != ordinary && (facts & 1);
+      if (props.prepared->programme == altroo::owned_transport_proof::Programme::Numeric &&
+          (!std::isfinite(props.normalPaddingBottom) ||
+          !std::isfinite(props.lastPaddingBottom) ||
+          props.normalPaddingBottom < 0 || props.lastPaddingBottom < 0 ||
+          props.normalPaddingBottom > std::numeric_limits<float>::max() ||
+          props.lastPaddingBottom > std::numeric_limits<float>::max()))
+        throw std::invalid_argument(
+            "Padding candidates must fit finite nonnegative Yoga float");
+      // Yoga StyleLength::points encodes float, including on iOS where RN Float
+      // is CGFloat/double. Ordinary in-range Double rounding is intentional.
+      const auto &chosen = facts == ordinary ? props.prepared->unselected
+                                       : props.prepared->candidates.at(facts);
+      const auto selectedBottom = bottomPadding(chosen->yogaStyle);
+      const float bottom = selectedBottom.isPoints() ? selectedBottom.value().unwrap() : 0;
+      const bool changed = props.selectedCase != facts;
+      plan.decisions.push_back({node->getTag(), last, bottom, changed});
+      if (changed) {
+        plan.changed.emplace(node.get(), Choice{facts});
+        ++plan.counts.changedTargets;
+      }
     }
   }
   const auto &children = node->getChildren();

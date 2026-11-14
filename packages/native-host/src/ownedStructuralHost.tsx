@@ -26,11 +26,11 @@ export type StructuralProps = ViewProps & {
   ownedProgramme?: OwnedProgramme | null;
 };
 export type StructuralView = ComponentType<StructuralProps & RefAttributes<ViewInstance>>;
-export function usePrelayoutActivation(activation: Pick<StructuralStyleActivation, 'acquire'>) {
-  useInsertionEffect(() => activation.acquire(), [activation]);
+export function usePrelayoutActivation(activation?: Pick<StructuralStyleActivation, 'acquire'>) {
+  useInsertionEffect(() => activation?.acquire(), [activation]);
 }
 type OwnedHostProps = {
-  activation: Pick<StructuralStyleActivation, 'acquire'>;
+  activation?: Pick<StructuralStyleActivation, 'acquire'>;
   Native: StructuralView;
   children?: ReactNode;
 } & StructuralProps;

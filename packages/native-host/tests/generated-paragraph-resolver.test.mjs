@@ -240,7 +240,7 @@ struct SameNameWrongHandle final : ConcreteViewShadowNode<duplicateName> {using 
 #pragma once
 #include "Framework.h"
 namespace altroo::owned_transport_proof {
-enum class Programme {Numeric,ExplicitPair};
+enum class Programme {Numeric,ExplicitPair,PeerOnly};
 struct Pair {
  std::shared_ptr<const facebook::react::ViewProps> normal,last;
  std::array<std::shared_ptr<const facebook::react::ViewProps>,8> cases{};

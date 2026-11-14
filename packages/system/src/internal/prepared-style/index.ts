@@ -79,3 +79,8 @@ export {
 export type { NativeStructuralFacts } from '../../nativeStructuralFacts';
 
 export { nativeMemoType } from '../../nativeMemoInterop';
+
+export { nativeCssClassIdentities } from '../../nativeCssPeerIdentity';
+export type { NativeStyleClassIdentity } from '../../nativeCssPeerIdentity';
+
+export { NativeCssPeerView } from '../../nativeCssPeerView';

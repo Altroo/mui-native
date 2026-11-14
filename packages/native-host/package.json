@@ -69,6 +69,11 @@
       "types": "./dist/internal/structural-root/index.d.ts",
       "react-native": "./src/internal/structural-root/index.ts",
       "default": "./dist/internal/structural-root/index.js"
+    },
+    "./internal/css-peer": {
+      "types": "./dist/internal/css-peer/index.d.ts",
+      "react-native": "./src/internal/css-peer/index.ts",
+      "default": "./dist/internal/css-peer/index.js"
     }
   },
   "dependencies": {},
