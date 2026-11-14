@@ -430,7 +430,9 @@ final class AccordionGroupingProbeUITests: XCTestCase {
       XCTAssertGreaterThan(try XCTUnwrap(UInt64(try XCTUnwrap(runtime["changedCandidates"] as? String))), 0)
       let rows = try XCTUnwrap(report["rows"] as? [[String: Any]])
       XCTAssertEqual(rows.count, 3)
-      let ordered = stage == 0 || stage == 4 ? ["a", "b", "c"] : ["c", "a", "b"]
+      let scenario = try XCTUnwrap(report["scenario"] as? String)
+      XCTAssertTrue(["position", "adjacency"].contains(scenario))
+      let ordered = scenario == "adjacency" || stage == 0 || stage == 4 ? ["a", "b", "c"] : ["c", "a", "b"]
       var positions: [String: Double] = [:]
       for row in rows {
         let id = try XCTUnwrap(row["id"] as? String)
@@ -438,8 +440,12 @@ final class AccordionGroupingProbeUITests: XCTestCase {
         XCTAssertEqual(row["nativeType"] as? String, "RN:AltrooMUIStructuralView", "The actual native selector host must be installed")
         XCTAssertEqual(row["ornamentNativeType"] as? String, "RN:AltrooMUIStructuralView", "The separator must use the actual parent-projected host")
         let height = try XCTUnwrap(row["height"] as? Double)
-        let expected: Double = stage == 2 ? 48 : id == ordered.first ? 80 : id == ordered.last ? 100 : 48
-        XCTAssertEqual(height, expected, accuracy: 1, "Wrong structural style for " + id + " at stage " + String(stage))
+        if scenario == "position" {
+          let expected: Double = stage == 2 ? 48 : id == ordered.first ? 80 : id == ordered.last ? 100 : 48
+          XCTAssertEqual(height, expected, accuracy: 1, "Wrong structural style for " + id + " at stage " + String(stage))
+        } else {
+          XCTAssertGreaterThan(height, 80, "Expanded native body must have layout")
+        }
         XCTAssertEqual(Double(node("accordion-grouping-root-" + id).frame.height), height, accuracy: 1)
         XCTAssertEqual(row["count"] as? Int, id == "b" && stage > 0 ? 1 : 0)
         if stage == 0 { tags[id] = tag } else { XCTAssertEqual(tag, tags[id], "A keyed native root must be retained") }

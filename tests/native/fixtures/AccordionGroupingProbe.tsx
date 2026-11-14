@@ -22,6 +22,7 @@ import {
 import { ownedStructuralCases } from '@altroo/mui-native-host/internal/structural-root';
 
 type Mode = 'default' | 'forwarded';
+type Scenario = 'position' | 'adjacency';
 type Id = 'a' | 'b' | 'c';
 type CounterHandle = { bump(): void; read(): number };
 type Targets = {
@@ -45,6 +46,7 @@ type Report = {
   fontScale: number;
   pixelRatio: number;
   mode: Mode;
+  scenario: Scenario;
   stage: number;
   phase: 'idle' | 'sampling' | 'complete' | 'error';
   rows: RowBounds[];
@@ -66,6 +68,12 @@ const rootStyle = {
   '&::before': { height: 4, backgroundColor: '#ff00ff' },
   '&:first-of-type': { minHeight: 80 },
   '&:last-of-type': { minHeight: 100 },
+};
+// Reveal source display suppression independently of expanded opacity. All
+// matched rows share this programme; a changed peer adds its own CSS class.
+const adjacencyStyle = {
+  '&::before': { height: 4, backgroundColor: '#ff00ff', opacity: 1 },
+  '&.Mui-expanded::before': { opacity: 1 },
 };
 // Distinct opaque fills let the display-frame collector identify each physical row.
 const rowPaint = {
@@ -90,7 +98,19 @@ const Counter = forwardRef<CounterHandle, { id: Id }>(function Counter({ id }, r
 });
 // Stable row props make a pure keyed reorder exercise the native tree observer,
 // rather than relying on a parent rerender to recompute every root's styles.
-const Row = memo(function Row({ id, mode, targets }: { id: Id; mode: Mode; targets: Targets }) {
+const Row = memo(function Row({
+  id,
+  mode,
+  scenario,
+  differentClass,
+  targets,
+}: {
+  id: Id;
+  mode: Mode;
+  scenario: Scenario;
+  differentClass: boolean;
+  targets: Targets;
+}) {
   const rootRef = useCallback(
     (node: ViewInstance | null) => {
       if (!node) return;
@@ -116,9 +136,15 @@ const Row = memo(function Row({ id, mode, targets }: { id: Id; mode: Mode; targe
       ref={rootRef}
       testID={`accordion-grouping-root-${id}`}
       component={mode === 'forwarded' ? Slot : undefined}
-      expanded={false}
+      expanded={scenario === 'adjacency'}
       elevation={0}
-      sx={rootStyle}
+      sx={
+        scenario === 'position'
+          ? rootStyle
+          : differentClass
+            ? { ...adjacencyStyle, paddingTop: '3px' }
+            : adjacencyStyle
+      }
       style={rowPaint[id]}
     >
       <AccordionSummary>
@@ -166,7 +192,7 @@ function measure(id: Id, targets: Targets): Promise<RowBounds> {
     });
   });
 }
-function Panel({ mode }: { mode: Mode }) {
+function Panel({ mode, scenario }: { mode: Mode; scenario: Scenario }) {
   const targets = useRef<Targets>({ roots: new Map(), counters: new Map() }).current;
   const job = useRef<Job | null>(null);
   const [stage, setStage] = useState(0);
@@ -176,6 +202,7 @@ function Panel({ mode }: { mode: Mode }) {
     fontScale: PixelRatio.getFontScale(),
     pixelRatio: PixelRatio.get(),
     mode,
+    scenario,
   };
   const [report, setReport] = useState<Report>({ ...metadata, stage, phase: 'idle', rows: [] });
   const cancel = (current: Job) => {
@@ -245,7 +272,8 @@ function Panel({ mode }: { mode: Mode }) {
     setStage(value);
     setReport({ ...metadata, stage: value, phase: 'idle', rows: [] });
   };
-  const order = stage === 0 || stage === 4 ? ids : (['c', 'a', 'b'] as const);
+  const order =
+    scenario === 'adjacency' || stage === 0 || stage === 4 ? ids : (['c', 'a', 'b'] as const);
   const sampling = report.phase === 'sampling';
   return (
     <View style={{ gap: 16 }}>
@@ -270,7 +298,7 @@ function Panel({ mode }: { mode: Mode }) {
         <View style={{ height: 6, backgroundColor: stagePaint[stage] }} />
       </View>
       <View collapsable={false}>
-        {stage === 2 ? (
+        {scenario === 'position' && stage === 2 ? (
           <View
             key="leading"
             collapsable={false}
@@ -278,9 +306,16 @@ function Panel({ mode }: { mode: Mode }) {
           />
         ) : null}
         {order.map((id) => (
-          <Row key={id} id={id} mode={mode} targets={targets} />
+          <ViewBoundaryRow
+            key={id}
+            id={id}
+            mode={mode}
+            scenario={scenario}
+            stage={stage}
+            targets={targets}
+          />
         ))}
-        {stage === 2 ? (
+        {scenario === 'position' && stage === 2 ? (
           <View
             key="trailing"
             collapsable={false}
@@ -299,13 +334,42 @@ function Panel({ mode }: { mode: Mode }) {
     </View>
   );
 }
-/** Isolated endpoint geometry and retention checks, not a first-paint timing probe. */
-export function AccordionGroupingProbe() {
+// A real intervening host breaks adjacency without remounting keyed rows.
+function ViewBoundaryRow({
+  id,
+  mode,
+  scenario,
+  stage,
+  targets,
+}: {
+  id: Id;
+  mode: Mode;
+  scenario: Scenario;
+  stage: number;
+  targets: Targets;
+}) {
+  return (
+    <>
+      {scenario === 'adjacency' && stage === 3 && id === 'b' ? (
+        <View collapsable={false} style={{ height: 8, backgroundColor: '#1565c0' }} />
+      ) : null}
+      <Row
+        id={id}
+        mode={mode}
+        scenario={scenario}
+        differentClass={scenario === 'adjacency' && stage === 1 && id === 'b'}
+        targets={targets}
+      />
+    </>
+  );
+}
+/** Independent native geometry, retention and source-class paint scenarios. */
+export function AccordionGroupingProbe({ scenario = 'position' }: { scenario?: Scenario } = {}) {
   const [selection, setSelection] = useState({ mode: 'default' as Mode, epoch: 0 });
   return (
     <ThemeProvider theme={theme}>
       <View style={{ flex: 1, padding: 24, paddingTop: 64, backgroundColor: '#fff', gap: 16 }}>
-        <Text style={{ fontSize: 20 }}>Accordion native grouping</Text>
+        <Text style={{ fontSize: 20 }}>Accordion native {scenario}</Text>
         <View style={{ flexDirection: 'row', gap: 12 }}>
           {(['default', 'forwarded'] as const).map((mode) => (
             <Button
@@ -317,7 +381,7 @@ export function AccordionGroupingProbe() {
             </Button>
           ))}
         </View>
-        <Panel key={selection.epoch} mode={selection.mode} />
+        <Panel key={selection.epoch} mode={selection.mode} scenario={scenario} />
       </View>
     </ThemeProvider>
   );
