@@ -11068,7 +11068,7 @@
       "packages/native-host/src/nativeTextInputNativeComponent.js": "16eaeadbf40263bcc4f5c8d6e8ee3a5cd71ae965445f368d6e7d3308b2d84ecb",
       "packages/native-host/src/nativeTextInputRuntime.js": "a8cfff64c382bd5ea9d207940f900f5ed52b64a522bfe86e032ccfde89d0bedc",
       "packages/native-host/src/ownedStructuralCases.ts": "7540f2fad96d3451b0e1773c6bbddd905527a2dcad0570a1e45d314a20507cd1",
-      "packages/native-host/src/ownedStructuralHost.tsx": "65ab37ea26506d63065bc3645524ccaea2aed50aa77029055873fa8371600d82",
+      "packages/native-host/src/ownedStructuralHost.tsx": "50e11ef2e738cd4cabf561b1aa887ac5cc03468c72d96ebf3ffb8faa01372ed6",
       "packages/native-host/src/ownedStyleBootstrap.ts": "29d44a497ea5ffaa3e8cd87518782cab4f168cd3ad63a4a5962b39094479af32",
       "packages/native-host/src/ownedStyleEncoding.ts": "9aa67f2eda13765fdb2fac7881d3bd49dd567db1b39b3a65e1845e85af7788da",
       "packages/native-host/src/ownedStyleMetadata.ts": "ef7cc0f4985e19a638d4b5c45bc6288f9ebafd4ece2ca2d6b3d92da2e87f8ef2",
