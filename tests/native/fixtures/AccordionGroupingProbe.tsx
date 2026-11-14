@@ -52,6 +52,7 @@ type Report = {
   rows: RowBounds[];
   runtime?: {
     parentSelectors: boolean;
+    peerSelectors: boolean;
     active: boolean;
     degraded: boolean;
     errors: string;
@@ -232,6 +233,7 @@ function Panel({ mode, scenario }: { mode: Mode; scenario: Scenario }) {
         const activity = status as typeof status & Record<string, unknown>;
         runtime = {
           parentSelectors: ownedStructuralCases?.parentSelectors === true,
+          peerSelectors: ownedStructuralCases?.peerSelectors === true,
           active: status.active,
           degraded: status.degraded,
           errors: status.errors,

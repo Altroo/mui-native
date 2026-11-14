@@ -21,9 +21,28 @@ export type CSSPeerIdentity = Readonly<{
   expanded: boolean;
   classes: readonly Readonly<{ cacheKey: string; css: string; eligible: boolean }>[];
 }>;
+export type CSSPeerObservation = Readonly<{
+  surface: number;
+  subject: number;
+  parent: number;
+  previous: number;
+  expanded: boolean;
+}>;
+export interface OwnedAdjacentProgramme {
+  readonly schema: 3;
+  readonly profile: OwnedStyleProfile;
+  readonly basis: 'parent';
+  readonly owner: string;
+  readonly cases: readonly Record<string, unknown>[];
+  readonly observation: CSSPeerObservation | null;
+}
 export interface OwnedPeerProgramme {
   readonly schema: 4;
   readonly profile: OwnedStyleProfile;
   readonly peer: CSSPeerIdentity | null;
 }
-export type OwnedProgramme = OwnedStylePair | OwnedStructuralProgramme | OwnedPeerProgramme;
+export type OwnedProgramme =
+  | OwnedStylePair
+  | OwnedStructuralProgramme
+  | OwnedAdjacentProgramme
+  | OwnedPeerProgramme;

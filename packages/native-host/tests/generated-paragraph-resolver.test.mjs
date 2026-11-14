@@ -20,6 +20,7 @@ const sources = {
 #include <string>
 #include <vector>
 #include <array>
+#include <optional>
 namespace facebook::yoga {
 enum class Edge { Bottom, Vertical, All };
 struct FloatOptional { float number; float unwrap() const {return number;} };
@@ -240,23 +241,28 @@ struct SameNameWrongHandle final : ConcreteViewShadowNode<duplicateName> {using 
 #pragma once
 #include "Framework.h"
 namespace altroo::owned_transport_proof {
+struct PeerClass {std::string cacheKey,css;bool eligible{};};
+struct PeerIdentity {bool expanded{};std::vector<PeerClass> classes;};
+struct PeerObservation {int surface{},subject{},parent{},previous{};bool expanded{};};
 enum class Programme {Numeric,ExplicitPair,PeerOnly};
 struct Pair {
  std::shared_ptr<const facebook::react::ViewProps> normal,last;
- std::array<std::shared_ptr<const facebook::react::ViewProps>,8> cases{};
+ std::vector<std::shared_ptr<const facebook::react::ViewProps>> cases{std::size_t(8)};
  bool structural()const{return cases[0]!=nullptr;}
- std::uint8_t ordinaryIndex()const{return 8;}
+ std::size_t count()const{return structural()?cases.size():8;}
+ std::uint8_t ordinaryIndex()const{return static_cast<std::uint8_t>(count());}
  const auto& at(std::uint8_t facts)const{return structural()?cases.at(facts):(facts&1?last:normal);}
 };
-struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;Programme programme{Programme::Numeric};};
+struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;std::shared_ptr<const PeerIdentity> peer;std::optional<PeerObservation> observation;Programme programme{Programme::Numeric};};
+using PreparedData=Prepared;
 struct OwnedProps : facebook::react::ViewProps {
  double normalPaddingBottom{16},lastPaddingBottom{24};bool selectedLast{};std::uint8_t selectedCase{};
  std::shared_ptr<const Prepared> prepared;
 };
 inline std::shared_ptr<const OwnedProps> select(std::shared_ptr<const OwnedProps> source,std::uint8_t facts){
  if(source->selectedCase==facts)return source;
- auto next=std::make_shared<OwnedProps>(*source);next->selectedCase=facts;next->selectedLast=facts&1;
- next->yogaStyle=(facts==8?source->prepared->unselected:source->prepared->candidates.at(facts))->yogaStyle;
+ auto next=std::make_shared<OwnedProps>(*source);next->selectedCase=facts;next->selectedLast=facts!=source->prepared->candidates.ordinaryIndex()&&(facts&1);
+ next->yogaStyle=(facts==source->prepared->candidates.ordinaryIndex()?source->prepared->unselected:source->prepared->candidates.at(facts))->yogaStyle;
  return next;
 }
 }
@@ -308,9 +314,10 @@ auto target(Tag tag){
  auto props=std::make_shared<Owned>();props->prepared=prepared;props->yogaStyle=normal->yogaStyle;
  return node<AltrooStructuralViewShadowNode>(tag,props);
 }
-auto structuralTarget(Tag tag){
+auto structuralTarget(Tag tag,std::size_t count=8){
  auto prepared=std::make_shared<altroo::owned_transport_proof::Prepared>();
- for(std::uint8_t facts=0;facts<8;++facts){
+ prepared->candidates.cases.resize(count);
+ for(std::uint8_t facts=0;facts<count;++facts){
   auto value=std::make_shared<ViewProps>();
   value->yogaStyle.setPadding(facebook::yoga::Edge::Bottom,facebook::yoga::StyleLength::points(100+facts));
   value->seal();prepared->candidates.cases[facts]=value;
@@ -432,8 +439,55 @@ int main(){try{
  check(nested.decisions.back().bottom==77,"a pseudo cannot impersonate its source parent");
  auto unsupported=resolve(root({pseudo(98)}));
  check(unsupported.decisions.front().bottom==77,"root/projection parent retains ordinary pseudo presentation");
+ // Candidate-bound peer matching and explicitly observed fallback are separate.
+ const auto peer=[](auto n,std::string key,std::string css,bool expanded,bool eligible){
+  auto p=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(n->getConcreteProps().prepared);
+  p->peer=std::make_shared<const altroo::owned_transport_proof::PeerIdentity>(altroo::owned_transport_proof::PeerIdentity{expanded,{{std::move(key),std::move(css),eligible}}});return n;
+ };
+ const auto adjacent=[&](std::optional<altroo::owned_transport_proof::PeerObservation> observation=std::nullopt){
+  auto decoration=structuralTarget(204,16);auto d=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(decoration->getConcreteProps().prepared);
+  d->parentSelector=true;d->owner="panel";d->observation=observation;
+  std::const_pointer_cast<Owned>(std::static_pointer_cast<const Owned>(decoration->getProps()))->nativeId="altroo:accordion-before:v1:";
+  return peer(panel(202,{decoration}),"css","same-class",true,true);
+ };
+ auto previousPeer=peer(panel(201,{},"previous"),"css","same-class",true,false);
+ auto matching=resolve(root({previousPeer,adjacent()}));
+ check(matching.decisions.back().bottom==113,"matching native peers select adjacency bit before layout");
+ auto different=peer(panel(201,{},"previous"),"css","different-class",true,false);
+ check(resolve(root({different,adjacent()})).decisions.back().bottom==105,"different emitted CSS does not match even when expanded");
+ auto prefix=peer(panel(201,{},"previous"),"other-prefix","same-class",true,false);
+ check(resolve(root({prefix,adjacent()})).decisions.back().bottom==105,"same CSS with a different cache prefix stays distinct");
+ auto collapsed=peer(panel(201,{},"previous"),"css","same-class",false,false);
+ check(resolve(root({collapsed,adjacent({{1,202,1,201,true}})})).decisions.back().bottom==105,"fresh native collapsed state overrides a stale observed true");
+ auto raw=node<ViewShadowNode>(203,std::make_shared<ViewProps>());
+ check(resolve(root({previousPeer,raw,adjacent({{1,202,1,201,true}})})).decisions.back().bottom==105,"new raw boundary invalidates prior peer observation while preserving positional bits");
+ check(resolve(root({previousPeer,adjacent({{1,202,1,203,false}})})).decisions.back().bottom==113,"boundary removal uses matching current native peers immediately");
+ check(resolve(root({raw,adjacent({{1,202,1,203,true}})})).decisions.back().bottom==113,"unknown identity can retain its exact matched JS observation as fallback");
+ check(resolve(root({raw,adjacent({{1,202,1,203,false}})})).decisions.back().bottom==105,"later observed mismatch converges without inferring CSS from paint");
+ check(resolve(root({raw,adjacent({{2,202,1,203,true}})})).decisions.back().bottom==105,"observation from another surface is rejected");
+ check(resolve(root({raw,adjacent({{1,999,1,203,true}})})).decisions.back().bottom==105,"observation for another source subject is rejected");
+ check(resolve(root({parent<ViewShadowNode>({raw,adjacent({{1,202,1,203,true}})})})).decisions.back().bottom==105,"reparented peer observation is rejected");
+ check(resolve(root({adjacent({{1,202,1,0,true}})})).decisions.back().bottom==107,"first child has no expanded predecessor even with contradictory observation");
 
 
+
+ // Fresh known absence overrides a formerly positive JS observation.
+ check(resolve(root({previousPeer,peer(adjacent({{1,202,1,201,true}}),"css","same-class",false,true)})).decisions.back().bottom==105,"collapsed current peer overrides observed true");
+ check(resolve(root({previousPeer,peer(adjacent({{1,202,1,201,true}}),"css","same-class",true,false)})).decisions.back().bottom==105,"ineligible current source token overrides observed true");
+ auto emptyPeer=panel(201,{},"previous");
+ std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(emptyPeer->getConcreteProps().prepared)->peer=std::make_shared<const altroo::owned_transport_proof::PeerIdentity>(altroo::owned_transport_proof::PeerIdentity{true,{}});
+ check(resolve(root({emptyPeer,adjacent({{1,202,1,201,true}})})).decisions.back().bottom==105,"known empty CSS identity overrides observed true");
+ auto unknownPeer=panel(201,{},"previous");
+ check(resolve(root({unknownPeer,adjacent({{1,202,1,201,true}})})).decisions.back().bottom==113,"null CSS identity retains its bound JS fallback");
+ auto wrongOwner=adjacent();
+ std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(wrongOwner->getConcreteProps().prepared)->owner="different";
+ check(resolve(root({previousPeer,wrongOwner})).decisions.back().bottom==77,"sixteen-case mismatched owner selects ordinary index16 instead of case8");
+ auto generatedProps=std::make_shared<ViewProps>();generatedProps->nativeId="altroo:generated-paragraph:v1:peer";
+ auto generatedPeer=node<ParagraphShadowNode>(205,generatedProps,{node<RawTextShadowNode>(206,std::make_shared<Props>())});
+ check(resolve(root({previousPeer,generatedPeer,adjacent()})).decisions.back().bottom==113,"generated literal paragraphs do not interrupt logical peer adjacency");
+ auto explicitPeer=node<ParagraphShadowNode>(205,std::make_shared<ViewProps>(),{node<RawTextShadowNode>(206,std::make_shared<Props>())});
+ check(resolve(root({previousPeer,explicitPeer,adjacent()})).decisions.back().bottom==105,"an explicit Paragraph interrupts source peer adjacency");
+ check(resolve(root({previousPeer,pseudo(205),adjacent()})).decisions.back().bottom==113,"private projected ornaments do not interrupt source peer adjacency");
  check(rawParses==0,"selection never evaluates raw conversion/callbacks");
  std::cout<<"{\"assertions\":"<<assertions<<",\"platform\":\""
 #ifdef ANDROID

@@ -170,10 +170,11 @@ for (const Root of [undefined, Box, Opaque]) {
       tree.rerender(scene(true));
       const programme = tree.getByTestId('panel').props.ownedProgramme;
       expect(programme.schema).toBe(2);
+      expect(programme.cases[2].borderTopLeftRadius ?? programme.cases[2].borderRadius).toBe(4);
+      expect(programme.cases[0].borderTopLeftRadius ?? programme.cases[0].borderRadius).toBe(0);
       expect(
-        new Set(programme.cases.map((value: Record<string, unknown>) => JSON.stringify(value)))
-          .size,
-      ).toBe(1);
+        programme.cases.every((value: Record<string, unknown>) => !Object.hasOwn(value, 'color')),
+      ).toBe(true);
       expect(tree.getByTestId('retained-count')).toHaveTextContent('1');
       expect(ref.current).toBe(host);
       tree.rerender(scene(false));
@@ -293,7 +294,8 @@ test('cache projection rechecks conditional text while retaining its native host
     const target = tree;
     const cases = () => target.getByTestId('text-cache-root').props.ownedProgramme.cases;
     const host = ref.current;
-    expect(cases().every((value: Record<string, unknown>) => value.minHeight === 48)).toBe(true);
+    expect(cases()[2].minHeight).toBe(80);
+    expect(cases()[0].minHeight).toBe(48);
     fireEvent.press(target.getByTestId('retained-count'));
     act(() => a.reset());
     expect(cases()[2].minHeight).toBe(80);

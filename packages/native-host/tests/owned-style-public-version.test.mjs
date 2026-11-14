@@ -68,6 +68,7 @@ function load(source, options = {}) {
   return {
     encode: module.exports.encodeStylePair,
     cases: module.exports.encodeStructuralCases,
+    adjacent: module.exports.encodeAdjacentCases,
     calls,
     reads: () => reads,
     api,
@@ -262,5 +263,35 @@ test('structural encoding rejects incomplete or oversized truth tables before pr
       /eight cases/,
     );
     assert.equal(m.calls.length, 0);
+  }
+});
+
+// The high adjacency bit must preserve the same processing and reset semantics.
+test('adjacent encoding snapshots and resets the complete sixteen-case bank', () => {
+  const input = Array.from({ length: 16 }, (_, width) =>
+    width === 15 ? { opacity: 0.5 } : { width },
+  );
+  const m = load(structuralSource, {
+    process(_payload, call) {
+      if (call === 1) input[14].width = 999;
+    },
+  });
+  const values = m.adjacent(profile(), input);
+  assert.equal(values[14].width, 14);
+  assert.equal(values[14].opacity, null);
+  assert.equal(values[15].width, null);
+  assert.equal(values[15].opacity, 0.5);
+  assert.equal(m.calls.length, 16);
+  for (const size of [0, 8, 15, 17]) {
+    const invalid = load(structuralSource);
+    assert.throws(
+      () =>
+        invalid.adjacent(
+          profile(),
+          Array.from({ length: size }, () => ({})),
+        ),
+      /sixteen cases/,
+    );
+    assert.equal(invalid.calls.length, 0);
   }
 });

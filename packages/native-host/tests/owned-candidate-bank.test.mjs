@@ -15,12 +15,16 @@ const framework = String.raw`
 #include <string>
 #include <vector>
 #include <cstddef>
+#include <cstdint>
+#include <limits>
+#include <cmath>
 namespace folly {
 struct dynamic {
-  bool array{}, null{}, boolean{}; int kind{}; int number{}; std::string text; std::vector<dynamic> values; std::map<std::string,dynamic> fields;
+  bool array{}, null{}, boolean{}; int kind{}; double number{}; std::string text; std::vector<dynamic> values; std::map<std::string,dynamic> fields;
   dynamic()=default; dynamic(std::nullptr_t):null(true){}
   bool isNull()const{return null;} double asDouble()const{return number;}
   bool isObject()const{return !array&&!null&&kind==0;}
+  bool isNumber()const{return kind==3;}
   bool isBool()const{return kind==1;} bool isString()const{return kind==2;}
   bool asBool()const{return boolean;}
   const std::string& getString()const{return text;}
@@ -265,6 +269,22 @@ int main(){try{
   bool bytesRejected=false;try{PreparedData::sharedPeer(baseline(peer(1,std::string(limit-2,'a'))),nullptr);}catch(const std::length_error&){bytesRejected=true;}check(bytesRejected);
   auto malformed=peer(1);malformed["expanded"]=text("true");bool typeRejected=false;
   try{PreparedData::sharedPeer(baseline(malformed),nullptr);}catch(const std::invalid_argument&){typeRejected=true;}check(typeRejected);
+  folly::dynamic observation;observation["expanded"]=boolean(true);
+  for(const char* key:{"surface","subject","parent","previous"}){observation[key].kind=3;observation[key].number=1;}
+  folly::dynamic bound;bound["observation"]=observation;
+  auto parsed=altroo::owned_channel::peerObservation(bound);check(parsed&&parsed->subject==1&&parsed->expanded);
+  for(const char* key:{"surface","subject","parent","previous"}){
+    for(const double invalid:{-1.0,0.5,double(std::numeric_limits<std::int32_t>::max())+1,std::numeric_limits<double>::infinity(),std::numeric_limits<double>::quiet_NaN()}){
+      auto bad=observation;bad[key].number=invalid;bool rejected=false;
+      try{altroo::owned_channel::requirePeerObservation(bad);}catch(const std::invalid_argument&){rejected=true;}check(rejected);
+    }
+  }
+  observation["previous"].number=0;altroo::owned_channel::requirePeerObservation(observation);
+  auto bad=observation;bad["subject"].number=0;bool zeroRejected=false;
+  try{altroo::owned_channel::requirePeerObservation(bad);}catch(const std::invalid_argument&){zeroRejected=true;}check(zeroRejected);
+  bad=observation;bad["expanded"]=text("true");bool flagRejected=false;
+  try{altroo::owned_channel::requirePeerObservation(bad);}catch(const std::invalid_argument&){flagRejected=true;}check(flagRejected);
+  bound["observation"]=folly::dynamic(nullptr);check(!altroo::owned_channel::peerObservation(bound));
   std::cout<<"PASS exact native peer parser and shared lifetime controls\n";
 }catch(const std::exception&e){std::cerr<<e.what()<<'\n';return 1;}}
 `;

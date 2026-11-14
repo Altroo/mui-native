@@ -70,6 +70,9 @@ function model(order: string[]) {
       tagName: name === 'text' ? 'Text' : 'View',
       isConnected: true,
     });
+  const document = { documentElement: { tag: 1 } as Host };
+  Object.assign(parent, { ownerDocument: document });
+  for (const node of nodes.values()) Object.assign(node, { ownerDocument: document });
   const reorder = (next: string[]) => {
     parent.children = next.map((name) => nodes.get(name)!);
   };
@@ -118,6 +121,35 @@ test.each([GENERATED_TEXT_ORIGIN_CONTRACT.nativeIDPrefix, accordionBeforeOrigin]
     ).toMatchObject({ previousExpanded: true });
   },
 );
+test('peer observations bind the surface, subject, parent and logical predecessor', () => {
+  const m = model(['a', 'text', 'b']);
+  const a = m.nodes.get('a')!,
+    b = m.nodes.get('b')!;
+  Object.assign(m.nodes.get('text')!, { id: accordionBeforeOrigin + 'test' });
+  const read = () => accordionStructureAt(b, (node) => node === a);
+  expect(read().peerObservation).toEqual({
+    surface: 1,
+    subject: b.tag,
+    parent: 99,
+    previous: a.tag,
+    expanded: true,
+  });
+  m.reorder(['b', 'a']);
+  expect(read().peerObservation).toEqual({
+    surface: 1,
+    subject: b.tag,
+    parent: 99,
+    previous: 0,
+    expanded: false,
+  });
+  b.parentElement = { ...m.parent, tag: 200, children: [b] };
+  expect(read().peerObservation?.parent).toBe(200);
+  b.tag = 0;
+  expect(read().peerObservation).toBeUndefined();
+  b.tag = 102;
+  Object.assign(b, { ownerDocument: null });
+  expect(read().peerObservation).toBeUndefined();
+});
 test('disconnected and stale parent snapshots keep structural predicates unknown', () => {
   const m = model(['a']);
   m.nodes.get('a')!.isConnected = false;

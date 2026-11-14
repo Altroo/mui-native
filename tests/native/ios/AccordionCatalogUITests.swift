@@ -423,6 +423,7 @@ final class AccordionGroupingProbeUITests: XCTestCase {
       XCTAssertEqual(try XCTUnwrap(report["fontScale"] as? Double), 1, accuracy: 0.01)
       let runtime = try XCTUnwrap(report["runtime"] as? [String: Any])
       XCTAssertEqual(runtime["parentSelectors"] as? Bool, true)
+      XCTAssertEqual(runtime["peerSelectors"] as? Bool, true, "The actual v2 peer-capable binary is required")
       XCTAssertEqual(runtime["active"] as? Bool, true)
       XCTAssertEqual(runtime["degraded"] as? Bool, false)
       XCTAssertEqual(runtime["errors"] as? String, "0")

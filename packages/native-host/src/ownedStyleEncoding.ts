@@ -106,3 +106,13 @@ export function encodeStructuralCases(
     throw new TypeError('Owned structural style requires eight cases');
   return encodeCandidates(profile, styles);
 }
+
+/** Positional bits plus source-class adjacency, supported only by the v2 binary. */
+export function encodeAdjacentCases(
+  profile: OwnedStyleProfile,
+  styles: readonly Record<string, unknown>[],
+): Record<string, unknown>[] {
+  if (!Array.isArray(styles) || styles.length !== 16)
+    throw new TypeError('Owned adjacent style requires sixteen cases');
+  return encodeCandidates(profile, styles);
+}

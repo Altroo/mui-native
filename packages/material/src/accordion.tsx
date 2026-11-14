@@ -47,10 +47,12 @@ import { NativeStructuralFactsContext } from '@altroo/mui-native-system/internal
 import {
   useAccordionStructure,
   accordionBeforeOrigin,
+  AccordionPeerObservationContext,
   type AccordionStructure,
 } from './accordionStructure';
 import { useAccordionMotion } from './accordionMotion';
 import { accordionBeforeStyle, accordionBeforeCases } from './accordionBeforeStyles';
+import { ownedStructuralCases } from '@altroo/mui-native-host/internal/structural-root';
 import {
   AccordionStructuralRootContext,
   AccordionStructuralView,
@@ -451,11 +453,18 @@ function AccordionBefore({
   const { width } = useWindowDimensions();
   useNativeStyleCacheRevision();
   const marker = useContext(AccordionStructuralRootContext);
+  const observation = useContext(AccordionPeerObservationContext);
   const context = { styleCache, width, ...nativeTextStyleContext(parent, undefined, theme) };
   const style = accordionBeforeStyle(theme, rules, context);
   const cases =
     hasAccordionParentSelectors && marker
-      ? accordionBeforeCases(theme, rules, context, marker)
+      ? accordionBeforeCases(
+          theme,
+          rules,
+          context,
+          marker,
+          ownedStructuralCases?.peerSelectors === true,
+        )
       : undefined;
   // CSS cancels transitions under display:none. A later structural reveal
   // starts at its current endpoint instead of exposing a hidden stale sample.
@@ -481,6 +490,7 @@ function AccordionBefore({
       nativeRef={null}
       cases={cases}
       basis="parent"
+      observation={observation}
       style={[style, presentation]}
       presentation={presentation}
     >
@@ -529,7 +539,9 @@ function AccordionStructureBoundary({
   const structure = useAccordionStructure(root, expanded, sourceCss);
   return (
     <NativeStructuralFactsContext.Provider value={structure}>
-      {children(structure)}
+      <AccordionPeerObservationContext.Provider value={structure.peerObservation ?? null}>
+        {children(structure)}
+      </AccordionPeerObservationContext.Provider>
     </NativeStructuralFactsContext.Provider>
   );
 }

@@ -18,6 +18,7 @@ import {
   OwnedStructuralHost,
   ownedStructuralCases,
 } from '@altroo/mui-native-host/internal/structural-root';
+import type { CSSPeerObservation, OwnedProgramme } from '@altroo/mui-native-host/internal/css-peer';
 import { mergeNativeRootStyle } from './nativeControlStyles';
 import { snapshotNativeStyleProgramme } from './cardContentCandidates';
 import {
@@ -64,7 +65,8 @@ type Input = Readonly<{
 function textFacet(style: NativeStyle, metrics: Record<string, unknown>) {
   return {
     style: Object.fromEntries(
-      Object.entries(style).filter(([key]) => isNativeTextStyleProperty(key)),
+      // Color stays in the text scope but cannot invalidate View layout cases.
+      Object.entries(style).filter(([key]) => key !== 'color' && isNativeTextStyleProperty(key)),
     ),
     metrics,
     direction: style.direction,
@@ -139,12 +141,14 @@ export function AccordionStructuralView({
   children,
   prepared,
   classNames,
+  observation,
   ...props
 }: ViewProps & {
   cases?: readonly NativeStyle[] | undefined;
   prepared?: NativePreparedStyle | undefined;
   classNames?: readonly string[] | undefined;
   basis?: 'parent' | undefined;
+  observation?: CSSPeerObservation | null | undefined;
   presentation?: NativeStyle | undefined;
   nativeRef: Ref<ViewInstance>;
   children: ReactNode;
@@ -159,20 +163,31 @@ export function AccordionStructuralView({
   // Non-animated structural fields remain eligible for pre-layout selection.
   const encoded =
     cases && ownedStructuralCases
-      ? ownedStructuralCases.encode(
+      ? (cases.length === 16 ? ownedStructuralCases.encodeAdjacent : ownedStructuralCases.encode)(
           ownedStructuralCases.profile,
           cases.map((value) => ({ ...value, ...presentation })),
         )
       : undefined;
-  const programme =
+  if (cases?.length === 16 && (!owner || basis !== 'parent'))
+    throw Error('Adjacent cases require their source parent');
+  const programme: OwnedProgramme | undefined =
     encoded && ownedStructuralCases
-      ? {
-          schema: 2 as const,
-          profile: ownedStructuralCases.profile,
-          cases: encoded,
-          ...(basis ? { basis } : {}),
-          ...(owner ? { owner } : {}),
-        }
+      ? cases?.length === 16
+        ? {
+            schema: 3,
+            profile: ownedStructuralCases.profile,
+            cases: encoded,
+            basis: 'parent',
+            owner: owner!,
+            observation: observation ?? null,
+          }
+        : {
+            schema: 2,
+            profile: ownedStructuralCases.profile,
+            cases: encoded,
+            ...(basis ? { basis } : {}),
+            ...(owner ? { owner } : {}),
+          }
       : undefined;
   // A constant leaf component preserves body state if an opaque root changes
   // which classes it forwards. Mode changes are props on the same v2 host.

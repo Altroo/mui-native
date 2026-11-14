@@ -1,12 +1,13 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Finite Accordion grouping reads the actual public native host tree. React
 // child indices are insufficient for opaque wrappers, Fragments and portals.
-import { useLayoutEffect, useRef, useState, type RefObject } from 'react';
+import { createContext, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import { findNodeHandle, type ViewInstance } from 'react-native';
 import { createNativeStructuralObservation } from '@altroo/mui-native-host/internal/structural-observation';
 import type { NativeStructuralFacts } from '@altroo/mui-native-system/internal/prepared-style';
 import { GENERATED_TEXT_ORIGIN_CONTRACT } from '@altroo/mui-native-system/internal/generated-paragraph';
 import { nativeStyleTree } from './nativeStyleAncestry';
+import type { CSSPeerObservation } from '@altroo/mui-native-host/internal/css-peer';
 import type { NativeStyleClassIdentity } from './buttonGroupContext';
 export type AccordionHost = {
   readonly parentElement?: AccordionHost | null;
@@ -14,12 +15,15 @@ export type AccordionHost = {
   readonly tagName?: string;
   readonly id?: string;
   readonly isConnected?: boolean;
+  readonly ownerDocument?: { readonly documentElement?: AccordionHost | null } | null;
 };
 export type AccordionStructure = Readonly<{
   element: AccordionHost | null;
   facts: NativeStructuralFacts;
   previousExpanded: boolean;
+  peerObservation?: CSSPeerObservation | undefined;
 }>;
+export const AccordionPeerObservationContext = createContext<CSSPeerObservation | null>(null);
 const unknown: AccordionStructure = Object.freeze({
   element: null,
   facts: {},
@@ -36,6 +40,52 @@ type Entry = {
   readElement(): AccordionHost | null;
   stop?: (() => void) | undefined;
 };
+function observedPeer(
+  subject: AccordionHost,
+  parent: AccordionHost,
+  previous: AccordionHost | undefined,
+  expanded: boolean,
+): CSSPeerObservation | undefined {
+  const surfaceNode = subject.ownerDocument?.documentElement;
+  if (!surfaceNode) return;
+  const tag = (node: AccordionHost | undefined) =>
+    node ? findNodeHandle(node as ViewInstance) : 0;
+  const surface = tag(surfaceNode),
+    current = tag(subject),
+    container = tag(parent),
+    prior = tag(previous);
+  if (
+    [surface, current, container].some(
+      (value) => typeof value !== 'number' || !Number.isSafeInteger(value) || value <= 0,
+    ) ||
+    typeof prior !== 'number' ||
+    !Number.isSafeInteger(prior) ||
+    prior < 0
+  )
+    return;
+  return Object.freeze({
+    surface: surface!,
+    subject: current!,
+    parent: container!,
+    previous: prior,
+    expanded,
+  });
+}
+function sameObservation(
+  a: CSSPeerObservation | undefined,
+  b: CSSPeerObservation | undefined,
+): boolean {
+  return (
+    a === b ||
+    (!!a &&
+      !!b &&
+      a.surface === b.surface &&
+      a.subject === b.subject &&
+      a.parent === b.parent &&
+      a.previous === b.previous &&
+      a.expanded === b.expanded)
+  );
+}
 /** One physical region read per notification, independent of group size. */
 function regionAt(
   parent: AccordionHost,
@@ -85,6 +135,16 @@ function regionAt(
               states: previousExpanded ? ['nativePreviousExpanded'] : [],
             },
             previousExpanded,
+            ...(element.ownerDocument
+              ? {
+                  peerObservation: observedPeer(
+                    element,
+                    parent,
+                    siblings[index - 1],
+                    previousExpanded,
+                  ),
+                }
+              : {}),
           } satisfies AccordionStructure,
         ] as const,
       ];
@@ -147,6 +207,7 @@ function refresh() {
     if (
       next.element === prior.element &&
       next.previousExpanded === prior.previousExpanded &&
+      sameObservation(next.peerObservation, prior.peerObservation) &&
       next.facts.firstOfType === prior.facts.firstOfType &&
       next.facts.lastOfType === prior.facts.lastOfType &&
       next.facts.lastChild === prior.facts.lastChild

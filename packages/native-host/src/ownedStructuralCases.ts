@@ -4,6 +4,7 @@ import {
   requireOwnedStyleProfile,
   supportsStructuralCases,
   supportsParentStructuralCases,
+  supportsPeerStyleIdentity,
 } from './ownedStyleBootstrap';
 import { structuralStyleActivation } from './structuralStyleActivation';
 import type { StructuralView } from './ownedStructuralHost';
@@ -18,13 +19,15 @@ function captureRuntime() {
   ).default;
   // This optional codec is initialized before React only after the matching
   // native binary advertises support. Ordinary roots keep the thin import path.
-  const { encodeStructuralCases } =
+  const { encodeStructuralCases, encodeAdjacentCases } =
     require('./ownedStyleEncoding') as typeof import('./ownedStyleEncoding');
   return Object.freeze({
     profile: requireOwnedStyleProfile(),
     activation: structuralStyleActivation(native),
     Native: Native as StructuralView,
     encode: encodeStructuralCases,
+    encodeAdjacent: encodeAdjacentCases,
+    peerSelectors: supportsPeerStyleIdentity(),
     parentSelectors: supportsParentStructuralCases(),
   });
 }

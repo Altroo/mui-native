@@ -131,3 +131,18 @@ test('cache projection snapshots genuine inline getters once and reuses its epoc
     cache.dispose();
   }
 });
+
+test('conditional inherited color preserves independent native corners and geometry', () => {
+  const source = jest.fn(() => ({
+    minHeight: 48,
+    '&:first-of-type': { color: 'red', minHeight: 80, borderTopLeftRadius: 4 },
+    '&:last-of-type': { minHeight: 100, borderBottomLeftRadius: 4 },
+  }));
+  const prepared = componentRootStyle(theme, 'MuiAccordion', {}, source, undefined, context, true);
+  const cases = compile(prepared.programme);
+  expect(cases.map((value) => value.minHeight)).toEqual([48, 48, 80, 80, 100, 100, 100, 100]);
+  expect(cases[2].borderTopLeftRadius).toBe(4);
+  expect(cases[4].borderBottomLeftRadius).toBe(4);
+  expect(cases.every((value) => !Object.hasOwn(value, 'color'))).toBe(true);
+  expect(source).toHaveBeenCalledTimes(1);
+});

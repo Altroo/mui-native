@@ -15,10 +15,38 @@ type Facts = Pick<StyleContext, 'lastChild' | 'firstOfType' | 'lastOfType'>;
  * Outer ancestor predicates keep their own facts; a path through the root gets
  * its projected facts too. No native tree or mutable registry is read here.
  */
-function ancestorsAt(rules: readonly NativeButtonGroupRule[], marker: string, facts: Facts) {
+function ancestorsAt(
+  rules: readonly NativeButtonGroupRule[],
+  marker: string,
+  facts: Facts,
+  previousExpanded?: boolean,
+) {
   const target: NativeStyleTarget = { classes: [], tag: '::before' };
-  const projectTarget = (value: NativeStyleTarget) =>
-    value.classes.includes(marker) ? { ...value, ...facts } : value;
+  const projectTarget = (value: NativeStyleTarget): NativeStyleTarget => {
+    if (!value.classes.includes(marker)) return value;
+    const classes =
+      previousExpanded === undefined
+        ? value.classes
+        : [
+            ...value.classes.filter((name) => name !== 'Mui-nativePreviousExpanded'),
+            ...(previousExpanded ? ['Mui-nativePreviousExpanded'] : []),
+          ];
+    return { ...value, ...facts, classes };
+  };
+  const projectContext = (value: StyleContext): StyleContext => ({
+    ...value,
+    ...facts,
+    ...(previousExpanded === undefined
+      ? {}
+      : {
+          states: [
+            ...(value.states ?? []).filter((state) => state !== 'nativePreviousExpanded'),
+            ...(previousExpanded ? ['nativePreviousExpanded'] : []),
+          ],
+          ...(value.classes ? { classes: projectTarget({ classes: value.classes }).classes } : {}),
+        }),
+    ...(value.descendantPath ? { descendantPath: value.descendantPath.map(projectTarget) } : {}),
+  });
   return rules.map((rule, index) => {
     const path = [
       ...rules
@@ -30,20 +58,14 @@ function ancestorsAt(rules: readonly NativeButtonGroupRule[], marker: string, fa
     if (!rule.selector?.classes.includes(marker)) return ancestor;
     return {
       ...ancestor,
-      context: { ...ancestor.context, ...facts },
+      context: projectContext(ancestor.context),
       ...(ancestor.prepared
         ? {
             prepared: {
               ...ancestor.prepared,
               sheets: ancestor.prepared.sheets.map((sheet) => ({
                 ...sheet,
-                context: {
-                  ...sheet.context,
-                  ...facts,
-                  ...(sheet.context.descendantPath
-                    ? { descendantPath: sheet.context.descendantPath.map(projectTarget) }
-                    : {}),
-                },
+                context: projectContext(sheet.context),
               })),
             },
           }
@@ -67,12 +89,13 @@ export function accordionBeforeCases(
   rules: readonly NativeButtonGroupRule[],
   context: StyleContext,
   marker: string,
+  peerSelectors = false,
 ): readonly NativeStyle[] {
-  return Array.from({ length: 8 }, (_, bits) => {
+  return Array.from({ length: peerSelectors ? 16 : 8 }, (_, bits) => {
     const facts = { lastChild: !!(bits & 1), firstOfType: !!(bits & 2), lastOfType: !!(bits & 4) };
     const style = componentStyle(theme, '', {}, undefined, {
       ...context,
-      ancestors: ancestorsAt(rules, marker, facts),
+      ancestors: ancestorsAt(rules, marker, facts, peerSelectors ? !!(bits & 8) : undefined),
     });
     return Object.fromEntries(
       Object.entries(style).filter(([key]) => !isNativeTextStyleProperty(key)),

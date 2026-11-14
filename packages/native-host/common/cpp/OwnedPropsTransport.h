@@ -154,6 +154,7 @@ struct PreparedData final {
   const bool parentSelector;
   const std::string owner;
   const std::shared_ptr<const altroo::owned_channel::PeerStyleIdentity> peer;
+  const std::optional<altroo::owned_channel::PeerObservation> observation;
 #ifdef RN_SERIALIZABLE_STATE
   const PhysicalPayloads physical;
 #if defined(__ANDROID__)
@@ -182,7 +183,8 @@ struct PreparedData final {
                bool parent = false, std::string identity = {})
       : unselected(std::move(current)), candidates(std::move(pair)), programme(kind),
         parentSelector(parent), owner(std::move(identity)),
-        peer(sharedPeer(unselected, previous))
+        peer(sharedPeer(unselected, previous)),
+        observation(unselected ? altroo::owned_channel::peerObservation(unselected->ownedProgramme) : std::nullopt)
 #ifdef RN_SERIALIZABLE_STATE
       , physical(checkedPhysical(unselected, candidates, previous))
 #if defined(__ANDROID__)

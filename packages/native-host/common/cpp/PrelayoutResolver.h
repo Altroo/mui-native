@@ -71,6 +71,7 @@ struct Choice {
 };
 struct Region {
   const ShadowNode *last{};
+  std::unordered_map<const ShadowNode *, const ShadowNode *> previous;
   std::unordered_map<ComponentHandle, const ShadowNode *> first;
   std::unordered_map<ComponentHandle, const ShadowNode *> lastOfType;
 };
@@ -140,6 +141,7 @@ inline const Region &regionFor(const ShadowNode *parent, Plan &plan) {
   if (siblings.size() > maxNodes)
     throw std::length_error("Sibling classification budget exceeded");
   std::size_t remainingRawLeaves = maxNodes - siblings.size();
+  const ShadowNode *previous = nullptr;
   for (const auto &sibling : siblings) {
     ++plan.counts.siblingChecks;
     if (!sibling) throw std::invalid_argument("Null candidate sibling");
@@ -153,6 +155,8 @@ inline const Region &regionFor(const ShadowNode *parent, Plan &plan) {
         !elementSibling(*sibling))
       throw std::invalid_argument("Probe requires an ordinary native host-element sibling");
     auto &region = entry->second;
+    region.previous.emplace(sibling.get(), previous);
+    previous = sibling.get();
     region.last = sibling.get();
     const auto type = selectorType(*sibling);
     region.first.try_emplace(type, sibling.get());
@@ -168,6 +172,34 @@ inline std::uint8_t selectorFacts(const ShadowNode &subject, const ShadowNode *p
   return (region.last == &subject ? 1 : 0) |
       (first != region.first.end() && first->second == &subject ? 2 : 0) |
       (last != region.lastOfType.end() && last->second == &subject ? 4 : 0);
+}
+inline const ShadowNode *previousFor(const ShadowNode &subject, const ShadowNode *parent, Plan &plan) {
+  const auto &region = regionFor(parent, plan);
+  const auto found = region.previous.find(&subject);
+  return found == region.previous.end() ? nullptr : found->second;
+}
+inline std::optional<bool> nativePeerMatch(const ShadowNode &subject, const ShadowNode *previous) {
+  if (!previous) return false;
+  const auto *current = dynamic_cast<const AltrooStructuralViewShadowNode *>(&subject);
+  if (!current || !current->getConcreteProps().prepared || !current->getConcreteProps().prepared->peer) return std::nullopt;
+  const auto &self = *current->getConcreteProps().prepared->peer;
+  if (!self.expanded) return false;
+  bool eligible = false;for (const auto &token : self.classes) eligible = eligible || token.eligible;
+  if (!eligible) return false;
+  const auto *prior = dynamic_cast<const AltrooStructuralViewShadowNode *>(previous);
+  if (!prior || !prior->getConcreteProps().prepared || !prior->getConcreteProps().prepared->peer) return std::nullopt;
+  const auto &peer = *prior->getConcreteProps().prepared->peer;
+  if (!peer.expanded) return false;
+  for (const auto &token : self.classes) if (token.eligible)
+    for (const auto &candidate : peer.classes)
+      if (token.cacheKey == candidate.cacheKey && token.css == candidate.css) return true;
+  return false;
+}
+inline bool observedPeerMatch(const altroo::owned_transport_proof::PreparedData &prepared,
+    const ShadowNode &subject, const ShadowNode &parent, const ShadowNode *previous) {
+  const auto &value = prepared.observation;
+  return value && value->surface == subject.getSurfaceId() && value->subject == subject.getTag() &&
+      value->parent == parent.getTag() && value->previous == (previous ? previous->getTag() : 0) && value->expanded;
 }
 // Validate the entire candidate before cloning anything. No old tree writes,
 // cached native tags, callbacks, per-frame work, or out-of-tree accepted reads.
@@ -214,6 +246,14 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
         throw std::invalid_argument("Probe requires a controlled View/root parent");
       const auto ordinary = props.prepared->candidates.ordinaryIndex();
       std::uint8_t facts = selectable ? selectorFacts(*subject, subjectParent, plan) : ordinary;
+      if (selectable && props.prepared->candidates.count() == 16) {
+        const auto *previous = previousFor(*subject, subjectParent, plan);
+        const auto match = nativePeerMatch(*subject, previous);
+        // Unknown identity uses an explicitly bound observation. A new peer
+        // cannot inherit a stale true from another sibling or parent.
+        const bool expanded = match.has_value() ? *match : observedPeerMatch(*props.prepared, *subject, *subjectParent, previous);
+        if (expanded) facts |= 8;
+      }
       if (!structural) facts &= 1;
       const bool last = facts != ordinary && (facts & 1);
       if (props.prepared->programme == altroo::owned_transport_proof::Programme::Numeric &&

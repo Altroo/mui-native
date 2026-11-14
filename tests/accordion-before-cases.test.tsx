@@ -109,3 +109,64 @@ test('retained outer sheets do not acquire the panel structural facts', () => {
   const cases = accordionBeforeCases(theme, [rule(prepared, panel)], {}, marker);
   expect(cases.map((value) => value.top)).toEqual(Array(8).fill(-1));
 });
+
+test('sixteen parent cases replace a captured stale peer state without replaying CSS', () => {
+  const source = jest.fn(() => ({
+    '&::before': { height: '4px', opacity: 1 },
+    '&:first-of-type::before': { display: 'none' },
+    '&.Mui-expanded.Mui-nativePreviousExpanded.Mui-nativePreviousExpanded::before': {
+      display: 'none',
+    },
+  }));
+  const selector = {
+    classes: [marker, 'MuiAccordion-root', 'Mui-expanded'],
+    states: ['nativePreviousExpanded'],
+  };
+  const cases = accordionBeforeCases(
+    theme,
+    [rule(prepare(source, selector), selector)],
+    {},
+    marker,
+    true,
+  );
+  expect(cases).toHaveLength(16);
+  expect(cases.slice(0, 8).map((value) => value.display)).toEqual([
+    undefined,
+    undefined,
+    'none',
+    'none',
+    undefined,
+    undefined,
+    'none',
+    'none',
+  ]);
+  expect(cases.slice(8).map((value) => value.display)).toEqual(Array(8).fill('none'));
+  expect(source).toHaveBeenCalledTimes(1);
+});
+
+test('peer projection leaves an outer ancestor state intact', () => {
+  const outer = { classes: ['outer', 'Mui-nativePreviousExpanded'] };
+  const panel = { classes: [marker, 'MuiAccordion-root'], states: ['nativePreviousExpanded'] };
+  const outerStyle = prepare(
+    { '&.Mui-nativePreviousExpanded': { '& .MuiAccordion-root': { '&::before': { height: 9 } } } },
+    outer,
+  );
+  const innerStyle = prepare(
+    {
+      '&::before': { height: 1, opacity: 1 },
+      '&.Mui-nativePreviousExpanded::before': { opacity: 0.25 },
+    },
+    panel,
+  );
+  const cases = accordionBeforeCases(
+    theme,
+    [rule(outerStyle, outer), rule(innerStyle, panel)],
+    {},
+    marker,
+    true,
+  );
+  expect(cases).toHaveLength(16);
+  expect(cases.every((value) => value.height === 9)).toBe(true);
+  expect(cases.slice(0, 8).map((value) => value.opacity)).toEqual(Array(8).fill(1));
+  expect(cases.slice(8).map((value) => value.opacity)).toEqual(Array(8).fill(0.25));
+});

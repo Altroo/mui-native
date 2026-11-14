@@ -9,6 +9,9 @@
 #include <string>
 #include <optional>
 #include <vector>
+#include <cmath>
+#include <cstdint>
+#include <limits>
 namespace altroo::owned_channel {
 inline constexpr std::array<std::string_view, 130> styleKeys{"alignContent","alignItems","alignSelf","aspectRatio","backfaceVisibility","backgroundColor","backgroundImage","backgroundPosition","backgroundRepeat","backgroundSize","borderBlockColor","borderBlockEndColor","borderBlockStartColor","borderBottomColor","borderBottomEndRadius","borderBottomLeftRadius","borderBottomRightRadius","borderBottomStartRadius","borderBottomWidth","borderColor","borderCurve","borderEndColor","borderEndEndRadius","borderEndStartRadius","borderEndWidth","borderLeftColor","borderLeftWidth","borderRadius","borderRightColor","borderRightWidth","borderStartColor","borderStartEndRadius","borderStartStartRadius","borderStartWidth","borderStyle","borderTopColor","borderTopEndRadius","borderTopLeftRadius","borderTopRightRadius","borderTopStartRadius","borderTopWidth","borderWidth","bottom","boxShadow","boxSizing","color","columnGap","cursor","direction","display","elevation","end","experimental_backgroundImage","experimental_backgroundPosition","experimental_backgroundRepeat","experimental_backgroundSize","filter","flex","flexBasis","flexDirection","flexGrow","flexShrink","flexWrap","gap","height","inset","insetBlock","insetBlockEnd","insetBlockStart","insetInline","insetInlineEnd","insetInlineStart","isolation","justifyContent","left","margin","marginBlock","marginBlockEnd","marginBlockStart","marginBottom","marginEnd","marginHorizontal","marginInline","marginInlineEnd","marginInlineStart","marginLeft","marginRight","marginStart","marginTop","marginVertical","maxHeight","maxWidth","minHeight","minWidth","mixBlendMode","opacity","outlineColor","outlineOffset","outlineStyle","outlineWidth","overflow","padding","paddingBlock","paddingBlockEnd","paddingBlockStart","paddingBottom","paddingEnd","paddingHorizontal","paddingInline","paddingInlineEnd","paddingInlineStart","paddingLeft","paddingRight","paddingStart","paddingTop","paddingVertical","pointerEvents","position","right","rowGap","shadowColor","shadowOffset","shadowOpacity","shadowRadius","start","top","transform","transformOrigin","width","zIndex"};
 inline folly::dynamic nativeProfile() {
@@ -74,6 +77,24 @@ inline std::optional<PeerStyleIdentity> peerStyleIdentity(const folly::dynamic &
     result.classes.push_back({token.at("cacheKey").getString(), token.at("css").getString(), token.at("eligible").asBool()});
   return result;
 }
+// A JS observation is fallback input only; candidate identity must still match.
+struct PeerObservation { std::int32_t surface; std::int32_t subject; std::int32_t parent; std::int32_t previous; bool expanded; };
+inline void requirePeerObservation(const folly::dynamic &value) {
+  if (value.isNull()) return;
+  if (!value.isObject() || value.size() != 5 || !value.count("expanded") || !value.at("expanded").isBool())
+    throw std::invalid_argument("Invalid peer observation binding");
+  for (const char *key : {"surface", "subject", "parent", "previous"}) {
+    if (!value.count(key) || !value.at(key).isNumber()) throw std::invalid_argument("Invalid peer observation tag");
+    const double tag = value.at(key).asDouble();
+    if (!std::isfinite(tag) || std::floor(tag) != tag || tag < (std::string_view(key) == "previous" ? 0 : 1) || tag > std::numeric_limits<std::int32_t>::max())
+      throw std::invalid_argument("Peer observation tag is outside native bounds");
+  }
+}
+inline std::optional<PeerObservation> peerObservation(const folly::dynamic &programme) {
+  if (!programme.isObject() || !programme.count("observation") || programme.at("observation").isNull()) return std::nullopt;
+  const auto &value = programme.at("observation");requirePeerObservation(value);
+  return PeerObservation{static_cast<std::int32_t>(value.at("surface").asDouble()), static_cast<std::int32_t>(value.at("subject").asDouble()), static_cast<std::int32_t>(value.at("parent").asDouble()), static_cast<std::int32_t>(value.at("previous").asDouble()), value.at("expanded").asBool()};
+}
 inline bool fullProgramme(const folly::dynamic &programme) {
   if (programme.isNull()) return false;
   if (!programme.isObject() || !programme.count("schema") ||
@@ -95,13 +116,17 @@ inline bool fullProgramme(const folly::dynamic &programme) {
     const bool owner = programme.count("owner") != 0;
     const bool parent = programme.count("basis") != 0;
     const bool peer = programme.count("peer") != 0;
-    if (programme.size() != 3 + std::size_t(owner) + std::size_t(parent) + std::size_t(peer) ||
+    const bool observation = programme.count("observation") != 0;
+    if (programme.size() != 3 + std::size_t(owner) + std::size_t(parent) + std::size_t(peer) + std::size_t(observation) ||
         (owner && (!programme.at("owner").isString() ||
                    programme.at("owner").getString().empty() ||
                    programme.at("owner").getString().size() > 256)) ||
         (parent && (!owner || !programme.at("basis").isString() ||
                     programme.at("basis").getString() != "parent")))
       throw std::invalid_argument("Invalid structural owner projection");
+    if ((schema == 3.0 && (!parent || !observation)) || (schema == 2.0 && observation))
+      throw std::invalid_argument("Adjacent cases require a bound parent observation");
+    if (observation) requirePeerObservation(programme.at("observation"));
     if (peer) {
       if (parent) throw std::invalid_argument("A projected ornament cannot own peer identity");
       requirePeerStyleIdentity(programme.at("peer"));
