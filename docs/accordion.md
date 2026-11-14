@@ -1,6 +1,6 @@
 # Native Accordion
 
-`Accordion`, `AccordionSummary`, `AccordionDetails` and `AccordionActions` compose native views, the shared ButtonBase activation host and the retained Collapse transition. This guide describes development on `main`. Published `0.0.8-prealpha.0` includes the earlier subset recorded in the [changelog](../CHANGELOG.md).
+`Accordion`, `AccordionSummary`, `AccordionDetails` and `AccordionActions` compose native views, the shared ButtonBase activation host and the retained Collapse transition. This guide describes the development source. Published `0.0.8-prealpha.0` includes the earlier subset recorded in the [changelog](../CHANGELOG.md).
 
 ```tsx
 import {
@@ -9,15 +9,11 @@ import {
   AccordionDetails,
   AccordionActions,
   Button,
-  Typography,
 } from '@altroo/mui-native';
+import ExpandMore from '@altroo/mui-native-icons/ExpandMore';
 
 <Accordion defaultExpanded>
-  <AccordionSummary
-    id="delivery-summary"
-    aria-controls="delivery-body"
-    expandIcon={<Typography>⌄</Typography>}
-  >
+  <AccordionSummary id="delivery-summary" aria-controls="delivery-body" expandIcon={<ExpandMore />}>
     Delivery instructions
   </AccordionSummary>
   <AccordionDetails>Leave with reception.</AccordionDetails>
@@ -27,7 +23,7 @@ import {
 </Accordion>;
 ```
 
-Registered Metro routing also accepts these imports from `@mui/material` and their component/class-helper subpaths. Follow the [installation guide](installation.md) and rebuild the native application for the existing ButtonBase hosts. This is a library composition; the catalog supplies only example data and application state.
+The example uses the optional `@altroo/mui-native-icons` package for its decorative indicator. Registered Metro routing also accepts these imports from `@mui/material` and their component/class-helper subpaths. Follow the [installation guide](installation.md) and rebuild the native application for the existing ButtonBase hosts. This is a library composition; the catalog supplies only example data and application state.
 
 ## Expansion and events
 
@@ -57,7 +53,7 @@ Panels derive rounded edges and expansion margins from actual native sibling ord
 
 Outer margins, Summary minimum height/content margins, icon rotation and separator opacity/color use theme transition timing. Rapid reversal continues from the presented value; reduced motion applies the endpoint. Changing gutters preserves Summary content state and refs. A theme `focusVisible` policy replaces the default Summary focus background.
 
-External browser stylesheets, HTML element roots and DOM refs require native equivalents. The native API includes Paper-compatible polymorphic roots; native refs intentionally differ from DOM refs. First-frame paint, broader grouping/motion matrices, screen-reader traversal and calibrated release performance remain completion gates. No full compatibility or completion claim is made.
+External browser stylesheets, HTML element roots and DOM refs require native equivalents. The native API includes Paper-compatible polymorphic roots; native refs intentionally differ from DOM refs. First-frame paint, broader grouping/motion and screen-reader matrices, and calibrated release performance remain completion gates. No full compatibility or completion claim is made.
 
 ## AccordionActions
 
@@ -77,7 +73,11 @@ Scoped checks on the existing iPhone 18 Pro / iOS 27 and Android API 37 emulator
 
 The maintained scenarios are [Android](../tests/native/android/AccordionScenario.java) and [iOS](../tests/native/ios/AccordionCatalogUITests.swift). Prepare the existing generated Android project with `node scripts/native-catalog/android-accordion.mjs prepare PROJECT`, build/install its test APK, then run `node scripts/native-catalog/android-accordion.mjs run SERIAL OUTPUT` with the Android SDK tools available. The runner targets that explicit device, retains native receipts/screenshots and restores only the catalog. Add the maintained Swift file to the catalog UI test target to run `AccordionCatalogUITests` on an existing simulator.
 
-The maintained iOS scenario also checks actual Summary content/icon positions when an authored parent switches RTL, retaining body state and restoring LTR. Normal and largest accessibility text sizes pass, including payment/footer bounds and visible-control description/trait audits. These automated audits complement touch checks; they do not establish VoiceOver traversal. Renderer regressions cover interruption, reduced motion, constructor replacement and state/ref retention when gutters change. Fresh tarball consumers compile native root/deep imports and strict polymorphic/optional contracts.
+The maintained iOS scenario also checks actual Summary content/icon positions when an authored parent switches RTL, retaining body state and restoring LTR. Normal and largest accessibility text sizes pass, including payment/footer bounds and visible-control description/trait audits. These automated audits complement touch checks; VoiceOver traversal is verified separately below. Renderer regressions cover interruption, reduced motion, constructor replacement and state/ref retention when gutters change. Fresh tarball consumers compile native root/deep imports and strict polymorphic/optional contracts.
+
+The [14 November VoiceOver evidence](../compatibility/evidence/native-accordion-voiceover-ios-2026-11-14.json) records six passing Release cases: the main spoken-traversal scenario, its independent input control, and dark-mode/RTL regressions at normal and largest accessibility text sizes. On iOS27, `testVoiceOverTraversalAndActivation` uses [Apple's VoiceOver service](https://developer.apple.com/documentation/xcuiautomation/xcuivoiceoverservice) to traverse the actual spoken elements. A target-specific double tap selects payment exactly once. Returning through the closed delivery interval must exclude its editor/actions; the disabled Return panel must remain collapsed. The catalog uses the native Material `ExpandMore` icon so a decorative text glyph cannot enter the Summary label. The collectors restore the original app and text size; VoiceOver tests restore its prior setting.
+
+The standalone [Pressable control](../tests/native/fixtures/PressableVoiceOverProbe.tsx), registered as an Expo entry for `PressableVoiceOverProbeUITests`, first qualifies that input on stock React Native Pressable. The owned host must then activate once while retaining the stock counter. An unavailable stock driver is reported as a skipped qualification; an owned-host failure after successful stock input fails the test. The retained result has one passing control case and no skips. Roles and disabled traits use native accessibility queries alongside the captured speech.
 
 The isolated [motion fixture](../tests/native/fixtures/AccordionMotionProbe.tsx) can be registered as an Expo entry beneath `apps/native-catalog`. Build the UI test target in `Release` with `ENTRY_FILE` selecting that entry, Swift `-O` and C optimization `s`, then select `AccordionMotionProbeUITests` from the maintained Swift file. Its default and forwarding-root cases sample public native bounds during the transition and compare the final native accessibility frame. Receipts require production JavaScript and actual font scale 1. Summary height, content offset and rotated icon bounds must contain intermediate values. This is geometry evidence; paint timing and performance deadlines remain separate.
 
