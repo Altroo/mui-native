@@ -1,6 +1,11 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
-import { componentRootStyle, createTheme } from '@altroo/mui-native-system';
-import { prepareAccordionStructuralCases as compileAccordionStructuralCases } from '../packages/material/src/accordionStructuralRoot';
+import { componentRootStyle, createTheme, createNativeStyleCache } from '@altroo/mui-native-system';
+import {
+  prepareAccordionStructuralCases as compileAccordionStructuralCases,
+  createAccordionStructuralPreparation,
+} from '../packages/material/src/accordionStructuralRoot';
+import { refreshNativeRootPreparation } from '@altroo/mui-native-system/internal/prepared-style';
+import { nativeStyleCacheRegistry } from '../packages/system/src/nativeStyleCache';
 const theme = createTheme();
 const context = {
   classes: ['MuiAccordion-root'],
@@ -97,4 +102,32 @@ test('a conditional direction cannot be hidden by equal physical heights', () =>
     true,
   );
   expect(compile(prepared.programme).every((value) => value.direction !== 'rtl')).toBe(true);
+});
+
+test('cache projection snapshots genuine inline getters once and reuses its epoch result', () => {
+  const cache = createNativeStyleCache({ key: 'case-projection-getter' });
+  try {
+    nativeStyleCacheRegistry.commit([{ cache, css: 'padding:1px;', hasRules: true }]);
+    let reads = 0;
+    const preparation = createAccordionStructuralPreparation({
+      theme,
+      context,
+      direction: 'ltr',
+      programme: {
+        get opacity() {
+          reads++;
+          return 0.3;
+        },
+      },
+    });
+    expect(reads).toBe(1);
+    cache.reset();
+    const refreshed = refreshNativeRootPreparation(preparation);
+    expect(refreshed).not.toBe(preparation);
+    expect(refreshed.every((value) => value.opacity === 0.3)).toBe(true);
+    expect(refreshNativeRootPreparation(preparation)).toBe(refreshed);
+    expect(reads).toBe(1);
+  } finally {
+    cache.dispose();
+  }
 });

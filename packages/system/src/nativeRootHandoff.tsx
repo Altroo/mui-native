@@ -22,28 +22,26 @@ export type NativeRootPreparation = Readonly<{
 // Source roots retain their counterfactual compiler; cache epochs only repaint
 // already-prepared CSS and recheck its physical-root text invariant.
 const preparations = new WeakMap<
-  NativeRootPreparation,
+  object,
   {
     revision: number;
-    project: () => NativeRootPreparation;
-    latest?: { revision: number; value: NativeRootPreparation };
+    project: () => object;
+    latest?: { revision: number; value: object };
   }
 >();
-export function retainNativeRootPreparation(
-  value: NativeRootPreparation,
-  project: () => NativeRootPreparation,
-): NativeRootPreparation {
+export function retainNativeRootPreparation<T extends object>(value: T, project: () => T): T {
   preparations.set(value, { revision: nativeStyleCacheRegistry.snapshot(), project });
   return value;
 }
-export function refreshNativeRootPreparation(value: NativeRootPreparation): NativeRootPreparation {
+// Each key owns its projection type; only the shared WeakMap erases that type.
+export function refreshNativeRootPreparation<T extends object>(value: T): T {
   const record = preparations.get(value);
   const revision = nativeStyleCacheRegistry.snapshot();
   if (!record || record.revision === revision) return value;
-  if (record.latest?.revision === revision) return record.latest.value;
+  if (record.latest?.revision === revision) return record.latest.value as T;
   const next = record.project();
   record.latest = { revision, value: next };
-  return next;
+  return next as T;
 }
 
 export type NativeRootStyleInput = Readonly<{

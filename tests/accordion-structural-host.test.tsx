@@ -34,9 +34,24 @@ jest.mock('../packages/native-host/src/ownedStructuralCases', () => ({
   },
 }));
 import { createRef, forwardRef, useState } from 'react';
-import { Text, type ViewInstance } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  processColor,
+  type StyleProp,
+  type ViewInstance,
+} from 'react-native';
 import { act, cleanup, fireEvent, render } from '@testing-library/react-native';
 import { Accordion, AccordionSummary, Box, ThemeProvider, createTheme } from '@altroo/mui-native';
+import {
+  styled,
+  createNativeStyleCache,
+  NativeStyleCacheProvider,
+  type NativeStyle,
+} from '@altroo/mui-native-system';
+import { Paper } from '@altroo/mui-native';
+import { AccordionStructuralRootContext } from '../packages/material/src/accordionStructuralRoot';
 import { nativeStyleTree } from '../packages/material/src/nativeStyleAncestry';
 const Opaque = forwardRef<ViewInstance, Record<string, unknown>>(function Opaque(props, ref) {
   return <Box {...props} ref={ref} />;
@@ -167,3 +182,126 @@ for (const Root of [undefined, Box, Opaque]) {
     },
   );
 }
+
+for (const Root of [Box, Paper]) {
+  test('owned case table refreshes when a foreign cache expires: ' + String(Root), () => {
+    const a = createNativeStyleCache({ key: 'owned-case-source' });
+    const b = createNativeStyleCache({ key: 'owned-case-target' });
+    let tree: ReturnType<typeof render> | undefined;
+    try {
+      const Warm = styled(View)({ padding: 1 });
+      const warm = render(
+        <NativeStyleCacheProvider value={b}>
+          <Warm />
+        </NativeStyleCacheProvider>,
+      );
+      warm.unmount();
+      let captured: StyleProp<NativeStyle> = undefined;
+      const produce = jest.fn(({ style }: { style?: StyleProp<NativeStyle> }) => {
+        captured = style;
+        return null;
+      });
+      const Producer = styled(produce)({ backgroundColor: 'red' });
+      const producer = render(
+        <NativeStyleCacheProvider value={a}>
+          <Producer />
+        </NativeStyleCacheProvider>,
+      );
+      producer.unmount();
+      const sx = jest.fn(() => ({ backgroundColor: 'blue' }));
+      const ref = createRef<ViewInstance>();
+      tree = render(
+        <NativeStyleCacheProvider value={b}>
+          <AccordionStructuralRootContext.Provider value="owned-cache-target">
+            <Root
+              ref={ref}
+              className="owned-cache-target"
+              testID="cache-root"
+              style={captured}
+              sx={sx}
+            >
+              <RetainedCounter />
+            </Root>
+          </AccordionStructuralRootContext.Provider>
+        </NativeStyleCacheProvider>,
+        { createNodeMock: () => ({}) },
+      );
+      const target = tree;
+      const paint = () =>
+        processColor(
+          StyleSheet.flatten(target.getByTestId('cache-root').props.style)?.backgroundColor,
+        );
+      const colors = () =>
+        target
+          .getByTestId('cache-root')
+          .props.ownedProgramme.cases.map(
+            (value: Record<string, unknown>) => value.backgroundColor,
+          );
+      const host = ref.current;
+      expect(paint()).toBe(processColor('red'));
+      expect(colors()).toEqual(Array(8).fill(processColor('red')));
+      fireEvent.press(target.getByTestId('retained-count'));
+      act(() => a.reset());
+      expect(paint()).toBe(processColor('blue'));
+      expect(colors()).toEqual(Array(8).fill(processColor('blue')));
+      expect(ref.current).toBe(host);
+      expect(target.getByTestId('retained-count')).toHaveTextContent('1');
+      expect(produce).toHaveBeenCalledTimes(1);
+      expect(sx).toHaveBeenCalledTimes(1);
+    } finally {
+      tree?.unmount();
+      a.dispose();
+      b.dispose();
+    }
+  });
+}
+
+test('cache projection rechecks conditional text while retaining its native host', () => {
+  const a = createNativeStyleCache({ key: 'case-text-source' });
+  const b = createNativeStyleCache({ key: 'case-text-target' });
+  let tree: ReturnType<typeof render> | undefined;
+  try {
+    let captured: StyleProp<NativeStyle> = undefined;
+    const Producer = styled(({ style }: { style?: StyleProp<NativeStyle> }) => {
+      captured = style;
+      return null;
+    })({ '&:first-of-type': { color: 'red' } });
+    const producer = render(
+      <NativeStyleCacheProvider value={a}>
+        <Producer />
+      </NativeStyleCacheProvider>,
+    );
+    producer.unmount();
+    const ref = createRef<ViewInstance>();
+    tree = render(
+      <NativeStyleCacheProvider value={b}>
+        <AccordionStructuralRootContext.Provider value="text-cache-root">
+          <Box
+            ref={ref}
+            className="text-cache-root"
+            testID="text-cache-root"
+            style={captured}
+            sx={{ minHeight: 48, '&:first-of-type': { minHeight: 80 } }}
+          >
+            <RetainedCounter />
+          </Box>
+        </AccordionStructuralRootContext.Provider>
+      </NativeStyleCacheProvider>,
+      { createNodeMock: () => ({}) },
+    );
+    const target = tree;
+    const cases = () => target.getByTestId('text-cache-root').props.ownedProgramme.cases;
+    const host = ref.current;
+    expect(cases().every((value: Record<string, unknown>) => value.minHeight === 48)).toBe(true);
+    fireEvent.press(target.getByTestId('retained-count'));
+    act(() => a.reset());
+    expect(cases()[2].minHeight).toBe(80);
+    expect(cases()[0].minHeight).toBe(48);
+    expect(ref.current).toBe(host);
+    expect(target.getByTestId('retained-count')).toHaveTextContent('1');
+  } finally {
+    tree?.unmount();
+    a.dispose();
+    b.dispose();
+  }
+});

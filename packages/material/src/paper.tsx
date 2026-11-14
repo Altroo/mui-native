@@ -34,11 +34,12 @@ import {
   NativeCssRootBoundary,
   refreshNativeStyle,
   retainNativeStyleTransform,
+  refreshNativeRootPreparation,
 } from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeRootTextBoundary } from './nativeRootTextBoundary';
 import {
   AccordionStructuralView,
-  prepareAccordionStructuralCases,
+  createAccordionStructuralPreparation,
   useAccordionStructuralRoot,
 } from './accordionStructuralRoot';
 import { paperConstructorCss, paperOverrideCss } from './nativeAccordionCss';
@@ -224,9 +225,9 @@ export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperR
     const inlineLayers = authored;
     const paint = paperPainter(parent?.direction ?? theme.direction, inlineLayers);
     const finalStyle = retainNativeStyleTransform(paint(computed), computed, paint);
-    const structuralCases =
+    const structuralPreparation =
       structuralRoot && Root === View
-        ? prepareAccordionStructuralCases({
+        ? createAccordionStructuralPreparation({
             theme,
             programme,
             direction: parent?.direction ?? theme.direction,
@@ -242,63 +243,68 @@ export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperR
         : undefined;
     return (
       <NativeCssRootBoundary style={computed} registerClass={Root !== View}>
-        {() => (
-          <NativeStyleScope root={root} theme={theme} classes={tokens} prepared={prepared}>
-            <NativeTextScope
-              rootRef={Root === View ? root : undefined}
-              theme={theme}
-              style={refreshNativeStyle(finalStyle)}
-              content={Root === View ? children : undefined}
-            >
-              {(resolvedStyle, content, fallback) =>
-                renderAccordionRootMotion(
-                  rootMotion,
-                  root,
-                  resolvedStyle,
-                  (nativeStyle, presentation) =>
-                    structuralCases ? (
-                      <AccordionStructuralView
-                        {...native}
-                        cases={structuralCases}
-                        nativeRef={nativeRef}
-                        presentation={presentation}
-                        style={nativeStyle}
-                      >
-                        {content}
-                      </AccordionStructuralView>
-                    ) : Root === View ? (
-                      <Root {...native} ref={nativeRef} style={nativeStyle}>
-                        {content}
-                      </Root>
-                    ) : (
-                      <NativeTextStyleContext.Provider value={parent}>
-                        <Root
+        {() => {
+          const structuralCases = structuralPreparation
+            ? refreshNativeRootPreparation(structuralPreparation)
+            : undefined;
+          return (
+            <NativeStyleScope root={root} theme={theme} classes={tokens} prepared={prepared}>
+              <NativeTextScope
+                rootRef={Root === View ? root : undefined}
+                theme={theme}
+                style={refreshNativeStyle(finalStyle)}
+                content={Root === View ? children : undefined}
+              >
+                {(resolvedStyle, content, fallback) =>
+                  renderAccordionRootMotion(
+                    rootMotion,
+                    root,
+                    resolvedStyle,
+                    (nativeStyle, presentation) =>
+                      structuralCases ? (
+                        <AccordionStructuralView
                           {...native}
-                          {...{ className: rootClass }}
-                          ref={nativeRef}
-                          style={retainNativeRootCss(
-                            inlineLayers,
-                            programme,
-                            Object.hasOwn(props, 'style'),
-                            nativeStyle,
-                          )}
+                          cases={structuralCases}
+                          nativeRef={nativeRef}
+                          presentation={presentation}
+                          style={nativeStyle}
                         >
-                          <NativeRootTextBoundary
-                            parent={parent}
-                            fallback={fallback}
-                            rootRef={root}
-                            theme={theme}
-                          >
-                            {children}
-                          </NativeRootTextBoundary>
+                          {content}
+                        </AccordionStructuralView>
+                      ) : Root === View ? (
+                        <Root {...native} ref={nativeRef} style={nativeStyle}>
+                          {content}
                         </Root>
-                      </NativeTextStyleContext.Provider>
-                    ),
-                )
-              }
-            </NativeTextScope>
-          </NativeStyleScope>
-        )}
+                      ) : (
+                        <NativeTextStyleContext.Provider value={parent}>
+                          <Root
+                            {...native}
+                            {...{ className: rootClass }}
+                            ref={nativeRef}
+                            style={retainNativeRootCss(
+                              inlineLayers,
+                              programme,
+                              Object.hasOwn(props, 'style'),
+                              nativeStyle,
+                            )}
+                          >
+                            <NativeRootTextBoundary
+                              parent={parent}
+                              fallback={fallback}
+                              rootRef={root}
+                              theme={theme}
+                            >
+                              {children}
+                            </NativeRootTextBoundary>
+                          </Root>
+                        </NativeTextStyleContext.Provider>
+                      ),
+                  )
+                }
+              </NativeTextScope>
+            </NativeStyleScope>
+          );
+        }}
       </NativeCssRootBoundary>
     );
   },

@@ -19,6 +19,7 @@ import {
 } from '@altroo/mui-native-host/internal/structural-root';
 import { mergeNativeRootStyle } from './nativeControlStyles';
 import { snapshotNativeStyleProgramme } from './cardContentCandidates';
+import { retainNativeRootPreparation } from '@altroo/mui-native-system/internal/prepared-style';
 
 const reportRuntimeError: Parameters<
   NonNullable<typeof ownedStructuralCases>['activation']['acquire']
@@ -108,6 +109,23 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
   }
   return cases.map((value) => value.view);
 }
+/** Snapshot genuine inline data once; cache epochs only re-evaluate retained CSS.
+ * Keep the projection outside component render closures so it cannot retain
+ * children, prop callbacks or a newer render's input through a mutable channel.
+ */
+export function createAccordionStructuralPreparation(input: Input) {
+  const { baseStyle: _base, rootProps: _props, ancestors: _ancestors, ...context } = input.context;
+  const captured: Input = {
+    theme: input.theme,
+    direction: input.direction,
+    context,
+    programme: snapshotNativeStyleProgramme(input.programme),
+  };
+  const project = (): readonly NativeStyle[] =>
+    retainNativeRootPreparation(Object.freeze(prepareAccordionStructuralCases(captured)), project);
+  return project();
+}
+
 export function AccordionStructuralView({
   cases,
   presentation,
