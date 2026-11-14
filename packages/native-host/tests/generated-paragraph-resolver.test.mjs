@@ -245,6 +245,7 @@ struct Pair {
  std::shared_ptr<const facebook::react::ViewProps> normal,last;
  std::array<std::shared_ptr<const facebook::react::ViewProps>,8> cases{};
  bool structural()const{return cases[0]!=nullptr;}
+ std::uint8_t ordinaryIndex()const{return 8;}
  const auto& at(std::uint8_t facts)const{return structural()?cases.at(facts):(facts&1?last:normal);}
 };
 struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;Programme programme{Programme::Numeric};};

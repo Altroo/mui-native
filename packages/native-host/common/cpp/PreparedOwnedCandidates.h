@@ -2,7 +2,7 @@
 // Private generated-host constructor proof, not a production CSS API.
 #pragma once
 #include <memory>
-#include <array>
+#include <vector>
 #include <cstdint>
 #include "GeneratedConversion.h"
 
@@ -17,10 +17,12 @@ struct PreparedViewCandidates {
   std::shared_ptr<const AltrooMUIStructuralViewProps> last;
   // Bits: last-child=1, first-of-type=2, last-of-type=4. Legacy pairs
   // keep their two-leaf storage and ignore the added structural facts.
-  std::array<std::shared_ptr<const AltrooMUIStructuralViewProps>, 8> cases{};
-  bool structural() const { return cases[0] != nullptr; }
+  std::vector<std::shared_ptr<const AltrooMUIStructuralViewProps>> cases{};
+  bool structural() const { return !cases.empty(); }
+  std::size_t count() const { return structural() ? cases.size() : 8; }
+  std::uint8_t ordinaryIndex() const { return static_cast<std::uint8_t>(count()); }
   const std::shared_ptr<const AltrooMUIStructuralViewProps> &at(std::uint8_t facts) const {
-    if (facts >= cases.size()) throw std::invalid_argument("Invalid owned selector facts");
+    if (facts >= count()) throw std::invalid_argument("Invalid owned selector facts");
     const auto &value = structural() ? cases[facts] : (facts & 1 ? last : normal);
     if (!value) throw std::invalid_argument("Owned style candidate is missing");
     return value;
@@ -62,7 +64,10 @@ inline PreparedViewCandidates prepareStructural(
     const std::shared_ptr<const AltrooMUIStructuralViewProps> &baseline,
     const folly::dynamic &payloads) {
   using CoreDescriptor = altroo::owned_channel::ConversionDescriptor;
+  if (!payloads.isArray() || (payloads.size() != 8 && payloads.size() != 16))
+    throw std::invalid_argument("Owned structural programme requires eight or sixteen cases");
   PreparedViewCandidates result;
+  result.cases.resize(payloads.size());
   for (std::size_t index = 0; index < result.cases.size(); ++index) {
     for (std::size_t prior = 0; prior < index; ++prior)
       if (payloads[index] == payloads[prior]) {

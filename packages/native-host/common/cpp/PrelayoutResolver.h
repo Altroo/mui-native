@@ -207,9 +207,10 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
         (controlledParent(*subjectParent) || (structural && elementSibling(*subjectParent)));
     if (!selectable && !structural)
       throw std::invalid_argument("Probe requires a controlled View/root parent");
-    std::uint8_t facts = selectable ? selectorFacts(*subject, subjectParent, plan) : 8;
+    const auto ordinary = props.prepared->candidates.ordinaryIndex();
+    std::uint8_t facts = selectable ? selectorFacts(*subject, subjectParent, plan) : ordinary;
     if (!structural) facts &= 1;
-    const bool last = facts != 8 && (facts & 1);
+    const bool last = facts != ordinary && (facts & 1);
     if (props.prepared->programme == altroo::owned_transport_proof::Programme::Numeric &&
         (!std::isfinite(props.normalPaddingBottom) ||
         !std::isfinite(props.lastPaddingBottom) ||
@@ -220,7 +221,7 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
           "Padding candidates must fit finite nonnegative Yoga float");
     // Yoga StyleLength::points encodes float, including on iOS where RN Float
     // is CGFloat/double. Ordinary in-range Double rounding is intentional.
-    const auto &chosen = facts == 8 ? props.prepared->unselected
+    const auto &chosen = facts == ordinary ? props.prepared->unselected
                                      : props.prepared->candidates.at(facts);
     const auto selectedBottom = bottomPadding(chosen->yogaStyle);
     const float bottom = selectedBottom.isPoints() ? selectedBottom.value().unwrap() : 0;

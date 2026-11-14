@@ -15,6 +15,7 @@
 #include <react/renderer/core/propsConversions.h>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 namespace altroo::owned_transport_proof {
 using namespace facebook::react;
@@ -29,7 +30,7 @@ using Pair = altroo::owned_adapter_proof::PreparedViewCandidates;
 // never materialize RawProps/JSI or infer values from typed fields.
 struct PhysicalPayloads final {
   folly::dynamic baseline;
-  std::array<folly::dynamic, 8> cases;
+  std::vector<folly::dynamic> cases;
 };
 inline void clearMissingPhysicalKeys(folly::dynamic &target,
                                      const folly::dynamic &known) {
@@ -43,7 +44,7 @@ inline PhysicalPayloads physicalPayloads(const Generated &baseline, const Pair &
   auto current = mergeDynamicProps(previous ? previous->baseline : folly::dynamic::object(),
                                   baseline.rawProps, NullValueStrategy::Override);
   current.erase("ownedProgramme");
-  std::array<folly::dynamic, 8> cases;
+  std::vector<folly::dynamic> cases(pair.count());
   for (std::size_t index = 0; index < cases.size(); ++index) {
     cases[index] = mergeDynamicProps(current, pair.at(index)->rawProps,
                                     NullValueStrategy::Override);
@@ -67,7 +68,7 @@ inline PhysicalPayloads physicalPayloads(const Generated &baseline, const Pair &
 // Complete native mount props are independent of speculative state history.
 // Preallocation may have consumed an earlier branch before the first commit.
 struct MountPayloads final {
-  std::array<folly::dynamic, 8> cases;
+  std::vector<folly::dynamic> cases;
   folly::dynamic ordinary;
 };
 inline folly::dynamic completeMountPayload(const GeneratedShared &selected,
@@ -85,9 +86,9 @@ inline folly::dynamic completeMountPayload(const GeneratedShared &selected,
   fillMissing(baseline);
   if (previousBaseline) fillMissing(previousBaseline);
   // Full current values win over partial nested deltas (for example a11y).
-  for (std::uint8_t index = 0; index < 8; ++index) fillMissing(pair.at(index));
+  for (std::uint8_t index = 0; index < pair.count(); ++index) fillMissing(pair.at(index));
   if (previousCandidates)
-    for (std::uint8_t index = 0; index < 8; ++index)
+    for (std::uint8_t index = 0; index < previousCandidates->count(); ++index)
       fillMissing(previousCandidates->at(index));
   // Core's typed Android diff omits these three supported background vectors.
   // Serialize actual typed values, including an ordinary baseline restored
@@ -98,11 +99,13 @@ inline folly::dynamic completeMountPayload(const GeneratedShared &selected,
     };
     bool known = nonempty(selected) || nonempty(baseline) || nonempty(previousBaseline) ||
         (previous && previous->ordinary.count(key));
-    for (std::uint8_t index = 0; index < 8; ++index) {
-      known = known || nonempty(pair.at(index)) ||
-          (previousCandidates && nonempty(previousCandidates->at(index))) ||
-          (previous && previous->cases[index].count(key));
-    }
+    for (std::uint8_t index = 0; index < pair.count(); ++index)
+      known = known || nonempty(pair.at(index));
+    if (previousCandidates)
+      for (std::uint8_t index = 0; index < previousCandidates->count(); ++index)
+        known = known || nonempty(previousCandidates->at(index));
+    if (previous)
+      for (const auto &value : previous->cases) known = known || value.count(key);
     if (known) result[key] = serialize(selected.get()->*member);
   };
   appendBackground("backgroundSize", &Generated::backgroundSize,
@@ -132,8 +135,8 @@ inline MountPayloads mountPayloads(const GeneratedShared &baseline, const Pair &
     const MountPayloads *previous) {
   if (!pair.normal || !pair.last)
     throw std::invalid_argument("Complete generated mount candidates required");
-  std::array<folly::dynamic, 8> cases;
-  for (std::uint8_t index = 0; index < 8; ++index)
+  std::vector<folly::dynamic> cases(pair.count());
+  for (std::uint8_t index = 0; index < pair.count(); ++index)
     cases[index] = completeMountPayload(pair.at(index), baseline, pair, previousBaseline, previousCandidates, previous);
   return {std::move(cases),
       completeMountPayload(baseline, baseline, pair, previousBaseline, previousCandidates, previous)};
@@ -179,7 +182,7 @@ struct PreparedData final {
     if (!unselected || !candidates.normal || !candidates.last)
       throw std::invalid_argument("Complete current generated props required");
     unselected->seal();
-    for (std::uint8_t index = 0; index < 8; ++index) candidates.at(index)->seal();
+    for (std::uint8_t index = 0; index < candidates.count(); ++index) candidates.at(index)->seal();
   }
 };
 using DataShared = std::shared_ptr<const PreparedData>;
@@ -187,7 +190,7 @@ using DataShared = std::shared_ptr<const PreparedData>;
 class OwnedProps final : public ViewProps {
   static const Generated &chosen(const DataShared &data, std::uint8_t facts) {
     if (!data) throw std::invalid_argument("Prepared owned data required");
-    return *(facts == 8 ? data->unselected : data->candidates.at(facts));
+    return *(facts == data->candidates.ordinaryIndex() ? data->unselected : data->candidates.at(facts));
   }
  public:
   using Shared = std::shared_ptr<const OwnedProps>;
@@ -215,7 +218,7 @@ class OwnedProps final : public ViewProps {
 #ifdef RN_SERIALIZABLE_STATE
     // Physical payload is complete and already has explicit removals. This
     // copy is native data only; candidate switching never parses/merges JS.
-    rawProps = facts == 8 ? prepared->physical.baseline : prepared->physical.cases[facts];
+    rawProps = facts == prepared->candidates.ordinaryIndex() ? prepared->physical.baseline : prepared->physical.cases[facts];
 #endif
   }
 #ifdef RN_SERIALIZABLE_STATE
@@ -260,7 +263,7 @@ inline OwnedProps::Shared wrap(DataShared data, std::uint8_t facts) {
 inline OwnedProps::Shared select(const OwnedProps::Shared &current, std::uint8_t facts) {
   if (!current || !current->prepared)
     throw std::invalid_argument("Current owned programme required");
-  if (facts > 8) throw std::invalid_argument("Invalid owned selector facts");
+  if (facts > current->prepared->candidates.ordinaryIndex()) throw std::invalid_argument("Invalid owned selector facts");
   if (current->selectedCase == facts) return current;
   return wrap(current->prepared, facts);
 }
@@ -280,7 +283,7 @@ struct MountStateData final {
   folly::dynamic getDynamic() const {
     if (!selected || !selected->prepared)
       throw std::logic_error("Unprepared owned mount state");
-    const auto &payload = selected->selectedCase == 8 ? selected->prepared->mount.ordinary
+    const auto &payload = selected->selectedCase == selected->prepared->candidates.ordinaryIndex() ? selected->prepared->mount.ordinary
         : selected->prepared->mount.cases[selected->selectedCase];
     return folly::dynamic::object("schema", 1)("selectedProps", payload);
   }
@@ -334,7 +337,7 @@ class OwnedDescriptor final : public ConcreteComponentDescriptor<OwnedShadowNode
                             const OwnedProps::Shared &source, bool parent = false, std::string owner = {}) const {
     // Structural programmes begin from their genuine ordinary presentation.
     // A failed/unsupported native selection must not pin the renderer to case0.
-    const std::uint8_t initial = pair.structural() ? 8 : (source && source->selectedLast ? 1 : 0);
+    const std::uint8_t initial = pair.structural() ? pair.ordinaryIndex() : (source && source->selectedLast ? 1 : 0);
     return wrap(std::make_shared<const PreparedData>(std::move(baseline),
         std::move(pair), kind, source ? source->prepared.get() : nullptr, parent, std::move(owner)), initial);
   }
@@ -354,7 +357,8 @@ class OwnedDescriptor final : public ConcreteComponentDescriptor<OwnedShadowNode
     // null. Always start from unselected current props, never COW-selected CSS.
     auto baseline = convertCurrent(context, current, std::move(raw));
     if (altroo::owned_channel::fullProgramme(baseline->ownedProgramme)) {
-      if (baseline->ownedProgramme.at("schema").asDouble() == 2.0) {
+      const auto schema = baseline->ownedProgramme.at("schema").asDouble();
+      if (schema == 2.0 || schema == 3.0) {
         auto cases = altroo::owned_adapter_proof::prepareStructural(
             converter_, context, baseline, baseline->ownedProgramme.at("cases"));
         const bool parent = baseline->ownedProgramme.count("basis") != 0;

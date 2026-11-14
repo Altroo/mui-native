@@ -47,7 +47,7 @@ inline bool fullProgramme(const folly::dynamic &programme) {
       programme.count("normal") && programme.count("last")) {
     requireStyleMap(programme.at("normal"));
     requireStyleMap(programme.at("last"));
-  } else if (schema == 2.0 && programme.count("cases")) {
+  } else if ((schema == 2.0 || schema == 3.0) && programme.count("cases")) {
     // Root identity is prepared once, not inferred from a nativeID or ancestry.
     const bool owner = programme.count("owner") != 0;
     const bool parent = programme.count("basis") != 0;
@@ -59,8 +59,8 @@ inline bool fullProgramme(const folly::dynamic &programme) {
                     programme.at("basis").getString() != "parent")))
       throw std::invalid_argument("Invalid structural owner projection");
     const auto &cases = programme.at("cases");
-    if (!cases.isArray() || cases.size() != 8)
-      throw std::invalid_argument("Owned structural programme requires eight cases");
+    if (!cases.isArray() || cases.size() != (schema == 3.0 ? 16 : 8))
+      throw std::invalid_argument("Owned structural programme case count must match its schema");
     for (const auto &value : cases) requireStyleMap(value);
   } else {
     throw std::invalid_argument("Unsupported owned programme schema");
