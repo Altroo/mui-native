@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "status": "passed-scoped-recorded-geometry",
+  "validatedSourceCommit": "993785ab3d0ae8d7fb28bd8028c36c0624fb7f66",
+  "regressionEvidence": "native-accordion-grouping-paint-ios-2026-11-14.json",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontScale": 1,
+    "pixelRatio": 3
+  },
+  "nativeEndpointChecks": {
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "qualifiedReceipts": 10,
+    "nativeType": "RN:AltrooMUIStructuralView",
+    "allResolversActive": true,
+    "allResolversHealthy": true,
+    "nativeAttemptRange": [8, 38],
+    "changedCandidateRange": [2, 10]
+  },
+  "capture": {
+    "qualified": true,
+    "recordingExitCode": 0,
+    "bytes": 10492839,
+    "sha256": "5ca9984d9415f96f8ff95ffb243fba5734ad344645f743f1127c22d02c2c3961",
+    "nativeAppExecutableSHA256": "f9305c8714159cccb4b91554c5e01d6def9f2f7b92d17b9aecdedcd04d24e60f",
+    "bundleSHA256": "df0ff9d4261b21dbefc8533e7b28a717edafff273b53a73cf74156417464cce3",
+    "swiftCollectorSHA256": "4fcec88d2b6ecea42f86a0d947f67080a69d4df110230514b1d29b8f7c06c130",
+    "testExecutableSHA256": "e152ed042a55ead26aef2a33d61764e3b986557e7dd1c7df3e43c17422c3c4cd",
+    "sourceFingerprint": "b9d8bbc8a93eacec39d08541e70ca9387b6d6eba30fc505af3b640748608127a",
+    "originalSessionRestored": true
+  },
+  "recordedFrameChecks": {
+    "frames": 469,
+    "qualifiedCompleteGroupFrames": 108,
+    "unqualifiedCompleteGroupFrames": 0,
+    "invalidGroupFrames": 0,
+    "observedCases": [
+      "default-0",
+      "default-1",
+      "default-2",
+      "default-3",
+      "default-4",
+      "forwarded-0",
+      "forwarded-1",
+      "forwarded-2",
+      "forwarded-3",
+      "forwarded-4"
+    ]
+  },
+  "limits": [
+    "The scan covers recorded complete groups with independent mode/stage markers, not every display frame or GPU deadline.",
+    "This verifies collapsed grouping geometry and retained native hosts for the default Paper and forwarded Box paths.",
+    "Separator/source-class paint, cache-cascade refresh, conditional text timing, exact motion-start timing, Android runtime and calibrated performance remain separate gates."
+  ]
+}
