@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "status": "scoped-native-geometry-passed",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontProfile": "normal"
+  },
+  "checks": [
+    {
+      "kind": "normal-expansion",
+      "validatedSourceCommit": "ce77edefa7843f0998a427ab530f2d4d4e7773f8",
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundleSHA256": "7c088683e924ed28419b7c6aba7c315f218d903be612e80f049cb91e074a3cb1",
+      "collectorSHA256": "9c9d307baa3f48b2cf291a227006c76dee297bacb6ca83c84fd7cce2f5dec515",
+      "testExecutableSHA256": "8cd7febd088b9a3460405bf92b55ed33aa3d9f737058b026804e097e431fee26",
+      "trackedSourceFilesMatchedToCommit": 461,
+      "originalSessionRestored": true
+    },
+    {
+      "kind": "reorder-reversal",
+      "validatedSourceCommit": "770f2faff4cb242e13b2a7bd6b17c9b74a450b16",
+      "passedTests": 2,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "bundleSHA256": "4842bbe64f3bccee0d37bf1caa1f6ade05dbab65a7525545397fa703b640f31d",
+      "collectorSHA256": "b7498de30091cbb4c076ef059496dd54e2e75c15392d59023ec2f30681e5a5e1",
+      "testExecutableSHA256": "c0364180dc40d8d7283d47316708425b72e3312d61447f2c84306effab3f103d",
+      "trackedSourceFilesMatchedToCommit": 462,
+      "originalSessionRestored": true,
+      "cases": [
+        {
+          "mode": "default",
+          "samples": 144,
+          "qualifiedReversalIntermediates": 41,
+          "rootRetained": true,
+          "boundaryRetained": true,
+          "bodyCounterRetained": true,
+          "nativeType": "RN:AltrooMUIStructuralView",
+          "receiptSHA256": "648852e06daa1bbd31adf9391909228e80c67b866f7ff123612d95c8b1af8687"
+        },
+        {
+          "mode": "forwarded",
+          "samples": 143,
+          "qualifiedReversalIntermediates": 41,
+          "rootRetained": true,
+          "boundaryRetained": true,
+          "bodyCounterRetained": true,
+          "nativeType": "RN:AltrooMUIStructuralView",
+          "receiptSHA256": "c8b946f80e0ef1a0e2a6616f1cdbce315121f3d08d4df0fbb6638be90c40fb11"
+        }
+      ]
+    }
+  ],
+  "qualification": [
+    "Normal expansion measures root top/bottom margins independently of the changing root height and fixed parent gaps.",
+    "Reorder changes one keyed native boundary around a memoized retained expanded row. Measured boundary placement qualifies the stages.",
+    "Return starts only after the first endpoint. Reversal starts from an observed intermediate presentation and requires two correctly placed intermediate samples moving in the reverse direction.",
+    "The same native root/boundary tags, fixed root height and body-local counter are retained. The actual v2 owned root and healthy native runtime are required."
+  ],
+  "limits": [
+    "This establishes bounded native geometry for default and forwarding roots on this simulator snapshot.",
+    "It does not establish every painted frame, browser-identical animation-start latency or GPU/performance deadlines.",
+    "Android runtime, conditional inherited text paint, wider accessibility matrices and calibrated Release performance remain separate gates."
+  ]
+}
