@@ -49,11 +49,13 @@ import {
   type AccordionStructure,
 } from './accordionStructure';
 import { useAccordionMotion } from './accordionMotion';
+import { accordionBeforeStyle, accordionBeforeCases } from './accordionBeforeStyles';
 import {
   AccordionStructuralRootContext,
   AccordionStructuralView,
   useAccordionStructuralRootMarker,
   prepareAccordionStructuralCases,
+  hasAccordionParentSelectors,
 } from './accordionStructuralRoot';
 import {
   accordionConstructorCss,
@@ -447,12 +449,13 @@ function AccordionBefore({
   const styleCache = useNativeStyleCache();
   const { width } = useWindowDimensions();
   useNativeStyleCacheRevision();
-  const style = componentStyle(theme, '', {}, undefined, {
-    styleCache,
-    width,
-    ancestors: nativeStyleAncestors(rules, { classes: [], tag: '::before' }),
-    ...nativeTextStyleContext(parent, undefined, theme),
-  });
+  const marker = useContext(AccordionStructuralRootContext);
+  const context = { styleCache, width, ...nativeTextStyleContext(parent, undefined, theme) };
+  const style = accordionBeforeStyle(theme, rules, context);
+  const cases =
+    hasAccordionParentSelectors && marker
+      ? accordionBeforeCases(theme, rules, context, marker)
+      : undefined;
   // CSS cancels transitions under display:none. A later structural reveal
   // starts at its current endpoint instead of exposing a hidden stale sample.
   const presentation = useAccordionMotion(
@@ -462,17 +465,28 @@ function AccordionBefore({
     undefined,
     timing,
   );
-  if (!Object.keys(style).length) return null;
-  return (
-    <View
-      nativeID={accordionBeforeOrigin}
-      testID="mui-accordion-before"
-      pointerEvents="none"
-      accessible={false}
-      accessibilityElementsHidden
-      importantForAccessibility="no-hide-descendants"
+  if (!Object.keys(style).length && !cases?.some((value) => Object.keys(value).length)) return null;
+  const native = {
+    nativeID: accordionBeforeOrigin,
+    testID: 'mui-accordion-before',
+    pointerEvents: 'none' as const,
+    accessible: false,
+    accessibilityElementsHidden: true,
+    importantForAccessibility: 'no-hide-descendants' as const,
+  };
+  return cases ? (
+    <AccordionStructuralView
+      {...native}
+      nativeRef={null}
+      cases={cases}
+      basis="parent"
       style={[style, presentation]}
-    />
+      presentation={presentation}
+    >
+      {null}
+    </AccordionStructuralView>
+  ) : (
+    <View {...native} style={[style, presentation]} />
   );
 }
 

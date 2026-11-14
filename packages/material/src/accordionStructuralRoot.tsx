@@ -128,6 +128,7 @@ export function createAccordionStructuralPreparation(input: Input) {
 
 export function AccordionStructuralView({
   cases,
+  basis,
   presentation,
   style,
   nativeRef,
@@ -135,12 +136,16 @@ export function AccordionStructuralView({
   ...props
 }: ViewProps & {
   cases: readonly NativeStyle[];
+  basis?: 'parent' | undefined;
   presentation?: NativeStyle | undefined;
   nativeRef: Ref<ViewInstance>;
   children: ReactNode;
 }) {
   if (!ownedStructuralCases || !activation)
     throw Error('Native Accordion selector support is unavailable');
+  const marker = useContext(AccordionStructuralRootContext);
+  const owner = ownedStructuralCases.parentSelectors && marker ? marker : undefined;
+  if (basis && !owner) throw Error('Native Accordion parent selection requires its source owner');
   // The source clock owns its animated fields even at a resting endpoint.
   // Deferring them avoids a native endpoint followed by a delayed JS snap-back.
   // Non-animated structural fields remain eligible for pre-layout selection.
@@ -157,9 +162,18 @@ export function AccordionStructuralView({
       style={style}
       normalPaddingBottom={0}
       lastPaddingBottom={0}
-      ownedProgramme={{ schema: 2, profile: ownedStructuralCases.profile, cases: encoded }}
+      ownedProgramme={{
+        schema: 2,
+        profile: ownedStructuralCases.profile,
+        cases: encoded,
+        ...(basis ? { basis } : {}),
+        ...(owner ? { owner } : {}),
+      }}
     >
       {children}
     </OwnedStructuralHost>
   );
 }
+
+/** Immutable binary readiness; an older app keeps its existing ordinary ornament. */
+export const hasAccordionParentSelectors = ownedStructuralCases?.parentSelectors === true;

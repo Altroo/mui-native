@@ -392,6 +392,7 @@ final class AccordionGroupingProbeUITests: XCTestCase {
       XCTAssertEqual(report["development"] as? Bool, false)
       XCTAssertEqual(try XCTUnwrap(report["fontScale"] as? Double), 1, accuracy: 0.01)
       let runtime = try XCTUnwrap(report["runtime"] as? [String: Any])
+      XCTAssertEqual(runtime["parentSelectors"] as? Bool, true)
       XCTAssertEqual(runtime["active"] as? Bool, true)
       XCTAssertEqual(runtime["degraded"] as? Bool, false)
       XCTAssertEqual(runtime["errors"] as? String, "0")
@@ -405,6 +406,7 @@ final class AccordionGroupingProbeUITests: XCTestCase {
         let id = try XCTUnwrap(row["id"] as? String)
         let tag = try XCTUnwrap(row["tag"] as? Int)
         XCTAssertEqual(row["nativeType"] as? String, "RN:AltrooMUIStructuralView", "The actual native selector host must be installed")
+        XCTAssertEqual(row["ornamentNativeType"] as? String, "RN:AltrooMUIStructuralView", "The separator must use the actual parent-projected host")
         let height = try XCTUnwrap(row["height"] as? Double)
         let expected: Double = stage == 2 ? 48 : id == ordered.first ? 80 : id == ordered.last ? 100 : 48
         XCTAssertEqual(height, expected, accuracy: 1, "Wrong structural style for " + id + " at stage " + String(stage))

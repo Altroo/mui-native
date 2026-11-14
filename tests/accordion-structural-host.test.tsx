@@ -14,6 +14,7 @@ jest.mock('react-native', () => {
 });
 jest.mock('../packages/native-host/src/ownedStructuralCases', () => ({
   ownedStructuralCases: {
+    parentSelectors: true,
     profile: {
       schema: 1,
       rn: '0.88.1',
@@ -305,3 +306,42 @@ test('cache projection rechecks conditional text while retaining its native host
     b.dispose();
   }
 });
+
+for (const Root of [undefined, Box, Opaque]) {
+  test('separator projects panel facts through the final root: ' + String(Root), () => {
+    const source = jest.fn(() => ({
+      '&::before': { height: 4, backgroundColor: '#ff00ff' },
+      '&:last-of-type::before': { height: 6 },
+    }));
+    const tree = render(
+      <ThemeProvider theme={createTheme({ motion: { reducedMotion: 'always' } })}>
+        <Accordion component={Root} testID="parent-panel" sx={source}>
+          <AccordionSummary>Projected panel</AccordionSummary>
+        </Accordion>
+      </ThemeProvider>,
+      { createNodeMock: () => ({}) },
+    );
+    const before = tree.getByTestId('mui-accordion-before', { includeHiddenElements: true });
+    const programme = before.props.ownedProgramme;
+    expect(programme.basis).toBe('parent');
+    expect(programme.owner).toBe(tree.getByTestId('parent-panel').props.ownedProgramme.owner);
+    expect(programme.owner).toMatch(/^altroo-accordion-root-/);
+    expect(programme.cases.map((value: Record<string, unknown>) => value.display)).toEqual([
+      null,
+      null,
+      'none',
+      'none',
+      null,
+      null,
+      'none',
+      'none',
+    ]);
+    expect(programme.cases.map((value: Record<string, unknown>) => value.height)).toEqual([
+      4, 4, 4, 4, 6, 6, 6, 6,
+    ]);
+    expect(before.props.pointerEvents).toBe('none');
+    expect(before.props.accessibilityElementsHidden).toBe(true);
+    expect(tree.getByTestId('parent-panel').props.ownedProgramme.basis).toBeUndefined();
+    expect(source).toHaveBeenCalledTimes(1);
+  });
+}

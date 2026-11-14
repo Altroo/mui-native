@@ -32,6 +32,7 @@ type RowBounds = {
   id: Id;
   tag: number;
   nativeType: string;
+  ornamentNativeType: string;
   count: number;
   x: number;
   y: number;
@@ -48,6 +49,7 @@ type Report = {
   phase: 'idle' | 'sampling' | 'complete' | 'error';
   rows: RowBounds[];
   runtime?: {
+    parentSelectors: boolean;
     active: boolean;
     degraded: boolean;
     errors: string;
@@ -146,6 +148,15 @@ function measure(id: Id, targets: Targets): Promise<RowBounds> {
           nativeType: String(
             (node as ViewInstance & { tagName?: string }).tagName ?? 'unavailable',
           ),
+          ornamentNativeType: String(
+            Array.from(
+              (
+                node as ViewInstance & {
+                  children?: ArrayLike<{ id?: string; tagName?: string }>;
+                }
+              ).children ?? [],
+            ).find((child) => child.id === 'altroo:accordion-before:v1:')?.tagName ?? 'unavailable',
+          ),
           count: counter.read(),
           x: round(x),
           y: round(y),
@@ -193,6 +204,7 @@ function Panel({ mode }: { mode: Mode }) {
         if (!status) throw new Error('Native structural runtime is unavailable');
         const activity = status as typeof status & Record<string, unknown>;
         runtime = {
+          parentSelectors: ownedStructuralCases?.parentSelectors === true,
           active: status.active,
           degraded: status.degraded,
           errors: status.errors,
