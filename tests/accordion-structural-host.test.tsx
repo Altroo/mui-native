@@ -34,7 +34,7 @@ jest.mock('../packages/native-host/src/ownedStructuralCases', () => ({
     encode: require('../packages/native-host/src/ownedStyleEncoding').encodeStructuralCases,
   },
 }));
-import { createRef, forwardRef, useState } from 'react';
+import { createRef, forwardRef, memo, useState } from 'react';
 import {
   Text,
   View,
@@ -344,4 +344,126 @@ for (const Root of [undefined, Box, Opaque]) {
     expect(tree.getByTestId('parent-panel').props.ownedProgramme.basis).toBeUndefined();
     expect(source).toHaveBeenCalledTimes(1);
   });
+}
+
+const PlainViewRoot = forwardRef<ViewInstance, Record<string, unknown>>(
+  function PlainViewRoot(props, ref) {
+    return <View {...props} ref={ref} />;
+  },
+);
+for (const Root of [View, PlainViewRoot]) {
+  test(
+    'native View root refreshes retained CSS when a foreign cache expires: ' + String(Root),
+    () => {
+      const a = createNativeStyleCache({ key: 'direct-case-source' });
+      const b = createNativeStyleCache({ key: 'direct-case-target' });
+      let tree: ReturnType<typeof render> | undefined;
+      try {
+        const Warm = styled(View)({ padding: 1 });
+        const warm = render(
+          <NativeStyleCacheProvider value={b}>
+            <Warm />
+          </NativeStyleCacheProvider>,
+        );
+        warm.unmount();
+        let captured: StyleProp<NativeStyle> = undefined;
+        const produce = jest.fn(({ style }: { style?: StyleProp<NativeStyle> }) => {
+          captured = style;
+          return null;
+        });
+        const Producer = styled(produce)({ backgroundColor: 'red' });
+        const producer = render(
+          <NativeStyleCacheProvider value={a}>
+            <Producer />
+          </NativeStyleCacheProvider>,
+        );
+        producer.unmount();
+        const source = jest.fn(() => ({ backgroundColor: 'blue' }));
+        const ref = createRef<ViewInstance>();
+        tree = render(
+          <NativeStyleCacheProvider value={b}>
+            <Accordion
+              ref={ref}
+              testID="direct-cache-root"
+              slotProps={{ root: { as: Root } }}
+              style={captured}
+              sx={source}
+            >
+              <AccordionSummary>
+                <RetainedCounter />
+              </AccordionSummary>
+            </Accordion>
+          </NativeStyleCacheProvider>,
+          { createNodeMock: () => ({}) },
+        );
+        const target = tree;
+        const paint = () =>
+          processColor(
+            StyleSheet.flatten(target.getByTestId('direct-cache-root').props.style)
+              ?.backgroundColor,
+          );
+        const cases = () =>
+          target
+            .getByTestId('direct-cache-root')
+            .props.ownedProgramme.cases.map(
+              (value: Record<string, unknown>) => value.backgroundColor,
+            );
+        const host = ref.current;
+        expect(paint()).toBe(processColor('red'));
+        if (Root === View) expect(cases()).toEqual(Array(8).fill(processColor('red')));
+        fireEvent.press(target.getByTestId('retained-count'));
+        act(() => a.reset());
+        expect(paint()).toBe(processColor('blue'));
+        if (Root === View) expect(cases()).toEqual(Array(8).fill(processColor('blue')));
+        expect(ref.current).toBe(host);
+        expect(target.getByTestId('retained-count')).toHaveTextContent('1');
+        expect(produce).toHaveBeenCalledTimes(1);
+        expect(source).toHaveBeenCalledTimes(1);
+      } finally {
+        tree?.unmount();
+        a.dispose();
+        b.dispose();
+      }
+    },
+  );
+}
+const MemoPaper = memo(Paper);
+const NestedMemoPaper = memo(MemoPaper);
+for (const Root of [Paper, MemoPaper, NestedMemoPaper]) {
+  test(
+    'unrelated cache commits preserve Paper callbacks: ' +
+      (Root === Paper ? 'Paper' : Root === MemoPaper ? 'memo(Paper)' : 'nested memo(Paper)'),
+    () => {
+      const cache = createNativeStyleCache({ key: 'unrelated-paper-refresh' });
+      const override = jest.fn(() => ({ backgroundColor: 'white' }));
+      let panel: ReturnType<typeof render> | undefined;
+      let other: ReturnType<typeof render> | undefined;
+      try {
+        const theme = createTheme({
+          components: { MuiPaper: { styleOverrides: { root: override } } },
+        });
+        panel = render(
+          <ThemeProvider theme={theme}>
+            <Accordion slotProps={{ root: { as: Root } }}>
+              <AccordionSummary>Stable source</AccordionSummary>
+            </Accordion>
+          </ThemeProvider>,
+          { createNodeMock: () => ({}) },
+        );
+        const calls = override.mock.calls.length;
+        expect(calls).toBeGreaterThan(0);
+        const Foreign = styled(View)({ opacity: 0.6 });
+        other = render(
+          <NativeStyleCacheProvider value={cache}>
+            <Foreign />
+          </NativeStyleCacheProvider>,
+        );
+        expect(override).toHaveBeenCalledTimes(calls);
+      } finally {
+        other?.unmount();
+        panel?.unmount();
+        cache.dispose();
+      }
+    },
+  );
 }

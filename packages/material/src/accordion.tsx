@@ -34,6 +34,7 @@ import {
 import {
   NativeCssInsertionScope,
   nativeCooperatingRootTarget,
+  nativeMemoType,
   retainNativeRootCss,
   refreshNativeStyle,
   prepareNativeCompositeSource,
@@ -490,19 +491,41 @@ function AccordionBefore({
   );
 }
 
+// Cache readiness is separate from physical text handoff registration. Only
+// canonical memo metadata reveals Paper here; opaque roots are never executed.
+function hasPaperCacheBoundary(root: unknown): boolean {
+  let candidate = root;
+  const seen = new Set<object>();
+  for (let depth = 0; depth < 128; depth++) {
+    if (candidate === Paper) return true;
+    if (!candidate || (typeof candidate !== 'object' && typeof candidate !== 'function'))
+      return false;
+    if (seen.has(candidate)) return false;
+    seen.add(candidate);
+    candidate = nativeMemoType(candidate);
+  }
+  return false;
+}
+
 // Structural notifications repaint retained CSS in this small boundary. They
 // must not rerun caller slot getters, owner callbacks, or recreate body children.
 function AccordionStructureBoundary({
   root,
   expanded,
   sourceCss,
+  observeCache,
   children,
 }: {
   root: React.RefObject<ViewInstance | null>;
   expanded: boolean;
   sourceCss: string | undefined;
+  observeCache: boolean;
   children(structure: AccordionStructure): React.ReactNode;
 }) {
+  // Rebind accepted CSS here, without replaying the outer caller's preparation.
+  // Direct/opaque View roots lack Paper/Box's boundary. Subscribing known
+  // cooperating roots here would replay their own source style callbacks.
+  useNativeStyleCacheRevision(observeCache);
   const structure = useAccordionStructure(root, expanded, sourceCss);
   return (
     <NativeStructuralFactsContext.Provider value={structure}>
@@ -766,6 +789,7 @@ const AccordionImpl: React.ForwardRefExoticComponent<
   const rootInline = [source.authored, rootStyle];
   return (
     <AccordionStructureBoundary
+      observeCache={!(cooperatingRoot || hasPaperCacheBoundary(Root))}
       root={scopeRoot}
       expanded={expanded}
       sourceCss={

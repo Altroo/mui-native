@@ -77,3 +77,5 @@ export {
   useNativeStructuralFacts,
 } from '../../nativeStructuralFacts';
 export type { NativeStructuralFacts } from '../../nativeStructuralFacts';
+
+export { nativeMemoType } from '../../nativeMemoInterop';
