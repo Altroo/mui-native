@@ -80,7 +80,14 @@ public final class AccordionScenario {
       require(ui(()->text("accordion-changes").equals("Section changes: 2"))&&expanded("delivery"),"Disabled summary must not dispatch or collapse its sibling");stage("disabled-summary");
       require(ui(()->find("accordion-help-details")==null),"unmountOnExit body must initially be absent");
       tap("accordion-help-summary");await(()->ui(()->find("accordion-help-details")!=null&&view("accordion-help-transition").getHeight()>0),"Independent help must mount its body");stage("help-mounted");
+      // Native absence alone cannot distinguish clipping from React unmounting.
+      // Mutate body-local state and require a fresh value after reopening.
+      tap("accordion-help-read");await(()->ui(()->contentText(view("accordion-help-read")).equals("Read")),"The Help button must update body-local state");stage("help-read");
       tap("accordion-help-summary");await(()->ui(()->find("accordion-help-details")==null),"unmountOnExit must remove the body after closing");stage("help-unmounted");
+      tap("accordion-help-summary");await(()->ui(()->find("accordion-help-read")!=null&&view("accordion-help-transition").getHeight()>0&&contentText(view("accordion-help-read")).equals("Mark as read")),"Reopened Help must remount fresh body-local state");stage("help-remounted-fresh");
+      tap("accordion-help-summary");await(()->ui(()->find("accordion-help-details")==null),"The remounted Help body must close again");stage("help-final-close");
+      ui(()->{((android.widget.ScrollView)view("accordion-scroll")).fullScroll(View.FOCUS_UP);return null;});
+      await(()->ui(()->find("accordion-note")!=null&&editor(view("accordion-note"))==original&&text("accordion-note-value").equals(edited)&&text("accordion-changes").equals("Section changes: 2")),"Independent Help lifecycle must preserve the edited sibling and controlled state");
       passed=true;
     } catch(Throwable error) {
       try {report.put("error",error.toString());if(directory!=null)capture("failure.png");} catch(Throwable ignored) { /* Preserve the original assertion. */ }
@@ -91,6 +98,12 @@ public final class AccordionScenario {
     }
   }
   private EditText editor(View root) {if(root instanceof EditText)return (EditText)root;if(root instanceof ViewGroup)for(int i=0;i<((ViewGroup)root).getChildCount();i++){EditText child=editor(((ViewGroup)root).getChildAt(i));if(child!=null)return child;}return null;}
+  private String contentText(View root) {
+    if(root instanceof TextView)return ((TextView)root).getText().toString();
+    StringBuilder text=new StringBuilder();
+    if(root instanceof ViewGroup)for(int index=0;index<((ViewGroup)root).getChildCount();index++)text.append(contentText(((ViewGroup)root).getChildAt(index)));
+    return text.toString();
+  }
   private String text(String id) {return ((TextView)view(id)).getText().toString();}
   // Native scene commits are asynchronous; readiness probes must tolerate absent nodes.
   private boolean expanded(String panel){return ui(()->{View root=find("accordion-"+panel+"-transition"),wrapper=find("accordion-"+panel+"-wrapper");return root!=null&&wrapper!=null&&wrapper.getHeight()>0&&Math.abs(root.getHeight()-wrapper.getHeight())<=2&&root instanceof ReactViewGroup&&"visible".equals(((ReactViewGroup)root).getOverflow());});}
@@ -110,8 +123,10 @@ public final class AccordionScenario {
     await(() -> ui(() -> {
       View target = view(id);
       Rect visible = new Rect();
-      if (!target.getGlobalVisibleRect(visible) || visible.width() < target.getWidth() || visible.height() < target.getHeight()) {
-        target.requestRectangleOnScreen(new Rect(0, 0, target.getWidth(), target.getHeight()), true);
+      Rect viewport = usableViewport();
+      if (!target.getGlobalVisibleRect(visible) || visible.width() < target.getWidth() || visible.height() < target.getHeight() || visible.top < viewport.top || visible.bottom > viewport.bottom) {
+        View decor = activity.getWindow().getDecorView(); int[] origin = new int[2]; decor.getLocationOnScreen(origin);
+        target.requestRectangleOnScreen(new Rect(0, -(viewport.top-origin[1]), target.getWidth(), target.getHeight()+origin[1]+decor.getHeight()-viewport.bottom), true);
         previous[0] = null;
         stableSince[0] = 0;
         return false;
@@ -149,10 +164,10 @@ public final class AccordionScenario {
     if (id.equals("accordion-help-summary") && !helpInputCaptured) { capture("help-input.png"); helpInputCaptured = true; }
     final float x = point[0], y = point[1];
     require(ui(() -> {
-      return activity.hasWindowFocus() && blockingLogBox(x, y) == null;
-    }), "A developer overlay covers the native touch point: " + id);
+      return activity.hasWindowFocus() && usableViewport().contains(Math.round(x), Math.round(y)) && blockingLogBox(x, y) == null;
+    }), "Native touch point must remain focused, usable and unobstructed: " + id);
     boolean imeVisible = ui(() -> Build.VERSION.SDK_INT >= 30 && activity.getWindow().getDecorView().getRootWindowInsets() != null && activity.getWindow().getDecorView().getRootWindowInsets().isVisible(android.view.WindowInsets.Type.ime()));
-    touches.put(new JSONObject().put("target", id).put("x", point[0]).put("y", point[1]).put("imeVisible", imeVisible).put("diagnosticClear",true));
+    touches.put(new JSONObject().put("target", id).put("x", point[0]).put("y", point[1]).put("imeVisible", imeVisible).put("diagnosticClear",true).put("viewportClear",true));
     inject(point);
   }
   /** Warning/error notifications share a native ID; inspect every instance. */
@@ -171,11 +186,20 @@ public final class AccordionScenario {
     }
     return obstruction;
   }
+  /** Edge-to-edge windows include untappable navigation/gesture regions. */
+  private Rect usableViewport() {
+    View decor=activity.getWindow().getDecorView(); Rect visible=new Rect(); decor.getWindowVisibleDisplayFrame(visible);
+    if(Build.VERSION.SDK_INT>=30 && decor.getRootWindowInsets()!=null) {
+      android.graphics.Insets insets=decor.getRootWindowInsets().getInsets(android.view.WindowInsets.Type.systemBars() | android.view.WindowInsets.Type.systemGestures() | android.view.WindowInsets.Type.displayCutout() | android.view.WindowInsets.Type.ime());
+      int[] origin=new int[2];decor.getLocationOnScreen(origin);
+      require(visible.intersect(new Rect(origin[0]+insets.left,origin[1]+insets.top,origin[0]+decor.getWidth()-insets.right,origin[1]+decor.getHeight()-insets.bottom)),"System insets cover the native viewport");
+    }
+    require(!visible.isEmpty(),"The native viewport must be visible");return visible;
+  }
   private float[] touchPoint(String id) {
-    View target=view(id); Rect visible=new Rect(); int[] origin=new int[2];
-    require(target.getLocalVisibleRect(visible) && !visible.isEmpty(), "Native touch target is covered");
-    target.getLocationOnScreen(origin);
-    return new float[]{origin[0]+visible.exactCenterX(),origin[1]+visible.exactCenterY()};
+    View target=view(id); Rect visible=new Rect();
+    require(target.getGlobalVisibleRect(visible) && visible.intersect(usableViewport()) && !visible.isEmpty(), "Native touch target is covered");
+    return new float[]{visible.exactCenterX(),visible.exactCenterY()};
   }
   private void inject(float[] point) throws Exception {
     long time=SystemClock.uptimeMillis();

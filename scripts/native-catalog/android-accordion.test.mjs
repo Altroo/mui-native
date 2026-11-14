@@ -132,6 +132,9 @@ test('qualified Accordion input rejects covered, missing and reordered touches',
     'accordion-save',
     'accordion-disabled-summary',
     'accordion-help-summary',
+    'accordion-help-read',
+    'accordion-help-summary',
+    'accordion-help-summary',
     'accordion-help-summary',
   ];
   const qualified = {
@@ -144,6 +147,7 @@ test('qualified Accordion input rejects covered, missing and reordered touches',
       y: 20,
       imeVisible: false,
       diagnosticClear: true,
+      viewportClear: true,
     })),
   };
   assert.deepEqual(summarizeAccordion(output(qualified)), qualified);
@@ -156,6 +160,10 @@ test('qualified Accordion input rejects covered, missing and reordered touches',
       touches: qualified.touches.map((t, i) => (i === 5 ? { ...t, diagnosticClear: false } : t)),
     },
     { ...qualified, touches: qualified.touches.map((t, i) => (i === 6 ? { ...t, x: null } : t)) },
+    {
+      ...qualified,
+      touches: qualified.touches.map((t, i) => (i === 7 ? { ...t, viewportClear: false } : t)),
+    },
     { ...qualified, screenshots: accordionPictures },
   ])
     assert.throws(() => summarizeAccordion(output(bad)));

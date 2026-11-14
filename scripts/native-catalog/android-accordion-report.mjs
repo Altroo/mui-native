@@ -7,7 +7,10 @@ export const accordionStages = [
   'actions-activated',
   'disabled-summary',
   'help-mounted',
+  'help-read',
   'help-unmounted',
+  'help-remounted-fresh',
+  'help-final-close',
 ];
 export const accordionPictures = ['initial.png', 'payment.png', 'retained.png'];
 const sampleNames = ['delivery-initial', 'delivery-closed', 'payment-open', 'delivery-reopened'];
@@ -89,6 +92,9 @@ export function summarizeAccordion(output) {
       'accordion-save',
       'accordion-disabled-summary',
       'accordion-help-summary',
+      'accordion-help-read',
+      'accordion-help-summary',
+      'accordion-help-summary',
       'accordion-help-summary',
     ];
     if (
@@ -101,7 +107,8 @@ export function summarizeAccordion(output) {
           !Number.isFinite(touch.x) ||
           !Number.isFinite(touch.y) ||
           typeof touch.imeVisible !== 'boolean' ||
-          touch.diagnosticClear !== true,
+          touch.diagnosticClear !== true ||
+          touch.viewportClear !== true,
       )
     )
       throw Error('Unqualified native Accordion input');
