@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
   AccordionSummary,
@@ -64,11 +65,8 @@ export function AccordionExamples() {
   const [phases, setPhases] = useState({ delivery: 'open', payment: 'closed' });
   const phase = (panel: 'delivery' | 'payment', value: string) =>
     setPhases((old) => ({ ...old, [panel]: value }));
-  const indicator = (
-    <Typography accessible={false} style={{ fontSize: 24, lineHeight: 24 }}>
-      ⌄
-    </Typography>
-  );
+  // A native SVG has no text glyph to leak into the Summary's computed label.
+  const indicator = <ExpandMore />;
   const panel = { borderColor: theme.palette.divider, borderWidth: 1, shadowOpacity: 0 };
   return (
     <ScrollView
@@ -266,7 +264,7 @@ export function AccordionExamples() {
                 </Typography>
               </View>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails testID="accordion-disabled-details">
               Return instructions become available after delivery.
             </AccordionDetails>
           </Accordion>

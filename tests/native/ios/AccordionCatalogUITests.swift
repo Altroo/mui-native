@@ -123,6 +123,92 @@ final class AccordionCatalogUITests: XCTestCase {
     }
     capture("accordion-ios-light-payment")
   }
+  @objc func testVoiceOverTraversalAndActivation() throws {
+    guard #available(iOS 27.0, *) else { throw XCTSkip("VoiceOver automation requires iOS27") }
+    let service = XCUIDevice.shared.voiceOverService
+    let original = service.isEnabled
+    // Teardown runs even after a failed XCTest assertion. Never leave the
+    // user's accessibility setting changed by a failed traversal scenario.
+    addTeardownBlock { @MainActor in
+      if !original { try service.disable() }
+      XCTAssertEqual(service.isEnabled, original)
+    }
+    var transcript: [[String: String]] = []
+    func attachTranscript() {
+      if let data = try? JSONSerialization.data(withJSONObject: transcript, options: [.sortedKeys]) {
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "accordion-voiceover-traversal-" + String(transcript.count)
+        attachment.lifetime = .keepAlways; add(attachment)
+      }
+    }
+    defer { attachTranscript() }
+    try service.enable()
+    XCTAssertTrue(service.isEnabled)
+    func find(_ label: String, phase: String, backward: Bool = false, limit: Int = 60) throws -> [String] {
+      var spoken: [String] = []
+      func matches(_ utterance: String) -> Bool {
+        utterance.lowercased().replacingOccurrences(of: "&", with: "and").contains(
+          label.lowercased().replacingOccurrences(of: "&", with: "and"))
+      }
+      // Enabling the service may already focus the desired Summary. Read it
+      // before advancing so the first focused element is never skipped.
+      if let utterance = try? service.currentSpeech().utterance {
+        transcript.append(["phase": phase, "utterance": utterance]); spoken.append(utterance)
+        if matches(utterance) { attachTranscript(); return spoken }
+      }
+      for _ in 0..<limit {
+        let utterance = try (backward ? service.moveBackward() : service.moveForward()).utterance
+        transcript.append(["phase": phase, "utterance": utterance]); spoken.append(utterance)
+        if matches(utterance) { attachTranscript(); return spoken }
+      }
+      attachTranscript()
+      XCTFail("VoiceOver could not reach " + label)
+      return spoken
+    }
+    let delivery = try XCTUnwrap(find("Delivery instructions", phase: "initial").last)
+    XCTAssertTrue(app.buttons.matching(identifier: "accordion-delivery-summary").firstMatch.exists)
+    XCTAssertTrue(delivery.lowercased().contains("expanded"), "Actual VoiceOver Summary: " + delivery)
+    XCTAssertFalse(delivery.contains("⌄"), "Decorative indicator text must not enter the spoken label")
+    let initialBody = try find("Payment & receipt", phase: "delivery-body")
+    XCTAssertTrue(initialBody.contains { $0.localizedCaseInsensitiveContains("Delivery note") })
+    XCTAssertTrue(initialBody.contains { $0.localizedCaseInsensitiveContains("Save note") })
+    // Pinned RN/UIKit announces the true expanded value; a collapsed button
+    // has no synthetic English "collapsed" accessibilityValue.
+    XCTAssertFalse(try XCTUnwrap(initialBody.last).lowercased().contains("expanded"))
+    // The independent stock/owned control qualifies a target-specific double
+    // tap: one activation with VoiceOver on. Whole-app gestures are unqualified.
+    node("accordion-payment-summary").doubleTap()
+    waitFor("VoiceOver activation must select payment exactly once") {
+      self.node("accordion-phases").label == "Delivery: closed · Payment: open"
+        && self.node("accordion-changes").label == "Section changes: 1"
+        && !self.node("accordion-note").exists
+    }
+    transcript.append(["phase": "payment-refocus", "utterance": try service.moveBackward().utterance])
+    let payment = try XCTUnwrap(find("Payment & receipt", phase: "payment-refocus", limit: 8).last)
+    XCTAssertTrue(payment.lowercased().contains("expanded"))
+    let closedDelivery = try XCTUnwrap(find("Delivery instructions", phase: "closed-delivery", backward: true).last)
+    XCTAssertFalse(closedDelivery.lowercased().contains("expanded"))
+    let hiddenBody = try find("Payment & receipt", phase: "closed-delivery-body")
+    XCTAssertFalse(hiddenBody.contains { $0.localizedCaseInsensitiveContains("Delivery note") || $0.localizedCaseInsensitiveContains("Save note") })
+    let paymentBody = try find("Return request", phase: "payment-body")
+    XCTAssertTrue(paymentBody.contains { $0.localizedCaseInsensitiveContains("Subtotal") })
+    XCTAssertFalse(paymentBody.contains { $0.localizedCaseInsensitiveContains("Delivery note") || $0.localizedCaseInsensitiveContains("Save note") })
+    // The system speaks control roles/disabled traits in its own language.
+    // Assert native traits and real activation, retaining the actual speech.
+    let disabled = app.buttons.matching(identifier: "accordion-disabled-summary").firstMatch
+    XCTAssertTrue(disabled.exists)
+    XCTAssertFalse(disabled.isEnabled)
+    disabled.doubleTap()
+    let opened = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+      self.node("accordion-disabled-details").exists
+    }, object: nil)
+    opened.isInverted = true
+    XCTAssertEqual(XCTWaiter.wait(for: [opened], timeout: 1), .completed,
+      "The disabled Return panel must remain collapsed after activation settles")
+    XCTAssertFalse((disabled.value as? String ?? "").lowercased().contains("expanded"))
+    XCTAssertEqual(node("accordion-changes").label, "Section changes: 1")
+    capture("accordion-ios-voiceover-payment")
+  }
   func testSummaryAccessibilityAudit() throws {
     guard #available(iOS 17.0, *) else {
       throw XCTSkip("XCTest accessibility auditing requires iOS 17 or later")
@@ -338,4 +424,64 @@ final class AccordionGroupingProbeUITests: XCTestCase {
   }
   func testDefaultNativeGrouping() throws { try run("default") }
   func testForwardedNativeGrouping() throws { try run("forwarded") }
+}
+
+
+/// Stock RN is an independent control for the same VoiceOver gesture driver.
+@MainActor
+final class PressableVoiceOverProbeUITests: XCTestCase {
+  private let app = XCUIApplication(bundleIdentifier: "dev.altroo.muinative.catalog")
+  private func node(_ id: String) -> XCUIElement {
+    app.descendants(matching: .any).matching(identifier: id).firstMatch
+  }
+  private func receipt() -> [String: Any]? {
+    guard let data = node("pressable-vo-receipt").label.data(using: .utf8) else { return nil }
+    return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+  }
+  override func setUp() async throws {
+    continueAfterFailure = false
+    app.launchArguments = []; app.launch()
+    XCTAssertTrue(node("pressable-vo-receipt").waitForExistence(timeout: 20))
+  }
+  private func run(_ mode: String, expectedOther: Int = 0) throws {
+    guard #available(iOS 27.0, *) else { throw XCTSkip("VoiceOver automation requires iOS27") }
+    let service = XCUIDevice.shared.voiceOverService, original = service.isEnabled
+    addTeardownBlock { @MainActor in
+      if !original { try service.disable() }
+      XCTAssertEqual(service.isEnabled, original)
+    }
+    XCTAssertEqual(receipt()?["development"] as? Bool, false)
+    XCTAssertEqual(try XCTUnwrap(receipt()?["fontScale"] as? Double), 1, accuracy: 0.01)
+    try service.enable()
+    let label = mode == "stock" ? "Stock presses 0" : "Native presses 0"
+    var speech: [String] = [], found = false
+    if let current = try? service.currentSpeech().utterance { speech.append(current); found = current.contains(label) }
+    for _ in 0..<10 {
+      if found { break }
+      let utterance = try service.moveForward().utterance
+      speech.append(utterance); found = utterance.contains(label)
+    }
+    let attachment = XCTAttachment(string: speech.joined(separator: "\n"))
+    attachment.name = "pressable-vo-" + mode; attachment.lifetime = .keepAlways; add(attachment)
+    XCTAssertTrue(found, "VoiceOver must focus the independent target")
+    node("pressable-vo-" + mode).doubleTap()
+    let expectation = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+      self.receipt()?[mode] as? Int == 1
+    }, object: nil)
+    let outcome = XCTWaiter.wait(for: [expectation], timeout: 8)
+    let report: [String: Any] = ["mode": mode, "gesture": "target-double-tap",
+      "status": outcome == .completed ? "received" : "unverified", "receipt": receipt() ?? [:]]
+    let data = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys])
+    let result = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+    result.name = "pressable-vo-result-" + mode; result.lifetime = .keepAlways; add(result)
+    if mode == "stock" && outcome != .completed {
+      throw XCTSkip("The independent stock control did not qualify this XCTest input path")
+    }
+    XCTAssertEqual(outcome, .completed, "The qualified input path must activate the owned control exactly once")
+    XCTAssertEqual(receipt()?[mode == "stock" ? "native" : "stock"] as? Int, expectedOther)
+  }
+  @objc func testQualifiedStockAndOwnedActivation() throws {
+    try run("stock")
+    try run("native", expectedOther: 1)
+  }
 }
