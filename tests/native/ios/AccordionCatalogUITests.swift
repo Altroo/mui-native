@@ -330,6 +330,10 @@ final class AccordionMotionProbeUITests: XCTestCase {
       self.receipt()?["mode"] as? String == mode
         && self.receipt()?["phase"] as? String == "idle"
     }
+    if self.receipt()?["scenario"] as? String == "root-reorder" {
+      node("accordion-motion-prime").tap()
+      waitFor("The body-local counter must update before sampling") { self.node("accordion-motion-counter").label == "Retained 1" }
+    }
     let initial = XCTAttachment(screenshot: app.screenshot())
     initial.name = "accordion-motion-" + mode + "-initial"
     initial.lifetime = .keepAlways
@@ -342,6 +346,56 @@ final class AccordionMotionProbeUITests: XCTestCase {
     XCTAssertEqual(report["schemaVersion"] as? Int, 1)
     XCTAssertEqual(report["development"] as? Bool, false, "An optimized standalone build is required")
     XCTAssertEqual(try XCTUnwrap(report["fontScale"] as? Double), 1, accuracy: 0.01)
+    if report["scenario"] as? String == "root-reorder" {
+      XCTAssertEqual(report["peerSelectors"] as? Bool, true)
+      XCTAssertEqual(report["nativeType"] as? String, "RN:AltrooMUIStructuralView")
+      let runtime = try XCTUnwrap(report["runtime"] as? [String: Any])
+      XCTAssertEqual(runtime["active"] as? Bool, true)
+      XCTAssertEqual(runtime["degraded"] as? Bool, false)
+      XCTAssertEqual(runtime["errors"] as? String, "0")
+      let samples = try XCTUnwrap(report["samples"] as? [[String: Double]])
+      XCTAssertGreaterThanOrEqual(samples.count, 12)
+      let first = try XCTUnwrap(samples.first), last = try XCTUnwrap(samples.last)
+      XCTAssertEqual(try XCTUnwrap(first["top"]), 16, accuracy: 1)
+      XCTAssertEqual(try XCTUnwrap(first["bottom"]), 0, accuracy: 1)
+      XCTAssertEqual(try XCTUnwrap(last["top"]), 0, accuracy: 1)
+      XCTAssertEqual(try XCTUnwrap(last["bottom"]), 16, accuracy: 1)
+      for sample in samples {
+        XCTAssertEqual(sample["rootTag"], first["rootTag"])
+        XCTAssertEqual(sample["boundaryTag"], first["boundaryTag"])
+        XCTAssertEqual(sample["counter"], 1)
+        XCTAssertEqual(try XCTUnwrap(sample["height"]), try XCTUnwrap(first["height"]), accuracy: 1)
+      }
+      func qualified(_ stage: Double) -> [[String: Double]] {
+        samples.filter { $0["stage"] == stage && $0["boundaryBefore"] == (stage == 0 || stage == 2 ? 1 : 0) }
+      }
+      let forwardEnd = try XCTUnwrap(qualified(1).last)
+      XCTAssertEqual(try XCTUnwrap(forwardEnd["top"]), 0, accuracy: 1)
+      XCTAssertEqual(try XCTUnwrap(forwardEnd["bottom"]), 16, accuracy: 1)
+      for stage in [1.0, 2.0, 3.0] {
+        XCTAssertTrue(qualified(stage).contains { sample in
+          (sample["top"] ?? -1) > 1 && (sample["top"] ?? 17) < 15
+            && (sample["bottom"] ?? -1) > 1 && (sample["bottom"] ?? 17) < 15
+        }, "Each stage requires intermediate margins after its native reorder commits")
+      }
+      let reversing = qualified(3)
+      XCTAssertLessThan(try XCTUnwrap(reversing.first?["top"]), 14, "Reversal must begin before the old endpoint")
+      let intermediate = reversing.filter { ($0["top"] ?? -1) > 1 && ($0["top"] ?? 17) < 15 }
+      XCTAssertGreaterThanOrEqual(intermediate.count, 2)
+      XCTAssertTrue(intermediate.enumerated().contains { item in
+        let (index, earlier) = item
+        return intermediate.dropFirst(index + 1).contains { later in
+          (later["top"] ?? 17) < (earlier["top"] ?? -1) - 0.5
+            && (later["bottom"] ?? -1) > (earlier["bottom"] ?? 17) + 0.5
+        }
+      }, "A carried intermediate sample followed by an endpoint snap cannot qualify as reversal")
+      let data = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys])
+      let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+      attachment.name = "accordion-root-margin-" + mode + "-native-bounds"
+      attachment.lifetime = .keepAlways
+      add(attachment)
+      return
+    }
     let samples = try XCTUnwrap(report["samples"] as? [[String: Double]])
     XCTAssertGreaterThanOrEqual(samples.count, 8)
     let first = try XCTUnwrap(samples.first), last = try XCTUnwrap(samples.last)
