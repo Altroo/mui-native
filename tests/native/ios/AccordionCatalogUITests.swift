@@ -207,7 +207,7 @@ final class AccordionCatalogUITests: XCTestCase {
       "frameAfterActivation": NSCoder.string(for: node("accordion-payment-summary").frame),
       "nativeValue": String(describing: node("accordion-payment-summary").value),
       "hittable": String(node("accordion-payment-summary").isHittable),
-      "nativeReadySeconds": String(ProcessInfo.processInfo.systemUptime - nativeReadyStart),
+      "nativeReadyAndObservationSeconds": String(ProcessInfo.processInfo.systemUptime - nativeReadyStart),
     ])
     if nativeReadyResult != .completed {
       attachTranscript(); attachNativeHierarchy("native-value-timeout")

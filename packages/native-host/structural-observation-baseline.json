@@ -71,6 +71,8 @@
     "ReactCommon/react/renderer/components/view/ViewShadowNode.cpp": "ff016c3b7f5140f946429dab92bae18afd8f28975e8a5f2bb66db32db31edda3",
     "ReactCommon/react/renderer/components/view/ViewShadowNode.h": "0ad61a978c724561d0af86005ea07713588dd1d6e1ce753632b69f3d1bb8dca0",
     "ReactCommon/react/renderer/components/view/platform/cxx/react/renderer/components/view/HostPlatformViewTraitsInitializer.h": "f93d79253670a65b84c072bdcdb681fe9e7fd3a20808abe28ee60c162008b287",
-    "ReactCommon/react/renderer/components/view/platform/android/react/renderer/components/view/HostPlatformViewTraitsInitializer.h": "2b0fdf5331f41b273a50298375229ff46a46af5b41890adb90bb517a6fa2c0c7"
+    "ReactCommon/react/renderer/components/view/platform/android/react/renderer/components/view/HostPlatformViewTraitsInitializer.h": "2b0fdf5331f41b273a50298375229ff46a46af5b41890adb90bb517a6fa2c0c7",
+    "Libraries/Components/View/View.js": "bd8bd1250762fde59a24e08680071952d938c06ba72e461b9f763a765ab3c61b",
+    "Libraries/Text/TextAncestorContext.js": "bf1a2a6b0f76d505b0c447d6f3be8fa827dc07adb22a9f291c142550c442832c"
   }
 }

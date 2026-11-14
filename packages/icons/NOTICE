@@ -136,7 +136,9 @@ above applies. Exact ABI source hashes are retained in
 packages/native-host/structural-observation-baseline.json. No React Native
 feature flags or source files are modified. Owned View mounting traits also
 adapt ViewShadowNode.cpp initialization from the same MIT-licensed version,
-retaining stock prop-derived view and stacking boundaries on creation/cloning.
+retaining stock prop-derived view and stacking boundaries on creation/cloning. The
+owned JS host also adapts View.js alias normalization and its text-ancestry
+boundary. The same pinned source and MIT notice apply.
 
 Native style cache compatibility
 --------------------------------

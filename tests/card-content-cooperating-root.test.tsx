@@ -165,8 +165,9 @@ test('exact styled(View) participates without a second native root; inline data 
     opacity: 0.4,
   });
   const root = tree.getByTestId('card');
-  expect(root.props.nativeID).toBe('user-id');
-  expect(root.props.id).toBe('dom-id');
+  expect(calls[0]).toMatchObject({ nativeID: 'user-id', id: 'dom-id' });
+  expect(root.props.nativeID).toBe('dom-id');
+  expect(root.props.id).toBeUndefined();
   expect(root.props.onTouchEnd).toBe(click);
   expect(tree.UNSAFE_getAllByType(Native)).toHaveLength(1);
   expect(tree.getByTestId('child').props.ownedProgramme).toBeUndefined();
@@ -240,8 +241,11 @@ test('styled shouldForwardProp is still owned by the actual root', () => {
   const m = selected(),
     Root = styled(View, { shouldForwardProp: (key) => key !== 'nativeID' })({});
   const tree = render(<m.Card component={Root} testID="card" nativeID="filtered" id="kept" />);
+  // The root filters nativeID; stock View then derives it from the retained id.
+  expect(tree.getByTestId('card').props.nativeID).toBe('kept');
+  expect(tree.getByTestId('card').props.id).toBeUndefined();
+  tree.rerender(<m.Card component={Root} testID="card" nativeID="still-filtered" />);
   expect(tree.getByTestId('card').props.nativeID).toBeUndefined();
-  expect(tree.getByTestId('card').props.id).toBe('kept');
 });
 test('descendant styled roots consume no ancestor handoff', () => {
   const m = selected(),
@@ -577,8 +581,8 @@ test.each(['styled-styled', 'styled-box'] as const)(
     expect(pair(tree).normal).toMatchObject({ width: 88, opacity: 0.8, padding: 16 });
     expect(pair(tree).last.paddingBottom).toBe(24);
     expect(tree.UNSAFE_getAllByType(Native)).toHaveLength(1);
-    expect(tree.getByTestId('card').props.nativeID).toBe('user-native');
-    expect(tree.getByTestId('card').props.id).toBe('user-id');
+    expect(tree.getByTestId('card').props.nativeID).toBe('user-id');
+    expect(tree.getByTestId('card').props.id).toBeUndefined();
     tree.rerender(<m.Card component={Root} testID="card" sx={{ width: '80px', opacity: 0.6 }} />);
     expect(pair(tree).normal).toMatchObject({ width: 80, opacity: 0.6 });
     expect(m.native.enableStructuralStyleRuntime).toHaveBeenCalledTimes(1);
@@ -1261,7 +1265,7 @@ test('review styled memo root defaults are visible to its outer style callback',
 
 test('review Card CSS handoff also respects a memo root comparator bailout', () => {
   const m = selected();
-  const compare = jest.fn(() => true);
+  const compare = jest.fn((_previous: unknown, _next: unknown) => true);
   const Root = memo(styled(View)({ opacity: 0.2 }), compare);
   const tree = render(
     <m.Card component={Root} testID="memo-card" id="one" sx={{ opacity: 0.4 }} />,
@@ -1269,6 +1273,9 @@ test('review Card CSS handoff also respects a memo root comparator bailout', () 
   expect(pair(tree, 'memo-card').normal.opacity).toBe(0.4);
   tree.rerender(<m.Card component={Root} testID="memo-card" id="two" sx={{ opacity: 0.7 }} />);
   expect(compare).toHaveBeenCalled();
-  expect(tree.getByTestId('memo-card').props.id).toBe('one');
+  expect(compare.mock.calls[0][0]).toMatchObject({ id: 'one' });
+  expect(compare.mock.calls[0][1]).toMatchObject({ id: 'two' });
+  expect(tree.getByTestId('memo-card').props.nativeID).toBe('one');
+  expect(tree.getByTestId('memo-card').props.id).toBeUndefined();
   expect(pair(tree, 'memo-card').normal.opacity).toBe(0.4);
 });
