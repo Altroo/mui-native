@@ -348,6 +348,14 @@ final class AccordionMotionProbeUITests: XCTestCase {
     XCTAssertEqual(try XCTUnwrap(first["height"]), 48, accuracy: 1)
     XCTAssertEqual(try XCTUnwrap(last["height"]), 64, accuracy: 1)
     XCTAssertEqual(Double(node("accordion-motion-summary").frame.height), 64, accuracy: 1)
+    for key in ["rootMarginTop", "rootMarginBottom"] {
+      XCTAssertEqual(try XCTUnwrap(first[key]), 0, accuracy: 1)
+      XCTAssertEqual(try XCTUnwrap(last[key]), 16, accuracy: 1)
+      XCTAssertTrue(samples.contains { sample in
+        guard let elapsed = sample["elapsed"], let margin = sample[key] else { return false }
+        return elapsed >= 100 && elapsed <= 350 && margin > 0.5 && margin < 8
+      }, "The root margin must contain intermediate native geometry: " + key)
+    }
     let startOffset = try XCTUnwrap(first["contentTop"])
     XCTAssertEqual(try XCTUnwrap(last["contentTop"]), startOffset + 8, accuracy: 1)
     XCTAssertTrue(samples.contains { sample in

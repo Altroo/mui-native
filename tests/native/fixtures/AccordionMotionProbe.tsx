@@ -15,7 +15,14 @@ import { NativePressable } from '@altroo/mui-native-host';
 
 type Mode = 'default' | 'forwarded';
 type Rect = { x: number; y: number; width: number; height: number };
-type Sample = { elapsed: number; height: number; contentTop: number; iconHeight: number };
+type Sample = {
+  elapsed: number;
+  height: number;
+  contentTop: number;
+  iconHeight: number;
+  rootMarginTop: number;
+  rootMarginBottom: number;
+};
 type Report = {
   schemaVersion: 1;
   development: boolean;
@@ -60,6 +67,9 @@ function bounds(ref: RefObject<ViewInstance | null>): Promise<Rect> {
 
 /** Public native bounds across a finite transition. These samples do not establish paint timing or frame deadlines. */
 function Panel({ mode }: { mode: Mode }) {
+  const root = useRef<ViewInstance | null>(null);
+  const leading = useRef<ViewInstance | null>(null);
+  const trailing = useRef<ViewInstance | null>(null);
   const summary = useRef<ViewInstance | null>(null);
   const content = useRef<ViewInstance | null>(null);
   const icon = useRef<ViewInstance | null>(null);
@@ -88,14 +98,20 @@ function Panel({ mode }: { mode: Mode }) {
     [],
   );
   const measure = async () => {
-    const [root, text, chevron] = await Promise.all([
+    const [summaryBounds, text, chevron, panel, before, after] = await Promise.all([
       bounds(summary),
       bounds(content),
       bounds(icon),
+      bounds(root),
+      bounds(leading),
+      bounds(trailing),
     ]);
     return {
-      height: round(root.height),
-      contentTop: round(text.y - root.y),
+      height: round(summaryBounds.height),
+      contentTop: round(text.y - summaryBounds.y),
+      // Subtract the fixed parent gap, leaving the actual native root margins.
+      rootMarginTop: round(panel.y - before.y - before.height - 16),
+      rootMarginBottom: round(after.y - panel.y - panel.height - 16),
       iconHeight: round(chevron.height),
     };
   };
@@ -142,7 +158,13 @@ function Panel({ mode }: { mode: Mode }) {
       <Button testID="accordion-motion-run" disabled={report.phase !== 'idle'} onClick={start}>
         Run transition
       </Button>
-      <Accordion expanded={expanded} elevation={0}>
+      <View ref={leading} style={{ height: 1 }} />
+      <Accordion
+        ref={root}
+        expanded={expanded}
+        elevation={0}
+        slotProps={mode === 'forwarded' ? { root: { as: Slot } } : undefined}
+      >
         <AccordionSummary
           ref={summary}
           testID="accordion-motion-summary"
@@ -157,6 +179,7 @@ function Panel({ mode }: { mode: Mode }) {
         </AccordionSummary>
         <Text style={{ padding: 16 }}>Retained body</Text>
       </Accordion>
+      <View ref={trailing} style={{ height: 1 }} />
       <Text
         testID="accordion-motion-receipt"
         accessibilityLabel={JSON.stringify(report)}
