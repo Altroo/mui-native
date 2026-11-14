@@ -60,6 +60,8 @@ type Job = { frame?: number; deadline?: ReturnType<typeof setTimeout> };
 const ids = ['a', 'b', 'c'] as const;
 const theme = createTheme({ motion: { reducedMotion: 'always' } });
 const rootStyle = {
+  // Magnify the source ornament without overriding its display/opacity states.
+  '&::before': { height: 4, backgroundColor: '#ff00ff' },
   '&:first-of-type': { minHeight: 80 },
   '&:last-of-type': { minHeight: 100 },
 };
