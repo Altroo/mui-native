@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "status": "scoped-regression-passed",
+  "validatedSourceCommit": "f307982e2bc849bbf3661d3460b032056f2aab12",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontProfile": "normal"
+  },
+  "passedEndpointTests": 2,
+  "failedEndpointTests": 0,
+  "skippedTests": 0,
+  "runtimeCapability": "first-last-of-type-v2",
+  "runtimeReceiptRequirements": [
+    "peerSelectors true",
+    "owned roots and ornaments",
+    "active resolver",
+    "zero errors",
+    "nonzero attempts and changed candidates"
+  ],
+  "bundleSHA256": "c767647ad3ec8abc64571d114f851ae4d45ff7756c1d9ffe6e82f2a7e70d7a73",
+  "collectorSHA256": "831dbcd996ab185d5533a38417d96fc74c1cb3b31bec77a5bf3ad861099f9aee",
+  "testExecutableSHA256": "691e2a51a01756f1789d30e53d94c4f12476d7e49dbbb4c9e3f0ad3591cead5a",
+  "trackedSourceFilesMatchedToCommit": 461,
+  "captureSHA256": "694db26ad4b440d9eff9d05ab3a85adbc6e4549c292416dcc0c2111a49dc85b6",
+  "scannerSHA256": "a7e0cecf9c5ce61149f89daaa6802f6374e3c4c13b0c25058caef07c02796c76",
+  "recordedFrames": 509,
+  "qualifiedCompleteGroups": 86,
+  "invalidGroupFrames": 0,
+  "configurations": [
+    "default-0",
+    "default-1",
+    "default-2",
+    "default-3",
+    "default-4",
+    "forwarded-0",
+    "forwarded-1",
+    "forwarded-2",
+    "forwarded-3",
+    "forwarded-4"
+  ],
+  "qualification": "Independent mode/stage bars and complete row fills qualify groups. Boundary paint and expected separator states are checked afterward. Fixture stages change emitted CSS classes; separator presence is not a qualification condition.",
+  "originalSessionRestored": true,
+  "limits": [
+    "This verifies the recorded default Paper and forwarded Box scenarios on this simulator snapshot.",
+    "Known peer identity comes from immutable candidate classes. Unknown peers retain only a matching surface/subject/parent/predecessor-bound JS observation.",
+    "Replacing an unknown custom peer or changing its CSS on the same host is not native first-paint parity.",
+    "Source opacity is intentionally overridden to expose display suppression.",
+    "Recorded qualified groups do not establish every display frame, GPU deadlines, conditional text timing, animation-start timing, Android runtime or release performance."
+  ]
+}
