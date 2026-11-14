@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "status": "passed-scoped-recorded-separators",
+  "validatedSourceCommit": "d7b5557432ac9c5bf2f049026ac5b5f5fa70522d",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontScale": 1,
+    "pixelRatio": 3
+  },
+  "nativeEndpointChecks": {
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "qualifiedReceipts": 10,
+    "retainedRootNativeType": "RN:AltrooMUIStructuralView",
+    "ornamentNativeType": "RN:AltrooMUIStructuralView",
+    "allParentSelectorCapabilities": true,
+    "allResolversActive": true,
+    "allResolversHealthy": true,
+    "nativeAttemptRange": [8, 38],
+    "changedCandidateRange": [2, 10]
+  },
+  "capture": {
+    "qualified": true,
+    "recordingExitCode": 0,
+    "bytes": 10433438,
+    "sha256": "58cf6c1bba4338894e33e4cc1d906f976b581cda230f82a93e54b69e11f64162",
+    "bundleSHA256": "668000c33a02747c0e0dca986b0bf28a0725252442ded6673530906fa36e19dd",
+    "swiftCollectorSHA256": "7c19de241d65870af25f4fe08e6fdeca5e89a353bc22a90131f34b38a67b297b",
+    "testExecutableSHA256": "9e9c8c4bf8423ed38b20facfb68ae4ea3065c2e894430550ddbc257ebb610ea6",
+    "trackedSourceFilesMatchedToCommit": 456,
+    "sourceFingerprint": "2f04a870236fbd9067c3a0f1b10aaa3297856f7e1cdb806c4750720ff86f6c0a",
+    "originalSessionRestored": true
+  },
+  "recordedFrameChecks": {
+    "frames": 453,
+    "qualifiedCompleteGroupFrames": 104,
+    "unqualifiedCompleteGroupFrames": 0,
+    "invalidGroupFrames": 0,
+    "observedCases": [
+      "default-0",
+      "default-1",
+      "default-2",
+      "default-3",
+      "default-4",
+      "forwarded-0",
+      "forwarded-1",
+      "forwarded-2",
+      "forwarded-3",
+      "forwarded-4"
+    ]
+  },
+  "limits": [
+    "The scan covers recorded complete collapsed groups qualified by independent mode/stage bars, not every display frame or GPU deadline.",
+    "A four-point magenta ornament magnifies the existing separator while retaining its source display and opacity rules. This is separator visibility evidence, not full row geometry.",
+    "Expanded source-class adjacency, conditional text, exact motion-start timing, Android runtime and calibrated performance remain separate gates."
+  ],
+  "regressionEvidence": "native-accordion-separator-regression-ios-2026-11-14.json",
+  "androidCompilation": {
+    "exitCode": 0,
+    "configuration": "Debug",
+    "architecture": "arm64-v8a",
+    "offline": true,
+    "runtimeTested": false
+  }
+}
