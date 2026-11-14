@@ -12,6 +12,7 @@
 #include <react/renderer/core/DynamicPropsUtilities.h>
 #endif
 #include <react/renderer/core/propsConversions.h>
+#include <string>
 #include <type_traits>
 
 namespace altroo::owned_transport_proof {
@@ -146,6 +147,8 @@ struct PreparedData final {
   const GeneratedShared unselected;
   const Pair candidates;
   const Programme programme;
+  const bool parentSelector;
+  const std::string owner;
 #ifdef RN_SERIALIZABLE_STATE
   const PhysicalPayloads physical;
 #if defined(__ANDROID__)
@@ -159,8 +162,10 @@ struct PreparedData final {
   }
 #endif
   PreparedData(GeneratedShared current, Pair pair, Programme kind,
-               [[maybe_unused]] const PreparedData *previous = nullptr)
-      : unselected(std::move(current)), candidates(std::move(pair)), programme(kind)
+               [[maybe_unused]] const PreparedData *previous = nullptr,
+               bool parent = false, std::string identity = {})
+      : unselected(std::move(current)), candidates(std::move(pair)), programme(kind),
+        parentSelector(parent), owner(std::move(identity))
 #ifdef RN_SERIALIZABLE_STATE
       , physical(checkedPhysical(unselected, candidates, previous))
 #if defined(__ANDROID__)
@@ -318,12 +323,12 @@ class OwnedDescriptor final : public ConcreteComponentDescriptor<OwnedShadowNode
     return std::static_pointer_cast<const Generated>(result);
   }
   OwnedProps::Shared finish(GeneratedShared baseline, Pair pair, Programme kind,
-                            const OwnedProps::Shared &source) const {
+                            const OwnedProps::Shared &source, bool parent = false, std::string owner = {}) const {
     // Structural programmes begin from their genuine ordinary presentation.
     // A failed/unsupported native selection must not pin the renderer to case0.
     const std::uint8_t initial = pair.structural() ? 8 : (source && source->selectedLast ? 1 : 0);
     return wrap(std::make_shared<const PreparedData>(std::move(baseline),
-        std::move(pair), kind, source ? source->prepared.get() : nullptr), initial);
+        std::move(pair), kind, source ? source->prepared.get() : nullptr, parent, std::move(owner)), initial);
   }
  public:
   explicit OwnedDescriptor(const ComponentDescriptorParameters &parameters)
@@ -344,7 +349,10 @@ class OwnedDescriptor final : public ConcreteComponentDescriptor<OwnedShadowNode
       if (baseline->ownedProgramme.at("schema").asDouble() == 2.0) {
         auto cases = altroo::owned_adapter_proof::prepareStructural(
             converter_, context, baseline, baseline->ownedProgramme.at("cases"));
-        return finish(std::move(baseline), std::move(cases), Programme::ExplicitPair, current);
+        const bool parent = baseline->ownedProgramme.count("basis") != 0;
+        auto owner = baseline->ownedProgramme.count("owner")
+            ? baseline->ownedProgramme.at("owner").getString() : std::string{};
+        return finish(std::move(baseline), std::move(cases), Programme::ExplicitPair, current, parent, std::move(owner));
       }
       auto normal = baseline->ownedProgramme.at("normal");
       auto last = baseline->ownedProgramme.at("last");

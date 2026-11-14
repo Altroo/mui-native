@@ -247,7 +247,7 @@ struct Pair {
  bool structural()const{return cases[0]!=nullptr;}
  const auto& at(std::uint8_t facts)const{return structural()?cases.at(facts):(facts&1?last:normal);}
 };
-struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;Programme programme{Programme::Numeric};};
+struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;Programme programme{Programme::Numeric};};
 struct OwnedProps : facebook::react::ViewProps {
  double normalPaddingBottom{16},lastPaddingBottom{24};bool selectedLast{};std::uint8_t selectedCase{};
  std::shared_ptr<const Prepared> prepared;
@@ -405,6 +405,33 @@ int main(){try{
  auto fallback=resolve(root({parent<TextShadowNode>({retainedFirst})}));
  check(fallback.decisions.front().bottom==77,"non-host parent restores genuine ordinary presentation instead of case0");
  check(resolve(fallback.root).root==fallback.root,"ordinary fallback is idempotent");
+ // Parent facts require the exact source-owned immediate native parent.
+ const auto pseudo=[](Tag tag){auto n=structuralTarget(tag);auto p=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(n->getConcreteProps().prepared);p->parentSelector=true;p->owner="panel";auto props=std::const_pointer_cast<Owned>(std::static_pointer_cast<const Owned>(n->getProps()));props->nativeId="altroo:accordion-before:v1:";return n;};
+ const auto panel=[](Tag tag,std::vector<Node>children,std::string owner="panel"){auto n=structuralTarget(tag);auto p=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(n->getConcreteProps().prepared);p->owner=std::move(owner);n->children=std::make_shared<const std::vector<Node>>(std::move(children));return n;};
+ auto ornamentA=pseudo(81),ornamentB=pseudo(83);
+ auto panelA=panel(80,{ornamentA}),panelB=panel(82,{ornamentB});
+ auto projected=resolve(root({panelA,panelB}));
+ check(projected.decisions[1].bottom==102&&projected.decisions[3].bottom==105,"pseudo case uses first/last facts of its source-owned parent");
+ auto moved=resolve(root({projected.root->getChildren()[1],projected.root->getChildren()[0]}));
+ check(moved.decisions[1].bottom==102&&moved.decisions[3].bottom==105,"retained pseudo updates on parent reorder without JS repaint");
+ auto acceptedPseudo=moved.root->getChildren()[1]->getChildren()[0];
+ check(acceptedPseudo->getFamilyShared()==ornamentA->getFamilyShared(),"pseudo COW preserves exact native family");
+ auto realChild=structuralTarget(85);auto internal=pseudo(86);
+ auto logical=resolve(root({panel(84,{realChild,internal})}));
+ check(logical.decisions[1].bottom==107,"owned source ornament is excluded from logical sibling order");
+ auto forgedProps=std::make_shared<ViewProps>();forgedProps->nativeId="altroo:accordion-before:v1:";
+ auto forged=resolve(root({panel(87,{structuralTarget(88),node<ViewShadowNode>(89,forgedProps)})}));
+ check(forged.decisions[1].bottom==102,"ordinary nativeID cannot impersonate owned pseudo projection");
+ auto wrapped=resolve(root({panel(90,{node<ViewShadowNode>(91,std::make_shared<ViewProps>(),{pseudo(92)})})}));
+ check(wrapped.decisions.back().bottom==77,"intervening View cannot supply source root position");
+ auto mismatched=resolve(root({panel(93,{pseudo(94)},"another-owner")}));
+ check(mismatched.decisions.back().bottom==77,"different source owner keeps ordinary pseudo presentation");
+ auto nestedPseudo=pseudo(96);nestedPseudo->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{pseudo(97)});
+ auto nested=resolve(root({panel(95,{nestedPseudo})}));
+ check(nested.decisions.back().bottom==77,"a pseudo cannot impersonate its source parent");
+ auto unsupported=resolve(root({pseudo(98)}));
+ check(unsupported.decisions.front().bottom==77,"root/projection parent retains ordinary pseudo presentation");
+
 
  check(rawParses==0,"selection never evaluates raw conversion/callbacks");
  std::cout<<"{\"assertions\":"<<assertions<<",\"platform\":\""

@@ -71,8 +71,8 @@ struct Choice {
 };
 struct Region {
   const ShadowNode *last{};
-  const ShadowNode *firstView{};
-  const ShadowNode *lastView{};
+  std::unordered_map<ComponentHandle, const ShadowNode *> first;
+  std::unordered_map<ComponentHandle, const ShadowNode *> lastOfType;
 };
 struct Plan {
   Counts counts;
@@ -120,10 +120,59 @@ inline bool controlledParent(const ShadowNode &node) {
   return false;
 #endif
 }
+// Only the owned parent-projected ornament is outside source element order.
+// A caller's ordinary View/nativeID cannot impersonate this private role.
+inline bool ornament(const ShadowNode &node) {
+  const auto *owned = dynamic_cast<const AltrooStructuralViewShadowNode *>(&node);
+  if (!owned) return false;
+  const auto &props = owned->getConcreteProps();
+  return props.prepared && props.prepared->parentSelector &&
+      props.nativeId == "altroo:accordion-before:v1:";
+}
+inline ComponentHandle selectorType(const ShadowNode &node) {
+  return controlledView(node) ? ViewShadowNode::Handle() : node.getComponentHandle();
+}
+inline const Region &regionFor(const ShadowNode *parent, Plan &plan) {
+  auto [entry, inserted] = plan.lastElements.try_emplace(parent);
+  if (!inserted) return entry->second;
+  ++plan.counts.participatingParents;
+  const auto &siblings = parent->getChildren();
+  if (siblings.size() > maxNodes)
+    throw std::length_error("Sibling classification budget exceeded");
+  std::size_t remainingRawLeaves = maxNodes - siblings.size();
+  for (const auto &sibling : siblings) {
+    ++plan.counts.siblingChecks;
+    if (!sibling) throw std::invalid_argument("Null candidate sibling");
+    if (ornament(*sibling)) continue;
+    const auto role = altroo::generated_text_origin::classifyParagraph(*sibling, remainingRawLeaves);
+    if (role == altroo::generated_text_origin::ParagraphRole::GeneratedLiteral) {
+      remainingRawLeaves -= sibling->getChildren().size();
+      continue;
+    }
+    if (role == altroo::generated_text_origin::ParagraphRole::NotParagraph &&
+        !elementSibling(*sibling))
+      throw std::invalid_argument("Probe requires an ordinary native host-element sibling");
+    auto &region = entry->second;
+    region.last = sibling.get();
+    const auto type = selectorType(*sibling);
+    region.first.try_emplace(type, sibling.get());
+    region.lastOfType[type] = sibling.get();
+  }
+  return entry->second;
+}
+inline std::uint8_t selectorFacts(const ShadowNode &subject, const ShadowNode *parent,
+                                  Plan &plan) {
+  const auto &region = regionFor(parent, plan);
+  const auto type = selectorType(subject);
+  const auto first = region.first.find(type), last = region.lastOfType.find(type);
+  return (region.last == &subject ? 1 : 0) |
+      (first != region.first.end() && first->second == &subject ? 2 : 0) |
+      (last != region.lastOfType.end() && last->second == &subject ? 4 : 0);
+}
 // Validate the entire candidate before cloning anything. No old tree writes,
 // cached native tags, callbacks, per-frame work, or out-of-tree accepted reads.
 inline void scan(const SharedNode &node, const ShadowNode *parent,
-                 std::size_t depth, Plan &plan) {
+                 const ShadowNode *grandparent, std::size_t depth, Plan &plan) {
   if (!node)
     throw std::invalid_argument("Null candidate child");
   if (depth > maxDepth || ++plan.counts.scanned > maxNodes)
@@ -142,51 +191,25 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
     if (!props.prepared)
       throw std::invalid_argument("Owned host requires ordinary prepared props");
     const bool structural = props.prepared->candidates.structural();
-    // New finite root cases can classify children of ordinary View-kind
-    // containers too. Legacy probe pairs retain their narrower parent contract.
-    const bool selectable = controlledParent(*parent) || (structural && elementSibling(*parent));
+    const bool projected = props.prepared->parentSelector;
+    const ShadowNode *subject = projected ? parent : node.get();
+    const ShadowNode *subjectParent = projected ? grandparent : parent;
+    // Only the exact source-owned immediate parent can supply pseudo facts.
+    // Opaque roots may nest children in another View; retain ordinary presentation
+    // at that boundary rather than applying the inner wrapper's position.
+    const auto *source = projected
+        ? dynamic_cast<const AltrooStructuralViewShadowNode *>(subject) : nullptr;
+    const bool matchingOwner = source && source->getConcreteProps().prepared &&
+        !props.prepared->owner.empty() &&
+        !source->getConcreteProps().prepared->parentSelector &&
+        source->getConcreteProps().prepared->owner == props.prepared->owner;
+    const bool selectable = subjectParent && (!projected || matchingOwner) &&
+        (controlledParent(*subjectParent) || (structural && elementSibling(*subjectParent)));
     if (!selectable && !structural)
       throw std::invalid_argument("Probe requires a controlled View/root parent");
-    bool last = false;
-    std::uint8_t facts = 8; // Ordinary fallback for a projection/non-host parent.
-    if (selectable) {
-      // Classify the actual sibling region once per parent. Retain the last
-      // element pointer so N targets never rescan suffixes. Physical children,
-      // generated paragraphs and their Core text/props are never removed.
-      auto [region, inserted] = plan.lastElements.try_emplace(parent);
-      if (inserted) {
-        ++plan.counts.participatingParents;
-        const auto &siblings = parent->getChildren();
-        if (siblings.size() > maxNodes)
-          throw std::length_error("Sibling classification budget exceeded");
-        std::size_t remainingRawLeaves = maxNodes - siblings.size();
-        for (const auto &sibling : siblings) {
-          ++plan.counts.siblingChecks;
-          if (!sibling) throw std::invalid_argument("Null candidate sibling");
-          const auto role = altroo::generated_text_origin::classifyParagraph(
-              *sibling, remainingRawLeaves);
-          if (role == altroo::generated_text_origin::ParagraphRole::GeneratedLiteral) {
-            remainingRawLeaves -= sibling->getChildren().size();
-            continue;
-          }
-          if (role == altroo::generated_text_origin::ParagraphRole::NotParagraph &&
-              !elementSibling(*sibling))
-            throw std::invalid_argument(
-                "Probe requires an ordinary native host-element sibling");
-          region->second.last = sibling.get();
-          // The owned View retains stock View's semantic selector type. Real
-          // leading/trailing View boundaries therefore still affect :*-of-type.
-          if (controlledView(*sibling)) {
-            if (!region->second.firstView) region->second.firstView = sibling.get();
-            region->second.lastView = sibling.get();
-          }
-        }
-      }
-      last = region->second.last == node.get();
-      facts = (last ? 1 : 0) | (structural ?
-          (region->second.firstView == node.get() ? 2 : 0) |
-          (region->second.lastView == node.get() ? 4 : 0) : 0);
-    }
+    std::uint8_t facts = selectable ? selectorFacts(*subject, subjectParent, plan) : 8;
+    if (!structural) facts &= 1;
+    const bool last = facts != 8 && (facts & 1);
     if (props.prepared->programme == altroo::owned_transport_proof::Programme::Numeric &&
         (!std::isfinite(props.normalPaddingBottom) ||
         !std::isfinite(props.lastPaddingBottom) ||
@@ -210,7 +233,7 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
   }
   const auto &children = node->getChildren();
   for (std::size_t index = 0; index < children.size(); ++index)
-    scan(children[index], node.get(), depth + 1, plan);
+    scan(children[index], node.get(), parent, depth + 1, plan);
 }
 struct Rewritten {
   SharedNode node;
@@ -261,7 +284,7 @@ inline Result resolve(const RootShadowNode::Unshared &candidate) {
   if (!candidate)
     throw std::invalid_argument("Candidate root is required");
   detail::Plan plan{{}, {}, {}, {}, {}, candidate->getSurfaceId(), {}};
-  detail::scan(candidate, nullptr, 0, plan);
+  detail::scan(candidate, nullptr, nullptr, 0, plan);
   if (plan.changed.empty())
     return {candidate, plan.counts, std::move(plan.decisions)};
   auto rewritten = detail::rewrite(candidate, plan);

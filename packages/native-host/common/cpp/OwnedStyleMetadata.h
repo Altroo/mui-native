@@ -15,6 +15,7 @@ inline std::string structuralStyleMetadata() {
       ("errorNotification", "async-once-per-generation-v1")
       ("ownedProgrammeProfile", nativeProfile())
       ("structuralCases", "first-last-of-type-v1")
+      ("parentStructuralCases", "parent-structural-facts-v1")
       ("generatedTextOrigin", folly::dynamic::object("schema", 1.0)
           ("nativeIDPrefix", std::string(generated_text_origin::nativeIDPrefix))));
 }

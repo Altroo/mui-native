@@ -466,6 +466,7 @@ for (const shape of ['base', 'raw', 'origin', 'both']) {
       assert.deepEqual(Object.keys(boot).sort(), [
         'requireGeneratedTextOrigin',
         'requireProfile',
+        'supportsParentStructuralCases',
         'supportsStructuralCases',
       ]);
       if (shape === 'origin' || shape === 'both') {
@@ -748,4 +749,19 @@ test('structural case capability is additive and remains native-free after initi
     assert.equal(calls, 1);
   }
   assert.equal(fresh()(() => null, expected).supportsStructuralCases(), false);
+});
+
+test('parent projection capability is additive and requires supported structural cases', () => {
+  for (const base of [undefined, 'first-last-of-type-v1'])
+    for (const parent of [undefined, 'unknown', 'parent-structural-facts-v1']) {
+      const data = metadata();
+      if (base !== undefined) data.structuralCases = base;
+      if (parent !== undefined) data.parentStructuralCases = parent;
+      const boot = fresh()(() => native(data), expected);
+      boot.requireProfile();
+      assert.equal(
+        boot.supportsParentStructuralCases(),
+        base === 'first-last-of-type-v1' && parent === 'parent-structural-facts-v1',
+      );
+    }
 });

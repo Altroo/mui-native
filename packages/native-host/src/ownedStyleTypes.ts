@@ -11,6 +11,8 @@ export interface OwnedStylePair {
 /** Eight finite cases indexed by last-child, first-of-type and last-of-type bits. */
 export interface OwnedStructuralProgramme {
   readonly schema: 2;
+  readonly basis?: 'parent';
+  readonly owner?: string;
   readonly profile: OwnedStyleProfile;
   readonly cases: readonly Record<string, unknown>[];
 }

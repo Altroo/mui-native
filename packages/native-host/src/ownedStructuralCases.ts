@@ -1,6 +1,10 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Readiness is captured at module initialization. Render never reads native metadata.
-import { requireOwnedStyleProfile, supportsStructuralCases } from './ownedStyleBootstrap';
+import {
+  requireOwnedStyleProfile,
+  supportsStructuralCases,
+  supportsParentStructuralCases,
+} from './ownedStyleBootstrap';
 import { structuralStyleActivation } from './structuralStyleActivation';
 import type { StructuralView } from './ownedStructuralHost';
 function captureRuntime() {
@@ -21,6 +25,7 @@ function captureRuntime() {
     activation: structuralStyleActivation(native),
     Native: Native as StructuralView,
     encode: encodeStructuralCases,
+    parentSelectors: supportsParentStructuralCases(),
   });
 }
 export const ownedStructuralCases = captureRuntime();
