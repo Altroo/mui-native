@@ -50,6 +50,12 @@ import {
 } from './accordionStructure';
 import { useAccordionMotion } from './accordionMotion';
 import {
+  AccordionStructuralRootContext,
+  AccordionStructuralView,
+  useAccordionStructuralRootMarker,
+  prepareAccordionStructuralCases,
+} from './accordionStructuralRoot';
+import {
   accordionConstructorCss,
   accordionOverrideCss,
   accordionMotionTiming,
@@ -657,8 +663,9 @@ const AccordionImpl: React.ForwardRefExoticComponent<
   if (!styledRoot && (Object.hasOwn(root, 'classes') || Object.hasOwn(props, 'classes')))
     rootNativeProps.classes = Object.hasOwn(root, 'classes') ? root.classes : classes;
   if (styledRoot || Root === View) delete rootNativeProps.classes;
+  const structuralMarker = useAccordionStructuralRootMarker();
   const states = [...(expanded ? ['expanded'] : []), ...(disabled ? ['disabled'] : [])];
-  const rootClass = joinClassNames(composed.root, className, rootSlotClass);
+  const rootClass = joinClassNames(composed.root, className, rootSlotClass, structuralMarker);
   const source = componentRootStyle(
     theme,
     styledRoot ? 'MuiAccordion' : '',
@@ -792,28 +799,76 @@ const AccordionImpl: React.ForwardRefExoticComponent<
             computed,
             nativeStyleTextMetrics([computed, rootInline]),
           ) ?? rootMerged;
-        const renderRoot = (viewStyle: StyleProp<NativeStyle>, fallback?: NativeTextScopeValue) => (
-          <Root
-            {...rootNativeProps}
-            ref={cooperatingRoot ? scopeRef : nativeRef}
-            {...(leaf ? { component: leaf } : {})}
-            {...(Root === View ? {} : { className: rootClass })}
-            {...(styledRoot || Root === Paper || Root === View ? {} : { ownerState: rootOwner })}
-            style={viewStyle}
-          >
-            {fallback ? (
-              <NativeRootTextBoundary
-                parent={parent}
-                fallback={fallback}
-                rootRef={scopeRoot}
-                theme={theme}
+        const structuralCases =
+          structuralMarker && Root === View
+            ? prepareAccordionStructuralCases({
+                theme,
+                programme,
+                direction: parent?.direction ?? theme.direction,
+                context: {
+                  styleCache,
+                  width,
+                  classes: rootClass.split(/\s+/).filter(Boolean),
+                  ...nativeTextStyleContext(parent, rootInline, theme),
+                  ...structure.facts,
+                  states: [...states, ...(structure.facts.states ?? [])],
+                  protectPhysicalGeometry: true,
+                },
+              })
+            : undefined;
+        const renderRoot = (
+          viewStyle: StyleProp<NativeStyle>,
+          fallback?: NativeTextScopeValue,
+          presentation?: NativeStyle,
+        ) => (
+          <AccordionStructuralRootContext.Provider value={structuralMarker ?? null}>
+            {structuralCases ? (
+              <AccordionStructuralView
+                {...rootNativeProps}
+                cases={structuralCases}
+                nativeRef={nativeRef}
+                presentation={presentation}
+                style={viewStyle}
               >
-                {nativeChildren}
-              </NativeRootTextBoundary>
+                {fallback ? (
+                  <NativeRootTextBoundary
+                    parent={parent}
+                    fallback={fallback}
+                    rootRef={scopeRoot}
+                    theme={theme}
+                  >
+                    {nativeChildren}
+                  </NativeRootTextBoundary>
+                ) : (
+                  nativeChildren
+                )}
+              </AccordionStructuralView>
             ) : (
-              nativeChildren
+              <Root
+                {...rootNativeProps}
+                ref={cooperatingRoot ? scopeRef : nativeRef}
+                {...(leaf ? { component: leaf } : {})}
+                {...(Root === View ? {} : { className: rootClass })}
+                {...(styledRoot || Root === Paper || Root === View
+                  ? {}
+                  : { ownerState: rootOwner })}
+                style={viewStyle}
+              >
+                {fallback ? (
+                  <NativeRootTextBoundary
+                    parent={parent}
+                    fallback={fallback}
+                    rootRef={scopeRoot}
+                    theme={theme}
+                  >
+                    {nativeChildren}
+                  </NativeRootTextBoundary>
+                ) : (
+                  nativeChildren
+                )}
+              </Root>
             )}
-          </Root>
+          </AccordionStructuralRootContext.Provider>
         );
         // First-party roots bind the retained programme to their own physical host.
         // A second text scope here would resolve the same em/% declaration twice.
@@ -828,7 +883,7 @@ const AccordionImpl: React.ForwardRefExoticComponent<
           >
             {(motion) => (
               <AccordionRootMotionBoundary scope={motion} root={scopeRoot} style={rootStyleResult}>
-                {(presented) =>
+                {(presented, presentation) =>
                   cooperatingRoot ? (
                     renderRoot([programme, rootStyle])
                   ) : (
@@ -849,6 +904,7 @@ const AccordionImpl: React.ForwardRefExoticComponent<
                                 viewStyle,
                               ),
                               fallback,
+                              presentation,
                             )}
                           </NativeTextStyleContext.Provider>
                         )}
@@ -944,8 +1000,9 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
   const ariaExpanded = merged['aria-expanded'];
   const expanded = owner.expanded,
     gutters = !owner.disableGutters;
+  const structuralMarker = useAccordionStructuralRootMarker();
   const states = [...(expanded ? ['expanded'] : []), ...(owner.disabled ? ['disabled'] : [])];
-  const rootClass = joinClassNames(composed.root, className, rootSlotClass);
+  const rootClass = joinClassNames(composed.root, className, rootSlotClass, structuralMarker);
   const focusClass = Object.hasOwn(root, 'focusVisibleClassName')
     ? rootFocusClass
     : joinClassNames(composed.focusVisible, focusVisibleClassName);

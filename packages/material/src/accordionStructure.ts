@@ -51,7 +51,13 @@ function regionAt(
       !id?.startsWith(accordionBeforeOrigin)
     );
   });
-  const tags = siblings.map((child) => child.tagName);
+  const tags = siblings.map((child) => {
+    const tag = child.tagName;
+    // RN's public DOM prefixes actual component names with RN:. Keep the
+    // legacy unprefixed model spelling equivalent without widening other hosts.
+    if (tag === 'RN:AltrooMUIStructuralView') return 'RN:View';
+    return tag === 'AltrooMUIStructuralView' ? 'View' : tag;
+  });
   const first = new Map<string, number>(),
     last = new Map<string, number>();
   tags.forEach((tag, index) => {

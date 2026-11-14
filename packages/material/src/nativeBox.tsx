@@ -38,6 +38,11 @@ import { mergeNativeRootStyle } from './nativeControlStyles';
 import { useAccordionRootMotion, renderAccordionRootMotion } from './accordionRootMotion';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
 import { NativeButtonGroupRules } from './buttonGroupContext';
+import {
+  AccordionStructuralView,
+  prepareAccordionStructuralCases,
+  useAccordionStructuralRoot,
+} from './accordionStructuralRoot';
 import { boxClasses } from './boxClasses';
 import { unstable_ClassNameGenerator } from './classNameGenerator';
 import type { NativeBoxComponent, NativeBoxRootProps } from './boxTypes';
@@ -62,6 +67,7 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
       nativeRef = useNativeStyleRef(root, ref);
     const structuralFacts = useNativeStructuralFacts(root);
     const rootMotion = useAccordionRootMotion();
+    const structuralRoot = useAccordionStructuralRoot(inProps.className);
     // Box is anonymous to styled/theme defaults: it must never resolve MuiBox.
     const input = separateNativeRootProps(inProps),
       props = input.props;
@@ -119,7 +125,7 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
         ancestors: nativeStyleAncestors(rules, { classes }),
         protectPhysicalGeometry: true,
       },
-      handoff !== null || !terminal,
+      handoff !== null || !terminal || structuralRoot,
     );
     const paint = (next: NativeStyle) => {
       const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, next, authored);
@@ -178,6 +184,22 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
         handoff?.retained,
       );
     }
+    const structuralCases =
+      structuralRoot && Root === View
+        ? prepareAccordionStructuralCases({
+            theme,
+            programme,
+            direction: parent?.direction ?? theme.direction,
+            context: {
+              styleCache,
+              width,
+              classes,
+              ...structuralFacts,
+              ...nativeTextStyleContext(parent, style, theme),
+              protectPhysicalGeometry: true,
+            },
+          })
+        : undefined;
     return clearNativeRootStyleForward(
       forwardedStyle,
       <NativeCssRootBoundary style={computed} registerClass={!terminal}>
@@ -190,25 +212,37 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
               content={children}
             >
               {(resolvedStyle, content) =>
-                renderAccordionRootMotion(rootMotion, root, resolvedStyle, (style) => (
-                  <Root
-                    {...native}
-                    {...(Root === View ? {} : { className: rootClass })}
-                    ref={nativeRef}
-                    style={
-                      terminal
-                        ? style
-                        : retainNativeRootCss(
-                            authored,
-                            programme,
-                            Object.hasOwn(props, 'style'),
-                            style,
-                          )
-                    }
-                  >
-                    {content}
-                  </Root>
-                ))
+                renderAccordionRootMotion(rootMotion, root, resolvedStyle, (style, presentation) =>
+                  structuralCases ? (
+                    <AccordionStructuralView
+                      {...native}
+                      cases={structuralCases}
+                      nativeRef={nativeRef}
+                      presentation={presentation}
+                      style={style}
+                    >
+                      {content}
+                    </AccordionStructuralView>
+                  ) : (
+                    <Root
+                      {...native}
+                      {...(Root === View ? {} : { className: rootClass })}
+                      ref={nativeRef}
+                      style={
+                        terminal
+                          ? style
+                          : retainNativeRootCss(
+                              authored,
+                              programme,
+                              Object.hasOwn(props, 'style'),
+                              style,
+                            )
+                      }
+                    >
+                      {content}
+                    </Root>
+                  ),
+                )
               }
             </NativeTextScope>
           </NativeStyleScope>

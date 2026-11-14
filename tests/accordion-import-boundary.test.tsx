@@ -3,6 +3,9 @@
 jest.mock('../packages/native-host/src/ownedStyleEncoding', () => {
   throw Error('Accordion eagerly loaded the unrelated native style compiler');
 });
+jest.mock('../packages/native-host/src/AltrooMUIStructuralViewNativeComponent', () => {
+  throw Error('Ordinary Accordion eagerly loaded an optional native host');
+});
 import { render, cleanup } from '@testing-library/react-native';
 import { Text } from 'react-native';
 import { Accordion, AccordionSummary } from '../packages/material/src/accordion';

@@ -391,6 +391,12 @@ final class AccordionGroupingProbeUITests: XCTestCase {
       XCTAssertEqual(report["schemaVersion"] as? Int, 1)
       XCTAssertEqual(report["development"] as? Bool, false)
       XCTAssertEqual(try XCTUnwrap(report["fontScale"] as? Double), 1, accuracy: 0.01)
+      let runtime = try XCTUnwrap(report["runtime"] as? [String: Any])
+      XCTAssertEqual(runtime["active"] as? Bool, true)
+      XCTAssertEqual(runtime["degraded"] as? Bool, false)
+      XCTAssertEqual(runtime["errors"] as? String, "0")
+      XCTAssertGreaterThan(try XCTUnwrap(UInt64(try XCTUnwrap(runtime["attempts"] as? String))), 0)
+      XCTAssertGreaterThan(try XCTUnwrap(UInt64(try XCTUnwrap(runtime["changedCandidates"] as? String))), 0)
       let rows = try XCTUnwrap(report["rows"] as? [[String: Any]])
       XCTAssertEqual(rows.count, 3)
       let ordered = stage == 0 || stage == 4 ? ["a", "b", "c"] : ["c", "a", "b"]
@@ -398,6 +404,7 @@ final class AccordionGroupingProbeUITests: XCTestCase {
       for row in rows {
         let id = try XCTUnwrap(row["id"] as? String)
         let tag = try XCTUnwrap(row["tag"] as? Int)
+        XCTAssertEqual(row["nativeType"] as? String, "RN:AltrooMUIStructuralView", "The actual native selector host must be installed")
         let height = try XCTUnwrap(row["height"] as? Double)
         let expected: Double = stage == 2 ? 48 : id == ordered.first ? 80 : id == ordered.last ? 100 : 48
         XCTAssertEqual(height, expected, accuracy: 1, "Wrong structural style for " + id + " at stage " + String(stage))

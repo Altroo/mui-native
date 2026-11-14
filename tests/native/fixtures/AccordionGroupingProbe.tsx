@@ -19,6 +19,8 @@ import {
   type BoxProps,
 } from '@mui/material';
 
+import { ownedStructuralCases } from '@altroo/mui-native-host/internal/structural-root';
+
 type Mode = 'default' | 'forwarded';
 type Id = 'a' | 'b' | 'c';
 type CounterHandle = { bump(): void; read(): number };
@@ -29,6 +31,7 @@ type Targets = {
 type RowBounds = {
   id: Id;
   tag: number;
+  nativeType: string;
   count: number;
   x: number;
   y: number;
@@ -44,6 +47,13 @@ type Report = {
   stage: number;
   phase: 'idle' | 'sampling' | 'complete' | 'error';
   rows: RowBounds[];
+  runtime?: {
+    active: boolean;
+    degraded: boolean;
+    errors: string;
+    attempts: string;
+    changedCandidates: string;
+  };
   error?: string;
 };
 type Job = { frame?: number; deadline?: ReturnType<typeof setTimeout> };
@@ -131,6 +141,9 @@ function measure(id: Id, targets: Targets): Promise<RowBounds> {
         resolve({
           id,
           tag,
+          nativeType: String(
+            (node as ViewInstance & { tagName?: string }).tagName ?? 'unavailable',
+          ),
           count: counter.read(),
           x: round(x),
           y: round(y),
@@ -172,11 +185,27 @@ function Panel({ mode }: { mode: Mode }) {
       if (job.current !== current) return;
       cancel(current);
       job.current = null;
+      let runtime: Report['runtime'];
+      try {
+        const status = ownedStructuralCases?.activation.getStatus();
+        if (!status) throw new Error('Native structural runtime is unavailable');
+        const activity = status as typeof status & Record<string, unknown>;
+        runtime = {
+          active: status.active,
+          degraded: status.degraded,
+          errors: status.errors,
+          attempts: String(activity.attempts ?? 'unavailable'),
+          changedCandidates: String(activity.changedCandidates ?? 'unavailable'),
+        };
+      } catch (runtimeError) {
+        error ??= runtimeError;
+      }
       setReport({
         ...metadata,
         stage,
         phase: error ? 'error' : 'complete',
         rows,
+        ...(runtime ? { runtime } : {}),
         ...(error ? { error: String(error) } : {}),
       });
     };

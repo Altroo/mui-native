@@ -125,7 +125,7 @@ export function AccordionRootMotionBoundary({
   scope: Scope;
   root: RefObject<ViewInstance | null>;
   style: StyleProp<NativeStyle>;
-  children(style: StyleProp<NativeStyle>): ReactNode;
+  children(style: StyleProp<NativeStyle>, presentation?: NativeStyle): ReactNode;
 }) {
   const depth = useContext(Depth);
   const candidate = useMemo(() => ({ root, depth }), [root, depth]);
@@ -147,14 +147,16 @@ export function AccordionRootMotionBoundary({
     scope.timing,
   );
   return (
-    <Depth.Provider value={depth + 1}>{children(patch ? [style, patch] : style)}</Depth.Provider>
+    <Depth.Provider value={depth + 1}>
+      {children(patch ? [style, patch] : style, patch)}
+    </Depth.Provider>
   );
 }
 export function renderAccordionRootMotion(
   scope: Scope | null,
   root: RefObject<ViewInstance | null>,
   style: StyleProp<NativeStyle>,
-  render: (style: StyleProp<NativeStyle>) => ReactNode,
+  render: (style: StyleProp<NativeStyle>, presentation?: NativeStyle) => ReactNode,
 ): ReactNode {
   return scope ? (
     <AccordionRootMotionBoundary scope={scope} root={root} style={style}>

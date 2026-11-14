@@ -665,3 +665,28 @@ test.each(['sx', 'theme', 'className'] as const)(
     expect(tree.getByTestId('count')).toHaveTextContent('1');
   },
 );
+
+test('real RN-prefixed owned and ordinary Views share one structural selector type', () => {
+  const m = model(['leading', 'a', 'b', 'trailing']);
+  for (const name of ['leading', 'trailing']) m.nodes.get(name)!.tagName = 'RN:View';
+  for (const name of ['a', 'b']) m.nodes.get(name)!.tagName = 'RN:AltrooMUIStructuralView';
+  expect(accordionStructureAt(m.nodes.get('a')!, () => false).facts).toMatchObject({
+    firstOfType: false,
+    lastOfType: false,
+  });
+  expect(accordionStructureAt(m.nodes.get('b')!, () => false).facts).toMatchObject({
+    firstOfType: false,
+    lastOfType: false,
+    lastChild: false,
+  });
+  m.reorder(['a', 'b']);
+  expect(accordionStructureAt(m.nodes.get('a')!, () => false).facts).toMatchObject({
+    firstOfType: true,
+    lastOfType: false,
+  });
+  expect(accordionStructureAt(m.nodes.get('b')!, () => false).facts).toMatchObject({
+    firstOfType: false,
+    lastOfType: true,
+    lastChild: true,
+  });
+});
