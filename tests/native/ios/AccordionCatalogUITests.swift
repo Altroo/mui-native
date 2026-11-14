@@ -141,6 +141,11 @@ final class AccordionCatalogUITests: XCTestCase {
         attachment.lifetime = .keepAlways; add(attachment)
       }
     }
+    func attachNativeHierarchy(_ phase: String) {
+      let attachment = XCTAttachment(string: app.debugDescription)
+      attachment.name = "accordion-voiceover-native-tree-" + phase
+      attachment.lifetime = .keepAlways; add(attachment)
+    }
     defer { attachTranscript() }
     try service.enable()
     XCTAssertTrue(service.isEnabled)
@@ -162,6 +167,7 @@ final class AccordionCatalogUITests: XCTestCase {
         if matches(utterance) { attachTranscript(); return spoken }
       }
       attachTranscript()
+      attachNativeHierarchy("failed-" + phase)
       XCTFail("VoiceOver could not reach " + label)
       return spoken
     }
@@ -177,12 +183,36 @@ final class AccordionCatalogUITests: XCTestCase {
     XCTAssertFalse(try XCTUnwrap(initialBody.last).lowercased().contains("expanded"))
     // The independent stock/owned control qualifies a target-specific double
     // tap: one activation with VoiceOver on. Whole-app gestures are unqualified.
+    let paymentBefore = node("accordion-payment-summary").frame
     node("accordion-payment-summary").doubleTap()
     waitFor("VoiceOver activation must select payment exactly once") {
       self.node("accordion-phases").label == "Delivery: closed · Payment: open"
         && self.node("accordion-changes").label == "Section changes: 1"
         && !self.node("accordion-note").exists
     }
+    // Transition callbacks and native accessibility snapshots have separate
+    // completion. Require the target's real expanded value before navigation;
+    // do not insert a blind delay, force focus, or expand the traversal budget.
+    let nativeReadyStart = ProcessInfo.processInfo.systemUptime
+    let nativeReady = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+      let target = self.node("accordion-payment-summary")
+      return target.exists && target.isHittable
+        && String(describing: target.value).lowercased().contains("expanded")
+    }, object: nil)
+    let nativeReadyResult = XCTWaiter.wait(for: [nativeReady], timeout: 12)
+    transcript.append([
+      "phase": "payment-before-navigation",
+      "utterance": try service.currentSpeech().utterance,
+      "frameBeforeActivation": NSCoder.string(for: paymentBefore),
+      "frameAfterActivation": NSCoder.string(for: node("accordion-payment-summary").frame),
+      "nativeValue": String(describing: node("accordion-payment-summary").value),
+      "hittable": String(node("accordion-payment-summary").isHittable),
+      "nativeReadySeconds": String(ProcessInfo.processInfo.systemUptime - nativeReadyStart),
+    ])
+    if nativeReadyResult != .completed {
+      attachTranscript(); attachNativeHierarchy("native-value-timeout")
+    }
+    XCTAssertEqual(nativeReadyResult, .completed, "Payment must expose its expanded native accessibility value")
     transcript.append(["phase": "payment-refocus", "utterance": try service.moveBackward().utterance])
     let payment = try XCTUnwrap(find("Payment & receipt", phase: "payment-refocus", limit: 8).last)
     XCTAssertTrue(payment.lowercased().contains("expanded"))
