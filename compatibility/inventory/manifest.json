@@ -10765,7 +10765,7 @@
       "packages/icons/src/ZoomOutSharp/index.ts": "9cddbf3cd084349d582f124b3fcd68a23fa75ccad808f14f84cda4bab2428eed",
       "packages/icons/src/ZoomOutTwoTone/index.ts": "c66203f5be3a21bc0de38541d8537b8227b743f60129dca75feff78e65c8ba32",
       "packages/material/package.json": "bf2741a997bdcbdb2fe095e85d6c2e82edc0325bde6ffb72fbcb9d329f410134",
-      "packages/material/src/accordion.tsx": "8924b9141e5dfac6b327022fdf698901d2cbc4b91e5197995eaf84d985bcfa50",
+      "packages/material/src/accordion.tsx": "39424ecd513a483e57bb143c79534652a686329c74e6641e5247d6aa6eb018d7",
       "packages/material/src/Accordion/accordionClasses/index.ts": "7bd64e00bf10c8bb5b05ecba5fa2b85e18eb8eab54de23cd011038d951a9ed4c",
       "packages/material/src/Accordion/index.ts": "294e49767548b28701ec7effd0492c9ddfd3f25e1c8d6a566be1c5385ec9f06d",
       "packages/material/src/AccordionActions/accordionActionsClasses/index.ts": "5be3181aa79737e2f61160eb2334e3dae5855d1bf258a98707dcbacf52e22dec",
@@ -11093,7 +11093,7 @@
       "packages/system/src/iconContext.ts": "c5687b1f3ff1673cfb7ada68c013c56f114a123224f248861a3df62611b264bf",
       "packages/system/src/index.ts": "b9de7ca97d25f35f0020289cb0a8cbe5081bd0f20dbc1831827549f96239d157",
       "packages/system/src/internal/generated-paragraph/index.ts": "005fcce240b30ad5e939e93ab50bc810694f9d77894359fe72d634479f98534d",
-      "packages/system/src/internal/prepared-style/index.ts": "64168b8fecf7b57e98e7b37febbce401548e642bac76f21490f3f45bef891d8e",
+      "packages/system/src/internal/prepared-style/index.ts": "0433b61112ef2c7ca5b1e6821af0d50df6409ed38ac0d423a6af8adc10962817",
       "packages/system/src/merge.ts": "c0c579f78b85584e6a481f8b87dd930a0c1fa484880efb118c6face83a190a46",
       "packages/system/src/nativeCssEmission.ts": "159567a3dac55cc70ec4ec9c6accb43f8edb55d937520e8f005105ed1e84488b",
       "packages/system/src/nativeCssProgram.ts": "53a7a3a64deeff0a5ea080d989a8b4e443c9dda81c84b4b0e972a41a9c38706a",
@@ -11103,7 +11103,7 @@
       "packages/system/src/nativeRootStyleSnapshots.ts": "323fb9b16c63082fb09c01b4de3cbe8b7271ba6bc93afc80139d29b3be0f3231",
       "packages/system/src/nativeStructuralFacts.tsx": "eefb4257dc931d8712457b6ca3392ee502404bd1d0b3d758270e53c4616d882d",
       "packages/system/src/nativeStyleCache.ts": "ccf0d1119765432d4b6dfc85e5e38883767150109b0f6de990c7e3fb138365da",
-      "packages/system/src/nativeStyleCacheScope.tsx": "7814c3fa7612b3a32635f4172307cb310051d5e10a95417b7044cf84a19b0c42",
+      "packages/system/src/nativeStyleCacheScope.tsx": "a2c14e0c2ee8b31e809feafc21e35c013a1d1244d7a331ef0b79029a239adf40",
       "packages/system/src/nativeStyledMetadata.ts": "34eab26961b6b2e3a07b552ce4b4a2393a947f468c37e46ff4ff9e18bf0790c8",
       "packages/system/src/nativeStyledPreprocessing.ts": "e83a867388ff64926e65646b487ea736f2efd86c00b68a2dcb111bee68b4d26d",
       "packages/system/src/nativeStyleEvaluation.ts": "2823af046d74c9e0a7afac465e2fd2a3641d05f07dd0034d9709c0ea2cd4c5bb",
@@ -11220,7 +11220,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "ec4fbf2153c354bc094c4a8f9ec33d4a738b7bb37adca4b84131c5e07c73b223",
+      "nativeSourceSha256": "738611f338f9ea60e0ee73f187059d3059613b00bb4bfa2411f963cc3f2fdb2a",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11232,7 +11232,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "5097caf07c845d1c02356b53eccbb68d8f8c27c57ed268ab0237d7b14275a714"
+      "sha256": "70034afd522d3ab5f19143e80431bdc269c02066634a5f17f79a3352d6c637a0"
     },
     {
       "package": "@mui/system",
@@ -11242,7 +11242,7 @@
       "apiSnapshotSha256": "3739a4fef1dae2ca74073b07576787171d6c26bedcfd6f057e622dc312014f02",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "79993ca251cf79c50ea847581b8025a8ba93c4521e95550057a2a9e0c3efc171",
+      "nativeSourceSha256": "6a03ac5ce27449c5a6eab4d7327ce67b38e2a29379589e151b3da914bc91204c",
       "declarationFiles": 226,
       "publishedImportPaths": 42,
       "resolvedRootExports": 267,
@@ -11254,7 +11254,7 @@
       "syntaxReviewItems": 12,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/system.json",
-      "sha256": "18ddb39fee7a682b6416a0f3d354e56f40d60f0968b8979b95b93d423787f9b8"
+      "sha256": "4dbe685300edc28c837f99129be9a3ea95132c22792e671526a700a7fe7355d3"
     },
     {
       "package": "@mui/icons-material",
