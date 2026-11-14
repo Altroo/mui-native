@@ -122,3 +122,41 @@ test('shared runner selects Accordion, collects its safe artifacts and restores 
     await rm(directory, { recursive: true, force: true });
   }
 });
+
+test('qualified Accordion input rejects covered, missing and reordered touches', () => {
+  const targets = [
+    'catalog-tab-Accordion',
+    'accordion-note',
+    'accordion-payment-summary',
+    'accordion-delivery-summary',
+    'accordion-save',
+    'accordion-disabled-summary',
+    'accordion-help-summary',
+    'accordion-help-summary',
+  ];
+  const qualified = {
+    ...complete,
+    inputQualification: 'unobstructed-logbox-v1',
+    screenshots: [...accordionPictures, 'help-input.png'],
+    touches: targets.map((target) => ({
+      target,
+      x: 10,
+      y: 20,
+      imeVisible: false,
+      diagnosticClear: true,
+    })),
+  };
+  assert.deepEqual(summarizeAccordion(output(qualified)), qualified);
+  for (const bad of [
+    { ...qualified, inputQualification: 'guessed' },
+    { ...qualified, touches: qualified.touches.slice(1) },
+    { ...qualified, touches: [...qualified.touches].reverse() },
+    {
+      ...qualified,
+      touches: qualified.touches.map((t, i) => (i === 5 ? { ...t, diagnosticClear: false } : t)),
+    },
+    { ...qualified, touches: qualified.touches.map((t, i) => (i === 6 ? { ...t, x: null } : t)) },
+    { ...qualified, screenshots: accordionPictures },
+  ])
+    assert.throws(() => summarizeAccordion(output(bad)));
+});

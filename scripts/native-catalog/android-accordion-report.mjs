@@ -29,7 +29,9 @@ export function inspectAccordionReport(output) {
     !report.device.model ||
     !Array.isArray(report.screenshots) ||
     new Set(report.screenshots).size !== report.screenshots.length ||
-    !report.screenshots.every((file) => [...accordionPictures, 'failure.png'].includes(file))
+    !report.screenshots.every((file) =>
+      [...accordionPictures, 'help-input.png', 'failure.png'].includes(file),
+    )
   )
     throw Error('Unsafe or incomplete Accordion diagnostic metadata');
   return report;
@@ -57,7 +59,10 @@ export function summarizeAccordion(output) {
     typeof report.device?.model !== 'string' ||
     !report.device.model ||
     JSON.stringify(report.stages) !== JSON.stringify(accordionStages) ||
-    JSON.stringify(report.screenshots) !== JSON.stringify(accordionPictures) ||
+    JSON.stringify(report.screenshots) !==
+      JSON.stringify(
+        report.inputQualification ? [...accordionPictures, 'help-input.png'] : accordionPictures,
+      ) ||
     !Array.isArray(report.samples) ||
     report.samples.length !== sampleNames.length
   )
@@ -74,6 +79,32 @@ export function summarizeAccordion(output) {
         : sample.actual <= 0 || Math.abs(sample.actual - sample.natural) > 2)
     )
       throw Error('Inconsistent native Accordion bounds at sample ' + index);
+  }
+  if (report.inputQualification !== undefined) {
+    const targets = [
+      'catalog-tab-Accordion',
+      'accordion-note',
+      'accordion-payment-summary',
+      'accordion-delivery-summary',
+      'accordion-save',
+      'accordion-disabled-summary',
+      'accordion-help-summary',
+      'accordion-help-summary',
+    ];
+    if (
+      report.inputQualification !== 'unobstructed-logbox-v1' ||
+      !Array.isArray(report.touches) ||
+      report.touches.length !== targets.length ||
+      report.touches.some(
+        (touch, index) =>
+          touch.target !== targets[index] ||
+          !Number.isFinite(touch.x) ||
+          !Number.isFinite(touch.y) ||
+          typeof touch.imeVisible !== 'boolean' ||
+          touch.diagnosticClear !== true,
+      )
+    )
+      throw Error('Unqualified native Accordion input');
   }
   return report;
 }
