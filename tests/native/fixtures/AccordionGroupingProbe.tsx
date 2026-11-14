@@ -39,6 +39,7 @@ type Report = {
   schemaVersion: 1;
   development: boolean;
   fontScale: number;
+  pixelRatio: number;
   mode: Mode;
   stage: number;
   phase: 'idle' | 'sampling' | 'complete' | 'error';
@@ -52,6 +53,13 @@ const rootStyle = {
   '&:first-of-type': { minHeight: 80 },
   '&:last-of-type': { minHeight: 100 },
 };
+// Distinct opaque fills let the display-frame collector identify each physical row.
+const rowPaint = {
+  a: { backgroundColor: '#ef9a9a' },
+  b: { backgroundColor: '#a5d6a7' },
+  c: { backgroundColor: '#90caf9' },
+};
+const stagePaint = ['#b71c1c', '#4a148c', '#006064', '#e65100', '#212121'];
 const Slot = forwardRef<ViewInstance, BoxProps>(function Slot(props, ref) {
   return <Box {...props} ref={ref} />;
 });
@@ -97,6 +105,7 @@ const Row = memo(function Row({ id, mode, targets }: { id: Id; mode: Mode; targe
       expanded={false}
       elevation={0}
       sx={rootStyle}
+      style={rowPaint[id]}
     >
       <AccordionSummary>
         <Counter ref={counterRef} id={id} />
@@ -139,6 +148,7 @@ function Panel({ mode }: { mode: Mode }) {
     schemaVersion: 1 as const,
     development: __DEV__,
     fontScale: PixelRatio.getFontScale(),
+    pixelRatio: PixelRatio.get(),
     mode,
   };
   const [report, setReport] = useState<Report>({ ...metadata, stage, phase: 'idle', rows: [] });
@@ -210,6 +220,11 @@ function Panel({ mode }: { mode: Mode }) {
         <Button testID="accordion-grouping-capture" disabled={sampling} onClick={capture}>
           Capture
         </Button>
+      </View>
+      {/* Independent commit markers identify expected mode/stage without reading row geometry. */}
+      <View collapsable={false}>
+        <View style={{ height: 6, backgroundColor: mode === 'default' ? '#ffeb3b' : '#ff9800' }} />
+        <View style={{ height: 6, backgroundColor: stagePaint[stage] }} />
       </View>
       <View collapsable={false}>
         {stage === 2 ? (
