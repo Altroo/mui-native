@@ -85,9 +85,12 @@ function emittedClasses(prepared: NativePreparedStyle): readonly NativeStyleClas
   return Object.freeze(
     tokens.map((token) => {
       const sourceOwners: string[] = [];
+      const selectorOwners: string[] = [];
       const visit = (programme: typeof token.programme) => {
-        if (programme.kind === 'owner') sourceOwners.push(programme.owner.css);
-        else if (programme.kind === 'sequence') programme.parts.forEach(visit);
+        if (programme.kind === 'owner') {
+          sourceOwners.push(programme.owner.css);
+          if (programme.owner.selectorOwner) selectorOwners.push(programme.owner.selectorOwner);
+        } else if (programme.kind === 'sequence') programme.parts.forEach(visit);
         else {
           visit(programme.own);
           programme.classes.forEach(visit);
@@ -98,6 +101,7 @@ function emittedClasses(prepared: NativePreparedStyle): readonly NativeStyleClas
         cacheKey: token.insertion.cache.key,
         css: token.insertion.css,
         sourceOwners: Object.freeze(sourceOwners),
+        ...(selectorOwners.length ? { selectorOwners: Object.freeze(selectorOwners) } : {}),
       });
     }),
   );

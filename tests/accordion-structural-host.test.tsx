@@ -467,3 +467,45 @@ for (const Root of [Paper, MemoPaper, NestedMemoPaper]) {
     },
   );
 }
+
+for (const Root of [undefined, Box, Opaque]) {
+  test(
+    'final emitted CSS carries the exact source owner without changing class identity: ' +
+      String(Root),
+    () => {
+      const a = {},
+        b = {};
+      const tree = render(
+        <>
+          <Accordion component={Root} expanded testID="owner-a">
+            <AccordionSummary>A</AccordionSummary>
+            <Text>Body</Text>
+          </Accordion>
+          <Accordion component={Root} expanded testID="owner-b">
+            <AccordionSummary>B</AccordionSummary>
+            <Text>Body</Text>
+          </Accordion>
+        </>,
+        {
+          createNodeMock: (node) =>
+            (node.props as { testID?: string }).testID === 'owner-a'
+              ? a
+              : (node.props as { testID?: string }).testID === 'owner-b'
+                ? b
+                : {},
+        },
+      );
+      const left = nativeStyleTree.exactHostStyle(a)!.sourceClasses!;
+      const right = nativeStyleTree.exactHostStyle(b)!.sourceClasses!;
+      const leftOwner = tree.getByTestId('owner-a').props.ownedProgramme.owner;
+      const rightOwner = tree.getByTestId('owner-b').props.ownedProgramme.owner;
+      expect(leftOwner).not.toBe(rightOwner);
+      expect(left.map(({ cacheKey, css }) => ({ cacheKey, css }))).toEqual(
+        right.map(({ cacheKey, css }) => ({ cacheKey, css })),
+      );
+      expect(left.some((token) => token.selectorOwners?.includes(leftOwner))).toBe(true);
+      expect(right.some((token) => token.selectorOwners?.includes(rightOwner))).toBe(true);
+      expect(left.some((token) => token.selectorOwners?.includes(rightOwner))).toBe(false);
+    },
+  );
+}

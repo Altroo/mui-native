@@ -28,6 +28,8 @@ export type NativeStyleClassIdentity = Readonly<{
   cacheKey: string;
   css: string;
   sourceOwners: readonly string[];
+  /** Immutable source occurrences; excluded when comparing emitted class identity. */
+  selectorOwners?: readonly string[];
 }>;
 export interface NativeButtonGroupRule {
   /** Actual participating native root, used only for physical styling ownership. */

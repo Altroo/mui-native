@@ -36,6 +36,8 @@ export function serializeNativeCssInterpolation(value: unknown): string {
 }
 
 export type NativeCssOwner = Readonly<{
+  /** Private immutable source occurrence, excluded from serialized CSS identity. */
+  selectorOwner?: string;
   name: string;
   base: string;
   tail: string;
@@ -45,11 +47,18 @@ export function createNativeCssOwner(
   name: string,
   base: unknown,
   tail: readonly unknown[],
+  selectorOwner?: string,
 ): NativeCssOwner {
   const baseCss = serializeNativeCssInterpolation(base);
   const tailCss = tail.map(serializeNativeCssInterpolation).join('');
   const label = name ? 'label:' + name + '-root;' : '';
-  return Object.freeze({ name, base: baseCss, tail: tailCss, css: label + baseCss + tailCss });
+  return Object.freeze({
+    name,
+    base: baseCss,
+    tail: tailCss,
+    css: label + baseCss + tailCss,
+    ...(selectorOwner ? { selectorOwner } : {}),
+  });
 }
 export function rebaseNativeCssOwner(
   previous: NativeCssOwner,

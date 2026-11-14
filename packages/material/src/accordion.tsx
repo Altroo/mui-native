@@ -728,6 +728,8 @@ const AccordionImpl: React.ForwardRefExoticComponent<
       overrideKeys: styledRoot
         ? [...(!props.square ? ['rounded'] : []), ...(!disableGutters ? ['gutters'] : [])]
         : [],
+      // Bind identity to the accepted source programme, not a newer render's CSS.
+      selectorOwner: styledRoot ? structuralMarker : undefined,
       baseProgramme: styledRoot ? accordionConstructorCss(theme, rootOwner) : undefined,
       overrideProgramme: styledRoot ? accordionOverrideCss : undefined,
       baseStyle: styledRoot

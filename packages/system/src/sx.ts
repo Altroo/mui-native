@@ -86,6 +86,8 @@ export type StyleContext = NativeTextContext & {
   baseProgramme?: string;
   /** @internal This preparation owns an actual styled source class. */
   sourceClass?: boolean;
+  /** @internal Source occurrence metadata; never serialized into CSS or native style. */
+  selectorOwner?: string | undefined;
   /** @internal Low-priority Yoga defaults are independent of source CSS identity. */
   nativeLayout?: Pick<ViewStyle, 'alignSelf' | 'flexShrink'>;
   /** @internal Source-owned root CSS; interaction frames only rebind its selectors. */
@@ -1163,11 +1165,12 @@ function componentSheets(
     : context.overrideProgramme
       ? context.overrideProgramme(props, selectedOverrides)
       : [...scopedLayers, ...rootLayers].map((layer) => snapshots.get(layer));
-  const owner = createNativeCssOwner(name, context.baseProgramme ?? snapshots.get(baseRules), [
-    overrideSnapshot,
-    snapshots.get(variantLayers),
-    snapshots.get(sxLayers),
-  ]);
+  const owner = createNativeCssOwner(
+    name,
+    context.baseProgramme ?? snapshots.get(baseRules),
+    [overrideSnapshot, snapshots.get(variantLayers), snapshots.get(sxLayers)],
+    context.selectorOwner,
+  );
   const sheets = [...baseRules, ...scopedOverrides, ...bases, ...variantLayers, ...sxLayers].map(
     (sheet, index) => ({ ...sheet, emissionOwner: owner, emissionStart: index === 0 }),
   );
