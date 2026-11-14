@@ -121,6 +121,10 @@ for (const args of [['--native-root'], ['--native-root', '--root'], ['--android-
 
 // The native host-element predicate depends on these trait/boundary contracts.
 for (const path of [
+  'ReactCommon/react/renderer/components/view/ViewShadowNode.cpp',
+  'ReactCommon/react/renderer/components/view/ViewShadowNode.h',
+  'ReactCommon/react/renderer/components/view/platform/cxx/react/renderer/components/view/HostPlatformViewTraitsInitializer.h',
+  'ReactCommon/react/renderer/components/view/platform/android/react/renderer/components/view/HostPlatformViewTraitsInitializer.h',
   'ReactCommon/react/renderer/core/ShadowNodeTraits.h',
   'ReactCommon/react/renderer/components/text/TextShadowNode.h',
   'ReactCommon/react/renderer/components/virtualview/VirtualViewShadowNode.h',

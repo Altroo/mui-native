@@ -67,6 +67,10 @@
     "ReactCommon/react/renderer/components/virtualview/VirtualViewShadowNode.h": "b710f5d1ba213dbfaab5150146fd6d2d12e251b1c7257f1fcc92ffb00fe173b1",
     "ReactCommon/react/renderer/components/root/RootShadowNode.h": "afb5e99c6fc33adb8932c9e78090d0cb0795b43e0576fd6b96d88a9070c871bc",
     "ReactCommon/react/renderer/components/modal/ModalHostViewShadowNode.h": "d1a69f429bf5e815f6241cbd5015e4036a533b557b64fed4706d7b7dd9a8e0d2",
-    "ReactCommon/react/renderer/components/inputaccessory/InputAccessoryShadowNode.h": "ac0aa9fa5ec8e1cdd73d880dcca0a2879e2f7b601f696f48fdc70f1b05f1e1f1"
+    "ReactCommon/react/renderer/components/inputaccessory/InputAccessoryShadowNode.h": "ac0aa9fa5ec8e1cdd73d880dcca0a2879e2f7b601f696f48fdc70f1b05f1e1f1",
+    "ReactCommon/react/renderer/components/view/ViewShadowNode.cpp": "ff016c3b7f5140f946429dab92bae18afd8f28975e8a5f2bb66db32db31edda3",
+    "ReactCommon/react/renderer/components/view/ViewShadowNode.h": "0ad61a978c724561d0af86005ea07713588dd1d6e1ce753632b69f3d1bb8dca0",
+    "ReactCommon/react/renderer/components/view/platform/cxx/react/renderer/components/view/HostPlatformViewTraitsInitializer.h": "f93d79253670a65b84c072bdcdb681fe9e7fd3a20808abe28ee60c162008b287",
+    "ReactCommon/react/renderer/components/view/platform/android/react/renderer/components/view/HostPlatformViewTraitsInitializer.h": "2b0fdf5331f41b273a50298375229ff46a46af5b41890adb90bb517a6fa2c0c7"
   }
 }

@@ -134,7 +134,9 @@ lookup follows the MIT-licensed React Native mutation observer implementation.
 Copyright (c) Meta Platforms, Inc. and affiliates. The React Native MIT license
 above applies. Exact ABI source hashes are retained in
 packages/native-host/structural-observation-baseline.json. No React Native
-feature flags or source files are modified.
+feature flags or source files are modified. Owned View mounting traits also
+adapt ViewShadowNode.cpp initialization from the same MIT-licensed version,
+retaining stock prop-derived view and stacking boundaries on creation/cloning.
 
 Native style cache compatibility
 --------------------------------

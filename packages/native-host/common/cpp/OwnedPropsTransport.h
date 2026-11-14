@@ -4,6 +4,7 @@
 #pragma once
 #include "PreparedOwnedCandidates.h"
 #include "OwnedProgramme.h"
+#include "OwnedViewTraits.h"
 #if defined(__ANDROID__) && defined(RN_SERIALIZABLE_STATE)
 #include "OwnedBackgroundPayload.h"
 #endif
@@ -293,14 +294,21 @@ class OwnedShadowNode final : public ConcreteViewShadowNode<
   using Base = ConcreteViewShadowNode<
       AltrooStructuralViewName, OwnedProps, ViewEventEmitter, OwnedStateData>;
  public:
-  using Base::Base;
+  OwnedShadowNode(const ShadowNodeFragment &fragment,
+      const ShadowNodeFamily::Shared &family, ShadowNodeTraits traits)
+      : Base(fragment, family, traits) {
+    altroo::owned_view_traits::initialize(getConcreteProps(), traits_);
+  }
 #if defined(__ANDROID__) && defined(RN_SERIALIZABLE_STATE)
   static MountStateData initialStateData(const Props::Shared &props,
       const ShadowNodeFamily::Shared &, const ComponentDescriptor &) {
     return MountStateData(std::static_pointer_cast<const OwnedProps>(props));
   }
+#endif
   OwnedShadowNode(const ShadowNode &source, const ShadowNodeFragment &fragment)
       : Base(source, fragment) {
+    altroo::owned_view_traits::initialize(getConcreteProps(), traits_);
+#if defined(__ANDROID__) && defined(RN_SERIALIZABLE_STATE)
     // Resolve state from this clone's actual props, including clones with an
     // explicit state fragment. Never publish a prior speculative selection.
     // RN0.88.1's convenience shared-props accessor returns a temporary by
@@ -308,8 +316,8 @@ class OwnedShadowNode final : public ConcreteViewShadowNode<
     const auto selected = std::static_pointer_cast<const OwnedProps>(getProps());
     if (getStateData().selected != selected)
       setStateData(MountStateData(selected));
-  }
 #endif
+  }
 };
 static_assert(std::is_same_v<OwnedShadowNode::ConcreteProps, OwnedProps>);
 static_assert(!std::is_same_v<OwnedShadowNode, altroo::owned_channel::ConversionShadowNode>);
