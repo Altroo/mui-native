@@ -37,15 +37,24 @@ inline void requireStyleMap(const folly::dynamic &value) {
 }
 inline bool fullProgramme(const folly::dynamic &programme) {
   if (programme.isNull()) return false;
-  if (!programme.isObject() || programme.size() != 4 ||
-      !programme.count("schema") || !programme.at("schema").isNumber() ||
-      programme.at("schema").asDouble() != 1.0 || !programme.count("profile") ||
-      !programme.count("normal") || !programme.count("last"))
+  if (!programme.isObject() || !programme.count("schema") ||
+      !programme.at("schema").isNumber() || !programme.count("profile"))
     throw std::invalid_argument("Unsupported owned programme schema");
+  const auto schema = programme.at("schema").asDouble();
   if (programme.at("profile") != nativeProfile())
     throw std::invalid_argument("Owned programme native parsing profile mismatch");
-  requireStyleMap(programme.at("normal"));
-  requireStyleMap(programme.at("last"));
+  if (schema == 1.0 && programme.size() == 4 &&
+      programme.count("normal") && programme.count("last")) {
+    requireStyleMap(programme.at("normal"));
+    requireStyleMap(programme.at("last"));
+  } else if (schema == 2.0 && programme.size() == 3 && programme.count("cases")) {
+    const auto &cases = programme.at("cases");
+    if (!cases.isArray() || cases.size() != 8)
+      throw std::invalid_argument("Owned structural programme requires eight cases");
+    for (const auto &value : cases) requireStyleMap(value);
+  } else {
+    throw std::invalid_argument("Unsupported owned programme schema");
+  }
   return true;
 }
 } // namespace altroo::owned_channel

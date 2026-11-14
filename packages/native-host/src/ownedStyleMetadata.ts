@@ -23,11 +23,13 @@ type Metadata = Readonly<{
   errorNotification: 'async-once-per-generation-v1';
   ownedProgrammeProfile: OwnedStyleProfile;
   generatedTextOrigin: GeneratedTextOrigin | undefined;
+  structuralCases: boolean;
 }>;
 type Outcome = Readonly<{ metadata: Metadata; error?: never } | { error: Error; metadata?: never }>;
 export type OwnedStyleBootstrap = Readonly<{
   requireProfile(): OwnedStyleProfile;
   requireGeneratedTextOrigin(): GeneratedTextOrigin;
+  supportsStructuralCases(): boolean;
 }>;
 type Expected = Readonly<{ rn: string; platform: string; styleKeys: string }>;
 // One canonical native module object has one immutable read for this JS runtime.
@@ -73,10 +75,11 @@ function parse(raw: unknown): Metadata {
   ];
   if (
     !record(value) ||
-    (!keys(value, baseKeys) &&
-      !keys(value, [...baseKeys, 'literalRawText']) &&
-      !keys(value, [...baseKeys, 'generatedTextOrigin']) &&
-      !keys(value, [...baseKeys, 'literalRawText', 'generatedTextOrigin'])) ||
+    !baseKeys.every((key) => Object.hasOwn(value, key)) ||
+    Object.keys(value).some(
+      (key) =>
+        ![...baseKeys, 'literalRawText', 'generatedTextOrigin', 'structuralCases'].includes(key),
+    ) ||
     value.schema !== 1 ||
     value.service !== 'owned-structural-style' ||
     value.host !== 'AltrooMUIStructuralView' ||
@@ -132,6 +135,8 @@ function parse(raw: unknown): Metadata {
     errorNotification: 'async-once-per-generation-v1',
     ownedProgrammeProfile: checked,
     generatedTextOrigin,
+    structuralCases:
+      Object.hasOwn(value, 'structuralCases') && value.structuralCases === 'first-last-of-type-v1',
   });
 }
 function readOnce(native: unknown): Outcome {
@@ -161,6 +166,7 @@ export function createOwnedStyleBootstrap(
   let profile: OwnedStyleProfile | undefined;
   let failure: Error | undefined;
   let generatedTextOrigin: GeneratedTextOrigin | undefined;
+  let structuralCases = false;
   const originFailure = fail(
     'generated paragraph origin is unavailable or unsupported; rebuild the matching native app',
   );
@@ -177,11 +183,13 @@ export function createOwnedStyleBootstrap(
     )
       throw fail('compiled JS/native parsing profile mismatch; rebuild the native app');
     profile = observed;
+    structuralCases = outcome.metadata.structuralCases;
     generatedTextOrigin = outcome.metadata.generatedTextOrigin;
   } catch (error) {
     failure = toFailure(error);
   }
   return Object.freeze({
+    supportsStructuralCases: () => structuralCases,
     requireProfile() {
       if (failure) throw failure;
       // The only successful initialization branch publishes this immutable profile.

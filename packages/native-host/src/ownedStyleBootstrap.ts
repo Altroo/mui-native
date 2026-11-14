@@ -20,3 +20,6 @@ export const requireOwnedStyleProfile = bootstrap.requireProfile;
 
 /** Generated stock-paragraph origin; same immutable module read, no activation. */
 export const requireGeneratedTextOrigin = bootstrap.requireGeneratedTextOrigin;
+
+/** Additive native support; old development binaries retain their ordinary path. */
+export const supportsStructuralCases = bootstrap.supportsStructuralCases;

@@ -2,6 +2,8 @@
 // Private generated-host constructor proof, not a production CSS API.
 #pragma once
 #include <memory>
+#include <array>
+#include <cstdint>
 #include "GeneratedConversion.h"
 
 #include <react/renderer/core/RawProps.h>
@@ -13,6 +15,16 @@ using namespace facebook::react;
 struct PreparedViewCandidates {
   std::shared_ptr<const AltrooMUIStructuralViewProps> normal;
   std::shared_ptr<const AltrooMUIStructuralViewProps> last;
+  // Bits: last-child=1, first-of-type=2, last-of-type=4. Legacy pairs
+  // keep their two-leaf storage and ignore the added structural facts.
+  std::array<std::shared_ptr<const AltrooMUIStructuralViewProps>, 8> cases{};
+  bool structural() const { return cases[0] != nullptr; }
+  const std::shared_ptr<const AltrooMUIStructuralViewProps> &at(std::uint8_t facts) const {
+    if (facts >= cases.size()) throw std::invalid_argument("Invalid owned selector facts");
+    const auto &value = structural() ? cases[facts] : (facts & 1 ? last : normal);
+    if (!value) throw std::invalid_argument("Owned style candidate is missing");
+    return value;
+  }
 };
 // Consume already normalized native payloads on RN's ordinary props-conversion
 // thread. The baseline must be unselected current props, not the previous COW
@@ -41,6 +53,35 @@ prepare(const altroo::owned_channel::ConversionDescriptor &descriptor,
   typedNormal->seal();
   typedLast->seal();
   return {std::move(typedNormal), std::move(typedLast)};
+}
+// Ordinary conversion only. Equal normalized maps share a sealed leaf; the
+// commit hook selects ownership and never runs a parser or reads JavaScript.
+inline PreparedViewCandidates prepareStructural(
+    const altroo::owned_channel::ConversionDescriptor &descriptor,
+    const PropsParserContext &context,
+    const std::shared_ptr<const AltrooMUIStructuralViewProps> &baseline,
+    const folly::dynamic &payloads) {
+  using CoreDescriptor = altroo::owned_channel::ConversionDescriptor;
+  PreparedViewCandidates result;
+  for (std::size_t index = 0; index < result.cases.size(); ++index) {
+    for (std::size_t prior = 0; prior < index; ++prior)
+      if (payloads[index] == payloads[prior]) {
+        result.cases[index] = result.cases[prior];
+        break;
+      }
+    if (result.cases[index]) continue;
+    auto payload = payloads[index];
+    payload["ownedProgramme"] = nullptr;
+    auto value = descriptor.CoreDescriptor::cloneProps(
+        context, baseline, RawProps(std::move(payload)));
+    if (!value) throw std::logic_error("Core View descriptor returned no candidate props");
+    auto typed = std::static_pointer_cast<const AltrooMUIStructuralViewProps>(value);
+    typed->seal();
+    result.cases[index] = std::move(typed);
+  }
+  result.normal = result.cases[0];
+  result.last = result.cases[1];
+  return result;
 }
 inline std::shared_ptr<const AltrooMUIStructuralViewProps>
 select(const PreparedViewCandidates &candidates, bool isLast) {

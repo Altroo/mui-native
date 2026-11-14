@@ -64,6 +64,11 @@
       "types": "./dist/internal/pressable-presentation/index.d.ts",
       "react-native": "./src/internal/pressable-presentation/index.ts",
       "default": "./dist/internal/pressable-presentation/index.js"
+    },
+    "./internal/structural-root": {
+      "types": "./dist/internal/structural-root/index.d.ts",
+      "react-native": "./src/internal/structural-root/index.ts",
+      "default": "./dist/internal/structural-root/index.js"
     }
   },
   "dependencies": {},

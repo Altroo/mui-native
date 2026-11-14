@@ -27,8 +27,7 @@ using Pair = altroo::owned_adapter_proof::PreparedViewCandidates;
 // never materialize RawProps/JSI or infer values from typed fields.
 struct PhysicalPayloads final {
   folly::dynamic baseline;
-  folly::dynamic normal;
-  folly::dynamic last;
+  std::array<folly::dynamic, 8> cases;
 };
 inline void clearMissingPhysicalKeys(folly::dynamic &target,
                                      const folly::dynamic &known) {
@@ -42,21 +41,23 @@ inline PhysicalPayloads physicalPayloads(const Generated &baseline, const Pair &
   auto current = mergeDynamicProps(previous ? previous->baseline : folly::dynamic::object(),
                                   baseline.rawProps, NullValueStrategy::Override);
   current.erase("ownedProgramme");
-  auto normal = mergeDynamicProps(current, pair.normal->rawProps, NullValueStrategy::Override);
-  auto last = mergeDynamicProps(current, pair.last->rawProps, NullValueStrategy::Override);
-  normal.erase("ownedProgramme"); last.erase("ownedProgramme");
-  // A field absent from one branch must restore native default, even on the
-  // first in-pair switch; raw1.0 does not synthesize a removal diff for us.
-  const auto normalKeys = normal;
-  clearMissingPhysicalKeys(normal, last);
-  clearMissingPhysicalKeys(last, normalKeys);
-  if (previous) {
-    for (const auto *known : {&previous->normal, &previous->last}) {
-      clearMissingPhysicalKeys(normal, *known);
-      clearMissingPhysicalKeys(last, *known);
-    }
+  std::array<folly::dynamic, 8> cases;
+  for (std::size_t index = 0; index < cases.size(); ++index) {
+    cases[index] = mergeDynamicProps(current, pair.at(index)->rawProps,
+                                    NullValueStrategy::Override);
+    cases[index].erase("ownedProgramme");
   }
-  return {std::move(current), std::move(normal), std::move(last)};
+  // Every branch must remove fields owned by any current or previous branch.
+  // Use the complete union before mutating maps, independent of loop order.
+  folly::dynamic known = folly::dynamic::object();
+  for (const auto &value : cases)
+    for (const auto &item : value.items()) known[item.first] = nullptr;
+  if (previous)
+    for (const auto &value : previous->cases)
+      for (const auto &item : value.items()) known[item.first] = nullptr;
+  for (auto &value : cases) clearMissingPhysicalKeys(value, known);
+  clearMissingPhysicalKeys(current, known);
+  return {std::move(current), std::move(cases)};
 }
 #endif
 
@@ -64,11 +65,12 @@ inline PhysicalPayloads physicalPayloads(const Generated &baseline, const Pair &
 // Complete native mount props are independent of speculative state history.
 // Preallocation may have consumed an earlier branch before the first commit.
 struct MountPayloads final {
-  folly::dynamic normal;
-  folly::dynamic last;
+  std::array<folly::dynamic, 8> cases;
+  folly::dynamic ordinary;
 };
 inline folly::dynamic completeMountPayload(const GeneratedShared &selected,
-    const Pair &pair, const Pair *previousCandidates,
+    const GeneratedShared &baseline, const Pair &pair,
+    const GeneratedShared &previousBaseline, const Pair *previousCandidates,
     const MountPayloads *previous) {
   auto result = selected->getDiffProps(nullptr);
   // The generated typed diff preserves platform removals under every supported
@@ -78,11 +80,13 @@ inline folly::dynamic completeMountPayload(const GeneratedShared &selected,
     for (const auto &item : delta.items())
       if (!result.count(item.first)) result[item.first] = item.second;
   };
+  fillMissing(baseline);
+  if (previousBaseline) fillMissing(previousBaseline);
   // Full current values win over partial nested deltas (for example a11y).
-  for (const auto &other : {pair.normal, pair.last}) fillMissing(other);
+  for (std::uint8_t index = 0; index < 8; ++index) fillMissing(pair.at(index));
   if (previousCandidates)
-    for (const auto &other : {previousCandidates->normal, previousCandidates->last})
-      fillMissing(other);
+    for (std::uint8_t index = 0; index < 8; ++index)
+      fillMissing(previousCandidates->at(index));
   // Core's typed Android diff omits these three supported background vectors.
   // Serialize actual typed values, including an ordinary baseline restored
   // after the programme is removed. Aliases never enter the physical payload.
@@ -90,10 +94,13 @@ inline folly::dynamic completeMountPayload(const GeneratedShared &selected,
     const auto nonempty = [&](const GeneratedShared &value) {
       return value && !(value.get()->*member).empty();
     };
-    const bool known = nonempty(selected) || nonempty(pair.normal) || nonempty(pair.last) ||
-        (previousCandidates &&
-          (nonempty(previousCandidates->normal) || nonempty(previousCandidates->last))) ||
-        (previous && (previous->normal.count(key) || previous->last.count(key)));
+    bool known = nonempty(selected) || nonempty(baseline) || nonempty(previousBaseline) ||
+        (previous && previous->ordinary.count(key));
+    for (std::uint8_t index = 0; index < 8; ++index) {
+      known = known || nonempty(pair.at(index)) ||
+          (previousCandidates && nonempty(previousCandidates->at(index))) ||
+          (previous && previous->cases[index].count(key));
+    }
     if (known) result[key] = serialize(selected.get()->*member);
   };
   appendBackground("backgroundSize", &Generated::backgroundSize,
@@ -104,8 +111,8 @@ inline folly::dynamic completeMountPayload(const GeneratedShared &selected,
                    altroo::owned_background::backgroundRepeat);
   result.erase("ownedProgramme");
   if (previous) {
-    clearMissingPhysicalKeys(result, previous->normal);
-    clearMissingPhysicalKeys(result, previous->last);
+    for (const auto &value : previous->cases) clearMissingPhysicalKeys(result, value);
+    clearMissingPhysicalKeys(result, previous->ordinary);
   }
   // The programme owns styles only. IDs, accessibility state and events keep
   // their ordinary prop path; replaying those setters can have side effects.
@@ -118,12 +125,16 @@ inline folly::dynamic completeMountPayload(const GeneratedShared &selected,
       }
   return styles;
 }
-inline MountPayloads mountPayloads(const Pair &pair, const Pair *previousCandidates,
+inline MountPayloads mountPayloads(const GeneratedShared &baseline, const Pair &pair,
+    const GeneratedShared &previousBaseline, const Pair *previousCandidates,
     const MountPayloads *previous) {
   if (!pair.normal || !pair.last)
     throw std::invalid_argument("Complete generated mount candidates required");
-  return {completeMountPayload(pair.normal, pair, previousCandidates, previous),
-          completeMountPayload(pair.last, pair, previousCandidates, previous)};
+  std::array<folly::dynamic, 8> cases;
+  for (std::uint8_t index = 0; index < 8; ++index)
+    cases[index] = completeMountPayload(pair.at(index), baseline, pair, previousBaseline, previousCandidates, previous);
+  return {std::move(cases),
+      completeMountPayload(baseline, baseline, pair, previousBaseline, previousCandidates, previous)};
 }
 #endif
 
@@ -153,7 +164,8 @@ struct PreparedData final {
 #ifdef RN_SERIALIZABLE_STATE
       , physical(checkedPhysical(unselected, candidates, previous))
 #if defined(__ANDROID__)
-      , mount(mountPayloads(candidates, previous ? &previous->candidates : nullptr,
+      , mount(mountPayloads(unselected, candidates, previous ? previous->unselected : nullptr,
+                            previous ? &previous->candidates : nullptr,
                             previous ? &previous->mount : nullptr))
 #endif
 #endif
@@ -161,16 +173,15 @@ struct PreparedData final {
     if (!unselected || !candidates.normal || !candidates.last)
       throw std::invalid_argument("Complete current generated props required");
     unselected->seal();
-    candidates.normal->seal();
-    candidates.last->seal();
+    for (std::uint8_t index = 0; index < 8; ++index) candidates.at(index)->seal();
   }
 };
 using DataShared = std::shared_ptr<const PreparedData>;
 
 class OwnedProps final : public ViewProps {
-  static const Generated &chosen(const DataShared &data, bool last) {
+  static const Generated &chosen(const DataShared &data, std::uint8_t facts) {
     if (!data) throw std::invalid_argument("Prepared owned data required");
-    return *(last ? data->candidates.last : data->candidates.normal);
+    return *(facts == 8 ? data->unselected : data->candidates.at(facts));
   }
  public:
   using Shared = std::shared_ptr<const OwnedProps>;
@@ -178,6 +189,7 @@ class OwnedProps final : public ViewProps {
   const double lastPaddingBottom{24};
   const DataShared prepared;
   const bool selectedLast{false};
+  const std::uint8_t selectedCase{0};
   OwnedProps() = default;
   // ConcreteComponentDescriptor prepares its parser through this ordinary
   // View constructor. The actual descriptor override below is the only path
@@ -189,15 +201,15 @@ class OwnedProps final : public ViewProps {
                                            source.normalPaddingBottom, 16.0)),
         lastPaddingBottom(convertRawProp(context, raw, "lastPaddingBottom",
                                          source.lastPaddingBottom, 24.0)) {}
-  OwnedProps(DataShared data, bool last)
-      : ViewProps(chosen(data, last)),
+  OwnedProps(DataShared data, std::uint8_t facts)
+      : ViewProps(chosen(data, facts)),
         normalPaddingBottom(data->unselected->normalPaddingBottom),
         lastPaddingBottom(data->unselected->lastPaddingBottom),
-        prepared(std::move(data)), selectedLast(last) {
+        prepared(std::move(data)), selectedLast(facts & 1), selectedCase(facts) {
 #ifdef RN_SERIALIZABLE_STATE
     // Physical payload is complete and already has explicit removals. This
     // copy is native data only; candidate switching never parses/merges JS.
-    rawProps = last ? prepared->physical.last : prepared->physical.normal;
+    rawProps = facts == 8 ? prepared->physical.baseline : prepared->physical.cases[facts];
 #endif
   }
 #ifdef RN_SERIALIZABLE_STATE
@@ -233,17 +245,18 @@ inline GeneratedShared baselineForUpdate(const OwnedProps::Shared &source) {
     throw std::invalid_argument("Unprepared programme source rejected");
   return source->prepared->unselected;
 }
-inline OwnedProps::Shared wrap(DataShared data, bool last) {
-  auto result = std::make_shared<OwnedProps>(std::move(data), last);
+inline OwnedProps::Shared wrap(DataShared data, std::uint8_t facts) {
+  auto result = std::make_shared<OwnedProps>(std::move(data), facts);
   result->seal();
   return result;
 }
 // Commit-side operation: native copies/ownership only, no parsing/context/JSI.
-inline OwnedProps::Shared select(const OwnedProps::Shared &current, bool last) {
+inline OwnedProps::Shared select(const OwnedProps::Shared &current, std::uint8_t facts) {
   if (!current || !current->prepared)
     throw std::invalid_argument("Current owned programme required");
-  if (current->selectedLast == last) return current;
-  return wrap(current->prepared, last);
+  if (facts > 8) throw std::invalid_argument("Invalid owned selector facts");
+  if (current->selectedCase == facts) return current;
+  return wrap(current->prepared, facts);
 }
 // END OWNERSHIP
 
@@ -261,8 +274,8 @@ struct MountStateData final {
   folly::dynamic getDynamic() const {
     if (!selected || !selected->prepared)
       throw std::logic_error("Unprepared owned mount state");
-    const auto &payload = selected->selectedLast ? selected->prepared->mount.last
-                                                : selected->prepared->mount.normal;
+    const auto &payload = selected->selectedCase == 8 ? selected->prepared->mount.ordinary
+        : selected->prepared->mount.cases[selected->selectedCase];
     return folly::dynamic::object("schema", 1)("selectedProps", payload);
   }
 };
@@ -306,8 +319,11 @@ class OwnedDescriptor final : public ConcreteComponentDescriptor<OwnedShadowNode
   }
   OwnedProps::Shared finish(GeneratedShared baseline, Pair pair, Programme kind,
                             const OwnedProps::Shared &source) const {
+    // Structural programmes begin from their genuine ordinary presentation.
+    // A failed/unsupported native selection must not pin the renderer to case0.
+    const std::uint8_t initial = pair.structural() ? 8 : (source && source->selectedLast ? 1 : 0);
     return wrap(std::make_shared<const PreparedData>(std::move(baseline),
-        std::move(pair), kind, source ? source->prepared.get() : nullptr), source && source->selectedLast);
+        std::move(pair), kind, source ? source->prepared.get() : nullptr), initial);
   }
  public:
   explicit OwnedDescriptor(const ComponentDescriptorParameters &parameters)
@@ -325,6 +341,11 @@ class OwnedDescriptor final : public ConcreteComponentDescriptor<OwnedShadowNode
     // null. Always start from unselected current props, never COW-selected CSS.
     auto baseline = convertCurrent(context, current, std::move(raw));
     if (altroo::owned_channel::fullProgramme(baseline->ownedProgramme)) {
+      if (baseline->ownedProgramme.at("schema").asDouble() == 2.0) {
+        auto cases = altroo::owned_adapter_proof::prepareStructural(
+            converter_, context, baseline, baseline->ownedProgramme.at("cases"));
+        return finish(std::move(baseline), std::move(cases), Programme::ExplicitPair, current);
+      }
       auto normal = baseline->ownedProgramme.at("normal");
       auto last = baseline->ownedProgramme.at("last");
       // Candidate generated leaves need no duplicate programme and must never

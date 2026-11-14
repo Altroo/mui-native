@@ -463,7 +463,11 @@ for (const shape of ['base', 'raw', 'origin', 'both']) {
       const boot = fresh()(() => native(data), expected);
       assert.equal(boot.requireProfile().rn, '0.88.1');
       assert.equal(Object.hasOwn(boot, 'requireLiteralRawText'), false);
-      assert.deepEqual(Object.keys(boot).sort(), ['requireGeneratedTextOrigin', 'requireProfile']);
+      assert.deepEqual(Object.keys(boot).sort(), [
+        'requireGeneratedTextOrigin',
+        'requireProfile',
+        'supportsStructuralCases',
+      ]);
       if (shape === 'origin' || shape === 'both') {
         const contract = boot.requireGeneratedTextOrigin();
         assert.equal(contract.schema, 1);
@@ -722,4 +726,26 @@ test('global wrapper no longer exposes retired raw readiness', () => {
   result.requireGeneratedTextOrigin();
   assert.equal(Object.hasOwn(result, 'requireOwnedLiteralRawText'), false);
   assert.equal(calls, 1);
+});
+
+test('structural case capability is additive and remains native-free after initialization', () => {
+  for (const capability of [undefined, 'unknown', 'first-last-of-type-v1']) {
+    const data = metadata();
+    if (capability !== undefined) data.structuralCases = capability;
+    let calls = 0;
+    const boot = fresh()(
+      () => ({
+        getStructuralStyleMetadata() {
+          calls++;
+          return JSON.stringify(data);
+        },
+      }),
+      expected,
+    );
+    boot.requireProfile();
+    assert.equal(boot.supportsStructuralCases(), capability === 'first-last-of-type-v1');
+    assert.equal(boot.supportsStructuralCases(), capability === 'first-last-of-type-v1');
+    assert.equal(calls, 1);
+  }
+  assert.equal(fresh()(() => null, expected).supportsStructuralCases(), false);
 });

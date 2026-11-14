@@ -241,16 +241,21 @@ struct SameNameWrongHandle final : ConcreteViewShadowNode<duplicateName> {using 
 #include "Framework.h"
 namespace altroo::owned_transport_proof {
 enum class Programme {Numeric,ExplicitPair};
-struct Pair {std::shared_ptr<const facebook::react::ViewProps> normal,last;};
-struct Prepared {Pair candidates;Programme programme{Programme::Numeric};};
+struct Pair {
+ std::shared_ptr<const facebook::react::ViewProps> normal,last;
+ std::array<std::shared_ptr<const facebook::react::ViewProps>,8> cases{};
+ bool structural()const{return cases[0]!=nullptr;}
+ const auto& at(std::uint8_t facts)const{return structural()?cases.at(facts):(facts&1?last:normal);}
+};
+struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;Programme programme{Programme::Numeric};};
 struct OwnedProps : facebook::react::ViewProps {
- double normalPaddingBottom{16},lastPaddingBottom{24};bool selectedLast{};
+ double normalPaddingBottom{16},lastPaddingBottom{24};bool selectedLast{};std::uint8_t selectedCase{};
  std::shared_ptr<const Prepared> prepared;
 };
-inline std::shared_ptr<const OwnedProps> select(std::shared_ptr<const OwnedProps> source,bool last){
- if(source->selectedLast==last)return source;
- auto next=std::make_shared<OwnedProps>(*source);next->selectedLast=last;
- next->yogaStyle=(last?source->prepared->candidates.last:source->prepared->candidates.normal)->yogaStyle;
+inline std::shared_ptr<const OwnedProps> select(std::shared_ptr<const OwnedProps> source,std::uint8_t facts){
+ if(source->selectedCase==facts)return source;
+ auto next=std::make_shared<OwnedProps>(*source);next->selectedCase=facts;next->selectedLast=facts&1;
+ next->yogaStyle=(facts==8?source->prepared->unselected:source->prepared->candidates.at(facts))->yogaStyle;
  return next;
 }
 }
@@ -300,6 +305,18 @@ auto target(Tag tag){
  normal->seal();last->seal();
  auto prepared=std::make_shared<altroo::owned_transport_proof::Prepared>();prepared->candidates={normal,last};
  auto props=std::make_shared<Owned>();props->prepared=prepared;props->yogaStyle=normal->yogaStyle;
+ return node<AltrooStructuralViewShadowNode>(tag,props);
+}
+auto structuralTarget(Tag tag){
+ auto prepared=std::make_shared<altroo::owned_transport_proof::Prepared>();
+ for(std::uint8_t facts=0;facts<8;++facts){
+  auto value=std::make_shared<ViewProps>();
+  value->yogaStyle.setPadding(facebook::yoga::Edge::Bottom,facebook::yoga::StyleLength::points(100+facts));
+  value->seal();prepared->candidates.cases[facts]=value;
+ }
+ auto ordinary=std::make_shared<ViewProps>();ordinary->yogaStyle.setPadding(facebook::yoga::Edge::Bottom,facebook::yoga::StyleLength::points(77));ordinary->seal();prepared->unselected=ordinary;
+ prepared->candidates.normal=prepared->candidates.cases[0];prepared->candidates.last=prepared->candidates.cases[1];
+ auto props=std::make_shared<Owned>();props->prepared=prepared;props->yogaStyle=prepared->candidates.normal->yogaStyle;
  return node<AltrooStructuralViewShadowNode>(tag,props);
 }
 auto root(std::vector<Node> children){return node<RootShadowNode>(1,std::make_shared<ViewProps>(),std::move(children));}
@@ -365,6 +382,30 @@ int main(){try{
  auto brokenFamily=std::const_pointer_cast<ShadowNodeFamily>(broken->family);
  brokenFamily->clone=[](const ShadowNode&old,const ShadowNodeFragment&fragment){auto wrong=std::make_shared<ViewShadowNode>(old,fragment);auto family=std::make_shared<ShadowNodeFamily>(*old.family);family->handle=ViewShadowNode::Handle();wrong->family=family;return wrong;};
  bool badClone=false;try{resolve(root({broken}));}catch(const std::logic_error&){badClone=true;}check(badClone,"existing identity check rejects wrong clone descriptor");
+ // Exercise the exact production selector over mixed semantic host types.
+ auto first=structuralTarget(60),second=structuralTarget(61);
+ auto singleton=resolve(root({first}));
+ check(singleton.decisions.front().bottom==107,"singleton is last-child and both first/last of View type");
+ auto pair=resolve(root({first,second}));
+ check(pair.decisions[0].bottom==102&&pair.decisions[1].bottom==105,"first/last View cases selected before layout");
+ auto retainedFirst=pair.root->getChildren()[0],retainedSecond=pair.root->getChildren()[1];
+ auto reorder=resolve(root({retainedSecond,retainedFirst}));
+ check(reorder.decisions[0].bottom==102&&reorder.decisions[1].bottom==105,"memoized reordered nodes use incoming order");
+ check(reorder.root->getChildren()[0]->getFamilyShared()==second->getFamilyShared(),"reorder preserves exact native family");
+ auto boundary=node<ViewShadowNode>(62,std::make_shared<ViewProps>());
+ auto tail=node<ViewShadowNode>(63,std::make_shared<ViewProps>());
+ auto bounded=resolve(root({boundary,reorder.root->getChildren()[0],reorder.root->getChildren()[1],tail}));
+ check(bounded.decisions[0].bottom==100&&bounded.decisions[1].bottom==100,"real View bounds suppress both of-type endpoints");
+ auto other=node<ArbitraryViewKindShadowNode>(64,std::make_shared<ViewProps>());
+ auto mixed=resolve(root({other,first,node<ArbitraryViewKindShadowNode>(65,std::make_shared<ViewProps>())}));
+ check(mixed.decisions.front().bottom==106&&!mixed.decisions.front().lastChild,"foreign View-kind siblings affect last-child but preserve singleton View type");
+ check(resolve(reorder.root).root==reorder.root,"resolved structural tree is idempotent");
+ auto nativeContainer=resolve(root({parent<ArbitraryViewKindShadowNode>({first})}));
+ check(nativeContainer.decisions.front().bottom==107,"structural cases admit truthful ordinary native View-kind parents");
+ auto fallback=resolve(root({parent<TextShadowNode>({retainedFirst})}));
+ check(fallback.decisions.front().bottom==77,"non-host parent restores genuine ordinary presentation instead of case0");
+ check(resolve(fallback.root).root==fallback.root,"ordinary fallback is idempotent");
+
  check(rawParses==0,"selection never evaluates raw conversion/callbacks");
  std::cout<<"{\"assertions\":"<<assertions<<",\"platform\":\""
 #ifdef ANDROID

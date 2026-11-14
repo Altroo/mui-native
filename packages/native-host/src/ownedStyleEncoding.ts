@@ -63,12 +63,10 @@ function snapshot(style: unknown): Record<string, unknown> {
   return result;
 }
 
-/** Encode raw resolved maps once with the exact React Native View processors. */
-export function encodeStylePair(
+function encodeCandidates(
   profile: OwnedStyleProfile,
-  normalStyle: Record<string, unknown>,
-  lastStyle: Record<string, unknown>,
-): { normal: Record<string, unknown>; last: Record<string, unknown> } {
+  styles: readonly Record<string, unknown>[],
+): Record<string, unknown>[] {
   if (
     typeof version !== 'string' ||
     !parserModeKnown ||
@@ -79,16 +77,32 @@ export function encodeStylePair(
     profile.nativeCSSParsing !== nativeCSSParsing
   )
     throw new Error('Owned style encoder parsing profile mismatch');
-  const normalRaw = snapshot(normalStyle),
-    lastRaw = snapshot(lastStyle);
-  const normal = create({ style: normalRaw }, { style: attributes }) ?? {};
-  const last = create({ style: lastRaw }, { style: attributes }) ?? {};
-  // Reset absent counterpart fields after processing. In particular, a raw null
-  // transform is invalid input to the JS processor, while a processed null is
-  // the renderer's ordinary removal token. Never process that token again.
-  for (const key of new Set([...Object.keys(normal), ...Object.keys(last)])) {
-    if (!Object.hasOwn(normal, key)) normal[key] = null;
-    if (!Object.hasOwn(last, key)) last[key] = null;
-  }
+  // Snapshot every branch before any processor can observe caller-owned data.
+  const raw = styles.map((style) => snapshot(style));
+  const values = raw.map((style) => create({ style }, { style: attributes }) ?? {});
+  const keys = new Set(values.flatMap((value) => Object.keys(value)));
+  // Removal tokens belong after processing: raw null transforms are invalid.
+  for (const value of values)
+    for (const key of keys) if (!Object.hasOwn(value, key)) value[key] = null;
+  return values;
+}
+
+/** Encode raw resolved maps once with the exact React Native View processors. */
+export function encodeStylePair(
+  profile: OwnedStyleProfile,
+  normalStyle: Record<string, unknown>,
+  lastStyle: Record<string, unknown>,
+): { normal: Record<string, unknown>; last: Record<string, unknown> } {
+  const [normal, last] = encodeCandidates(profile, [normalStyle, lastStyle]);
   return { normal, last };
+}
+
+/** A bounded selector truth table, including singleton first-and-last hosts. */
+export function encodeStructuralCases(
+  profile: OwnedStyleProfile,
+  styles: readonly Record<string, unknown>[],
+): Record<string, unknown>[] {
+  if (!Array.isArray(styles) || styles.length !== 8)
+    throw new TypeError('Owned structural style requires eight cases');
+  return encodeCandidates(profile, styles);
 }
