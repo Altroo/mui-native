@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "status": "regression-reproduced",
+  "validatedSourceCommit": "4cf7b696fd29f209df261ae09bf236b46310f74f",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontProfile": "normal"
+  },
+  "passedEndpointTests": 2,
+  "failedEndpointTests": 0,
+  "skippedTests": 0,
+  "bundleSHA256": "c46b43e5943b6409054a863c85e1752b98c2229f6b751e7941fe19e63f6d42f6",
+  "collectorSHA256": "789c6df7a6eea65ea2ff0cc131cd4b355f84d0b527fc4585ffb1a60183c33033",
+  "testExecutableSHA256": "5074006dbfe659e8db4a88ba28843790e9c305de298041aca2777f5c537d37e2",
+  "trackedSourceFilesMatchedToCommit": 457,
+  "captureSHA256": "37363ecf79ef21daa2f4c724a1e290b36e6c5023b97f1a387136a1e0bd153bc2",
+  "recordedFrames": 458,
+  "qualifiedCompleteGroups": 111,
+  "invalidGroupFrames": 4,
+  "configurations": [
+    "default-0",
+    "default-1",
+    "default-2",
+    "default-3",
+    "default-4",
+    "forwarded-0",
+    "forwarded-1",
+    "forwarded-2",
+    "forwarded-3",
+    "forwarded-4"
+  ],
+  "failures": [
+    {
+      "mode": "default",
+      "stage": 3,
+      "frame": 289,
+      "expectedSeparators": [false, true, false],
+      "observedSeparators": [false, false, false]
+    },
+    {
+      "mode": "default",
+      "stage": 4,
+      "frame": 296,
+      "expectedSeparators": [false, false, false],
+      "observedSeparators": [false, true, false]
+    },
+    {
+      "mode": "forwarded",
+      "stage": 3,
+      "frame": 425,
+      "expectedSeparators": [false, true, false],
+      "observedSeparators": [false, false, false]
+    },
+    {
+      "mode": "forwarded",
+      "stage": 4,
+      "frame": 432,
+      "expectedSeparators": [false, false, false],
+      "observedSeparators": [false, true, false]
+    }
+  ],
+  "qualification": "Independent mode/stage bars, complete opaque row fills, source-class change, and exactly one blue native View in the A/B interval at stage3. Other stages require no intervening boundary. Separator presence is not a qualification condition.",
+  "originalSessionRestored": true,
+  "limits": [
+    "This records a failing expanded adjacency paint scenario; it does not establish a fix.",
+    "Source opacity is intentionally overridden to expose source display suppression.",
+    "Recorded qualified groups do not establish every display frame, GPU deadlines or animation-start timing."
+  ]
+}
