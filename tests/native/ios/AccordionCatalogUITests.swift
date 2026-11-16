@@ -466,6 +466,7 @@ final class AccordionGroupingProbeUITests: XCTestCase {
       self.receipt()?["mode"] as? String == mode && self.receipt()?["phase"] as? String == "idle"
     }
     var tags: [String: Int] = [:]
+    var glyphTags: [String: Int] = [:]
     for stage in 0...4 {
       if stage > 0 {
         if stage == 1 {
@@ -520,6 +521,31 @@ final class AccordionGroupingProbeUITests: XCTestCase {
         }
         XCTAssertEqual(Double(node("accordion-grouping-root-" + id).frame.height), height, accuracy: 1)
         XCTAssertEqual(row["count"] as? Int, id == "b" && stage > 0 ? 1 : 0)
+        if report["textPaint"] as? Bool == true {
+          let glyph = try XCTUnwrap(row["glyphTag"] as? Int)
+          XCTAssertGreaterThan(glyph, 0)
+          XCTAssertTrue(node("accordion-text-glyph-" + id).exists)
+          XCTAssertTrue(node("accordion-text-control-" + id).exists)
+          XCTAssertTrue(node("accordion-text-explicit-" + id).exists)
+          // Disjoint native-verified windows prevent the colored Counter from
+          // substituting for either MMMM glyph group in the display scan.
+          let rootFrame = node("accordion-grouping-root-" + id).frame
+          let glyphFrame = node("accordion-text-glyph-" + id).frame
+          let controlFrame = node("accordion-text-control-" + id).frame
+          let explicitFrame = node("accordion-text-explicit-" + id).frame
+          XCTAssertEqual(glyphFrame.minX - rootFrame.minX, 48, accuracy: 1)
+          XCTAssertEqual(controlFrame.minX - rootFrame.minX, 112, accuracy: 1)
+          XCTAssertEqual(explicitFrame.minX - rootFrame.minX, 176, accuracy: 1)
+          XCTAssertEqual(glyphFrame.width, 64, accuracy: 1)
+          XCTAssertEqual(controlFrame.width, 64, accuracy: 1)
+          XCTAssertEqual(explicitFrame.width, 64, accuracy: 1)
+          XCTAssertEqual(glyphFrame.height, 24, accuracy: 1)
+          XCTAssertEqual(controlFrame.height, 24, accuracy: 1)
+          XCTAssertEqual(explicitFrame.height, 24, accuracy: 1)
+          if stage == 0 { glyphTags[id] = glyph } else {
+            XCTAssertEqual(glyph, glyphTags[id], "Inherited text must retain its native host")
+          }
+        }
         if stage == 0 { tags[id] = tag } else { XCTAssertEqual(tag, tags[id], "A keyed native root must be retained") }
         positions[id] = try XCTUnwrap(row["y"] as? Double)
       }

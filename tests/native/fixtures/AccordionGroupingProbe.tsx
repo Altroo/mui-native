@@ -8,7 +8,14 @@ import {
   useRef,
   useState,
 } from 'react';
-import { findNodeHandle, PixelRatio, Text, View, type ViewInstance } from 'react-native';
+import {
+  findNodeHandle,
+  PixelRatio,
+  Text,
+  View,
+  type ViewInstance,
+  type TextInstance,
+} from 'react-native';
 import {
   Accordion,
   AccordionSummary,
@@ -16,6 +23,7 @@ import {
   Button,
   CircularProgress,
   LinearProgress,
+  Typography,
   ThemeProvider,
   createTheme,
   type BoxProps,
@@ -32,6 +40,7 @@ type Targets = {
   roots: Map<Id, ViewInstance>;
   counters: Map<Id, CounterHandle>;
   boundary: ViewInstance | null;
+  glyphs: Map<Id, TextInstance>;
 };
 type RowBounds = {
   id: Id;
@@ -39,6 +48,7 @@ type RowBounds = {
   nativeType: string;
   ornamentNativeType: string;
   count: number;
+  glyphTag: number | null;
   x: number;
   y: number;
   width: number;
@@ -51,6 +61,7 @@ type Report = {
   pixelRatio: number;
   mode: Mode;
   scenario: Scenario;
+  textPaint: boolean;
   boundaryPeer: 'view' | 'circular' | 'linear';
   boundary?: { kind: string; nativeType: string; tag: number | null };
   stage: number;
@@ -76,6 +87,13 @@ const rootStyle = {
   '&:first-of-type': { minHeight: 80 },
   '&:last-of-type': { minHeight: 100 },
 };
+// Reordering changes inherited color while ordinary View geometry stays eligible.
+// The fixed green sibling is a paint control independent of conditional text.
+const textRootStyle = {
+  ...rootStyle,
+  color: '#0000ff',
+  '&:first-of-type': { ...rootStyle['&:first-of-type'], color: '#ff0000' },
+};
 // Reveal source display suppression independently of expanded opacity. All
 // matched rows share this programme; a changed peer adds its own CSS class.
 const adjacencyStyle = {
@@ -92,13 +110,19 @@ const stagePaint = ['#b71c1c', '#4a148c', '#006064', '#e65100', '#212121'];
 const Slot = forwardRef<ViewInstance, BoxProps>(function Slot(props, ref) {
   return <Box {...props} ref={ref} />;
 });
-const Counter = forwardRef<CounterHandle, { id: Id }>(function Counter({ id }, ref) {
+const Counter = forwardRef<CounterHandle, { id: Id; textPaint: boolean }>(function Counter(
+  { id, textPaint },
+  ref,
+) {
   const [count, setCount] = useState(0);
   useImperativeHandle(ref, () => ({ bump: () => setCount((old) => old + 1), read: () => count }), [
     count,
   ]);
   return (
-    <Text testID={`accordion-grouping-counter-${id}`} style={{ fontSize: 16, lineHeight: 24 }}>
+    <Text
+      testID={`accordion-grouping-counter-${id}`}
+      style={{ fontSize: 16, lineHeight: 24, ...(textPaint ? { width: 32 } : {}) }}
+    >
       {id.toUpperCase()} {count}
     </Text>
   );
@@ -110,12 +134,14 @@ const Row = memo(function Row({
   mode,
   scenario,
   differentClass,
+  textPaint,
   targets,
 }: {
   id: Id;
   mode: Mode;
   scenario: Scenario;
   differentClass: boolean;
+  textPaint: boolean;
   targets: Targets;
 }) {
   const rootRef = useCallback(
@@ -138,6 +164,16 @@ const Row = memo(function Row({
     },
     [id, targets],
   );
+  const glyphRef = useCallback(
+    (node: TextInstance | null) => {
+      if (!node) return;
+      targets.glyphs.set(id, node);
+      return () => {
+        if (targets.glyphs.get(id) === node) targets.glyphs.delete(id);
+      };
+    },
+    [id, targets],
+  );
   return (
     <Accordion
       ref={rootRef}
@@ -147,7 +183,9 @@ const Row = memo(function Row({
       elevation={0}
       sx={
         scenario === 'position'
-          ? rootStyle
+          ? textPaint
+            ? textRootStyle
+            : rootStyle
           : differentClass
             ? { ...adjacencyStyle, paddingTop: '3px' }
             : adjacencyStyle
@@ -155,7 +193,36 @@ const Row = memo(function Row({
       style={rowPaint[id]}
     >
       <AccordionSummary>
-        <Counter ref={counterRef} id={id} />
+        <Counter ref={counterRef} id={id} textPaint={textPaint} />
+        {textPaint ? (
+          <>
+            <Typography
+              ref={glyphRef}
+              variant="inherit"
+              testID={`accordion-text-glyph-${id}`}
+              sx={{ fontSize: 16, lineHeight: '24px' }}
+              style={{ width: 64 }}
+            >
+              MMMM
+            </Typography>
+            <Typography
+              variant="inherit"
+              testID={`accordion-text-control-${id}`}
+              sx={{ fontSize: 16, lineHeight: '24px' }}
+              style={{ width: 64, color: '#00aa00' }}
+            >
+              MMMM
+            </Typography>
+            <Typography
+              variant="inherit"
+              testID={`accordion-text-explicit-${id}`}
+              sx={{ fontSize: 16, lineHeight: '24px' }}
+              style={{ width: 64, color: '#0000ff' }}
+            >
+              MMMM
+            </Typography>
+          </>
+        ) : null}
       </AccordionSummary>
       <Text>Retained body {id}</Text>
     </Accordion>
@@ -191,6 +258,7 @@ function measure(id: Id, targets: Targets): Promise<RowBounds> {
             ).find((child) => child.id === 'altroo:accordion-before:v1:')?.tagName ?? 'unavailable',
           ),
           count: counter.read(),
+          glyphTag: findNodeHandle(targets.glyphs.get(id) ?? null) ?? null,
           x: round(x),
           y: round(y),
           width: round(width),
@@ -203,15 +271,18 @@ function Panel({
   mode,
   scenario,
   boundaryPeer,
+  textPaint,
 }: {
   mode: Mode;
   scenario: Scenario;
   boundaryPeer: BoundaryPeer;
+  textPaint: boolean;
 }) {
   const targets = useRef<Targets>({
     roots: new Map(),
     counters: new Map(),
     boundary: null,
+    glyphs: new Map(),
   }).current;
   const job = useRef<Job | null>(null);
   const [stage, setStage] = useState(0);
@@ -222,6 +293,7 @@ function Panel({
     pixelRatio: PixelRatio.get(),
     mode,
     scenario,
+    textPaint,
     boundaryPeer:
       boundaryPeer === 'progress'
         ? mode === 'default'
@@ -350,6 +422,7 @@ function Panel({
             mode={mode}
             scenario={scenario}
             boundaryPeer={boundaryPeer}
+            textPaint={textPaint}
             stage={stage}
             targets={targets}
           />
@@ -379,6 +452,7 @@ function ViewBoundaryRow({
   mode,
   scenario,
   boundaryPeer,
+  textPaint,
   stage,
   targets,
 }: {
@@ -386,6 +460,7 @@ function ViewBoundaryRow({
   mode: Mode;
   scenario: Scenario;
   boundaryPeer: BoundaryPeer;
+  textPaint: boolean;
   stage: number;
   targets: Targets;
 }) {
@@ -439,6 +514,7 @@ function ViewBoundaryRow({
         mode={mode}
         scenario={scenario}
         differentClass={scenario === 'adjacency' && stage === 1 && id === 'b'}
+        textPaint={textPaint}
         targets={targets}
       />
     </>
@@ -448,7 +524,8 @@ function ViewBoundaryRow({
 export function AccordionGroupingProbe({
   scenario = 'position',
   boundaryPeer = 'view',
-}: { scenario?: Scenario; boundaryPeer?: BoundaryPeer } = {}) {
+  textPaint = false,
+}: { scenario?: Scenario; boundaryPeer?: BoundaryPeer; textPaint?: boolean } = {}) {
   const [selection, setSelection] = useState({ mode: 'default' as Mode, epoch: 0 });
   return (
     <ThemeProvider theme={theme}>
@@ -470,6 +547,7 @@ export function AccordionGroupingProbe({
           mode={selection.mode}
           scenario={scenario}
           boundaryPeer={boundaryPeer}
+          textPaint={textPaint}
         />
       </View>
     </ThemeProvider>
