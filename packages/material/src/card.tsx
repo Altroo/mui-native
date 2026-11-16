@@ -19,8 +19,6 @@ import {
   componentRootStyle,
   NativeTextScope,
   useNativeTextRootRef,
-  applyNativeTextMetrics,
-  nativeStyleTextMetrics,
   diagnostic,
   type Theme,
   type NativeStyle,
@@ -28,8 +26,16 @@ import {
 import { Paper, type NativePaperRootProps } from './paper';
 import { useTheme, THEME_ID } from './themeProvider';
 import { getCardUtilityClass } from './cardClasses';
-import { mergeNativeRootStyle } from './nativeControlStyles';
+import { nativeRootStylePainter } from './nativeControlStyles';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
+import {
+  NativeCssPeerView,
+  NativeCssRootBoundary,
+  refreshNativeStyle,
+  retainNativeStyleTransform,
+  NativeCssInsertionScope,
+  useNativeStyleCache,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeButtonGroupRules } from './buttonGroupContext';
 import type { NativeCardComponent, NativeCardRootProps } from './cardTypes';
 export type { CardOwnProps, CardProps, CardTypeMap, CardPropsColorOverrides } from './cardTypes';
@@ -58,39 +64,50 @@ const AlternateCardRoot = forwardRef<
   const parent = useNativeTextContext(),
     rules = useContext(NativeButtonGroupRules),
     { width } = useWindowDimensions();
+  const Root = typeof component === 'string' ? View : component;
+  const Host = (Root === View ? NativeCssPeerView : Root) as ComponentType<any>;
+  const styleCache = useNativeStyleCache();
   const classes = className.split(/\s+/).filter(Boolean);
   const { computed, authored, prepared } = componentRootStyle(theme, '', {}, undefined, style, {
+    styleCache,
+    sourceClass: Root === View,
     ...nativeTextStyleContext(parent, undefined, theme),
     width,
     classes,
     ancestors: nativeStyleAncestors(rules, { classes }),
     protectPhysicalGeometry: true,
   });
-  const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, computed, authored);
-  const finalStyle =
-    applyNativeTextMetrics(merged, computed, nativeStyleTextMetrics([computed, authored])) ??
-    merged;
+  const paint = nativeRootStylePainter(parent?.direction ?? theme.direction, authored);
+  const finalStyle = retainNativeStyleTransform(paint(computed), computed, paint);
   if (typeof component === 'string' && component !== 'div')
     diagnostic(
       'card-component',
       'Use a custom native component for Card alternate roots other than the div alias.',
     );
-  const Root = typeof component === 'string' ? View : component;
   return (
-    <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
-      <NativeTextScope rootRef={root} theme={theme} style={finalStyle} content={children}>
-        {(nativeStyle, content) => (
-          <Root
-            {...native}
-            {...(Root === View ? {} : { className })}
-            ref={nativeRef}
-            style={nativeStyle}
+    <NativeCssRootBoundary style={computed} registerClass={false}>
+      {() => (
+        <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
+          <NativeTextScope
+            rootRef={root}
+            theme={theme}
+            style={refreshNativeStyle(finalStyle)}
+            content={children}
           >
-            {content}
-          </Root>
-        )}
-      </NativeTextScope>
-    </NativeStyleScope>
+            {(nativeStyle, content) => (
+              <Host
+                {...native}
+                {...(Root === View ? { prepared, classNames: classes } : { className })}
+                ref={nativeRef}
+                style={nativeStyle}
+              >
+                {content}
+              </Host>
+            )}
+          </NativeTextScope>
+        </NativeStyleScope>
+      )}
+    </NativeCssRootBoundary>
   );
 });
 export const Card: NativeCardComponent = forwardRef<ViewInstance, NativeCardRootProps>(
@@ -116,6 +133,7 @@ export const Card: NativeCardComponent = forwardRef<ViewInstance, NativeCardRoot
     const selectedOwnerState = Object.hasOwn(other, 'ownerState')
       ? reserved.ownerState
       : ownerState;
+    const styleCache = useNativeStyleCache();
     const providerTheme = useTheme(),
       parent = useNativeTextContext(),
       { width } = useWindowDimensions();
@@ -126,22 +144,28 @@ export const Card: NativeCardComponent = forwardRef<ViewInstance, NativeCardRoot
       explicit && typeof explicit === 'object'
         ? (explicit as Theme & Record<string, Theme>)[THEME_ID] || explicit
         : providerTheme;
+    const styleContext = {
+      styleCache,
+      ...nativeTextStyleContext(parent, other.style, theme),
+      width,
+      classes: rootClass.split(/\s+/).filter(Boolean),
+      rootProps,
+      baseStyle: { overflow: 'hidden' },
+      protectPhysicalGeometry: true,
+    };
     const style = createNativeStyledStyle(
       theme,
       'MuiCard',
       selectedOwnerState as Record<string, unknown>,
       other.sx,
-      {
-        ...nativeTextStyleContext(parent, other.style, theme),
-        width,
-        classes: rootClass.split(/\s+/).filter(Boolean),
-        rootProps,
-        baseStyle: { overflow: 'hidden' },
-        protectPhysicalGeometry: true,
-      },
+      styleContext,
       preparedStyle,
       Object.hasOwn(props, 'style'),
+      { renderedClass: true },
     );
+    // Preparation consumed these source arguments. Retained insertion/evaluation
+    // data must not keep an obsolete child tree alive through this owned context.
+    Reflect.deleteProperty(styleContext, 'rootProps');
     // Material's named styled root consumes these props. Prepared CSS travels
     // privately, keeping exact authored ownerState identity and style presence.
     const {
@@ -155,25 +179,29 @@ export const Card: NativeCardComponent = forwardRef<ViewInstance, NativeCardRoot
     } = reserved;
     if (reserved.as)
       return (
-        <AlternateCardRoot
-          component={reserved.as}
-          native={{ elevation: raised ? 8 : undefined, ...native }}
-          className={rootClass}
-          theme={theme}
-          style={style}
-          ref={ref}
-        >
-          {other.children}
-        </AlternateCardRoot>
+        <NativeCssInsertionScope style={style}>
+          <AlternateCardRoot
+            component={reserved.as}
+            native={{ elevation: raised ? 8 : undefined, ...native }}
+            className={rootClass}
+            theme={theme}
+            style={style}
+            ref={ref}
+          >
+            {other.children}
+          </AlternateCardRoot>
+        </NativeCssInsertionScope>
       );
     return (
-      <CardRoot
-        className={rootClass}
-        elevation={raised ? 8 : undefined}
-        ref={ref}
-        {...native}
-        style={style}
-      />
+      <NativeCssInsertionScope style={style}>
+        <CardRoot
+          className={rootClass}
+          elevation={raised ? 8 : undefined}
+          ref={ref}
+          {...native}
+          style={style}
+        />
+      </NativeCssInsertionScope>
     );
   },
 ) as NativeCardComponent;

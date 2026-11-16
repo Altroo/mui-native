@@ -9,17 +9,23 @@ import {
   useNativeTextRootRef,
   useNativeTextContext,
   nativeTextStyleContext,
-  nativeStyleTextMetrics,
   nativeStyleBorderStyle,
-  applyNativeTextMetrics,
   joinClassNames,
   diagnostic,
   resolveSx,
   type NativeStyle,
+  type Theme,
 } from '@altroo/mui-native-system';
 import { useTheme, useComponentRootStyle } from './themeProvider';
-import { mergeNativeRootStyle } from './nativeControlStyles';
+import { nativeRootStylePainter } from './nativeControlStyles';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
+import {
+  NativeCssPeerView,
+  NativeCssRootBoundary,
+  refreshNativeStyle,
+  retainNativeStyleTransform,
+  useNativeStyleCache,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeButtonGroupRules } from './buttonGroupContext';
 import { getDividerUtilityClass, type DividerClasses } from './dividerClasses';
 import type { NativeDividerComponent, NativeDividerRootProps } from './dividerTypes';
@@ -60,6 +66,27 @@ function literalText(content: React.ReactNode): string | undefined {
   }
   return text;
 }
+// Keep cache-only line refreshes independent of owner props and source callbacks.
+function dividerLinePainter(theme: Theme, vertical: boolean) {
+  const color = theme.palette.divider;
+  return (style: NativeStyle) =>
+    resolveSx(
+      {
+        alignSelf: 'center',
+        flexBasis: 0,
+        flexShrink: 1,
+        borderColor: color,
+        borderStyle: nativeStyleBorderStyle(style) ?? 'solid',
+        ...(vertical ? { borderLeftWidth: 1 } : { borderTopWidth: 1 }),
+      },
+      theme,
+      {
+        parentDirection: style.direction === 'rtl' ? 'rtl' : 'ltr',
+        protectPhysicalGeometry: true,
+        mode: 'css',
+      },
+    );
+}
 function DividerLabel({
   ownerState,
   className,
@@ -71,6 +98,7 @@ function DividerLabel({
   children: React.ReactNode;
   lineStyle: () => NativeStyle;
 }) {
+  const styleCache = useNativeStyleCache();
   const theme = useTheme(),
     parent = useNativeTextContext(),
     rules = useContext(NativeButtonGroupRules);
@@ -83,6 +111,8 @@ function DividerLabel({
     authored,
     prepared,
   } = useComponentRootStyle('MuiDivider', ownerState, undefined, undefined, {
+    styleCache,
+    sourceClass: true,
     rejectPseudoElements: true,
     ...nativeTextStyleContext(parent, undefined, theme),
     classes,
@@ -105,10 +135,8 @@ function DividerLabel({
     },
     protectPhysicalGeometry: true,
   });
-  const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, resolved, authored);
-  const style =
-    applyNativeTextMetrics(merged, resolved, nativeStyleTextMetrics([resolved, authored])) ??
-    merged;
+  const paint = nativeRootStylePainter(parent?.direction ?? theme.direction, authored);
+  const style = retainNativeStyleTransform(paint(resolved), resolved, paint);
   // Literal labels implement the source nowrap default. Authored elements keep
   // their native text policy and identity rather than being flattened into text.
   const literal = literalText(children);
@@ -127,27 +155,41 @@ function DividerLabel({
         ? 1
         : 1;
   return (
-    <>
-      <View
-        accessible={false}
-        importantForAccessibility="no-hide-descendants"
-        style={[lineStyle(), { flexGrow: before }]}
-      />
-      <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
-        <NativeTextScope rootRef={root} theme={theme} style={style} content={content}>
-          {(native, content) => (
-            <View ref={nativeRef} style={native}>
-              {content}
-            </View>
-          )}
-        </NativeTextScope>
-      </NativeStyleScope>
-      <View
-        accessible={false}
-        importantForAccessibility="no-hide-descendants"
-        style={[lineStyle(), { flexGrow: after }]}
-      />
-    </>
+    <NativeCssRootBoundary style={resolved} registerClass={false}>
+      {() => (
+        <>
+          <View
+            accessible={false}
+            importantForAccessibility="no-hide-descendants"
+            style={[refreshNativeStyle(lineStyle()), { flexGrow: before }]}
+          />
+          <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
+            <NativeTextScope
+              rootRef={root}
+              theme={theme}
+              style={refreshNativeStyle(style)}
+              content={content}
+            >
+              {(native, content) => (
+                <NativeCssPeerView
+                  ref={nativeRef}
+                  style={native}
+                  prepared={prepared}
+                  classNames={classes}
+                >
+                  {content}
+                </NativeCssPeerView>
+              )}
+            </NativeTextScope>
+          </NativeStyleScope>
+          <View
+            accessible={false}
+            importantForAccessibility="no-hide-descendants"
+            style={[refreshNativeStyle(lineStyle()), { flexGrow: after }]}
+          />
+        </>
+      )}
+    </NativeCssRootBoundary>
   );
 }
 const consumed = [
@@ -193,6 +235,8 @@ export const Divider: NativeDividerComponent = forwardRef<ViewInstance, NativeDi
         'Use a custom native component for Divider roots other than hr/div aliases.',
       );
     const Root = typeof component === 'string' ? View : component;
+    const Host = (Root === View ? NativeCssPeerView : Root) as React.ComponentType<any>;
+    const styleCache = useNativeStyleCache();
     const ownerState = {
       ...props,
       absolute,
@@ -241,6 +285,8 @@ export const Divider: NativeDividerComponent = forwardRef<ViewInstance, NativeDi
       prepared,
     } = useComponentRootStyle('MuiDivider', ownerState, sx, preparedStyle, {
       rejectPseudoElements: true,
+      styleCache,
+      sourceClass: Root === View,
       ...nativeTextStyleContext(parent, style, theme),
       classes: tokens,
       rootProps,
@@ -273,48 +319,37 @@ export const Divider: NativeDividerComponent = forwardRef<ViewInstance, NativeDi
           : false,
       ],
     });
-    const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, resolved, authored);
-    const finalStyle =
-      applyNativeTextMetrics(merged, resolved, nativeStyleTextMetrics([resolved, authored])) ??
-      merged;
+    const paint = nativeRootStylePainter(parent?.direction ?? theme.direction, authored);
+    const finalStyle = retainNativeStyleTransform(paint(resolved), resolved, paint);
     // The valid native solid/zero payload may encode CSS none. Owned lines
     // inherit its semantic style before resolving their own native paint.
-    lineStyle = resolveSx(
-      {
-        alignSelf: 'center',
-        flexBasis: 0,
-        flexShrink: 1,
-        borderColor: theme.palette.divider,
-        borderStyle: nativeStyleBorderStyle(finalStyle) ?? 'solid',
-        ...(vertical ? { borderLeftWidth: 1 } : { borderTopWidth: 1 }),
-      },
-      theme,
-      {
-        parentDirection: finalStyle.direction === 'rtl' ? 'rtl' : 'ltr',
-        protectPhysicalGeometry: true,
-        mode: 'css',
-      },
-    );
+    const paintLine = dividerLinePainter(theme, vertical);
+    lineStyle = retainNativeStyleTransform(paintLine(finalStyle), finalStyle, paintLine);
     // RN gives role precedence over accessibilityRole. Preserve source owner
     // defaults, while letting an authored native role replace the fallback.
     return (
-      <NativeStyleScope root={root} theme={theme} classes={tokens} prepared={prepared}>
-        <NativeTextScope rootRef={root} theme={theme} style={finalStyle}>
-          {(nativeStyle) => (
-            <Root
-              {...native}
-              {...(Root === View ? {} : { className: rootClass })}
-              role={
-                props.role ?? (native.accessibilityRole == null ? (role ?? 'separator') : undefined)
-              }
-              ref={nativeRef}
-              style={nativeStyle}
-            >
-              {label}
-            </Root>
-          )}
-        </NativeTextScope>
-      </NativeStyleScope>
+      <NativeCssRootBoundary style={resolved} registerClass={false}>
+        {() => (
+          <NativeStyleScope root={root} theme={theme} classes={tokens} prepared={prepared}>
+            <NativeTextScope rootRef={root} theme={theme} style={refreshNativeStyle(finalStyle)}>
+              {(nativeStyle) => (
+                <Host
+                  {...native}
+                  {...(Root === View ? { prepared, classNames: tokens } : { className: rootClass })}
+                  role={
+                    props.role ??
+                    (native.accessibilityRole == null ? (role ?? 'separator') : undefined)
+                  }
+                  ref={nativeRef}
+                  style={nativeStyle}
+                >
+                  {label}
+                </Host>
+              )}
+            </NativeTextScope>
+          </NativeStyleScope>
+        )}
+      </NativeCssRootBoundary>
     );
   },
 ) as NativeDividerComponent;

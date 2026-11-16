@@ -47,9 +47,26 @@ jest.mock('../packages/native-host/src/structuralStyleActivation', () => ({
   structuralStyleActivation: () => ({ acquire: () => mockAcquire(), getStatus: jest.fn() }),
 }));
 import { createRef, forwardRef, useState } from 'react';
-import { Text, View, type ViewInstance, type StyleProp } from 'react-native';
-import { cleanup, fireEvent, render } from '@testing-library/react-native';
-import { Accordion, AccordionSummary, Box, Paper } from '@altroo/mui-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  processColor,
+  type ViewInstance,
+  type StyleProp,
+} from 'react-native';
+import { act, cleanup, fireEvent, render } from '@testing-library/react-native';
+import {
+  Accordion,
+  AccordionSummary,
+  Box,
+  Paper,
+  Card,
+  CardActions,
+  DialogActions,
+  Divider,
+  ListItemIcon,
+} from '@altroo/mui-native';
 import {
   styled,
   createNativeStyleCache,
@@ -69,11 +86,28 @@ afterEach(() => {
   cleanup();
   mockAcquire.mockClear();
 });
-for (const name of ['styled(View)', 'Box', 'Paper'] as const) {
+type PeerProps = Pick<
+  React.ComponentProps<typeof Box>,
+  'children' | 'testID' | 'style' | 'className' | 'sx'
+> &
+  React.RefAttributes<ViewInstance>;
+const viewPeers: Record<string, React.ComponentType<PeerProps>> = {
+  'styled(View)': Styled,
+  Box,
+  Paper,
+  CardActions,
+  DialogActions,
+  Divider,
+  ListItemIcon,
+  'Card (div)': forwardRef<ViewInstance, PeerProps>(function AlternateCard(props, ref) {
+    return <Card {...props} {...{ as: 'div' as const }} ref={ref} />;
+  }),
+};
+for (const [name, Peer] of Object.entries(viewPeers)) {
   test(name + ' keeps native ref and body state as foreign CSS appears and disappears', () => {
     const emitterCache = createNativeStyleCache({ key: 'peer-source' });
     const receiverCache = createNativeStyleCache({ key: 'peer-target' });
-    let captured: StyleProp<NativeStyle>;
+    let captured: StyleProp<NativeStyle> = undefined;
     const Capture = ({ style }: { style?: StyleProp<NativeStyle> }) => {
       captured = style;
       return null;
@@ -86,22 +120,15 @@ for (const name of ['styled(View)', 'Box', 'Paper'] as const) {
     );
     emitter.unmount();
     const ref = createRef<ViewInstance>();
-    const scene = (foreign: boolean) => {
+    const scene = (foreign: boolean, expanded = true) => {
       const props = {
         ref,
         testID: 'peer-root',
-        className: 'Mui-expanded',
+        className: expanded ? 'Mui-expanded' : undefined,
         style: foreign ? captured : undefined,
         children: <Counter />,
       };
-      const root =
-        name === 'styled(View)' ? (
-          <Styled {...props} />
-        ) : name === 'Box' ? (
-          <Box {...props} />
-        ) : (
-          <Paper {...props} />
-        );
+      const root = <Peer {...props} />;
       return <NativeStyleCacheProvider value={receiverCache}>{root}</NativeStyleCacheProvider>;
     };
     const host = {};
@@ -131,11 +158,66 @@ for (const name of ['styled(View)', 'Box', 'Paper'] as const) {
       expect(programme().peer.classes).toEqual(original);
       expect(ref.current).toBe(host);
       expect(tree.getByTestId('peer-count')).toHaveTextContent('1');
+      tree.rerender(scene(false, false));
+      expect(programme().peer.expanded).toBe(false);
+      expect(ref.current).toBe(host);
+      expect(tree.getByTestId('peer-count')).toHaveTextContent('1');
+      expect(
+        programme().peer.classes.some(
+          (token: { cacheKey: string }) => token.cacheKey === 'peer-target',
+        ),
+      ).toBe(true);
+      expect(() => receiverCache.reset()).toThrow('Unmount the native style cache roots');
       expect(mockAcquire).not.toHaveBeenCalled();
     } finally {
       tree.unmount();
       emitterCache.dispose();
       receiverCache.dispose();
+    }
+  });
+}
+
+for (const [name, Peer] of Object.entries(viewPeers)) {
+  test(name + ' refreshes foreign CSS reset without replaying sx', () => {
+    const source = createNativeStyleCache({ key: 'reset-peer-source' });
+    const target = createNativeStyleCache({ key: 'reset-peer-target' });
+    const warm = render(
+      <NativeStyleCacheProvider value={target}>
+        <Styled />
+      </NativeStyleCacheProvider>,
+    );
+    warm.unmount();
+    let captured: StyleProp<NativeStyle> = undefined;
+    const Producer = styled(({ style }: { style?: StyleProp<NativeStyle> }) => {
+      captured = style;
+      return null;
+    })({ color: 'red' });
+    const emitter = render(
+      <NativeStyleCacheProvider value={source}>
+        <Producer />
+      </NativeStyleCacheProvider>,
+    );
+    emitter.unmount();
+    const sx = jest.fn(() => ({ color: 'blue' }));
+    const tree = render(
+      <NativeStyleCacheProvider value={target}>
+        <Peer style={captured} sx={sx}>
+          <Text testID="peer-color">Color</Text>
+        </Peer>
+      </NativeStyleCacheProvider>,
+    );
+    try {
+      const color = () =>
+        processColor(StyleSheet.flatten(tree.getByTestId('peer-color').props.style)?.color);
+      expect(color()).toBe(processColor('red'));
+      expect(sx).toHaveBeenCalledTimes(1);
+      act(() => source.reset());
+      expect(color()).toBe(processColor('blue'));
+      expect(sx).toHaveBeenCalledTimes(1);
+    } finally {
+      tree.unmount();
+      source.dispose();
+      target.dispose();
     }
   });
 }
@@ -222,6 +304,49 @@ test('65 foreign classes become unknown identity without replacing the baseline 
     expect(tree.getByTestId('many-root').props.ownedProgramme.peer).not.toBeNull();
     expect(ref.current).toBe(host);
     expect(attaches).toBe(1);
+  } finally {
+    tree.unmount();
+    source.dispose();
+    target.dispose();
+  }
+});
+
+test('Divider refreshes both decorative lines after foreign border CSS resets', () => {
+  const source = createNativeStyleCache({ key: 'border-source' });
+  const target = createNativeStyleCache({ key: 'border-target' });
+  const warm = render(
+    <NativeStyleCacheProvider value={target}>
+      <Styled />
+    </NativeStyleCacheProvider>,
+  );
+  warm.unmount();
+  let captured: StyleProp<NativeStyle> = undefined;
+  const Producer = styled(({ style }: { style?: StyleProp<NativeStyle> }) => {
+    captured = style;
+    return null;
+  })({ borderStyle: 'dashed' });
+  const emitter = render(
+    <NativeStyleCacheProvider value={source}>
+      <Producer />
+    </NativeStyleCacheProvider>,
+  );
+  emitter.unmount();
+  const tree = render(
+    <NativeStyleCacheProvider value={target}>
+      <Divider style={captured} sx={{ borderStyle: 'solid' }}>
+        Label
+      </Divider>
+    </NativeStyleCacheProvider>,
+  );
+  try {
+    const lines = () =>
+      tree
+        .UNSAFE_getAllByType(View)
+        .filter((node) => node.props.importantForAccessibility === 'no-hide-descendants')
+        .map((node) => StyleSheet.flatten(node.props.style)?.borderStyle);
+    expect(lines()).toEqual(['dashed', 'dashed']);
+    act(() => source.reset());
+    expect(lines()).toEqual(['solid', 'solid']);
   } finally {
     tree.unmount();
     source.dispose();

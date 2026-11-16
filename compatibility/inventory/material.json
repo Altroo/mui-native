@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "bee495f9384769717df22df56861543bef75e8bb56dec60d944ea89c39fdaa25",
+  "nativeSourceSha256": "f63028fef164053ed3560985b9fe9cd35d78039657db4362e442dd89d267d8df",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -35779,7 +35779,7 @@
           "module": "@altroo/mui-native:src/lists.tsx",
           "name": "ListItemAvatarOwnProps",
           "kind": "type",
-          "line": 72
+          "line": 79
         }
       ]
     },
@@ -35790,7 +35790,7 @@
           "module": "@altroo/mui-native:src/lists.tsx",
           "name": "ListItemAvatarRootProps",
           "kind": "type",
-          "line": 65
+          "line": 72
         }
       ]
     },
@@ -35801,7 +35801,7 @@
           "module": "@altroo/mui-native:src/lists.tsx",
           "name": "ListItemIconOwnProps",
           "kind": "type",
-          "line": 63
+          "line": 70
         }
       ]
     },
@@ -35812,7 +35812,7 @@
           "module": "@altroo/mui-native:src/lists.tsx",
           "name": "ListItemIconRootProps",
           "kind": "type",
-          "line": 56
+          "line": 63
         }
       ]
     },
@@ -36417,7 +36417,7 @@
           "module": "@altroo/mui-native:src/lists.tsx",
           "name": "NativeListComponent",
           "kind": "type",
-          "line": 43
+          "line": 50
         }
       ]
     },
@@ -36428,7 +36428,7 @@
           "module": "@altroo/mui-native:src/lists.tsx",
           "name": "NativeListRootProps",
           "kind": "type",
-          "line": 38
+          "line": 45
         }
       ]
     },
@@ -57846,7 +57846,7 @@
         {
           "name": "CardActionsProps",
           "file": "src/cardActions.tsx",
-          "line": 24,
+          "line": 30,
           "package": "@altroo/mui-native"
         }
       ]
@@ -57925,7 +57925,7 @@
         {
           "name": "CardActionsProps",
           "file": "src/cardActions.tsx",
-          "line": 24,
+          "line": 30,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66314,7 +66314,7 @@
         {
           "name": "DialogActionsProps",
           "file": "src/dialogActions.tsx",
-          "line": 24,
+          "line": 30,
           "package": "@altroo/mui-native"
         }
       ]
@@ -66393,7 +66393,7 @@
         {
           "name": "DialogActionsProps",
           "file": "src/dialogActions.tsx",
-          "line": 24,
+          "line": 30,
           "package": "@altroo/mui-native"
         }
       ]
@@ -84481,13 +84481,13 @@
         {
           "name": "ListOwnProps",
           "file": "src/lists.tsx",
-          "line": 44,
+          "line": 51,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ListProps",
           "file": "src/lists.tsx",
-          "line": 54,
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -84623,7 +84623,7 @@
         {
           "name": "ListProps",
           "file": "src/lists.tsx",
-          "line": 54,
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -84725,13 +84725,13 @@
         {
           "name": "ListOwnProps",
           "file": "src/lists.tsx",
-          "line": 44,
+          "line": 51,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ListProps",
           "file": "src/lists.tsx",
-          "line": 54,
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -84867,7 +84867,7 @@
         {
           "name": "ListProps",
           "file": "src/lists.tsx",
-          "line": 54,
+          "line": 61,
           "package": "@altroo/mui-native"
         }
       ]
@@ -86081,7 +86081,7 @@
         {
           "name": "ListItemAvatarProps",
           "file": "src/lists.tsx",
-          "line": 68,
+          "line": 75,
           "package": "@altroo/mui-native"
         }
       ]
@@ -86147,7 +86147,7 @@
         {
           "name": "ListItemAvatarProps",
           "file": "src/lists.tsx",
-          "line": 68,
+          "line": 75,
           "package": "@altroo/mui-native"
         }
       ]
@@ -87057,7 +87057,7 @@
         {
           "name": "ListItemIconProps",
           "file": "src/lists.tsx",
-          "line": 59,
+          "line": 66,
           "package": "@altroo/mui-native"
         }
       ]
@@ -87123,7 +87123,7 @@
         {
           "name": "ListItemIconProps",
           "file": "src/lists.tsx",
-          "line": 59,
+          "line": 66,
           "package": "@altroo/mui-native"
         }
       ]
@@ -88434,13 +88434,13 @@
         {
           "name": "ListSubheaderOwnProps",
           "file": "src/lists.tsx",
-          "line": 73,
+          "line": 80,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ListSubheaderProps",
           "file": "src/lists.tsx",
-          "line": 80,
+          "line": 87,
           "package": "@altroo/mui-native"
         }
       ]
@@ -88519,7 +88519,7 @@
         {
           "name": "ListSubheaderProps",
           "file": "src/lists.tsx",
-          "line": 80,
+          "line": 87,
           "package": "@altroo/mui-native"
         }
       ]
@@ -88634,13 +88634,13 @@
         {
           "name": "ListSubheaderOwnProps",
           "file": "src/lists.tsx",
-          "line": 73,
+          "line": 80,
           "package": "@altroo/mui-native"
         },
         {
           "name": "ListSubheaderProps",
           "file": "src/lists.tsx",
-          "line": 80,
+          "line": 87,
           "package": "@altroo/mui-native"
         }
       ]
@@ -88719,7 +88719,7 @@
         {
           "name": "ListSubheaderProps",
           "file": "src/lists.tsx",
-          "line": 80,
+          "line": 87,
           "package": "@altroo/mui-native"
         }
       ]
@@ -188978,7 +188978,7 @@
     {
       "name": "AlternateRoot",
       "file": "src/card.tsx",
-      "line": 42,
+      "line": 48,
       "kind": "type",
       "members": [],
       "references": [
@@ -188990,7 +188990,7 @@
     {
       "name": "CardActionsProps",
       "file": "src/cardActions.tsx",
-      "line": 24,
+      "line": 30,
       "kind": "type",
       "members": [
         {
@@ -189000,7 +189000,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: BoxProps['component'];",
-          "line": 25,
+          "line": 31,
           "kind": "property",
           "type": "BoxProps['component']"
         },
@@ -189011,7 +189011,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<import('./cardActionsClasses').CardActionsClasses> | undefined;",
-          "line": 26,
+          "line": 32,
           "kind": "property",
           "type": "Partial<import('./cardActionsClasses').CardActionsClasses> | undefined"
         },
@@ -189022,7 +189022,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 27,
+          "line": 33,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -189033,7 +189033,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableSpacing?: boolean | undefined;",
-          "line": 28,
+          "line": 34,
           "kind": "property",
           "type": "boolean | undefined"
         }
@@ -189049,7 +189049,7 @@
     {
       "name": "CardActionsNativeRootProps",
       "file": "src/cardActions.tsx",
-      "line": 30,
+      "line": 36,
       "kind": "type",
       "members": [
         {
@@ -189059,7 +189059,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "as?: BoxProps['component'];",
-          "line": 31,
+          "line": 37,
           "kind": "property",
           "type": "BoxProps['component']"
         },
@@ -189070,7 +189070,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: Record<string, unknown> | null | undefined;",
-          "line": 32,
+          "line": 38,
           "kind": "property",
           "type": "Record<string, unknown> | null | undefined"
         },
@@ -189081,7 +189081,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme?: Theme | null | undefined;",
-          "line": 33,
+          "line": 39,
           "kind": "property",
           "type": "Theme | null | undefined"
         }
@@ -189097,7 +189097,7 @@
     {
       "name": "ActionRoot",
       "file": "src/cardActions.tsx",
-      "line": 35,
+      "line": 41,
       "kind": "type",
       "members": [],
       "references": [
@@ -189109,7 +189109,7 @@
     {
       "name": "NativeActionRoot",
       "file": "src/cardActions.tsx",
-      "line": 36,
+      "line": 42,
       "kind": "type",
       "members": [],
       "references": [
@@ -189125,7 +189125,7 @@
     {
       "name": "PropsForRoot",
       "file": "src/cardActions.tsx",
-      "line": 45,
+      "line": 51,
       "kind": "type",
       "members": [
         {
@@ -189135,7 +189135,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: (R & NativeActionRoot<R>) | undefined;",
-          "line": 47,
+          "line": 53,
           "kind": "property",
           "type": "(R & NativeActionRoot<R>) | undefined"
         }
@@ -189154,7 +189154,7 @@
     {
       "name": "DefaultActionsProps",
       "file": "src/cardActions.tsx",
-      "line": 49,
+      "line": 55,
       "kind": "type",
       "members": [
         {
@@ -189164,7 +189164,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: undefined",
-          "line": 49,
+          "line": 55,
           "kind": "property",
           "type": "undefined"
         }
@@ -189179,7 +189179,7 @@
     {
       "name": "InferredActionsProps",
       "file": "src/cardActions.tsx",
-      "line": 50,
+      "line": 56,
       "kind": "type",
       "members": [],
       "references": [
@@ -189197,7 +189197,7 @@
     {
       "name": "InferredActionsKeys",
       "file": "src/cardActions.tsx",
-      "line": 57,
+      "line": 63,
       "kind": "type",
       "members": [],
       "references": [
@@ -189211,7 +189211,7 @@
     {
       "name": "NativeCardActionsComponent",
       "file": "src/cardActions.tsx",
-      "line": 62,
+      "line": 68,
       "kind": "type",
       "members": [
         {
@@ -189221,7 +189221,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "<R extends ActionRoot>(\n    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },\n  ): React.JSX.Element;",
-          "line": 63,
+          "line": 69,
           "kind": "signature",
           "type": "<R extends ActionRoot>(\n    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },\n  ): React.JSX.Element;"
         },
@@ -189232,7 +189232,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: DefaultActionsProps): React.JSX.Element;",
-          "line": 66,
+          "line": 72,
           "kind": "signature",
           "type": "(props: DefaultActionsProps): React.JSX.Element;"
         },
@@ -189243,7 +189243,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "<P extends CardActionsProps>(\n    props: P &\n      NoInfer<InferredActionsProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,\n  ): React.JSX.Element;",
-          "line": 67,
+          "line": 73,
           "kind": "signature",
           "type": "<P extends CardActionsProps>(\n    props: P &\n      NoInfer<InferredActionsProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,\n  ): React.JSX.Element;"
         },
@@ -189254,7 +189254,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "displayName?: string | undefined;",
-          "line": 72,
+          "line": 78,
           "kind": "property",
           "type": "string | undefined"
         }
@@ -195192,7 +195192,7 @@
     {
       "name": "DialogActionsProps",
       "file": "src/dialogActions.tsx",
-      "line": 24,
+      "line": 30,
       "kind": "type",
       "members": [
         {
@@ -195202,7 +195202,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: BoxProps['component'];",
-          "line": 25,
+          "line": 31,
           "kind": "property",
           "type": "BoxProps['component']"
         },
@@ -195213,7 +195213,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<import('./dialogActionsClasses').DialogActionsClasses> | undefined;",
-          "line": 26,
+          "line": 32,
           "kind": "property",
           "type": "Partial<import('./dialogActionsClasses').DialogActionsClasses> | undefined"
         },
@@ -195224,7 +195224,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 27,
+          "line": 33,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -195235,7 +195235,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableSpacing?: boolean | undefined;",
-          "line": 28,
+          "line": 34,
           "kind": "property",
           "type": "boolean | undefined"
         }
@@ -195251,7 +195251,7 @@
     {
       "name": "DialogActionsNativeRootProps",
       "file": "src/dialogActions.tsx",
-      "line": 30,
+      "line": 36,
       "kind": "type",
       "members": [
         {
@@ -195261,7 +195261,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "as?: BoxProps['component'];",
-          "line": 31,
+          "line": 37,
           "kind": "property",
           "type": "BoxProps['component']"
         },
@@ -195272,7 +195272,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: Record<string, unknown> | null | undefined;",
-          "line": 32,
+          "line": 38,
           "kind": "property",
           "type": "Record<string, unknown> | null | undefined"
         },
@@ -195283,7 +195283,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "theme?: Theme | null | undefined;",
-          "line": 33,
+          "line": 39,
           "kind": "property",
           "type": "Theme | null | undefined"
         }
@@ -195299,7 +195299,7 @@
     {
       "name": "ActionRoot",
       "file": "src/dialogActions.tsx",
-      "line": 35,
+      "line": 41,
       "kind": "type",
       "members": [],
       "references": [
@@ -195311,7 +195311,7 @@
     {
       "name": "NativeActionRoot",
       "file": "src/dialogActions.tsx",
-      "line": 36,
+      "line": 42,
       "kind": "type",
       "members": [],
       "references": [
@@ -195327,7 +195327,7 @@
     {
       "name": "PropsForRoot",
       "file": "src/dialogActions.tsx",
-      "line": 45,
+      "line": 51,
       "kind": "type",
       "members": [
         {
@@ -195337,7 +195337,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: (R & NativeActionRoot<R>) | undefined;",
-          "line": 47,
+          "line": 53,
           "kind": "property",
           "type": "(R & NativeActionRoot<R>) | undefined"
         }
@@ -195356,7 +195356,7 @@
     {
       "name": "DefaultActionsProps",
       "file": "src/dialogActions.tsx",
-      "line": 49,
+      "line": 55,
       "kind": "type",
       "members": [
         {
@@ -195366,7 +195366,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: undefined",
-          "line": 49,
+          "line": 55,
           "kind": "property",
           "type": "undefined"
         }
@@ -195381,7 +195381,7 @@
     {
       "name": "InferredActionsProps",
       "file": "src/dialogActions.tsx",
-      "line": 50,
+      "line": 56,
       "kind": "type",
       "members": [],
       "references": [
@@ -195399,7 +195399,7 @@
     {
       "name": "InferredActionsKeys",
       "file": "src/dialogActions.tsx",
-      "line": 57,
+      "line": 63,
       "kind": "type",
       "members": [],
       "references": [
@@ -195413,7 +195413,7 @@
     {
       "name": "NativeDialogActionsComponent",
       "file": "src/dialogActions.tsx",
-      "line": 62,
+      "line": 68,
       "kind": "type",
       "members": [
         {
@@ -195423,7 +195423,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "<R extends ActionRoot>(\n    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },\n  ): React.JSX.Element;",
-          "line": 63,
+          "line": 69,
           "kind": "signature",
           "type": "<R extends ActionRoot>(\n    props: PropsForRoot<R> & { component: R & NativeActionRoot<NoInfer<R>> },\n  ): React.JSX.Element;"
         },
@@ -195434,7 +195434,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: DefaultActionsProps): React.JSX.Element;",
-          "line": 66,
+          "line": 72,
           "kind": "signature",
           "type": "(props: DefaultActionsProps): React.JSX.Element;"
         },
@@ -195445,7 +195445,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "<P extends DialogActionsProps>(\n    props: P &\n      NoInfer<InferredActionsProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,\n  ): React.JSX.Element;",
-          "line": 67,
+          "line": 73,
           "kind": "signature",
           "type": "<P extends DialogActionsProps>(\n    props: P &\n      NoInfer<InferredActionsProps<P>> &\n      Record<Exclude<keyof P, NoInfer<InferredActionsKeys<P>>>, never>,\n  ): React.JSX.Element;"
         },
@@ -195456,7 +195456,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "displayName?: string | undefined;",
-          "line": 72,
+          "line": 78,
           "kind": "property",
           "type": "string | undefined"
         }
@@ -201073,7 +201073,7 @@
     {
       "name": "NativeListRootProps",
       "file": "src/lists.tsx",
-      "line": 38,
+      "line": 45,
       "kind": "type",
       "members": [
         {
@@ -201083,7 +201083,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle> | undefined;",
-          "line": 39,
+          "line": 46,
           "kind": "property",
           "type": "StyleProp<NativeStyle> | undefined"
         },
@@ -201094,7 +201094,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps | undefined;",
-          "line": 40,
+          "line": 47,
           "kind": "property",
           "type": "SxProps | undefined"
         },
@@ -201105,7 +201105,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ref?: React.Ref<ViewInstance> | undefined;",
-          "line": 41,
+          "line": 48,
           "kind": "property",
           "type": "React.Ref<ViewInstance> | undefined"
         }
@@ -201125,7 +201125,7 @@
     {
       "name": "NativeListComponent",
       "file": "src/lists.tsx",
-      "line": 43,
+      "line": 50,
       "kind": "type",
       "members": [],
       "references": [
@@ -201138,7 +201138,7 @@
     {
       "name": "ListOwnProps",
       "file": "src/lists.tsx",
-      "line": 44,
+      "line": 51,
       "kind": "type",
       "members": [
         {
@@ -201148,7 +201148,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 45,
+          "line": 52,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -201159,7 +201159,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: NativeListComponent;",
-          "line": 46,
+          "line": 53,
           "kind": "property",
           "type": "NativeListComponent"
         },
@@ -201170,7 +201170,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "dense?: boolean;",
-          "line": 47,
+          "line": 54,
           "kind": "property",
           "type": "boolean"
         },
@@ -201181,7 +201181,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disablePadding?: boolean;",
-          "line": 48,
+          "line": 55,
           "kind": "property",
           "type": "boolean"
         },
@@ -201192,7 +201192,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "subheader?: React.ReactNode;",
-          "line": 49,
+          "line": 56,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -201203,7 +201203,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "scrollable?: boolean;",
-          "line": 51,
+          "line": 58,
           "kind": "property",
           "type": "boolean"
         },
@@ -201214,7 +201214,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "scrollViewProps?: Omit<ScrollViewProps, 'ref' | 'children' | 'style'>;",
-          "line": 52,
+          "line": 59,
           "kind": "property",
           "type": "Omit<ScrollViewProps, 'ref' | 'children' | 'style'>"
         }
@@ -201231,7 +201231,7 @@
     {
       "name": "ListProps",
       "file": "src/lists.tsx",
-      "line": 54,
+      "line": 61,
       "kind": "type",
       "members": [],
       "references": [
@@ -201245,7 +201245,7 @@
     {
       "name": "ListItemIconRootProps",
       "file": "src/lists.tsx",
-      "line": 56,
+      "line": 63,
       "kind": "type",
       "members": [
         {
@@ -201255,7 +201255,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 57,
+          "line": 64,
           "kind": "property",
           "type": "string | undefined"
         }
@@ -201269,7 +201269,7 @@
     {
       "name": "ListItemIconProps",
       "file": "src/lists.tsx",
-      "line": 59,
+      "line": 66,
       "kind": "type",
       "members": [
         {
@@ -201279,7 +201279,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<ListItemIconClasses> | undefined;",
-          "line": 60,
+          "line": 67,
           "kind": "property",
           "type": "Partial<ListItemIconClasses> | undefined"
         },
@@ -201290,7 +201290,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<ListItemIconRootProps> | undefined;",
-          "line": 61,
+          "line": 68,
           "kind": "property",
           "type": "React.ComponentType<ListItemIconRootProps> | undefined"
         }
@@ -201307,7 +201307,7 @@
     {
       "name": "ListItemIconOwnProps",
       "file": "src/lists.tsx",
-      "line": 63,
+      "line": 70,
       "kind": "type",
       "members": [],
       "references": [
@@ -201319,7 +201319,7 @@
     {
       "name": "ListItemAvatarRootProps",
       "file": "src/lists.tsx",
-      "line": 65,
+      "line": 72,
       "kind": "type",
       "members": [
         {
@@ -201329,7 +201329,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string | undefined;",
-          "line": 66,
+          "line": 73,
           "kind": "property",
           "type": "string | undefined"
         }
@@ -201343,7 +201343,7 @@
     {
       "name": "ListItemAvatarProps",
       "file": "src/lists.tsx",
-      "line": 68,
+      "line": 75,
       "kind": "type",
       "members": [
         {
@@ -201353,7 +201353,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<ListItemAvatarClasses> | undefined;",
-          "line": 69,
+          "line": 76,
           "kind": "property",
           "type": "Partial<ListItemAvatarClasses> | undefined"
         },
@@ -201364,7 +201364,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<ListItemAvatarRootProps> | undefined;",
-          "line": 70,
+          "line": 77,
           "kind": "property",
           "type": "React.ComponentType<ListItemAvatarRootProps> | undefined"
         }
@@ -201381,7 +201381,7 @@
     {
       "name": "ListItemAvatarOwnProps",
       "file": "src/lists.tsx",
-      "line": 72,
+      "line": 79,
       "kind": "type",
       "members": [],
       "references": [
@@ -201393,7 +201393,7 @@
     {
       "name": "ListSubheaderOwnProps",
       "file": "src/lists.tsx",
-      "line": 73,
+      "line": 80,
       "kind": "type",
       "members": [
         {
@@ -201403,7 +201403,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color?: 'default' | 'primary' | 'inherit';",
-          "line": 74,
+          "line": 81,
           "kind": "property",
           "type": "'default' | 'primary' | 'inherit'"
         },
@@ -201414,7 +201414,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: NativeListComponent;",
-          "line": 75,
+          "line": 82,
           "kind": "property",
           "type": "NativeListComponent"
         },
@@ -201425,7 +201425,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableGutters?: boolean;",
-          "line": 76,
+          "line": 83,
           "kind": "property",
           "type": "boolean"
         },
@@ -201436,7 +201436,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableSticky?: boolean;",
-          "line": 77,
+          "line": 84,
           "kind": "property",
           "type": "boolean"
         },
@@ -201447,7 +201447,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inset?: boolean;",
-          "line": 78,
+          "line": 85,
           "kind": "property",
           "type": "boolean"
         }
@@ -201461,7 +201461,7 @@
     {
       "name": "ListSubheaderProps",
       "file": "src/lists.tsx",
-      "line": 80,
+      "line": 87,
       "kind": "type",
       "members": [],
       "references": [
@@ -201474,7 +201474,7 @@
     {
       "name": "NativeListItemIconComponent",
       "file": "src/lists.tsx",
-      "line": 220,
+      "line": 227,
       "kind": "type",
       "members": [
         {
@@ -201484,7 +201484,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: ListItemIconProps): React.JSX.Element;",
-          "line": 227,
+          "line": 234,
           "kind": "signature",
           "type": "(props: ListItemIconProps): React.JSX.Element;"
         }

@@ -29,8 +29,15 @@ import { useTheme, useComponentStyle, useComponentRootStyle } from './themeProvi
 import { ListContext } from './listContext';
 import { nativeListProps, listDirection } from './listStyles';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
+import {
+  NativeCssPeerView,
+  NativeCssRootBoundary,
+  refreshNativeStyle,
+  retainNativeStyleTransform,
+  useNativeStyleCache,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeButtonGroupRules } from './buttonGroupContext';
-import { mergeNativeRootStyle } from './nativeControlStyles';
+import { nativeRootStylePainter, mergeNativeRootStyle } from './nativeControlStyles';
 import { getListItemAvatarUtilityClass, type ListItemAvatarClasses } from './listItemAvatarClasses';
 export * from './listItemAvatarClasses';
 import { getListItemIconUtilityClass, type ListItemIconClasses } from './listItemIconClasses';
@@ -237,6 +244,8 @@ export const ListItemIcon: NativeListItemIconComponent = forwardRef<
     name: 'MuiListItemIcon',
   });
   const { component: Root = View, children, style, sx, classes, className, ...native } = props;
+  const Host = (Root === View ? NativeCssPeerView : Root) as React.ComponentType<any>;
+  const styleCache = useNativeStyleCache();
   const { alignItems, direction } = useContext(ListContext);
   const ancestry = useContext(NativeButtonGroupRules);
   const theme = useTheme(),
@@ -252,11 +261,14 @@ export const ListItemIcon: NativeListItemIconComponent = forwardRef<
     alignItems === 'flex-start' && token('alignItemsFlexStart'),
     className,
   );
+  const tokens = rootClass.split(/\s+/).filter(Boolean);
   const {
     computed: resolved,
     authored,
     prepared,
   } = useComponentRootStyle('MuiListItemIcon', { ...props, alignItems }, sx, preparedStyle, {
+    styleCache,
+    sourceClass: Root === View,
     ...nativeTextStyleContext(parent, style, theme),
     overrideKeys: alignItems === 'flex-start' ? ['alignItemsFlexStart'] : [],
     baseStyle: {
@@ -267,42 +279,40 @@ export const ListItemIcon: NativeListItemIconComponent = forwardRef<
       color: theme.palette.action.active,
       ...(alignItems === 'flex-start' ? { marginTop: 8 } : {}),
     },
-    classes: rootClass.split(/\s+/).filter(Boolean),
-    ancestors: nativeStyleAncestors(ancestry, { classes: rootClass.split(/\s+/).filter(Boolean) }),
+    classes: tokens,
+    ancestors: nativeStyleAncestors(ancestry, { classes: tokens }),
     rootProps: {
       ...props,
       ...(props.component ? { as: props.component } : {}),
       className: rootClass,
     },
   });
-  const merged = mergeNativeRootStyle(
-    parent?.direction ?? direction ?? theme.direction,
-    resolved,
-    authored,
-  );
-  const computed =
-    applyNativeTextMetrics(merged, resolved, nativeStyleTextMetrics([resolved, authored])) ??
-    merged;
+  const paint = nativeRootStylePainter(parent?.direction ?? direction ?? theme.direction, authored);
+  const computed = retainNativeStyleTransform(paint(resolved), resolved, paint);
   return (
-    <NativeStyleScope
-      root={scopeRoot}
-      theme={theme}
-      classes={rootClass.split(/\s+/).filter(Boolean)}
-      prepared={prepared}
-    >
-      <NativeTextScope rootRef={scopeRoot} theme={theme} style={computed} content={children}>
-        {(style, content) => (
-          <Root
-            {...native}
-            {...(Root === View ? {} : { className: rootClass })}
-            ref={styleRef}
-            style={style}
+    <NativeCssRootBoundary style={resolved} registerClass={false}>
+      {() => (
+        <NativeStyleScope root={scopeRoot} theme={theme} classes={tokens} prepared={prepared}>
+          <NativeTextScope
+            rootRef={scopeRoot}
+            theme={theme}
+            style={refreshNativeStyle(computed)}
+            content={children}
           >
-            {content}
-          </Root>
-        )}
-      </NativeTextScope>
-    </NativeStyleScope>
+            {(style, content) => (
+              <Host
+                {...native}
+                {...(Root === View ? { prepared, classNames: tokens } : { className: rootClass })}
+                ref={styleRef}
+                style={style}
+              >
+                {content}
+              </Host>
+            )}
+          </NativeTextScope>
+        </NativeStyleScope>
+      )}
+    </NativeCssRootBoundary>
   );
 }) as NativeListItemIconComponent;
 export const ListItemAvatar: React.ForwardRefExoticComponent<
