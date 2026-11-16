@@ -89,7 +89,7 @@ final class LayoutRootPerformanceUITests: XCTestCase {
       guard value[key] as? Int == expected else { throw Refusal.invalid("Unexpected lifecycle count: \(key)=\(String(describing: value[key]))") }
     }
   }
-  private func ack(_ cohort: XCUIElement, mode: String, family: String, epoch: Int) throws -> [String: Any] {
+  private func ack(_ cohort: XCUIElement, mode: String, family: String, epoch: Int, validateAction: Bool = true) throws -> [String: Any] {
     let receipt = member(cohort, "layout-root-receipt")
     let row = member(cohort, "layout-root-row-000")
     let text = member(cohort, "layout-root-detail-000")
@@ -138,7 +138,7 @@ final class LayoutRootPerformanceUITests: XCTestCase {
       let action = member(cohort, "layout-root-label-000-action")
       guard action.label == "Row 001 presses 1" else { throw Refusal.invalid("A grouped action lost its local press state") }
     }
-    if family == "accordion" && epoch > 0 { _ = try validateAccordion(cohort: cohort, epoch: epoch) }
+    if family == "accordion" && epoch > 0 && validateAction { _ = try validateAccordion(cohort: cohort, epoch: epoch) }
     return value
   }
   private func fresh(mode: String, family: String) throws -> XCUIElement {
@@ -217,6 +217,10 @@ final class LayoutRootPerformanceUITests: XCTestCase {
       "preflight": ["expectedSourceId": expectedSourceID, "nativeAppExecutableSHA256": nativeAppSHA256, "nativeConfiguration": "Release"],
       "nativeRow0": ["x": Double(frame.minX), "y": Double(frame.minY), "width": Double(frame.width), "height": Double(frame.height)]]
     if family == "button-group" { summary["nativeActions"] = try validateGroup(cohort: cohort, epoch: 16) }
+    if family == "accordion" {
+      guard let epoch = receipt["updateEpoch"] as? Int else { throw Refusal.invalid("Missing recorded Accordion epoch") }
+      summary["nativeActions"] = try validateAccordion(cohort: cohort, epoch: epoch)
+    }
     if let validation { summary["nativeValidation"] = validation }
     let data = try JSONSerialization.data(withJSONObject: summary, options: [.prettyPrinted, .sortedKeys])
     guard let text = String(data: data, encoding: .utf8) else { throw Refusal.invalid("Validation JSON encoding failed") }
@@ -249,7 +253,9 @@ final class LayoutRootPerformanceUITests: XCTestCase {
       var final: [String: Any] = [:]
       for epoch in 1...16 {
         advance.tap()
-        final = try ack(cohort, mode: mode, family: family, epoch: epoch)
+        // The complete audit below owns this correctness epoch; avoid running
+        // the same native queries once more inside acknowledgement.
+        final = try ack(cohort, mode: mode, family: family, epoch: epoch, validateAction: false)
         validation.append(try validateAccordion(cohort: cohort, epoch: epoch, probeDisabled: true))
       }
       try record(final, cohort: cohort, mode: mode, family: family, phase: "native-validation", validation: validation)
@@ -260,7 +266,7 @@ final class LayoutRootPerformanceUITests: XCTestCase {
     var invocation = 0
     // The installed XCTest SDK executes iterationCount + 1 blocks and discards the first.
     // The first metric block is the one discarded metric warm-up. ButtonGroup
-    // additionally runs its separate unmeasured correctness cohort above.
+    // and Accordion additionally run separate unmeasured correctness cohorts above.
     measure(metrics: [XCTCPUMetric(application: app), XCTMemoryMetric(application: app)], options: options) {
       invocation += 1
       var measuring = false
@@ -273,7 +279,11 @@ final class LayoutRootPerformanceUITests: XCTestCase {
         var final: [String: Any] = [:]
         for epoch in 1...16 {
           advance.tap()
-          final = try self.ack(cohort, mode: mode, family: family, epoch: epoch)
+          // Retain native frame/text acknowledgement for every epoch. Accordion
+          // action/disabled audits belong to the separate correctness cohort,
+          // with a final native action check in record(), after stopMeasuring.
+          // These app-wide samples still include acknowledgement servicing.
+          final = try self.ack(cohort, mode: mode, family: family, epoch: epoch, validateAction: family != "accordion")
         }
         self.stopMeasuring()
         measuring = false
