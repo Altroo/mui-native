@@ -681,3 +681,127 @@ final class TextColorMarkerProbeUITests: XCTestCase {
     }
   }
 }
+
+
+/// Retained-row endpoint proof. Display recording separately checks transitional paint.
+@MainActor
+final class AccordionTextMetricsProbeUITests: XCTestCase {
+  private let app = XCUIApplication(bundleIdentifier: "dev.altroo.muinative.catalog")
+  private func node(_ id: String) -> XCUIElement {
+    app.descendants(matching: .any).matching(identifier: id).firstMatch
+  }
+  private func receipt() -> [String: Any]? {
+    let value = node("accordion-metric-receipt")
+    guard value.exists, let data = value.label.data(using: .utf8) else { return nil }
+    return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+  }
+  private func waitFor(_ message: String, _ condition: @escaping () -> Bool) {
+    let expectation = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in condition() }, object: nil)
+    XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: 12), .completed, message)
+  }
+  override func setUp() async throws {
+    continueAfterFailure = false
+    app.launchArguments = []
+    app.launch()
+    XCTAssertTrue(node("accordion-metric-capture").waitForExistence(timeout: 20))
+  }
+  private func run(_ mode: String) throws {
+    node("accordion-metric-mode-" + mode).tap()
+    waitFor("Selected metric case must start idle") {
+      self.receipt()?["mode"] as? String == mode && self.receipt()?["phase"] as? String == "idle"
+    }
+    var tags: [String: Int] = [:]
+    var lineRevisions: [String: Int] = [:]
+    for stage in 0...4 {
+      if stage > 0 {
+        if stage == 1 {
+          node("accordion-metric-bump").tap()
+          waitFor("The local counter must change before reordering") { self.node("accordion-metric-counter-b").label == "B 1" }
+        }
+        node("accordion-metric-next").tap()
+        waitFor("The requested metric stage must commit") {
+          self.receipt()?["stage"] as? Int == stage && self.receipt()?["phase"] as? String == "idle"
+        }
+      }
+      node("accordion-metric-capture").tap()
+      waitFor("Native line/frame capture must finish") { self.receipt()?["phase"] as? String == "complete" }
+      let report = try XCTUnwrap(receipt())
+      XCTAssertEqual(report["schemaVersion"] as? Int, 1)
+      XCTAssertEqual(report["development"] as? Bool, false)
+      XCTAssertEqual(report["mode"] as? String, mode)
+      XCTAssertEqual(report["stage"] as? Int, stage)
+      XCTAssertEqual(try XCTUnwrap(report["fontScale"] as? Double), 1, accuracy: 0.01)
+      let rows = try XCTUnwrap(report["rows"] as? [[String: Any]])
+      XCTAssertEqual(Set(rows.compactMap { $0["id"] as? String }), Set(["a", "b", "c"]))
+      XCTAssertEqual(rows.count, 3)
+      let order = stage == 0 || stage == 4 ? ["a", "b", "c"] : ["c", "a", "b"]
+      var positions: [String: Double] = [:]
+      for row in rows {
+        let id = try XCTUnwrap(row["id"] as? String)
+        let first = stage != 2 && id == order.first
+        let rootTag = try XCTUnwrap(row["tag"] as? Int)
+        XCTAssertGreaterThan(rootTag, 0)
+        if stage == 0 { tags[id] = rootTag } else { XCTAssertEqual(rootTag, tags[id]) }
+        XCTAssertEqual(row["nativeType"] as? String, "RN:AltrooMUIStructuralView")
+        XCTAssertEqual(row["renders"] as? Int, 1, "The row component must not rerender to repair its captured input")
+        XCTAssertEqual(row["count"] as? Int, id == "b" && stage > 0 ? 1 : 0)
+        let frame = try XCTUnwrap(row["frame"] as? [String: Double])
+        XCTAssertEqual(try XCTUnwrap(frame["height"]), first ? 128 : 96, accuracy: 1)
+        XCTAssertEqual(Double(node("accordion-metric-root-" + id).frame.height), try XCTUnwrap(frame["height"]), accuracy: 1)
+        positions[id] = try XCTUnwrap(frame["y"])
+        let texts = try XCTUnwrap(row["text"] as? [String: [String: Any]])
+        let expected = try XCTUnwrap(texts[first ? "large" : "small"])
+        let expectedLine = try XCTUnwrap(expected["line"] as? [String: Double])
+        let inherited = try XCTUnwrap(texts["inherited"])
+        let inheritedLine = try XCTUnwrap(inherited["line"] as? [String: Double])
+        // Actual fixed-font native text supplies the reference, including OS font metrics.
+        for key in ["width", "height", "ascender", "descender", "capHeight", "xHeight"] {
+          XCTAssertEqual(try XCTUnwrap(inheritedLine[key]), try XCTUnwrap(expectedLine[key]), accuracy: 0.5,
+            "Inherited glyph differs from its authored native control: " + id + "/" + key)
+        }
+        for kind in ["inherited", "small", "large", "explicit"] {
+          let text = try XCTUnwrap(texts[kind])
+          let tag = try XCTUnwrap(text["tag"] as? Int)
+          XCTAssertGreaterThan(tag, 0)
+          let key = id + ":" + kind
+          XCTAssertEqual(text["lineTag"] as? Int, tag, "A line event must belong to this retained native Text")
+          let revision = try XCTUnwrap(text["lineRevision"] as? Int)
+          XCTAssertGreaterThan(revision, 0)
+          if stage > 0 {
+            let previousOrder = stage - 1 == 0 ? ["a", "b", "c"] : ["c", "a", "b"]
+            let previouslyFirst = stage - 1 != 2 && id == previousOrder.first
+            if kind == "inherited" && first != previouslyFirst {
+              XCTAssertGreaterThan(revision, try XCTUnwrap(lineRevisions[key]), "A changed inherited font requires a fresh native line event")
+            } else {
+              XCTAssertGreaterThanOrEqual(revision, try XCTUnwrap(lineRevisions[key]))
+            }
+          }
+          lineRevisions[key] = revision
+          if stage == 0 { tags[key] = tag } else { XCTAssertEqual(tag, tags[key], "Text host must remain retained") }
+          let nativeFrame = try XCTUnwrap(text["frame"] as? [String: Double])
+          XCTAssertEqual(try XCTUnwrap(nativeFrame["width"]), 60, accuracy: 0.5)
+          let column = try XCTUnwrap(["inherited", "small", "large", "explicit"].firstIndex(of: kind))
+          XCTAssertEqual(try XCTUnwrap(nativeFrame["x"]) - (try XCTUnwrap(frame["x"])), Double(16 + column * 64), accuracy: 1)
+          XCTAssertGreaterThanOrEqual(try XCTUnwrap(nativeFrame["y"]), try XCTUnwrap(frame["y"]))
+          XCTAssertLessThanOrEqual(try XCTUnwrap(nativeFrame["y"]) + (try XCTUnwrap(nativeFrame["height"])), (try XCTUnwrap(frame["y"])) + 48.5)
+          let expectedHeight: Double = kind == "inherited" ? (first ? 18 : 12) : kind == "large" ? 18 : kind == "small" ? 12 : 13
+          XCTAssertEqual(try XCTUnwrap(nativeFrame["height"]), expectedHeight, accuracy: 1)
+        }
+      }
+      XCTAssertLessThan(try XCTUnwrap(positions[order[0]]), try XCTUnwrap(positions[order[1]]))
+      XCTAssertLessThan(try XCTUnwrap(positions[order[1]]), try XCTUnwrap(positions[order[2]]))
+      let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys]), uniformTypeIdentifier: "public.json")
+      attachment.name = "accordion-text-metrics-" + mode + "-stage-" + String(stage)
+      attachment.lifetime = .keepAlways
+      add(attachment)
+      if stage == 0 || stage == 2 || stage == 4 {
+        let picture = XCTAttachment(screenshot: app.screenshot())
+        picture.name = "accordion-text-metrics-" + mode + "-stage-" + String(stage)
+        picture.lifetime = .keepAlways
+        add(picture)
+      }
+    }
+  }
+  func testDefaultNativeTextMetrics() throws { try run("default") }
+  func testForwardedNativeTextMetrics() throws { try run("forwarded") }
+}
