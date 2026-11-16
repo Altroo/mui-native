@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "f63028fef164053ed3560985b9fe9cd35d78039657db4362e442dd89d267d8df",
+  "nativeSourceSha256": "eab31bad6234f63c97de0e7d5a4c93bb706a6b5075c365f1f8fd12f0d61583de",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -36340,7 +36340,7 @@
           "module": "@altroo/mui-native:src/collapse.tsx",
           "name": "NativeCollapseSlotProps",
           "kind": "type",
-          "line": 54
+          "line": 53
         }
       ]
     },
@@ -63572,7 +63572,7 @@
         {
           "name": "CollapseSlots",
           "file": "src/collapse.tsx",
-          "line": 64,
+          "line": 63,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63589,7 +63589,7 @@
         {
           "name": "CollapseRootSlotPropsOverrides",
           "file": "src/collapse.tsx",
-          "line": 51,
+          "line": 50,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63606,7 +63606,7 @@
         {
           "name": "CollapseWrapperSlotPropsOverrides",
           "file": "src/collapse.tsx",
-          "line": 52,
+          "line": 51,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63623,7 +63623,7 @@
         {
           "name": "CollapseWrapperInnerSlotPropsOverrides",
           "file": "src/collapse.tsx",
-          "line": 53,
+          "line": 52,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63648,7 +63648,7 @@
         {
           "name": "CollapseSlotsAndSlotProps",
           "file": "src/collapse.tsx",
-          "line": 69,
+          "line": 68,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63832,7 +63832,7 @@
         {
           "name": "CollapseProps",
           "file": "src/collapse.tsx",
-          "line": 83,
+          "line": 82,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63866,7 +63866,7 @@
         {
           "name": "CollapseOwnerState",
           "file": "src/collapse.tsx",
-          "line": 97,
+          "line": 96,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63925,7 +63925,7 @@
         {
           "name": "CollapseSlots",
           "file": "src/collapse.tsx",
-          "line": 64,
+          "line": 63,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63942,7 +63942,7 @@
         {
           "name": "CollapseRootSlotPropsOverrides",
           "file": "src/collapse.tsx",
-          "line": 51,
+          "line": 50,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63959,7 +63959,7 @@
         {
           "name": "CollapseWrapperSlotPropsOverrides",
           "file": "src/collapse.tsx",
-          "line": 52,
+          "line": 51,
           "package": "@altroo/mui-native"
         }
       ]
@@ -63976,7 +63976,7 @@
         {
           "name": "CollapseWrapperInnerSlotPropsOverrides",
           "file": "src/collapse.tsx",
-          "line": 53,
+          "line": 52,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64001,7 +64001,7 @@
         {
           "name": "CollapseSlotsAndSlotProps",
           "file": "src/collapse.tsx",
-          "line": 69,
+          "line": 68,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64185,7 +64185,7 @@
         {
           "name": "CollapseProps",
           "file": "src/collapse.tsx",
-          "line": 83,
+          "line": 82,
           "package": "@altroo/mui-native"
         }
       ]
@@ -64219,7 +64219,7 @@
         {
           "name": "CollapseOwnerState",
           "file": "src/collapse.tsx",
-          "line": 97,
+          "line": 96,
           "package": "@altroo/mui-native"
         }
       ]
@@ -182601,7 +182601,7 @@
     {
       "name": "ExpansionContext",
       "file": "src/accordion.tsx",
-      "line": 106,
+      "line": 113,
       "kind": "type",
       "members": [
         {
@@ -182611,7 +182611,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "expanded: boolean;",
-          "line": 107,
+          "line": 114,
           "kind": "property",
           "type": "boolean"
         },
@@ -182622,7 +182622,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disabled: boolean;",
-          "line": 108,
+          "line": 115,
           "kind": "property",
           "type": "boolean"
         },
@@ -182633,7 +182633,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableGutters: boolean;",
-          "line": 109,
+          "line": 116,
           "kind": "property",
           "type": "boolean"
         },
@@ -182644,7 +182644,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "toggle: (event: ButtonBaseActivationEvent) => void;",
-          "line": 110,
+          "line": 117,
           "kind": "property",
           "type": "(event: ButtonBaseActivationEvent) => void"
         }
@@ -182658,7 +182658,7 @@
     {
       "name": "FrameProps",
       "file": "src/accordion.tsx",
-      "line": 184,
+      "line": 217,
       "kind": "type",
       "members": [
         {
@@ -182668,7 +182668,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "name: string;",
-          "line": 185,
+          "line": 218,
           "kind": "property",
           "type": "string"
         },
@@ -182679,7 +182679,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string;",
-          "line": 186,
+          "line": 219,
           "kind": "property",
           "type": "string"
         },
@@ -182690,7 +182690,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slot?: string;",
-          "line": 187,
+          "line": 220,
           "kind": "slot",
           "type": "string"
         },
@@ -182701,7 +182701,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState: object;",
-          "line": 188,
+          "line": 221,
           "kind": "property",
           "type": "object"
         },
@@ -182712,7 +182712,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "resolved?: NativeAccordionSlotProps<any>;",
-          "line": 189,
+          "line": 222,
           "kind": "property",
           "type": "NativeAccordionSlotProps<any>"
         },
@@ -182723,7 +182723,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<any>;",
-          "line": 190,
+          "line": 223,
           "kind": "property",
           "type": "React.ComponentType<any>"
         },
@@ -182734,7 +182734,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "base?: SxProps;",
-          "line": 191,
+          "line": 224,
           "kind": "property",
           "type": "SxProps"
         },
@@ -182745,7 +182745,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "states?: string[];",
-          "line": 192,
+          "line": 225,
           "kind": "property",
           "type": "string[]"
         },
@@ -182756,7 +182756,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "overrideKeys?: string[];",
-          "line": 193,
+          "line": 226,
           "kind": "property",
           "type": "string[]"
         },
@@ -182767,7 +182767,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 194,
+          "line": 227,
           "kind": "property",
           "type": "React.ReactNode"
         }
@@ -182784,7 +182784,7 @@
     {
       "name": "NativeAccordionDetailsComponent",
       "file": "src/accordion.tsx",
-      "line": 1362,
+      "line": 1426,
       "kind": "type",
       "members": [
         {
@@ -182794,7 +182794,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;",
-          "line": 1369,
+          "line": 1433,
           "kind": "signature",
           "type": "(props: AccordionDetailsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;"
         }
@@ -182814,7 +182814,7 @@
     {
       "name": "NativeAccordionActionsComponent",
       "file": "src/accordion.tsx",
-      "line": 1424,
+      "line": 1503,
       "kind": "type",
       "members": [
         {
@@ -182824,7 +182824,7 @@
           "computed": false,
           "memberKind": "TSCallSignatureDeclaration",
           "declaration": "(props: AccordionActionsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;",
-          "line": 1428,
+          "line": 1507,
           "kind": "signature",
           "type": "(props: AccordionActionsProps & React.RefAttributes<ViewInstance>): React.JSX.Element;"
         }
@@ -193299,7 +193299,7 @@
     {
       "name": "CollapseRootSlotPropsOverrides",
       "file": "src/collapse.tsx",
-      "line": 51,
+      "line": 50,
       "kind": "type",
       "members": [],
       "references": [],
@@ -193309,7 +193309,7 @@
     {
       "name": "CollapseWrapperSlotPropsOverrides",
       "file": "src/collapse.tsx",
-      "line": 52,
+      "line": 51,
       "kind": "type",
       "members": [],
       "references": [],
@@ -193319,7 +193319,7 @@
     {
       "name": "CollapseWrapperInnerSlotPropsOverrides",
       "file": "src/collapse.tsx",
-      "line": 53,
+      "line": 52,
       "kind": "type",
       "members": [],
       "references": [],
@@ -193329,7 +193329,7 @@
     {
       "name": "NativeCollapseSlotProps",
       "file": "src/collapse.tsx",
-      "line": 54,
+      "line": 53,
       "kind": "type",
       "members": [
         {
@@ -193339,7 +193339,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle>;",
-          "line": 57,
+          "line": 56,
           "kind": "slot",
           "type": "StyleProp<NativeStyle>"
         },
@@ -193350,7 +193350,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 58,
+          "line": 57,
           "kind": "slot",
           "type": "SxProps"
         },
@@ -193361,7 +193361,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState?: CollapseOwnerState;",
-          "line": 59,
+          "line": 58,
           "kind": "slot",
           "type": "CollapseOwnerState"
         },
@@ -193372,7 +193372,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<any>;",
-          "line": 60,
+          "line": 59,
           "kind": "slot",
           "type": "React.ComponentType<any>"
         },
@@ -193383,7 +193383,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "as?: React.ComponentType<any>;",
-          "line": 61,
+          "line": 60,
           "kind": "slot",
           "type": "React.ComponentType<any>"
         },
@@ -193394,7 +193394,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id?: string;",
-          "line": 62,
+          "line": 61,
           "kind": "slot",
           "type": "string"
         }
@@ -193416,7 +193416,7 @@
     {
       "name": "CollapseSlots",
       "file": "src/collapse.tsx",
-      "line": 64,
+      "line": 63,
       "kind": "type",
       "members": [
         {
@@ -193426,7 +193426,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: React.ComponentType<NativeCollapseSlotProps>;",
-          "line": 65,
+          "line": 64,
           "kind": "slot",
           "type": "React.ComponentType<NativeCollapseSlotProps>"
         },
@@ -193437,7 +193437,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "wrapper?: React.ComponentType<NativeCollapseSlotProps>;",
-          "line": 66,
+          "line": 65,
           "kind": "slot",
           "type": "React.ComponentType<NativeCollapseSlotProps>"
         },
@@ -193448,7 +193448,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "wrapperInner?: React.ComponentType<NativeCollapseSlotProps>;",
-          "line": 67,
+          "line": 66,
           "kind": "slot",
           "type": "React.ComponentType<NativeCollapseSlotProps>"
         }
@@ -193463,7 +193463,7 @@
     {
       "name": "CollapseSlotsAndSlotProps",
       "file": "src/collapse.tsx",
-      "line": 69,
+      "line": 68,
       "kind": "type",
       "members": [
         {
@@ -193473,7 +193473,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slots?: CollapseSlots;",
-          "line": 70,
+          "line": 69,
           "kind": "slot",
           "type": "CollapseSlots"
         },
@@ -193484,7 +193484,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "slotProps?: {\n    root?: SlotProps<NativeCollapseSlotProps & CollapseRootSlotPropsOverrides, CollapseOwnerState>;\n    wrapper?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperSlotPropsOverrides,\n      CollapseOwnerState\n    >;\n    wrapperInner?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperInnerSlotPropsOverrides,\n      CollapseOwnerState\n    >;\n  };",
-          "line": 71,
+          "line": 70,
           "kind": "slot",
           "type": "{\n    root?: SlotProps<NativeCollapseSlotProps & CollapseRootSlotPropsOverrides, CollapseOwnerState>;\n    wrapper?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperSlotPropsOverrides,\n      CollapseOwnerState\n    >;\n    wrapperInner?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperInnerSlotPropsOverrides,\n      CollapseOwnerState\n    >;\n  }"
         },
@@ -193495,7 +193495,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root?: SlotProps<NativeCollapseSlotProps & CollapseRootSlotPropsOverrides, CollapseOwnerState>;",
-          "line": 72,
+          "line": 71,
           "kind": "slot",
           "type": "SlotProps<NativeCollapseSlotProps & CollapseRootSlotPropsOverrides, CollapseOwnerState>"
         },
@@ -193506,7 +193506,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "wrapper?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperSlotPropsOverrides,\n      CollapseOwnerState\n    >;",
-          "line": 73,
+          "line": 72,
           "kind": "slot",
           "type": "SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperSlotPropsOverrides,\n      CollapseOwnerState\n    >"
         },
@@ -193517,7 +193517,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "wrapperInner?: SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperInnerSlotPropsOverrides,\n      CollapseOwnerState\n    >;",
-          "line": 77,
+          "line": 76,
           "kind": "slot",
           "type": "SlotProps<\n      NativeCollapseSlotProps & CollapseWrapperInnerSlotPropsOverrides,\n      CollapseOwnerState\n    >"
         }
@@ -193537,7 +193537,7 @@
     {
       "name": "CollapseProps",
       "file": "src/collapse.tsx",
-      "line": 83,
+      "line": 82,
       "kind": "type",
       "members": [
         {
@@ -193547,7 +193547,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 86,
+          "line": 85,
           "kind": "property",
           "type": "React.ReactNode"
         },
@@ -193558,7 +193558,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "collapsedSize?: string | number;",
-          "line": 87,
+          "line": 86,
           "kind": "property",
           "type": "string | number"
         },
@@ -193569,7 +193569,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "component?: React.ComponentType<any>;",
-          "line": 88,
+          "line": 87,
           "kind": "property",
           "type": "React.ComponentType<any>"
         },
@@ -193580,7 +193580,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "classes?: Partial<CollapseClasses>;",
-          "line": 89,
+          "line": 88,
           "kind": "property",
           "type": "Partial<CollapseClasses>"
         },
@@ -193591,7 +193591,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className?: string;",
-          "line": 90,
+          "line": 89,
           "kind": "property",
           "type": "string"
         },
@@ -193602,7 +193602,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "id?: string;",
-          "line": 91,
+          "line": 90,
           "kind": "property",
           "type": "string"
         },
@@ -193613,7 +193613,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "orientation?: 'horizontal' | 'vertical';",
-          "line": 92,
+          "line": 91,
           "kind": "property",
           "type": "'horizontal' | 'vertical'"
         },
@@ -193624,7 +193624,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: StyleProp<NativeStyle>;",
-          "line": 93,
+          "line": 92,
           "kind": "property",
           "type": "StyleProp<NativeStyle>"
         },
@@ -193635,7 +193635,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "sx?: SxProps;",
-          "line": 94,
+          "line": 93,
           "kind": "property",
           "type": "SxProps"
         },
@@ -193646,7 +193646,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "timeout?: TransitionProps['timeout'] | 'auto';",
-          "line": 95,
+          "line": 94,
           "kind": "property",
           "type": "TransitionProps['timeout'] | 'auto'"
         }
@@ -193669,7 +193669,7 @@
     {
       "name": "CollapseOwnerState",
       "file": "src/collapse.tsx",
-      "line": 97,
+      "line": 96,
       "kind": "type",
       "members": [
         {
@@ -193679,7 +193679,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "state: TransitionStatus;",
-          "line": 98,
+          "line": 97,
           "kind": "property",
           "type": "TransitionStatus"
         }
@@ -193694,7 +193694,7 @@
     {
       "name": "Geometry",
       "file": "src/collapse.tsx",
-      "line": 100,
+      "line": 99,
       "kind": "type",
       "members": [
         {
@@ -193704,7 +193704,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "width: number;",
-          "line": 100,
+          "line": 99,
           "kind": "property",
           "type": "number"
         },
@@ -193715,7 +193715,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "height: number",
-          "line": 100,
+          "line": 99,
           "kind": "property",
           "type": "number"
         }
@@ -193727,7 +193727,7 @@
     {
       "name": "SurfaceProps",
       "file": "src/collapse.tsx",
-      "line": 184,
+      "line": 198,
       "kind": "type",
       "members": [
         {
@@ -193737,7 +193737,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "props: CollapseProps;",
-          "line": 185,
+          "line": 199,
           "kind": "property",
           "type": "CollapseProps"
         },
@@ -193748,7 +193748,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "status: Exclude<TransitionStatus, 'unmounted'>;",
-          "line": 186,
+          "line": 200,
           "kind": "property",
           "type": "Exclude<TransitionStatus, 'unmounted'>"
         },
@@ -193759,7 +193759,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "phase: number;",
-          "line": 187,
+          "line": 201,
           "kind": "property",
           "type": "number"
         },
@@ -193770,7 +193770,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "identity: symbol;",
-          "line": 188,
+          "line": 202,
           "kind": "property",
           "type": "symbol"
         },
@@ -193781,7 +193781,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ready: boolean;",
-          "line": 189,
+          "line": 203,
           "kind": "property",
           "type": "boolean"
         },
@@ -193792,7 +193792,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "paused: boolean;",
-          "line": 190,
+          "line": 204,
           "kind": "property",
           "type": "boolean"
         },
@@ -193803,7 +193803,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "geometry: Geometry;",
-          "line": 191,
+          "line": 205,
           "kind": "property",
           "type": "Geometry"
         },
@@ -193814,7 +193814,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "timing: NativeOpacityTiming;",
-          "line": 192,
+          "line": 206,
           "kind": "property",
           "type": "NativeOpacityTiming"
         },
@@ -193825,7 +193825,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "resolved: {\n    root: NativeCollapseSlotProps;\n    wrapper: NativeCollapseSlotProps;\n    inner: NativeCollapseSlotProps;\n  };",
-          "line": 193,
+          "line": 207,
           "kind": "property",
           "type": "{\n    root: NativeCollapseSlotProps;\n    wrapper: NativeCollapseSlotProps;\n    inner: NativeCollapseSlotProps;\n  }"
         },
@@ -193836,7 +193836,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "root: NativeCollapseSlotProps;",
-          "line": 194,
+          "line": 208,
           "kind": "property",
           "type": "NativeCollapseSlotProps"
         },
@@ -193847,7 +193847,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "wrapper: NativeCollapseSlotProps;",
-          "line": 195,
+          "line": 209,
           "kind": "property",
           "type": "NativeCollapseSlotProps"
         },
@@ -193858,7 +193858,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inner: NativeCollapseSlotProps;",
-          "line": 196,
+          "line": 210,
           "kind": "property",
           "type": "NativeCollapseSlotProps"
         },
@@ -193869,7 +193869,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "reduce: boolean;",
-          "line": 198,
+          "line": 212,
           "kind": "property",
           "type": "boolean"
         },
@@ -193880,7 +193880,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "rootRef: React.Ref<ViewInstance>;",
-          "line": 199,
+          "line": 213,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         },
@@ -193891,7 +193891,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "wrapperRef: React.RefObject<ViewInstance | null>;",
-          "line": 200,
+          "line": 214,
           "kind": "property",
           "type": "React.RefObject<ViewInstance | null>"
         },
@@ -193902,7 +193902,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "captureWrapper: React.Ref<ViewInstance>;",
-          "line": 201,
+          "line": 215,
           "kind": "property",
           "type": "React.Ref<ViewInstance>"
         },
@@ -193913,7 +193913,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "terminalCurrent?: () => boolean;",
-          "line": 202,
+          "line": 216,
           "kind": "property",
           "type": "() => boolean"
         },
@@ -193924,7 +193924,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "measure: (value: Geometry, identity: symbol) => void;",
-          "line": 203,
+          "line": 217,
           "kind": "property",
           "type": "(value: Geometry, identity: symbol) => void"
         },
@@ -193935,7 +193935,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "resolveCollapsed: (value: string | number, axis: 'width' | 'height') => number;",
-          "line": 204,
+          "line": 218,
           "kind": "property",
           "type": "(value: string | number, axis: 'width' | 'height') => number"
         }
@@ -207337,7 +207337,7 @@
     {
       "name": "Props",
       "file": "src/NativeTransition.tsx",
-      "line": 14,
+      "line": 15,
       "kind": "type",
       "members": [
         {
@@ -207347,7 +207347,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "in?: boolean;",
-          "line": 15,
+          "line": 16,
           "kind": "property",
           "type": "boolean"
         },
@@ -207358,7 +207358,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "mountOnEnter?: boolean;",
-          "line": 16,
+          "line": 17,
           "kind": "property",
           "type": "boolean"
         },
@@ -207369,7 +207369,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "unmountOnExit?: boolean;",
-          "line": 17,
+          "line": 18,
           "kind": "property",
           "type": "boolean"
         },
@@ -207380,7 +207380,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "timeout?: TransitionProps['timeout'];",
-          "line": 18,
+          "line": 19,
           "kind": "property",
           "type": "TransitionProps['timeout']"
         },
@@ -207391,7 +207391,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "getAutoTimeout?: () => number | null | undefined;",
-          "line": 19,
+          "line": 20,
           "kind": "property",
           "type": "() => number | null | undefined"
         },
@@ -207402,7 +207402,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nodeRef: React.RefObject<ViewInstance | null>;",
-          "line": 20,
+          "line": 21,
           "kind": "property",
           "type": "React.RefObject<ViewInstance | null>"
         },
@@ -207413,7 +207413,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "reduceMotion: boolean;",
-          "line": 21,
+          "line": 22,
           "kind": "property",
           "type": "boolean"
         },
@@ -207424,7 +207424,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "layoutIdentity?: unknown;",
-          "line": 23,
+          "line": 24,
           "kind": "property",
           "type": "unknown"
         },
@@ -207435,7 +207435,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "layoutCurrent?: () => boolean;",
-          "line": 24,
+          "line": 25,
           "kind": "property",
           "type": "() => boolean"
         },
@@ -207446,7 +207446,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onResume?: (entering: boolean) => void;",
-          "line": 25,
+          "line": 26,
           "kind": "event",
           "type": "(entering: boolean) => void"
         },
@@ -207457,7 +207457,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "addEndListener?: (node: ViewInstance, done: () => void) => void;",
-          "line": 26,
+          "line": 27,
           "kind": "property",
           "type": "(node: ViewInstance, done: () => void) => void"
         },
@@ -207468,7 +207468,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEnter?: (appearing: boolean) => void;",
-          "line": 27,
+          "line": 28,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -207479,7 +207479,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEntering?: (appearing: boolean) => void;",
-          "line": 28,
+          "line": 29,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -207490,7 +207490,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onEntered?: (appearing: boolean) => void;",
-          "line": 29,
+          "line": 30,
           "kind": "event",
           "type": "(appearing: boolean) => void"
         },
@@ -207501,7 +207501,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExit?: () => void;",
-          "line": 30,
+          "line": 31,
           "kind": "event",
           "type": "() => void"
         },
@@ -207512,7 +207512,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExiting?: () => void;",
-          "line": 31,
+          "line": 32,
           "kind": "event",
           "type": "() => void"
         },
@@ -207523,7 +207523,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "onExited?: () => void;",
-          "line": 32,
+          "line": 33,
           "kind": "event",
           "type": "() => void"
         },
@@ -207534,7 +207534,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children: (\n    status: Exclude<TransitionStatus, 'unmounted'>,\n    phase: number,\n    paused?: boolean,\n    terminalCurrent?: () => boolean,\n  ) => React.ReactNode;",
-          "line": 33,
+          "line": 34,
           "kind": "property",
           "type": "(\n    status: Exclude<TransitionStatus, 'unmounted'>,\n    phase: number,\n    paused?: boolean,\n    terminalCurrent?: () => boolean,\n  ) => React.ReactNode"
         }
@@ -207554,11 +207554,182 @@
     {
       "name": "NativeStatus",
       "file": "src/NativeTransition.tsx",
-      "line": 40,
+      "line": 41,
       "kind": "type",
       "members": [],
       "references": [
         "TransitionStatus"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "PendingWork",
+      "file": "src/NativeTransition.tsx",
+      "line": 42,
+      "kind": "type",
+      "members": [
+        {
+          "name": "cancel",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "cancel(): void;",
+          "line": 42,
+          "kind": "property",
+          "type": "cancel(): void;"
+        },
+        {
+          "name": "finish",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSMethodSignature",
+          "declaration": "finish(): void",
+          "line": 42,
+          "kind": "property",
+          "type": "finish(): void"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "Completion",
+      "file": "src/NativeTransition.tsx",
+      "line": 43,
+      "kind": "type",
+      "members": [
+        {
+          "name": "state",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "state: 'entered' | 'exited';",
+          "line": 43,
+          "kind": "property",
+          "type": "'entered' | 'exited'"
+        },
+        {
+          "name": "identity",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "identity: unknown",
+          "line": 43,
+          "kind": "property",
+          "type": "unknown"
+        }
+      ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "TaskRefs",
+      "file": "src/NativeTransition.tsx",
+      "line": 44,
+      "kind": "type",
+      "members": [
+        {
+          "name": "current",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "current: React.RefObject<Props>;",
+          "line": 45,
+          "kind": "property",
+          "type": "React.RefObject<Props>"
+        },
+        {
+          "name": "mounted",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "mounted: React.RefObject<boolean>;",
+          "line": 46,
+          "kind": "property",
+          "type": "React.RefObject<boolean>"
+        },
+        {
+          "name": "committedReady",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "committedReady: React.RefObject<boolean>;",
+          "line": 47,
+          "kind": "property",
+          "type": "React.RefObject<boolean>"
+        },
+        {
+          "name": "appearing",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "appearing: React.RefObject<boolean>;",
+          "line": 48,
+          "kind": "property",
+          "type": "React.RefObject<boolean>"
+        },
+        {
+          "name": "phase",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "phase: React.RefObject<number>;",
+          "line": 49,
+          "kind": "property",
+          "type": "React.RefObject<number>"
+        },
+        {
+          "name": "pending",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "pending: React.RefObject<PendingWork | undefined>;",
+          "line": 50,
+          "kind": "property",
+          "type": "React.RefObject<PendingWork | undefined>"
+        },
+        {
+          "name": "completion",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "completion: React.RefObject<Completion | undefined>;",
+          "line": 51,
+          "kind": "property",
+          "type": "React.RefObject<Completion | undefined>"
+        },
+        {
+          "name": "statusRef",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "statusRef: React.RefObject<NativeStatus>;",
+          "line": 52,
+          "kind": "property",
+          "type": "React.RefObject<NativeStatus>"
+        }
+      ],
+      "references": [
+        "Completion",
+        "NativeStatus",
+        "PendingWork",
+        "Props",
+        "React.RefObject"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"

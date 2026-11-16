@@ -50,6 +50,9 @@ import { createRef, forwardRef, useState } from 'react';
 import { Text, View, type ViewInstance } from 'react-native';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 import {
+  AccordionSummary,
+  AccordionDetails,
+  AccordionActions,
   Card,
   CardActions,
   DialogActions,
@@ -73,6 +76,17 @@ const peers: Record<string, React.ComponentType<PeerProps>> = {
   DialogActions,
   Divider,
   ListItemIcon,
+  AccordionDetails,
+  AccordionActions,
+  'AccordionSummary content': forwardRef<ViewInstance, PeerProps>(
+    function SummaryContent(props, ref) {
+      return (
+        <AccordionSummary slotProps={{ content: { ...props, ref } }}>
+          {props.children}
+        </AccordionSummary>
+      );
+    },
+  ),
   'Card (div)': forwardRef<ViewInstance, PeerProps>(function AlternateCard(props, ref) {
     return <Card {...props} {...{ as: 'div' as const }} ref={ref} />;
   }),

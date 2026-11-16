@@ -59,6 +59,9 @@ import { act, cleanup, fireEvent, render } from '@testing-library/react-native';
 import {
   Accordion,
   AccordionSummary,
+  AccordionDetails,
+  AccordionActions,
+  Typography,
   Box,
   Paper,
   Card,
@@ -99,6 +102,17 @@ const viewPeers: Record<string, React.ComponentType<PeerProps>> = {
   DialogActions,
   Divider,
   ListItemIcon,
+  AccordionDetails,
+  AccordionActions,
+  'AccordionSummary content': forwardRef<ViewInstance, PeerProps>(
+    function SummaryContent(props, ref) {
+      return (
+        <AccordionSummary slotProps={{ content: { ...props, ref } }}>
+          {props.children}
+        </AccordionSummary>
+      );
+    },
+  ),
   'Card (div)': forwardRef<ViewInstance, PeerProps>(function AlternateCard(props, ref) {
     return <Card {...props} {...{ as: 'div' as const }} ref={ref} />;
   }),
@@ -353,3 +367,82 @@ test('Divider refreshes both decorative lines after foreign border CSS resets', 
     target.dispose();
   }
 });
+
+test.each(['Paper', 'View'] as const)(
+  'Accordion %s root slot preserves foreign CSS separately from native overrides',
+  (rootKind) => {
+    const source = createNativeStyleCache({ key: 'root-slot-source' });
+    const target = createNativeStyleCache({ key: 'root-slot-target' });
+    const warm = render(
+      <NativeStyleCacheProvider value={target}>
+        <Styled />
+      </NativeStyleCacheProvider>,
+    );
+    warm.unmount();
+    let captured: StyleProp<NativeStyle> = undefined;
+    const Producer = styled(({ style }: { style?: StyleProp<NativeStyle> }) => {
+      captured = style;
+      return null;
+    })({ paddingTop: '17px', color: 'red' });
+    const emitter = render(
+      <NativeStyleCacheProvider value={source}>
+        <Producer />
+      </NativeStyleCacheProvider>,
+    );
+    emitter.unmount();
+    const ref = createRef<ViewInstance>();
+    const scene = (nativeOverride: boolean) => (
+      <NativeStyleCacheProvider value={target}>
+        <Accordion
+          expanded
+          ref={ref}
+          testID="root-slot-peer"
+          sx={{ color: 'blue' }}
+          slotProps={{
+            root: {
+              ...(rootKind === 'View' ? { as: View } : {}),
+              style: nativeOverride ? [captured, { paddingTop: 0 }] : captured,
+            },
+          }}
+        >
+          <AccordionSummary>Summary</AccordionSummary>
+          <Counter />
+          <Typography variant="inherit" testID="root-slot-color">
+            Color
+          </Typography>
+        </Accordion>
+      </NativeStyleCacheProvider>
+    );
+    const host = {};
+    const tree = render(scene(false), {
+      createNodeMock: (node) =>
+        (node.props as { testID?: string }).testID === 'root-slot-peer' ? host : {},
+    });
+    try {
+      expect(tree.getByTestId('root-slot-peer')).toHaveStyle({ paddingTop: 17 });
+      expect(
+        tree
+          .getByTestId('root-slot-peer')
+          .props.ownedProgramme.peer.classes.some(
+            (token: { cacheKey: string }) => token.cacheKey === 'root-slot-source',
+          ),
+      ).toBe(true);
+      fireEvent.press(tree.getByTestId('peer-count'));
+      tree.rerender(scene(true));
+      expect(tree.getByTestId('root-slot-peer')).toHaveStyle({ paddingTop: 0 });
+      expect(ref.current).toBe(host);
+      expect(tree.getByTestId('peer-count')).toHaveTextContent('1');
+      const color = () =>
+        processColor(StyleSheet.flatten(tree.getByTestId('root-slot-color').props.style)?.color);
+      expect(color()).toBe(processColor('red'));
+      act(() => source.reset());
+      expect(color()).toBe(processColor('blue'));
+      expect(tree.getByTestId('root-slot-peer')).toHaveStyle({ paddingTop: 0 });
+      expect(ref.current).toBe(host);
+    } finally {
+      tree.unmount();
+      source.dispose();
+      target.dispose();
+    }
+  },
+);

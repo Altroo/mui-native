@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, {
   useCallback,
   useContext,
@@ -38,49 +39,24 @@ interface Props extends TransitionActions {
   ) => React.ReactNode;
 }
 type NativeStatus = TransitionStatus | 'waiting' | 'waiting-enter' | 'waiting-exit';
-export default function NativeTransition(props: Props) {
-  const ready = useContext(NativeTransitionReadiness);
-  const committedReady = useRef(ready);
-  const { in: inProp = false, appear = false, mountOnEnter = false, unmountOnExit = false } = props;
-  const [status, setStatus] = useState<NativeStatus>(() =>
-    inProp
-      ? appear
-        ? ready
-          ? 'exited'
-          : 'waiting'
-        : 'entered'
-      : mountOnEnter || unmountOnExit
-        ? 'unmounted'
-        : 'exited',
-  );
-  const statusRef = useRef(status);
-  statusRef.current = status;
-  if (inProp && status === 'unmounted') {
-    statusRef.current = 'exited';
-    setStatus('exited');
-  }
-  const current = useRef(props);
-  useInsertionEffect(() => {
-    current.current = props;
-    committedReady.current = ready;
-  });
-  const mounted = useRef(false),
-    shouldAppear = useRef(inProp && appear),
-    appearing = useRef(false),
-    lastFired = useRef(status),
-    phase = useRef(0);
-  const pending = useRef<{ cancel(): void; finish(): void } | undefined>(undefined);
-  const completion = useRef<{ state: 'entered' | 'exited'; identity: unknown } | undefined>(
-    undefined,
-  );
-  // A listener may finish before React commits an owner change in the same batch.
-  // Keep its terminal render provisional until that committed owner is checked.
-  const retiredCompletion =
-    props.layoutIdentity !== undefined &&
-    (status === 'entered' || status === 'exited') &&
-    completion.current?.state === status &&
-    lastFired.current !== status &&
-    (completion.current.identity !== props.layoutIdentity || !ready);
+type PendingWork = { cancel(): void; finish(): void };
+type Completion = { state: 'entered' | 'exited'; identity: unknown };
+interface TaskRefs {
+  current: React.RefObject<Props>;
+  mounted: React.RefObject<boolean>;
+  committedReady: React.RefObject<boolean>;
+  appearing: React.RefObject<boolean>;
+  phase: React.RefObject<number>;
+  pending: React.RefObject<PendingWork | undefined>;
+  completion: React.RefObject<Completion | undefined>;
+  statusRef: React.RefObject<NativeStatus>;
+}
+// Stable timer operations share only mutable cells. Their closure environment
+// must not own the first transition renderer or its obsolete child props.
+function useTransitionTasks(
+  { current, mounted, committedReady, appearing, phase, pending, completion, statusRef }: TaskRefs,
+  setStatus: React.Dispatch<React.SetStateAction<NativeStatus>>,
+) {
   const cancel = useCallback(() => {
     pending.current?.cancel();
     pending.current = undefined;
@@ -180,17 +156,73 @@ export default function NativeTransition(props: Props) {
     },
     [cancel],
   );
-  useLayoutEffect(() => {
-    mounted.current = true;
-    if (shouldAppear.current && committedReady.current && current.current.in) {
-      shouldAppear.current = false;
-      update(true, true);
-    }
-    return () => {
-      mounted.current = false;
-      cancel();
-    };
-  }, [cancel, update]);
+  return { cancel, schedule, update };
+}
+function mountTransition(
+  refs: Pick<TaskRefs, 'mounted' | 'committedReady' | 'current'>,
+  shouldAppear: React.RefObject<boolean>,
+  update: (entering: boolean, mounting?: boolean) => void,
+  cancel: () => void,
+) {
+  refs.mounted.current = true;
+  if (shouldAppear.current && refs.committedReady.current && refs.current.current.in) {
+    shouldAppear.current = false;
+    update(true, true);
+  }
+  return () => {
+    refs.mounted.current = false;
+    cancel();
+  };
+}
+export default function NativeTransition(props: Props) {
+  const ready = useContext(NativeTransitionReadiness);
+  const committedReady = useRef(ready);
+  const { in: inProp = false, appear = false, mountOnEnter = false, unmountOnExit = false } = props;
+  const [status, setStatus] = useState<NativeStatus>(() =>
+    inProp
+      ? appear
+        ? ready
+          ? 'exited'
+          : 'waiting'
+        : 'entered'
+      : mountOnEnter || unmountOnExit
+        ? 'unmounted'
+        : 'exited',
+  );
+  const statusRef = useRef(status);
+  statusRef.current = status;
+  if (inProp && status === 'unmounted') {
+    statusRef.current = 'exited';
+    setStatus('exited');
+  }
+  const current = useRef(props);
+  useInsertionEffect(() => {
+    current.current = props;
+    committedReady.current = ready;
+  });
+  const mounted = useRef(false),
+    shouldAppear = useRef(inProp && appear),
+    appearing = useRef(false),
+    lastFired = useRef(status),
+    phase = useRef(0);
+  const pending = useRef<PendingWork | undefined>(undefined);
+  const completion = useRef<Completion | undefined>(undefined);
+  // A listener may finish before React commits an owner change in the same batch.
+  // Keep its terminal render provisional until that committed owner is checked.
+  const retiredCompletion =
+    props.layoutIdentity !== undefined &&
+    (status === 'entered' || status === 'exited') &&
+    completion.current?.state === status &&
+    lastFired.current !== status &&
+    (completion.current.identity !== props.layoutIdentity || !ready);
+  const { cancel, schedule, update } = useTransitionTasks(
+    { current, mounted, committedReady, appearing, phase, pending, completion, statusRef },
+    setStatus,
+  );
+  useLayoutEffect(
+    () => mountTransition({ mounted, committedReady, current }, shouldAppear, update, cancel),
+    [cancel, update],
+  );
   const previousLayout = useRef(props.layoutIdentity);
   useLayoutEffect(() => {
     const changed = previousLayout.current !== props.layoutIdentity;
