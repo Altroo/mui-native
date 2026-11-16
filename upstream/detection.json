@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "lastSuccessfulCheck": "2026-11-15T23:24:54.305Z",
+  "lastSuccessfulCheck": "2026-11-16T17:07:14.896Z",
   "packages": {
     "@mui/material": {
       "latestDetected": "9.5.0",
@@ -1050,7 +1050,7 @@
       ]
     },
     "@mui/x-charts": {
-      "latestDetected": "9.18.0",
+      "latestDetected": "9.18.1",
       "observedVersions": [
         "9.15.0",
         "6.18.0",
@@ -1183,7 +1183,8 @@
         "9.14.0",
         "9.16.0",
         "9.17.0",
-        "9.18.0"
+        "9.18.0",
+        "9.18.1"
       ]
     },
     "@mui/x-tree-view": {
