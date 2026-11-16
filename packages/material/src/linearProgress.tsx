@@ -21,6 +21,11 @@ import {
 } from '@altroo/mui-native-system';
 import { useNativeStyledTheme } from './themeProvider';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
+import {
+  NativeCssRootBoundary,
+  refreshNativeStyle,
+  useNativeStyleCache,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeButtonGroupRules } from './buttonGroupContext';
 import { nativeProgressAccessibilityValue } from './nativeProgressAccessibility';
 import { getLinearProgressUtilityClass } from './linearProgressClasses';
@@ -391,6 +396,7 @@ export const LinearProgress: React.ForwardRefExoticComponent<
   };
   const { root, ref } = useNativeTextRootRef(forwarded),
     nativeRef = useNativeStyleRef(root, ref);
+  const styleCache = useNativeStyleCache();
   const parent = useNativeTextContext(),
     rules = useContext(NativeButtonGroupRules),
     { width } = useWindowDimensions();
@@ -404,6 +410,8 @@ export const LinearProgress: React.ForwardRefExoticComponent<
     props.sx,
     retainedStyle,
     {
+      styleCache,
+      sourceClass: true,
       ...nativeTextStyleContext(parent, props.style, theme),
       width,
       classes,
@@ -430,32 +438,38 @@ export const LinearProgress: React.ForwardRefExoticComponent<
     ...native
   } = rootProps as Record<string, unknown>;
   return (
-    <NativeStyleScope root={root} theme={theme} classes={classes} prepared={result.prepared}>
-      <NativeTextScope
-        rootRef={root}
-        theme={theme}
-        style={[result.computed, result.authored]}
-        content={null}
-      >
-        {(layout) => (
-          <LinearProgressRootFrame
-            nodeRef={nativeRef}
-            native={{
-              ...native,
-              nativeID: props.id ?? props.nativeID,
-              testID: Object.hasOwn(props, 'testID') ? props.testID : dataTestId,
-              accessible: props.accessible ?? true,
-              accessibilityValue: nativeProgressAccessibilityValue(
-                rootProps as Record<string, unknown>,
-              ),
-            }}
-            style={layout}
-            inheritTrack={color === 'inherit' && variant !== 'buffer'}
+    <NativeCssRootBoundary style={result.computed} registerClass={false}>
+      {() => (
+        <NativeStyleScope root={root} theme={theme} classes={classes} prepared={result.prepared}>
+          <NativeTextScope
+            rootRef={root}
+            theme={theme}
+            style={[refreshNativeStyle(result.computed), result.authored]}
+            content={null}
           >
-            {graphic}
-          </LinearProgressRootFrame>
-        )}
-      </NativeTextScope>
-    </NativeStyleScope>
+            {(layout) => (
+              <LinearProgressRootFrame
+                nodeRef={nativeRef}
+                prepared={result.prepared}
+                classNames={classes}
+                native={{
+                  ...native,
+                  nativeID: props.id ?? props.nativeID,
+                  testID: Object.hasOwn(props, 'testID') ? props.testID : dataTestId,
+                  accessible: props.accessible ?? true,
+                  accessibilityValue: nativeProgressAccessibilityValue(
+                    rootProps as Record<string, unknown>,
+                  ),
+                }}
+                style={layout}
+                inheritTrack={color === 'inherit' && variant !== 'buffer'}
+              >
+                {graphic}
+              </LinearProgressRootFrame>
+            )}
+          </NativeTextScope>
+        </NativeStyleScope>
+      )}
+    </NativeCssRootBoundary>
   );
 });

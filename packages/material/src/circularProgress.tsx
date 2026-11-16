@@ -25,6 +25,11 @@ import {
   type CircularProgressMotionStyle,
 } from './circularProgressFrames';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
+import {
+  NativeCssRootBoundary,
+  refreshNativeStyle,
+  useNativeStyleCache,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeButtonGroupRules } from './buttonGroupContext';
 import { getCircularProgressUtilityClass } from './circularProgressClasses';
 import type { CircularProgressProps } from './circularProgressTypes';
@@ -261,6 +266,7 @@ export const CircularProgress: React.ForwardRefExoticComponent<
   const rootSheet = rootConstructor(theme);
   const { root, ref } = useNativeTextRootRef(forwarded),
     nativeRef = useNativeStyleRef(root, ref);
+  const styleCache = useNativeStyleCache();
   const parent = useNativeTextContext(),
     rules = useContext(NativeButtonGroupRules),
     { width } = useWindowDimensions();
@@ -367,6 +373,8 @@ export const CircularProgress: React.ForwardRefExoticComponent<
     sx,
     retainedStyle,
     {
+      styleCache,
+      sourceClass: true,
       ...nativeTextStyleContext(parent, style, theme),
       // This View owns SVG descendant sheets; retain their paint declarations.
       svg: true,
@@ -379,16 +387,6 @@ export const CircularProgress: React.ForwardRefExoticComponent<
     },
   );
   const nativeSize = typeof size === 'number' ? `${size}px` : size;
-  const dimensions = resolveSx({ width: nativeSize, height: nativeSize, ...rootTransform }, theme, {
-    ...nativeTextStyleContext(
-      parent,
-      StyleSheet.flatten([prepared.computed, prepared.authored]),
-      theme,
-    ),
-    width,
-  });
-  // Component defaults are inline in the original, ahead of authored native style.
-  const rootStyle = [prepared.computed, dimensions, prepared.authored];
   const {
     'aria-valuenow': _now,
     'aria-valuemin': _min,
@@ -405,26 +403,49 @@ export const CircularProgress: React.ForwardRefExoticComponent<
     ...native
   } = rootProps as Record<string, unknown>;
   return (
-    <NativeStyleScope root={root} theme={theme} classes={tokens} prepared={prepared.prepared}>
-      <NativeTextScope rootRef={root} theme={theme} style={rootStyle} content={null}>
-        {(layout) => (
-          <ProgressRootFrame
-            nodeRef={nativeRef}
-            style={layout}
-            sheet={rootSheet}
-            variant={variant}
-            native={{
-              ...native,
-              nativeID: id ?? props.nativeID,
-              testID: Object.hasOwn(props, 'testID') ? props.testID : dataTestId,
-              accessible: props.accessible ?? true,
-              accessibilityValue: nativeProgressAccessibilityValue(rootProps),
-            }}
-          >
-            {graphic}
-          </ProgressRootFrame>
-        )}
-      </NativeTextScope>
-    </NativeStyleScope>
+    <NativeCssRootBoundary style={prepared.computed} registerClass={false}>
+      {() => {
+        const computed = refreshNativeStyle(prepared.computed);
+        const dimensions = resolveSx(
+          { width: nativeSize, height: nativeSize, ...rootTransform },
+          theme,
+          {
+            ...nativeTextStyleContext(
+              parent,
+              StyleSheet.flatten([computed, prepared.authored]),
+              theme,
+            ),
+            width,
+          },
+        );
+        // Component defaults are inline in the original, ahead of authored native style.
+        const rootStyle = [computed, dimensions, prepared.authored];
+        return (
+          <NativeStyleScope root={root} theme={theme} classes={tokens} prepared={prepared.prepared}>
+            <NativeTextScope rootRef={root} theme={theme} style={rootStyle} content={null}>
+              {(layout) => (
+                <ProgressRootFrame
+                  nodeRef={nativeRef}
+                  prepared={prepared.prepared}
+                  classNames={tokens}
+                  style={layout}
+                  sheet={rootSheet}
+                  variant={variant}
+                  native={{
+                    ...native,
+                    nativeID: id ?? props.nativeID,
+                    testID: Object.hasOwn(props, 'testID') ? props.testID : dataTestId,
+                    accessible: props.accessible ?? true,
+                    accessibilityValue: nativeProgressAccessibilityValue(rootProps),
+                  }}
+                >
+                  {graphic}
+                </ProgressRootFrame>
+              )}
+            </NativeTextScope>
+          </NativeStyleScope>
+        );
+      }}
+    </NativeCssRootBoundary>
   );
 });

@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "eab31bad6234f63c97de0e7d5a4c93bb706a6b5075c365f1f8fd12f0d61583de",
+  "nativeSourceSha256": "4a829e20d0b70d0c36eeea0c98f3af5e67877bafc24f329e94f30096c748242e",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -157904,7 +157904,7 @@
         {
           "name": "Palette",
           "file": "src/linearProgress.tsx",
-          "line": 46,
+          "line": 51,
           "package": "@altroo/mui-native"
         },
         {
@@ -159390,7 +159390,7 @@
         {
           "name": "Palette",
           "file": "src/linearProgress.tsx",
-          "line": 46,
+          "line": 51,
           "package": "@altroo/mui-native"
         },
         {
@@ -181974,13 +181974,13 @@
         {
           "name": "SlotProps",
           "file": "src/circularProgress.tsx",
-          "line": 106,
+          "line": 111,
           "package": "@altroo/mui-native"
         },
         {
           "name": "SlotProps",
           "file": "src/linearProgress.tsx",
-          "line": 216,
+          "line": 221,
           "package": "@altroo/mui-native"
         },
         {
@@ -182094,13 +182094,13 @@
         {
           "name": "SlotProps",
           "file": "src/circularProgress.tsx",
-          "line": 106,
+          "line": 111,
           "package": "@altroo/mui-native"
         },
         {
           "name": "SlotProps",
           "file": "src/linearProgress.tsx",
-          "line": 216,
+          "line": 221,
           "package": "@altroo/mui-native"
         },
         {
@@ -192665,7 +192665,7 @@
     {
       "name": "Owner",
       "file": "src/circularProgress.tsx",
-      "line": 34,
+      "line": 39,
       "kind": "type",
       "members": [
         {
@@ -192675,7 +192675,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color: string;",
-          "line": 35,
+          "line": 40,
           "kind": "property",
           "type": "string"
         },
@@ -192686,7 +192686,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant: string;",
-          "line": 36,
+          "line": 41,
           "kind": "property",
           "type": "string"
         },
@@ -192697,7 +192697,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "size: number | string;",
-          "line": 37,
+          "line": 42,
           "kind": "property",
           "type": "number | string"
         },
@@ -192708,7 +192708,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "thickness: number;",
-          "line": 38,
+          "line": 43,
           "kind": "property",
           "type": "number"
         },
@@ -192719,7 +192719,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "value: number;",
-          "line": 39,
+          "line": 44,
           "kind": "property",
           "type": "number"
         },
@@ -192730,7 +192730,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "disableShrink: boolean;",
-          "line": 40,
+          "line": 45,
           "kind": "property",
           "type": "boolean"
         },
@@ -192741,7 +192741,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "enableTrackSlot: boolean;",
-          "line": 41,
+          "line": 46,
           "kind": "slot",
           "type": "boolean"
         }
@@ -192755,7 +192755,7 @@
     {
       "name": "ConstructorStyle",
       "file": "src/circularProgress.tsx",
-      "line": 56,
+      "line": 61,
       "kind": "type",
       "members": [
         {
@@ -192765,7 +192765,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "base: SxProps",
-          "line": 56,
+          "line": 61,
           "kind": "property",
           "type": "SxProps"
         }
@@ -192780,7 +192780,7 @@
     {
       "name": "SlotProps",
       "file": "src/circularProgress.tsx",
-      "line": 106,
+      "line": 111,
       "kind": "type",
       "members": [
         {
@@ -192790,7 +192790,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState: Owner;",
-          "line": 107,
+          "line": 112,
           "kind": "slot",
           "type": "Owner"
         },
@@ -192801,7 +192801,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className: string;",
-          "line": 108,
+          "line": 113,
           "kind": "slot",
           "type": "string"
         },
@@ -192812,7 +192812,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: Record<string, unknown>;",
-          "line": 109,
+          "line": 114,
           "kind": "slot",
           "type": "Record<string, unknown>"
         },
@@ -192823,7 +192823,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "children?: React.ReactNode;",
-          "line": 110,
+          "line": 115,
           "kind": "slot",
           "type": "React.ReactNode"
         },
@@ -192834,7 +192834,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "viewBox?: string;",
-          "line": 111,
+          "line": 116,
           "kind": "slot",
           "type": "string"
         },
@@ -192845,7 +192845,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "'aria-hidden'?: string;",
-          "line": 112,
+          "line": 117,
           "kind": "slot",
           "type": "string"
         }
@@ -192985,7 +192985,7 @@
     {
       "name": "CircularProgressMotionStyle",
       "file": "src/circularProgressFrames.tsx",
-      "line": 36,
+      "line": 42,
       "kind": "type",
       "members": [
         {
@@ -192995,7 +192995,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "motion?: ReducedMotionMode | undefined;",
-          "line": 37,
+          "line": 43,
           "kind": "property",
           "type": "ReducedMotionMode | undefined"
         },
@@ -193006,7 +193006,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transitionMotion?: ReducedMotionMode | undefined;",
-          "line": 38,
+          "line": 44,
           "kind": "property",
           "type": "ReducedMotionMode | undefined"
         },
@@ -193017,7 +193017,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transition?: string | undefined;",
-          "line": 39,
+          "line": 45,
           "kind": "property",
           "type": "string | undefined"
         }
@@ -199794,7 +199794,7 @@
     {
       "name": "Owner",
       "file": "src/linearProgress.tsx",
-      "line": 34,
+      "line": 39,
       "kind": "type",
       "members": [
         {
@@ -199804,7 +199804,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "color: string;",
-          "line": 34,
+          "line": 39,
           "kind": "property",
           "type": "string"
         },
@@ -199815,7 +199815,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "variant: string",
-          "line": 34,
+          "line": 39,
           "kind": "property",
           "type": "string"
         }
@@ -199829,7 +199829,7 @@
     {
       "name": "Palette",
       "file": "src/linearProgress.tsx",
-      "line": 46,
+      "line": 51,
       "kind": "type",
       "members": [],
       "references": [
@@ -199842,7 +199842,7 @@
     {
       "name": "LinearProgressSheet",
       "file": "src/linearProgress.tsx",
-      "line": 66,
+      "line": 71,
       "kind": "type",
       "members": [
         {
@@ -199852,7 +199852,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "base: SxProps;",
-          "line": 67,
+          "line": 72,
           "kind": "property",
           "type": "SxProps"
         },
@@ -199863,7 +199863,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "motion?: ReducedMotionMode | undefined;",
-          "line": 68,
+          "line": 73,
           "kind": "property",
           "type": "ReducedMotionMode | undefined"
         },
@@ -199874,7 +199874,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transitionMotion?: ReducedMotionMode | undefined;",
-          "line": 69,
+          "line": 74,
           "kind": "property",
           "type": "ReducedMotionMode | undefined"
         },
@@ -199885,7 +199885,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "transition?: string | undefined;",
-          "line": 70,
+          "line": 75,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -199896,7 +199896,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "determinateTransition?: string | undefined;",
-          "line": 71,
+          "line": 76,
           "kind": "property",
           "type": "string | undefined"
         },
@@ -199907,7 +199907,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "bufferTransitions?: Record<string, string | undefined> | undefined;",
-          "line": 72,
+          "line": 77,
           "kind": "property",
           "type": "Record<string, string | undefined> | undefined"
         },
@@ -199918,7 +199918,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "dotColors?: Record<string, string> | undefined;",
-          "line": 73,
+          "line": 78,
           "kind": "property",
           "type": "Record<string, string> | undefined"
         }
@@ -199934,7 +199934,7 @@
     {
       "name": "SlotProps",
       "file": "src/linearProgress.tsx",
-      "line": 216,
+      "line": 221,
       "kind": "type",
       "members": [
         {
@@ -199944,7 +199944,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "className: string;",
-          "line": 217,
+          "line": 222,
           "kind": "slot",
           "type": "string"
         },
@@ -199955,7 +199955,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "ownerState: Owner;",
-          "line": 218,
+          "line": 223,
           "kind": "slot",
           "type": "Owner"
         },
@@ -199966,7 +199966,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "style?: Record<string, unknown> | undefined;",
-          "line": 219,
+          "line": 224,
           "kind": "slot",
           "type": "Record<string, unknown> | undefined"
         }
