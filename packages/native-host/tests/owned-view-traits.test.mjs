@@ -106,7 +106,10 @@ int main(){try{
  // This catalog shape forms a physical View, but not a stacking boundary.
  ViewProps panel;panel.testId="accordion";panel.yogaStyle.borders[0].defined=true;
  ShadowNodeTraits traits{7};altroo::owned_view_traits::initialize(panel,traits);
- if(traits.bits!=1)throw std::runtime_error("bordered/test-ID panel must retain stock flattening");compare(panel);
+ if(traits.bits!=1){
+  throw std::runtime_error("bordered/test-ID panel must retain stock flattening");
+ }
+ compare(panel);
  unsigned seed=0x72e4a89u;
  for(unsigned i=0;i<256;++i){ViewProps p;for(const auto&change:changes){seed=1664525u*seed+1013904223u;if(seed&0x80000000u)change(p);}compare(p);}
  std::cout<<"PASS "<<checks<<" pinned stock trait controls; framework doubles only\n";
