@@ -14,6 +14,8 @@ import {
   AccordionSummary,
   Box,
   Button,
+  CircularProgress,
+  LinearProgress,
   ThemeProvider,
   createTheme,
   type BoxProps,
@@ -23,11 +25,13 @@ import { ownedStructuralCases } from '@altroo/mui-native-host/internal/structura
 
 type Mode = 'default' | 'forwarded';
 type Scenario = 'position' | 'adjacency';
+type BoundaryPeer = 'view' | 'progress';
 type Id = 'a' | 'b' | 'c';
 type CounterHandle = { bump(): void; read(): number };
 type Targets = {
   roots: Map<Id, ViewInstance>;
   counters: Map<Id, CounterHandle>;
+  boundary: ViewInstance | null;
 };
 type RowBounds = {
   id: Id;
@@ -47,6 +51,8 @@ type Report = {
   pixelRatio: number;
   mode: Mode;
   scenario: Scenario;
+  boundaryPeer: 'view' | 'circular' | 'linear';
+  boundary?: { kind: string; nativeType: string; tag: number | null };
   stage: number;
   phase: 'idle' | 'sampling' | 'complete' | 'error';
   rows: RowBounds[];
@@ -193,8 +199,20 @@ function measure(id: Id, targets: Targets): Promise<RowBounds> {
     });
   });
 }
-function Panel({ mode, scenario }: { mode: Mode; scenario: Scenario }) {
-  const targets = useRef<Targets>({ roots: new Map(), counters: new Map() }).current;
+function Panel({
+  mode,
+  scenario,
+  boundaryPeer,
+}: {
+  mode: Mode;
+  scenario: Scenario;
+  boundaryPeer: BoundaryPeer;
+}) {
+  const targets = useRef<Targets>({
+    roots: new Map(),
+    counters: new Map(),
+    boundary: null,
+  }).current;
   const job = useRef<Job | null>(null);
   const [stage, setStage] = useState(0);
   const metadata = {
@@ -204,6 +222,12 @@ function Panel({ mode, scenario }: { mode: Mode; scenario: Scenario }) {
     pixelRatio: PixelRatio.get(),
     mode,
     scenario,
+    boundaryPeer:
+      boundaryPeer === 'progress'
+        ? mode === 'default'
+          ? ('circular' as const)
+          : ('linear' as const)
+        : ('view' as const),
   };
   const [report, setReport] = useState<Report>({ ...metadata, stage, phase: 'idle', rows: [] });
   const cancel = (current: Job) => {
@@ -248,6 +272,18 @@ function Panel({ mode, scenario }: { mode: Mode; scenario: Scenario }) {
         stage,
         phase: error ? 'error' : 'complete',
         rows,
+        ...(targets.boundary
+          ? {
+              boundary: {
+                kind: metadata.boundaryPeer,
+                nativeType: String(
+                  (targets.boundary as ViewInstance & { tagName?: string }).tagName ??
+                    'unavailable',
+                ),
+                tag: findNodeHandle(targets.boundary) ?? null,
+              },
+            }
+          : {}),
         ...(runtime ? { runtime } : {}),
         ...(error ? { error: String(error) } : {}),
       });
@@ -313,6 +349,7 @@ function Panel({ mode, scenario }: { mode: Mode; scenario: Scenario }) {
             id={id}
             mode={mode}
             scenario={scenario}
+            boundaryPeer={boundaryPeer}
             stage={stage}
             targets={targets}
           />
@@ -341,19 +378,61 @@ function ViewBoundaryRow({
   id,
   mode,
   scenario,
+  boundaryPeer,
   stage,
   targets,
 }: {
   id: Id;
   mode: Mode;
   scenario: Scenario;
+  boundaryPeer: BoundaryPeer;
   stage: number;
   targets: Targets;
 }) {
+  const boundaryRef = useCallback(
+    (node: ViewInstance | null) => {
+      targets.boundary = node;
+      return () => {
+        if (targets.boundary === node) targets.boundary = null;
+      };
+    },
+    [targets],
+  );
   return (
     <>
       {scenario === 'adjacency' && stage === 3 && id === 'b' ? (
-        <View collapsable={false} style={{ height: 8, backgroundColor: '#1565c0' }} />
+        boundaryPeer === 'progress' ? (
+          mode === 'default' ? (
+            <CircularProgress
+              ref={boundaryRef}
+              testID="accordion-grouping-boundary"
+              className="Mui-expanded"
+              size={8}
+              variant="determinate"
+              value={25}
+              // Its inline size/rotation outrank sx, matching MUI. Author the
+              // full-width horizontal band needed by the independent paint scan.
+              style={{ width: '100%', transform: [] }}
+              sx={{ height: 8, backgroundColor: '#1565c0' }}
+            />
+          ) : (
+            <LinearProgress
+              ref={boundaryRef}
+              testID="accordion-grouping-boundary"
+              className="Mui-expanded"
+              variant="determinate"
+              value={25}
+              sx={{ height: 8, backgroundColor: '#1565c0' }}
+            />
+          )
+        ) : (
+          <View
+            ref={boundaryRef}
+            testID="accordion-grouping-boundary"
+            collapsable={false}
+            style={{ height: 8, backgroundColor: '#1565c0' }}
+          />
+        )
       ) : null}
       <Row
         id={id}
@@ -366,7 +445,10 @@ function ViewBoundaryRow({
   );
 }
 /** Independent native geometry, retention and source-class paint scenarios. */
-export function AccordionGroupingProbe({ scenario = 'position' }: { scenario?: Scenario } = {}) {
+export function AccordionGroupingProbe({
+  scenario = 'position',
+  boundaryPeer = 'view',
+}: { scenario?: Scenario; boundaryPeer?: BoundaryPeer } = {}) {
   const [selection, setSelection] = useState({ mode: 'default' as Mode, epoch: 0 });
   return (
     <ThemeProvider theme={theme}>
@@ -383,7 +465,12 @@ export function AccordionGroupingProbe({ scenario = 'position' }: { scenario?: S
             </Button>
           ))}
         </View>
-        <Panel key={selection.epoch} mode={selection.mode} scenario={scenario} />
+        <Panel
+          key={selection.epoch}
+          mode={selection.mode}
+          scenario={scenario}
+          boundaryPeer={boundaryPeer}
+        />
       </View>
     </ThemeProvider>
   );

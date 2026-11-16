@@ -495,6 +495,15 @@ final class AccordionGroupingProbeUITests: XCTestCase {
       XCTAssertEqual(rows.count, 3)
       let scenario = try XCTUnwrap(report["scenario"] as? String)
       XCTAssertTrue(["position", "adjacency"].contains(scenario))
+      let peer = report["boundaryPeer"] as? String ?? "view"
+      XCTAssertTrue(["view", "circular", "linear"].contains(peer))
+      if scenario == "adjacency" && stage == 3 && peer != "view" {
+        let boundary = try XCTUnwrap(report["boundary"] as? [String: Any])
+        XCTAssertEqual(boundary["kind"] as? String, peer)
+        XCTAssertEqual(boundary["nativeType"] as? String, "RN:AltrooMUIStructuralView")
+        XCTAssertGreaterThan(try XCTUnwrap(boundary["tag"] as? Int), 0)
+        XCTAssertTrue(node("accordion-grouping-boundary").exists)
+      }
       let ordered = scenario == "adjacency" || stage == 0 || stage == 4 ? ["a", "b", "c"] : ["c", "a", "b"]
       var positions: [String: Double] = [:]
       for row in rows {
