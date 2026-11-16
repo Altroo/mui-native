@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "status": "scoped-regression-passed",
+  "validatedSourceCommit": "936b96650e9556586b59941854b5faa6c9309b6c",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontProfile": "normal"
+  },
+  "passedEndpointTests": 2,
+  "failedEndpointTests": 0,
+  "skippedTests": 0,
+  "runtimeCapability": "first-last-of-type-v2",
+  "runtimeReceiptRequirements": [
+    "peerSelectors true",
+    "owned roots and ornaments",
+    "active resolver",
+    "zero errors",
+    "nonzero attempts and changed candidates"
+  ],
+  "bundleSHA256": "142686e52c23cafa9a3fd407ce7d225ba454867336b9eeb7a8b04c38f0283fe9",
+  "collectorSHA256": "b7498de30091cbb4c076ef059496dd54e2e75c15392d59023ec2f30681e5a5e1",
+  "testExecutableSHA256": "c0364180dc40d8d7283d47316708425b72e3312d61447f2c84306effab3f103d",
+  "trackedSourceFilesMatchedToCommit": 461,
+  "captureSHA256": "2cbbbe8023b412a34b3e549e44cde29d91c300ad2abb487da33b604da98289aa",
+  "scannerSourceSHA256": "a7e0cecf9c5ce61149f89daaa6802f6374e3c4c13b0c25058caef07c02796c76",
+  "scannerExecutableSHA256": "95778e7f1ab61cc6c147d69548afee79a6bb701272c076b567084334eb381121",
+  "paintReportSHA256": "069afd941c37ef88136e70975e028d0be753dcf4d4cd675917d560c8b93a6110",
+  "analyzedFrames": 460,
+  "qualifiedCompleteGroups": 92,
+  "invalidGroupFrames": 0,
+  "configurations": [
+    "default-0",
+    "default-1",
+    "default-2",
+    "default-3",
+    "default-4",
+    "forwarded-0",
+    "forwarded-1",
+    "forwarded-2",
+    "forwarded-3",
+    "forwarded-4"
+  ],
+  "qualification": "Independent mode/stage bars and complete row fills qualify groups. Boundary paint and expected separator states are checked afterward.",
+  "originalSessionRestored": true,
+  "componentCompletionClaimed": false,
+  "limits": [
+    "This repeats the maintained default Paper and forwarded Box adjacency fixture after source-class, slot and closure changes. It does not exercise every slot API or custom root on a device.",
+    "Source opacity is intentionally overridden to expose display suppression.",
+    "Qualified recorded groups do not establish every display frame, exact animation-start timing, conditional inherited text timing, Android paint, broader accessibility or release performance.",
+    "The separate Node/React lifetime controls isolate library ownership with controlled animation host wrappers; native heap behavior is not measured here.",
+    "Unknown Text, SVG and noncooperating custom peers retain the documented limitations."
+  ],
+  "pixelRatio": 3
+}
