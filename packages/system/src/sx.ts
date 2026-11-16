@@ -47,6 +47,7 @@ import {
 import { nativePreprocessedCss } from './nativeStyledPreprocessing';
 import { retainNativeStyleEvaluation } from './nativeStyleEvaluation';
 import { cssBorder, finishCssBorderStyle } from './borders';
+import { retainNativeColorSource } from './nativeColorSources';
 import {
   normalizeTextStyle,
   textMetricKeys,
@@ -818,6 +819,18 @@ function finishRules(
     }
     diagnostic(code, message);
   });
+  // CSS currentColor on color itself inherits the parent's effective color.
+  // Resolve it before native encoding; an unresolved keyword must not become
+  // a null color branch. SVG keeps its separate presentation-attribute policy.
+  if (
+    !context.svg &&
+    typeof result.color === 'string' &&
+    result.color.toLowerCase() === 'currentcolor'
+  ) {
+    const parentColor = context.parentTextStyle?.color;
+    if (parentColor != null) normalized.color = parentColor;
+    else delete normalized.color;
+  }
   // CSS border shorthands reset paint to currentColor. Bind after the complete
   // cascade and authored native foreground, never while a parent rule is built.
   // An owned native reset clears CSS foreground and inherits the text scope's
@@ -898,6 +911,11 @@ function finishRules(
     }
   }
   const finished = finishCssBorderStyle(normalized as NativeStyle);
+  const colorInherits =
+    !Object.hasOwn(result, 'color') ||
+    (typeof result.color === 'string' &&
+      ['inherit', 'unset', 'currentcolor'].includes(result.color.toLowerCase()));
+  retainNativeColorSource(finished, colorInherits ? 'inherited' : 'authored');
   if (retainTextInputs) retainNativeTextWinner(finished, result, nativeTextEmissionKeys);
   return finished;
 }

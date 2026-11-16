@@ -16,6 +16,7 @@ inline std::string structuralStyleMetadata() {
       ("ownedProgrammeProfile", nativeProfile())
       ("structuralCases", "first-last-of-type-v2")
       ("parentStructuralCases", "parent-structural-facts-v1")
+      ("inheritedTextColors", "stock-text-color-v1")
       ("generatedTextOrigin", folly::dynamic::object("schema", 1.0)
           ("nativeIDPrefix", std::string(generated_text_origin::nativeIDPrefix))));
 }

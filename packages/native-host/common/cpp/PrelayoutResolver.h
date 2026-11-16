@@ -3,6 +3,9 @@
 #pragma once
 #include "AltrooStructuralViewShadowNode.h"
 #include "GeneratedParagraphOrigin.h"
+#include "AltrooTextColorMarker.h"
+#include <react/renderer/components/text/ParagraphShadowNode.h>
+#include <react/renderer/components/text/TextShadowNode.h>
 #include <cmath>
 #include <limits>
 #include <memory>
@@ -75,6 +78,12 @@ struct Region {
   std::unordered_map<ComponentHandle, const ShadowNode *> first;
   std::unordered_map<ComponentHandle, const ShadowNode *> lastOfType;
 };
+struct ColorSource {
+  std::string owner;
+  std::shared_ptr<const altroo::text_color::ColorBank> bank;
+  SharedColor selected;
+  const ColorSource *parent;
+};
 struct Plan {
   Counts counts;
   std::unordered_map<const ShadowNode *, Choice> changed;
@@ -83,6 +92,7 @@ struct Plan {
   std::unordered_map<const ShadowNode *, Region> lastElements;
   SurfaceId surface;
   std::vector<Decision> decisions;
+  std::unordered_map<const ShadowNode *, SharedColor> textChanges;
 };
 inline bool controlledView(const ShadowNode &node) {
   // Core RTTI may be duplicated across Android DSOs. The registry's canonical
@@ -204,7 +214,8 @@ inline bool observedPeerMatch(const altroo::owned_transport_proof::PreparedData 
 // Validate the entire candidate before cloning anything. No old tree writes,
 // cached native tags, callbacks, per-frame work, or out-of-tree accepted reads.
 inline void scan(const SharedNode &node, const ShadowNode *parent,
-                 const ShadowNode *grandparent, std::size_t depth, Plan &plan) {
+                 const ShadowNode *grandparent, std::size_t depth, Plan &plan,
+                 const ColorSource *inheritedColor = nullptr) {
   if (!node)
     throw std::invalid_argument("Null candidate child");
   if (depth > maxDepth || ++plan.counts.scanned > maxNodes)
@@ -214,6 +225,8 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
   if (!plan.families.insert(node->getFamilyShared().get()).second ||
       !plan.tags.insert(node->getTag()).second)
     throw std::invalid_argument("Duplicate candidate family/tag");
+  std::optional<ColorSource> ownColor;
+  const ColorSource *color = inheritedColor;
   if (const auto *target =
           dynamic_cast<const AltrooStructuralViewShadowNode *>(node.get())) {
     if (target->getConcreteProps().prepared &&
@@ -255,6 +268,28 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
         if (expanded) facts |= 8;
       }
       if (!structural) facts &= 1;
+      if (!projected && !props.prepared->owner.empty()) {
+        // Only an authored color blocks outer authority. Explicit inherit on
+        // a nested root keeps the finite source chain, with the same facts.
+        const bool barrier = (props.prepared->textColorBarriers & (1u << facts)) != 0;
+        if (barrier) color = nullptr;
+        if (props.prepared->textColors) {
+          const auto &bank = props.prepared->textColors;
+          const ColorSource *parentColor = nullptr;
+          // Physical proximity cannot cross a passive authored text scope.
+          // Resolve only the exact parent source bound during ordinary render.
+          if (!barrier && bank->parent)
+            for (auto source = inheritedColor; source; source = source->parent)
+              if (source->owner == bank->parent->owner && source->bank->key == bank->parent->key) {
+                parentColor = source;
+                break;
+              }
+          const auto selected = parentColor ? parentColor->selected
+              : (facts < 8 ? bank->colors[facts] : bank->ordinary);
+          ownColor.emplace(ColorSource{props.prepared->owner, bank, selected, parentColor});
+          color = &*ownColor;
+        }
+      }
       const bool last = facts != ordinary && (facts & 1);
       if (props.prepared->programme == altroo::owned_transport_proof::Programme::Numeric &&
           (!std::isfinite(props.normalPaddingBottom) ||
@@ -279,8 +314,35 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
     }
   }
   const auto &children = node->getChildren();
+  const auto *paragraph = dynamic_cast<const ParagraphShadowNode *>(node.get());
+  const auto *text = dynamic_cast<const TextShadowNode *>(node.get());
+  if (paragraph || text) {
+    const altroo::text_color::ColorBinding *binding = nullptr;
+    for (const auto &child : children) {
+      const auto *marker = dynamic_cast<const altroo::text_color::ColorMarkerShadowNode *>(child.get());
+      if (!marker) continue;
+      if (!marker->getChildren().empty()) throw std::invalid_argument("Text color marker must be empty");
+      const auto &prepared = marker->getConcreteProps().prepared;
+      if (!prepared) continue;
+      if (binding) throw std::invalid_argument("Duplicate native text color binding");
+      binding = prepared.get();
+    }
+    if (binding) {
+      // Ordinary presentation is mandatory. A retained core props object may
+      // contain a prior native COW color although React sent no color delta.
+      auto selected = binding->ordinary;
+      for (auto source = color; source; source = source->parent)
+        if (binding->owner == source->owner && binding->key == source->bank->key) {
+          selected = source->selected;
+          break;
+        }
+      const auto &current = paragraph ? paragraph->getConcreteProps().textAttributes.foregroundColor
+                                      : text->getConcreteProps().textAttributes.foregroundColor;
+      if (current != selected) plan.textChanges.emplace(node.get(), std::move(selected));
+    }
+  }
   for (std::size_t index = 0; index < children.size(); ++index)
-    scan(children[index], node.get(), parent, depth + 1, plan);
+    scan(children[index], node.get(), parent, depth + 1, plan, color);
 }
 struct Rewritten {
   SharedNode node;
@@ -306,6 +368,22 @@ inline Rewritten rewrite(const SharedNode &node, Plan &plan) {
         std::static_pointer_cast<const altroo::owned_transport_proof::OwnedProps>(target.getProps()),
         choice->second.facts);
   }
+  const auto textChoice = plan.textChanges.find(node.get());
+  if (textChoice != plan.textChanges.end()) {
+    // Clone the stock concrete props and every ancestor through Paragraph.
+    // RN then regenerates its own attributed string, measurement and state.
+    if (const auto *paragraph = dynamic_cast<const ParagraphShadowNode *>(node.get())) {
+      auto props = std::make_shared<ParagraphProps>(paragraph->getConcreteProps());
+      props->textAttributes.foregroundColor = textChoice->second;
+      props->seal();
+      newProps = std::move(props);
+    } else if (const auto *text = dynamic_cast<const TextShadowNode *>(node.get())) {
+      auto props = std::make_shared<TextProps>(text->getConcreteProps());
+      props->textAttributes.foregroundColor = textChoice->second;
+      props->seal();
+      newProps = std::move(props);
+    } else throw std::logic_error("Text color target changed type");
+  }
   if (!newProps && !newChildren)
     return {node, nullptr};
   std::shared_ptr<const std::vector<SharedNode>> immutableChildren =
@@ -330,9 +408,9 @@ inline Rewritten rewrite(const SharedNode &node, Plan &plan) {
 inline Result resolve(const RootShadowNode::Unshared &candidate) {
   if (!candidate)
     throw std::invalid_argument("Candidate root is required");
-  detail::Plan plan{{}, {}, {}, {}, {}, candidate->getSurfaceId(), {}};
+  detail::Plan plan{{}, {}, {}, {}, {}, candidate->getSurfaceId(), {}, {}};
   detail::scan(candidate, nullptr, nullptr, 0, plan);
-  if (plan.changed.empty())
+  if (plan.changed.empty() && plan.textChanges.empty())
     return {candidate, plan.counts, std::move(plan.decisions)};
   auto rewritten = detail::rewrite(candidate, plan);
   auto root = std::dynamic_pointer_cast<RootShadowNode>(rewritten.mutableClone);

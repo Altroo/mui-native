@@ -84,3 +84,8 @@ export { nativeCssClassIdentities } from '../../nativeCssPeerIdentity';
 export type { NativeStyleClassIdentity } from '../../nativeCssPeerIdentity';
 
 export { NativeCssPeerView } from '../../nativeCssPeerView';
+
+export { nativeColorLayer, nativeColorSource } from '../../nativeColorSources';
+
+export { inheritNativeTextColorBinding, nativeTextColorBinding } from '../../nativeColorSources';
+export { nativeTextColorChildren } from '../../textScope';

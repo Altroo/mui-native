@@ -13,6 +13,7 @@ jest.mock('react-native', () => {
   );
 });
 jest.mock('../packages/native-host/src/ownedStyleBootstrap', () => ({
+  supportsInheritedTextColors: () => false,
   supportsPeerStyleIdentity: () => true,
   supportsStructuralCases: () => true,
   supportsParentStructuralCases: () => true,

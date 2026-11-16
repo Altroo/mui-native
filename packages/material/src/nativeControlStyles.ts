@@ -8,6 +8,7 @@ import {
   type NativeStyle,
 } from '@altroo/mui-native-system';
 import { nativeInsets } from './nativeInsets';
+import { nativeColorLayer } from '@altroo/mui-native-system/internal/prepared-style';
 import { nativeInlineBorderBase, nativeInlineSideMapper } from './nativeInlineBorders';
 
 const horizontalInsetSides = [
@@ -144,7 +145,9 @@ export function mergeNativeRootStyle(
   // Fabric can replace logical edges with defined physical aliases during its
   // global RTL swap. Keep computed CSS protection intact and let Yoga resolve
   // the original native shorthand/specific edges instead of synthesizing sides.
-  return applyNativeBorderStyle(nativeStyleBorderDeclarations([base, inline]));
+  return applyNativeBorderStyle(
+    nativeStyleBorderDeclarations([base, nativeColorLayer(inline, 'authored')]),
+  );
 }
 
 /** Retained cache refreshes keep native direction/metrics without owning caller props. */

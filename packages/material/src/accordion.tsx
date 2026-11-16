@@ -63,6 +63,7 @@ import { ownedStructuralCases } from '@altroo/mui-native-host/internal/structura
 import {
   AccordionStructuralRootContext,
   AccordionStructuralView,
+  AccordionRootTextScope,
   useAccordionStructuralRootMarker,
   prepareAccordionStructuralCases,
   hasAccordionParentSelectors,
@@ -914,6 +915,7 @@ const AccordionImpl: React.ForwardRefExoticComponent<
             structuralMarker && Root === View
               ? prepareAccordionStructuralCases({
                   theme,
+                  parent,
                   programme,
                   direction: parent?.direction ?? theme.direction,
                   context: {
@@ -1010,7 +1012,12 @@ const AccordionImpl: React.ForwardRefExoticComponent<
                         classes={rootClass.split(/\s+/).filter(Boolean)}
                         prepared={prepared}
                       >
-                        <NativeTextScope theme={theme} style={presented}>
+                        <AccordionRootTextScope
+                          owner={structuralMarker}
+                          cases={structuralCases}
+                          theme={theme}
+                          style={presented}
+                        >
                           {(viewStyle, _content, fallback) => (
                             <NativeTextStyleContext.Provider value={parent}>
                               {renderRoot(
@@ -1025,7 +1032,7 @@ const AccordionImpl: React.ForwardRefExoticComponent<
                               )}
                             </NativeTextStyleContext.Provider>
                           )}
-                        </NativeTextScope>
+                        </AccordionRootTextScope>
                       </NativeStyleScope>
                     )
                   }

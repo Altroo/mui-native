@@ -16,7 +16,16 @@ export interface OwnedStructuralProgramme {
   readonly profile: OwnedStyleProfile;
   readonly cases: readonly Record<string, unknown>[];
   readonly peer?: CSSPeerIdentity | null;
+  readonly textColors?: OwnedTextColorBank;
+  readonly textColorBarriers?: number;
 }
+export type OwnedTextColorBank = Readonly<{
+  key: string;
+  colors: readonly unknown[];
+  ordinary: unknown;
+  parent: NativeTextColorBinding | null;
+}>;
+export type NativeTextColorBinding = Readonly<{ owner: string; key: string }>;
 export type CSSPeerIdentity = Readonly<{
   expanded: boolean;
   classes: readonly Readonly<{ cacheKey: string; css: string; eligible: boolean }>[];

@@ -628,3 +628,56 @@ final class PressableVoiceOverProbeUITests: XCTestCase {
     try run("native", expectedOther: 1)
   }
 }
+
+
+/// An empty registered marker must not become a View/attachment or replace Text.
+@MainActor
+final class TextColorMarkerProbeUITests: XCTestCase {
+  private let app = XCUIApplication(bundleIdentifier: "dev.altroo.muinative.catalog")
+  private func node(_ id: String) -> XCUIElement {
+    app.descendants(matching: .any).matching(identifier: id).firstMatch
+  }
+  private func receipt() -> [String: Any]? {
+    guard let data = node("color-marker-receipt").label.data(using: .utf8) else { return nil }
+    return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+  }
+  func testEmptyMarkerPreservesNativeText() throws {
+    continueAfterFailure = false
+    app.launchArguments = []
+    app.launch()
+    XCTAssertTrue(node("color-marker-receipt").waitForExistence(timeout: 20))
+    var tag: Int?
+    for epoch in 0...3 {
+      if epoch > 0 { node("color-marker-update").tap() }
+      let ready = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+        self.receipt()?["epoch"] as? Int == epoch && self.receipt()?["phase"] as? String == "ready"
+      }, object: nil)
+      XCTAssertEqual(XCTWaiter.wait(for: [ready], timeout: 12), .completed)
+      let report = try XCTUnwrap(receipt())
+      XCTAssertEqual(report["schemaVersion"] as? Int, 1)
+      XCTAssertEqual(report["development"] as? Bool, false)
+      XCTAssertEqual(try XCTUnwrap(report["fontScale"] as? Double), 1, accuracy: 0.01)
+      XCTAssertEqual(report["plain"] as? [String], ["Marker preserves native text"])
+      XCTAssertEqual(report["marked"] as? [String], report["plain"] as? [String])
+      XCTAssertEqual(report["attaches"] as? Int, 1)
+      XCTAssertEqual(report["cleanups"] as? Int, 0)
+      XCTAssertEqual(report["nativeID"] as? String, "kept-public-native-id")
+      let parser = try XCTUnwrap(report["parser"] as? [String: Any])
+      XCTAssertGreaterThanOrEqual(try XCTUnwrap(parser["checks"] as? Int), 30)
+      XCTAssertEqual(parser["ordinaryConversionOnly"] as? Bool, true)
+      XCTAssertEqual(parser["mountedOrDrawnProved"] as? Bool, false)
+
+      let current = try XCTUnwrap(report["nativeTag"] as? Int)
+      XCTAssertGreaterThan(current, 0)
+      if epoch == 0 { tag = current } else { XCTAssertEqual(current, tag) }
+      XCTAssertEqual(node("color-marker-marked").label, "Marker preserves native text")
+      XCTAssertEqual(node("color-marker-marked").frame.width, node("color-marker-plain").frame.width, accuracy: 1)
+      XCTAssertEqual(node("color-marker-marked").frame.height, node("color-marker-plain").frame.height, accuracy: 1)
+      let data = try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys])
+      let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+      attachment.name = "empty-color-marker-" + String(epoch)
+      attachment.lifetime = .keepAlways
+      add(attachment)
+    }
+  }
+}

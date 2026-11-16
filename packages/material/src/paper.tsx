@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import {
   useNativeRootProps,
-  NativeTextScope,
   NativeTextStyleContext,
   componentRootStyle,
   useNativeTextRootRef,
@@ -39,6 +38,7 @@ import {
 import { NativeRootTextBoundary } from './nativeRootTextBoundary';
 import {
   AccordionStructuralView,
+  AccordionRootTextScope,
   createAccordionStructuralPreparation,
   useAccordionStructuralRoot,
 } from './accordionStructuralRoot';
@@ -229,6 +229,7 @@ export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperR
       structuralRoot && Root === View
         ? createAccordionStructuralPreparation({
             theme,
+            parent,
             programme,
             direction: parent?.direction ?? theme.direction,
             context: {
@@ -249,7 +250,8 @@ export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperR
             : undefined;
           return (
             <NativeStyleScope root={root} theme={theme} classes={tokens} prepared={prepared}>
-              <NativeTextScope
+              <AccordionRootTextScope
+                cases={structuralCases}
                 rootRef={Root === View ? root : undefined}
                 theme={theme}
                 style={refreshNativeStyle(finalStyle)}
@@ -299,7 +301,7 @@ export const Paper: NativePaperComponent = forwardRef<ViewInstance, NativePaperR
                       ),
                   )
                 }
-              </NativeTextScope>
+              </AccordionRootTextScope>
             </NativeStyleScope>
           );
         }}

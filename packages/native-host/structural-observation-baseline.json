@@ -73,6 +73,21 @@
     "ReactCommon/react/renderer/components/view/platform/cxx/react/renderer/components/view/HostPlatformViewTraitsInitializer.h": "f93d79253670a65b84c072bdcdb681fe9e7fd3a20808abe28ee60c162008b287",
     "ReactCommon/react/renderer/components/view/platform/android/react/renderer/components/view/HostPlatformViewTraitsInitializer.h": "2b0fdf5331f41b273a50298375229ff46a46af5b41890adb90bb517a6fa2c0c7",
     "Libraries/Components/View/View.js": "bd8bd1250762fde59a24e08680071952d938c06ba72e461b9f763a765ab3c61b",
-    "Libraries/Text/TextAncestorContext.js": "bf1a2a6b0f76d505b0c447d6f3be8fa827dc07adb22a9f291c142550c442832c"
+    "Libraries/Text/TextAncestorContext.js": "bf1a2a6b0f76d505b0c447d6f3be8fa827dc07adb22a9f291c142550c442832c",
+    "ReactCommon/react/renderer/attributedstring/TextAttributes.h": "9b2d474fee9e0653824fff7ee076baffffb46b5eb52c69f892ef9230e2ef47a8",
+    "ReactCommon/react/renderer/components/text/BaseParagraphProps.h": "f3b74cc636669350b0184a7c9cb5f806c477b4910dbf17352ab007d492b0e2a3",
+    "ReactCommon/react/renderer/components/text/BaseTextProps.cpp": "233da3da27a29002d82a20fab768c3147be0eacfe8af9f4309812952c8a11a22",
+    "ReactCommon/react/renderer/components/text/BaseTextProps.h": "a94b403f3851fe10fee0392d1530ef91ebcedb8e51735ff0bacc1c5f44271ce5",
+    "ReactCommon/react/renderer/components/text/BaseTextShadowNode.cpp": "cb36cfb581b414a11da4d4a1864d291a78571c519fd1663cd8e5326ec5509d35",
+    "ReactCommon/react/renderer/components/text/ParagraphProps.h": "f5e76eee607437f828c487ddd13778cb25c5c42a4ea097d899197526ea56d7e6",
+    "ReactCommon/react/renderer/components/text/TextEffectProps.cpp": "cfdfb613b916f54770737270a9be8eb93e485a4e9bf53fa84a309aec08e9e23a",
+    "ReactCommon/react/renderer/components/text/TextEffectProps.h": "b7386f3c3426d9401b8458a1e362cf2a3f38bcd6c2a82fa8918e3db07ebb435a",
+    "ReactCommon/react/renderer/components/text/TextEffectShadowNode.cpp": "27b90f23d7d963c49da2201f71037180dfab9564266078b48150d7cbee07efaa",
+    "ReactCommon/react/renderer/components/text/TextEffectShadowNode.h": "d486412a103ed450460150fed45c09a5f7b1cca1b6ea9d344d7e3be193af1c02",
+    "ReactCommon/react/renderer/components/text/TextProps.cpp": "e85dceedefbdb3e7d1ae798e876b0a156c6ba2c590a967e4f622819b1affec27",
+    "ReactCommon/react/renderer/components/text/TextProps.h": "b451fcb328e18f0dc43dc255d4eb23e9598839e96db3d200b687c8f25920526c",
+    "ReactCommon/react/renderer/components/text/platform/android/react/renderer/components/text/HostPlatformParagraphProps.h": "cf19053bf0283fa0f0f60baf8adf10e6034fbfabdbe9fe141d1aedc6d19d9422",
+    "ReactCommon/react/renderer/components/text/platform/cxx/react/renderer/components/text/HostPlatformParagraphProps.h": "086a3856ccf1f6d24b8cf908ef6e08fbfcb7b78b7726b29dbdfaccf749151411",
+    "ReactCommon/react/renderer/graphics/Color.h": "34f61d6d8dbed0c47306192275d299223338d8622110e35a89921341c186b824"
   }
 }

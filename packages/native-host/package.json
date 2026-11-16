@@ -95,7 +95,8 @@
         "AltrooMUIPortalHost": "AltrooMUIPortalHostComponentView",
         "AltrooMUIPortalCanvas": "AltrooMUIPortalCanvasComponentView",
         "AltrooMUITextInput": "AltrooMUITextInputComponentView",
-        "AltrooMUIStructuralView": "AltrooMUIStructuralViewComponentView"
+        "AltrooMUIStructuralView": "AltrooMUIStructuralViewComponentView",
+        "AltrooMUITextColorMarker": "AltrooMUITextColorMarkerComponentView"
       },
       "modulesProvider": {
         "AltrooStructuralObserver": "AltrooStructuralObserverProvider",

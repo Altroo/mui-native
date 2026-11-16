@@ -15,6 +15,7 @@ module.exports = {
           'AltrooPortalHostComponentDescriptor',
           'AltrooPortalCanvasComponentDescriptor',
           'AltrooStructuralViewComponentDescriptor',
+          'AltrooTextColorMarkerComponentDescriptor',
         ],
         packageImportPath: 'import com.altroo.muinativehost.AltrooMuiNativeHostPackage;',
         packageInstance: 'new AltrooMuiNativeHostPackage()',

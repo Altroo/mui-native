@@ -1,5 +1,9 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Typography composition adapts MIT Material UI 9.5.0. See NOTICE and upstream/typography-contract.json.
+import {
+  inheritNativeTextColorBinding,
+  nativeTextColorChildren,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { useTheme, useComponentRootStyle } from './themeProvider';
 import React, { forwardRef, useContext } from 'react';
 import {
@@ -26,11 +30,14 @@ import {
   applyNativeTextMetrics,
   nativeTextAlignmentStyle,
   nativeTextParagraphDirection,
+  nativeStyleBorderDeclarations,
+  applyNativeBorderStyle,
   diagnostic,
   type SxProps,
   type TypographyVariant,
 } from '@altroo/mui-native-system';
 import { mergeNativeRootStyle } from './nativeControlStyles';
+import { nativeColorLayer } from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
 import { NativeButtonGroupRules } from './buttonGroupContext';
 import { getTypographyUtilityClass, type TypographyClasses } from './typographyClasses';
@@ -216,9 +223,11 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
     inheritOnly: variant === 'inherit',
     baseStyle: {
       margin: 0,
-      ...(variant === 'inherit' || color === 'inherit'
+      // Parent text is composed below. It must not become an authored CSS
+      // declaration just because the native fallback already knows its value.
+      ...(variant === 'inherit' || color === 'inherit' || parent?.style.color != null
         ? {}
-        : { color: parent?.style.color ?? theme.palette.text.primary }),
+        : { color: theme.palette.text.primary }),
       ...(variant !== 'inherit' && variantStyle && typeof variantStyle === 'object'
         ? variantStyle
         : {}),
@@ -233,10 +242,12 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
     resolved as TextStyle,
     nativeStyleTextMetrics(authored),
   );
-  const finalStyle = StyleSheet.flatten([
-    parent && !parent.nativeText ? parent.style : undefined,
-    mergeNativeRootStyle(textContext.parentDirection, resolved, adjustedNativeStyle),
-  ]);
+  const finalStyle = applyNativeBorderStyle(
+    nativeStyleBorderDeclarations([
+      parent && !parent.nativeText ? nativeColorLayer(parent.style, 'inherited') : undefined,
+      mergeNativeRootStyle(textContext.parentDirection, resolved, adjustedNativeStyle),
+    ]),
+  );
   const ownDirection = nativeStyle?.direction ?? resolved.direction;
   const direction =
     ownDirection === 'ltr' || ownDirection === 'rtl' ? ownDirection : parent?.direction;
@@ -251,6 +262,7 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
     ...(direction ? { direction } : {}),
   };
   setNativeTextScopeParent(context, parent);
+  inheritNativeTextColorBinding(context, parent, finalStyle);
   useNativeTextScopeRoot(root, context);
   const trackChildren = useNativeTextChildRoots();
   if (typeof mapped === 'string' && !textTags.has(mapped))
@@ -283,7 +295,13 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
             context.paragraphDirection,
           )}
         >
-          {renderNativeTextChildren(native.children, theme, context, trackChildren)}
+          {Component === Text
+            ? nativeTextColorChildren(
+                renderNativeTextChildren(native.children, theme, context, trackChildren),
+                context,
+                finalStyle,
+              )
+            : renderNativeTextChildren(native.children, theme, context, trackChildren)}
         </Component>
       </NativeTextStyleContext.Provider>
     </NativeStyleScope>

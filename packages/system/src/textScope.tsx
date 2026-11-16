@@ -18,6 +18,17 @@ import {
 } from './nativeTextRegistry';
 import type { Theme } from './theme';
 import {
+  NativeTextColorMarker,
+  supportsNativeTextColors,
+  type NativeTextColorBinding,
+} from '@altroo/mui-native-host/internal/structural-root';
+import {
+  inheritNativeTextColorBinding,
+  retainNativeTextColorBinding,
+  nativeTextColorBinding,
+  nativeColorLayer,
+} from './nativeColorSources';
+import {
   trackNativeTextContext,
   finishNativeTextProvenance,
   sealNativeTextElement,
@@ -160,6 +171,7 @@ function resolveScope(
     ...(inheritance.textAlign ? { textAlign: inheritance.textAlign } : {}),
   };
   setNativeTextScopeParent(value, parent);
+  inheritNativeTextColorBinding(value, parent, flat, true);
   const inheritable = inheritedTextStyle(flat);
   value.literalStyle = {
     ...value.style,
@@ -208,6 +220,8 @@ export interface NativeTextScopeProps {
   style?: StyleProp<NativeStyle>;
   kind?: 'view' | 'text';
   reset?: boolean;
+  /** First-party finite color source; never forwarded to the native host. */
+  colorBinding?: NativeTextColorBinding | undefined;
   /** Native root owned by this scope; used for physical Portal inheritance. */
   rootRef?: React.RefObject<object | null>;
   content?: React.ReactNode;
@@ -223,6 +237,7 @@ export function NativeTextScope({
   style,
   kind = 'view',
   reset = false,
+  colorBinding,
   rootRef,
   content,
   children,
@@ -236,8 +251,9 @@ export function NativeTextScope({
       : undefined;
   const resolved = useMemo(
     () => resolveScope(theme, parent, style, kind, owningParagraph),
-    [theme, parent, style, kind, owningParagraph],
+    [theme, parent, style, kind, owningParagraph, colorBinding],
   );
+  if (colorBinding) retainNativeTextColorBinding(resolved.value, colorBinding);
   // Equivalent style arrays must not broadcast a fresh inheritance context.
   // Nested groups inside a custom Portal otherwise feed their own publications.
   const stable = useRef(resolved.value);
@@ -334,6 +350,9 @@ const childInputs = new WeakMap<
     emission: EmittedStyle | undefined;
   }
 >();
+// A consumer clone can retain our children while reauthoring style. Rebase
+// from original content so stale providers/markers cannot be nested twice.
+const emittedTextContents = new WeakMap<object, { source: React.ReactNode }>();
 const literalInputs = new WeakMap<
   object,
   { style: StyleProp<TextStyle>; content: string; emission: EmittedStyle | undefined }
@@ -348,17 +367,52 @@ function originalChildInput(props: object) {
 // Only library-created literal runs use this wrapper. Explicit consumer Text
 // keeps its own nativeID/id, refs and props. The namespace identifies origin;
 // it does not authenticate callers or add another native host.
+export function nativeTextColorChildren(
+  content: React.ReactNode,
+  scope: NativeTextScopeValue,
+  style: TextStyle,
+): React.ReactNode {
+  // Older binaries keep the exact ordinary children shape, including scalar
+  // receipt strings. A null JSX sibling would silently turn those into arrays.
+  return supportsNativeTextColors ? (
+    <>
+      {content}
+      <NativeTextColorMarker binding={nativeTextColorBinding(scope)} color={style.color} />
+    </>
+  ) : (
+    content
+  );
+}
 function GeneratedParagraph(props: { children: string; style: StyleProp<TextStyle> }) {
   const { children, style } = props;
+  const scope = useNativeTextContext();
+  const saved = literalInputs.get(props);
+  const original = !!saved && unchangedEmission(props, style, children, saved.emission);
+  // Flatten a reauthored array into an owned map once. The ordinary native
+  // processor then reads that map, rather than observing caller getters twice.
+  const nativeStyle =
+    supportsNativeTextColors && !original
+      ? nativeStyleBorderDeclarations(style as StyleProp<NativeStyle>)
+      : style;
   // An unconditional hook keeps identity stable across updates and StrictMode.
   const id = useId();
   const mobile = Platform.OS === 'ios' || Platform.OS === 'android';
   return sealNativeTextEmission(
     <Text
-      style={style}
+      style={nativeStyle}
       {...(mobile ? { nativeID: GENERATED_TEXT_ORIGIN_CONTRACT.nativeIDPrefix + id } : {})}
     >
-      {children}
+      {supportsNativeTextColors ? (
+        <>
+          {children}
+          <NativeTextColorMarker
+            binding={original && scope ? nativeTextColorBinding(scope) : undefined}
+            color={(nativeStyle as TextStyle).color}
+          />
+        </>
+      ) : (
+        children
+      )}
     </Text>,
     style,
     props,
@@ -400,6 +454,19 @@ export function renderNativeTextChildren(
     }
   };
   for (const [index, child] of items.entries()) {
+    // React.Children.toArray has already traversed caller arrays. Its element
+    // key clones keep the exact props identity of our owned provider receipt.
+    const emittedContent = React.isValidElement<object>(child)
+      ? emittedTextContents.get(child.props)
+      : undefined;
+    if (emittedContent) {
+      flush();
+      result.push(
+        renderNativeTextChildren(emittedContent.source, theme, scope, track, parentKey, provenance),
+      );
+      continue;
+    }
+
     // JSON string segments preserve arbitrary React keys, including lone UTF16
     // surrogates, without allowing a child key to impersonate a path separator.
     const segment = React.isValidElement(child) ? (child.key ?? index) : index;
@@ -448,11 +515,12 @@ export function renderNativeTextChildren(
         const resolved = resolveScope(
           theme,
           scope,
-          sourceStyle,
+          input ? sourceStyle : nativeColorLayer(sourceStyle, 'authored'),
           child.type === Text ? 'text' : 'view',
           child.type === Text ? scope.paragraphDirection : undefined,
         );
-        const sourceContent = input ? input.content : child.props.children;
+        const authoredContent = input ? input.content : child.props.children;
+        const sourceContent = authoredContent;
         const element = React.cloneElement(
           child,
           {
@@ -460,16 +528,31 @@ export function renderNativeTextChildren(
             ...(track ? { ref: track(key, child.props.ref, resolved.value) } : {}),
           },
           <NativeTextStyleContext.Provider value={resolved.value}>
-            {renderNativeTextChildren(
-              sourceContent,
-              theme,
-              resolved.value,
-              track,
-              key,
-              resolved.provenance,
-            )}
+            {child.type === Text
+              ? nativeTextColorChildren(
+                  renderNativeTextChildren(
+                    sourceContent,
+                    theme,
+                    resolved.value,
+                    track,
+                    key,
+                    resolved.provenance,
+                  ),
+                  resolved.value,
+                  resolved.native,
+                )
+              : renderNativeTextChildren(
+                  sourceContent,
+                  theme,
+                  resolved.value,
+                  track,
+                  key,
+                  resolved.provenance,
+                )}
           </NativeTextStyleContext.Provider>,
         );
+        if (React.isValidElement<object>(element.props.children))
+          emittedTextContents.set(element.props.children.props, { source: sourceContent });
         childInputs.set(element.props, {
           style: sourceStyle,
           content: sourceContent,

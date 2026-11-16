@@ -1,9 +1,17 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Finite root selectors use retained CSS and the incoming native candidate.
 // No callback replay or mutable latest-render data crosses an opaque wrapper.
-import { createContext, useContext, useId, type ReactNode, type Ref } from 'react';
+import {
+  createContext,
+  useContext,
+  useId,
+  type ReactNode,
+  type Ref,
+  type ComponentProps,
+} from 'react';
 import { type StyleProp, type ViewInstance, type ViewProps } from 'react-native';
 import {
+  NativeTextScope,
   componentRootStyle,
   diagnostic,
   applyNativeTextMetrics,
@@ -13,16 +21,22 @@ import {
   type StyleContext,
   type Theme,
   type NativePreparedStyle,
+  type NativeTextScopeValue,
 } from '@altroo/mui-native-system';
 import {
   OwnedStructuralHost,
   ownedStructuralCases,
+  prepareNativeTextColorBank,
+  supportsNativeTextColors,
+  type OwnedTextColorBank,
 } from '@altroo/mui-native-host/internal/structural-root';
 import type { CSSPeerObservation, OwnedProgramme } from '@altroo/mui-native-host/internal/css-peer';
 import { mergeNativeRootStyle } from './nativeControlStyles';
 import { snapshotNativeStyleProgramme } from './cardContentCandidates';
 import {
   NativeCssPeerView,
+  nativeColorSource,
+  nativeTextColorBinding,
   retainNativeRootPreparation,
 } from '@altroo/mui-native-system/internal/prepared-style';
 
@@ -61,6 +75,7 @@ type Input = Readonly<{
   programme: StyleProp<NativeStyle>;
   context: StyleContext;
   direction: 'ltr' | 'rtl';
+  parent?: NativeTextScopeValue | undefined;
 }>;
 function textFacet(style: NativeStyle, metrics: Record<string, unknown>) {
   return {
@@ -79,10 +94,15 @@ function sameFacet(a: Record<string, unknown>, b: Record<string, unknown>): bool
     keys.every((key) => Object.hasOwn(b, key) && Object.is(a[key], b[key]))
   );
 }
+const colorBanks = new WeakMap<object, OwnedTextColorBank>();
+const colorBarriers = new WeakMap<object, number>();
 /** Only evaluate prepared declarations. Genuine native inline values remain last. */
 export function prepareAccordionStructuralCases(input: Input): readonly NativeStyle[] {
   const { baseStyle: _base, rootProps: _props, ancestors: _ancestors, ...context } = input.context;
   const programme = snapshotNativeStyleProgramme(input.programme);
+  // Match NativeTextScope's View inheritance basis, including a colorless
+  // explicit parent versus the default scope at the top of the tree.
+  const inheritedColor = input.parent ? input.parent.style.color : input.theme.palette.text.primary;
   const resolve = (facts?: number) => {
     const { computed, authored } = componentRootStyle(input.theme, '', {}, undefined, programme, {
       ...context,
@@ -94,6 +114,8 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
     const metrics = nativeStyleTextMetrics([computed, authored]);
     const presentation = applyNativeTextMetrics(merged, computed, metrics) ?? merged;
     return {
+      color: presentation.color ?? inheritedColor,
+      colorBarrier: nativeColorSource(presentation) === 'authored' && presentation.color != null,
       text: textFacet(presentation, metrics),
       view: Object.fromEntries(
         Object.entries(presentation).filter(([key]) => !isNativeTextStyleProperty(key)),
@@ -113,7 +135,20 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
     // scopes retain their JS behavior; no native conditional-text claim is made.
     return Array(8).fill(ordinary.view) as NativeStyle[];
   }
-  return cases.map((value) => value.view);
+  const views = cases.map((value) => value.view);
+  const barriers = [...cases, ordinary].reduce(
+    (mask, value, index) => mask | (value.colorBarrier ? 1 << index : 0),
+    0,
+  );
+  if (supportsNativeTextColors) colorBarriers.set(views, barriers);
+  const bank = prepareNativeTextColorBank(
+    cases.map((value) => value.color),
+    ordinary.color,
+    barriers,
+    nativeTextColorBinding(input.parent),
+  );
+  if (bank) colorBanks.set(views, bank);
+  return views;
 }
 /** Snapshot genuine inline data once; cache epochs only re-evaluate retained CSS.
  * Keep the projection outside component render closures so it cannot retain
@@ -123,6 +158,7 @@ export function createAccordionStructuralPreparation(input: Input) {
   const { baseStyle: _base, rootProps: _props, ancestors: _ancestors, ...context } = input.context;
   const captured: Input = {
     theme: input.theme,
+    parent: input.parent,
     direction: input.direction,
     context,
     programme: snapshotNativeStyleProgramme(input.programme),
@@ -130,6 +166,26 @@ export function createAccordionStructuralPreparation(input: Input) {
   const project = (): readonly NativeStyle[] =>
     retainNativeRootPreparation(Object.freeze(prepareAccordionStructuralCases(captured)), project);
   return project();
+}
+
+/** Bind only at the actual cooperating root, after its final CSS/native merge. */
+export function AccordionRootTextScope({
+  cases,
+  owner,
+  ...props
+}: ComponentProps<typeof NativeTextScope> & {
+  cases?: readonly NativeStyle[] | undefined;
+  owner?: string | undefined;
+}) {
+  const marker = useContext(AccordionStructuralRootContext);
+  const bank = cases ? colorBanks.get(cases) : undefined;
+  const source = owner ?? marker;
+  return (
+    <NativeTextScope
+      {...props}
+      colorBinding={source && bank ? { owner: source, key: bank.key } : undefined}
+    />
+  );
 }
 
 export function AccordionStructuralView({
@@ -187,6 +243,12 @@ export function AccordionStructuralView({
             cases: encoded,
             ...(basis ? { basis } : {}),
             ...(owner ? { owner } : {}),
+            ...(!basis && owner && cases && colorBarriers.has(cases)
+              ? { textColorBarriers: colorBarriers.get(cases)! }
+              : {}),
+            ...(!basis && owner && cases && colorBanks.has(cases)
+              ? { textColors: colorBanks.get(cases)! }
+              : {}),
           }
       : undefined;
   // A constant leaf component preserves body state if an opaque root changes

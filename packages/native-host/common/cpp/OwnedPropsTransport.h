@@ -4,6 +4,7 @@
 #pragma once
 #include "PreparedOwnedCandidates.h"
 #include "OwnedProgramme.h"
+#include "NativeTextColors.h"
 #include "OwnedViewTraits.h"
 #if defined(__ANDROID__) && defined(RN_SERIALIZABLE_STATE)
 #include "OwnedBackgroundPayload.h"
@@ -155,6 +156,8 @@ struct PreparedData final {
   const std::string owner;
   const std::shared_ptr<const altroo::owned_channel::PeerStyleIdentity> peer;
   const std::optional<altroo::owned_channel::PeerObservation> observation;
+  const std::shared_ptr<const altroo::text_color::ColorBank> textColors;
+  const std::uint16_t textColorBarriers;
 #ifdef RN_SERIALIZABLE_STATE
   const PhysicalPayloads physical;
 #if defined(__ANDROID__)
@@ -180,11 +183,15 @@ struct PreparedData final {
   }
   PreparedData(GeneratedShared current, Pair pair, Programme kind,
                [[maybe_unused]] const PreparedData *previous = nullptr,
-               bool parent = false, std::string identity = {})
+               bool parent = false, std::string identity = {},
+               std::shared_ptr<const altroo::text_color::ColorBank> colors = {})
       : unselected(std::move(current)), candidates(std::move(pair)), programme(kind),
         parentSelector(parent), owner(std::move(identity)),
         peer(sharedPeer(unselected, previous)),
-        observation(unselected ? altroo::owned_channel::peerObservation(unselected->ownedProgramme) : std::nullopt)
+        observation(unselected ? altroo::owned_channel::peerObservation(unselected->ownedProgramme) : std::nullopt),
+        textColors(std::move(colors)),
+        textColorBarriers(unselected && unselected->ownedProgramme.isObject() && unselected->ownedProgramme.count("textColorBarriers")
+          ? static_cast<std::uint16_t>(unselected->ownedProgramme.at("textColorBarriers").asDouble()) : 511)
 #ifdef RN_SERIALIZABLE_STATE
       , physical(checkedPhysical(unselected, candidates, previous))
 #if defined(__ANDROID__)
@@ -350,12 +357,13 @@ class OwnedDescriptor final : public ConcreteComponentDescriptor<OwnedShadowNode
     return std::static_pointer_cast<const Generated>(result);
   }
   OwnedProps::Shared finish(GeneratedShared baseline, Pair pair, Programme kind,
-                            const OwnedProps::Shared &source, bool parent = false, std::string owner = {}) const {
+                            const OwnedProps::Shared &source, bool parent = false, std::string owner = {},
+                            std::shared_ptr<const altroo::text_color::ColorBank> colors = {}) const {
     // Structural programmes begin from their genuine ordinary presentation.
     // A failed/unsupported native selection must not pin the renderer to case0.
     const std::uint8_t initial = pair.structural() ? pair.ordinaryIndex() : (source && source->selectedLast ? 1 : 0);
     return wrap(std::make_shared<const PreparedData>(std::move(baseline),
-        std::move(pair), kind, source ? source->prepared.get() : nullptr, parent, std::move(owner)), initial);
+        std::move(pair), kind, source ? source->prepared.get() : nullptr, parent, std::move(owner), std::move(colors)), initial);
   }
  public:
   explicit OwnedDescriptor(const ComponentDescriptorParameters &parameters)
@@ -386,7 +394,16 @@ class OwnedDescriptor final : public ConcreteComponentDescriptor<OwnedShadowNode
         const bool parent = baseline->ownedProgramme.count("basis") != 0;
         auto owner = baseline->ownedProgramme.count("owner")
             ? baseline->ownedProgramme.at("owner").getString() : std::string{};
-        return finish(std::move(baseline), std::move(cases), Programme::ExplicitPair, current, parent, std::move(owner));
+        std::shared_ptr<const altroo::text_color::ColorBank> colors;
+        if (baseline->ownedProgramme.count("textColors")) {
+          const auto &value = baseline->ownedProgramme.at("textColors");
+          const auto previous = current && current->prepared ? current->prepared : nullptr;
+          if (previous && previous->textColors && previous->unselected->ownedProgramme.count("textColors") &&
+              previous->unselected->ownedProgramme.at("textColors") == value)
+            colors = previous->textColors;
+          else colors = altroo::text_color::prepareColorBank(context, value);
+        }
+        return finish(std::move(baseline), std::move(cases), Programme::ExplicitPair, current, parent, std::move(owner), std::move(colors));
       }
       auto normal = baseline->ownedProgramme.at("normal");
       auto last = baseline->ownedProgramme.at("last");

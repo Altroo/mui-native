@@ -466,6 +466,7 @@ for (const shape of ['base', 'raw', 'origin', 'both']) {
       assert.deepEqual(Object.keys(boot).sort(), [
         'requireGeneratedTextOrigin',
         'requireProfile',
+        'supportsInheritedTextColors',
         'supportsParentStructuralCases',
         'supportsPeerStyleIdentity',
         'supportsStructuralCases',
@@ -807,4 +808,24 @@ test('CSS peer support is immutable, distinct from v1 and requires parent projec
       assert.equal(calls, 1);
     }
   assert.equal(fresh()(() => null, expected).supportsPeerStyleIdentity(), false);
+});
+
+// New color readiness is additive and requires the physical parent selector ABI.
+test('stock Text color capability requires its exact version and parent selectors', () => {
+  for (const structural of [undefined, 'first-last-of-type-v1', 'first-last-of-type-v2']) {
+    for (const parent of [undefined, 'parent-structural-facts-v1']) {
+      for (const color of [undefined, false, 'stock-text-color-v0', 'stock-text-color-v1']) {
+        const data = metadata();
+        if (structural !== undefined) data.structuralCases = structural;
+        if (parent !== undefined) data.parentStructuralCases = parent;
+        if (color !== undefined) data.inheritedTextColors = color;
+        const boot = fresh()(() => native(data), expected);
+        assert.equal(boot.requireProfile().rn, '0.88.1');
+        assert.equal(
+          boot.supportsInheritedTextColors(),
+          !!structural && !!parent && color === 'stock-text-color-v1',
+        );
+      }
+    }
+  }
 });

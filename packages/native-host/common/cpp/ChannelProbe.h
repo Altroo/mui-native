@@ -2,6 +2,7 @@
 // Callable with a live ordinary RN PropsParserContext. Compiling is not running.
 #pragma once
 #include "OwnedPropsTransport.h"
+#include "TextColorProbe.h"
 #include <react/renderer/graphics/Color.h>
 namespace altroo::owned_channel {
 inline folly::dynamic runChannelProbe(const facebook::react::PropsParserContext &context,
@@ -172,6 +173,7 @@ inline folly::dynamic runChannelProbe(const facebook::react::PropsParserContext 
   require(weak.expired(), "No wrapper/data/pair ownership cycle");
   return D::object("schema", 1)("checks", int64_t(checks))("nativeProfile", nativeProfile())
       ("ordinaryConversionOnly", true)("mountedOrDrawnProved", false)
-      ("androidRawPayloads", std::move(androidRawPayloads));
+      ("androidRawPayloads", std::move(androidRawPayloads))
+      ("textColors", altroo::text_color::runTextColorProbe(context, container));
 }
 } // namespace altroo::owned_channel

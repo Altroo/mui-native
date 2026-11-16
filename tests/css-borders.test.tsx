@@ -357,3 +357,24 @@ test('ButtonBase preserves CSS none declarations through its owned custom-root s
     borderColor: 'red',
   });
 });
+
+test('CSS currentColor foreground resolves before border, outline and shadow paint', () => {
+  expect(
+    resolveSx(
+      {
+        color: 'currentColor',
+        border: '1px solid currentColor',
+        outlineWidth: 1,
+        outlineColor: 'currentColor',
+        boxShadow: '0 1px 2px currentColor',
+      },
+      theme,
+      { parentTextStyle: { color: '#0000ff' } },
+    ),
+  ).toMatchObject({
+    color: '#0000ff',
+    borderColor: '#0000ff',
+    outlineColor: '#0000ff',
+    boxShadow: '0 1px 2px #0000ff',
+  });
+});

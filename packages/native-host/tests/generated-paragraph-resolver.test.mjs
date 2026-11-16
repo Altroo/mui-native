@@ -49,6 +49,8 @@ using Float=float;
 using Tag = int;
 using SurfaceId = int;
 using ComponentHandle = const void *;
+using SharedColor = std::optional<unsigned>;
+struct TextAttributes { SharedColor foregroundColor; };
 inline std::atomic<int> rawParses{0}, cloneCalls{0}, failCloneAt{0};
 inline bool rejectParsing = false;
 inline std::atomic<std::size_t> observedChildEntries{0};
@@ -72,6 +74,7 @@ public:
 class ViewProps : public Props {
 public:
   yoga::Style yogaStyle;
+  TextAttributes textAttributes;
   ViewProps() = default;
   ViewProps(const PropsParserContext &, const ViewProps &source,
             const RawProps &)
@@ -180,6 +183,8 @@ template <class T> struct ConcreteComponentDescriptor {
   };
 };
 inline const char ParagraphComponentName[]="Paragraph", RawTextComponentName[]="RawText";
+using ParagraphProps = ViewProps;
+using TextProps = ViewProps;
 struct ParagraphShadowNode final : ConcreteViewShadowNode<ParagraphComponentName> {using ConcreteViewShadowNode::ConcreteViewShadowNode;};
 struct RawTextShadowNode final : ConcreteViewShadowNode<RawTextComponentName> {using ConcreteViewShadowNode::ConcreteViewShadowNode;static ShadowNodeTraits BaseTraits(){return {};}};
 inline constexpr char fakeParagraphName[]="Paragraph";
@@ -240,6 +245,11 @@ struct SameNameWrongHandle final : ConcreteViewShadowNode<duplicateName> {using 
 // Bounded typed-props/model only. Does not implement RN conversion/Yoga/layout/state transport.
 #pragma once
 #include "Framework.h"
+namespace altroo::text_color {
+struct ColorParent {std::string owner,key;};
+struct ColorBank { std::optional<ColorParent> parent;std::string key; std::array<facebook::react::SharedColor,8> colors; facebook::react::SharedColor ordinary; };
+struct ColorBinding { std::string owner,key; facebook::react::SharedColor ordinary; };
+}
 namespace altroo::owned_transport_proof {
 struct PeerClass {std::string cacheKey,css;bool eligible{};};
 struct PeerIdentity {bool expanded{};std::vector<PeerClass> classes;};
@@ -253,7 +263,7 @@ struct Pair {
  std::uint8_t ordinaryIndex()const{return static_cast<std::uint8_t>(count());}
  const auto& at(std::uint8_t facts)const{return structural()?cases.at(facts):(facts&1?last:normal);}
 };
-struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;std::shared_ptr<const PeerIdentity> peer;std::optional<PeerObservation> observation;Programme programme{Programme::Numeric};};
+struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;std::shared_ptr<const PeerIdentity> peer;std::optional<PeerObservation> observation;Programme programme{Programme::Numeric};std::shared_ptr<const altroo::text_color::ColorBank> textColors;std::uint16_t textColorBarriers{511};};
 using PreparedData=Prepared;
 struct OwnedProps : facebook::react::ViewProps {
  double normalPaddingBottom{16},lastPaddingBottom{24};bool selectedLast{};std::uint8_t selectedCase{};
@@ -274,6 +284,24 @@ struct AltrooStructuralViewShadowNode final : ConcreteViewShadowNode<ownedName,a
 }
 `,
   // language=TEXT
+  'adapter/AltrooTextColorMarker.h': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+#pragma once
+#include "AltrooStructuralViewShadowNode.h"
+#include "StructuralComponentName.h"
+namespace altroo::text_color {
+struct MarkerProps : facebook::react::ViewProps {std::shared_ptr<const ColorBinding> prepared;};
+struct ColorMarkerShadowNode : facebook::react::ConcreteViewShadowNode<facebook::react::AltrooTextColorMarkerName,MarkerProps> {
+ using ConcreteViewShadowNode::ConcreteViewShadowNode;
+ static facebook::react::ShadowNodeTraits BaseTraits(){return {};}
+};
+}
+`,
+  'adapter/react/renderer/components/text/ParagraphShadowNode.h': String.raw`#pragma once
+#include "Framework.h"
+`,
+  'adapter/react/renderer/components/text/TextShadowNode.h': String.raw`#pragma once
+#include "Framework.h"
+`,
   'adapter/react/renderer/core/ShadowNode.h': String.raw`#pragma once
 #include "Framework.h"
 `,
@@ -637,7 +665,7 @@ template<class S>void ordinarySiblingControls(){
   check(observedChildEntries<=std::size_t(12*n+16),"new classifier does not add quadratic traversal");
  }
 }
-int main(){try{
+int preservedSiblingControls(){try{
  if(preservedGeneratedControls()!=0) {
   return 1;
  }
@@ -683,6 +711,88 @@ int main(){try{
  return 0;
 }catch(const std::exception&e){std::cerr<<"core sibling failure: "<<e.what()<<'\n';return 1;}}
 `,
+  // language=TEXT
+  'ColorControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Source-backed COW/data controls. Stock text layout remains a Release native gate.
+#include "SiblingControls.cpp"
+using ColorMarker=altroo::text_color::ColorMarkerShadowNode;
+auto colorMarker(Tag tag,std::string owner="source",std::string key="palette",SharedColor ordinary=0x0000ffu){
+ auto binding=std::make_shared<altroo::text_color::ColorBinding>();binding->owner=std::move(owner);binding->key=std::move(key);binding->ordinary=ordinary;
+ auto props=std::make_shared<altroo::text_color::MarkerProps>();props->prepared=binding;
+ return node<ColorMarker>(tag,props);
+}
+auto colorSource(std::vector<Node> children,bool bank=true){
+ auto source=structuralTarget(2);auto data=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(source->getConcreteProps().prepared);data->owner="source";
+ if(bank){auto colors=std::make_shared<altroo::text_color::ColorBank>();colors->key="palette";colors->ordinary=0x0000ffu;for(int facts=0;facts<8;++facts)colors->colors[facts]=(facts&2)?0xff0000u:0x0000ffu;data->textColors=colors;}
+ source->children=std::make_shared<const std::vector<Node>>(std::move(children));return source;
+}
+auto painted(Tag tag,std::vector<Node> children,SharedColor color=0x0000ffu){auto props=std::make_shared<ViewProps>();props->textAttributes.foregroundColor=color;props->nativeId="consumer-glyph";return node<ParagraphShadowNode>(tag,props,std::move(children));}
+const ParagraphShadowNode &paragraphIn(const Result &result){return static_cast<const ParagraphShadowNode&>(*result.root->getChildren()[0]->getChildren()[0]);}
+int main(){try{
+ if(preservedSiblingControls()!=0)return 1;
+ const int before=assertions;auto other=node<ViewShadowNode>(3,std::make_shared<ViewProps>());
+ auto glyph=painted(4,{raw(5),colorMarker(6)});auto source=colorSource({glyph});auto input=root({source,other});input->sealRecursive();
+ auto selected=resolve(input);auto &first=paragraphIn(selected);
+ check(first.getConcreteProps().textAttributes.foregroundColor==0xff0000u,"same candidate first-of-type color selected");
+ check(first.getFamilyShared()==glyph->getFamilyShared()&&first.getTag()==4,"actual text family and tag stay exact");
+ check(first.getProps()->nativeId=="consumer-glyph","consumer nativeID retained");
+ check(first.getChildren()==glyph->getChildren(),"RawText and empty marker remain shared");
+ check(glyph->getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"accepted sealed Text props untouched");
+ check(selected.decisions[0].bottom==102,"color and geometry use identical selector facts");
+ check(selected.counts.requestedClones==3,"only Text, source and Root cloned");
+ check(resolve(selected.root).root==selected.root,"selected Text candidate is idempotent");
+ auto selectedSource=selected.root->getChildren()[0];auto reordered=resolve(root({other,selectedSource}));
+ const auto &last=static_cast<const ParagraphShadowNode&>(*reordered.root->getChildren()[1]->getChildren()[0]);
+ check(last.getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"retained core props restore blue after reordering");
+ check(last.getFamilyShared()==glyph->getFamilyShared(),"reordering keeps same actual Text family");
+ auto authored=painted(4,{raw(5),colorMarker(6,"","",0x0000ffu)});
+ check(paragraphIn(resolve(root({colorSource({authored}),other}))).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"same-valued explicit blue never inherits palette");
+ auto stale=painted(4,{raw(5),colorMarker(6,"source","old",0x00aa00u)},0xff0000u);
+ check(paragraphIn(resolve(root({colorSource({stale}),other}))).getConcreteProps().textAttributes.foregroundColor==0x00aa00u,"stale palette key restores true ordinary color");
+ auto foreign=painted(4,{raw(5),colorMarker(6,"foreign","palette",0x00aa00u)},0xff0000u);
+ check(paragraphIn(resolve(root({colorSource({foreign}),other}))).getConcreteProps().textAttributes.foregroundColor==0x00aa00u,"foreign source owner cannot bind");
+ auto unbound=painted(4,{raw(5),colorMarker(6,"","",std::nullopt)},0xff0000u);
+ check(!paragraphIn(resolve(root({colorSource({unbound}),other}))).getConcreteProps().textAttributes.foregroundColor,"ordinary absent color resets a previously selected native color");
+ auto nestedText=node<TextShadowNode>(7,std::make_shared<ViewProps>(),{raw(8),colorMarker(9)});
+ auto outerParagraph=painted(4,{nestedText},0x0000ffu);auto nested=resolve(root({colorSource({outerParagraph}),other}));
+ const auto &virtualText=static_cast<const TextShadowNode&>(*paragraphIn(nested).getChildren()[0]);
+ check(virtualText.getConcreteProps().textAttributes.foregroundColor==0xff0000u,"virtual Text typed color selected");
+ check(virtualText.getFamilyShared()==nestedText->getFamilyShared(),"virtual text family retained");
+ check(paragraphIn(nested).getFamilyShared()==outerParagraph->getFamilyShared(),"changed virtual child clones retaining Paragraph family");
+ auto removed=resolve(root({colorSource({selected.root->getChildren()[0]->getChildren()[0]},false),other}));
+ check(paragraphIn(removed).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"removing the source bank restores ordinary color without a JS color delta");
+ auto reparented=resolve(root({selected.root->getChildren()[0]->getChildren()[0]}));
+ check(static_cast<const ParagraphShadowNode&>(*reparented.root->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"retained Text leaving last source root restores ordinary color");
+ auto inner=structuralTarget(7);auto innerData=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(inner->getConcreteProps().prepared);innerData->owner="inner";inner->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{glyph});
+ auto innerResult=resolve(root({colorSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*innerResult.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"inner source boundary without a bank blocks outer authority");
+ // The exact same physical inner root can inherit outer color or author its own.
+ innerData->textColorBarriers=0;
+ auto inheritedInner=resolve(root({colorSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*inheritedInner.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0xff0000u,"inherited inner root preserves the exact outer color source");
+ auto innerBank=std::make_shared<altroo::text_color::ColorBank>();innerBank->key="inner-palette";innerBank->parent=altroo::text_color::ColorParent{"source","palette"};innerBank->ordinary=0x0000ffu;innerBank->colors.fill(0x0000ffu);innerData->textColors=innerBank;
+ auto innerGlyph=painted(4,{raw(5),colorMarker(6,"inner","inner-palette")});inner->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{innerGlyph});
+ auto inheritedBank=resolve(root({colorSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*inheritedBank.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0xff0000u,"an inner bank's inherit case resolves the current native outer color, not captured blue");
+ innerBank->parent.reset();
+ auto passiveBarrier=resolve(root({colorSource({node<ViewShadowNode>(11,std::make_shared<ViewProps>(),{inner})}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*passiveBarrier.root->getChildren()[0]->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"an unbound passive authored scope cannot borrow a physical ancestor palette");
+ innerData->textColorBarriers=511;
+ auto authoredBank=resolve(root({colorSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*authoredBank.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"the same inner bank's authored case remains an outer inheritance barrier");
+ auto duplicate=painted(4,{raw(5),colorMarker(6),colorMarker(7)});
+ rejectWithoutClone([&]{resolve(root({colorSource({duplicate}),other}));},"duplicate bindings reject before any COW");
+ auto badMarker=colorMarker(6);badMarker->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{raw(7)});
+ rejectWithoutClone([&]{resolve(root({colorSource({painted(4,{raw(5),badMarker})}),other}));},"nonempty binding rejects before COW");
+ auto generatedText=paragraph(4,prefix+"color",{raw(5),colorMarker(6)});
+ check(classifyParagraph(*generatedText,2)==ParagraphRole::GeneratedLiteral,"empty trailing marker keeps generated literal origin");
+ rejectWithoutClone([&]{classifyParagraph(*paragraph(4,prefix+"color",{colorMarker(6),raw(5)}),2);},"marker cannot split RawText fragments");
+ rejectWithoutClone([&]{classifyParagraph(*paragraph(4,prefix+"color",{colorMarker(6)}),1);},"marker cannot impersonate a primitive text run");
+ check(rawParses==0,"color commit selection does not invoke raw conversion");
+ std::cout<<"{\"colorAssertions\":"<<assertions-before<<",\"nativeExecution\":false}\n";
+ return 0;
+}catch(const std::exception&e){std::cerr<<"text color finite failure: "<<e.what()<<'\n';return 1;}}
+`,
 };
 for (const [profile, defines] of [
   ['android', ['-DANDROID']],
@@ -699,7 +809,11 @@ for (const [profile, defines] of [
         // the finite doubles, even when the real native build tree is present.
         const isolatedProduction = path.join(temp, 'production');
         await mkdir(isolatedProduction);
-        for (const header of ['PrelayoutResolver.h', 'GeneratedParagraphOrigin.h']) {
+        for (const header of [
+          'PrelayoutResolver.h',
+          'GeneratedParagraphOrigin.h',
+          'StructuralComponentName.h',
+        ]) {
           const original = path.join(production, header);
           const isolated = path.join(isolatedProduction, header);
           await copyFile(original, isolated);
@@ -722,7 +836,7 @@ for (const [profile, defines] of [
             ...defines,
             '-I' + isolatedProduction,
             '-I' + path.join(temp, 'adapter'),
-            path.join(temp, 'SiblingControls.cpp'),
+            path.join(temp, 'ColorControls.cpp'),
             '-o',
             output,
           ],
@@ -739,11 +853,13 @@ for (const [profile, defines] of [
           .trim()
           .split('\n')
           .map((row) => JSON.parse(row));
-        assert.equal(rows.length, 3);
+        assert.equal(rows.length, 4);
         assert.equal(rows[1].generatedAssertions, 105);
         assert.equal(rows[1].nativeExecution, false);
         assert.equal(rows[2].siblingAssertions, 780);
         assert.equal(rows[2].nativeExecution, false);
+        assert.ok(rows[3].colorAssertions >= 30);
+        assert.equal(rows[3].nativeExecution, false);
       } finally {
         await rm(temp, { recursive: true, force: true });
       }

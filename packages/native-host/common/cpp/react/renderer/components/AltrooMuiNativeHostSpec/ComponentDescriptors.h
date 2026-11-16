@@ -4,6 +4,7 @@
 #include <AltrooPortalShadowNodes.h>
 #include <AltrooStructuralViewShadowNode.h>
 #include <AltrooNativeTextInputDescriptor.h>
+#include <AltrooTextColorMarker.h>
 namespace facebook::react {
 using AltrooMUIInteractiveViewComponentDescriptor=ConcreteComponentDescriptor<AltrooMUIInteractiveViewShadowNode>;
 using AltrooMUINativePickerComponentDescriptor=ConcreteComponentDescriptor<AltrooMUINativePickerShadowNode>;

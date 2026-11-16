@@ -40,6 +40,7 @@ import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nat
 import { NativeButtonGroupRules } from './buttonGroupContext';
 import {
   AccordionStructuralView,
+  AccordionRootTextScope,
   createAccordionStructuralPreparation,
   useAccordionStructuralRoot,
 } from './accordionStructuralRoot';
@@ -188,6 +189,7 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
       structuralRoot && Root === View
         ? createAccordionStructuralPreparation({
             theme,
+            parent,
             programme,
             direction: parent?.direction ?? theme.direction,
             context: {
@@ -209,7 +211,8 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
             : undefined;
           return (
             <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
-              <NativeTextScope
+              <AccordionRootTextScope
+                cases={structuralCases}
                 rootRef={root}
                 theme={theme}
                 style={refreshNativeStyle(finalStyle)}
@@ -254,7 +257,7 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
                       ),
                   )
                 }
-              </NativeTextScope>
+              </AccordionRootTextScope>
             </NativeStyleScope>
           );
         }}

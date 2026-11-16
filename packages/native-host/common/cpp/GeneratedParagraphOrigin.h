@@ -2,6 +2,7 @@
 // Reserved first-party origin for stock paragraphs created by System's normalizer.
 // This is a public-prop convention, not authentication. No RTTI or registry is used.
 #pragma once
+#include "StructuralComponentName.h"
 #include <react/renderer/core/ShadowNode.h>
 #include <cstddef>
 #include <stdexcept>
@@ -45,7 +46,17 @@ inline ParagraphRole classifyParagraph(const facebook::react::ShadowNode &node,
   const auto &children = node.getChildren();
   if (children.empty() || children.size() > rawChildBudget)
     throw std::invalid_argument("Generated paragraph requires bounded Core RawText leaves");
-  for (const auto &child : children) {
+  std::size_t rawLeaves = 0;
+  for (std::size_t index = 0; index < children.size(); ++index) {
+    const auto &child = children[index];
+    // The canonical empty marker is appended, never placed between RawText
+    // siblings. It emits neither a fragment nor an inline attachment.
+    if (child && child->getComponentHandle() == facebook::react::ComponentHandle(facebook::react::AltrooTextColorMarkerName)) {
+      if (index + 1 != children.size() || !child->getChildren().empty())
+        throw std::invalid_argument("Generated paragraph requires an empty trailing color marker");
+      continue;
+    }
+    ++rawLeaves;
     if (!child ||
         child->getComponentHandle() !=
             facebook::react::ComponentHandle(facebook::react::RawTextComponentName) ||
@@ -53,6 +64,7 @@ inline ParagraphRole classifyParagraph(const facebook::react::ShadowNode &node,
         reserved(child->getProps()->nativeId))
       throw std::invalid_argument("Generated paragraph contains unsupported text children");
   }
+  if (!rawLeaves) throw std::invalid_argument("Generated paragraph requires actual RawText");
   return ParagraphRole::GeneratedLiteral;
 }
 } // namespace altroo::generated_text_origin

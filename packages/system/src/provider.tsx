@@ -43,7 +43,12 @@ import {
   retainNativeRootSnapshotElement,
   nativeRootSnapshotClassName,
 } from './nativeRootStyleSnapshots';
-import { NativeTextScope, useNativeTextContext, nativeTextStyleContext } from './textScope';
+import {
+  NativeTextScope,
+  useNativeTextContext,
+  nativeTextStyleContext,
+  nativeTextColorChildren,
+} from './textScope';
 import { sealNativeTextElement } from './nativeTextProvenance';
 import {
   componentStyle,
@@ -532,7 +537,7 @@ export function styled<P extends object>(
                 style={refreshNativeStyleProp(finalStyle)}
                 content={output.children as React.ReactNode}
               >
-                {(style, children) => {
+                {(style, children, scope) => {
                   if (finalTag === (View as unknown)) {
                     const peerStyle =
                       finalStyle && typeof finalStyle === 'object'
@@ -559,7 +564,7 @@ export function styled<P extends object>(
                     ...output,
                     ref: rootRef,
                     style,
-                    children,
+                    children: nativeTextColorChildren(children, scope, style),
                   } as unknown as P);
                   return finalTag === (Text as unknown)
                     ? sealNativeTextElement(element, style)
