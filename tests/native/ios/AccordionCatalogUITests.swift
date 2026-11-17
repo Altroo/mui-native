@@ -664,6 +664,7 @@ final class TextColorMarkerProbeUITests: XCTestCase {
       XCTAssertEqual(report["nativeID"] as? String, "kept-public-native-id")
       let parser = try XCTUnwrap(report["parser"] as? [String: Any])
       XCTAssertGreaterThanOrEqual(try XCTUnwrap(parser["checks"] as? Int), 30)
+      XCTAssertGreaterThanOrEqual(try XCTUnwrap(parser["metricChecks"] as? Int), 30)
       XCTAssertEqual(parser["ordinaryConversionOnly"] as? Bool, true)
       XCTAssertEqual(parser["mountedOrDrawnProved"] as? Bool, false)
 

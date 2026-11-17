@@ -3,6 +3,10 @@
 import {
   inheritNativeTextColorBinding,
   nativeTextColorChildren,
+  nativeMetricPlan,
+  nativeMetricBasis,
+  nativeMetricTypographyTail,
+  retainNativeMetricScope,
 } from '@altroo/mui-native-system/internal/prepared-style';
 import { useTheme, useComponentRootStyle } from './themeProvider';
 import React, { forwardRef, useContext } from 'react';
@@ -261,6 +265,24 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
     ),
     ...(direction ? { direction } : {}),
   };
+  const metricPlan = nativeMetricPlan(resolved);
+  const metricBasis = nativeMetricBasis(resolved);
+  retainNativeMetricScope(
+    context,
+    parent,
+    context.style,
+    context.lineHeight,
+    metricPlan && metricBasis
+      ? [
+          metricPlan,
+          nativeMetricTypographyTail(
+            adjustedNativeStyle ?? {},
+            nativeStyleTextMetrics(adjustedNativeStyle),
+            metricBasis,
+          ),
+        ]
+      : undefined,
+  );
   setNativeTextScopeParent(context, parent);
   inheritNativeTextColorBinding(context, parent, finalStyle);
   useNativeTextScopeRoot(root, context);

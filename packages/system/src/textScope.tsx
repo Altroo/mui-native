@@ -20,8 +20,16 @@ import type { Theme } from './theme';
 import {
   NativeTextColorMarker,
   supportsNativeTextColors,
+  supportsNativeTextMetrics,
+  type NativeMetricBinding,
   type NativeTextColorBinding,
 } from '@altroo/mui-native-host/internal/structural-root';
+import {
+  nativeMetricBinding,
+  retainNativeMetricBinding,
+  retainNativeMetricScope,
+  nativeMetricPresentation,
+} from './nativeMetricSources';
 import {
   inheritNativeTextColorBinding,
   retainNativeTextColorBinding,
@@ -53,6 +61,7 @@ import {
   isNativeTextStyleProperty,
   nativeStyleTextMetrics,
   normalizeTextStyle,
+  nativeMetricPlan,
   applyNativeTextMetrics,
   getTextStyleInheritance,
   nativeTextAlignmentStyle,
@@ -87,6 +96,7 @@ export function nativeTextStyleContext(
     nativeStyle: flattenNativeTextInput(style, StyleSheet.flatten) ?? undefined,
     nativeTextMetrics: nativeStyleTextMetrics(style),
     inheritOnly: true,
+    captureMetricPlan: supportsNativeTextMetrics && !!nativeMetricBinding(parent),
   };
   retainNativeTextInputContext(context, style);
   return context;
@@ -170,6 +180,14 @@ function resolveScope(
     ...(paragraphDirection ? { paragraphDirection } : {}),
     ...(inheritance.textAlign ? { textAlign: inheritance.textAlign } : {}),
   };
+  const metricPlan = nativeMetricPlan(normalized);
+  retainNativeMetricScope(
+    value,
+    parent,
+    inherited,
+    value.lineHeight,
+    metricPlan ? [metricPlan] : undefined,
+  );
   setNativeTextScopeParent(value, parent);
   inheritNativeTextColorBinding(value, parent, flat, true);
   const inheritable = inheritedTextStyle(flat);
@@ -222,6 +240,8 @@ export interface NativeTextScopeProps {
   reset?: boolean;
   /** First-party finite color source; never forwarded to the native host. */
   colorBinding?: NativeTextColorBinding | undefined;
+  /** Finite metric source at the actual cooperating root. */
+  metricBinding?: NativeMetricBinding | undefined;
   /** Native root owned by this scope; used for physical Portal inheritance. */
   rootRef?: React.RefObject<object | null>;
   content?: React.ReactNode;
@@ -238,6 +258,7 @@ export function NativeTextScope({
   kind = 'view',
   reset = false,
   colorBinding,
+  metricBinding,
   rootRef,
   content,
   children,
@@ -251,9 +272,10 @@ export function NativeTextScope({
       : undefined;
   const resolved = useMemo(
     () => resolveScope(theme, parent, style, kind, owningParagraph),
-    [theme, parent, style, kind, owningParagraph, colorBinding],
+    [theme, parent, style, kind, owningParagraph, colorBinding, metricBinding],
   );
   if (colorBinding) retainNativeTextColorBinding(resolved.value, colorBinding);
+  if (metricBinding) retainNativeMetricBinding(resolved.value, metricBinding);
   // Equivalent style arrays must not broadcast a fresh inheritance context.
   // Nested groups inside a custom Portal otherwise feed their own publications.
   const stable = useRef(resolved.value);
@@ -377,7 +399,11 @@ export function nativeTextColorChildren(
   return supportsNativeTextColors ? (
     <>
       {content}
-      <NativeTextColorMarker binding={nativeTextColorBinding(scope)} color={style.color} />
+      <NativeTextColorMarker
+        binding={nativeTextColorBinding(scope)}
+        color={style.color}
+        metrics={nativeMetricPresentation(scope, style)}
+      />
     </>
   ) : (
     content
@@ -408,6 +434,10 @@ function GeneratedParagraph(props: { children: string; style: StyleProp<TextStyl
           <NativeTextColorMarker
             binding={original && scope ? nativeTextColorBinding(scope) : undefined}
             color={(nativeStyle as TextStyle).color}
+            metrics={nativeMetricPresentation(
+              original ? scope : undefined,
+              nativeStyle as TextStyle,
+            )}
           />
         </>
       ) : (

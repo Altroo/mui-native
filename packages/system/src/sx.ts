@@ -50,6 +50,7 @@ import { cssBorder, finishCssBorderStyle } from './borders';
 import { retainNativeColorSource } from './nativeColorSources';
 import {
   normalizeTextStyle,
+  copyNativeMetricPlan,
   textMetricKeys,
   nativeStyleTextMetrics,
   applyNativeTextMetrics,
@@ -911,6 +912,7 @@ function finishRules(
     }
   }
   const finished = finishCssBorderStyle(normalized as NativeStyle);
+  copyNativeMetricPlan(normalized, finished);
   const colorInherits =
     !Object.hasOwn(result, 'color') ||
     (typeof result.color === 'string' &&

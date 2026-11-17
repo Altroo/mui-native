@@ -118,13 +118,15 @@ inline bool fullProgramme(const folly::dynamic &programme) {
     const bool peer = programme.count("peer") != 0;
     const bool observation = programme.count("observation") != 0;
     const bool textColors = programme.count("textColors") != 0;
+    const bool textMetrics = programme.count("textMetrics") != 0;
     const bool textBarriers = programme.count("textColorBarriers") != 0;
-    if (programme.size() != 3 + std::size_t(owner) + std::size_t(parent) + std::size_t(peer) + std::size_t(observation) + std::size_t(textColors) + std::size_t(textBarriers) ||
+    if (programme.size() != 3 + std::size_t(owner) + std::size_t(parent) + std::size_t(peer) + std::size_t(observation) + std::size_t(textColors) + std::size_t(textBarriers) + std::size_t(textMetrics) ||
         (textBarriers && (schema != 2.0 || !owner || parent || !programme.at("textColorBarriers").isNumber() ||
           !std::isfinite(programme.at("textColorBarriers").asDouble()) ||
           std::floor(programme.at("textColorBarriers").asDouble()) != programme.at("textColorBarriers").asDouble() ||
           programme.at("textColorBarriers").asDouble() < 0 || programme.at("textColorBarriers").asDouble() > 511)) ||
         (textColors && (schema != 2.0 || !owner || parent)) ||
+        (textMetrics && (schema != 2.0 || !owner || parent)) ||
         (owner && (!programme.at("owner").isString() ||
                    programme.at("owner").getString().empty() ||
                    programme.at("owner").getString().size() > 256)) ||

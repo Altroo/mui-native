@@ -27,6 +27,7 @@ type Metadata = Readonly<{
   parentStructuralCases: boolean;
   peerStyleIdentity: boolean;
   inheritedTextColors: boolean;
+  inheritedTextMetrics: boolean;
 }>;
 type Outcome = Readonly<{ metadata: Metadata; error?: never } | { error: Error; metadata?: never }>;
 export type OwnedStyleBootstrap = Readonly<{
@@ -36,6 +37,7 @@ export type OwnedStyleBootstrap = Readonly<{
   supportsParentStructuralCases(): boolean;
   supportsPeerStyleIdentity(): boolean;
   supportsInheritedTextColors(): boolean;
+  supportsInheritedTextMetrics(): boolean;
 }>;
 type Expected = Readonly<{ rn: string; platform: string; styleKeys: string }>;
 // One canonical native module object has one immutable read for this JS runtime.
@@ -91,6 +93,7 @@ function parse(raw: unknown): Metadata {
           'structuralCases',
           'parentStructuralCases',
           'inheritedTextColors',
+          'inheritedTextMetrics',
         ].includes(key),
     ) ||
     value.schema !== 1 ||
@@ -155,6 +158,9 @@ function parse(raw: unknown): Metadata {
     inheritedTextColors:
       Object.hasOwn(value, 'inheritedTextColors') &&
       value.inheritedTextColors === 'stock-text-color-v1',
+    inheritedTextMetrics:
+      Object.hasOwn(value, 'inheritedTextMetrics') &&
+      value.inheritedTextMetrics === 'stock-text-metrics-v1',
     peerStyleIdentity:
       Object.hasOwn(value, 'structuralCases') && value.structuralCases === 'first-last-of-type-v2',
     parentStructuralCases:
@@ -193,6 +199,7 @@ export function createOwnedStyleBootstrap(
   let parentStructuralCases = false;
   let peerStyleIdentity = false;
   let inheritedTextColors = false;
+  let inheritedTextMetrics = false;
   const originFailure = fail(
     'generated paragraph origin is unavailable or unsupported; rebuild the matching native app',
   );
@@ -213,6 +220,7 @@ export function createOwnedStyleBootstrap(
     parentStructuralCases = structuralCases && outcome.metadata.parentStructuralCases;
     peerStyleIdentity = parentStructuralCases && outcome.metadata.peerStyleIdentity;
     inheritedTextColors = parentStructuralCases && outcome.metadata.inheritedTextColors;
+    inheritedTextMetrics = inheritedTextColors && outcome.metadata.inheritedTextMetrics;
     generatedTextOrigin = outcome.metadata.generatedTextOrigin;
   } catch (error) {
     failure = toFailure(error);
@@ -222,6 +230,7 @@ export function createOwnedStyleBootstrap(
     supportsParentStructuralCases: () => parentStructuralCases,
     supportsPeerStyleIdentity: () => peerStyleIdentity,
     supportsInheritedTextColors: () => inheritedTextColors,
+    supportsInheritedTextMetrics: () => inheritedTextMetrics,
     requireProfile() {
       if (failure) throw failure;
       // The only successful initialization branch publishes this immutable profile.

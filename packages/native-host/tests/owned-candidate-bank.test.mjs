@@ -147,18 +147,24 @@ inline std::shared_ptr<const ColorBank> prepareColorBank(const PropsParserContex
   throw std::logic_error("Unexpected color parsing in schema-only control");
 }
 }
+namespace altroo::text_metrics {
+struct Bank {};
+inline std::shared_ptr<const Bank> prepareBank(const folly::dynamic&) {
+  throw std::logic_error("Unexpected metric parsing in schema-only control");
+}
+}
 using Generated=AltrooMUIStructuralViewProps;
 using GeneratedShared=std::shared_ptr<const Generated>;
 using Pair=altroo::owned_adapter_proof::PreparedViewCandidates;
 enum class Programme {Numeric,ExplicitPair,PeerOnly};
-struct Prepared {Programme programme;GeneratedShared unselected;Pair candidates;std::shared_ptr<const altroo::text_color::ColorBank> textColors;};
+struct Prepared {Programme programme;GeneratedShared unselected;Pair candidates;std::shared_ptr<const altroo::text_color::ColorBank> textColors;std::shared_ptr<const altroo::text_metrics::Bank> textMetrics;};
 struct OwnedProps:Props {using Shared=std::shared_ptr<const OwnedProps>;std::shared_ptr<const Prepared> prepared;bool selectedLast{};};
 struct Descriptor {
   using ConverterCore=altroo::owned_channel::ConversionDescriptor;
   ConverterCore converter_;GeneratedShared incoming;
   GeneratedShared convertCurrent(const PropsParserContext&,const OwnedProps::Shared&,RawProps)const{return incoming;}
-  OwnedProps::Shared finish(GeneratedShared value,Pair pair,Programme kind,const OwnedProps::Shared&,bool=false,std::string={},std::shared_ptr<const altroo::text_color::ColorBank> colors={})const{
-    auto out=std::make_shared<OwnedProps>();out->prepared=std::make_shared<const Prepared>(Prepared{kind,std::move(value),std::move(pair),std::move(colors)});return out;
+  OwnedProps::Shared finish(GeneratedShared value,Pair pair,Programme kind,const OwnedProps::Shared&,bool=false,std::string={},std::shared_ptr<const altroo::text_color::ColorBank> colors={},std::shared_ptr<const altroo::text_metrics::Bank> metrics={})const{
+    auto out=std::make_shared<OwnedProps>();out->prepared=std::make_shared<const Prepared>(Prepared{kind,std::move(value),std::move(pair),std::move(colors),std::move(metrics)});return out;
   }
   OwnedProps::Shared numericFromBaseline(const PropsParserContext&,GeneratedShared value,const OwnedProps::Shared& source)const{
     Pair pair;pair.normal=pair.last=value;return finish(value,std::move(pair),Programme::Numeric,source);

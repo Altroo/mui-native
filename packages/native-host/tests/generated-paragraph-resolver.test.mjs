@@ -21,6 +21,8 @@ const sources = {
 #include <vector>
 #include <array>
 #include <optional>
+#include <cmath>
+#include <limits>
 namespace facebook::yoga {
 enum class Edge { Bottom, Vertical, All };
 struct FloatOptional { float number; float unwrap() const {return number;} };
@@ -50,7 +52,7 @@ using Tag = int;
 using SurfaceId = int;
 using ComponentHandle = const void *;
 using SharedColor = std::optional<unsigned>;
-struct TextAttributes { SharedColor foregroundColor; };
+struct TextAttributes { SharedColor foregroundColor; Float fontSize{std::numeric_limits<Float>::quiet_NaN()}, lineHeight{std::numeric_limits<Float>::quiet_NaN()}, letterSpacing{std::numeric_limits<Float>::quiet_NaN()}; };
 inline std::atomic<int> rawParses{0}, cloneCalls{0}, failCloneAt{0};
 inline bool rejectParsing = false;
 inline std::atomic<std::size_t> observedChildEntries{0};
@@ -245,6 +247,7 @@ struct SameNameWrongHandle final : ConcreteViewShadowNode<duplicateName> {using 
 // Bounded typed-props/model only. Does not implement RN conversion/Yoga/layout/state transport.
 #pragma once
 #include "Framework.h"
+#include "NativeMetricData.h"
 namespace altroo::text_color {
 struct ColorParent {std::string owner,key;};
 struct ColorBank { std::optional<ColorParent> parent;std::string key; std::array<facebook::react::SharedColor,8> colors; facebook::react::SharedColor ordinary; };
@@ -263,7 +266,7 @@ struct Pair {
  std::uint8_t ordinaryIndex()const{return static_cast<std::uint8_t>(count());}
  const auto& at(std::uint8_t facts)const{return structural()?cases.at(facts):(facts&1?last:normal);}
 };
-struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;std::shared_ptr<const PeerIdentity> peer;std::optional<PeerObservation> observation;Programme programme{Programme::Numeric};std::shared_ptr<const altroo::text_color::ColorBank> textColors;std::uint16_t textColorBarriers{511};};
+struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;std::shared_ptr<const PeerIdentity> peer;std::optional<PeerObservation> observation;Programme programme{Programme::Numeric};std::shared_ptr<const altroo::text_color::ColorBank> textColors;std::uint16_t textColorBarriers{511};std::shared_ptr<const altroo::text_metrics::Bank> textMetrics;};
 using PreparedData=Prepared;
 struct OwnedProps : facebook::react::ViewProps {
  double normalPaddingBottom{16},lastPaddingBottom{24};bool selectedLast{};std::uint8_t selectedCase{};
@@ -289,12 +292,15 @@ struct AltrooStructuralViewShadowNode final : ConcreteViewShadowNode<ownedName,a
 #include "AltrooStructuralViewShadowNode.h"
 #include "StructuralComponentName.h"
 namespace altroo::text_color {
-struct MarkerProps : facebook::react::ViewProps {std::shared_ptr<const ColorBinding> prepared;};
+struct MarkerProps : facebook::react::ViewProps {std::shared_ptr<const ColorBinding> prepared;std::shared_ptr<const altroo::text_metrics::Presentation> metrics;};
 struct ColorMarkerShadowNode : facebook::react::ConcreteViewShadowNode<facebook::react::AltrooTextColorMarkerName,MarkerProps> {
  using ConcreteViewShadowNode::ConcreteViewShadowNode;
  static facebook::react::ShadowNodeTraits BaseTraits(){return {};}
 };
 }
+`,
+  'adapter/react/renderer/graphics/Float.h': String.raw`#pragma once
+#include "Framework.h"
 `,
   'adapter/react/renderer/components/text/ParagraphShadowNode.h': String.raw`#pragma once
 #include "Framework.h"
@@ -728,7 +734,7 @@ auto colorSource(std::vector<Node> children,bool bank=true){
 }
 auto painted(Tag tag,std::vector<Node> children,SharedColor color=0x0000ffu){auto props=std::make_shared<ViewProps>();props->textAttributes.foregroundColor=color;props->nativeId="consumer-glyph";return node<ParagraphShadowNode>(tag,props,std::move(children));}
 const ParagraphShadowNode &paragraphIn(const Result &result){return static_cast<const ParagraphShadowNode&>(*result.root->getChildren()[0]->getChildren()[0]);}
-int main(){try{
+int preservedColorControls(){try{
  if(preservedSiblingControls()!=0)return 1;
  const int before=assertions;auto other=node<ViewShadowNode>(3,std::make_shared<ViewProps>());
  auto glyph=painted(4,{raw(5),colorMarker(6)});auto source=colorSource({glyph});auto input=root({source,other});input->sealRecursive();
@@ -793,6 +799,100 @@ int main(){try{
  return 0;
 }catch(const std::exception&e){std::cerr<<"text color finite failure: "<<e.what()<<'\n';return 1;}}
 `,
+  // language=TEXT
+  'MetricControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Exact numeric evaluation and Text COW; mounted measurement is tested on iOS.
+#include "ColorControls.cpp"
+namespace metric=altroo::text_metrics;
+const metric::Step inheritMetric{0,0,0,0,0,0,0,0,16,16};
+const metric::Step halfFont{2,.5,2,0,0,0,0,0,16,16};
+auto metricMarker(Tag tag,std::vector<metric::Step> steps={halfFont},std::string owner="source",std::string key="metrics",unsigned resets=0){
+ auto presentation=std::make_shared<metric::Presentation>();presentation->binding={std::move(owner),std::move(key),std::move(steps)};presentation->ordinary={8,12,0};presentation->resets=static_cast<std::uint8_t>(resets);
+ auto props=std::make_shared<altroo::text_color::MarkerProps>();props->metrics=presentation;return node<ColorMarker>(tag,props);
+}
+auto metricGlyph(std::vector<Node> children){auto props=std::make_shared<ViewProps>();props->textAttributes.fontSize=8;props->textAttributes.lineHeight=12;props->textAttributes.letterSpacing=0;props->nativeId="metric-glyph";return node<ParagraphShadowNode>(4,props,std::move(children));}
+auto metricSource(std::vector<Node> children){
+ auto source=colorSource(std::move(children),false);auto data=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(source->getConcreteProps().prepared);
+ auto bank=std::make_shared<metric::Bank>();bank->key="metrics";bank->base={16,std::nullopt,std::nullopt,0};bank->ordinary={1,16,3,1.5,1,1.5,1,0,16,16};
+ for(unsigned i=0;i<8;++i){bank->cases[i]=bank->ordinary;if(i&2)bank->cases[i][1]=24;}
+ data->textMetrics=bank;return source;
+}
+const auto& metricAttributes(const Result& result){return paragraphIn(result).getConcreteProps().textAttributes;}
+int main(){try{
+ if(preservedColorControls()!=0)return 1;
+ const int before=assertions;auto other=node<ViewShadowNode>(3,std::make_shared<ViewProps>());
+ auto glyph=metricGlyph({raw(5),metricMarker(6)});auto source=metricSource({glyph});auto input=root({source,other});input->sealRecursive();
+ auto result=resolve(input);const auto &text=metricAttributes(result);const auto &changed=paragraphIn(result);
+ check(text.fontSize==12&&text.lineHeight==18,"selected root font24 and ratio1.5 reach half-em child in same candidate");
+ check(text.letterSpacing==0,"inherited absolute spacing retained");
+ check(changed.getTag()==glyph->getTag()&&changed.getFamilyShared()==glyph->getFamilyShared(),"actual Paragraph tag/family retained");
+ check(changed.getProps()->nativeId=="metric-glyph","nativeID retained");
+ check(changed.getChildren()==glyph->getChildren(),"raw text and empty marker shared");
+ check(glyph->getConcreteProps().textAttributes.fontSize==8&&glyph->getConcreteProps().textAttributes.lineHeight==12,"sealed accepted props untouched");
+ check(result.decisions[0].bottom==102,"geometry and text use identical first-of-type facts");
+ check(result.counts.requestedClones==3,"only changed Text/source/root cloned");
+ check(resolve(result.root).root==result.root,"metric COW is idempotent");
+ auto moved=resolve(root({other,result.root->getChildren()[0]}));const auto &movedText=static_cast<const ParagraphShadowNode&>(*moved.root->getChildren()[1]->getChildren()[0]).getConcreteProps().textAttributes;
+ check(movedText.fontSize==8&&movedText.lineHeight==12,"retained Text reorders back to8/12");
+ check(moved.root->getChildren()[1]->getChildren()[0]->getFamilyShared()==glyph->getFamilyShared(),"reorder keeps original glyph family");
+ const auto valueFor=[&](std::vector<metric::Step> steps){return metricAttributes(resolve(root({metricSource({metricGlyph({raw(5),metricMarker(6,std::move(steps))})}),other})));};
+ const metric::Step nativeFont{1,10,2,0,0,0,0,0,16,16};
+ auto native=valueFor({nativeFont});check(native.fontSize==10&&native.lineHeight==15,"authored native font blocks only font, inherits unitless ratio");
+ auto explicitStep=nativeFont;explicitStep[2]=1;explicitStep[3]=13;auto explicitText=valueFor({explicitStep});
+ check(explicitText.fontSize==10&&explicitText.lineHeight==13,"native font/absolute height stay literal");
+ auto relativeSpacing=halfFont;relativeSpacing[6]=2;relativeSpacing[7]=.25;
+ check(valueFor({relativeSpacing}).letterSpacing==3,"descendant em spacing follows selected child font");
+ auto nativeSpacing=halfFont;nativeSpacing[6]=1;nativeSpacing[7]=-2;
+ check(valueFor({nativeSpacing}).letterSpacing==-2,"negative authored native spacing remains literal");
+ auto sourceRatio=metricSource({metricGlyph({raw(5),metricMarker(6,{nativeFont})})});auto ratioData=std::const_pointer_cast<metric::Bank>(sourceRatio->getConcreteProps().prepared->textMetrics);
+ for(auto &step:ratioData->cases){step[3]=2;step[5]=2;}
+ check(metricAttributes(resolve(root({sourceRatio,other}))).lineHeight==20,"native font10 follows changing parent ratio to20");
+ auto absoluteSource=metricSource({metricGlyph({raw(5),metricMarker(6)})});auto absData=std::const_pointer_cast<metric::Bank>(absoluteSource->getConcreteProps().prepared->textMetrics);
+ for(auto &step:absData->cases){step[2]=1;step[3]=32;step[4]=2;}
+ check(metricAttributes(resolve(root({absoluteSource,other}))).lineHeight==32,"parent native absolute height stays32 through relative font child");
+ auto retained=result.root->getChildren()[0]->getChildren()[0];auto withdrawn=colorSource({retained},false);
+ check(metricAttributes(resolve(root({withdrawn,other}))).fontSize==8,"withdrawn source restores ordinary with no JS delta");
+ auto reparented=resolve(root({retained}));const auto &reparentedText=static_cast<const ParagraphShadowNode&>(*reparented.root->getChildren()[0]);
+ check(reparentedText.getConcreteProps().textAttributes.fontSize==8,"reparented Text restores ordinary");
+ check(reparentedText.getFamilyShared()==glyph->getFamilyShared(),"restoration preserves family");
+ auto stale=metricGlyph({raw(5),metricMarker(6,{halfFont},"source","stale")});
+ check(metricAttributes(resolve(root({metricSource({stale}),other}))).fontSize==8,"stale key cannot inherit");
+ auto foreign=metricGlyph({raw(5),metricMarker(6,{halfFont},"foreign")});
+ check(metricAttributes(resolve(root({metricSource({foreign}),other}))).fontSize==8,"foreign source cannot inherit");
+ auto unbound=metricGlyph({raw(5),metricMarker(6,{},"","")});
+ check(metricAttributes(resolve(root({metricSource({unbound}),other}))).fontSize==8,"unbound marker retains ordinary");
+ auto reset=metricMarker(6,{halfFont},"source","metrics",7);auto resetProps=std::const_pointer_cast<metric::Presentation>(reset->getConcreteProps().metrics);resetProps->ordinary={std::nullopt,std::nullopt,std::nullopt};
+ auto resetText=metricAttributes(resolve(root({metricSource({metricGlyph({raw(5),reset})}),other})));
+ check(std::isnan(resetText.fontSize)&&std::isnan(resetText.lineHeight)&&std::isnan(resetText.letterSpacing),"explicit nulls reset each typed field");
+ auto virtualProps=std::make_shared<ViewProps>();virtualProps->textAttributes.fontSize=8;virtualProps->textAttributes.lineHeight=12;virtualProps->textAttributes.letterSpacing=0;
+ auto virtualText=node<TextShadowNode>(7,virtualProps,{raw(8),metricMarker(9)});auto enclosing=metricGlyph({virtualText});
+ auto nested=resolve(root({metricSource({enclosing}),other}));const auto &selectedVirtual=static_cast<const TextShadowNode&>(*paragraphIn(nested).getChildren()[0]);
+ check(selectedVirtual.getConcreteProps().textAttributes.fontSize==12&&selectedVirtual.getConcreteProps().textAttributes.lineHeight==18,"virtual Text typed metrics selected");
+ check(selectedVirtual.getFamilyShared()==virtualText->getFamilyShared(),"virtual family retained");
+ check(paragraphIn(nested).getFamilyShared()==enclosing->getFamilyShared(),"Paragraph ancestor retained when virtual child changes");
+ auto inner=structuralTarget(7);auto innerData=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(inner->getConcreteProps().prepared);innerData->owner="inner";
+ auto innerBank=std::make_shared<metric::Bank>();innerBank->key="inner-metrics";innerBank->base={16,24,1.5,0};innerBank->cases.fill(inheritMetric);innerBank->ordinary=inheritMetric;
+ innerBank->parent=metric::Binding{"source","metrics",{nativeFont}};innerData->textMetrics=innerBank;
+ inner->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{metricGlyph({raw(5),metricMarker(6,{inheritMetric},"inner","inner-metrics")})});
+ auto composed=resolve(root({metricSource({inner}),other}));const auto &composedText=static_cast<const ParagraphShadowNode&>(*composed.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes;
+ check(composedText.fontSize==10&&composedText.lineHeight==15,"nested source composes prepared passive native-font barrier");
+ innerBank->parent->key="stale";auto staleParent=resolve(root({metricSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*staleParent.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.fontSize==16,"stale parent binding uses own ordinary base");
+ innerBank->parent=metric::Binding{"source","metrics",{}};
+ inner->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{glyph});
+ auto nearest=resolve(root({metricSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*nearest.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.fontSize==8,"marker cannot skip nearest metric source for outer matching owner");
+ auto duplicate=metricGlyph({raw(5),metricMarker(6),metricMarker(7)});
+ rejectWithoutClone([&]{resolve(root({metricSource({duplicate}),other}));},"duplicate metric markers reject before COW");
+ auto nonempty=metricMarker(6);nonempty->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{raw(7)});
+ rejectWithoutClone([&]{resolve(root({metricSource({metricGlyph({raw(5),nonempty})}),other}));},"nonempty metric marker rejects before COW");
+ metric::Step overflow{2,std::numeric_limits<Float>::max(),2,0,0,0,0,0,16,16};
+ check(!metric::apply(metric::State{24,36,1.5,0},overflow),"overflow declines without publishing invalid attributes");
+ check(metric::apply(metric::State{24,36,1.5,0},halfFont)->at(0)==12,"pure production evaluator matches selected font");
+ check(rawParses==0,"no raw conversion during metric selection");
+ std::cout<<"{\"metricAssertions\":"<<assertions-before<<",\"nativeExecution\":false}\n";return 0;
+}catch(const std::exception&e){std::cerr<<"text metric finite failure: "<<e.what()<<'\n';return 1;}}
+`,
 };
 for (const [profile, defines] of [
   ['android', ['-DANDROID']],
@@ -811,6 +911,7 @@ for (const [profile, defines] of [
         await mkdir(isolatedProduction);
         for (const header of [
           'PrelayoutResolver.h',
+          'NativeMetricData.h',
           'GeneratedParagraphOrigin.h',
           'StructuralComponentName.h',
         ]) {
@@ -836,7 +937,7 @@ for (const [profile, defines] of [
             ...defines,
             '-I' + isolatedProduction,
             '-I' + path.join(temp, 'adapter'),
-            path.join(temp, 'ColorControls.cpp'),
+            path.join(temp, 'MetricControls.cpp'),
             '-o',
             output,
           ],
@@ -853,13 +954,15 @@ for (const [profile, defines] of [
           .trim()
           .split('\n')
           .map((row) => JSON.parse(row));
-        assert.equal(rows.length, 4);
+        assert.equal(rows.length, 5);
         assert.equal(rows[1].generatedAssertions, 105);
         assert.equal(rows[1].nativeExecution, false);
         assert.equal(rows[2].siblingAssertions, 780);
         assert.equal(rows[2].nativeExecution, false);
         assert.ok(rows[3].colorAssertions >= 30);
         assert.equal(rows[3].nativeExecution, false);
+        assert.ok(rows[4].metricAssertions >= 35);
+        assert.equal(rows[4].nativeExecution, false);
       } finally {
         await rm(temp, { recursive: true, force: true });
       }

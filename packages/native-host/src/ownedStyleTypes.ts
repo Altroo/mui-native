@@ -1,5 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 export type { OwnedStyleProfile } from './ownedStyleMetadata';
+import type { OwnedMetricBank } from './nativeTextMetricData';
 import type { OwnedStyleProfile } from './ownedStyleMetadata';
 export interface OwnedStylePair {
   readonly schema: 1;
@@ -18,6 +19,7 @@ export interface OwnedStructuralProgramme {
   readonly peer?: CSSPeerIdentity | null;
   readonly textColors?: OwnedTextColorBank;
   readonly textColorBarriers?: number;
+  readonly textMetrics?: OwnedMetricBank;
 }
 export type OwnedTextColorBank = Readonly<{
   key: string;

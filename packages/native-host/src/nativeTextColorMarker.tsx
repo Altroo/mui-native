@@ -3,7 +3,12 @@
 // no wrapper, host replacement, nativeID change or late runtime discovery.
 import { useRef } from 'react';
 import type { ColorValue } from 'react-native';
-import { supportsInheritedTextColors, requireOwnedStyleProfile } from './ownedStyleBootstrap';
+import type { NativeMetricPresentation } from './nativeTextMetricData';
+import {
+  supportsInheritedTextColors,
+  supportsInheritedTextMetrics,
+  requireOwnedStyleProfile,
+} from './ownedStyleBootstrap';
 import { ownedStructuralCases } from './ownedStructuralCases';
 import { usePrelayoutActivation } from './ownedStructuralHost';
 import type { NativeTextColorBinding, OwnedTextColorBank } from './ownedStyleTypes';
@@ -24,6 +29,8 @@ function capture() {
 }
 const runtime = capture();
 export const supportsNativeTextColors = !!runtime;
+export const supportsNativeTextMetrics =
+  !!runtime && typeof supportsInheritedTextMetrics === 'function' && supportsInheritedTextMetrics();
 // Opaque platform/dynamic color objects stay on their ordinary RN path. They
 // are never replayed through an extra processor or treated as inheritance proof.
 function scalar(value: unknown): value is string | number | null | undefined {
@@ -61,14 +68,16 @@ export function prepareNativeTextColorBank(
 export function NativeTextColorMarker({
   binding,
   color,
+  metrics,
 }: {
   binding?: NativeTextColorBinding | undefined;
   color?: ColorValue | undefined;
+  metrics?: NativeMetricPresentation | undefined;
 }) {
   // A retained Text can leave its last source root while keeping COW props.
   // Keep its reset lease through unmount, including a later inactive binding.
   const hasOwnedColor = useRef(false);
-  if (binding) hasOwnedColor.current = true;
+  if (binding || metrics?.binding) hasOwnedColor.current = true;
   usePrelayoutActivation(hasOwnedColor.current ? runtime?.activation : undefined);
   if (!runtime) return null;
   const ordinary = scalar(color)
@@ -76,6 +85,21 @@ export function NativeTextColorMarker({
     : undefined;
   return (
     <runtime.Native
+      {...(supportsNativeTextMetrics
+        ? {
+            metricProgramme: metrics
+              ? {
+                  schema: 1,
+                  profile: runtime.profile,
+                  owner: metrics.binding?.owner ?? '',
+                  key: metrics.binding?.key ?? '',
+                  steps: metrics.binding?.steps ?? [],
+                  ordinary: metrics.ordinary,
+                  resets: metrics.resets,
+                }
+              : null,
+          }
+        : {})}
       colorProgramme={
         ordinary === undefined
           ? null

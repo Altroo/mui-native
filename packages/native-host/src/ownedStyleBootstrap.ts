@@ -27,6 +27,7 @@ export const supportsStructuralCases = bootstrap.supportsStructuralCases;
 /** Parent-projected pseudo targets require the matching native selector capability. */
 export const supportsParentStructuralCases = bootstrap.supportsParentStructuralCases;
 export const supportsInheritedTextColors = bootstrap.supportsInheritedTextColors;
+export const supportsInheritedTextMetrics = bootstrap.supportsInheritedTextMetrics;
 
 /** Full CSS peers require the newer matching binary, independently of positional v1. */
 export const supportsPeerStyleIdentity = bootstrap.supportsPeerStyleIdentity;

@@ -28,6 +28,10 @@ import {
   ownedStructuralCases,
   prepareNativeTextColorBank,
   supportsNativeTextColors,
+  supportsNativeTextMetrics,
+  prepareNativeMetricBank,
+  type OwnedMetricBank,
+  type NativeMetricStep,
   type OwnedTextColorBank,
 } from '@altroo/mui-native-host/internal/structural-root';
 import type { CSSPeerObservation, OwnedProgramme } from '@altroo/mui-native-host/internal/css-peer';
@@ -38,6 +42,10 @@ import {
   nativeColorSource,
   nativeTextColorBinding,
   retainNativeRootPreparation,
+  nativeMetricViewPlan,
+  nativeMetricBasis,
+  nativeMetricBinding,
+  nativeMetricState,
 } from '@altroo/mui-native-system/internal/prepared-style';
 
 const reportRuntimeError: Parameters<
@@ -95,6 +103,14 @@ function sameFacet(a: Record<string, unknown>, b: Record<string, unknown>): bool
   );
 }
 const colorBanks = new WeakMap<object, OwnedTextColorBank>();
+const metricBanks = new WeakMap<object, OwnedMetricBank>();
+const metricKeys = new Set(['fontSize', 'lineHeight', 'letterSpacing']);
+function withoutMetrics(value: Record<string, unknown>) {
+  return Object.fromEntries(Object.entries(value).filter(([key]) => !metricKeys.has(key)));
+}
+function onlyMetrics(value: Record<string, unknown>) {
+  return Object.fromEntries(Object.entries(value).filter(([key]) => metricKeys.has(key)));
+}
 const colorBarriers = new WeakMap<object, number>();
 /** Only evaluate prepared declarations. Genuine native inline values remain last. */
 export function prepareAccordionStructuralCases(input: Input): readonly NativeStyle[] {
@@ -106,6 +122,7 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
   const resolve = (facts?: number) => {
     const { computed, authored } = componentRootStyle(input.theme, '', {}, undefined, programme, {
       ...context,
+      captureMetricPlan: supportsNativeTextMetrics,
       ...(facts === undefined
         ? {}
         : { lastChild: !!(facts & 1), firstOfType: !!(facts & 2), lastOfType: !!(facts & 4) }),
@@ -113,7 +130,10 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
     const merged = mergeNativeRootStyle(input.direction, computed, authored);
     const metrics = nativeStyleTextMetrics([computed, authored]);
     const presentation = applyNativeTextMetrics(merged, computed, metrics) ?? merged;
+    const basis = nativeMetricBasis(computed);
     return {
+      metricBasis: basis,
+      metricInput: { presentation, metrics },
       color: presentation.color ?? inheritedColor,
       colorBarrier: nativeColorSource(presentation) === 'authored' && presentation.color != null,
       text: textFacet(presentation, metrics),
@@ -124,11 +144,48 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
   };
   const ordinary = resolve();
   const cases = Array.from({ length: 8 }, (_, facts) => resolve(facts));
+  const differentMetrics = cases.some(
+    (value) =>
+      !sameFacet(onlyMetrics(ordinary.text.style), onlyMetrics(value.text.style)) ||
+      !sameFacet(onlyMetrics(ordinary.text.metrics), onlyMetrics(value.text.metrics)),
+  );
+  const parentMetrics = nativeMetricBinding(input.parent);
+  const baseMetrics = input.parent
+    ? nativeMetricState(input.parent)
+    : ordinary.metricBasis
+      ? ([ordinary.metricBasis.rootSize, null, null, null] as const)
+      : undefined;
+  const metricPlan = (value: typeof ordinary) =>
+    value.metricBasis
+      ? nativeMetricViewPlan(
+          value.metricInput.presentation,
+          value.metricInput.metrics,
+          value.metricBasis,
+        )
+      : undefined;
+  const plans =
+    supportsNativeTextMetrics && (differentMetrics || parentMetrics)
+      ? [ordinary, ...cases].map(metricPlan)
+      : undefined;
+  const metricsBank =
+    supportsNativeTextMetrics &&
+    (differentMetrics || parentMetrics) &&
+    baseMetrics &&
+    plans?.[0] &&
+    plans.every((value) => value)
+      ? prepareNativeMetricBank(
+          plans.slice(1) as NativeMetricStep[],
+          plans[0],
+          baseMetrics,
+          parentMetrics,
+        )
+      : undefined;
+  const facet = metricsBank ? withoutMetrics : (value: Record<string, unknown>) => value;
   const differentText = cases.some(
     (value) =>
       ordinary.text.direction !== value.text.direction ||
-      !sameFacet(ordinary.text.style, value.text.style) ||
-      !sameFacet(ordinary.text.metrics, value.text.metrics),
+      !sameFacet(facet(ordinary.text.style), facet(value.text.style)) ||
+      !sameFacet(facet(ordinary.text.metrics), facet(value.text.metrics)),
   );
   if (differentText) {
     // Preserve the same owned host/ref and descendant state. Ordinary text
@@ -136,6 +193,7 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
     return Array(8).fill(ordinary.view) as NativeStyle[];
   }
   const views = cases.map((value) => value.view);
+  if (metricsBank) metricBanks.set(views, metricsBank);
   const barriers = [...cases, ordinary].reduce(
     (mask, value, index) => mask | (value.colorBarrier ? 1 << index : 0),
     0,
@@ -179,11 +237,13 @@ export function AccordionRootTextScope({
 }) {
   const marker = useContext(AccordionStructuralRootContext);
   const bank = cases ? colorBanks.get(cases) : undefined;
+  const metrics = cases ? metricBanks.get(cases) : undefined;
   const source = owner ?? marker;
   return (
     <NativeTextScope
       {...props}
       colorBinding={source && bank ? { owner: source, key: bank.key } : undefined}
+      metricBinding={source && metrics ? { owner: source, key: metrics.key, steps: [] } : undefined}
     />
   );
 }
@@ -245,6 +305,9 @@ export function AccordionStructuralView({
             ...(owner ? { owner } : {}),
             ...(!basis && owner && cases && colorBarriers.has(cases)
               ? { textColorBarriers: colorBarriers.get(cases)! }
+              : {}),
+            ...(!basis && owner && cases && metricBanks.has(cases)
+              ? { textMetrics: metricBanks.get(cases)! }
               : {}),
             ...(!basis && owner && cases && colorBanks.has(cases)
               ? { textColors: colorBanks.get(cases)! }

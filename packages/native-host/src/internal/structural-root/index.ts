@@ -5,6 +5,22 @@ export { ownedStructuralCases } from '../../ownedStructuralCases';
 export {
   NativeTextColorMarker,
   supportsNativeTextColors,
+  supportsNativeTextMetrics,
   prepareNativeTextColorBank,
 } from '../../nativeTextColorMarker';
 export type { NativeTextColorBinding, OwnedTextColorBank } from '../../nativeTextColorMarker';
+
+export type {
+  NativeMetricState,
+  NativeMetricStep,
+  NativeMetricBinding,
+  OwnedMetricBank,
+  NativeMetricPresentation,
+} from '../../nativeTextMetricData';
+
+export {
+  prepareNativeMetricBank,
+  applyNativeMetricStep,
+  isNativeMetricScalar,
+  isNativeMetricStep,
+} from '../../nativeTextMetricData';

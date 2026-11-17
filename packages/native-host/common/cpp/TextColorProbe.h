@@ -72,7 +72,74 @@ inline folly::dynamic runTextColorProbe(const PropsParserContext &context,
   reject([&]{ (void)prepareColorBank(context, shortBank); });
   auto missing = bank; missing.erase("ordinary");
   reject([&]{ (void)prepareColorBank(context, missing); });
-  return D::object("schema", 1)("checks", int64_t(checks))
+  // Exercise the actual marker descriptor, including omitted/replaced/reset
+  // metric props. These controls run only in this opt-in conversion diagnostic.
+  const auto colorChecks = checks;
+  const D step = D::array(2, .5, 2, 0, 0, 0, 0, 0, 16, 16);
+  D path = D::array(); path.push_back(step);
+  const D metricBinding = D::object("schema", 1)("profile", owned_channel::nativeProfile())
+      ("owner", "source")("key", "metrics")("steps", path)
+      ("ordinary", D::array(8, 12, 0))("resets", 0);
+  auto metricActive = clone(empty, D::object("metricProgramme", metricBinding));
+  require(metricActive->metrics && metricActive->metrics->binding.owner == "source", "Actual descriptor prepares metrics");
+  require(metricActive->metrics->binding.steps.size() == 1, "Actual descriptor prepares passive path");
+  auto metricOmitted = clone(metricActive, D::object("nativeID", "retained"));
+  require(metricOmitted->metrics == metricActive->metrics, "Omitted metric payload reuses preparation");
+  auto metricChanged = metricBinding; metricChanged["ordinary"][0] = 9;
+  auto metricReplaced = clone(metricOmitted, D::object("metricProgramme", metricChanged));
+  require(metricReplaced->metrics->ordinary[0] == 9 && metricActive->metrics->ordinary[0] == 8, "Replacement never mutates accepted data");
+  auto metricCleared = clone(metricReplaced, D::object("metricProgramme", nullptr));
+  require(!metricCleared->metrics && !clone(metricCleared, D::object())->metrics, "Explicit clear survives omitted update");
+  auto metricReset = metricBinding; metricReset["owner"] = ""; metricReset["key"] = "";
+  metricReset["ordinary"] = D::array(nullptr, nullptr, nullptr); metricReset["resets"] = 7;
+  auto resetMetrics = clone(metricActive, D::object("metricProgramme", metricReset));
+  require(resetMetrics->metrics->resets == 7 && !resetMetrics->metrics->ordinary[0], "Ordinary null reset survives typed preparation");
+  auto preparedStep = altroo::text_metrics::prepareStep(step);
+  auto selectedMetrics = altroo::text_metrics::apply(altroo::text_metrics::State{24, 36, 1.5, 0}, preparedStep);
+  require(selectedMetrics && selectedMetrics->at(0) == 12 && selectedMetrics->at(1) == 18, "Native operations match relative CSS contract");
+  for (const auto &badSchema : {D(true), D("1"), D(2), D(nullptr)}) {
+    auto bad = metricBinding; bad["schema"] = badSchema;
+    reject([&]{ (void)clone(metricActive, D::object("metricProgramme", bad)); });
+  }
+  for (const auto &mask : {D(-1), D(8), D(1.00000001)}) {
+    auto bad = metricBinding; bad["resets"] = mask;
+    reject([&]{ (void)clone(metricActive, D::object("metricProgramme", bad)); });
+  }
+  for (const int index : {0, 2, 4, 6}) {
+    auto bad = step; bad[index] = 1.00000001;
+    reject([&]{ (void)altroo::text_metrics::prepareStep(bad); });
+  }
+  for (const int index : {1, 3, 5, 8, 9}) {
+    auto bad = step; bad[index] = -1;
+    reject([&]{ (void)altroo::text_metrics::prepareStep(bad); });
+  }
+  // Validate signs before conversion: Android Float can underflow a negative
+  // double to signed zero, which must not legalize an invalid source value.
+  for (const int index : {1, 3, 5, 9}) {
+    auto bad = step; bad[index] = -1e-100;
+    reject([&]{ (void)altroo::text_metrics::prepareStep(bad); });
+  }
+  auto negativeOrdinary = metricBinding; negativeOrdinary["ordinary"][0] = -1e-100;
+  reject([&]{ (void)clone(metricActive, D::object("metricProgramme", negativeOrdinary)); });
+  auto tooLong = metricBinding;
+  for (int i = 0; i < 128; ++i) tooLong["steps"].push_back(step);
+  reject([&]{ (void)clone(metricActive, D::object("metricProgramme", tooLong)); });
+  auto wrongMetricProfile = metricBinding; wrongMetricProfile["profile"]["rn"] = "stale";
+  reject([&]{ (void)clone(metricActive, D::object("metricProgramme", wrongMetricProfile)); });
+  auto extraMetric = metricBinding; extraMetric["extra"] = 1;
+  reject([&]{ (void)clone(metricActive, D::object("metricProgramme", extraMetric)); });
+  auto partialMetric = metricBinding; partialMetric["key"] = "";
+  reject([&]{ (void)clone(metricActive, D::object("metricProgramme", partialMetric)); });
+  D metricCases = D::array(); for (int i = 0; i < 8; ++i) metricCases.push_back(step);
+  D metricBank = D::object("key", "metrics")("base", D::array(24, 36, 1.5, 0))
+      ("cases", metricCases)("ordinary", step)("parent", nullptr);
+  require(altroo::text_metrics::prepareBank(metricBank)->cases.size() == 8, "Exact eight metric cases prepared");
+  metricBank["parent"] = D::object("owner", "parent")("key", "parent-metrics")("steps", path);
+  require(altroo::text_metrics::prepareBank(metricBank)->parent->steps.size() == 1, "Parent operation path prepared");
+  metricBank["cases"].pop_back();
+  reject([&]{ (void)altroo::text_metrics::prepareBank(metricBank); });
+  return D::object("schema", 1)("checks", int64_t(colorChecks))("metricChecks", int64_t(checks - colorChecks))
+
       ("ordinaryConversionOnly", true)("mountedOrDrawnProved", false);
 }
 } // namespace altroo::text_color

@@ -88,6 +88,10 @@
     "ReactCommon/react/renderer/components/text/TextProps.h": "b451fcb328e18f0dc43dc255d4eb23e9598839e96db3d200b687c8f25920526c",
     "ReactCommon/react/renderer/components/text/platform/android/react/renderer/components/text/HostPlatformParagraphProps.h": "cf19053bf0283fa0f0f60baf8adf10e6034fbfabdbe9fe141d1aedc6d19d9422",
     "ReactCommon/react/renderer/components/text/platform/cxx/react/renderer/components/text/HostPlatformParagraphProps.h": "086a3856ccf1f6d24b8cf908ef6e08fbfcb7b78b7726b29dbdfaccf749151411",
-    "ReactCommon/react/renderer/graphics/Color.h": "34f61d6d8dbed0c47306192275d299223338d8622110e35a89921341c186b824"
+    "ReactCommon/react/renderer/graphics/Color.h": "34f61d6d8dbed0c47306192275d299223338d8622110e35a89921341c186b824",
+    "ReactCommon/react/renderer/attributedstring/TextAttributes.cpp": "ca25b474e9c113a103b4eac7a49a0cd3f3c13cf27b012f1618a456a02fd3c65a",
+    "ReactCommon/react/renderer/graphics/platform/ios/react/renderer/graphics/Float.h": "015268b87b83427237e68ce8c249897a944d02452d8c7566717b55911bc9ba29",
+    "ReactCommon/react/renderer/graphics/platform/android/react/renderer/graphics/Float.h": "d4f32dd02101ae5f6c53ef8ac941837fc1b006676d244fdeac53838ba0b8f924",
+    "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h": "d4f32dd02101ae5f6c53ef8ac941837fc1b006676d244fdeac53838ba0b8f924"
   }
 }

@@ -89,3 +89,11 @@ export { nativeColorLayer, nativeColorSource } from '../../nativeColorSources';
 
 export { inheritNativeTextColorBinding, nativeTextColorBinding } from '../../nativeColorSources';
 export { nativeTextColorChildren } from '../../textScope';
+
+export { nativeMetricPlan, nativeMetricBasis, nativeMetricViewPlan } from '../../nativeText';
+export {
+  nativeMetricBinding,
+  nativeMetricState,
+  nativeMetricTypographyTail,
+  retainNativeMetricScope,
+} from '../../nativeMetricSources';

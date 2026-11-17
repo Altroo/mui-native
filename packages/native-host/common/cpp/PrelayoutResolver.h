@@ -84,6 +84,17 @@ struct ColorSource {
   SharedColor selected;
   const ColorSource *parent;
 };
+struct MetricSource {
+  std::string owner;
+  std::shared_ptr<const altroo::text_metrics::Bank> bank;
+  std::optional<altroo::text_metrics::State> selected;
+};
+struct TextChange {
+  bool hasColor{};
+  SharedColor color{};
+  bool hasMetrics{};
+  std::array<altroo::text_metrics::Number, 3> metrics{};
+};
 struct Plan {
   Counts counts;
   std::unordered_map<const ShadowNode *, Choice> changed;
@@ -92,7 +103,7 @@ struct Plan {
   std::unordered_map<const ShadowNode *, Region> lastElements;
   SurfaceId surface;
   std::vector<Decision> decisions;
-  std::unordered_map<const ShadowNode *, SharedColor> textChanges;
+  std::unordered_map<const ShadowNode *, TextChange> textChanges;
 };
 inline bool controlledView(const ShadowNode &node) {
   // Core RTTI may be duplicated across Android DSOs. The registry's canonical
@@ -215,7 +226,8 @@ inline bool observedPeerMatch(const altroo::owned_transport_proof::PreparedData 
 // cached native tags, callbacks, per-frame work, or out-of-tree accepted reads.
 inline void scan(const SharedNode &node, const ShadowNode *parent,
                  const ShadowNode *grandparent, std::size_t depth, Plan &plan,
-                 const ColorSource *inheritedColor = nullptr) {
+                 const ColorSource *inheritedColor = nullptr,
+                 const MetricSource *inheritedMetrics = nullptr) {
   if (!node)
     throw std::invalid_argument("Null candidate child");
   if (depth > maxDepth || ++plan.counts.scanned > maxNodes)
@@ -227,6 +239,8 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
     throw std::invalid_argument("Duplicate candidate family/tag");
   std::optional<ColorSource> ownColor;
   const ColorSource *color = inheritedColor;
+  std::optional<MetricSource> ownMetrics;
+  const MetricSource *metrics = inheritedMetrics;
   if (const auto *target =
           dynamic_cast<const AltrooStructuralViewShadowNode *>(node.get())) {
     if (target->getConcreteProps().prepared &&
@@ -290,6 +304,18 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
           color = &*ownColor;
         }
       }
+      if (!projected && !props.prepared->owner.empty() && props.prepared->textMetrics) {
+        const auto &bank = props.prepared->textMetrics;
+        std::optional<altroo::text_metrics::State> base = bank->base;
+        // An exact nearest source is mandatory. A passive path is already
+        // prepared in the binding; unrelated physical ancestors are not guessed.
+        if (bank->parent && inheritedMetrics && inheritedMetrics->selected &&
+            bank->parent->owner == inheritedMetrics->owner && bank->parent->key == inheritedMetrics->bank->key)
+          base = altroo::text_metrics::applySteps(*inheritedMetrics->selected, bank->parent->steps);
+        auto selected = base ? altroo::text_metrics::apply(*base, facts < 8 ? bank->cases[facts] : bank->ordinary) : std::nullopt;
+        ownMetrics.emplace(MetricSource{props.prepared->owner, bank, std::move(selected)});
+        metrics = &*ownMetrics;
+      }
       const bool last = facts != ordinary && (facts & 1);
       if (props.prepared->programme == altroo::owned_transport_proof::Programme::Numeric &&
           (!std::isfinite(props.normalPaddingBottom) ||
@@ -318,31 +344,54 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
   const auto *text = dynamic_cast<const TextShadowNode *>(node.get());
   if (paragraph || text) {
     const altroo::text_color::ColorBinding *binding = nullptr;
+    const altroo::text_metrics::Presentation *metricBinding = nullptr;
     for (const auto &child : children) {
       const auto *marker = dynamic_cast<const altroo::text_color::ColorMarkerShadowNode *>(child.get());
       if (!marker) continue;
-      if (!marker->getChildren().empty()) throw std::invalid_argument("Text color marker must be empty");
-      const auto &prepared = marker->getConcreteProps().prepared;
-      if (!prepared) continue;
-      if (binding) throw std::invalid_argument("Duplicate native text color binding");
-      binding = prepared.get();
+      if (!marker->getChildren().empty()) throw std::invalid_argument("Text presentation marker must be empty");
+      const auto &props = marker->getConcreteProps();
+      if (props.prepared) {
+        if (binding) throw std::invalid_argument("Duplicate native text color binding");
+        binding = props.prepared.get();
+      }
+      if (props.metrics) {
+        if (metricBinding) throw std::invalid_argument("Duplicate native text metric binding");
+        metricBinding = props.metrics.get();
+      }
     }
+    TextChange change;
+    const auto &current = paragraph ? paragraph->getConcreteProps().textAttributes : text->getConcreteProps().textAttributes;
     if (binding) {
-      // Ordinary presentation is mandatory. A retained core props object may
-      // contain a prior native COW color although React sent no color delta.
+      // COW props may retain selected values when React sends no style delta.
       auto selected = binding->ordinary;
       for (auto source = color; source; source = source->parent)
         if (binding->owner == source->owner && binding->key == source->bank->key) {
           selected = source->selected;
           break;
         }
-      const auto &current = paragraph ? paragraph->getConcreteProps().textAttributes.foregroundColor
-                                      : text->getConcreteProps().textAttributes.foregroundColor;
-      if (current != selected) plan.textChanges.emplace(node.get(), std::move(selected));
+      if (current.foregroundColor != selected) { change.hasColor = true; change.color = std::move(selected); }
     }
+    if (metricBinding) {
+      auto selected = metricBinding->ordinary;
+      if (metrics && metrics->selected && metricBinding->binding.owner == metrics->owner &&
+          metricBinding->binding.key == metrics->bank->key) {
+        const auto value = altroo::text_metrics::applySteps(*metrics->selected, metricBinding->binding.steps);
+        if (value) {
+          const std::array<std::size_t, 3> fields{0, 1, 3};
+          for (std::size_t index = 0; index < 3; ++index)
+            if (!(metricBinding->resets & (1u << index))) selected[index] = (*value)[fields[index]];
+        }
+      }
+      if (!altroo::text_metrics::equal(current.fontSize, altroo::text_metrics::attribute(selected[0])) ||
+          !altroo::text_metrics::equal(current.lineHeight, altroo::text_metrics::attribute(selected[1])) ||
+          !altroo::text_metrics::equal(current.letterSpacing, altroo::text_metrics::attribute(selected[2]))) {
+        change.hasMetrics = true; change.metrics = std::move(selected);
+      }
+    }
+    if (change.hasColor || change.hasMetrics) plan.textChanges.emplace(node.get(), std::move(change));
   }
   for (std::size_t index = 0; index < children.size(); ++index)
-    scan(children[index], node.get(), parent, depth + 1, plan, color);
+    scan(children[index], node.get(), parent, depth + 1, plan, color, metrics);
 }
 struct Rewritten {
   SharedNode node;
@@ -374,12 +423,24 @@ inline Rewritten rewrite(const SharedNode &node, Plan &plan) {
     // RN then regenerates its own attributed string, measurement and state.
     if (const auto *paragraph = dynamic_cast<const ParagraphShadowNode *>(node.get())) {
       auto props = std::make_shared<ParagraphProps>(paragraph->getConcreteProps());
-      props->textAttributes.foregroundColor = textChoice->second;
+      const auto &change = textChoice->second;
+      if (change.hasColor) props->textAttributes.foregroundColor = change.color;
+      if (change.hasMetrics) {
+        props->textAttributes.fontSize = altroo::text_metrics::attribute(change.metrics[0]);
+        props->textAttributes.lineHeight = altroo::text_metrics::attribute(change.metrics[1]);
+        props->textAttributes.letterSpacing = altroo::text_metrics::attribute(change.metrics[2]);
+      }
       props->seal();
       newProps = std::move(props);
     } else if (const auto *text = dynamic_cast<const TextShadowNode *>(node.get())) {
       auto props = std::make_shared<TextProps>(text->getConcreteProps());
-      props->textAttributes.foregroundColor = textChoice->second;
+      const auto &change = textChoice->second;
+      if (change.hasColor) props->textAttributes.foregroundColor = change.color;
+      if (change.hasMetrics) {
+        props->textAttributes.fontSize = altroo::text_metrics::attribute(change.metrics[0]);
+        props->textAttributes.lineHeight = altroo::text_metrics::attribute(change.metrics[1]);
+        props->textAttributes.letterSpacing = altroo::text_metrics::attribute(change.metrics[2]);
+      }
       props->seal();
       newProps = std::move(props);
     } else throw std::logic_error("Text color target changed type");

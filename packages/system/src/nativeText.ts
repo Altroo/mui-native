@@ -4,6 +4,8 @@ import { tracksNativeTextContext, retainNativeTextNormalization } from './native
 import { I18nManager, Platform, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
 import type { Theme } from './theme';
 import { diagnostic } from './diagnostics';
+import { supportsNativeTextMetrics } from '@altroo/mui-native-host/internal/structural-root';
+import type { NativeMetricStep } from '@altroo/mui-native-host/internal/structural-root';
 import { defaultTypographyFontFamily } from './typography';
 
 export type NativeCssTextAlign = 'left' | 'right' | 'start' | 'end';
@@ -14,6 +16,8 @@ export type NativeTextContext = {
   parentTextAlign?: NativeCssTextAlign | undefined;
   nativeTextMetrics?: Record<string, unknown>;
   inheritOnly?: boolean;
+  /** @internal Capture only along an active, first-party metric source. */
+  captureMetricPlan?: boolean;
   nativeStyle?: TextStyle;
 };
 const numeric = '[+-]?(?:\\d+\\.?\\d*|\\.\\d+)(?:e[+-]?\\d+)?';
@@ -58,11 +62,14 @@ export function inheritedTextStyle(style: TextStyle): TextStyle {
 }
 const relativeLineHeights = new WeakMap<object, number>();
 const cssTextMetrics = new WeakMap<object, Record<string, unknown>>();
+// A synthesized inherited ratio is not an authored constant declaration.
+const inheritedMetricRatios = new WeakSet<object>();
 const relativeMetricKeys = ['fontSize', 'lineHeight', 'letterSpacing', 'textAlign'] as const;
 // Preserve authored CSS metrics across library-generated style arrays. Literal native
 // styles clear that provenance and retain their absolute React Native semantics.
 export function nativeStyleTextMetrics(style: StyleProp<TextStyle>): Record<string, unknown> {
   const metrics: Record<string, unknown> = {};
+  let inheritedHeight = false;
   const visit = (entry: StyleProp<TextStyle>) => {
     if (Array.isArray(entry)) {
       for (const child of entry) visit(child);
@@ -73,11 +80,17 @@ export function nativeStyleTextMetrics(style: StyleProp<TextStyle>): Record<stri
     const authored = cssTextMetrics.get(flat);
     for (const key of relativeMetricKeys)
       if (Object.hasOwn(flat, key)) {
-        if (authored && Object.hasOwn(authored, key)) metrics[key] = authored[key];
-        else delete metrics[key];
+        if (authored && Object.hasOwn(authored, key)) {
+          metrics[key] = authored[key];
+          if (key === 'lineHeight') inheritedHeight = inheritedMetricRatios.has(flat);
+        } else {
+          delete metrics[key];
+          if (key === 'lineHeight') inheritedHeight = false;
+        }
       }
   };
   visit(style);
+  if (inheritedHeight) inheritedMetricRatios.add(metrics);
   return metrics;
 }
 export function applyNativeTextMetrics<T extends TextStyle>(
@@ -93,6 +106,7 @@ export function applyNativeTextMetrics<T extends TextStyle>(
       else delete adjusted[key];
     }
   cssTextMetrics.set(adjusted, { ...metrics });
+  if (inheritedMetricRatios.has(metrics)) inheritedMetricRatios.add(adjusted);
   const ratio = relativeLineHeights.get(resolved);
   if (ratio !== undefined) relativeLineHeights.set(adjusted, ratio);
   return adjusted;
@@ -149,21 +163,107 @@ export function nativeTextAlignmentStyle<T extends TextStyle | null | undefined>
   cssTextMetrics.set(native, { ...metrics, textAlign: alignment, emittedTextAlign: physical });
   return native;
 }
-function size(value: unknown, em: number, rem: number): number | undefined {
-  if (typeof value === 'number') return Number.isFinite(value) ? value : undefined;
+type Length = readonly [relative: boolean, value: number];
+type ParsedLength = readonly [unit: string | undefined, amount: number];
+function parsedLength(value: unknown): ParsedLength | undefined {
+  if (typeof value === 'number') return Number.isFinite(value) ? [undefined, value] : undefined;
   if (typeof value !== 'string') return undefined;
   const multiplied = value
     .trim()
     .match(new RegExp(`^calc\\(\\s*(${numeric})\\s*\\*\\s*(${numeric})(px|rem|em|%)\\s*\\)$`, 'i'));
   if (multiplied)
-    return size(`${Number(multiplied[1]) * Number(multiplied[2])}${multiplied[3]}`, em, rem);
+    return parsedLength(`${Number(multiplied[1]) * Number(multiplied[2])}${multiplied[3]}`);
   const match = value.trim().match(dimension);
   if (!match) return undefined;
-  const amount = Number(match[1]);
-  const unit = match[2]?.toLowerCase();
+  return [match[2]?.toLowerCase(), Number(match[1])];
+}
+function length(value: unknown, rem: number): Length | undefined {
+  const parsed = parsedLength(value);
+  if (!parsed) return undefined;
+  const [unit, amount] = parsed;
+  const result = amount * (unit === 'rem' ? rem : unit === '%' ? 0.01 : 1);
+  return Number.isFinite(result) ? [unit === 'em' || unit === '%', result] : undefined;
+}
+function size(value: unknown, em: number, rem: number): number | undefined {
+  const parsed = parsedLength(value);
+  if (!parsed) return undefined;
+  const [unit, amount] = parsed;
+  // Preserve the ordinary normalizer's arithmetic order, including percentages.
   const result = amount * (unit === 'rem' ? rem : unit === 'em' ? em : unit === '%' ? em / 100 : 1);
   return Number.isFinite(result) ? result : undefined;
 }
+const metricPlans = new WeakMap<
+  object,
+  { rootSize: number; fallbackSize: number; step?: NativeMetricStep | undefined }
+>();
+export function nativeMetricPlan(style: object): NativeMetricStep | undefined {
+  return metricPlans.get(style)?.step;
+}
+export function nativeMetricBasis(
+  style: object,
+): Readonly<{ rootSize: number; fallbackSize: number }> | undefined {
+  return metricPlans.get(style);
+}
+export function copyNativeMetricPlan(source: object, target: object): void {
+  const plan = metricPlans.get(source);
+  if (plan) metricPlans.set(target, plan);
+}
+
+/** Compile a View scope from its final owned layers, including native resets. */
+export function nativeMetricViewPlan(
+  style: TextStyle,
+  metrics: Record<string, unknown>,
+  basis: Readonly<{ rootSize: number; fallbackSize: number }>,
+): NativeMetricStep | undefined {
+  const rem = basis.rootSize;
+  const fontValue = Object.hasOwn(metrics, 'fontSize') ? metrics.fontSize : style.fontSize;
+  const font = length(fontValue, rem);
+  const validFont = font && font[1] >= 0 ? font : undefined;
+  const cssHeight = Object.hasOwn(metrics, 'lineHeight');
+  const value = cssHeight ? metrics.lineHeight : style.lineHeight;
+  let heightMode: NativeMetricStep[2] = 0,
+    heightValue = 0,
+    ratioMode: NativeMetricStep[4] = 0,
+    ratioValue = 0;
+  if (inheritedMetricRatios.has(metrics)) {
+    heightMode = 2;
+  } else if (!cssHeight && value != null) {
+    if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) return;
+    heightMode = 1;
+    heightValue = value;
+    ratioMode = 2;
+  } else if (!cssHeight || value == null || value === 'inherit' || value === 'unset') {
+    heightMode = validFont ? 2 : 0;
+  } else {
+    const unitless =
+      typeof value === 'number' ||
+      (typeof value === 'string' && new RegExp(`^${numeric}$`).test(value.trim()));
+    const parsed = length(value, rem);
+    if (parsed && parsed[1] >= 0) {
+      heightMode = unitless ? 3 : parsed[0] ? 4 : 1;
+      heightValue = parsed[1];
+      ratioMode = unitless ? 1 : 2;
+      ratioValue = unitless ? parsed[1] : 0;
+    } else ratioMode = 2;
+  }
+  const spacingValue = Object.hasOwn(metrics, 'letterSpacing')
+    ? metrics.letterSpacing
+    : style.letterSpacing;
+  const spacing = spacingValue === 'normal' ? ([false, 0] as const) : length(spacingValue, rem);
+  return Object.freeze([
+    validFont ? (validFont[0] ? 2 : 1) : 0,
+    validFont?.[1] ?? 0,
+    heightMode,
+    heightValue,
+    ratioMode,
+    ratioValue,
+    spacing ? (spacing[0] ? 2 : 1) : 0,
+    spacing?.[1] ?? 0,
+    rem,
+    basis.fallbackSize,
+  ]);
+}
+
 // The matching Android host registers this private alias with Typeface.DEFAULT.
 // Only CSS-derived defaults use it; genuine native style layers remain untouched.
 const androidDefaultFontFamily = '__AltrooMUIPlatformDefaultSansSerif';
@@ -200,6 +300,8 @@ export function normalizeTextStyle(
   // keep the default reporter and their existing diagnostic behavior.
   report: (code: string, message: string, property: string) => void = diagnostic,
 ): Record<string, unknown> {
+  const inheritedMetricHeight =
+    !!context.captureMetricPlan && inheritedMetricRatios.has(context.nativeTextMetrics ?? {});
   input = { ...input, ...context.nativeTextMetrics };
   const output = { ...input };
   let rootFont: number | undefined;
@@ -298,9 +400,9 @@ export function normalizeTextStyle(
   if (alignment === 'left' || alignment === 'right') output.textAlign = alignment;
   if (alignment === 'start') output.textAlign = direction === 'rtl' ? 'right' : 'left';
   if (alignment === 'end') output.textAlign = direction === 'rtl' ? 'left' : 'right';
+  const nativeHeight = context.nativeStyle?.lineHeight;
   const nativeAbsoluteHeight =
-    context.nativeStyle?.lineHeight != null &&
-    !Object.hasOwn(context.nativeTextMetrics ?? {}, 'lineHeight');
+    nativeHeight != null && !Object.hasOwn(context.nativeTextMetrics ?? {}, 'lineHeight');
   const inheritsHeight =
     input.lineHeight == null || input.lineHeight === 'inherit' || input.lineHeight === 'unset';
   const inheritedRatio = nativeAbsoluteHeight
@@ -322,6 +424,77 @@ export function normalizeTextStyle(
       } else metrics[key] = key === 'lineHeight' ? authoredLineHeight : input[key];
     }
   cssTextMetrics.set(output, metrics);
+  if (
+    context.captureMetricPlan &&
+    (inheritedMetricHeight || (inheritsHeight && lineHeightRatio !== undefined))
+  )
+    inheritedMetricRatios.add(output);
+  if (supportsNativeTextMetrics || context.captureMetricPlan) {
+    let step: NativeMetricStep | undefined;
+    if (context.captureMetricPlan) {
+      const font =
+        typeof nativeSize === 'number' && Number.isFinite(nativeSize) && nativeSize >= 0
+          ? ([false, nativeSize] as const)
+          : Object.hasOwn(output, 'fontSize')
+            ? length(input.fontSize, rem)
+            : undefined;
+      const height =
+        nativeAbsoluteHeight && typeof nativeHeight === 'number' && Number.isFinite(nativeHeight)
+          ? ([false, nativeHeight] as const)
+          : Object.hasOwn(output, 'lineHeight')
+            ? length(authoredLineHeight, rem)
+            : undefined;
+      const spacing = Object.hasOwn(output, 'letterSpacing')
+        ? input.letterSpacing === 'normal'
+          ? ([false, 0] as const)
+          : length(input.letterSpacing, rem)
+        : undefined;
+      const synthesizedHeight =
+        inheritedMetricHeight ||
+        (inheritsHeight &&
+          input.lineHeight !== null &&
+          (!context.inheritOnly || ownSize !== undefined || nativeSize !== undefined));
+      const heightMode = nativeAbsoluteHeight
+        ? 1
+        : synthesizedHeight
+          ? 2
+          : inheritsHeight
+            ? 0
+            : height
+              ? lineHeightRatio !== undefined
+                ? 3
+                : height[0]
+                  ? 4
+                  : 1
+              : 0;
+      const ratioMode = nativeAbsoluteHeight
+        ? 2
+        : inheritedMetricHeight
+          ? 0
+          : inheritsHeight
+            ? synthesizedHeight || context.inheritOnly
+              ? 0
+              : 2
+            : lineHeightRatio !== undefined
+              ? 1
+              : 2;
+      if ((!nativeAbsoluteHeight || height) && (!font || font[1] >= 0))
+        step = Object.freeze([
+          font ? (font[0] ? 2 : 1) : 0,
+          font?.[1] ?? 0,
+          heightMode,
+          nativeAbsoluteHeight ? (height?.[1] ?? 0) : (lineHeightRatio ?? height?.[1] ?? 0),
+          ratioMode,
+          ratioMode === 1 ? lineHeightRatio! : 0,
+          spacing ? (spacing[0] ? 2 : 1) : 0,
+          spacing?.[1] ?? 0,
+          rem,
+          fallbackSize,
+        ]);
+    }
+    metricPlans.set(output, Object.freeze({ rootSize: rem, fallbackSize, step }));
+  }
+
   if (tracksNativeTextContext(context))
     retainNativeTextNormalization(output, {
       rootFont,

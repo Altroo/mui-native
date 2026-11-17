@@ -467,6 +467,7 @@ for (const shape of ['base', 'raw', 'origin', 'both']) {
         'requireGeneratedTextOrigin',
         'requireProfile',
         'supportsInheritedTextColors',
+        'supportsInheritedTextMetrics',
         'supportsParentStructuralCases',
         'supportsPeerStyleIdentity',
         'supportsStructuralCases',
@@ -828,4 +829,39 @@ test('stock Text color capability requires its exact version and parent selector
       }
     }
   }
+});
+
+// Metric recipes require all predecessor capabilities and are captured once.
+test('stock Text metrics require exact version, color and parent capabilities', () => {
+  for (const structural of [undefined, 'first-last-of-type-v2'])
+    for (const parent of [undefined, 'parent-structural-facts-v1'])
+      for (const color of [undefined, 'stock-text-color-v1'])
+        for (const metrics of [
+          undefined,
+          false,
+          'stock-text-metrics-v0',
+          'stock-text-metrics-v1',
+        ]) {
+          const data = metadata();
+          if (structural) data.structuralCases = structural;
+          if (parent) data.parentStructuralCases = parent;
+          if (color) data.inheritedTextColors = color;
+          if (metrics !== undefined) data.inheritedTextMetrics = metrics;
+          let calls = 0;
+          const boot = fresh()(
+            () => ({
+              getStructuralStyleMetadata() {
+                calls++;
+                return JSON.stringify(data);
+              },
+            }),
+            expected,
+          );
+          boot.requireProfile();
+          const wanted = !!structural && !!parent && !!color && metrics === 'stock-text-metrics-v1';
+          assert.equal(boot.supportsInheritedTextMetrics(), wanted);
+          data.inheritedTextMetrics = 'changed-after-capture';
+          assert.equal(boot.supportsInheritedTextMetrics(), wanted);
+          assert.equal(calls, 1);
+        }
 });

@@ -3,6 +3,7 @@
 import { codegenNativeComponent, type ViewProps, type CodegenTypes } from 'react-native';
 export interface NativeProps extends ViewProps {
   colorProgramme?: CodegenTypes.UnsafeMixed;
+  metricProgramme?: CodegenTypes.UnsafeMixed;
 }
 export default codegenNativeComponent<NativeProps>('AltrooMUITextColorMarker', {
   interfaceOnly: true,
