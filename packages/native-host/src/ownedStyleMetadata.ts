@@ -160,7 +160,7 @@ function parse(raw: unknown): Metadata {
       value.inheritedTextColors === 'stock-text-color-v1',
     inheritedTextMetrics:
       Object.hasOwn(value, 'inheritedTextMetrics') &&
-      value.inheritedTextMetrics === 'stock-text-metrics-v1',
+      value.inheritedTextMetrics === 'stock-text-metrics-v2',
     peerStyleIdentity:
       Object.hasOwn(value, 'structuralCases') && value.structuralCases === 'first-last-of-type-v2',
     parentStructuralCases:

@@ -886,6 +886,18 @@ int main(){try{
  rejectWithoutClone([&]{resolve(root({metricSource({duplicate}),other}));},"duplicate metric markers reject before COW");
  auto nonempty=metricMarker(6);nonempty->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{raw(7)});
  rejectWithoutClone([&]{resolve(root({metricSource({metricGlyph({raw(5),nonempty})}),other}));},"nonempty metric marker rejects before COW");
+ auto naturalStep=inheritMetric;naturalStep[2]=6;naturalStep[4]=2;
+ auto naturalState=metric::apply(metric::State{24,64,4,0},naturalStep);
+ check(naturalState&&naturalState->at(1)==-1&&!naturalState->at(2),"natural operation clears parent height and unitless ratio");
+ auto naturalText=valueFor({naturalStep,halfFont});
+#ifdef ANDROID
+ check(naturalText.lineHeight==-1,"Android natural height uses UNSET, never zero span");
+#else
+ check(naturalText.lineHeight==0,"iOS natural height removes paragraph min/max constraint");
+#endif
+ auto zeroHeight=inheritMetric;zeroHeight[2]=1;zeroHeight[3]=0;zeroHeight[4]=2;
+ check(valueFor({zeroHeight}).lineHeight==0,"genuine native zero stays zero on both platforms");
+ check(naturalText.fontSize==12,"natural height retains selected relative font");
  metric::Step overflow{2,std::numeric_limits<Float>::max(),2,0,0,0,0,0,16,16};
  check(!metric::apply(metric::State{24,36,1.5,0},overflow),"overflow declines without publishing invalid attributes");
  check(metric::apply(metric::State{24,36,1.5,0},halfFont)->at(0)==12,"pure production evaluator matches selected font");

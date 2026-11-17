@@ -48,7 +48,7 @@ jest.mock('../packages/native-host/src/ownedStructuralCases', () => ({
     encode: require('../packages/native-host/src/ownedStyleEncoding').encodeStructuralCases,
   },
 }));
-import type { TextStyle } from 'react-native';
+import { Platform, type TextStyle } from 'react-native';
 import { render, cleanup } from '@testing-library/react-native';
 import {
   Accordion,
@@ -251,4 +251,58 @@ test('invalid or out-of-native-range recipes stay on ordinary fallback', () => {
   ).toBeUndefined();
   const huge: NativeMetricStep = [2, 3e38, 0, 0, 0, 0, 0, 0, 16, 16];
   expect(prepareNativeMetricBank(Array(8).fill(huge), huge, base)).toBeUndefined();
+});
+
+test.each(['ios', 'android'] as const)(
+  'normal source cases clear parent ratios on %s',
+  (platform) => {
+    // Keep the encoder double aligned with the RN platform double.
+    const profile =
+      require('../packages/native-host/src/ownedStyleBootstrap').requireOwnedStyleProfile();
+    const parsingProfile = jest.replaceProperty(profile, 'platform', platform);
+    const os = jest.replaceProperty(Platform, 'OS', platform);
+    try {
+      const tree = render(
+        <ThemeProvider theme={theme}>
+          <Box sx={{ fontSize: '16px', lineHeight: 2 }}>
+            <Accordion
+              testID="panel"
+              sx={{
+                lineHeight: 1.5,
+                minHeight: 48,
+                '&:first-of-type': { fontSize: '24px', lineHeight: 'normal', minHeight: 80 },
+              }}
+            >
+              <AccordionSummary>
+                <Typography testID="glyph" variant="inherit" sx={{ fontSize: '0.5em' }}>
+                  Glyph
+                </Typography>
+              </AccordionSummary>
+            </Accordion>
+          </Box>
+        </ThemeProvider>,
+      );
+      const bank = source(tree).textMetrics;
+      expect(applyNativeMetricStep(bank.base, bank.cases[2])).toEqual([24, -1, null, null]);
+      expect(selected(tree, 'glyph', 2)).toEqual([12, -1, null]);
+      expect(selected(tree, 'glyph', 0)).toEqual([8, 12, null]);
+    } finally {
+      os.restore();
+      parsingProfile.restore();
+    }
+  },
+);
+
+test('a genuine native height overrides a passive View CSS normal declaration', () => {
+  const tree = render(
+    scene(
+      <Box sx={{ lineHeight: 'normal' }} style={{ lineHeight: 13 }}>
+        <Typography testID="view-normal-native" variant="inherit" sx={{ fontSize: '0.5em' }}>
+          Glyph
+        </Typography>
+      </Box>,
+    ),
+  );
+  expect(selected(tree, 'view-normal-native', 0)).toEqual([8, 13, null]);
+  expect(selected(tree, 'view-normal-native', 2)).toEqual([12, 13, null]);
 });

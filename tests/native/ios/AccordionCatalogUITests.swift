@@ -664,7 +664,7 @@ final class TextColorMarkerProbeUITests: XCTestCase {
       XCTAssertEqual(report["nativeID"] as? String, "kept-public-native-id")
       let parser = try XCTUnwrap(report["parser"] as? [String: Any])
       XCTAssertGreaterThanOrEqual(try XCTUnwrap(parser["checks"] as? Int), 30)
-      XCTAssertGreaterThanOrEqual(try XCTUnwrap(parser["metricChecks"] as? Int), 30)
+      XCTAssertGreaterThanOrEqual(try XCTUnwrap(parser["metricChecks"] as? Int), 35)
       XCTAssertEqual(parser["ordinaryConversionOnly"] as? Bool, true)
       XCTAssertEqual(parser["mountedOrDrawnProved"] as? Bool, false)
 
@@ -731,6 +731,7 @@ final class AccordionTextMetricsProbeUITests: XCTestCase {
       XCTAssertEqual(report["development"] as? Bool, false)
       XCTAssertEqual(report["mode"] as? String, mode)
       XCTAssertEqual(report["stage"] as? Int, stage)
+      let naturalHeight = try XCTUnwrap(report["naturalHeight"] as? Bool)
       XCTAssertEqual(try XCTUnwrap(report["fontScale"] as? Double), 1, accuracy: 0.01)
       let rows = try XCTUnwrap(report["rows"] as? [[String: Any]])
       XCTAssertEqual(Set(rows.compactMap { $0["id"] as? String }), Set(["a", "b", "c"]))
@@ -785,7 +786,13 @@ final class AccordionTextMetricsProbeUITests: XCTestCase {
           XCTAssertEqual(try XCTUnwrap(nativeFrame["x"]) - (try XCTUnwrap(frame["x"])), Double(16 + column * 64), accuracy: 1)
           XCTAssertGreaterThanOrEqual(try XCTUnwrap(nativeFrame["y"]), try XCTUnwrap(frame["y"]))
           XCTAssertLessThanOrEqual(try XCTUnwrap(nativeFrame["y"]) + (try XCTUnwrap(nativeFrame["height"])), (try XCTUnwrap(frame["y"])) + 48.5)
-          let expectedHeight: Double = kind == "inherited" ? (first ? 18 : 12) : kind == "large" ? 18 : kind == "small" ? 12 : 13
+          // A natural-height reference is independent core Text with no lineHeight.
+          // Compare native event geometry, rather than approximating a font ratio.
+          let naturalLine = try XCTUnwrap((texts["large"]?["line"]) as? [String: Double])
+          let largeHeight = naturalHeight ? try XCTUnwrap(naturalLine["height"]) : 18
+          XCTAssertGreaterThan(largeHeight, 0)
+          XCTAssertLessThan(largeHeight, 24)
+          let expectedHeight: Double = kind == "inherited" ? (first ? largeHeight : 12) : kind == "large" ? largeHeight : kind == "small" ? 12 : 13
           XCTAssertEqual(try XCTUnwrap(nativeFrame["height"]), expectedHeight, accuracy: 1)
         }
       }
@@ -805,4 +812,68 @@ final class AccordionTextMetricsProbeUITests: XCTestCase {
   }
   func testDefaultNativeTextMetrics() throws { try run("default") }
   func testForwardedNativeTextMetrics() throws { try run("forwarded") }
+}
+
+/// Ordinary Text/View reset and scaling controls, independent of selector paint.
+@MainActor
+final class NormalLineHeightProbeUITests: XCTestCase {
+  private let app = XCUIApplication(bundleIdentifier: "dev.altroo.muinative.catalog")
+  private func node(_ id: String) -> XCUIElement { app.descendants(matching: .any).matching(identifier: id).firstMatch }
+  private func receipt() -> [String: Any]? {
+    guard let data = node("normal-height-receipt").label.data(using: .utf8) else { return nil }
+    return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
+  }
+  private func wait(_ condition: @escaping () -> Bool) {
+    let expectation = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in condition() }, object: nil)
+    XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: 12), .completed)
+  }
+  func testNaturalResetAndRestoration() throws {
+    continueAfterFailure = false
+    app.launchArguments = []
+    app.launch()
+    XCTAssertTrue(node("normal-height-receipt").waitForExistence(timeout: 20))
+    var tags: [String: Int] = [:], revisions: [String: Int] = [:]
+    for stage in 0...4 {
+      if stage > 0 {
+        node("normal-height-next").tap()
+        wait { self.receipt()?["stage"] as? Int == stage && self.receipt()?["phase"] as? String == "idle" }
+      }
+      node("normal-height-capture").tap()
+      wait { self.receipt()?["phase"] as? String == "complete" && self.receipt()?["stage"] as? Int == stage }
+      let report = try XCTUnwrap(receipt())
+      XCTAssertEqual(report["schemaVersion"] as? Int, 1)
+      XCTAssertEqual(report["stage"] as? Int, stage)
+      XCTAssertEqual(report["development"] as? Bool, false)
+      XCTAssertGreaterThan(try XCTUnwrap(report["fontScale"] as? Double), 0)
+      let rows = try XCTUnwrap(report["rows"] as? [[String: Any]])
+      XCTAssertEqual(Set(rows.compactMap { $0["kind"] as? String }), Set(["mui", "native", "view", "capped", "unscaled"]))
+      XCTAssertEqual(rows.count, 5)
+      for row in rows {
+        let kind = try XCTUnwrap(row["kind"] as? String)
+        let source = try XCTUnwrap(row["source"] as? [String: Any]), control = try XCTUnwrap(row["control"] as? [String: Any])
+        let sourceLine = try XCTUnwrap(source["line"] as? [String: Double]), controlLine = try XCTUnwrap(control["line"] as? [String: Double])
+        for field in ["width", "height", "ascender", "descender", "capHeight", "xHeight"] {
+          XCTAssertEqual(try XCTUnwrap(sourceLine[field]), try XCTUnwrap(controlLine[field]), accuracy: 0.5, kind + "/" + field)
+        }
+        let sourceFrame = try XCTUnwrap(source["frame"] as? [String: Double]), controlFrame = try XCTUnwrap(control["frame"] as? [String: Double])
+        XCTAssertEqual(try XCTUnwrap(sourceFrame["height"]), try XCTUnwrap(controlFrame["height"]), accuracy: 0.5)
+        for (role, value) in [("source", source), ("control", control)] {
+          let key = kind + ":" + role, tag = try XCTUnwrap(value["tag"] as? Int), revision = try XCTUnwrap(value["revision"] as? Int)
+          XCTAssertGreaterThan(tag, 0)
+          XCTAssertEqual(value["lineTag"] as? Int, tag)
+          XCTAssertEqual(value["attaches"] as? Int, 1)
+          XCTAssertEqual(value["cleanups"] as? Int, 0)
+          if stage == 0 { tags[key] = tag } else {
+            XCTAssertEqual(tag, tags[key])
+            XCTAssertGreaterThan(revision, try XCTUnwrap(revisions[key]), "Changed font/height requires a new native line event")
+          }
+          revisions[key] = revision
+        }
+      }
+      let attachment = XCTAttachment(data: try JSONSerialization.data(withJSONObject: report, options: [.sortedKeys]), uniformTypeIdentifier: "public.json")
+      attachment.name = "normal-height-stage-" + String(stage)
+      attachment.lifetime = .keepAlways
+      add(attachment)
+    }
+  }
 }

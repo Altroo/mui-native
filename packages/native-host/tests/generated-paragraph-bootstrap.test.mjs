@@ -841,6 +841,7 @@ test('stock Text metrics require exact version, color and parent capabilities', 
           false,
           'stock-text-metrics-v0',
           'stock-text-metrics-v1',
+          'stock-text-metrics-v2',
         ]) {
           const data = metadata();
           if (structural) data.structuralCases = structural;
@@ -858,7 +859,7 @@ test('stock Text metrics require exact version, color and parent capabilities', 
             expected,
           );
           boot.requireProfile();
-          const wanted = !!structural && !!parent && !!color && metrics === 'stock-text-metrics-v1';
+          const wanted = !!structural && !!parent && !!color && metrics === 'stock-text-metrics-v2';
           assert.equal(boot.supportsInheritedTextMetrics(), wanted);
           data.inheritedTextMetrics = 'changed-after-capture';
           assert.equal(boot.supportsInheritedTextMetrics(), wanted);

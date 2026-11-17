@@ -37,10 +37,11 @@ inline Step prepareStep(const folly::dynamic &value) {
   if (!value.isArray() || value.size() != 10) throw std::invalid_argument("Invalid native metric operation");
   Step result; for (std::size_t i = 0; i < 10; ++i) result[i] = scalar(value[i]);
   for (const auto index : {0, 2, 4, 6}) {
-    const Float maximum = index == 2 ? 5 : index == 4 ? 2 : 3;
+    const Float maximum = index == 2 ? 6 : index == 4 ? 2 : 3;
     if (std::trunc(value[index].asDouble()) != value[index].asDouble() || result[index] < 0 || result[index] > maximum)
       throw std::invalid_argument("Invalid native metric opcode");
   }
+  if (result[2] == 6 && result[4] != 2) throw std::invalid_argument("Natural height must clear inherited ratio");
   if (value[1].asDouble() < 0 || value[3].asDouble() < 0 || value[5].asDouble() < 0 || result[8] <= 0 || value[9].asDouble() < 0)
     throw std::invalid_argument("Invalid native metric basis");
   return result;
@@ -58,7 +59,10 @@ inline Binding prepareBinding(const folly::dynamic &value) {
 }
 inline State prepareState(const folly::dynamic &value) {
   if (!value.isArray() || value.size() != 4) throw std::invalid_argument("Invalid native metric state");
-  return {nullable(value[0], true), nullable(value[1], true), nullable(value[2], true), nullable(value[3])};
+  const auto height = nullable(value[1]);
+  if (height && value[1].asDouble() < 0 && value[1].asDouble() != -1)
+    throw std::invalid_argument("Invalid native metric height state");
+  return {nullable(value[0], true), height, nullable(value[2], true), nullable(value[3])};
 }
 inline std::shared_ptr<const Bank> prepareBank(const folly::dynamic &value) {
   if (!value.isObject() || value.size() != 5 || !value.count("key") || !value.count("base") ||
@@ -70,6 +74,14 @@ inline std::shared_ptr<const Bank> prepareBank(const folly::dynamic &value) {
   for (std::size_t i = 0; i < 8; ++i) result->cases[i] = prepareStep(value.at("cases")[i]);
   if (!value.at("parent").isNull()) result->parent = prepareBinding(value.at("parent"));
   return result;
+}
+inline Number ordinaryHeight(const folly::dynamic &value) {
+  const auto height = nullable(value);
+#ifdef ANDROID
+  if (height && value.asDouble() == -1) return height;
+#endif
+  if (height && value.asDouble() < 0) throw std::invalid_argument("Invalid ordinary native height");
+  return height;
 }
 inline std::shared_ptr<const Presentation> preparePresentation(const folly::dynamic &value) {
   if (value.isNull()) return nullptr;
@@ -83,7 +95,7 @@ inline std::shared_ptr<const Presentation> preparePresentation(const folly::dyna
   Binding binding{identity(value.at("owner"), 256, true), identity(value.at("key"), 4096, true), prepareSteps(value.at("steps"))};
   if (binding.owner.empty() != binding.key.empty()) throw std::invalid_argument("Incomplete native metric source");
   return std::make_shared<const Presentation>(Presentation{std::move(binding),
-    {nullable(value.at("ordinary")[0], true), nullable(value.at("ordinary")[1], true), nullable(value.at("ordinary")[2])},
+    {nullable(value.at("ordinary")[0], true), ordinaryHeight(value.at("ordinary")[1]), nullable(value.at("ordinary")[2])},
     static_cast<std::uint8_t>(resets)});
 }
 } // namespace altroo::text_metrics

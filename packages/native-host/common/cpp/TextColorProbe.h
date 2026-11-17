@@ -138,6 +138,32 @@ inline folly::dynamic runTextColorProbe(const PropsParserContext &context,
   require(altroo::text_metrics::prepareBank(metricBank)->parent->steps.size() == 1, "Parent operation path prepared");
   metricBank["cases"].pop_back();
   reject([&]{ (void)altroo::text_metrics::prepareBank(metricBank); });
+  const D natural = D::array(0, 0, 6, 0, 2, 0, 0, 0, 16, 16);
+  require(altroo::text_metrics::prepareStep(natural)[2] == 6, "Natural height is a prepared semantic operation");
+  const auto naturalState = altroo::text_metrics::apply(altroo::text_metrics::State{24, 64, 4, 0}, altroo::text_metrics::prepareStep(natural));
+  require(naturalState && naturalState->at(1) == -1 && !naturalState->at(2), "Natural height removes the inherited ratio");
+#ifdef ANDROID
+  require(altroo::text_metrics::emittedHeight(naturalState->at(1)) == -1, "Android natural uses UNSET");
+#else
+  require(altroo::text_metrics::emittedHeight(naturalState->at(1)) == 0, "iOS natural removes paragraph constraints");
+#endif
+  auto naturalBinding = metricBinding; naturalBinding["steps"] = D::array(); naturalBinding["steps"].push_back(natural);
+  require(clone(metricActive, D::object("metricProgramme", naturalBinding))->metrics->binding.steps[0][2] == 6, "Actual descriptor retains natural semantics");
+  require(altroo::text_metrics::prepareState(D::array(16, -1, nullptr, 0))[1] == -1, "Canonical semantic state accepts natural height");
+  for (const auto value : {-0.5, -1e-100})
+    reject([&]{ (void)altroo::text_metrics::prepareState(D::array(16, value, nullptr, 0)); });
+  auto badNatural = natural; badNatural[4] = 0;
+  reject([&]{ (void)altroo::text_metrics::prepareStep(badNatural); });
+  auto unknownHeight = natural; unknownHeight[2] = 7;
+  reject([&]{ (void)altroo::text_metrics::prepareStep(unknownHeight); });
+  auto ordinaryNatural = metricBinding; ordinaryNatural["ordinary"][1] = -1;
+#ifdef ANDROID
+  require(clone(metricActive, D::object("metricProgramme", ordinaryNatural))->metrics->ordinary[1] == -1, "Android ordinary UNSET remains physical");
+#else
+  reject([&]{ (void)clone(metricActive, D::object("metricProgramme", ordinaryNatural)); });
+#endif
+  auto tinyHeight = metricBinding; tinyHeight["ordinary"][1] = -1e-100;
+  reject([&]{ (void)clone(metricActive, D::object("metricProgramme", tinyHeight)); });
   return D::object("schema", 1)("checks", int64_t(colorChecks))("metricChecks", int64_t(checks - colorChecks))
 
       ("ordinaryConversionOnly", true)("mountedOrDrawnProved", false);

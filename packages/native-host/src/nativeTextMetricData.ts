@@ -6,12 +6,13 @@ export type NativeMetricState = readonly [
   ratio: number | null,
   spacing: number | null,
 ];
-// Height: retain/absolute/parent ratio/own ratio/font factor/clear.
+// Height: retain/absolute/parent ratio/own ratio/font factor/clear/natural.
+// Internal height -1 denotes natural metrics; emission uses platform semantics.
 // Ratio metadata is separate from computed height, as in ordinary text scopes.
 export type NativeMetricStep = readonly [
   fontMode: 0 | 1 | 2 | 3,
   fontValue: number,
-  heightMode: 0 | 1 | 2 | 3 | 4 | 5,
+  heightMode: 0 | 1 | 2 | 3 | 4 | 5 | 6,
   heightValue: number,
   ratioMode: 0 | 1 | 2,
   ratioValue: number,
@@ -52,8 +53,9 @@ export function isNativeMetricStep(step: NativeMetricStep): boolean {
       (index) =>
         Number.isInteger(step[index]) &&
         step[index] >= 0 &&
-        step[index] <= (index === 2 ? 5 : index === 4 ? 2 : 3),
+        step[index] <= (index === 2 ? 6 : index === 4 ? 2 : 3),
     ) &&
+    (step[2] !== 6 || step[4] === 2) &&
     step[1] >= 0 &&
     step[3] >= 0 &&
     step[5] >= 0 &&
@@ -66,7 +68,9 @@ function isState(state: NativeMetricState): boolean {
     state.length === 4 &&
     state.every(
       (value, index) =>
-        value === null || (isNativeMetricScalar(value) && (index === 3 || value >= 0)),
+        value === null ||
+        (isNativeMetricScalar(value) &&
+          (index === 3 || value >= 0 || (index === 1 && value === -1))),
     )
   );
 }
@@ -106,7 +110,9 @@ export function applyNativeMetricStep(
             : state[2] * effective
           : step[2] === 5
             ? null
-            : step[3] * effective;
+            : step[2] === 6
+              ? -1
+              : step[3] * effective;
   const ratio = step[4] === 0 ? state[2] : step[4] === 1 ? step[5] : null;
   const spacing =
     step[6] === 0 ? state[3] : step[6] === 1 ? step[7] : step[6] === 2 ? step[7] * effective : null;
@@ -115,7 +121,7 @@ export function applyNativeMetricStep(
       (value) => value !== null && !isNativeMetricScalar(value),
     ) ||
     (font !== null && font < 0) ||
-    (height !== null && height < 0) ||
+    (height !== null && height < 0 && height !== -1) ||
     (ratio !== null && ratio < 0)
   )
     return;

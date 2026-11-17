@@ -225,7 +225,10 @@ export function nativeMetricViewPlan(
     heightValue = 0,
     ratioMode: NativeMetricStep[4] = 0,
     ratioValue = 0;
-  if (inheritedMetricRatios.has(metrics)) {
+  if (value === 'normal' || (!cssHeight && Platform.OS === 'android' && value === -1)) {
+    heightMode = 6;
+    ratioMode = 2;
+  } else if (inheritedMetricRatios.has(metrics)) {
     heightMode = 2;
   } else if (!cssHeight && value != null) {
     if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) return;
@@ -362,13 +365,10 @@ export function normalizeTextStyle(
   if (output.lineHeight !== undefined) {
     const value = output.lineHeight;
     if (value === 'normal') {
-      if (context.parentTextStyle?.lineHeight != null)
-        report(
-          'typography-inheritance',
-          'lineHeight: normal cannot reset an inherited native line height; use an explicit px length or unitless ratio.',
-          'lineHeight',
-        );
-      delete output.lineHeight;
+      // NaN/undefined inherits in stock TextAttributes::apply. UIKit's zero
+      // constraint and Android's UNSET sentinel explicitly restore natural
+      // font metrics; Android zero would instead create a zero-height span.
+      output.lineHeight = Platform.OS === 'android' ? -1 : 0;
     } else {
       const unitless =
         typeof value === 'number' ||
@@ -454,36 +454,46 @@ export function normalizeTextStyle(
         (inheritsHeight &&
           input.lineHeight !== null &&
           (!context.inheritOnly || ownSize !== undefined || nativeSize !== undefined));
-      const heightMode = nativeAbsoluteHeight
-        ? 1
-        : synthesizedHeight
-          ? 2
-          : inheritsHeight
-            ? 0
-            : height
-              ? lineHeightRatio !== undefined
-                ? 3
-                : height[0]
-                  ? 4
-                  : 1
-              : 0;
-      const ratioMode = nativeAbsoluteHeight
-        ? 2
-        : inheritedMetricHeight
-          ? 0
-          : inheritsHeight
-            ? synthesizedHeight || context.inheritOnly
+      const naturalHeight =
+        authoredLineHeight === 'normal' ||
+        (nativeAbsoluteHeight && Platform.OS === 'android' && nativeHeight === -1);
+      const heightMode = naturalHeight
+        ? 6
+        : nativeAbsoluteHeight
+          ? 1
+          : synthesizedHeight
+            ? 2
+            : inheritsHeight
               ? 0
-              : 2
-            : lineHeightRatio !== undefined
-              ? 1
-              : 2;
-      if ((!nativeAbsoluteHeight || height) && (!font || font[1] >= 0))
+              : height
+                ? lineHeightRatio !== undefined
+                  ? 3
+                  : height[0]
+                    ? 4
+                    : 1
+                : 0;
+      const ratioMode =
+        nativeAbsoluteHeight || naturalHeight
+          ? 2
+          : inheritedMetricHeight
+            ? 0
+            : inheritsHeight
+              ? synthesizedHeight || context.inheritOnly
+                ? 0
+                : 2
+              : lineHeightRatio !== undefined
+                ? 1
+                : 2;
+      if ((!nativeAbsoluteHeight || height || naturalHeight) && (!font || font[1] >= 0))
         step = Object.freeze([
           font ? (font[0] ? 2 : 1) : 0,
           font?.[1] ?? 0,
           heightMode,
-          nativeAbsoluteHeight ? (height?.[1] ?? 0) : (lineHeightRatio ?? height?.[1] ?? 0),
+          naturalHeight
+            ? 0
+            : nativeAbsoluteHeight
+              ? (height?.[1] ?? 0)
+              : (lineHeightRatio ?? height?.[1] ?? 0),
           ratioMode,
           ratioMode === 1 ? lineHeightRatio! : 0,
           spacing ? (spacing[0] ? 2 : 1) : 0,

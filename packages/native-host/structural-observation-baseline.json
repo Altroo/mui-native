@@ -92,6 +92,11 @@
     "ReactCommon/react/renderer/attributedstring/TextAttributes.cpp": "ca25b474e9c113a103b4eac7a49a0cd3f3c13cf27b012f1618a456a02fd3c65a",
     "ReactCommon/react/renderer/graphics/platform/ios/react/renderer/graphics/Float.h": "015268b87b83427237e68ce8c249897a944d02452d8c7566717b55911bc9ba29",
     "ReactCommon/react/renderer/graphics/platform/android/react/renderer/graphics/Float.h": "d4f32dd02101ae5f6c53ef8ac941837fc1b006676d244fdeac53838ba0b8f924",
-    "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h": "d4f32dd02101ae5f6c53ef8ac941837fc1b006676d244fdeac53838ba0b8f924"
+    "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Float.h": "d4f32dd02101ae5f6c53ef8ac941837fc1b006676d244fdeac53838ba0b8f924",
+    "ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTAttributedTextUtils.mm": "9cbbb59d3885f30c8a8dc463780a3401e83ef5502b8dc0db83c9bd13fd8f1069",
+    "ReactAndroid/src/main/java/com/facebook/react/views/text/TextAttributeProps.kt": "2312b2a52222046737ce93a67dda418d3bbb2db92f7005a06f2f35fecc30ba39",
+    "ReactAndroid/src/main/java/com/facebook/react/views/text/TextLayoutManager.kt": "5f0e46a199d851ab3e23790678563650a72ed4dab7d52a2db96349a73abad8ce",
+    "ReactAndroid/src/main/java/com/facebook/react/views/text/internal/span/CustomLineHeightSpan.kt": "e1d8e9d6df9be11b9231597e63ae07eb2d45c95bcfd626ef4c5746c15b09026d",
+    "ReactAndroid/src/main/java/com/facebook/react/common/ReactConstants.kt": "d201a06d203cea0bfe9efedaef7b7687a6a5b4dfd5792c7965a1ea3a5b6745ae"
   }
 }

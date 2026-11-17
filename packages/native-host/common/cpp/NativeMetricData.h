@@ -13,6 +13,7 @@
 namespace altroo::text_metrics {
 using facebook::react::Float;
 using Number = std::optional<Float>;
+// Height -1 is a prepared natural-metrics operation, never an inherited NaN.
 using State = std::array<Number, 4>;
 using Step = std::array<Float, 10>;
 struct Binding final { std::string owner; std::string key; std::vector<Step> steps; };
@@ -32,19 +33,27 @@ inline std::optional<State> apply(const State &before, const Step &step) {
   const Float effective = font.value_or(step[9]);
   const Number height = heightMode == 0 ? before[1] : heightMode == 1 ? Number(step[3])
       : heightMode == 2 ? (before[2] ? Number(*before[2] * effective) : before[1])
-      : heightMode == 5 ? std::nullopt : Number(step[3] * effective);
+      : heightMode == 5 ? std::nullopt : heightMode == 6 ? Number(-1) : Number(step[3] * effective);
   const Number ratio = ratioMode == 0 ? before[2] : ratioMode == 1 ? Number(step[5]) : std::nullopt;
   const Number spacing = spacingMode == 0 ? before[3] : spacingMode == 1 ? Number(step[7])
       : spacingMode == 2 ? Number(step[7] * effective) : std::nullopt;
   State result{font, height, ratio, spacing};
   for (std::size_t i = 0; i < 4; ++i)
-    if (result[i] && (!std::isfinite(*result[i]) || (i < 3 && *result[i] < 0))) return std::nullopt;
+    if (result[i] && (!std::isfinite(*result[i]) || (i < 3 && *result[i] < 0 && !(i == 1 && *result[i] == -1)))) return std::nullopt;
   return result;
 }
 inline std::optional<State> applySteps(State value, const std::vector<Step> &steps) {
   for (const auto &step : steps) {
     auto next = altroo::text_metrics::apply(value, step); if (!next) return std::nullopt; value = *next;
   }
+  return value;
+}
+// Keep ordinary native props physical. Only a selected semantic natural height
+// is adapted here, before copying it into stock Text/Paragraph typed props.
+inline Number emittedHeight(const Number &value) {
+#ifndef ANDROID
+  if (value && *value == -1) return Number(0);
+#endif
   return value;
 }
 inline Float attribute(const Number &value) { return value.value_or(std::numeric_limits<Float>::quiet_NaN()); }

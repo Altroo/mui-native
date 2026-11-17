@@ -67,6 +67,7 @@ type Report = {
   pixelRatio: number;
   mode: Mode;
   stage: number;
+  naturalHeight: boolean;
   phase: 'idle' | 'sampling' | 'complete' | 'error';
   rows: RowReceipt[];
   error?: string;
@@ -99,7 +100,17 @@ const Counter = forwardRef<CounterHandle, { id: Id }>(function Counter({ id }, r
 });
 
 /** Stable props ensure a keyed reorder cannot refresh the row's captured input. */
-const Row = memo(function Row({ id, mode, targets }: { id: Id; mode: Mode; targets: Targets }) {
+const Row = memo(function Row({
+  id,
+  mode,
+  targets,
+  naturalHeight,
+}: {
+  id: Id;
+  mode: Mode;
+  targets: Targets;
+  naturalHeight: boolean;
+}) {
   targets.renders.set(id, (targets.renders.get(id) ?? 0) + 1);
   targets.observationRevision++;
   const rootRef = useCallback(
@@ -139,14 +150,21 @@ const Row = memo(function Row({ id, mode, targets }: { id: Id; mode: Mode; targe
       disableGutters
       expanded
       slotProps={{ transition: { timeout: 0 } }}
-      sx={rootStyle}
+      sx={
+        naturalHeight
+          ? {
+              ...rootStyle,
+              '&:first-of-type': { ...rootStyle['&:first-of-type'], lineHeight: 'normal' },
+            }
+          : rootStyle
+      }
       style={{ backgroundColor: paint[id] }}
     >
       <AccordionSummary
         slotProps={{ content: { style: { margin: 0, gap: 4, alignItems: 'center' } } }}
       >
         {kinds.map((kind) => (
-          <Glyph key={kind} id={id} kind={kind} targets={targets} />
+          <Glyph key={kind} id={id} kind={kind} targets={targets} naturalHeight={naturalHeight} />
         ))}
       </AccordionSummary>
       <Counter ref={counterRef} id={id} />
@@ -154,7 +172,17 @@ const Row = memo(function Row({ id, mode, targets }: { id: Id; mode: Mode; targe
   );
 });
 /** Three authored controls distinguish relative inheritance from absolute native paint. */
-function Glyph({ id, kind, targets }: { id: Id; kind: Kind; targets: Targets }) {
+function Glyph({
+  id,
+  kind,
+  targets,
+  naturalHeight,
+}: {
+  id: Id;
+  kind: Kind;
+  targets: Targets;
+  naturalHeight: boolean;
+}) {
   const key = id + ':' + kind;
   const ref = useCallback(
     (node: TextInstance | null) => {
@@ -210,7 +238,8 @@ function Glyph({ id, kind, targets }: { id: Id; kind: Kind; targets: Targets }) 
           width: 60,
           color: '#000',
           fontSize: kind === 'small' ? 8 : kind === 'large' ? 12 : 10,
-          lineHeight: kind === 'small' ? 12 : kind === 'large' ? 18 : 13,
+          lineHeight:
+            kind === 'small' ? 12 : kind === 'large' ? (naturalHeight ? undefined : 18) : 13,
         }}
       >
         MMMM
@@ -270,7 +299,7 @@ async function rowReceipt(id: Id, targets: Targets): Promise<RowReceipt> {
     text,
   };
 }
-function Panel({ mode }: { mode: Mode }) {
+function Panel({ mode, naturalHeight }: { mode: Mode; naturalHeight: boolean }) {
   const targets = useRef<Targets>({
     observationRevision: 0,
     roots: new Map(),
@@ -288,6 +317,7 @@ function Panel({ mode }: { mode: Mode }) {
     pixelRatio: PixelRatio.get(),
     mode,
     stage,
+    naturalHeight,
   };
   const [report, setReport] = useState<Report>({ ...metadata, phase: 'idle', rows: [] });
   const job = useRef<Job | null>(null);
@@ -391,7 +421,7 @@ function Panel({ mode }: { mode: Mode }) {
           />
         ) : null}
         {order.map((id) => (
-          <Row key={id} id={id} mode={mode} targets={targets} />
+          <Row key={id} id={id} mode={mode} targets={targets} naturalHeight={naturalHeight} />
         ))}
         {stage === 2 ? (
           <View
@@ -412,7 +442,9 @@ function Panel({ mode }: { mode: Mode }) {
     </View>
   );
 }
-export function AccordionTextMetricsProbe() {
+export function AccordionTextMetricsProbe({
+  naturalHeight = false,
+}: { naturalHeight?: boolean } = {}) {
   const [selection, setSelection] = useState({ mode: 'default' as Mode, epoch: 0 });
   return (
     <ThemeProvider theme={theme}>
@@ -429,7 +461,13 @@ export function AccordionTextMetricsProbe() {
             </Button>
           ))}
         </View>
-        <Panel key={selection.epoch} mode={selection.mode} />
+        {naturalHeight ? (
+          <Box sx={{ fontSize: '16px', lineHeight: 4 }}>
+            <Panel key={selection.epoch} mode={selection.mode} naturalHeight />
+          </Box>
+        ) : (
+          <Panel key={selection.epoch} mode={selection.mode} naturalHeight={false} />
+        )}
       </View>
     </ThemeProvider>
   );

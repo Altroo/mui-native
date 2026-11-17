@@ -379,7 +379,8 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
         if (value) {
           const std::array<std::size_t, 3> fields{0, 1, 3};
           for (std::size_t index = 0; index < 3; ++index)
-            if (!(metricBinding->resets & (1u << index))) selected[index] = (*value)[fields[index]];
+            if (!(metricBinding->resets & (1u << index))) selected[index] = index == 1
+                ? altroo::text_metrics::emittedHeight((*value)[1]) : (*value)[fields[index]];
         }
       }
       if (!altroo::text_metrics::equal(current.fontSize, altroo::text_metrics::attribute(selected[0])) ||

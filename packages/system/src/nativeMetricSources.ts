@@ -1,6 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Private immutable inheritance paths, anchored only at an actual owned root.
-import type { TextStyle } from 'react-native';
+import { Platform, type TextStyle } from 'react-native';
 import {
   supportsNativeTextMetrics,
   isNativeMetricScalar,
@@ -36,6 +36,15 @@ export function retainNativeMetricScope(
   steps: readonly NativeMetricStep[] | undefined,
 ): void {
   if (!supportsNativeTextMetrics) return;
+  if (
+    typeof style.lineHeight === 'number' &&
+    style.lineHeight < 0 &&
+    !(Platform.OS === 'android' && style.lineHeight === -1)
+  ) {
+    states.delete(scope);
+    bindings.delete(scope);
+    return;
+  }
   states.set(
     scope,
     Object.freeze([
@@ -84,7 +93,9 @@ export function nativeMetricPresentation(
       const value = style[key];
       return (
         value != null &&
-        (typeof value !== 'number' || !isNativeMetricScalar(value) || (index < 2 && value < 0))
+        (typeof value !== 'number' ||
+          !isNativeMetricScalar(value) ||
+          (index < 2 && value < 0 && !(index === 1 && Platform.OS === 'android' && value === -1)))
       );
     })
   )
@@ -115,12 +126,13 @@ export function nativeMetricTypographyTail(
   const font = nullable(style.fontSize),
     height = nullable(style.lineHeight),
     spacing = nullable(style.letterSpacing);
+  const naturalHeight = literalHeight && Platform.OS === 'android' && height === -1;
   return Object.freeze([
     literalFont ? (font === null ? 3 : 1) : 0,
     font ?? 0,
-    literalHeight ? (height === null ? 5 : 1) : 0,
-    height ?? 0,
-    0,
+    naturalHeight ? 6 : literalHeight ? (height === null ? 5 : 1) : 0,
+    naturalHeight ? 0 : (height ?? 0),
+    naturalHeight ? 2 : 0,
     0,
     literalSpacing ? (spacing === null ? 3 : 1) : 0,
     spacing ?? 0,
