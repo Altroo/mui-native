@@ -81,7 +81,7 @@ export type BoxProps<R extends Root = typeof View, AdditionalProps = {}> = [Nati
 type DefaultBoxProps = Omit<BoxProps, 'component'> & { component?: undefined };
 type Keys<T> = T extends unknown ? keyof T : never;
 // Preserve the relationship between a conditional spread's root and its props;
-// a default-root branch cannot accept a concrete custom component. Otherwise
+// a default-root branch cannot accept a concrete custom component. Otherwise,
 // that broad branch would absorb a missing-prop custom branch in the same union.
 type InferredBoxProps<P extends BoxProps> = P extends unknown
   ? [NonNullable<P['component']>] extends [never]

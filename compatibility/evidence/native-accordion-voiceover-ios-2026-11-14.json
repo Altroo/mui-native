@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "validatedSourceCommit": "f8b31e908ccbf76e273ce84a089549761acd2a6b",
+  "device": "iPhone 18 Pro simulator",
+  "os": "iOS27.0",
+  "sdk": "iPhoneSimulator27.1",
+  "voiceOver": {
+    "testsPassed": 1,
+    "nativeConfiguration": "Release",
+    "sourceFingerprint": "b0d38c53a749d60e5c5c49e80f494e994bae4eca809923086bf7d84e15610942",
+    "nativeAppExecutableSHA256": "bd7969109267c5d25da8d7e78a1a9d931b87bbe22ec4230c54eef1910a65e92e",
+    "bundleSHA256": "08adb433cdd470a72a7b5365d98165a8fb7477f273cb69ac10e024cda5390bdb",
+    "swiftCollectorSHA256": "1721c85e2a8cf391e60a7830d095bd9d63842121cfcf92f451daacb864b945ed",
+    "originalSessionRestored": true,
+    "osContentSize": "large"
+  },
+  "independentInputControl": {
+    "testsPassed": 1,
+    "nativeConfiguration": "Release",
+    "sourceFingerprint": "08b87310d55a1b586afccf10c9fd09f1960f9247c9fddf818ed1fc4815439eee",
+    "nativeAppExecutableSHA256": "bd7969109267c5d25da8d7e78a1a9d931b87bbe22ec4230c54eef1910a65e92e",
+    "bundleSHA256": "cc1a04ce2aa9d87db61a3a59398fa9b211be12d031f9357ad20d9e05a8c8bfe6",
+    "swiftCollectorSHA256": "1721c85e2a8cf391e60a7830d095bd9d63842121cfcf92f451daacb864b945ed",
+    "originalSessionRestored": true,
+    "osContentSize": "large",
+    "gesture": "target-specific double tap",
+    "stockReceipt": {
+      "development": false,
+      "fontScale": 1,
+      "native": 0,
+      "stock": 1
+    },
+    "ownedReceipt": {
+      "development": false,
+      "fontScale": 1,
+      "native": 1,
+      "stock": 1
+    }
+  },
+  "visualRegressions": {
+    "normal": {
+      "testsPassed": 2,
+      "nativeConfiguration": "Release",
+      "sourceFingerprint": "b0d38c53a749d60e5c5c49e80f494e994bae4eca809923086bf7d84e15610942",
+      "nativeAppExecutableSHA256": "bd7969109267c5d25da8d7e78a1a9d931b87bbe22ec4230c54eef1910a65e92e",
+      "bundleSHA256": "08adb433cdd470a72a7b5365d98165a8fb7477f273cb69ac10e024cda5390bdb",
+      "swiftCollectorSHA256": "1721c85e2a8cf391e60a7830d095bd9d63842121cfcf92f451daacb864b945ed",
+      "originalSessionRestored": true,
+      "osContentSize": "large"
+    },
+    "largestAccessibilityText": {
+      "testsPassed": 2,
+      "nativeConfiguration": "Release",
+      "sourceFingerprint": "b0d38c53a749d60e5c5c49e80f494e994bae4eca809923086bf7d84e15610942",
+      "nativeAppExecutableSHA256": "bd7969109267c5d25da8d7e78a1a9d931b87bbe22ec4230c54eef1910a65e92e",
+      "bundleSHA256": "08adb433cdd470a72a7b5365d98165a8fb7477f273cb69ac10e024cda5390bdb",
+      "swiftCollectorSHA256": "1721c85e2a8cf391e60a7830d095bd9d63842121cfcf92f451daacb864b945ed",
+      "originalSessionRestored": true,
+      "osContentSize": "accessibility-extra-extra-extra-large"
+    }
+  },
+  "spokenTraversal": [
+    {
+      "phase": "initial",
+      "utterance": "MUI Native Catalog Browse component library Bouton"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Dark mode Bouton désactivé Touchez deux fois l’écran rapidement "
+    },
+    {
+      "phase": "initial",
+      "utterance": "Dark mode"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Explore"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Forms & selection"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Data grid"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Overlays"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Tree view"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Charts"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Date pickers"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Compatibility"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Autocomplete"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Keyboard"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Text inputs"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Transitions"
+    },
+    {
+      "phase": "initial",
+      "utterance": "sélectionné Accordion"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Icons"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Button groups"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Layout & surfaces"
+    },
+    {
+      "phase": "initial",
+      "utterance": "MATERIAL · ACCORDION"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Details, when you need them En-tête"
+    },
+    {
+      "phase": "initial",
+      "utterance": "A delivery review built from the library’s summary, details and "
+    },
+    {
+      "phase": "initial",
+      "utterance": "Layout direction: left to right Bouton"
+    },
+    {
+      "phase": "initial",
+      "utterance": "ORDER NV-0482 · REVIEW"
+    },
+    {
+      "phase": "initial",
+      "utterance": "Delivery instructions, Rabat · 2 parcels expanded Bouton"
+    },
+    {
+      "phase": "delivery-body",
+      "utterance": "Delivery instructions, Rabat · 2 parcels expanded Bouton"
+    },
+    {
+      "phase": "delivery-body",
+      "utterance": "Add a short note for the courier. It stays here when this sectio"
+    },
+    {
+      "phase": "delivery-body",
+      "utterance": "Delivery note Leave with reception Champ de texte Touchez deux f"
+    },
+    {
+      "phase": "delivery-body",
+      "utterance": "Leave with reception"
+    },
+    {
+      "phase": "delivery-body",
+      "utterance": "Save note Bouton"
+    },
+    {
+      "phase": "delivery-body",
+      "utterance": "Payment & receipt, Card ending 0482 Bouton"
+    },
+    {
+      "phase": "payment-refocus",
+      "utterance": "Delivery instructions, Rabat · 2 parcels Bouton"
+    },
+    {
+      "phase": "payment-refocus",
+      "utterance": "Delivery instructions, Rabat · 2 parcels Bouton"
+    },
+    {
+      "phase": "payment-refocus",
+      "utterance": "Payment & receipt, Card ending 0482 expanded Bouton"
+    },
+    {
+      "phase": "closed-delivery",
+      "utterance": "Payment & receipt, Card ending 0482 expanded Bouton"
+    },
+    {
+      "phase": "closed-delivery",
+      "utterance": "Delivery instructions, Rabat · 2 parcels Bouton"
+    },
+    {
+      "phase": "closed-delivery-body",
+      "utterance": "Delivery instructions, Rabat · 2 parcels Bouton"
+    },
+    {
+      "phase": "closed-delivery-body",
+      "utterance": "Payment & receipt, Card ending 0482 expanded Bouton"
+    },
+    {
+      "phase": "payment-body",
+      "utterance": "Payment & receipt, Card ending 0482 expanded Bouton"
+    },
+    {
+      "phase": "payment-body",
+      "utterance": "Subtotal"
+    },
+    {
+      "phase": "payment-body",
+      "utterance": "640.00 MAD"
+    },
+    {
+      "phase": "payment-body",
+      "utterance": "Delivery"
+    },
+    {
+      "phase": "payment-body",
+      "utterance": "30.00 MAD"
+    },
+    {
+      "phase": "payment-body",
+      "utterance": "Total En-tête"
+    },
+    {
+      "phase": "payment-body",
+      "utterance": "670.00 MAD En-tête"
+    },
+    {
+      "phase": "payment-body",
+      "utterance": "Return request, Available after delivery estompé Bouton"
+    }
+  ],
+  "limits": [
+    "These scenarios cover the recorded simulator and target-specific double-tap input path.",
+    "Other devices, assistive configurations, Android and calibrated performance need separate verification."
+  ]
+}

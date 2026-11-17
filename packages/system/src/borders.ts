@@ -4,6 +4,13 @@
 import { StyleSheet, processColor, type StyleProp } from 'react-native';
 import type { NativeStyle } from './sx';
 import { beginNativeTextInputCapture } from './nativeTextInputProvenance';
+import {
+  copyNativeColorSource,
+  nativeColorSource,
+  nativeColorLayerSource,
+  retainNativeColorSource,
+  type NativeColorSource,
+} from './nativeColorSources';
 
 // Composition results are library-owned and mutable; authored RN styles stay readonly.
 type OwnedNativeStyle = { -readonly [Property in keyof NativeStyle]: NativeStyle[Property] };
@@ -68,22 +75,28 @@ const cssNone = new WeakMap<object, CssNone>();
 export function copyNativeBorderStyle<Style extends object>(source: object, target: Style): Style {
   const declaration = cssNone.get(source);
   if (declaration) cssNone.set(target, declaration);
-  return target;
+  return copyNativeColorSource(source, target);
 }
 /** @internal Restore declared widths while composing CSS and genuine native layers. */
 export function nativeStyleBorderDeclarations(style: StyleProp<NativeStyle>): OwnedNativeStyle {
   const inputCapture = beginNativeTextInputCapture(style);
   const result: Record<string, unknown> = {};
   let none = false;
-  const visit = (entry: StyleProp<NativeStyle>) => {
+  let colorSource: NativeColorSource = 'inherited';
+  const visit = (entry: StyleProp<NativeStyle>, channel?: NativeColorSource) => {
     if (Array.isArray(entry)) {
-      for (const layer of entry) visit(layer);
+      const inheritedChannel = channel ?? nativeColorLayerSource(entry);
+      for (const layer of entry) visit(layer, inheritedChannel);
       return;
     }
     const flat = StyleSheet.flatten(entry);
     if (!flat) return;
     const declaration = cssNone.get(flat);
     const source: Record<string, unknown> = inputCapture ? inputCapture.copy(flat) : { ...flat };
+    // source is the owned copy produced by the existing spread/capture above.
+    // Inspecting it never introduces another read of caller getters or Proxies.
+    if (Object.hasOwn(source, 'color'))
+      colorSource = channel ?? nativeColorSource(flat) ?? 'authored';
     if (declaration?.widths) {
       for (const key of Object.keys(source)) if (widthKey.test(key)) delete source[key];
       Object.assign(source, declaration.widths);
@@ -94,6 +107,7 @@ export function nativeStyleBorderDeclarations(style: StyleProp<NativeStyle>): Ow
   };
   visit(style);
   if (none) cssNone.set(result, {});
+  retainNativeColorSource(result, colorSource);
   inputCapture?.finish(result);
   return result as OwnedNativeStyle;
 }

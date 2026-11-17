@@ -2,4 +2,5 @@
 #pragma once
 namespace facebook::react {
 inline constexpr char AltrooStructuralViewName[] = "AltrooMUIStructuralView";
+inline constexpr char AltrooTextColorMarkerName[] = "AltrooMUITextColorMarker";
 }

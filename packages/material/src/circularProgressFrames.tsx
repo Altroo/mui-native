@@ -6,7 +6,6 @@ import {
   Animated,
   StyleSheet,
   type StyleProp,
-  View,
   type ViewInstance,
   type ViewProps,
 } from 'react-native';
@@ -14,8 +13,10 @@ import { Circle, type CircleProps } from 'react-native-svg';
 import {
   useNativeTextRootRef,
   type NativeStyle,
+  type NativePreparedStyle,
   type ReducedMotionMode,
 } from '@altroo/mui-native-system';
+import { NativeCssPeerView } from '@altroo/mui-native-system/internal/prepared-style';
 import { useNativeReducedMotion } from './motionPreference';
 import { nativeEasing, nativePropertyTiming } from './nativeTransitionTiming';
 import { useCircularProgressRotation, useCircularProgressDash } from './circularProgressMotion';
@@ -24,13 +25,18 @@ import { useCircularProgressTransform } from './circularProgressTransform';
 // Animated refreshes its own merged ref when the animated prop graph changes.
 // Give it an imperative bridge while the actual View owns the public lifecycle.
 // This retains one native host and never reports a graph update as a new root.
-const ProgressHost = forwardRef<ViewInstance, ViewProps & { nodeRef: React.Ref<ViewInstance> }>(
-  function ProgressHost({ nodeRef, ...props }, animatedRef) {
-    const { root, ref } = useNativeTextRootRef(nodeRef);
-    useImperativeHandle(animatedRef, () => root.current!, []);
-    return <View {...props} ref={ref} />;
-  },
-);
+const ProgressHost = forwardRef<
+  ViewInstance,
+  ViewProps & {
+    nodeRef: React.Ref<ViewInstance>;
+    prepared: NativePreparedStyle;
+    classNames: readonly string[];
+  }
+>(function ProgressHost({ nodeRef, prepared, classNames, ...props }, animatedRef) {
+  const { root, ref } = useNativeTextRootRef(nodeRef);
+  useImperativeHandle(animatedRef, () => root.current!, []);
+  return <NativeCssPeerView {...props} ref={ref} prepared={prepared} classNames={classNames} />;
+});
 const AnimatedProgressHost = Animated.createAnimatedComponent(ProgressHost);
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 export interface CircularProgressMotionStyle {
@@ -41,6 +47,8 @@ export interface CircularProgressMotionStyle {
 export function ProgressRootFrame({
   native,
   nodeRef,
+  prepared,
+  classNames,
   style,
   sheet,
   variant,
@@ -48,6 +56,8 @@ export function ProgressRootFrame({
 }: {
   native: Record<string, unknown>;
   nodeRef: React.Ref<ViewInstance>;
+  prepared: NativePreparedStyle;
+  classNames: readonly string[];
   style: StyleProp<NativeStyle>;
   sheet: CircularProgressMotionStyle;
   variant: string;
@@ -80,6 +90,8 @@ export function ProgressRootFrame({
     <AnimatedProgressHost
       {...native}
       nodeRef={nodeRef}
+      prepared={prepared}
+      classNames={classNames}
       // Clearing an animated transform must send the native identity list.
       // RN's development payload validator rejects null during property removal.
       style={[

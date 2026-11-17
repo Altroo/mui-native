@@ -4,11 +4,12 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
-import * as prettier from 'prettier';
+import prettier from 'prettier';
+const { format: prettierFormat, resolveConfig: prettierResolveConfig } = prettier;
 import { loadReference } from './load.mjs';
 import { replaceUniqueLocalFileEntries } from '../upstream/reuse.mjs';
 const jsonFormat = {
-  ...(await prettier.resolveConfig('tests/fixtures/mui-paper-9.5.0.json')),
+  ...(await prettierResolveConfig('tests/fixtures/mui-paper-9.5.0.json')),
   parser: 'json',
 };
 const material = await loadReference('@mui/material', [
@@ -433,7 +434,7 @@ const data = {
   staticProxyAccess,
 };
 const fixture = 'tests/fixtures/mui-paper-9.5.0.json';
-const bytes = await prettier.format(JSON.stringify(data), jsonFormat);
+const bytes = await prettierFormat(JSON.stringify(data), jsonFormat);
 const provenance = {
   schemaVersion: 1,
   description:
@@ -500,8 +501,8 @@ const replacements = localReferences.map(([localFile, reference, files]) => ({
 reuse.entries = replaceUniqueLocalFileEntries(reuse.entries, replacements);
 for (const [file, value] of [
   [fixture, bytes],
-  ['upstream/paper.json', await prettier.format(JSON.stringify(provenance), jsonFormat)],
-  ['upstream/reuse.json', await prettier.format(JSON.stringify(reuse), jsonFormat)],
+  ['upstream/paper.json', await prettierFormat(JSON.stringify(provenance), jsonFormat)],
+  ['upstream/reuse.json', await prettierFormat(JSON.stringify(reuse), jsonFormat)],
 ]) {
   if (process.argv.includes('--check'))
     assert.equal(await readFile(file, 'utf8'), value, 'Paper source reference changed: ' + file);

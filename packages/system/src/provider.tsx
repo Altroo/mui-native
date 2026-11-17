@@ -14,6 +14,7 @@ import {
 } from './defaultProps';
 import {
   separateNativeRootProps,
+  nativeStyledStyles,
   restoreNativeRootStyle,
   type NativeRootStyle,
   type NativeRootStyleInput,
@@ -42,7 +43,12 @@ import {
   retainNativeRootSnapshotElement,
   nativeRootSnapshotClassName,
 } from './nativeRootStyleSnapshots';
-import { NativeTextScope, useNativeTextContext, nativeTextStyleContext } from './textScope';
+import {
+  NativeTextScope,
+  useNativeTextContext,
+  nativeTextStyleContext,
+  nativeTextColorChildren,
+} from './textScope';
 import { sealNativeTextElement } from './nativeTextProvenance';
 import {
   componentStyle,
@@ -61,6 +67,7 @@ import {
   useNativeStyleCache,
 } from './nativeStyleCacheScope';
 import { refreshNativeStyleProp } from './nativeStyleEvaluation';
+import { NativeCssPeerView } from './nativeCssPeerView';
 import { preprocessNativeStyledStyle } from './nativeStyledPreprocessing';
 
 export const systemDefaultTheme = createTheme();
@@ -530,12 +537,34 @@ export function styled<P extends object>(
                 style={refreshNativeStyleProp(finalStyle)}
                 content={output.children as React.ReactNode}
               >
-                {(style, children) => {
+                {(style, children, scope) => {
+                  if (finalTag === (View as unknown)) {
+                    const peerStyle =
+                      finalStyle && typeof finalStyle === 'object'
+                        ? nativeStyledStyles.get(finalStyle)
+                        : undefined;
+                    if (!peerStyle)
+                      throw Error('A styled View requires its accepted CSS programme');
+                    return (
+                      <NativeCssPeerView
+                        {...output}
+                        ref={rootRef as React.Ref<import('react-native').ViewInstance>}
+                        prepared={peerStyle}
+                        classNames={
+                          typeof output.className === 'string'
+                            ? output.className.split(/\s+/).filter(Boolean)
+                            : []
+                        }
+                        style={style}
+                        children={children}
+                      />
+                    );
+                  }
                   const element = React.createElement(finalTag, {
                     ...output,
                     ref: rootRef,
                     style,
-                    children,
+                    children: nativeTextColorChildren(children, scope, style),
                   } as unknown as P);
                   return finalTag === (Text as unknown)
                     ? sealNativeTextElement(element, style)

@@ -2,7 +2,8 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import * as prettier from 'prettier';
+import prettier from 'prettier';
+const { format: prettierFormat } = prettier;
 import { loadReference } from './load.mjs';
 
 const system = await loadReference('@mui/system', ['createStyled/createStyled.js']);
@@ -304,7 +305,7 @@ const report = {
   observations,
 };
 const file = 'tests/fixtures/mui-style-overrides-9.5.0.json';
-const bytes = await prettier.format(JSON.stringify(report), { parser: 'json' });
+const bytes = await prettierFormat(JSON.stringify(report), { parser: 'json' });
 const provenance = {
   schemaVersion: 1,
   description:
@@ -328,7 +329,7 @@ for (const [target, content] of [
   [file, bytes],
   [
     'upstream/style-overrides.json',
-    await prettier.format(JSON.stringify(provenance), { parser: 'json' }),
+    await prettierFormat(JSON.stringify(provenance), { parser: 'json' }),
   ],
 ]) {
   if (process.argv.includes('--check'))

@@ -23,11 +23,21 @@ type Metadata = Readonly<{
   errorNotification: 'async-once-per-generation-v1';
   ownedProgrammeProfile: OwnedStyleProfile;
   generatedTextOrigin: GeneratedTextOrigin | undefined;
+  structuralCases: boolean;
+  parentStructuralCases: boolean;
+  peerStyleIdentity: boolean;
+  inheritedTextColors: boolean;
+  inheritedTextMetrics: boolean;
 }>;
 type Outcome = Readonly<{ metadata: Metadata; error?: never } | { error: Error; metadata?: never }>;
 export type OwnedStyleBootstrap = Readonly<{
   requireProfile(): OwnedStyleProfile;
   requireGeneratedTextOrigin(): GeneratedTextOrigin;
+  supportsStructuralCases(): boolean;
+  supportsParentStructuralCases(): boolean;
+  supportsPeerStyleIdentity(): boolean;
+  supportsInheritedTextColors(): boolean;
+  supportsInheritedTextMetrics(): boolean;
 }>;
 type Expected = Readonly<{ rn: string; platform: string; styleKeys: string }>;
 // One canonical native module object has one immutable read for this JS runtime.
@@ -73,10 +83,19 @@ function parse(raw: unknown): Metadata {
   ];
   if (
     !record(value) ||
-    (!keys(value, baseKeys) &&
-      !keys(value, [...baseKeys, 'literalRawText']) &&
-      !keys(value, [...baseKeys, 'generatedTextOrigin']) &&
-      !keys(value, [...baseKeys, 'literalRawText', 'generatedTextOrigin'])) ||
+    !baseKeys.every((key) => Object.hasOwn(value, key)) ||
+    Object.keys(value).some(
+      (key) =>
+        ![
+          ...baseKeys,
+          'literalRawText',
+          'generatedTextOrigin',
+          'structuralCases',
+          'parentStructuralCases',
+          'inheritedTextColors',
+          'inheritedTextMetrics',
+        ].includes(key),
+    ) ||
     value.schema !== 1 ||
     value.service !== 'owned-structural-style' ||
     value.host !== 'AltrooMUIStructuralView' ||
@@ -132,6 +151,21 @@ function parse(raw: unknown): Metadata {
     errorNotification: 'async-once-per-generation-v1',
     ownedProgrammeProfile: checked,
     generatedTextOrigin,
+    structuralCases:
+      Object.hasOwn(value, 'structuralCases') &&
+      (value.structuralCases === 'first-last-of-type-v1' ||
+        value.structuralCases === 'first-last-of-type-v2'),
+    inheritedTextColors:
+      Object.hasOwn(value, 'inheritedTextColors') &&
+      value.inheritedTextColors === 'stock-text-color-v1',
+    inheritedTextMetrics:
+      Object.hasOwn(value, 'inheritedTextMetrics') &&
+      value.inheritedTextMetrics === 'stock-text-metrics-v2',
+    peerStyleIdentity:
+      Object.hasOwn(value, 'structuralCases') && value.structuralCases === 'first-last-of-type-v2',
+    parentStructuralCases:
+      Object.hasOwn(value, 'parentStructuralCases') &&
+      value.parentStructuralCases === 'parent-structural-facts-v1',
   });
 }
 function readOnce(native: unknown): Outcome {
@@ -161,6 +195,11 @@ export function createOwnedStyleBootstrap(
   let profile: OwnedStyleProfile | undefined;
   let failure: Error | undefined;
   let generatedTextOrigin: GeneratedTextOrigin | undefined;
+  let structuralCases = false;
+  let parentStructuralCases = false;
+  let peerStyleIdentity = false;
+  let inheritedTextColors = false;
+  let inheritedTextMetrics = false;
   const originFailure = fail(
     'generated paragraph origin is unavailable or unsupported; rebuild the matching native app',
   );
@@ -177,11 +216,21 @@ export function createOwnedStyleBootstrap(
     )
       throw fail('compiled JS/native parsing profile mismatch; rebuild the native app');
     profile = observed;
+    structuralCases = outcome.metadata.structuralCases;
+    parentStructuralCases = structuralCases && outcome.metadata.parentStructuralCases;
+    peerStyleIdentity = parentStructuralCases && outcome.metadata.peerStyleIdentity;
+    inheritedTextColors = parentStructuralCases && outcome.metadata.inheritedTextColors;
+    inheritedTextMetrics = inheritedTextColors && outcome.metadata.inheritedTextMetrics;
     generatedTextOrigin = outcome.metadata.generatedTextOrigin;
   } catch (error) {
     failure = toFailure(error);
   }
   return Object.freeze({
+    supportsStructuralCases: () => structuralCases,
+    supportsParentStructuralCases: () => parentStructuralCases,
+    supportsPeerStyleIdentity: () => peerStyleIdentity,
+    supportsInheritedTextColors: () => inheritedTextColors,
+    supportsInheritedTextMetrics: () => inheritedTextMetrics,
     requireProfile() {
       if (failure) throw failure;
       // The only successful initialization branch publishes this immutable profile.

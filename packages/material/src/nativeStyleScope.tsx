@@ -1,6 +1,10 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React, { useContext, useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import type { ViewInstance } from 'react-native';
+import {
+  nativeCssClassIdentities,
+  useNativeStructuralFacts,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import type {
   NativePreparedStyle,
   NativeStyleTarget,
@@ -107,31 +111,40 @@ interface ScopeProps {
 /** Renderless ownership boundary; Portal resets this same context at its destination. */
 export function NativeStyleScope({ root, theme, classes, prepared, children }: ScopeProps) {
   const inherited = useContext(NativeButtonGroupRules);
-  const current = useRef({ theme, classes, prepared });
+  const structure = useNativeStructuralFacts(root);
+  const current = useRef({ theme, classes, prepared, structure });
   if (
     current.current.theme !== theme ||
     !equalData(current.current.classes, classes) ||
-    !equalData(current.current.prepared, prepared)
+    !equalData(current.current.prepared, prepared) ||
+    !equalData(current.current.structure, structure)
   )
-    current.current = { theme, classes, prepared };
+    current.current = { theme, classes, prepared, structure };
   const value = current.current;
   const own = useMemo<NativeButtonGroupRule>(
     () => ({
       get element() {
         return root.current;
       },
-      selector: { classes: value.classes },
+      selector: { classes: value.classes, ...value.structure },
+      scopeDepth: inherited.length,
+      sourceClasses: nativeCssClassIdentities(value.prepared),
       cascade(target, path) {
         return {
           theme: value.theme,
           name: '',
           props: {},
           prepared: value.prepared,
-          context: { descendantOnly: true, descendantClasses: target, descendantPath: path },
+          context: {
+            ...value.structure,
+            descendantOnly: true,
+            descendantClasses: target,
+            descendantPath: path,
+          },
         };
       },
     }),
-    [root, value],
+    [root, value, inherited.length],
   );
   const committed = useRef(own);
   const registered = useMemo<NativeButtonGroupRule>(
@@ -144,6 +157,12 @@ export function NativeStyleScope({ root, theme, classes, prepared, children }: S
       },
       get cascade() {
         return committed.current.cascade;
+      },
+      get sourceClasses() {
+        return committed.current.sourceClasses;
+      },
+      get scopeDepth() {
+        return committed.current.scopeDepth;
       },
     }),
     [root],

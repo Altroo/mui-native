@@ -15,10 +15,28 @@ const boundaries = new WeakMap<StyleNode, Boundary>();
 const groups = new Set<NativeButtonGroupRule>();
 const listeners = new Set<() => void>();
 let revision = 0;
+// Derived lookups reuse the existing registry and are dropped on mutation, so
+// an externally retained old host cannot keep an unregistered rule cached.
+let indexedGroups: WeakMap<object, NativeButtonGroupRule[]> | undefined;
+function rulesAt(element: object) {
+  if (!indexedGroups) {
+    const next = new WeakMap<object, NativeButtonGroupRule[]>();
+    for (const rule of groups) {
+      const host = rule.element;
+      if (!host) continue;
+      const rules = next.get(host) ?? [];
+      rules.push(rule);
+      next.set(host, rules);
+    }
+    indexedGroups = next;
+  }
+  return indexedGroups.get(element) ?? [];
+}
 const node = (value: unknown): StyleNode | null =>
   value !== null && typeof value === 'object' ? (value as StyleNode) : null;
 function changed() {
   revision++;
+  indexedGroups = undefined;
   for (const listener of [...listeners]) listener();
 }
 export const nativeStyleTree = {
@@ -41,9 +59,15 @@ export const nativeStyleTree = {
   groupRulesAt(target: object | null) {
     const { path, valid } = physicalPath(target);
     if (!valid) return [];
-    return path
-      .reverse()
-      .flatMap((ancestor) => [...groups].filter((rule) => rule.element === ancestor));
+    return path.reverse().flatMap(rulesAt);
+  },
+  /** The final styled constructor on one host replaces discarded wrapper classes. */
+  exactHostStyle(element: object) {
+    let selected: NativeButtonGroupRule | undefined;
+    for (const rule of rulesAt(element))
+      if (rule.sourceClasses && (rule.scopeDepth ?? -1) > (selected?.scopeDepth ?? -1))
+        selected = rule;
+    return selected;
   },
   registerPortal(canvas: object, container: object | null) {
     const entry: Boundary = { target: node(container), lease: Symbol() };

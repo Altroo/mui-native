@@ -1,7 +1,8 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
-import { format, resolveConfig } from 'prettier';
+import prettier from 'prettier';
+const { format, resolveConfig } = prettier;
 import { loadReference } from './load.mjs';
 const files = [
   'package.json',

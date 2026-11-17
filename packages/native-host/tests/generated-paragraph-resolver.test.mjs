@@ -9,6 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 const production = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../common/cpp');
 const sources = {
+  // language=TEXT
   'adapter/Framework.h': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Finite scheduling/data double. No RN/Yoga layout or runtime-reference proof.
 #pragma once
@@ -19,6 +20,9 @@ const sources = {
 #include <string>
 #include <vector>
 #include <array>
+#include <optional>
+#include <cmath>
+#include <limits>
 namespace facebook::yoga {
 enum class Edge { Bottom, Vertical, All };
 struct FloatOptional { float number; float unwrap() const {return number;} };
@@ -47,6 +51,8 @@ using Float=float;
 using Tag = int;
 using SurfaceId = int;
 using ComponentHandle = const void *;
+using SharedColor = std::optional<unsigned>;
+struct TextAttributes { SharedColor foregroundColor; Float fontSize{std::numeric_limits<Float>::quiet_NaN()}, lineHeight{std::numeric_limits<Float>::quiet_NaN()}, letterSpacing{std::numeric_limits<Float>::quiet_NaN()}; };
 inline std::atomic<int> rawParses{0}, cloneCalls{0}, failCloneAt{0};
 inline bool rejectParsing = false;
 inline std::atomic<std::size_t> observedChildEntries{0};
@@ -70,6 +76,7 @@ public:
 class ViewProps : public Props {
 public:
   yoga::Style yogaStyle;
+  TextAttributes textAttributes;
   ViewProps() = default;
   ViewProps(const PropsParserContext &, const ViewProps &source,
             const RawProps &)
@@ -178,6 +185,8 @@ template <class T> struct ConcreteComponentDescriptor {
   };
 };
 inline const char ParagraphComponentName[]="Paragraph", RawTextComponentName[]="RawText";
+using ParagraphProps = ViewProps;
+using TextProps = ViewProps;
 struct ParagraphShadowNode final : ConcreteViewShadowNode<ParagraphComponentName> {using ConcreteViewShadowNode::ConcreteViewShadowNode;};
 struct RawTextShadowNode final : ConcreteViewShadowNode<RawTextComponentName> {using ConcreteViewShadowNode::ConcreteViewShadowNode;static ShadowNodeTraits BaseTraits(){return {};}};
 inline constexpr char fakeParagraphName[]="Paragraph";
@@ -233,22 +242,40 @@ struct LayoutOnly final : ConcreteViewShadowNode<layoutOnlyName>{using ConcreteV
 struct SameNameWrongHandle final : ConcreteViewShadowNode<duplicateName> {using ConcreteViewShadowNode::ConcreteViewShadowNode;};
 } // namespace facebook::react
 `,
+  // language=TEXT
   'adapter/AltrooStructuralViewShadowNode.h': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Bounded typed-props/model only. Does not implement RN conversion/Yoga/layout/state transport.
 #pragma once
 #include "Framework.h"
+#include "NativeMetricData.h"
+namespace altroo::text_color {
+struct ColorParent {std::string owner,key;};
+struct ColorBank { std::optional<ColorParent> parent;std::string key; std::array<facebook::react::SharedColor,8> colors; facebook::react::SharedColor ordinary; };
+struct ColorBinding { std::string owner,key; facebook::react::SharedColor ordinary; };
+}
 namespace altroo::owned_transport_proof {
-enum class Programme {Numeric,ExplicitPair};
-struct Pair {std::shared_ptr<const facebook::react::ViewProps> normal,last;};
-struct Prepared {Pair candidates;Programme programme{Programme::Numeric};};
+struct PeerClass {std::string cacheKey,css;bool eligible{};};
+struct PeerIdentity {bool expanded{};std::vector<PeerClass> classes;};
+struct PeerObservation {int surface{},subject{},parent{},previous{};bool expanded{};};
+enum class Programme {Numeric,ExplicitPair,PeerOnly};
+struct Pair {
+ std::shared_ptr<const facebook::react::ViewProps> normal,last;
+ std::vector<std::shared_ptr<const facebook::react::ViewProps>> cases{std::size_t(8)};
+ bool structural()const{return cases[0]!=nullptr;}
+ std::size_t count()const{return structural()?cases.size():8;}
+ std::uint8_t ordinaryIndex()const{return static_cast<std::uint8_t>(count());}
+ const auto& at(std::uint8_t facts)const{return structural()?cases.at(facts):(facts&1?last:normal);}
+};
+struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;std::shared_ptr<const PeerIdentity> peer;std::optional<PeerObservation> observation;Programme programme{Programme::Numeric};std::shared_ptr<const altroo::text_color::ColorBank> textColors;std::uint16_t textColorBarriers{511};std::shared_ptr<const altroo::text_metrics::Bank> textMetrics;};
+using PreparedData=Prepared;
 struct OwnedProps : facebook::react::ViewProps {
- double normalPaddingBottom{16},lastPaddingBottom{24};bool selectedLast{};
+ double normalPaddingBottom{16},lastPaddingBottom{24};bool selectedLast{};std::uint8_t selectedCase{};
  std::shared_ptr<const Prepared> prepared;
 };
-inline std::shared_ptr<const OwnedProps> select(std::shared_ptr<const OwnedProps> source,bool last){
- if(source->selectedLast==last)return source;
- auto next=std::make_shared<OwnedProps>(*source);next->selectedLast=last;
- next->yogaStyle=(last?source->prepared->candidates.last:source->prepared->candidates.normal)->yogaStyle;
+inline std::shared_ptr<const OwnedProps> select(std::shared_ptr<const OwnedProps> source,std::uint8_t facts){
+ if(source->selectedCase==facts)return source;
+ auto next=std::make_shared<OwnedProps>(*source);next->selectedCase=facts;next->selectedLast=facts!=source->prepared->candidates.ordinaryIndex()&&(facts&1);
+ next->yogaStyle=(facts==source->prepared->candidates.ordinaryIndex()?source->prepared->unselected:source->prepared->candidates.at(facts))->yogaStyle;
  return next;
 }
 }
@@ -259,15 +286,41 @@ struct AltrooStructuralViewShadowNode final : ConcreteViewShadowNode<ownedName,a
 };
 }
 `,
+  // language=TEXT
+  'adapter/AltrooTextColorMarker.h': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+#pragma once
+#include "AltrooStructuralViewShadowNode.h"
+#include "StructuralComponentName.h"
+namespace altroo::text_color {
+struct MarkerProps : facebook::react::ViewProps {std::shared_ptr<const ColorBinding> prepared;std::shared_ptr<const altroo::text_metrics::Presentation> metrics;};
+struct ColorMarkerShadowNode : facebook::react::ConcreteViewShadowNode<facebook::react::AltrooTextColorMarkerName,MarkerProps> {
+ using ConcreteViewShadowNode::ConcreteViewShadowNode;
+ static facebook::react::ShadowNodeTraits BaseTraits(){return {};}
+};
+}
+`,
+  'adapter/react/renderer/graphics/Float.h': String.raw`#pragma once
+#include "Framework.h"
+`,
+  'adapter/react/renderer/components/text/ParagraphShadowNode.h': String.raw`#pragma once
+#include "Framework.h"
+`,
+  'adapter/react/renderer/components/text/TextShadowNode.h': String.raw`#pragma once
+#include "Framework.h"
+`,
   'adapter/react/renderer/core/ShadowNode.h': String.raw`#pragma once
 #include "Framework.h"
 `,
+  // language=TEXT
   'adapter/react/renderer/components/root/RootShadowNode.h': String.raw`#pragma once
 #include "Framework.h"
 `,
+  // language=TEXT
   'adapter/react/renderer/components/view/ViewShadowNode.h': String.raw`#pragma once
 #include "Framework.h"
 `,
+  // C++ is compiled below; this is not a JavaScript code fragment.
+  // language=TEXT
   'ParentControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Exact current production resolver with bounded RN/COW/typed-props doubles.
 // No native RN/Yoga execution, scrolling, RTL or platform state transport proof.
@@ -293,6 +346,19 @@ auto target(Tag tag){
  normal->seal();last->seal();
  auto prepared=std::make_shared<altroo::owned_transport_proof::Prepared>();prepared->candidates={normal,last};
  auto props=std::make_shared<Owned>();props->prepared=prepared;props->yogaStyle=normal->yogaStyle;
+ return node<AltrooStructuralViewShadowNode>(tag,props);
+}
+auto structuralTarget(Tag tag,std::size_t count=8){
+ auto prepared=std::make_shared<altroo::owned_transport_proof::Prepared>();
+ prepared->candidates.cases.resize(count);
+ for(std::uint8_t facts=0;facts<count;++facts){
+  auto value=std::make_shared<ViewProps>();
+  value->yogaStyle.setPadding(facebook::yoga::Edge::Bottom,facebook::yoga::StyleLength::points(100+facts));
+  value->seal();prepared->candidates.cases[facts]=value;
+ }
+ auto ordinary=std::make_shared<ViewProps>();ordinary->yogaStyle.setPadding(facebook::yoga::Edge::Bottom,facebook::yoga::StyleLength::points(77));ordinary->seal();prepared->unselected=ordinary;
+ prepared->candidates.normal=prepared->candidates.cases[0];prepared->candidates.last=prepared->candidates.cases[1];
+ auto props=std::make_shared<Owned>();props->prepared=prepared;props->yogaStyle=prepared->candidates.normal->yogaStyle;
  return node<AltrooStructuralViewShadowNode>(tag,props);
 }
 auto root(std::vector<Node> children){return node<RootShadowNode>(1,std::make_shared<ViewProps>(),std::move(children));}
@@ -358,6 +424,104 @@ int main(){try{
  auto brokenFamily=std::const_pointer_cast<ShadowNodeFamily>(broken->family);
  brokenFamily->clone=[](const ShadowNode&old,const ShadowNodeFragment&fragment){auto wrong=std::make_shared<ViewShadowNode>(old,fragment);auto family=std::make_shared<ShadowNodeFamily>(*old.family);family->handle=ViewShadowNode::Handle();wrong->family=family;return wrong;};
  bool badClone=false;try{resolve(root({broken}));}catch(const std::logic_error&){badClone=true;}check(badClone,"existing identity check rejects wrong clone descriptor");
+ // Exercise the exact production selector over mixed semantic host types.
+ auto first=structuralTarget(60),second=structuralTarget(61);
+ auto singleton=resolve(root({first}));
+ check(singleton.decisions.front().bottom==107,"singleton is last-child and both first/last of View type");
+ auto pair=resolve(root({first,second}));
+ check(pair.decisions[0].bottom==102&&pair.decisions[1].bottom==105,"first/last View cases selected before layout");
+ auto retainedFirst=pair.root->getChildren()[0],retainedSecond=pair.root->getChildren()[1];
+ auto reorder=resolve(root({retainedSecond,retainedFirst}));
+ check(reorder.decisions[0].bottom==102&&reorder.decisions[1].bottom==105,"memoized reordered nodes use incoming order");
+ check(reorder.root->getChildren()[0]->getFamilyShared()==second->getFamilyShared(),"reorder preserves exact native family");
+ auto boundary=node<ViewShadowNode>(62,std::make_shared<ViewProps>());
+ auto tail=node<ViewShadowNode>(63,std::make_shared<ViewProps>());
+ auto bounded=resolve(root({boundary,reorder.root->getChildren()[0],reorder.root->getChildren()[1],tail}));
+ check(bounded.decisions[0].bottom==100&&bounded.decisions[1].bottom==100,"real View bounds suppress both of-type endpoints");
+ auto other=node<ArbitraryViewKindShadowNode>(64,std::make_shared<ViewProps>());
+ auto mixed=resolve(root({other,first,node<ArbitraryViewKindShadowNode>(65,std::make_shared<ViewProps>())}));
+ check(mixed.decisions.front().bottom==106&&!mixed.decisions.front().lastChild,"foreign View-kind siblings affect last-child but preserve singleton View type");
+ check(resolve(reorder.root).root==reorder.root,"resolved structural tree is idempotent");
+ auto nativeContainer=resolve(root({parent<ArbitraryViewKindShadowNode>({first})}));
+ check(nativeContainer.decisions.front().bottom==107,"structural cases admit truthful ordinary native View-kind parents");
+ auto fallback=resolve(root({parent<TextShadowNode>({retainedFirst})}));
+ check(fallback.decisions.front().bottom==77,"non-host parent restores genuine ordinary presentation instead of case0");
+ check(resolve(fallback.root).root==fallback.root,"ordinary fallback is idempotent");
+ // Parent facts require the exact source-owned immediate native parent.
+ const auto pseudo=[](Tag tag){auto n=structuralTarget(tag);auto p=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(n->getConcreteProps().prepared);p->parentSelector=true;p->owner="panel";auto props=std::const_pointer_cast<Owned>(std::static_pointer_cast<const Owned>(n->getProps()));props->nativeId="altroo:accordion-before:v1:";return n;};
+ const auto panel=[](Tag tag,std::vector<Node>children,std::string owner="panel"){auto n=structuralTarget(tag);auto p=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(n->getConcreteProps().prepared);p->owner=std::move(owner);n->children=std::make_shared<const std::vector<Node>>(std::move(children));return n;};
+ auto ornamentA=pseudo(81),ornamentB=pseudo(83);
+ auto panelA=panel(80,{ornamentA}),panelB=panel(82,{ornamentB});
+ auto projected=resolve(root({panelA,panelB}));
+ check(projected.decisions[1].bottom==102&&projected.decisions[3].bottom==105,"pseudo case uses first/last facts of its source-owned parent");
+ auto moved=resolve(root({projected.root->getChildren()[1],projected.root->getChildren()[0]}));
+ check(moved.decisions[1].bottom==102&&moved.decisions[3].bottom==105,"retained pseudo updates on parent reorder without JS repaint");
+ auto acceptedPseudo=moved.root->getChildren()[1]->getChildren()[0];
+ check(acceptedPseudo->getFamilyShared()==ornamentA->getFamilyShared(),"pseudo COW preserves exact native family");
+ auto realChild=structuralTarget(85);auto internal=pseudo(86);
+ auto logical=resolve(root({panel(84,{realChild,internal})}));
+ check(logical.decisions[1].bottom==107,"owned source ornament is excluded from logical sibling order");
+ auto forgedProps=std::make_shared<ViewProps>();forgedProps->nativeId="altroo:accordion-before:v1:";
+ auto forged=resolve(root({panel(87,{structuralTarget(88),node<ViewShadowNode>(89,forgedProps)})}));
+ check(forged.decisions[1].bottom==102,"ordinary nativeID cannot impersonate owned pseudo projection");
+ auto wrapped=resolve(root({panel(90,{node<ViewShadowNode>(91,std::make_shared<ViewProps>(),{pseudo(92)})})}));
+ check(wrapped.decisions.back().bottom==77,"intervening View cannot supply source root position");
+ auto mismatched=resolve(root({panel(93,{pseudo(94)},"another-owner")}));
+ check(mismatched.decisions.back().bottom==77,"different source owner keeps ordinary pseudo presentation");
+ auto nestedPseudo=pseudo(96);nestedPseudo->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{pseudo(97)});
+ auto nested=resolve(root({panel(95,{nestedPseudo})}));
+ check(nested.decisions.back().bottom==77,"a pseudo cannot impersonate its source parent");
+ auto unsupported=resolve(root({pseudo(98)}));
+ check(unsupported.decisions.front().bottom==77,"root/projection parent retains ordinary pseudo presentation");
+ // Candidate-bound peer matching and explicitly observed fallback are separate.
+ const auto peer=[](auto n,std::string key,std::string css,bool expanded,bool eligible){
+  auto p=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(n->getConcreteProps().prepared);
+  p->peer=std::make_shared<const altroo::owned_transport_proof::PeerIdentity>(altroo::owned_transport_proof::PeerIdentity{expanded,{{std::move(key),std::move(css),eligible}}});return n;
+ };
+ const auto adjacent=[&](std::optional<altroo::owned_transport_proof::PeerObservation> observation=std::nullopt){
+  auto decoration=structuralTarget(204,16);auto d=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(decoration->getConcreteProps().prepared);
+  d->parentSelector=true;d->owner="panel";d->observation=observation;
+  std::const_pointer_cast<Owned>(std::static_pointer_cast<const Owned>(decoration->getProps()))->nativeId="altroo:accordion-before:v1:";
+  return peer(panel(202,{decoration}),"css","same-class",true,true);
+ };
+ auto previousPeer=peer(panel(201,{},"previous"),"css","same-class",true,false);
+ auto matching=resolve(root({previousPeer,adjacent()}));
+ check(matching.decisions.back().bottom==113,"matching native peers select adjacency bit before layout");
+ auto different=peer(panel(201,{},"previous"),"css","different-class",true,false);
+ check(resolve(root({different,adjacent()})).decisions.back().bottom==105,"different emitted CSS does not match even when expanded");
+ auto prefix=peer(panel(201,{},"previous"),"other-prefix","same-class",true,false);
+ check(resolve(root({prefix,adjacent()})).decisions.back().bottom==105,"same CSS with a different cache prefix stays distinct");
+ auto collapsed=peer(panel(201,{},"previous"),"css","same-class",false,false);
+ check(resolve(root({collapsed,adjacent({{1,202,1,201,true}})})).decisions.back().bottom==105,"fresh native collapsed state overrides a stale observed true");
+ auto raw=node<ViewShadowNode>(203,std::make_shared<ViewProps>());
+ check(resolve(root({previousPeer,raw,adjacent({{1,202,1,201,true}})})).decisions.back().bottom==105,"new raw boundary invalidates prior peer observation while preserving positional bits");
+ check(resolve(root({previousPeer,adjacent({{1,202,1,203,false}})})).decisions.back().bottom==113,"boundary removal uses matching current native peers immediately");
+ check(resolve(root({raw,adjacent({{1,202,1,203,true}})})).decisions.back().bottom==113,"unknown identity can retain its exact matched JS observation as fallback");
+ check(resolve(root({raw,adjacent({{1,202,1,203,false}})})).decisions.back().bottom==105,"later observed mismatch converges without inferring CSS from paint");
+ check(resolve(root({raw,adjacent({{2,202,1,203,true}})})).decisions.back().bottom==105,"observation from another surface is rejected");
+ check(resolve(root({raw,adjacent({{1,999,1,203,true}})})).decisions.back().bottom==105,"observation for another source subject is rejected");
+ check(resolve(root({parent<ViewShadowNode>({raw,adjacent({{1,202,1,203,true}})})})).decisions.back().bottom==105,"reparented peer observation is rejected");
+ check(resolve(root({adjacent({{1,202,1,0,true}})})).decisions.back().bottom==107,"first child has no expanded predecessor even with contradictory observation");
+
+
+
+ // Fresh known absence overrides a formerly positive JS observation.
+ check(resolve(root({previousPeer,peer(adjacent({{1,202,1,201,true}}),"css","same-class",false,true)})).decisions.back().bottom==105,"collapsed current peer overrides observed true");
+ check(resolve(root({previousPeer,peer(adjacent({{1,202,1,201,true}}),"css","same-class",true,false)})).decisions.back().bottom==105,"ineligible current source token overrides observed true");
+ auto emptyPeer=panel(201,{},"previous");
+ std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(emptyPeer->getConcreteProps().prepared)->peer=std::make_shared<const altroo::owned_transport_proof::PeerIdentity>(altroo::owned_transport_proof::PeerIdentity{true,{}});
+ check(resolve(root({emptyPeer,adjacent({{1,202,1,201,true}})})).decisions.back().bottom==105,"known empty CSS identity overrides observed true");
+ auto unknownPeer=panel(201,{},"previous");
+ check(resolve(root({unknownPeer,adjacent({{1,202,1,201,true}})})).decisions.back().bottom==113,"null CSS identity retains its bound JS fallback");
+ auto wrongOwner=adjacent();
+ std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(wrongOwner->getConcreteProps().prepared)->owner="different";
+ check(resolve(root({previousPeer,wrongOwner})).decisions.back().bottom==77,"sixteen-case mismatched owner selects ordinary index16 instead of case8");
+ auto generatedProps=std::make_shared<ViewProps>();generatedProps->nativeId="altroo:generated-paragraph:v1:peer";
+ auto generatedPeer=node<ParagraphShadowNode>(205,generatedProps,{node<RawTextShadowNode>(206,std::make_shared<Props>())});
+ check(resolve(root({previousPeer,generatedPeer,adjacent()})).decisions.back().bottom==113,"generated literal paragraphs do not interrupt logical peer adjacency");
+ auto explicitPeer=node<ParagraphShadowNode>(205,std::make_shared<ViewProps>(),{node<RawTextShadowNode>(206,std::make_shared<Props>())});
+ check(resolve(root({previousPeer,explicitPeer,adjacent()})).decisions.back().bottom==105,"an explicit Paragraph interrupts source peer adjacency");
+ check(resolve(root({previousPeer,pseudo(205),adjacent()})).decisions.back().bottom==113,"private projected ornaments do not interrupt source peer adjacency");
  check(rawParses==0,"selection never evaluates raw conversion/callbacks");
  std::cout<<"{\"assertions\":"<<assertions<<",\"platform\":\""
 #ifdef ANDROID
@@ -369,6 +533,7 @@ int main(){try{
 return 0;
 }catch(const std::exception&e){std::cerr<<"source-backed failure: "<<e.what()<<'\n';return 1;}}
 `,
+  // language=TEXT
   'GeneratedParagraphControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Exact production resolver, finite framework doubles only. No native layout/topology proof.
 #include "GeneratedParagraphOrigin.h"
@@ -455,6 +620,7 @@ return 0;
 }catch(const std::exception&e){std::cerr<<"generated paragraph failure: "<<e.what()<<'\n';return 1;}}
 `,
 
+  // language=TEXT
   'SiblingControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Exact production resolver with finite family/props/COW doubles, not RN layout.
 #include "GeneratedParagraphControls.cpp"
@@ -505,7 +671,7 @@ template<class S>void ordinarySiblingControls(){
   check(observedChildEntries<=std::size_t(12*n+16),"new classifier does not add quadratic traversal");
  }
 }
-int main(){try{
+int preservedSiblingControls(){try{
  if(preservedGeneratedControls()!=0) {
   return 1;
  }
@@ -551,6 +717,194 @@ int main(){try{
  return 0;
 }catch(const std::exception&e){std::cerr<<"core sibling failure: "<<e.what()<<'\n';return 1;}}
 `,
+  // language=TEXT
+  'ColorControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Source-backed COW/data controls. Stock text layout remains a Release native gate.
+#include "SiblingControls.cpp"
+using ColorMarker=altroo::text_color::ColorMarkerShadowNode;
+auto colorMarker(Tag tag,std::string owner="source",std::string key="palette",SharedColor ordinary=0x0000ffu){
+ auto binding=std::make_shared<altroo::text_color::ColorBinding>();binding->owner=std::move(owner);binding->key=std::move(key);binding->ordinary=ordinary;
+ auto props=std::make_shared<altroo::text_color::MarkerProps>();props->prepared=binding;
+ return node<ColorMarker>(tag,props);
+}
+auto colorSource(std::vector<Node> children,bool bank=true){
+ auto source=structuralTarget(2);auto data=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(source->getConcreteProps().prepared);data->owner="source";
+ if(bank){auto colors=std::make_shared<altroo::text_color::ColorBank>();colors->key="palette";colors->ordinary=0x0000ffu;for(int facts=0;facts<8;++facts)colors->colors[facts]=(facts&2)?0xff0000u:0x0000ffu;data->textColors=colors;}
+ source->children=std::make_shared<const std::vector<Node>>(std::move(children));return source;
+}
+auto painted(Tag tag,std::vector<Node> children,SharedColor color=0x0000ffu){auto props=std::make_shared<ViewProps>();props->textAttributes.foregroundColor=color;props->nativeId="consumer-glyph";return node<ParagraphShadowNode>(tag,props,std::move(children));}
+const ParagraphShadowNode &paragraphIn(const Result &result){return static_cast<const ParagraphShadowNode&>(*result.root->getChildren()[0]->getChildren()[0]);}
+int preservedColorControls(){try{
+ if(preservedSiblingControls()!=0)return 1;
+ const int before=assertions;auto other=node<ViewShadowNode>(3,std::make_shared<ViewProps>());
+ auto glyph=painted(4,{raw(5),colorMarker(6)});auto source=colorSource({glyph});auto input=root({source,other});input->sealRecursive();
+ auto selected=resolve(input);auto &first=paragraphIn(selected);
+ check(first.getConcreteProps().textAttributes.foregroundColor==0xff0000u,"same candidate first-of-type color selected");
+ check(first.getFamilyShared()==glyph->getFamilyShared()&&first.getTag()==4,"actual text family and tag stay exact");
+ check(first.getProps()->nativeId=="consumer-glyph","consumer nativeID retained");
+ check(first.getChildren()==glyph->getChildren(),"RawText and empty marker remain shared");
+ check(glyph->getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"accepted sealed Text props untouched");
+ check(selected.decisions[0].bottom==102,"color and geometry use identical selector facts");
+ check(selected.counts.requestedClones==3,"only Text, source and Root cloned");
+ check(resolve(selected.root).root==selected.root,"selected Text candidate is idempotent");
+ auto selectedSource=selected.root->getChildren()[0];auto reordered=resolve(root({other,selectedSource}));
+ const auto &last=static_cast<const ParagraphShadowNode&>(*reordered.root->getChildren()[1]->getChildren()[0]);
+ check(last.getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"retained core props restore blue after reordering");
+ check(last.getFamilyShared()==glyph->getFamilyShared(),"reordering keeps same actual Text family");
+ auto authored=painted(4,{raw(5),colorMarker(6,"","",0x0000ffu)});
+ check(paragraphIn(resolve(root({colorSource({authored}),other}))).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"same-valued explicit blue never inherits palette");
+ auto stale=painted(4,{raw(5),colorMarker(6,"source","old",0x00aa00u)},0xff0000u);
+ check(paragraphIn(resolve(root({colorSource({stale}),other}))).getConcreteProps().textAttributes.foregroundColor==0x00aa00u,"stale palette key restores true ordinary color");
+ auto foreign=painted(4,{raw(5),colorMarker(6,"foreign","palette",0x00aa00u)},0xff0000u);
+ check(paragraphIn(resolve(root({colorSource({foreign}),other}))).getConcreteProps().textAttributes.foregroundColor==0x00aa00u,"foreign source owner cannot bind");
+ auto unbound=painted(4,{raw(5),colorMarker(6,"","",std::nullopt)},0xff0000u);
+ check(!paragraphIn(resolve(root({colorSource({unbound}),other}))).getConcreteProps().textAttributes.foregroundColor,"ordinary absent color resets a previously selected native color");
+ auto nestedText=node<TextShadowNode>(7,std::make_shared<ViewProps>(),{raw(8),colorMarker(9)});
+ auto outerParagraph=painted(4,{nestedText},0x0000ffu);auto nested=resolve(root({colorSource({outerParagraph}),other}));
+ const auto &virtualText=static_cast<const TextShadowNode&>(*paragraphIn(nested).getChildren()[0]);
+ check(virtualText.getConcreteProps().textAttributes.foregroundColor==0xff0000u,"virtual Text typed color selected");
+ check(virtualText.getFamilyShared()==nestedText->getFamilyShared(),"virtual text family retained");
+ check(paragraphIn(nested).getFamilyShared()==outerParagraph->getFamilyShared(),"changed virtual child clones retaining Paragraph family");
+ auto removed=resolve(root({colorSource({selected.root->getChildren()[0]->getChildren()[0]},false),other}));
+ check(paragraphIn(removed).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"removing the source bank restores ordinary color without a JS color delta");
+ auto reparented=resolve(root({selected.root->getChildren()[0]->getChildren()[0]}));
+ check(static_cast<const ParagraphShadowNode&>(*reparented.root->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"retained Text leaving last source root restores ordinary color");
+ auto inner=structuralTarget(7);auto innerData=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(inner->getConcreteProps().prepared);innerData->owner="inner";inner->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{glyph});
+ auto innerResult=resolve(root({colorSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*innerResult.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"inner source boundary without a bank blocks outer authority");
+ // The exact same physical inner root can inherit outer color or author its own.
+ innerData->textColorBarriers=0;
+ auto inheritedInner=resolve(root({colorSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*inheritedInner.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0xff0000u,"inherited inner root preserves the exact outer color source");
+ auto innerBank=std::make_shared<altroo::text_color::ColorBank>();innerBank->key="inner-palette";innerBank->parent=altroo::text_color::ColorParent{"source","palette"};innerBank->ordinary=0x0000ffu;innerBank->colors.fill(0x0000ffu);innerData->textColors=innerBank;
+ auto innerGlyph=painted(4,{raw(5),colorMarker(6,"inner","inner-palette")});inner->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{innerGlyph});
+ auto inheritedBank=resolve(root({colorSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*inheritedBank.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0xff0000u,"an inner bank's inherit case resolves the current native outer color, not captured blue");
+ innerBank->parent.reset();
+ auto passiveBarrier=resolve(root({colorSource({node<ViewShadowNode>(11,std::make_shared<ViewProps>(),{inner})}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*passiveBarrier.root->getChildren()[0]->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"an unbound passive authored scope cannot borrow a physical ancestor palette");
+ innerData->textColorBarriers=511;
+ auto authoredBank=resolve(root({colorSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*authoredBank.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.foregroundColor==0x0000ffu,"the same inner bank's authored case remains an outer inheritance barrier");
+ auto duplicate=painted(4,{raw(5),colorMarker(6),colorMarker(7)});
+ rejectWithoutClone([&]{resolve(root({colorSource({duplicate}),other}));},"duplicate bindings reject before any COW");
+ auto badMarker=colorMarker(6);badMarker->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{raw(7)});
+ rejectWithoutClone([&]{resolve(root({colorSource({painted(4,{raw(5),badMarker})}),other}));},"nonempty binding rejects before COW");
+ auto generatedText=paragraph(4,prefix+"color",{raw(5),colorMarker(6)});
+ check(classifyParagraph(*generatedText,2)==ParagraphRole::GeneratedLiteral,"empty trailing marker keeps generated literal origin");
+ rejectWithoutClone([&]{classifyParagraph(*paragraph(4,prefix+"color",{colorMarker(6),raw(5)}),2);},"marker cannot split RawText fragments");
+ rejectWithoutClone([&]{classifyParagraph(*paragraph(4,prefix+"color",{colorMarker(6)}),1);},"marker cannot impersonate a primitive text run");
+ check(rawParses==0,"color commit selection does not invoke raw conversion");
+ std::cout<<"{\"colorAssertions\":"<<assertions-before<<",\"nativeExecution\":false}\n";
+ return 0;
+}catch(const std::exception&e){std::cerr<<"text color finite failure: "<<e.what()<<'\n';return 1;}}
+`,
+  // language=TEXT
+  'MetricControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Exact numeric evaluation and Text COW; mounted measurement is tested on iOS.
+#include "ColorControls.cpp"
+namespace metric=altroo::text_metrics;
+const metric::Step inheritMetric{0,0,0,0,0,0,0,0,16,16};
+const metric::Step halfFont{2,.5,2,0,0,0,0,0,16,16};
+auto metricMarker(Tag tag,std::vector<metric::Step> steps={halfFont},std::string owner="source",std::string key="metrics",unsigned resets=0){
+ auto presentation=std::make_shared<metric::Presentation>();presentation->binding={std::move(owner),std::move(key),std::move(steps)};presentation->ordinary={8,12,0};presentation->resets=static_cast<std::uint8_t>(resets);
+ auto props=std::make_shared<altroo::text_color::MarkerProps>();props->metrics=presentation;return node<ColorMarker>(tag,props);
+}
+auto metricGlyph(std::vector<Node> children){auto props=std::make_shared<ViewProps>();props->textAttributes.fontSize=8;props->textAttributes.lineHeight=12;props->textAttributes.letterSpacing=0;props->nativeId="metric-glyph";return node<ParagraphShadowNode>(4,props,std::move(children));}
+auto metricSource(std::vector<Node> children){
+ auto source=colorSource(std::move(children),false);auto data=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(source->getConcreteProps().prepared);
+ auto bank=std::make_shared<metric::Bank>();bank->key="metrics";bank->base={16,std::nullopt,std::nullopt,0};bank->ordinary={1,16,3,1.5,1,1.5,1,0,16,16};
+ for(unsigned i=0;i<8;++i){bank->cases[i]=bank->ordinary;if(i&2)bank->cases[i][1]=24;}
+ data->textMetrics=bank;return source;
+}
+const auto& metricAttributes(const Result& result){return paragraphIn(result).getConcreteProps().textAttributes;}
+int main(){try{
+ if(preservedColorControls()!=0)return 1;
+ const int before=assertions;auto other=node<ViewShadowNode>(3,std::make_shared<ViewProps>());
+ auto glyph=metricGlyph({raw(5),metricMarker(6)});auto source=metricSource({glyph});auto input=root({source,other});input->sealRecursive();
+ auto result=resolve(input);const auto &text=metricAttributes(result);const auto &changed=paragraphIn(result);
+ check(text.fontSize==12&&text.lineHeight==18,"selected root font24 and ratio1.5 reach half-em child in same candidate");
+ check(text.letterSpacing==0,"inherited absolute spacing retained");
+ check(changed.getTag()==glyph->getTag()&&changed.getFamilyShared()==glyph->getFamilyShared(),"actual Paragraph tag/family retained");
+ check(changed.getProps()->nativeId=="metric-glyph","nativeID retained");
+ check(changed.getChildren()==glyph->getChildren(),"raw text and empty marker shared");
+ check(glyph->getConcreteProps().textAttributes.fontSize==8&&glyph->getConcreteProps().textAttributes.lineHeight==12,"sealed accepted props untouched");
+ check(result.decisions[0].bottom==102,"geometry and text use identical first-of-type facts");
+ check(result.counts.requestedClones==3,"only changed Text/source/root cloned");
+ check(resolve(result.root).root==result.root,"metric COW is idempotent");
+ auto moved=resolve(root({other,result.root->getChildren()[0]}));const auto &movedText=static_cast<const ParagraphShadowNode&>(*moved.root->getChildren()[1]->getChildren()[0]).getConcreteProps().textAttributes;
+ check(movedText.fontSize==8&&movedText.lineHeight==12,"retained Text reorders back to8/12");
+ check(moved.root->getChildren()[1]->getChildren()[0]->getFamilyShared()==glyph->getFamilyShared(),"reorder keeps original glyph family");
+ const auto valueFor=[&](std::vector<metric::Step> steps){return metricAttributes(resolve(root({metricSource({metricGlyph({raw(5),metricMarker(6,std::move(steps))})}),other})));};
+ const metric::Step nativeFont{1,10,2,0,0,0,0,0,16,16};
+ auto native=valueFor({nativeFont});check(native.fontSize==10&&native.lineHeight==15,"authored native font blocks only font, inherits unitless ratio");
+ auto explicitStep=nativeFont;explicitStep[2]=1;explicitStep[3]=13;auto explicitText=valueFor({explicitStep});
+ check(explicitText.fontSize==10&&explicitText.lineHeight==13,"native font/absolute height stay literal");
+ auto relativeSpacing=halfFont;relativeSpacing[6]=2;relativeSpacing[7]=.25;
+ check(valueFor({relativeSpacing}).letterSpacing==3,"descendant em spacing follows selected child font");
+ auto nativeSpacing=halfFont;nativeSpacing[6]=1;nativeSpacing[7]=-2;
+ check(valueFor({nativeSpacing}).letterSpacing==-2,"negative authored native spacing remains literal");
+ auto sourceRatio=metricSource({metricGlyph({raw(5),metricMarker(6,{nativeFont})})});auto ratioData=std::const_pointer_cast<metric::Bank>(sourceRatio->getConcreteProps().prepared->textMetrics);
+ for(auto &step:ratioData->cases){step[3]=2;step[5]=2;}
+ check(metricAttributes(resolve(root({sourceRatio,other}))).lineHeight==20,"native font10 follows changing parent ratio to20");
+ auto absoluteSource=metricSource({metricGlyph({raw(5),metricMarker(6)})});auto absData=std::const_pointer_cast<metric::Bank>(absoluteSource->getConcreteProps().prepared->textMetrics);
+ for(auto &step:absData->cases){step[2]=1;step[3]=32;step[4]=2;}
+ check(metricAttributes(resolve(root({absoluteSource,other}))).lineHeight==32,"parent native absolute height stays32 through relative font child");
+ auto retained=result.root->getChildren()[0]->getChildren()[0];auto withdrawn=colorSource({retained},false);
+ check(metricAttributes(resolve(root({withdrawn,other}))).fontSize==8,"withdrawn source restores ordinary with no JS delta");
+ auto reparented=resolve(root({retained}));const auto &reparentedText=static_cast<const ParagraphShadowNode&>(*reparented.root->getChildren()[0]);
+ check(reparentedText.getConcreteProps().textAttributes.fontSize==8,"reparented Text restores ordinary");
+ check(reparentedText.getFamilyShared()==glyph->getFamilyShared(),"restoration preserves family");
+ auto stale=metricGlyph({raw(5),metricMarker(6,{halfFont},"source","stale")});
+ check(metricAttributes(resolve(root({metricSource({stale}),other}))).fontSize==8,"stale key cannot inherit");
+ auto foreign=metricGlyph({raw(5),metricMarker(6,{halfFont},"foreign")});
+ check(metricAttributes(resolve(root({metricSource({foreign}),other}))).fontSize==8,"foreign source cannot inherit");
+ auto unbound=metricGlyph({raw(5),metricMarker(6,{},"","")});
+ check(metricAttributes(resolve(root({metricSource({unbound}),other}))).fontSize==8,"unbound marker retains ordinary");
+ auto reset=metricMarker(6,{halfFont},"source","metrics",7);auto resetProps=std::const_pointer_cast<metric::Presentation>(reset->getConcreteProps().metrics);resetProps->ordinary={std::nullopt,std::nullopt,std::nullopt};
+ auto resetText=metricAttributes(resolve(root({metricSource({metricGlyph({raw(5),reset})}),other})));
+ check(std::isnan(resetText.fontSize)&&std::isnan(resetText.lineHeight)&&std::isnan(resetText.letterSpacing),"explicit nulls reset each typed field");
+ auto virtualProps=std::make_shared<ViewProps>();virtualProps->textAttributes.fontSize=8;virtualProps->textAttributes.lineHeight=12;virtualProps->textAttributes.letterSpacing=0;
+ auto virtualText=node<TextShadowNode>(7,virtualProps,{raw(8),metricMarker(9)});auto enclosing=metricGlyph({virtualText});
+ auto nested=resolve(root({metricSource({enclosing}),other}));const auto &selectedVirtual=static_cast<const TextShadowNode&>(*paragraphIn(nested).getChildren()[0]);
+ check(selectedVirtual.getConcreteProps().textAttributes.fontSize==12&&selectedVirtual.getConcreteProps().textAttributes.lineHeight==18,"virtual Text typed metrics selected");
+ check(selectedVirtual.getFamilyShared()==virtualText->getFamilyShared(),"virtual family retained");
+ check(paragraphIn(nested).getFamilyShared()==enclosing->getFamilyShared(),"Paragraph ancestor retained when virtual child changes");
+ auto inner=structuralTarget(7);auto innerData=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(inner->getConcreteProps().prepared);innerData->owner="inner";
+ auto innerBank=std::make_shared<metric::Bank>();innerBank->key="inner-metrics";innerBank->base={16,24,1.5,0};innerBank->cases.fill(inheritMetric);innerBank->ordinary=inheritMetric;
+ innerBank->parent=metric::Binding{"source","metrics",{nativeFont}};innerData->textMetrics=innerBank;
+ inner->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{metricGlyph({raw(5),metricMarker(6,{inheritMetric},"inner","inner-metrics")})});
+ auto composed=resolve(root({metricSource({inner}),other}));const auto &composedText=static_cast<const ParagraphShadowNode&>(*composed.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes;
+ check(composedText.fontSize==10&&composedText.lineHeight==15,"nested source composes prepared passive native-font barrier");
+ innerBank->parent->key="stale";auto staleParent=resolve(root({metricSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*staleParent.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.fontSize==16,"stale parent binding uses own ordinary base");
+ innerBank->parent=metric::Binding{"source","metrics",{}};
+ inner->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{glyph});
+ auto nearest=resolve(root({metricSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*nearest.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.fontSize==8,"marker cannot skip nearest metric source for outer matching owner");
+ auto duplicate=metricGlyph({raw(5),metricMarker(6),metricMarker(7)});
+ rejectWithoutClone([&]{resolve(root({metricSource({duplicate}),other}));},"duplicate metric markers reject before COW");
+ auto nonempty=metricMarker(6);nonempty->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{raw(7)});
+ rejectWithoutClone([&]{resolve(root({metricSource({metricGlyph({raw(5),nonempty})}),other}));},"nonempty metric marker rejects before COW");
+ auto naturalStep=inheritMetric;naturalStep[2]=6;naturalStep[4]=2;
+ auto naturalState=metric::apply(metric::State{24,64,4,0},naturalStep);
+ check(naturalState&&naturalState->at(1)==-1&&!naturalState->at(2),"natural operation clears parent height and unitless ratio");
+ auto naturalText=valueFor({naturalStep,halfFont});
+#ifdef ANDROID
+ check(naturalText.lineHeight==-1,"Android natural height uses UNSET, never zero span");
+#else
+ check(naturalText.lineHeight==0,"iOS natural height removes paragraph min/max constraint");
+#endif
+ auto zeroHeight=inheritMetric;zeroHeight[2]=1;zeroHeight[3]=0;zeroHeight[4]=2;
+ check(valueFor({zeroHeight}).lineHeight==0,"genuine native zero stays zero on both platforms");
+ check(naturalText.fontSize==12,"natural height retains selected relative font");
+ metric::Step overflow{2,std::numeric_limits<Float>::max(),2,0,0,0,0,0,16,16};
+ check(!metric::apply(metric::State{24,36,1.5,0},overflow),"overflow declines without publishing invalid attributes");
+ check(metric::apply(metric::State{24,36,1.5,0},halfFont)->at(0)==12,"pure production evaluator matches selected font");
+ check(rawParses==0,"no raw conversion during metric selection");
+ std::cout<<"{\"metricAssertions\":"<<assertions-before<<",\"nativeExecution\":false}\n";return 0;
+}catch(const std::exception&e){std::cerr<<"text metric finite failure: "<<e.what()<<'\n';return 1;}}
+`,
 };
 for (const [profile, defines] of [
   ['android', ['-DANDROID']],
@@ -567,7 +921,12 @@ for (const [profile, defines] of [
         // the finite doubles, even when the real native build tree is present.
         const isolatedProduction = path.join(temp, 'production');
         await mkdir(isolatedProduction);
-        for (const header of ['PrelayoutResolver.h', 'GeneratedParagraphOrigin.h']) {
+        for (const header of [
+          'PrelayoutResolver.h',
+          'NativeMetricData.h',
+          'GeneratedParagraphOrigin.h',
+          'StructuralComponentName.h',
+        ]) {
           const original = path.join(production, header);
           const isolated = path.join(isolatedProduction, header);
           await copyFile(original, isolated);
@@ -590,7 +949,7 @@ for (const [profile, defines] of [
             ...defines,
             '-I' + isolatedProduction,
             '-I' + path.join(temp, 'adapter'),
-            path.join(temp, 'SiblingControls.cpp'),
+            path.join(temp, 'MetricControls.cpp'),
             '-o',
             output,
           ],
@@ -607,11 +966,15 @@ for (const [profile, defines] of [
           .trim()
           .split('\n')
           .map((row) => JSON.parse(row));
-        assert.equal(rows.length, 3);
+        assert.equal(rows.length, 5);
         assert.equal(rows[1].generatedAssertions, 105);
         assert.equal(rows[1].nativeExecution, false);
         assert.equal(rows[2].siblingAssertions, 780);
         assert.equal(rows[2].nativeExecution, false);
+        assert.ok(rows[3].colorAssertions >= 30);
+        assert.equal(rows[3].nativeExecution, false);
+        assert.ok(rows[4].metricAssertions >= 35);
+        assert.equal(rows[4].nativeExecution, false);
       } finally {
         await rm(temp, { recursive: true, force: true });
       }

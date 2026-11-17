@@ -6,6 +6,12 @@
 #include <array>
 #include <stdexcept>
 #include <string_view>
+#include <string>
+#include <optional>
+#include <vector>
+#include <cmath>
+#include <cstdint>
+#include <limits>
 namespace altroo::owned_channel {
 inline constexpr std::array<std::string_view, 130> styleKeys{"alignContent","alignItems","alignSelf","aspectRatio","backfaceVisibility","backgroundColor","backgroundImage","backgroundPosition","backgroundRepeat","backgroundSize","borderBlockColor","borderBlockEndColor","borderBlockStartColor","borderBottomColor","borderBottomEndRadius","borderBottomLeftRadius","borderBottomRightRadius","borderBottomStartRadius","borderBottomWidth","borderColor","borderCurve","borderEndColor","borderEndEndRadius","borderEndStartRadius","borderEndWidth","borderLeftColor","borderLeftWidth","borderRadius","borderRightColor","borderRightWidth","borderStartColor","borderStartEndRadius","borderStartStartRadius","borderStartWidth","borderStyle","borderTopColor","borderTopEndRadius","borderTopLeftRadius","borderTopRightRadius","borderTopStartRadius","borderTopWidth","borderWidth","bottom","boxShadow","boxSizing","color","columnGap","cursor","direction","display","elevation","end","experimental_backgroundImage","experimental_backgroundPosition","experimental_backgroundRepeat","experimental_backgroundSize","filter","flex","flexBasis","flexDirection","flexGrow","flexShrink","flexWrap","gap","height","inset","insetBlock","insetBlockEnd","insetBlockStart","insetInline","insetInlineEnd","insetInlineStart","isolation","justifyContent","left","margin","marginBlock","marginBlockEnd","marginBlockStart","marginBottom","marginEnd","marginHorizontal","marginInline","marginInlineEnd","marginInlineStart","marginLeft","marginRight","marginStart","marginTop","marginVertical","maxHeight","maxWidth","minHeight","minWidth","mixBlendMode","opacity","outlineColor","outlineOffset","outlineStyle","outlineWidth","overflow","padding","paddingBlock","paddingBlockEnd","paddingBlockStart","paddingBottom","paddingEnd","paddingHorizontal","paddingInline","paddingInlineEnd","paddingInlineStart","paddingLeft","paddingRight","paddingStart","paddingTop","paddingVertical","pointerEvents","position","right","rowGap","shadowColor","shadowOffset","shadowOpacity","shadowRadius","start","top","transform","transformOrigin","width","zIndex"};
 inline folly::dynamic nativeProfile() {
@@ -35,17 +41,112 @@ inline void requireStyleMap(const folly::dynamic &value) {
     if (!allowed) throw std::invalid_argument("Unsupported owned View style key: " + key);
   }
 }
+// Peer identity is immutable ordinary-prop data. Native commits compare exact
+// emitted class strings; they never infer identity from painted declarations.
+struct PeerClassIdentity { std::string cacheKey; std::string css; bool eligible; };
+struct PeerStyleIdentity { bool expanded; std::vector<PeerClassIdentity> classes; };
+inline void requirePeerStyleIdentity(const folly::dynamic &value) {
+  if (value.isNull()) return;
+  if (!value.isObject() || value.size() != 2 || !value.count("expanded") ||
+      !value.at("expanded").isBool() || !value.count("classes") ||
+      !value.at("classes").isArray() || value.at("classes").size() > 64)
+    throw std::invalid_argument("Invalid bounded CSS peer identity");
+  std::size_t bytes = 0;
+  for (const auto &token : value.at("classes")) {
+    if (!token.isObject() || token.size() != 3 || !token.count("cacheKey") ||
+        !token.at("cacheKey").isString() || !token.count("css") ||
+        !token.at("css").isString() || !token.count("eligible") ||
+        !token.at("eligible").isBool())
+      throw std::invalid_argument("Invalid emitted CSS class identity");
+    for (const char *key : {"cacheKey", "css"}) {
+      const auto size = token.at(key).getString().size();
+      if (size > 1024 * 1024 - bytes)
+        throw std::length_error("CSS peer identity byte budget exceeded");
+      bytes += size;
+    }
+  }
+}
+inline std::optional<PeerStyleIdentity> peerStyleIdentity(const folly::dynamic &programme) {
+  if (!programme.isObject() || !programme.count("peer")) return std::nullopt;
+  const auto &peer = programme.at("peer");
+  if (peer.isNull()) return std::nullopt;
+  requirePeerStyleIdentity(peer);
+  PeerStyleIdentity result{peer.at("expanded").asBool(), {}};
+  result.classes.reserve(peer.at("classes").size());
+  for (const auto &token : peer.at("classes"))
+    result.classes.push_back({token.at("cacheKey").getString(), token.at("css").getString(), token.at("eligible").asBool()});
+  return result;
+}
+// A JS observation is fallback input only; candidate identity must still match.
+struct PeerObservation { std::int32_t surface; std::int32_t subject; std::int32_t parent; std::int32_t previous; bool expanded; };
+inline void requirePeerObservation(const folly::dynamic &value) {
+  if (value.isNull()) return;
+  if (!value.isObject() || value.size() != 5 || !value.count("expanded") || !value.at("expanded").isBool())
+    throw std::invalid_argument("Invalid peer observation binding");
+  for (const char *key : {"surface", "subject", "parent", "previous"}) {
+    if (!value.count(key) || !value.at(key).isNumber()) throw std::invalid_argument("Invalid peer observation tag");
+    const double tag = value.at(key).asDouble();
+    if (!std::isfinite(tag) || std::floor(tag) != tag || tag < (std::string_view(key) == "previous" ? 0 : 1) || tag > std::numeric_limits<std::int32_t>::max())
+      throw std::invalid_argument("Peer observation tag is outside native bounds");
+  }
+}
+inline std::optional<PeerObservation> peerObservation(const folly::dynamic &programme) {
+  if (!programme.isObject() || !programme.count("observation") || programme.at("observation").isNull()) return std::nullopt;
+  const auto &value = programme.at("observation");requirePeerObservation(value);
+  return PeerObservation{static_cast<std::int32_t>(value.at("surface").asDouble()), static_cast<std::int32_t>(value.at("subject").asDouble()), static_cast<std::int32_t>(value.at("parent").asDouble()), static_cast<std::int32_t>(value.at("previous").asDouble()), value.at("expanded").asBool()};
+}
 inline bool fullProgramme(const folly::dynamic &programme) {
   if (programme.isNull()) return false;
-  if (!programme.isObject() || programme.size() != 4 ||
-      !programme.count("schema") || !programme.at("schema").isNumber() ||
-      programme.at("schema").asDouble() != 1.0 || !programme.count("profile") ||
-      !programme.count("normal") || !programme.count("last"))
+  if (!programme.isObject() || !programme.count("schema") ||
+      !programme.at("schema").isNumber() || !programme.count("profile"))
     throw std::invalid_argument("Unsupported owned programme schema");
+  const auto schema = programme.at("schema").asDouble();
   if (programme.at("profile") != nativeProfile())
     throw std::invalid_argument("Owned programme native parsing profile mismatch");
-  requireStyleMap(programme.at("normal"));
-  requireStyleMap(programme.at("last"));
+  if (schema == 4.0) {
+    if (programme.size() != 3 || !programme.count("peer"))
+      throw std::invalid_argument("CSS peer host requires its identity");
+    requirePeerStyleIdentity(programme.at("peer"));
+  } else if (schema == 1.0 && programme.size() == 4 &&
+      programme.count("normal") && programme.count("last")) {
+    requireStyleMap(programme.at("normal"));
+    requireStyleMap(programme.at("last"));
+  } else if ((schema == 2.0 || schema == 3.0) && programme.count("cases")) {
+    // Root identity is prepared once, not inferred from a nativeID or ancestry.
+    const bool owner = programme.count("owner") != 0;
+    const bool parent = programme.count("basis") != 0;
+    const bool peer = programme.count("peer") != 0;
+    const bool observation = programme.count("observation") != 0;
+    const bool textColors = programme.count("textColors") != 0;
+    const bool textMetrics = programme.count("textMetrics") != 0;
+    const bool textBarriers = programme.count("textColorBarriers") != 0;
+    if (programme.size() != 3 + std::size_t(owner) + std::size_t(parent) + std::size_t(peer) + std::size_t(observation) + std::size_t(textColors) + std::size_t(textBarriers) + std::size_t(textMetrics) ||
+        (textBarriers && (schema != 2.0 || !owner || parent || !programme.at("textColorBarriers").isNumber() ||
+          !std::isfinite(programme.at("textColorBarriers").asDouble()) ||
+          std::floor(programme.at("textColorBarriers").asDouble()) != programme.at("textColorBarriers").asDouble() ||
+          programme.at("textColorBarriers").asDouble() < 0 || programme.at("textColorBarriers").asDouble() > 511)) ||
+        (textColors && (schema != 2.0 || !owner || parent)) ||
+        (textMetrics && (schema != 2.0 || !owner || parent)) ||
+        (owner && (!programme.at("owner").isString() ||
+                   programme.at("owner").getString().empty() ||
+                   programme.at("owner").getString().size() > 256)) ||
+        (parent && (!owner || !programme.at("basis").isString() ||
+                    programme.at("basis").getString() != "parent")))
+      throw std::invalid_argument("Invalid structural owner projection");
+    if ((schema == 3.0 && (!parent || !observation)) || (schema == 2.0 && observation))
+      throw std::invalid_argument("Adjacent cases require a bound parent observation");
+    if (observation) requirePeerObservation(programme.at("observation"));
+    if (peer) {
+      if (parent) throw std::invalid_argument("A projected ornament cannot own peer identity");
+      requirePeerStyleIdentity(programme.at("peer"));
+    }
+    const auto &cases = programme.at("cases");
+    if (!cases.isArray() || cases.size() != (schema == 3.0 ? 16 : 8))
+      throw std::invalid_argument("Owned structural programme case count must match its schema");
+    for (const auto &value : cases) requireStyleMap(value);
+  } else {
+    throw std::invalid_argument("Unsupported owned programme schema");
+  }
   return true;
 }
 } // namespace altroo::owned_channel

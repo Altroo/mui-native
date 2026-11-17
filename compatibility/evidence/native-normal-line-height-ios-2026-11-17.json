@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "status": "scoped-regression-passed",
+  "validatedSourceCommit": "b3611e66ec1af9e67f0950fb85bee8e6abd4d9db",
+  "runtimeCapability": "stock-text-metrics-v2",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS 27.0",
+    "configuration": "Release",
+    "fontScales": [1, 3.571],
+    "pixelRatio": 3
+  },
+  "implementation": "CSS normal is an explicit prepared natural-height operation that clears an inherited unitless ratio. Selected semantic height is emitted through stock platform reset behavior; ordinary native props, explicit zero, native overrides, source restoration and font-scaling options remain distinct. Extended operations are gated by the exact v2 native capability.",
+  "retainedSelectorReplay": {
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "endpointReceipts": 10,
+    "scenarioNaturalHeight": true,
+    "analyzedFrames": 488,
+    "qualifiedCompleteGroups": 83,
+    "invalidGroupFrames": 0,
+    "qualifiedRowComparisons": 249,
+    "qualifiedFixedControlTextRuns": 747,
+    "qualifiedBoundaryGroups": 83,
+    "configurations": [
+      "default-0",
+      "default-1",
+      "default-2",
+      "default-3",
+      "default-4",
+      "forwarded-0",
+      "forwarded-1",
+      "forwarded-2",
+      "forwarded-3",
+      "forwarded-4"
+    ],
+    "qualification": "Independent stage/mode bars and row fills qualify groups before comparisons. Fixed core Text controls are created inside opaque Glyph. Native receipts bind retained actual root/Text tags, one memoized row render, counters, line-event identity/freshness and disjoint glyph windows. Pixel checks cover glyph size and root height. Natural line-box metrics are endpoint assertions, not transient line-box pixel reconstruction.",
+    "bundleSHA256": "4d965821e05764b63fffc4b667188cf24dcd4c9efd22e5c18389b72ccdfb6cbb",
+    "testExecutableSHA256": "3f0679c872d9027e9cd70a41d653d5322af6afd97e89e0708ec309dd82f10618",
+    "captureSHA256": "e2db087587296e4966449e578d0fce0e0e5c358519c06d2dcc9095bea8fd2e14",
+    "analysisSHA256": "bee4f7c1ec609310c032d090d752ce17e96a8e064a399b47e6ac2f357757b52e",
+    "scannerSourceSHA256": "3dba89f2ac35b75763e5c0d79de4a56e10d90272c132947198bdc5c5bd559bfe",
+    "fixture": "tests/native/fixtures/AccordionTextMetricsProbe.tsx"
+  },
+  "ordinaryResetAndScaling": {
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "endpointReceipts": 10,
+    "profiles": ["normal", "largest-accessibility-text"],
+    "actualFontScales": [1, 3.571],
+    "sourceControlPairs": 50,
+    "sourceAndControlObservations": 100,
+    "uniqueRetainedTextOwnersPerProfile": 10,
+    "parentKinds": ["tracked Typography", "untracked core Text", "View scope"],
+    "scalingControls": ["uncapped", "maxFontSizeMultiplier 1.2", "allowFontScaling false"],
+    "stages": [
+      "natural at font size 16",
+      "natural at font size 24",
+      "native line height 13 overrides normal",
+      "withdraw normal and inherit the 96-point parent height",
+      "restore natural at font size 16"
+    ],
+    "independentIntrinsicFrames": true,
+    "qualification": "Each opaque Pair creates an independent core Text control outside its source provider. The row uses flex-start alignment so a source cannot stretch its control. Bound native line events and intrinsic frames must agree, refs attach once with no cleanup, tags remain unique/retained and revisions advance. Cross-profile controls independently distinguish scaled, capped and unscaled observations.",
+    "fixture": "tests/native/fixtures/NormalLineHeightProbe.tsx",
+    "normalRunSHA256": "4b7951821b55bd8284a2dd4a4328c93d9b2822b2a50a05f5cd575754c9ee013a",
+    "enlargedRunSHA256": "11d7b060f3f5d3d2f6bbf7aaaeabf635a11a315d5e308c616a11fbc19c41f25b"
+  },
+  "parserAndFirstUse": {
+    "passedTests": 1,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "epochs": 4,
+    "actualNativeMetricChecks": 46,
+    "preservedNativeColorChecks": 32,
+    "ordinaryConversionOnly": true,
+    "nativeSurfaceForConstructorDiagnostics": 0,
+    "textRefNativeIDAndLineFrameParity": true,
+    "runSHA256": "fb88ec97ed93771e68fc5076bfc19880b6005454b079c50f2114401cc811e13e"
+  },
+  "trackedSourceFilesMatchedToCommit": {
+    "ios-accordion-natural-height-final": 476,
+    "ios-normal-height-ordinary-03": 476,
+    "ios-normal-height-ordinary-enlarged-03": 476,
+    "ios-normal-height-descriptor-final": 476
+  },
+  "originalSessionsRestored": true,
+  "remainingLimits": [
+    "Android natural-height runtime verification; source/float-model controls are separate",
+    "Transient line-box paint timing and deadlines",
+    "Complete inherited font/alignment/direction/transform/decoration/shadow contracts",
+    "Unknown noncooperating roots and peers",
+    "Wider motion, physical accessibility and calibrated Release memory/performance",
+    "Full typography and Accordion completion"
+  ],
+  "parityClaim": false,
+  "performanceClaim": false
+}

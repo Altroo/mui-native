@@ -2,25 +2,47 @@
  * Copyright (c) MUI contributors. See NOTICE and upstream/accordion.json.
  * Native layout and interaction: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
  * Details contract observations: upstream/accordion-details.json. */
-import React, { createContext, forwardRef, useCallback, useContext, useMemo } from 'react';
-import { Text, View, useWindowDimensions, type ViewInstance, type StyleProp } from 'react-native';
+import React, { createContext, forwardRef, useContext, useMemo } from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  useWindowDimensions,
+  type ViewInstance,
+  type StyleProp,
+} from 'react-native';
 import {
   NativeTextScope,
+  NativeTextStyleContext,
   useNativeTextRootRef,
   useNativeTextContext,
   nativeTextStyleContext,
   useNativeRootProps,
+  separateNativeRootProps,
+  restoreNativeRootStyle,
   joinClassNames,
   applyNativeTextMetrics,
   nativeStyleTextMetrics,
+  nativeStyleBorderDeclarations,
+  copyNativeBorderStyle,
   resolveSlotProps,
   componentRootStyle,
   componentStyle,
+  type NativeTextScopeValue,
   type NativeStyle,
+  type NativePreparedStyle,
+  type Theme,
   type SxProps,
 } from '@altroo/mui-native-system';
 import {
   NativeCssInsertionScope,
+  NativeCssPeerView,
+  nativeStyledStyles,
+  NativeCssRootBoundary,
+  retainNativeStyleTransform,
+  nativeCooperatingRootTarget,
+  nativeMemoType,
+  retainNativeRootCss,
   refreshNativeStyle,
   prepareNativeCompositeSource,
   nativeInlineStyle,
@@ -28,9 +50,34 @@ import {
   useNativeStyleCacheRevision,
   useNativeDefaultPropsSource,
 } from '@altroo/mui-native-system/internal/prepared-style';
+import { NativeStructuralFactsContext } from '@altroo/mui-native-system/internal/prepared-style';
+import {
+  useAccordionStructure,
+  accordionBeforeOrigin,
+  AccordionPeerObservationContext,
+  type AccordionStructure,
+} from './accordionStructure';
+import { useAccordionMotion } from './accordionMotion';
+import { accordionBeforeStyle, accordionBeforeCases } from './accordionBeforeStyles';
+import { ownedStructuralCases } from '@altroo/mui-native-host/internal/structural-root';
+import {
+  AccordionStructuralRootContext,
+  AccordionStructuralView,
+  AccordionRootTextScope,
+  useAccordionStructuralRootMarker,
+  prepareAccordionStructuralCases,
+  hasAccordionParentSelectors,
+} from './accordionStructuralRoot';
+import {
+  accordionConstructorCss,
+  accordionOverrideCss,
+  accordionMotionTiming,
+} from './nativeAccordionCss';
+import { AccordionRootMotionScope, AccordionRootMotionBoundary } from './accordionRootMotion';
 import { NativeButtonGroupRules } from './buttonGroupContext';
-import { nativeStyleAncestors } from './nativeStyleScope';
+import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
 import { Paper } from './layout';
+import { NativeRootTextBoundary } from './nativeRootTextBoundary';
 import {
   ButtonBase,
   type ButtonBaseState,
@@ -39,17 +86,19 @@ import {
 } from './buttonBase';
 import { Collapse } from './collapse';
 import { useControlled } from './formState';
-import { useTheme, useComponentRootStyle } from './themeProvider';
+import { useTheme, useNativeStyledTheme, useComponentRootStyle } from './themeProvider';
 import { useForkRef } from './utils';
 import {
+  accordionClasses,
   getAccordionActionsUtilityClass,
   getAccordionUtilityClass,
   getAccordionSummaryUtilityClass,
   getAccordionDetailsUtilityClass,
 } from './accordionClasses';
-import { mergeNativeRootStyle } from './nativeControlStyles';
+import { mergeNativeRootStyle, nativeRootStylePainter } from './nativeControlStyles';
 import type {
   AccordionProps,
+  NativeAccordionComponent,
   AccordionRootSlotProps,
   AccordionOwnerState,
   AccordionSummaryProps,
@@ -90,11 +139,87 @@ function slotClasses<Slots extends Record<string, readonly (string | false | und
     ]),
   ) as Record<keyof Slots, string>;
 }
+// Adapt useSlot's layout-only merge order. className is read before copying;
+// style may be read again for the optional shallow merge, and ref is read last.
+// All other accessors are observed only by the copy, keeping callback inputs and
+// the selected native presentation on the same authored values.
+function mergeLayoutSlot<
+  P extends {
+    className?: string | undefined;
+    style?: StyleProp<NativeStyle>;
+    ref?: React.Ref<ViewInstance> | undefined;
+  },
+>(slot: P, externalStyle?: StyleProp<NativeStyle>) {
+  const className = slot.className;
+  const props = { ...slot };
+  let inline = props.style;
+  let css: StyleProp<NativeStyle> = undefined;
+  if (externalStyle || slot.style) {
+    const slotStyle = slot.style;
+    // Prepared classes travel separately from the native declarations spread by
+    // useSlot. Flattening their eager fallback would turn CSS into stale inline paint.
+    const preparation = separateNativeRootProps<{ style?: StyleProp<NativeStyle> | undefined }>({
+      style: slotStyle,
+    });
+    const nativeSlotStyle = preparation.props.style;
+    if (preparation.prepared) css = restoreNativeRootStyle(preparation, {});
+    // Source spreads native declarations once. Keep the selected slot layer
+    // as owned data, so later text/border normalization cannot replay getters.
+    let snapshot: NativeStyle | undefined;
+    if (Array.isArray(nativeSlotStyle)) snapshot = nativeStyleBorderDeclarations(nativeSlotStyle);
+    else {
+      const flat = StyleSheet.flatten(nativeSlotStyle);
+      if (flat) snapshot = copyNativeBorderStyle(flat, { ...flat });
+    }
+    const selected = applyNativeTextMetrics(
+      snapshot,
+      snapshot ?? {},
+      nativeStyleTextMetrics(nativeSlotStyle),
+    );
+    const merged = { ...StyleSheet.flatten(externalStyle), ...selected };
+    if (Object.keys(merged).length || preparation.prepared) {
+      props.style = restoreNativeRootStyle(preparation, { style: merged });
+      inline = selected;
+    }
+  }
+  return { props, className, inline, css, ref: slot.ref };
+}
+function frameSlot<P extends Parameters<typeof mergeLayoutSlot>[0]>(
+  slot: P,
+  generatedClass = true,
+) {
+  const merged = mergeLayoutSlot(slot);
+  return {
+    ...merged.props,
+    // Transition has no generated class. An empty first getter read must not
+    // replace the copied value or introduce an absent className property.
+    ...(generatedClass || joinClassNames(merged.className) ? { className: merged.className } : {}),
+    ref: merged.ref,
+  };
+}
+// Physical selector rebinding changes presentation, not the classes already
+// emitted by the source root. Keep foreign classes through the Paper boundary.
+function retainAccordionSourceClasses(
+  programme: StyleProp<NativeStyle>,
+  source: NativePreparedStyle,
+): StyleProp<NativeStyle> {
+  if (!source.classTokens) return programme;
+  const descriptor =
+    programme && typeof programme === 'object' ? nativeStyledStyles.get(programme) : undefined;
+  if (!descriptor) throw Error('Expected rebound Accordion CSS');
+  const carrier = [programme];
+  nativeStyledStyles.set(
+    carrier,
+    Object.freeze({ ...descriptor, classTokens: source.classTokens }),
+  );
+  return carrier;
+}
+
 interface FrameProps {
   name: string;
   className?: string;
   slot?: string;
-  owner: object;
+  ownerState: object;
   resolved?: NativeAccordionSlotProps<any>;
   component?: React.ComponentType<any>;
   base?: SxProps;
@@ -108,9 +233,9 @@ const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
     name,
     className,
     slot = 'root',
-    owner,
+    ownerState: canonicalOwner,
     resolved = EMPTY_SLOT_PROPS,
-    component: Component = View,
+    component: Component,
     base,
     states,
     overrideKeys,
@@ -118,45 +243,77 @@ const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
   },
   forwarded,
 ) {
-  const theme = useTheme(),
-    parent = useNativeTextContext();
+  const parent = useNativeTextContext();
   const {
     sx,
     style,
     className: slotClassName,
     component,
     as,
-    ownerState: _ownerState,
+    ownerState: suppliedOwner,
     ref: slotRef,
     children: _children,
     id,
     ...native
   } = resolved;
-  const ref = useForkRef(forwarded, slotRef);
+  const hostProps: Record<string, unknown> = { ...native };
+  const theme = useNativeStyledTheme(hostProps.theme as Theme | undefined);
+  const owner = useMemo(
+    () => ({ ...suppliedOwner, ...canonicalOwner }),
+    [suppliedOwner, canonicalOwner],
+  );
+  const ref = useForkRef(slotRef, forwarded);
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
-  const Element = Component === View ? (component ?? as ?? View) : Component;
+  const nativeRef = useNativeStyleRef(scopeRoot, scopeRef);
+  const styledSlot = !Component;
+  const selected = Component || component || as || View;
+  const Element = typeof selected === 'string' ? View : selected;
+  const Host = (Element === View ? NativeCssPeerView : Element) as React.ComponentType<any>;
+  const cooperatingRoot = Element === Paper || nativeCooperatingRootTarget(Element) !== undefined;
   const fullClassName = joinClassNames(className, slotClassName);
+  const ancestry = useContext(NativeButtonGroupRules);
   const styleCache = useNativeStyleCache();
   const { width } = useWindowDimensions();
   useNativeStyleCacheRevision();
-  // Source slot CSS is independent of inherited native presentation text.
-  // Retain its callbacks once, then normalize the same source against each frame.
+  // A custom slot replaces the named constructor; as/component only replace
+  // its terminal host. Keep raw sx for custom slots and run named CSS solely
+  // for the default constructor, preserving useSlot's ownership boundary.
+  const arguments_ = {
+    ...resolved,
+    ...(component ? { as: component } : {}),
+    className: fullClassName,
+    ref: nativeRef,
+    ownerState: owner,
+    children,
+    theme,
+  };
+  delete arguments_.component;
   const source = useMemo(
     () =>
-      componentRootStyle(theme, name, { ...owner }, sx, style, {
-        styleCache,
-        slot,
-        rootSlot: slot,
-        width,
-        classes: fullClassName.split(/\s+/).filter(Boolean),
-        rootProps: { ...resolved, className: fullClassName, ownerState: owner },
-        skipVariants: slot !== 'root',
-        states,
-        overrideKeys,
-        baseStyle: base,
-      }),
+      componentRootStyle(
+        theme,
+        styledSlot ? name : '',
+        owner,
+        styledSlot ? sx : undefined,
+        style,
+        {
+          styleCache,
+          sourceClass: Element === View,
+          slot,
+          rootSlot: slot,
+          width,
+          classes: fullClassName.split(/\s+/).filter(Boolean),
+          styledProps: arguments_,
+          skipVariants: slot !== 'root',
+          states,
+          overrideKeys: styledSlot ? overrideKeys : [],
+          baseStyle: styledSlot ? base : undefined,
+        },
+        true,
+      ),
     [
       theme,
+      styledSlot,
       name,
       owner,
       sx,
@@ -165,51 +322,284 @@ const Frame = forwardRef<ViewInstance, FrameProps>(function Frame(
       slot,
       width,
       fullClassName,
-      resolved,
+      cooperatingRoot,
+      Element,
       states,
       overrideKeys,
       base,
+      resolved,
+      nativeRef,
+      children,
+      component,
     ],
   );
-  const computed = componentStyle(theme, name, { ...owner }, undefined, {
+  const computed = componentStyle(theme, styledSlot ? name : '', owner, undefined, {
     preparedRoot: source.prepared,
     styleCache,
     width,
     classes: fullClassName.split(/\s+/).filter(Boolean),
+    ancestors: nativeStyleAncestors(ancestry, {
+      classes: fullClassName.split(/\s+/).filter(Boolean),
+    }),
     states,
     ...nativeTextStyleContext(parent, source.authored, theme),
   });
+  const motionProperty =
+    styledSlot && name === 'MuiAccordionSummary'
+      ? slot === 'expandIconWrapper'
+        ? 'transform'
+        : slot === 'content'
+          ? 'margin'
+          : undefined
+      : undefined;
+  const motionDisabled = slot === 'content' && 'disableGutters' in owner && owner.disableGutters;
+  // Resolve presentation on the final physical host, including styling-aware
+  // terminals hidden behind memo/forwardRef wrappers. The outer boundary is
+  // only a fallback when no deeper Box/Paper claims that same element.
+  const terminalTiming = useMemo(
+    () =>
+      motionProperty
+        ? {
+            // Preserve the host and its last numeric endpoint when the source
+            // removes this transition, so re-enabling gutters can animate again.
+            declaration: motionDisabled
+              ? 'none'
+              : theme.transitions.create(
+                  motionProperty === 'margin' ? ['margin'] : motionProperty,
+                  {
+                    duration: theme.transitions.duration.shortest,
+                  },
+                ),
+          }
+        : undefined,
+    [theme, motionProperty, motionDisabled],
+  );
+  const renderElement = (viewStyle: StyleProp<NativeStyle>, fallback?: NativeTextScopeValue) => (
+    <Host
+      {...hostProps}
+      nativeID={id ?? native.nativeID}
+      ref={cooperatingRoot ? scopeRef : nativeRef}
+      {...(Element === View
+        ? { prepared: source.prepared, classNames: fullClassName.split(/\s+/).filter(Boolean) }
+        : Element === Text
+          ? {}
+          : { className: fullClassName })}
+      {...(!styledSlot && Element !== View && Element !== Text
+        ? {
+            ownerState: owner,
+            ...(Object.hasOwn(resolved, 'sx') ? { sx } : {}),
+            ...(component || Object.hasOwn(resolved, 'as') ? { as: component || as } : {}),
+          }
+        : {})}
+      style={viewStyle}
+    >
+      {fallback ? (
+        <NativeRootTextBoundary
+          parent={parent}
+          fallback={fallback}
+          rootRef={scopeRoot}
+          theme={theme}
+        >
+          {children}
+        </NativeRootTextBoundary>
+      ) : (
+        children
+      )}
+    </Host>
+  );
+  if (styledSlot) {
+    delete hostProps.theme;
+    // Non-root styled slots forward classes to authored terminals. Physical
+    // View/Text hosts consume that metadata locally rather than receiving it.
+    if (slot === 'root' || Element === View || Element === Text) delete hostProps.classes;
+  }
+  // Cooperating roots evaluate retained CSS on their own host. Opaque wrappers
+  // start from the physical parent's text context and publish their own result
+  // when available; the fallback boundary covers a plain native View wrapper.
+  const renderResult = (presentation: StyleProp<NativeStyle>) =>
+    cooperatingRoot ? (
+      renderElement(source.programme)
+    ) : (
+      <NativeStyleScope
+        root={scopeRoot}
+        theme={theme}
+        classes={fullClassName.split(/\s+/).filter(Boolean)}
+        prepared={source.prepared}
+      >
+        <NativeTextScope theme={theme} style={presentation}>
+          {(viewStyle, _content, fallback) => (
+            <NativeTextStyleContext.Provider value={parent}>
+              {renderElement(
+                retainNativeRootCss(
+                  source.authored,
+                  source.programme,
+                  Object.hasOwn(resolved, 'style'),
+                  viewStyle,
+                ),
+                fallback,
+              )}
+            </NativeTextStyleContext.Provider>
+          )}
+        </NativeTextScope>
+      </NativeStyleScope>
+    );
+  const merged = mergeNativeRootStyle(
+    parent?.direction ?? theme.direction,
+    computed,
+    source.authored,
+  );
+  const frameStyle =
+    applyNativeTextMetrics(merged, computed, nativeStyleTextMetrics([computed, source.authored])) ??
+    merged;
   return (
     <NativeCssInsertionScope
       style={source.computed}
       registerClass={Element !== View && Element !== Text}
     >
-      <NativeTextScope
-        rootRef={scopeRoot}
-        theme={theme}
-        style={[computed, source.authored]}
-        content={children}
-      >
-        {(viewStyle, content) => (
-          <Element
-            {...native}
-            nativeID={id ?? native.nativeID}
-            ref={scopeRef}
-            {...(Element === View || Element === Text
-              ? {}
-              : { ownerState: owner, className: fullClassName })}
-            {...(Component !== View && (component ?? as) ? { as: component ?? as } : {})}
-            style={viewStyle}
-          >
-            {content}
-          </Element>
-        )}
-      </NativeTextScope>
+      {motionProperty ? (
+        <AccordionRootMotionScope
+          root={scopeRoot}
+          theme={theme}
+          ready
+          timing={terminalTiming}
+          property={motionProperty}
+        >
+          {(motion) => (
+            <AccordionRootMotionBoundary scope={motion} root={scopeRoot} style={frameStyle}>
+              {renderResult}
+            </AccordionRootMotionBoundary>
+          )}
+        </AccordionRootMotionScope>
+      ) : (
+        renderResult(frameStyle)
+      )}
     </NativeCssInsertionScope>
   );
 });
 
-export const Accordion: React.ForwardRefExoticComponent<
+// Native has no browser pseudo-elements. This ornament consumes retained
+// ancestor CSS, including Paper/custom-root overrides, while taking no layout,
+// pointer, or accessibility space. Its reserved origin is not a source sibling.
+function AccordionBefore({
+  sourceTheme,
+  timing,
+}: {
+  sourceTheme: Theme;
+  timing: Readonly<{ declaration: unknown }> | undefined;
+}) {
+  const theme = useTheme();
+  const parent = useNativeTextContext();
+  const rules = useContext(NativeButtonGroupRules);
+  const styleCache = useNativeStyleCache();
+  const { width } = useWindowDimensions();
+  useNativeStyleCacheRevision();
+  const marker = useContext(AccordionStructuralRootContext);
+  const observation = useContext(AccordionPeerObservationContext);
+  const context = { styleCache, width, ...nativeTextStyleContext(parent, undefined, theme) };
+  const style = accordionBeforeStyle(theme, rules, context);
+  const cases =
+    hasAccordionParentSelectors && marker
+      ? accordionBeforeCases(
+          theme,
+          rules,
+          context,
+          marker,
+          ownedStructuralCases?.peerSelectors === true,
+        )
+      : undefined;
+  // CSS cancels transitions under display:none. A later structural reveal
+  // starts at its current endpoint instead of exposing a hidden stale sample.
+  const presentation = useAccordionMotion(
+    style,
+    sourceTheme,
+    !timing || style.display === 'none' || !Object.keys(style).length ? undefined : 'before',
+    undefined,
+    timing,
+  );
+  if (!Object.keys(style).length && !cases?.some((value) => Object.keys(value).length)) return null;
+  const native = {
+    nativeID: accordionBeforeOrigin,
+    testID: 'mui-accordion-before',
+    pointerEvents: 'none' as const,
+    accessible: false,
+    accessibilityElementsHidden: true,
+    importantForAccessibility: 'no-hide-descendants' as const,
+  };
+  return cases ? (
+    <AccordionStructuralView
+      {...native}
+      nativeRef={null}
+      cases={cases}
+      basis="parent"
+      observation={observation}
+      style={[style, presentation]}
+      presentation={presentation}
+    >
+      {null}
+    </AccordionStructuralView>
+  ) : (
+    <View {...native} style={[style, presentation]} />
+  );
+}
+
+// Cache readiness is separate from physical text handoff registration. Only
+// canonical memo metadata reveals Paper here; opaque roots are never executed.
+function hasPaperCacheBoundary(root: unknown): boolean {
+  let candidate = root;
+  const seen = new Set<object>();
+  for (let depth = 0; depth < 128; depth++) {
+    if (candidate === Paper) return true;
+    if (!candidate || (typeof candidate !== 'object' && typeof candidate !== 'function'))
+      return false;
+    if (seen.has(candidate)) return false;
+    seen.add(candidate);
+    candidate = nativeMemoType(candidate);
+  }
+  return false;
+}
+
+// Structural notifications repaint retained CSS in this small boundary. They
+// must not rerun caller slot getters, owner callbacks, or recreate body children.
+function AccordionStructureBoundary({
+  root,
+  expanded,
+  sourceCss,
+  observeCache,
+  children,
+}: {
+  root: React.RefObject<ViewInstance | null>;
+  expanded: boolean;
+  sourceCss: string | undefined;
+  observeCache: boolean;
+  children(structure: AccordionStructure): React.ReactNode;
+}) {
+  // Rebind accepted CSS here, without replaying the outer caller's preparation.
+  // Direct/opaque View roots lack Paper/Box's boundary. Subscribing known
+  // cooperating roots here would replay their own source style callbacks.
+  useNativeStyleCacheRevision(observeCache);
+  const structure = useAccordionStructure(root, expanded, sourceCss);
+  return (
+    <NativeStructuralFactsContext.Provider value={structure}>
+      <AccordionPeerObservationContext.Provider value={structure.peerObservation ?? null}>
+        {children(structure)}
+      </AccordionPeerObservationContext.Provider>
+    </NativeStructuralFactsContext.Provider>
+  );
+}
+
+// A native event consumer can retain its first handler. Limit that handler's
+// environment to expansion inputs, never the render's complete owner/child tree.
+function createAccordionToggle(
+  expanded: boolean,
+  setExpanded: (value: boolean) => void,
+  onChange: AccordionProps['onChange'],
+) {
+  return (event: ButtonBaseActivationEvent) => {
+    setExpanded(!expanded);
+    onChange?.(event, !expanded);
+  };
+}
+const AccordionImpl: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<AccordionProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, AccordionProps>(function Accordion(inProps, forwarded) {
   const { props, style: preparedStyle } = useNativeRootProps({
@@ -233,11 +623,8 @@ export const Accordion: React.ForwardRefExoticComponent<
     ...other
   } = props;
   const [expanded, setExpanded] = useControlled(expandedProp, defaultExpanded);
-  const toggle = useCallback(
-    (event: ButtonBaseActivationEvent) => {
-      setExpanded(!expanded);
-      onChange?.(event, !expanded);
-    },
+  const toggle = useMemo(
+    () => createAccordionToggle(expanded, setExpanded, onChange),
     [expanded, onChange, setExpanded],
   );
   const context = useMemo(
@@ -260,64 +647,52 @@ export const Accordion: React.ForwardRefExoticComponent<
     getAccordionUtilityClass,
     classes,
   );
-  const root = resolveSlotProps(slotProps.root, owner) ?? {};
-  const heading = resolveSlotProps(slotProps.heading, owner) ?? {};
-  const transition = resolveSlotProps(slotProps.transition, owner) ?? {};
-  const region = resolveSlotProps(slotProps.region, owner) ?? {};
+  const mergedRoot = mergeLayoutSlot(resolveSlotProps(slotProps.root, owner) ?? {}, style);
+  const root = mergedRoot.props;
+  const rootStyle = mergedRoot.inline;
+  const rootSlotClass = mergedRoot.className;
+  const slotRef = mergedRoot.ref;
+  const heading = frameSlot(resolveSlotProps(slotProps.heading, owner) ?? {});
+  const transition = frameSlot(resolveSlotProps(slotProps.transition, owner) ?? {}, false);
+  const region = frameSlot(resolveSlotProps(slotProps.region, owner) ?? {});
   const {
     sx: rootSx,
-    style: rootStyle,
-    className: rootSlotClass,
+    style: _mergedRootStyle,
+    className: _copiedRootClass,
     component: rootComponent,
     as: rootAs,
-    ref: slotRef,
-    ownerState: _ownerState,
+    ref: _copiedSlotRef,
+    ownerState: suppliedOwner,
     children: _rootChildren,
     ...rootNative
   } = root;
-  const ref = useForkRef(forwarded, slotRef);
+  const ref = useForkRef(slotRef, forwarded);
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
-  const theme = useTheme(),
+  const nativeRef = useNativeStyleRef(scopeRoot, scopeRef);
+  const ancestry = useContext(NativeButtonGroupRules);
+  const styleCache = useNativeStyleCache();
+  const rootNativeProps: Record<string, unknown> = { ...other, ...rootNative };
+  const selectedAs = Object.hasOwn(root, 'as') ? rootAs : rootNativeProps.as;
+  // An as override replaces the named styled Paper base. A custom root slot
+  // owns its own constructor and receives as unchanged, just like useSlot.
+  const styledRoot = !slots.root;
+  const Root = (slots.root ??
+    (selectedAs
+      ? typeof selectedAs === 'string'
+        ? View
+        : selectedAs
+      : Paper)) as React.ComponentType<AccordionRootSlotProps>;
+  const cooperatingRoot = Root === Paper || nativeCooperatingRootTarget(Root) !== undefined;
+  const theme = useNativeStyledTheme(rootNativeProps.theme as Theme | undefined),
     parent = useNativeTextContext(),
     { width } = useWindowDimensions();
-  const states = [...(expanded ? ['expanded'] : []), ...(disabled ? ['disabled'] : [])];
-  const rootClass = joinClassNames(composed.root, className, rootSlotClass);
-  const { computed, authored, programme } = componentRootStyle(
-    theme,
-    'MuiAccordion',
-    { ...owner },
-    Object.hasOwn(root, 'sx') ? rootSx : sx,
-    preparedStyle,
-    {
-      classes: rootClass.split(/\s+/).filter(Boolean),
-      rootProps: { ...props, ...root, className: rootClass, ownerState: owner },
-      width,
-      ...nativeTextStyleContext(parent, [style, rootStyle], theme),
-      states,
-      overrideKeys: [
-        ...(!props.square ? ['rounded'] : []),
-        ...(!disableGutters ? ['gutters'] : []),
-      ],
-      baseStyle: {
-        position: 'relative',
-        direction: theme.direction,
-        marginTop: expanded && !disableGutters ? 16 : 0,
-        marginBottom: expanded && !disableGutters ? 16 : 0,
-        ...(disabled ? { backgroundColor: theme.palette.action.disabledBackground } : {}),
-      },
-    },
-    true,
-  );
-  // Paper binds retained selectors to the final shared host, including its own classes.
-  const rootInline = [authored, rootStyle];
-  const rootMerged = mergeNativeRootStyle(
-    parent?.direction ?? theme.direction,
-    computed,
-    rootInline,
-  );
-  const rootStyleResult =
-    applyNativeTextMetrics(rootMerged, computed, nativeStyleTextMetrics([computed, rootInline])) ??
-    rootMerged;
+  if (styledRoot) {
+    for (const reserved of ['as', 'theme', 'ownerState']) delete rootNativeProps[reserved];
+  } else {
+    if (Object.hasOwn(root, 'as')) rootNativeProps.as = rootAs;
+    if (Object.hasOwn(root, 'sx') || Object.hasOwn(props, 'sx'))
+      rootNativeProps.sx = Object.hasOwn(root, 'sx') ? rootSx : sx;
+  }
   const [summary, ...body] = React.Children.toArray(children);
   if (
     !React.isValidElement<{ id?: string; 'aria-controls'?: string }>(summary) ||
@@ -326,64 +701,352 @@ export const Accordion: React.ForwardRefExoticComponent<
     throw new Error(
       'MUI Native: Accordion requires a summary element as its first child; use AccordionSummary directly rather than a Fragment.',
     );
-  // The private slot keeps its existing runtime contract; public Paper retains
-  // its stricter generic root inference at direct call sites.
-  const Root = slots.root ?? (Paper as React.ComponentType<AccordionRootSlotProps>),
-    Transition = slots.transition ?? Collapse;
-  const leaf = rootComponent ?? component ?? rootAs;
-  const renderRoot = (viewStyle: StyleProp<NativeStyle>) => (
-    <Root
-      {...other}
-      {...rootNative}
-      ref={scopeRef}
-      component={leaf}
-      {...(Root === View ? {} : { className: rootClass })}
-      {...(Root === Paper || Root === View ? {} : { ownerState: owner })}
-      style={viewStyle}
+  const Transition = slots.transition ?? Collapse;
+  const leaf = rootComponent || component;
+  const rootChildren = [
+    <Frame
+      key="heading"
+      name="MuiAccordion"
+      slot="heading"
+      className={composed.heading}
+      ownerState={owner}
+      resolved={{ accessibilityRole: 'header', ...heading }}
+      component={slots.heading}
+    >
+      <AccordionContext.Provider value={context}>{summary}</AccordionContext.Provider>
+    </Frame>,
+    <Transition
+      key="transition"
+      in={expanded}
+      timeout="auto"
+      {...transition}
+      ownerState={{ ...transition.ownerState, ...owner }}
     >
       <Frame
         name="MuiAccordion"
-        slot="heading"
-        className={composed.heading}
-        owner={owner}
-        resolved={heading}
-        component={slots.heading}
+        slot="region"
+        className={composed.region}
+        ownerState={owner}
+        component={slots.region}
+        resolved={{
+          role: 'region',
+          'aria-labelledby': summary.props.id,
+          id: summary.props['aria-controls'],
+          ...region,
+        }}
       >
-        <AccordionContext.Provider value={context}>{summary}</AccordionContext.Provider>
+        {body}
       </Frame>
-      <Transition
-        in={expanded}
-        timeout="auto"
-        {...transition}
-        {...(Transition === Collapse ? {} : { ownerState: owner })}
-      >
-        <Frame
-          name="MuiAccordion"
-          slot="region"
-          className={composed.region}
-          owner={owner}
-          component={slots.region}
-          resolved={{
-            role: 'region',
-            'aria-labelledby': summary.props.id,
-            id: summary.props['aria-controls'],
-            ...region,
-          }}
-        >
-          {body}
-        </Frame>
-      </Transition>
-    </Root>
+    </Transition>,
+  ];
+  // useSlot forwards unconsumed authored props, then root slot props. Controls
+  // stay in ownerState and generated heading/transition children replace input.
+  // Preserve explicit undefined and merge native style arrays like source style
+  // objects, without exposing the prepared programme to contributor callbacks.
+  const rootOwner = { ...suppliedOwner, ...owner };
+  const rootArguments: Record<string, unknown> = {
+    ...other,
+    ...(Object.hasOwn(props, 'classes') ? { classes } : {}),
+    ...(Object.hasOwn(props, 'style') ? { style } : {}),
+    ...(Object.hasOwn(props, 'sx') ? { sx } : {}),
+    ...root,
+    className: joinClassNames(composed.root, className, rootSlotClass),
+    ref: nativeRef,
+    ownerState: rootOwner,
+    children: rootChildren,
+  };
+  delete rootArguments.component;
+  if (leaf) rootArguments.component = leaf;
+  // The default named styled root consumes classes before Paper. An authored
+  // root slot receives them directly and owns its own forwarding policy.
+  if (!styledRoot && (Object.hasOwn(root, 'classes') || Object.hasOwn(props, 'classes')))
+    rootNativeProps.classes = Object.hasOwn(root, 'classes') ? root.classes : classes;
+  if (styledRoot || Root === View) delete rootNativeProps.classes;
+  const structuralMarker = useAccordionStructuralRootMarker();
+  const states = [...(expanded ? ['expanded'] : []), ...(disabled ? ['disabled'] : [])];
+  const rootClass = joinClassNames(composed.root, className, rootSlotClass, structuralMarker);
+  const source = componentRootStyle(
+    theme,
+    styledRoot ? 'MuiAccordion' : '',
+    rootOwner,
+    styledRoot ? (Object.hasOwn(root, 'sx') ? rootSx : sx) : undefined,
+    [preparedStyle, mergedRoot.css],
+    {
+      styleCache,
+      sourceClass: styledRoot,
+      classes: rootClass.split(/\s+/).filter(Boolean),
+      ...(!cooperatingRoot
+        ? {
+            ancestors: nativeStyleAncestors(ancestry, {
+              classes: rootClass.split(/\s+/).filter(Boolean),
+            }),
+          }
+        : {}),
+      protectPhysicalGeometry: true,
+      ...(styledRoot ? { overrideSelectors: { region: `& .${accordionClasses.region}` } } : {}),
+      styledProps: { ...rootArguments, theme },
+      width,
+      ...nativeTextStyleContext(parent, [style, rootStyle], theme),
+      states,
+      overrideKeys: styledRoot
+        ? [...(!props.square ? ['rounded'] : []), ...(!disableGutters ? ['gutters'] : [])]
+        : [],
+      // Bind identity to the accepted source programme, not a newer render's CSS.
+      selectorOwner: styledRoot ? structuralMarker : undefined,
+      baseProgramme: styledRoot ? accordionConstructorCss(theme, rootOwner) : undefined,
+      overrideProgramme: styledRoot ? accordionOverrideCss : undefined,
+      baseStyle: styledRoot
+        ? {
+            position: 'relative',
+            direction: parent?.direction ?? theme.direction,
+            '&::before': {
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              top: -1,
+              height: 1,
+              opacity: 1,
+              backgroundColor: theme.palette.divider,
+            },
+            '&:first-of-type': { '&::before': { display: 'none' } },
+            '&.Mui-expanded': {
+              '&::before': { opacity: 0 },
+              '&:first-of-type': { marginTop: 0 },
+              '&:last-of-type': { marginBottom: 0 },
+              ...(!disableGutters ? { margin: '16px 0' } : {}),
+            },
+            '&.Mui-disabled': { backgroundColor: theme.palette.action.disabledBackground },
+            // The original nested & + & rule requires both panels expanded.
+            // Its two source classes plus two expanded states have specificity
+            // four; the private peer fact supplies the missing adjacent target.
+            '&.Mui-expanded.Mui-nativePreviousExpanded.Mui-nativePreviousExpanded::before': {
+              display: 'none',
+            },
+            ...(!props.square
+              ? {
+                  borderRadius: 0,
+                  '&:first-of-type': {
+                    '&::before': { display: 'none' },
+                    borderTopLeftRadius: theme.shape.borderRadius,
+                    borderTopRightRadius: theme.shape.borderRadius,
+                  },
+                  '&:last-of-type': {
+                    borderBottomLeftRadius: theme.shape.borderRadius,
+                    borderBottomRightRadius: theme.shape.borderRadius,
+                  },
+                }
+              : {}),
+          }
+        : undefined,
+    },
+    true,
   );
-  // Paper owns this physical root's text scope; a second scope would resolve em/% twice.
-  return Root === Paper ? (
-    renderRoot([programme, rootStyle])
-  ) : (
-    <NativeTextScope rootRef={scopeRoot} theme={theme} style={rootStyleResult}>
-      {renderRoot}
-    </NativeTextScope>
+  const rootTiming = styledRoot ? accordionMotionTiming(theme, 'root') : undefined;
+  const nativeChildren = [
+    ...rootChildren,
+    <AccordionBefore
+      key="native-before"
+      sourceTheme={theme}
+      timing={styledRoot ? accordionMotionTiming(theme, 'before') : undefined}
+    />,
+  ];
+  // Paper binds retained selectors to the final shared host, including its own classes.
+  const rootInline = [source.authored, rootStyle];
+  return (
+    <NativeCssInsertionScope style={source.computed} registerClass={styledRoot}>
+      <AccordionStructureBoundary
+        observeCache={!(cooperatingRoot || hasPaperCacheBoundary(Root))}
+        root={scopeRoot}
+        expanded={expanded}
+        sourceCss={
+          styledRoot
+            ? source.prepared.sheets.find((sheet) => !sheet.ancestor && !sheet.emissionForeign)
+                ?.emissionOwner?.css
+            : undefined
+        }
+      >
+        {(structure) => {
+          const {
+            computed,
+            programme: reboundProgramme,
+            prepared: reboundPrepared,
+          } = componentRootStyle(
+            theme,
+            styledRoot ? 'MuiAccordion' : '',
+            rootOwner,
+            undefined,
+            rootInline,
+            {
+              preparedRoot: source.prepared,
+              styleCache,
+              classes: rootClass.split(/\s+/).filter(Boolean),
+              ...structure.facts,
+              ...(!cooperatingRoot
+                ? {
+                    ancestors: nativeStyleAncestors(ancestry, {
+                      classes: rootClass.split(/\s+/).filter(Boolean),
+                      ...structure.facts,
+                    }),
+                  }
+                : {}),
+              ...nativeTextStyleContext(parent, rootInline, theme),
+              width,
+              states: [...states, ...(structure.facts.states ?? [])],
+              protectPhysicalGeometry: true,
+            },
+            true,
+          );
+          const programme = retainAccordionSourceClasses(reboundProgramme, source.prepared);
+          const prepared = source.prepared.classTokens
+            ? { ...reboundPrepared, classTokens: source.prepared.classTokens }
+            : reboundPrepared;
+          const rootMerged = mergeNativeRootStyle(
+            parent?.direction ?? theme.direction,
+            computed,
+            rootInline,
+          );
+          const rootStyleResult =
+            applyNativeTextMetrics(
+              rootMerged,
+              computed,
+              nativeStyleTextMetrics([computed, rootInline]),
+            ) ?? rootMerged;
+          const structuralCases =
+            structuralMarker && Root === View
+              ? prepareAccordionStructuralCases({
+                  theme,
+                  parent,
+                  programme,
+                  direction: parent?.direction ?? theme.direction,
+                  context: {
+                    styleCache,
+                    width,
+                    classes: rootClass.split(/\s+/).filter(Boolean),
+                    ...nativeTextStyleContext(parent, rootInline, theme),
+                    ...structure.facts,
+                    states: [...states, ...(structure.facts.states ?? [])],
+                    protectPhysicalGeometry: true,
+                  },
+                })
+              : undefined;
+          const renderRoot = (
+            viewStyle: StyleProp<NativeStyle>,
+            fallback?: NativeTextScopeValue,
+            presentation?: NativeStyle,
+          ) => (
+            <AccordionStructuralRootContext.Provider value={structuralMarker ?? null}>
+              {structuralCases ? (
+                <AccordionStructuralView
+                  {...rootNativeProps}
+                  cases={structuralCases}
+                  prepared={prepared}
+                  classNames={rootClass.split(/\s+/).filter(Boolean)}
+                  nativeRef={nativeRef}
+                  presentation={presentation}
+                  style={viewStyle}
+                >
+                  {fallback ? (
+                    <NativeRootTextBoundary
+                      parent={parent}
+                      fallback={fallback}
+                      rootRef={scopeRoot}
+                      theme={theme}
+                    >
+                      {nativeChildren}
+                    </NativeRootTextBoundary>
+                  ) : (
+                    nativeChildren
+                  )}
+                </AccordionStructuralView>
+              ) : (
+                <Root
+                  {...rootNativeProps}
+                  ref={cooperatingRoot ? scopeRef : nativeRef}
+                  {...(leaf ? { component: leaf } : {})}
+                  {...(Root === View ? {} : { className: rootClass })}
+                  {...(styledRoot || Root === Paper || Root === View
+                    ? {}
+                    : { ownerState: rootOwner })}
+                  style={viewStyle}
+                >
+                  {fallback ? (
+                    <NativeRootTextBoundary
+                      parent={parent}
+                      fallback={fallback}
+                      rootRef={scopeRoot}
+                      theme={theme}
+                    >
+                      {nativeChildren}
+                    </NativeRootTextBoundary>
+                  ) : (
+                    nativeChildren
+                  )}
+                </Root>
+              )}
+            </AccordionStructuralRootContext.Provider>
+          );
+          // First-party roots bind the retained programme to their own physical host.
+          // A second text scope here would resolve the same em/% declaration twice.
+          return (
+            <AccordionRootMotionScope
+              root={scopeRoot}
+              theme={theme}
+              timing={rootTiming}
+              ready={
+                styledRoot && structure.element !== null && structure.element === scopeRoot.current
+              }
+            >
+              {(motion) => (
+                <AccordionRootMotionBoundary
+                  scope={motion}
+                  root={scopeRoot}
+                  style={rootStyleResult}
+                >
+                  {(presented, presentation) =>
+                    cooperatingRoot ? (
+                      renderRoot([programme, rootStyle])
+                    ) : (
+                      <NativeStyleScope
+                        root={scopeRoot}
+                        theme={theme}
+                        classes={rootClass.split(/\s+/).filter(Boolean)}
+                        prepared={prepared}
+                      >
+                        <AccordionRootTextScope
+                          owner={structuralMarker}
+                          cases={structuralCases}
+                          theme={theme}
+                          style={presented}
+                        >
+                          {(viewStyle, _content, fallback) => (
+                            <NativeTextStyleContext.Provider value={parent}>
+                              {renderRoot(
+                                retainNativeRootCss(
+                                  rootInline,
+                                  programme,
+                                  Object.hasOwn(props, 'style') || Object.hasOwn(root, 'style'),
+                                  viewStyle,
+                                ),
+                                fallback,
+                                presentation,
+                              )}
+                            </NativeTextStyleContext.Provider>
+                          )}
+                        </AccordionRootTextScope>
+                      </NativeStyleScope>
+                    )
+                  }
+                </AccordionRootMotionBoundary>
+              )}
+            </AccordionRootMotionScope>
+          );
+        }}
+      </AccordionStructureBoundary>
+    </NativeCssInsertionScope>
   );
 });
+
+export const Accordion: NativeAccordionComponent = AccordionImpl as NativeAccordionComponent;
 
 export const AccordionSummary: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<AccordionSummaryProps> & React.RefAttributes<ViewInstance>
@@ -430,8 +1093,8 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
     classes,
   );
   const root = resolveSlotProps(slotProps.root, owner) ?? {};
-  const content = resolveSlotProps(slotProps.content, owner) ?? {};
-  const icon = resolveSlotProps(slotProps.expandIconWrapper, owner) ?? {};
+  const content = frameSlot(resolveSlotProps(slotProps.content, owner) ?? {});
+  const icon = frameSlot(resolveSlotProps(slotProps.expandIconWrapper, owner) ?? {});
   const {
     sx: rootSx,
     style: rootStyle,
@@ -446,7 +1109,8 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
     component: rootComponent,
     ...rootNative
   } = root;
-  const ref = useForkRef(forwarded, slotRef);
+  const mergedRef = useForkRef(slotRef, forwarded);
+  const { root: summaryRoot, ref } = useNativeTextRootRef(mergedRef);
   const theme = useTheme(),
     parent = useNativeTextContext(),
     { width } = useWindowDimensions();
@@ -461,21 +1125,47 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
   const ariaExpanded = merged['aria-expanded'];
   const expanded = owner.expanded,
     gutters = !owner.disableGutters;
+  const structuralMarker = useAccordionStructuralRootMarker();
   const states = [...(expanded ? ['expanded'] : []), ...(owner.disabled ? ['disabled'] : [])];
-  const rootClass = joinClassNames(composed.root, className, rootSlotClass);
+  const rootClass = joinClassNames(composed.root, className, rootSlotClass, structuralMarker);
   const focusClass = Object.hasOwn(root, 'focusVisibleClassName')
     ? rootFocusClass
     : joinClassNames(composed.focusVisible, focusVisibleClassName);
   const Root = slots.root ?? (ButtonBase as React.ComponentType<AccordionSummaryRootSlotProps>);
+  const styledRoot = !slots.root;
+  // Replacing the slot transfers sx/style ownership to the new constructor.
+  // Keep native callback styles composable without resolving its sx here.
+  const replacementStyle =
+    typeof preparedStyle === 'function' || typeof rootStyle === 'function'
+      ? (state: ButtonBaseState) => [
+          typeof preparedStyle === 'function' ? preparedStyle(state) : preparedStyle,
+          typeof rootStyle === 'function' ? rootStyle(state) : rootStyle,
+        ]
+      : rootStyle === undefined
+        ? preparedStyle
+        : preparedStyle === undefined
+          ? rootStyle
+          : [preparedStyle, rootStyle];
+  const summaryTiming = useMemo(
+    () =>
+      slots.root
+        ? undefined
+        : {
+            declaration: theme.transitions.create(['min-height', 'background-color'], {
+              duration: theme.transitions.duration.shortest,
+            }),
+          },
+    [theme, slots.root],
+  );
   const styleCache = useNativeStyleCache();
   const defaultsSource = useNativeDefaultPropsSource();
   const source = useMemo(
     () =>
       componentRootStyle(
         theme,
-        'MuiAccordionSummary',
+        styledRoot ? 'MuiAccordionSummary' : '',
         { ...owner },
-        Object.hasOwn(root, 'sx') ? rootSx : sx,
+        styledRoot ? (Object.hasOwn(root, 'sx') ? rootSx : sx) : undefined,
         [
           typeof preparedStyle === 'function' ? undefined : preparedStyle,
           typeof rootStyle === 'function' ? undefined : rootStyle,
@@ -498,20 +1188,24 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
           ...nativeTextStyleContext(parent, typeof style === 'function' ? undefined : style, theme),
           width,
           states,
-          overrideKeys: gutters ? ['gutters'] : [],
-          baseStyle: {
-            width: '100%',
-            minHeight: expanded && gutters ? 64 : 48,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            padding: theme.spacing(0, 2),
-            direction: theme.direction,
-            ...(owner.disabled || disabled
-              ? { opacity: theme.palette.action.disabledOpacity }
-              : {}),
-            '&.Mui-focusVisible': { backgroundColor: theme.palette.action.focus },
-          },
+          overrideKeys: styledRoot && gutters ? ['gutters'] : [],
+          baseStyle: styledRoot
+            ? {
+                width: '100%',
+                minHeight: expanded && gutters ? 64 : 48,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
+                padding: theme.spacing(0, 2),
+                direction: parent?.direction ?? theme.direction,
+                ...(owner.disabled || disabled
+                  ? { opacity: theme.palette.action.disabledOpacity }
+                  : {}),
+                ...(!theme.focusVisible
+                  ? { '&.Mui-focusVisible': { backgroundColor: theme.palette.action.focus } }
+                  : {}),
+              }
+            : undefined,
         },
       ),
     [inProps, context, theme, parent, width, styleCache, defaultsSource],
@@ -522,42 +1216,49 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
     inline: StyleProp<NativeStyle>,
     hovered = false,
   ) =>
-    componentRootStyle(theme, 'MuiAccordionSummary', { ...owner }, undefined, inline, {
-      preparedRoot: sheet?.sourcePrepared ?? source.prepared,
-      styleCache,
-      classes: joinClassNames(
-        rootClass,
-        Root === ButtonBase && 'MuiButtonBase-root',
-        state.focusVisible && focusClass,
-        state.pressed && 'Mui-active',
-        hovered && !state.disabled && 'Mui-hover',
-      )
-        .split(/\s+/)
-        .filter(Boolean),
-      ancestors: [
-        ...(sheet && !sheet.sourcePrepared ? [sheet] : []),
-        ...nativeStyleAncestors(ancestry, {
-          classes: joinClassNames(
-            rootClass,
-            Root === ButtonBase && 'MuiButtonBase-root',
-            state.focusVisible && focusClass,
-            state.pressed && 'Mui-active',
-            hovered && !state.disabled && 'Mui-hover',
-          )
-            .split(/\s+/)
-            .filter(Boolean),
-        }),
-      ],
-      ...nativeTextStyleContext(parent, inline, theme),
-      width,
-      states: [
-        ...states,
-        ...(state.disabled ? ['disabled'] : []),
-        ...(state.focusVisible ? ['focusVisible'] : []),
-        ...(state.pressed ? ['active'] : []),
-        ...(hovered && !state.disabled ? ['hover'] : []),
-      ],
-    });
+    componentRootStyle(
+      theme,
+      styledRoot ? 'MuiAccordionSummary' : '',
+      { ...owner },
+      undefined,
+      inline,
+      {
+        preparedRoot: sheet?.sourcePrepared ?? source.prepared,
+        styleCache,
+        classes: joinClassNames(
+          rootClass,
+          Root === ButtonBase && 'MuiButtonBase-root',
+          state.focusVisible && focusClass,
+          state.pressed && 'Mui-active',
+          hovered && !state.disabled && 'Mui-hover',
+        )
+          .split(/\s+/)
+          .filter(Boolean),
+        ancestors: [
+          ...(sheet && !sheet.sourcePrepared ? [sheet] : []),
+          ...nativeStyleAncestors(ancestry, {
+            classes: joinClassNames(
+              rootClass,
+              Root === ButtonBase && 'MuiButtonBase-root',
+              state.focusVisible && focusClass,
+              state.pressed && 'Mui-active',
+              hovered && !state.disabled && 'Mui-hover',
+            )
+              .split(/\s+/)
+              .filter(Boolean),
+          }),
+        ],
+        ...nativeTextStyleContext(parent, inline, theme),
+        width,
+        states: [
+          ...states,
+          ...(state.disabled ? ['disabled'] : []),
+          ...(state.focusVisible ? ['focusVisible'] : []),
+          ...(state.pressed ? ['active'] : []),
+          ...(hovered && !state.disabled ? ['hover'] : []),
+        ],
+      },
+    );
   const sourceFor = useMemo(
     () => (sheet: NativeButtonBaseStyleSheet) =>
       prepareNativeCompositeSource(sheet.prepared!, source.prepared, styleCache),
@@ -626,85 +1327,105 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
   };
   return (
     <NativeCssInsertionScope style={source.computed}>
-      <Root
-        focusRipple={false}
-        disableRipple
-        {...other}
-        {...rootNative}
-        ref={ref}
-        component={rootComponent ?? other.component ?? rootAs}
-        className={rootClass}
-        {...(Root === ButtonBase
-          ? {
-              _muiNativeSourceStyle: sourceFor,
-              _muiNativeStyle: (
-                state: ButtonBaseState,
-                sheet: NativeButtonBaseStyleSheet,
-                hovered?: boolean,
-              ) => {
-                styled(state, sheet, hovered);
-                return { computed: cache!.computed, authored: cache!.authored };
-              },
-              _muiNativeClassName: rootClass,
-              _muiNativeClassMetadata: { root: rootClass, focusVisible: focusClass },
-            }
-          : { focusVisibleClassName: focusClass })}
-        {...(Root === ButtonBase ? {} : { ownerState: owner })}
-        disabled={disabled}
-        aria-expanded={ariaExpanded}
-        accessibilityState={{
-          ...other.accessibilityState,
-          ...rootNative.accessibilityState,
-          ...(ariaExpanded !== undefined ? { expanded: ariaExpanded } : {}),
-          ...(disabled !== undefined ? { disabled } : {}),
-        }}
-        style={styled}
-        onClick={(event) => {
-          if (disabled) return;
-          // Slot callbacks precede expansion and authored callbacks, including when prevented.
-          (rootPress ?? rootClick)?.(event);
-          context?.toggle(event);
-          (onPress ?? onClick)?.(event);
-        }}
+      <AccordionRootMotionScope
+        root={summaryRoot}
+        theme={theme}
+        ready
+        timing={summaryTiming}
+        property="summary"
       >
-        <Frame
-          name="MuiAccordionSummary"
-          slot="content"
-          className={composed.content}
-          owner={owner}
-          resolved={content}
-          component={slots.content}
-          states={states}
-          base={{
-            flexDirection: 'row',
-            flexGrow: 1,
-            flexShrink: 1,
-            minWidth: 0,
-            marginTop: expanded && gutters ? 20 : 12,
-            marginBottom: expanded && gutters ? 20 : 12,
-          }}
-        >
-          {children}
-        </Frame>
-        {expandIcon && (
-          <Frame
-            name="MuiAccordionSummary"
-            slot="expandIconWrapper"
-            className={composed.expandIconWrapper}
-            owner={owner}
-            resolved={icon}
-            component={slots.expandIconWrapper}
-            states={states}
-            base={{
-              flexShrink: 0,
-              color: theme.palette.action.active,
-              transform: [{ rotate: expanded ? '180deg' : '0deg' }],
+        {() => (
+          <Root
+            focusRipple={false}
+            disableRipple
+            {...other}
+            {...rootNative}
+            ref={ref}
+            component={rootComponent ?? other.component ?? rootAs}
+            className={rootClass}
+            {...(styledRoot && Root === ButtonBase
+              ? {
+                  _muiNativeSourceStyle: sourceFor,
+                  _muiNativeStyle: (
+                    state: ButtonBaseState,
+                    sheet: NativeButtonBaseStyleSheet,
+                    hovered?: boolean,
+                  ) => {
+                    styled(state, sheet, hovered);
+                    return { computed: cache!.computed, authored: cache!.authored };
+                  },
+                  _muiNativeClassName: rootClass,
+                  _muiNativeClassMetadata: { root: rootClass, focusVisible: focusClass },
+                }
+              : { focusVisibleClassName: focusClass })}
+            {...(styledRoot && Root === ButtonBase ? {} : { ownerState: owner })}
+            {...(!styledRoot && (Object.hasOwn(root, 'sx') || Object.hasOwn(props, 'sx'))
+              ? { sx: Object.hasOwn(root, 'sx') ? rootSx : sx }
+              : {})}
+            disabled={disabled}
+            aria-expanded={ariaExpanded}
+            accessibilityState={{
+              ...other.accessibilityState,
+              ...rootNative.accessibilityState,
+              ...(ariaExpanded !== undefined ? { expanded: ariaExpanded } : {}),
+              ...(disabled !== undefined ? { disabled } : {}),
+            }}
+            {...(styledRoot
+              ? { style: styled }
+              : Object.hasOwn(root, 'style') ||
+                  Object.hasOwn(props, 'style') ||
+                  replacementStyle !== undefined
+                ? { style: replacementStyle }
+                : {})}
+            onClick={(event) => {
+              if (disabled) return;
+              // Slot callbacks precede expansion and authored callbacks, including when prevented.
+              (rootPress ?? rootClick)?.(event);
+              context?.toggle(event);
+              (onPress ?? onClick)?.(event);
             }}
           >
-            {expandIcon}
-          </Frame>
+            <Frame
+              name="MuiAccordionSummary"
+              slot="content"
+              className={composed.content}
+              ownerState={owner}
+              resolved={content}
+              component={slots.content}
+              states={states}
+              base={{
+                textAlign: 'start',
+                flexDirection: 'row',
+                flexGrow: 1,
+                flexShrink: 1,
+                minWidth: 0,
+                marginTop: expanded && gutters ? 20 : 12,
+                marginBottom: expanded && gutters ? 20 : 12,
+              }}
+            >
+              {children}
+            </Frame>
+            {expandIcon && (
+              <Frame
+                name="MuiAccordionSummary"
+                slot="expandIconWrapper"
+                className={composed.expandIconWrapper}
+                ownerState={owner}
+                resolved={icon}
+                component={slots.expandIconWrapper}
+                states={states}
+                base={{
+                  flexShrink: 0,
+                  color: theme.palette.action.active,
+                  transform: [{ rotate: expanded ? '180deg' : '0deg' }],
+                }}
+              >
+                {expandIcon}
+              </Frame>
+            )}
+          </Root>
         )}
-      </Root>
+      </AccordionRootMotionScope>
     </NativeCssInsertionScope>
   );
 });
@@ -723,11 +1444,15 @@ export const AccordionDetails: NativeAccordionDetailsComponent = forwardRef<
   AccordionDetailsProps
 >(function AccordionDetails(inProps, ref) {
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(ref);
+  const styleRef = useNativeStyleRef(scopeRoot, scopeRef);
   const { props, style: preparedStyle } = useNativeRootProps({
     props: inProps,
     name: 'MuiAccordionDetails',
   });
   const { classes, className, component: Root = View, children, sx, style, ...native } = props;
+  const Host = (Root === View ? NativeCssPeerView : Root) as React.ComponentType<any>;
+  const styleCache = useNativeStyleCache();
+  const ancestry = useContext(NativeButtonGroupRules);
   const theme = useTheme(),
     parent = useNativeTextContext();
   const utility = getAccordionDetailsUtilityClass('root');
@@ -736,39 +1461,50 @@ export const AccordionDetails: NativeAccordionDetailsComponent = forwardRef<
     classes?.root ? `${utility} ${classes.root}` : utility,
     className,
   );
-  const { computed: resolved, authored } = useComponentRootStyle(
-    'MuiAccordionDetails',
-    props,
-    sx,
-    preparedStyle,
-    {
-      ...nativeTextStyleContext(parent, style, theme),
-      classes: rootClass.split(/\s+/).filter(Boolean),
-      rootProps: {
-        ...props,
-        ...(props.component ? { as: props.component } : {}),
-        className: rootClass,
-      },
-      baseStyle: { padding: theme.spacing(1, 2, 2) },
+  const tokens = rootClass.split(/\s+/).filter(Boolean);
+  const {
+    computed: resolved,
+    authored,
+    prepared,
+  } = useComponentRootStyle('MuiAccordionDetails', props, sx, preparedStyle, {
+    styleCache,
+    sourceClass: Root === View,
+    ...nativeTextStyleContext(parent, style, theme),
+    classes: tokens,
+    ancestors: nativeStyleAncestors(ancestry, { classes: tokens }),
+    rootProps: {
+      ...props,
+      ...(props.component ? { as: props.component } : {}),
+      className: rootClass,
     },
-  );
-  const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, resolved, authored);
-  const computed =
-    applyNativeTextMetrics(merged, resolved, nativeStyleTextMetrics([resolved, authored])) ??
-    merged;
+    baseStyle: { padding: theme.spacing(1, 2, 2) },
+  });
+  const paint = nativeRootStylePainter(parent?.direction ?? theme.direction, authored);
+  const computed = retainNativeStyleTransform(paint(resolved), resolved, paint);
   return (
-    <NativeTextScope rootRef={scopeRoot} theme={theme} style={computed} content={children}>
-      {(style, content) => (
-        <Root
-          {...native}
-          {...(Root === View ? {} : { className: rootClass })}
-          ref={scopeRef}
-          style={style}
-        >
-          {content}
-        </Root>
+    <NativeCssRootBoundary style={resolved} registerClass={false}>
+      {() => (
+        <NativeStyleScope root={scopeRoot} theme={theme} classes={tokens} prepared={prepared}>
+          <NativeTextScope
+            rootRef={scopeRoot}
+            theme={theme}
+            style={refreshNativeStyle(computed)}
+            content={children}
+          >
+            {(style, content) => (
+              <Host
+                {...native}
+                {...(Root === View ? { prepared, classNames: tokens } : { className: rootClass })}
+                ref={styleRef}
+                style={style}
+              >
+                {content}
+              </Host>
+            )}
+          </NativeTextScope>
+        </NativeStyleScope>
       )}
-    </NativeTextScope>
+    </NativeCssRootBoundary>
   );
 }) as NativeAccordionDetailsComponent;
 interface NativeAccordionActionsComponent
@@ -800,8 +1536,12 @@ export const AccordionActions: NativeAccordionActionsComponent = forwardRef<
     ...native
   } = props as AccordionActionsProps & NativeAccordionSlotProps;
   const Root = Component === View ? (as ?? View) : Component;
+  const Host = (Root === View ? NativeCssPeerView : Root) as React.ComponentType<any>;
+  const styleCache = useNativeStyleCache();
+  const ancestry = useContext(NativeButtonGroupRules);
   const mergedRef = useForkRef(ref, slotRef);
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(mergedRef);
+  const styleRef = useNativeStyleRef(scopeRoot, scopeRef);
   const theme = useTheme(),
     parent = useNativeTextContext();
   const token = (slot: 'root' | 'spacing') => {
@@ -813,51 +1553,61 @@ export const AccordionActions: NativeAccordionActionsComponent = forwardRef<
   const rootClass = joinClassNames(token('root'), !disableSpacing && token('spacing'), className);
   const owner = { ...props, disableSpacing };
   const { disableSpacing: _disableSpacing, ...styledProps } = props;
-  const { computed: resolved, authored } = useComponentRootStyle(
-    'MuiAccordionActions',
-    owner,
-    sx,
-    preparedStyle,
-    {
-      ...nativeTextStyleContext(parent, style, theme),
-      slot: 'root',
-      overrideKeys: disableSpacing ? [] : ['spacing'],
-      classes: rootClass.split(/\s+/).filter(Boolean),
-      rootProps: {
-        ...styledProps,
-        ...(as || Component !== View ? { as: as ?? Component } : {}),
-        className: rootClass,
-      },
-      baseStyle: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: 8,
-        // Yoga gap preserves caller-owned children and mirrors with the native row direction.
-        columnGap: disableSpacing ? 0 : 8,
-      },
+  const tokens = rootClass.split(/\s+/).filter(Boolean);
+  const {
+    computed: resolved,
+    authored,
+    prepared,
+  } = useComponentRootStyle('MuiAccordionActions', owner, sx, preparedStyle, {
+    styleCache,
+    sourceClass: Root === View,
+    ...nativeTextStyleContext(parent, style, theme),
+    slot: 'root',
+    overrideKeys: disableSpacing ? [] : ['spacing'],
+    classes: tokens,
+    ancestors: nativeStyleAncestors(ancestry, { classes: tokens }),
+    rootProps: {
+      ...styledProps,
+      ...(as || Component !== View ? { as: as ?? Component } : {}),
+      className: rootClass,
     },
-  );
+    baseStyle: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      padding: 8,
+      // Yoga gap preserves caller-owned children and mirrors with the native row direction.
+      columnGap: disableSpacing ? 0 : 8,
+    },
+  });
   // Keep native array precedence: an inline gap does not erase a named columnGap.
   return (
-    <NativeTextScope
-      rootRef={scopeRoot}
-      theme={theme}
-      style={[resolved, authored]}
-      content={children}
-    >
-      {(rootStyle, content) => (
-        <Root
-          {...native}
-          nativeID={id ?? native.nativeID}
-          {...(Root === View ? {} : { className: rootClass, ownerState: owner })}
-          {...(Component !== View && as ? { as } : {})}
-          ref={scopeRef}
-          style={rootStyle}
-        >
-          {content}
-        </Root>
+    <NativeCssRootBoundary style={resolved} registerClass={false}>
+      {() => (
+        <NativeStyleScope root={scopeRoot} theme={theme} classes={tokens} prepared={prepared}>
+          <NativeTextScope
+            rootRef={scopeRoot}
+            theme={theme}
+            style={[refreshNativeStyle(resolved), authored]}
+            content={children}
+          >
+            {(rootStyle, content) => (
+              <Host
+                {...native}
+                nativeID={id ?? native.nativeID}
+                {...(Root === View
+                  ? { prepared, classNames: tokens }
+                  : { className: rootClass, ownerState: owner })}
+                {...(Component !== View && as ? { as } : {})}
+                ref={styleRef}
+                style={rootStyle}
+              >
+                {content}
+              </Host>
+            )}
+          </NativeTextScope>
+        </NativeStyleScope>
       )}
-    </NativeTextScope>
+    </NativeCssRootBoundary>
   );
 }) as NativeAccordionActionsComponent;

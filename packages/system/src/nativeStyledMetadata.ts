@@ -18,6 +18,8 @@ export type NativeSelectorContext = Pick<
   StyleContext,
   | 'classes'
   | 'lastChild'
+  | 'firstOfType'
+  | 'lastOfType'
   | 'states'
   | 'descendantClasses'
   | 'descendantPath'
@@ -264,6 +266,8 @@ const generatedRootToken = /^altroo-root-(css|handoff)-v1-/;
 const selectorKeys = [
   'classes',
   'lastChild',
+  'firstOfType',
+  'lastOfType',
   'states',
   'descendantClasses',
   'descendantPath',
@@ -328,7 +332,9 @@ function selectorSnapshot(context: NativeSelectorContext): Record<string, unknow
     // This field is the library-owned deferred structural predicate. A later
     // compiler binds each counterfactual; do not observe a released getter.
     if (!('value' in descriptor)) {
-      result[key] = key === 'lastChild' ? 'deferred-last-child' : descriptor;
+      result[key] = ['lastChild', 'firstOfType', 'lastOfType'].includes(key)
+        ? `deferred-${key}`
+        : descriptor;
       continue;
     }
     const value: unknown = descriptor.value;

@@ -4,7 +4,8 @@ import { resolve, dirname } from 'node:path';
 import { createRequire } from 'node:module';
 import { createHash } from 'node:crypto';
 import { build } from 'esbuild';
-import { format, resolveConfig } from 'prettier';
+import prettier from 'prettier';
+const { format, resolveConfig } = prettier;
 import { loadReference } from './load.mjs';
 const sources = [
   'ButtonGroup/ButtonGroup.js',

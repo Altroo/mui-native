@@ -8,7 +8,7 @@ import type { CardContentClasses } from './cardContentClasses';
 export interface CardContentOwnProps {
   children?: React.ReactNode;
   classes?: Partial<CardContentClasses> | undefined;
-  sx?: SxProps<Theme> | undefined;
+  sx?: SxProps | undefined;
 }
 type Root = React.ComponentType<any> | 'div';
 // A declared ref must expose a native host. Ref-less wrappers remain valid;
@@ -87,7 +87,7 @@ export type CardContentProps<R extends Root = typeof View, AdditionalProps = {}>
 type DefaultCardContentProps = Omit<CardContentProps, 'component'> & { component?: undefined };
 type Keys<T> = T extends unknown ? keyof T : never;
 // Preserve the relationship between a conditional spread's root and its props;
-// a default-root branch cannot accept a concrete custom component. Otherwise
+// a default-root branch cannot accept a concrete custom component. Otherwise,
 // that broad branch would absorb a missing-prop custom branch in the same union.
 type InferredCardContentProps<P extends CardContentProps> = P extends unknown
   ? [NonNullable<P['component']>] extends [never]

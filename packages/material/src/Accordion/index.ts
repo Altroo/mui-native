@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 export {
   Accordion as default,
   Accordion,
@@ -6,6 +7,7 @@ export {
 } from '../accordion';
 export type {
   AccordionProps,
+  AccordionTypeMap,
   AccordionOwnProps,
   AccordionOwnerState,
   AccordionSlots,

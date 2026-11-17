@@ -95,6 +95,7 @@ test('Android System font registration precedes all registered lazy view manager
       'AltrooMUIPortalHostManager',
       'AltrooMUIPortalCanvasManager',
       'AltrooMUIStructuralViewManager',
+      'AltrooMUITextColorMarkerManager',
     ],
   );
 });

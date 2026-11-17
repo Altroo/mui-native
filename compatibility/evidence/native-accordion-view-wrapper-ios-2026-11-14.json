@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "status": "passed-scoped-stock-view-js-parity",
+  "validatedSourceCommit": "87c97f7e02a376ee61c74a0f9582cddc6be2f821",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontProfile": "normal"
+  },
+  "reference": {
+    "version": "React Native 0.88.1",
+    "sourceBaseline": "packages/native-host/structural-observation-baseline.json",
+    "oracleTest": "tests/owned-structural-view-props.test.tsx",
+    "scope": "Actual pinned View.js wrapper compared with the owned JS host: native ID and ARIA alias precedence, false/zero/empty values, native props, text ancestry reset, exact ref and programme identity."
+  },
+  "synchronizedVoiceOver": {
+    "passedTests": 1,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "nativeConfiguration": "Release",
+    "bundleSHA256": "c9ace960fb1414663bf7bffc9003e77ffce544db5ed3341e8723ad57b07e4c1b",
+    "collectorSHA256": "49345ae07044f48da8b91c9e44dd8bbd6b20fa3d3e01b71f70ab5fe8e949b176",
+    "testExecutableSHA256": "17d61e59b3ca336b96b6b2c6fdc3cce489cc547602d8fc6d5230a136976271ed",
+    "trackedSourceFilesMatchedToCommit": 464,
+    "originalSessionRestored": true
+  },
+  "groupingSeparators": {
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "nativeConfiguration": "Release",
+    "bundleSHA256": "0abdd9e84e6dde3e097d2f468a9ad1611acbd78a24b0ac94424271f6d931743e",
+    "collectorSHA256": "49345ae07044f48da8b91c9e44dd8bbd6b20fa3d3e01b71f70ab5fe8e949b176",
+    "testExecutableSHA256": "17d61e59b3ca336b96b6b2c6fdc3cce489cc547602d8fc6d5230a136976271ed",
+    "trackedSourceFilesMatchedToCommit": 457,
+    "originalSessionRestored": true,
+    "recordedFrames": 425,
+    "qualifiedCompleteGroups": 95,
+    "invalidGroupFrames": 0,
+    "configurations": [
+      "default-0",
+      "default-1",
+      "default-2",
+      "default-3",
+      "default-4",
+      "forwarded-0",
+      "forwarded-1",
+      "forwarded-2",
+      "forwarded-3",
+      "forwarded-4"
+    ],
+    "captureSHA256": "52848f7351f8238e23721676a8cc12585efb28afaa34d2b0c2172ef3401f13f9"
+  },
+  "limits": [
+    "Wrapper alias and ancestry semantics are established by renderer differential tests; native scenarios replay existing grouping and synchronized VoiceOver checks.",
+    "Synchronized VoiceOver does not establish immediate-navigation focus behavior or app latency.",
+    "Recorded complete-group separator checks do not establish every display frame or GPU deadlines.",
+    "Expanded source-class adjacency, conditional inherited text, exact motion start, broader platform matrices and calibrated performance remain completion gates."
+  ]
+}

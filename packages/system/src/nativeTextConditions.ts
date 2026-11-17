@@ -3,7 +3,7 @@
 // Private same-instance services. No caller data, runtime or native discovery.
 import { diagnostic } from './diagnostics';
 const allowed = new Set(
-  'alignContent alignItems alignSelf aspectRatio backfaceVisibility backgroundColor borderBottomColor borderBottomLeftRadius borderBottomRightRadius borderBottomWidth borderColor borderLeftColor borderLeftWidth borderRadius borderRightColor borderRightWidth borderStyle borderTopColor borderTopLeftRadius borderTopRightRadius borderTopWidth borderWidth bottom color columnGap direction display elevation flex flexBasis flexDirection flexGrow flexShrink flexWrap fontFamily fontSize fontStyle fontWeight gap height justifyContent left letterSpacing lineHeight margin marginTop marginRight marginBottom marginLeft marginStart marginEnd maxHeight maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineStyle outlineWidth overflow padding paddingTop paddingRight paddingBottom paddingLeft paddingStart paddingEnd position right rowGap shadowColor shadowOffset shadowOpacity shadowRadius start end textAlign textDecorationColor textDecorationLine textDecorationStyle textTransform top transform width zIndex'.split(
+  'alignContent alignItems alignSelf aspectRatio backfaceVisibility backgroundImage experimental_backgroundImage backgroundColor borderBottomColor borderBottomLeftRadius borderBottomRightRadius borderBottomWidth borderColor borderLeftColor borderLeftWidth borderRadius borderRightColor borderRightWidth borderStyle borderTopColor borderTopLeftRadius borderTopRightRadius borderTopWidth borderWidth bottom color columnGap direction display elevation flex flexBasis flexDirection flexGrow flexShrink flexWrap fontFamily fontSize fontStyle fontWeight gap height justifyContent left letterSpacing lineHeight margin marginTop marginRight marginBottom marginLeft marginStart marginEnd maxHeight maxWidth minHeight minWidth opacity outlineColor outlineOffset outlineStyle outlineWidth overflow padding paddingTop paddingRight paddingBottom paddingLeft paddingStart paddingEnd position right rowGap shadowColor shadowOffset shadowOpacity shadowRadius start end textAlign textDecorationColor textDecorationLine textDecorationStyle textTransform top transform width zIndex'.split(
     ' ',
   ),
 );
@@ -33,6 +33,7 @@ function matchesMedia(query: string, width: number): boolean {
   }
   return prefix?.[1] ? !matches : matches;
 }
+type StructuralPredicate = 'last-child' | 'first-of-type' | 'last-of-type';
 type SelectorAtom = { classes: string[]; tag?: string };
 function parseSelectors(key: string) {
   const selectors = key.split(',').map((selector) => selector.trim());
@@ -44,9 +45,14 @@ function parseSelectors(key: string) {
       (_match, state: string) => '.Mui-' + (state === 'focus-visible' ? 'focusVisible' : state),
     );
     const [head, ...parts] = normalized.split(/\s+/);
-    const match = head.match(/^&((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)*)(:last-child)?$/);
+    const match = head.match(
+      /^&((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)*)((?::(?:last-child|first-of-type|last-of-type))*)(::?before)?$/,
+    );
     if (!match) return undefined;
-    const atoms: SelectorAtom[] = [];
+    if (match[3] && parts.length) return undefined;
+    // The library paints this finite ornament as a noninteractive native View.
+    // It is a pseudo target, never another source element or a root declaration.
+    const atoms: SelectorAtom[] = match[3] ? [{ classes: [], tag: '::before' }] : [];
     for (const part of parts) {
       const descendant = part.match(/^(svg)?((?:\.[a-zA-Z_][a-zA-Z0-9_-]*)*)$/);
       if (!descendant || (!descendant[1] && !descendant[2])) return undefined;
@@ -57,14 +63,14 @@ function parseSelectors(key: string) {
     }
     return {
       self: match[1].split('.').slice(1),
-      lastChild: Boolean(match[2]),
+      predicates: match[2].split(':').filter(Boolean) as StructuralPredicate[],
       atoms,
     };
   });
   return parsed.every(Boolean)
     ? (parsed as {
         self: string[];
-        lastChild: boolean;
+        predicates: StructuralPredicate[];
         atoms: SelectorAtom[];
       }[])
     : undefined;

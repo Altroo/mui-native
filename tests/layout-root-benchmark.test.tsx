@@ -1,7 +1,7 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 jest.mock('@mui/material', () => jest.requireActual('../packages/material/src'), { virtual: true });
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
-import { I18nManager, StyleSheet, View } from 'react-native';
+import { Dimensions, I18nManager, StyleSheet, View } from 'react-native';
 import type { ReactTestInstance } from 'react-test-renderer';
 import { LayoutRootBenchmark } from '../apps/native-benchmark/LayoutRootBenchmark';
 import { backendEdges } from './helpers/nativeInsetEdges';
@@ -25,7 +25,7 @@ function renderedText(node: ReactTestInstance): string {
 const strings = (tree: ReturnType<typeof render>) =>
   tree.getAllByTestId(/^layout-root-(label|detail)-\d{3}$/).map(renderedText);
 
-test.each(['form-group', 'list-item-avatar', 'button-group'] as const)(
+test.each(['form-group', 'list-item-avatar', 'button-group', 'accordion'] as const)(
   '%s uses identical baseline/material content and real commit/ref counts',
   (family) => {
     const observed: string[][] = [];
@@ -36,6 +36,9 @@ test.each(['form-group', 'list-item-avatar', 'button-group'] as const)(
       observed.push(strings(tree));
       expect(read(tree)).toMatchObject({
         workload: 'layout-root-v1',
+        fontScale: expect.any(Number),
+        globalRtl: false,
+        swapInRtl: false,
         mode,
         family,
         operation: 'update',
@@ -225,3 +228,56 @@ test.each(['rn', 'mui'] as const)(
     expect(tree.getByLabelText('Row 001 presses 1')).toBeTruthy();
   },
 );
+
+test.each(['rn', 'mui'] as const)(
+  '%s Accordion workload retains actions and roots across controlled expansion',
+  (mode) => {
+    const tree = render(<LayoutRootBenchmark mode={mode} family="accordion" rowCount={3} />);
+    const roots = instances(tree);
+    fireEvent.press(tree.getByTestId('layout-root-row-000-action'));
+    expect(tree.getByTestId('layout-root-row-000-action').props.accessibilityLabel).toBe(
+      'Row 001 presses 1',
+    );
+    for (let epoch = 1; epoch <= 16; epoch++) {
+      fireEvent.press(tree.getByTestId('layout-root-advance'));
+      expect(read(tree)).toMatchObject({
+        updateEpoch: epoch,
+        mounts: 3,
+        cleanups: 0,
+        rootAttachments: 3,
+        rootCleanups: 0,
+        ready: true,
+      });
+      expect(instances(tree)).toEqual(roots);
+      expect(tree.getByTestId('layout-root-row-000-action').props.accessibilityLabel).toBe(
+        'Row 001 presses 1',
+      );
+      const action = tree.getByTestId('layout-root-row-000-action');
+      const disabled = Math.floor(epoch / 2) % 2 === 1;
+      expect(action.props.accessibilityState.disabled).toBe(disabled);
+      expect(action.props.accessibilityState.expanded).toBe(epoch % 2 === 1);
+      if (disabled) {
+        fireEvent.press(action);
+        expect(tree.getByTestId('layout-root-row-000-action').props.accessibilityLabel).toBe(
+          'Row 001 presses 1',
+        );
+      }
+    }
+  },
+);
+
+test('Accordion workload reports actual enlarged text and native RTL without normalizing them', () => {
+  const original = Dimensions.get.bind(Dimensions);
+  const dimensions = jest
+    .spyOn(Dimensions, 'get')
+    .mockImplementation((name) => ({ ...original(name), fontScale: 1.75 }));
+  jest.replaceProperty(I18nManager, 'isRTL', true);
+  jest.replaceProperty(I18nManager, 'doLeftAndRightSwapInRTL', true);
+  try {
+    const tree = render(<LayoutRootBenchmark mode="mui" family="accordion" rowCount={1} />);
+    expect(read(tree)).toMatchObject({ fontScale: 1.75, globalRtl: true, swapInRtl: true });
+    tree.unmount();
+  } finally {
+    dimensions.mockRestore();
+  }
+});

@@ -14,7 +14,7 @@ const source = await readFile(
 );
 const compiled = join(folder, 'client.cjs');
 await writeFile(compiled, transformSync(source, { loader: 'ts', format: 'cjs' }).code);
-const { createStructuralObserverClient } = require(compiled);
+const { createStructuralObserverClient, createNativeStructuralObservation } = require(compiled);
 after(() => rm(folder, { recursive: true, force: true }));
 class Native {
   calls = [];
@@ -300,4 +300,44 @@ test('dispose invalidates pending notifications and is idempotent', () => {
   notify();
   assert.equal(calls, 0);
   assert.equal(native.calls.filter((c) => c[0] === 'disconnect').length, 1);
+});
+
+test('first-party owners share one native queue and dispose only their own watches', () => {
+  const native = new Native();
+  const first = createNativeStructuralObservation(native);
+  const second = createNativeStructuralObservation(native);
+  const values = [];
+  first.watch(100, 'first', 'siblings', (change) => values.push(['first', change.revision]));
+  second.watch(200, 'second', 'siblings', (change) => values.push(['second', change.revision]));
+  assert.equal(native.calls.filter(([name]) => name === 'connect').length, 1);
+  native.notify();
+  assert.deepEqual(values, [
+    ['first', 1],
+    ['second', 1],
+  ]);
+  first.dispose();
+  first.dispose();
+  assert.equal(native.entries.size, 1);
+  assert.equal(native.calls.filter(([name]) => name === 'disconnect').length, 0);
+  assert.throws(() => first.watch(300, 'disposed', 'children', () => {}), /owner is disposed/);
+  native.records.push({ subscriptionId: 2, lease: 'second', revision: 2, closed: false });
+  native.notify();
+  assert.deepEqual(values.at(-1), ['second', 2]);
+  second.dispose();
+  assert.equal(native.entries.size, 0);
+  assert.equal(native.calls.filter(([name]) => name === 'disconnect').length, 1);
+});
+
+test('a failed owner cleanup invalidates the shared client without stranding a later owner', () => {
+  const native = new Native();
+  const failed = createNativeStructuralObservation(native);
+  failed.watch(100, 'failed', 'siblings', () => {});
+  native.unobserveError = new Error('test cleanup failure');
+  assert.throws(() => failed.dispose(), /cleanup failed/);
+  delete native.unobserveError;
+  const next = createNativeStructuralObservation(native);
+  next.watch(200, 'next', 'siblings', () => {});
+  assert.equal(native.calls.filter(([name]) => name === 'connect').length, 2);
+  next.dispose();
+  assert.equal(native.calls.filter(([name]) => name === 'disconnect').length, 2);
 });

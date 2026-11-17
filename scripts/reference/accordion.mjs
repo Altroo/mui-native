@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { writeFile } from 'node:fs/promises';
-import { format, resolveConfig } from 'prettier';
+import prettier from 'prettier';
+const { format, resolveConfig } = prettier;
 import { loadReference } from './load.mjs';
 const names = ['Accordion', 'AccordionSummary', 'AccordionDetails', 'AccordionActions'];
 const sources = names.flatMap((name) => [
@@ -17,9 +18,11 @@ const { reference, require, directory } = await loadReference('@mui/material', [
   'className/index.js',
   'Paper/Paper.js',
   'Paper/paperClasses.js',
+  'Box/Box.js',
   'ButtonBase/ButtonBase.js',
   'ButtonBase/buttonBaseClasses.js',
   'styles/rootShouldForwardProp.js',
+  'styles/slotShouldForwardProp.js',
 ]);
 const React = require('react'),
   { create, act } = require('react-test-renderer');
@@ -44,6 +47,8 @@ const classUtils = await loadReference('@mui/utils', [
   'generateUtilityClass/generateUtilityClass.js',
   'ClassNameGenerator/ClassNameGenerator.js',
   'composeClasses/composeClasses.js',
+  'mergeSlotProps/mergeSlotProps.js',
+  'appendOwnerState/appendOwnerState.js',
 ]);
 const { unstable_ClassNameGenerator: generator } = require(
   directory + '/node_modules/@mui/material/className',
@@ -456,6 +461,412 @@ for (const input of inputs) {
   await act(async () => tree.unmount());
   fixtures.push({ input, trace, snapshots });
 }
+// Capture the styled root's actual useSlot arguments, including property presence.
+// Consumed Accordion controls belong to ownerState; generated slot children replace
+// authored children before theme callbacks run.
+const rootArguments = [];
+for (const mode of ['defaults', 'authored', 'slot-overrides']) {
+  const seen = [];
+  const Component = React.forwardRef(function Component(props, ref) {
+    return React.createElement('component', { ref }, props.children);
+  });
+  Component.displayName = 'Component';
+  const snapshot = (args) => {
+    const scalar = {};
+    for (const key of [
+      'disabled',
+      'expanded',
+      'disableGutters',
+      'defaultExpanded',
+      'onChange',
+      'classes',
+      'component',
+      'style',
+      'sx',
+      'slots',
+      'slotProps',
+    ]) {
+      const value = args[key];
+      scalar[key] = {
+        present: Object.hasOwn(args, key),
+        value:
+          key === 'component'
+            ? (value?.displayName ?? value ?? null)
+            : typeof value === 'function'
+              ? 'function'
+              : (value ?? null),
+      };
+    }
+    return {
+      keys: Object.keys(args).sort(),
+      scalar,
+      children: React.Children.toArray(args.children).map((child) => ({
+        className: child.props?.className ?? null,
+        expanded: child.props?.in ?? null,
+        timeout: child.props?.timeout ?? null,
+        ownerExpanded: child.props?.ownerState?.expanded ?? null,
+      })),
+      owner: { expanded: args.ownerState?.expanded, extra: args.ownerState?.extra ?? null },
+    };
+  };
+  const theme = createTheme({
+    components: {
+      MuiAccordion: {
+        styleOverrides: {
+          root: (args) => {
+            if (String(args.className).split(/\s+/).includes('MuiAccordion-root'))
+              seen.push(snapshot(args));
+            return {};
+          },
+        },
+      },
+    },
+  });
+  const props = {};
+  if (mode !== 'defaults')
+    Object.assign(props, {
+      defaultExpanded: true,
+      disabled: true,
+      disableGutters: true,
+      component: Component,
+      classes: { root: 'authored-root' },
+      style: { paddingTop: 7, paddingBottom: 11 },
+      sx: { opacity: 0.8 },
+      onChange() {},
+    });
+  if (mode === 'slot-overrides')
+    props.slotProps = {
+      root: {
+        component: undefined,
+        classes: { root: 'slot-root' },
+        style: { paddingBottom: 13 },
+        sx: undefined,
+        disabled: false,
+        ownerState: { extra: 'kept', expanded: false },
+      },
+    };
+  let tree;
+  await act(async () => {
+    tree = create(
+      React.createElement(
+        ThemeProvider,
+        { theme },
+        React.createElement(
+          Accordion,
+          props,
+          React.createElement('summary', { id: 'summary', 'aria-controls': 'body' }, 'Summary'),
+          React.createElement('section', null, 'Body'),
+        ),
+      ),
+    );
+  });
+  rootArguments.push({ mode, seen });
+  await act(async () => tree.unmount());
+}
+
+// Replacing a slot bypasses its named styled constructor. Using as changes
+// only that constructor's terminal element, so its theme styling still runs.
+const slotConstructorContracts = [];
+for (const slot of ['heading', 'region']) {
+  for (const mode of ['default', 'as', 'slot', 'slot-component']) {
+    let calls = 0;
+    let forwarded = null;
+    const Leaf = React.forwardRef(function Leaf(props, ref) {
+      return React.createElement('leaf', { ref }, props.children);
+    });
+    Leaf.displayName = 'Leaf';
+    const Custom = React.forwardRef(function Custom(props, ref) {
+      forwarded = {
+        sxPresent: Object.hasOwn(props, 'sx'),
+        sx: props.sx ?? null,
+        ownerPresent: Object.hasOwn(props, 'ownerState'),
+        ownerExpanded: props.ownerState?.expanded ?? null,
+        asPresent: Object.hasOwn(props, 'as'),
+        as: props.as?.displayName ?? null,
+        classes: String(props.className)
+          .split(/\s+/)
+          .filter((name) => name.startsWith('Mui')),
+      };
+      return React.createElement('custom', { ref }, props.children);
+    });
+    const theme = createTheme({
+      components: {
+        MuiAccordion: {
+          styleOverrides: {
+            [slot]: (args) => {
+              if (String(args.className).split(/\s+/).includes(classes.Accordion[slot])) calls++;
+              return { paddingTop: 19 };
+            },
+          },
+        },
+      },
+    });
+    const slotProps = { [slot]: { sx: { paddingBottom: 2 } } };
+    if (mode === 'as') slotProps[slot].as = Custom;
+    if (mode === 'slot-component') slotProps[slot].component = Leaf;
+    let tree;
+    await act(async () => {
+      tree = create(
+        React.createElement(
+          ThemeProvider,
+          { theme },
+          React.createElement(
+            Accordion,
+            {
+              defaultExpanded: true,
+              slots: mode.startsWith('slot') ? { [slot]: Custom } : {},
+              slotProps,
+            },
+            React.createElement('summary', null, 'Summary'),
+            React.createElement('section', null, 'Body'),
+          ),
+        ),
+      );
+    });
+    slotConstructorContracts.push({ slot, mode, calls, forwarded });
+    await act(async () => tree.unmount());
+  }
+}
+
+// Read traces expose observable merge semantics independently of native code.
+const slotReadContracts = [];
+for (const slot of ['root', 'heading', 'region']) {
+  const trace = [];
+  const counts = {};
+  let forwarded;
+  const Leaf = React.forwardRef(function Leaf(props, ref) {
+    return React.createElement('leaf', { ref }, props.children);
+  });
+  Leaf.displayName = 'Leaf';
+  const Slot = React.forwardRef(function Slot(props, ref) {
+    forwarded = {
+      className: props.className,
+      sx: props.sx,
+      component: props.component?.displayName ?? null,
+      as: props.as?.displayName ?? null,
+      extra: props.ownerState?.extra ?? null,
+      paddingTop: props.style?.paddingTop ?? null,
+    };
+    return React.createElement('slot', { ref }, props.children);
+  });
+  const authored = {};
+  for (const key of ['sx', 'component', 'ownerState', 'className', 'style', 'ref'])
+    Object.defineProperty(authored, key, {
+      enumerable: true,
+      get() {
+        const count = (counts[key] = (counts[key] ?? 0) + 1);
+        trace.push(key + ':' + count);
+        if (['sx', 'component', 'ownerState'].includes(key) && count > 1)
+          throw Error('Unexpected accessor replay: ' + key);
+        return {
+          sx: { opacity: 0.8 },
+          component: Leaf,
+          ownerState: { extra: 'kept' },
+          className: 'slot-class-' + count,
+          style: { paddingTop: count },
+          ref: null,
+        }[key];
+      },
+    });
+  let tree;
+  await act(async () => {
+    tree = create(
+      React.createElement(
+        Accordion,
+        {
+          slots: { [slot]: Slot },
+          slotProps: { [slot]: authored },
+        },
+        React.createElement('summary', null, 'Summary'),
+        React.createElement('section', null, 'Body'),
+      ),
+    );
+  });
+  slotReadContracts.push({ slot, trace, forwarded });
+  await act(async () => tree.unmount());
+}
+
+const transitionClassContracts = [];
+for (const kind of ['absent', 'empty-first', 'undefined-first', 'explicit-undefined']) {
+  let reads = 0;
+  let observed;
+  const Transition = (props) => {
+    observed = { present: Object.hasOwn(props, 'className'), value: props.className ?? null };
+    return React.createElement('transition', null, props.children);
+  };
+  const slot = {};
+  if (kind !== 'absent')
+    Object.defineProperty(slot, 'className', {
+      enumerable: true,
+      get() {
+        reads++;
+        if (kind === 'explicit-undefined') return undefined;
+        return reads === 1 ? (kind === 'empty-first' ? '' : undefined) : 'selected';
+      },
+    });
+  let tree;
+  await act(async () => {
+    tree = create(
+      React.createElement(
+        Accordion,
+        {
+          slots: { transition: Transition },
+          slotProps: { transition: slot },
+        },
+        React.createElement('summary', null, 'Summary'),
+        React.createElement('section', null, 'Body'),
+      ),
+    );
+  });
+  transitionClassContracts.push({ kind, reads, observed });
+  await act(async () => tree.unmount());
+}
+
+const refOrderContracts = [];
+for (const family of ['Accordion', 'AccordionSummary']) {
+  const trace = [];
+  const slot = React.createRef();
+  const outer = (node) => {
+    if (!node) {
+      trace.push('outer-null:' + (slot.current === null));
+      return;
+    }
+    trace.push('outer-attach:' + (slot.current === node));
+    return () => trace.push('outer-cleanup:' + (slot.current === null));
+  };
+  const Root = React.forwardRef(function Root(props, ref) {
+    return React.createElement('root', { ref }, props.children);
+  });
+  const Component = family === 'Accordion' ? Accordion : Summary;
+  let tree;
+  await act(async () => {
+    tree = create(
+      React.createElement(
+        Component,
+        {
+          ref: outer,
+          slots: { root: Root },
+          slotProps: { root: { ref: slot } },
+        },
+        React.createElement('summary', null, 'Summary'),
+        React.createElement('section', null, 'Body'),
+      ),
+      { createNodeMock: (node) => (node.type === 'root' ? {} : null) },
+    );
+  });
+  await act(async () => tree.unmount());
+  refOrderContracts.push({ family, trace });
+}
+
+const styleValueReadContracts = [];
+for (const slot of ['root', 'heading', 'region']) {
+  let reads = 0;
+  let selected;
+  const style = Object.defineProperty({}, 'paddingTop', {
+    enumerable: true,
+    get() {
+      reads++;
+      if (reads > 1) throw Error('Native declaration accessor replayed');
+      return 17;
+    },
+  });
+  const Slot = React.forwardRef(function Slot(props, ref) {
+    selected = props.style.paddingTop;
+    return React.createElement('slot', { ref }, props.children);
+  });
+  let tree;
+  await act(async () => {
+    tree = create(
+      React.createElement(
+        Accordion,
+        { slots: { [slot]: Slot }, slotProps: { [slot]: { style } } },
+        React.createElement('summary', null, 'Summary'),
+        React.createElement('section', null, 'Body'),
+      ),
+    );
+  });
+  styleValueReadContracts.push({ slot, reads, selected });
+  await act(async () => tree.unmount());
+}
+
+// Observe emitted source classes, rather than infer peer eligibility from
+// utility classes or native shadow values. Both sides of nested & + & include
+// the expanded state and the exact final constructor's generated class.
+const SourceBox = original('Box');
+const ForwardedView = React.forwardRef(function ForwardedView(props, ref) {
+  return React.createElement('div', { ...props, ref });
+});
+const ForwardedBox = React.forwardRef(function ForwardedBox(props, ref) {
+  return React.createElement(SourceBox, { ...props, ref });
+});
+const sourceClassContracts = [];
+for (const [name, a, b] of [
+  ['same source class', {}, {}],
+  ['elevation is inline source paint', { props: { elevation: 1 } }, { props: { elevation: 5 } }],
+  ['square changes constructor CSS', {}, { props: { square: true } }],
+  ['gutters change constructor CSS', {}, { props: { disableGutters: true } }],
+  ['sx changes emitted CSS', {}, { props: { sx: { paddingTop: '3px' } } }],
+  [
+    'inline paint keeps CSS identity',
+    { props: { style: { opacity: 0.4 } } },
+    { props: { style: { opacity: 0.8 } } },
+  ],
+  [
+    'direction is inherited source CSS',
+    { theme: { direction: 'ltr' } },
+    { theme: { direction: 'rtl' } },
+  ],
+  ['dark palette changes constructor CSS', {}, { theme: { palette: { mode: 'dark' } } }],
+  [
+    'authored expanded class participates',
+    { props: { expanded: false, className: 'Mui-expanded' } },
+    {},
+  ],
+  ['collapsed current class does not participate', {}, { props: { expanded: false } }],
+  ['same Box terminals', { root: 'Box' }, { root: 'Box' }],
+  ['Box changes the final constructor', {}, { root: 'Box' }],
+  ['opaque Box keeps the final Box identity', { root: 'Box' }, { root: 'ForwardedBox' }],
+  ['opaque View keeps Paper identity', {}, { root: 'ForwardedView' }],
+]) {
+  const observe = (profile) => {
+    const component =
+      profile.root === 'Box'
+        ? SourceBox
+        : profile.root === 'ForwardedBox'
+          ? ForwardedBox
+          : profile.root === 'ForwardedView'
+            ? ForwardedView
+            : undefined;
+    const html = renderToStaticMarkup(
+      React.createElement(
+        ThemeProvider,
+        { theme: createTheme({ motion: { reducedMotion: 'always' }, ...profile.theme }) },
+        React.createElement(
+          Accordion,
+          { expanded: true, ...profile.props, ...(component ? { component } : {}) },
+          React.createElement('div', null, 'Summary'),
+          React.createElement('div', null, 'Body'),
+        ),
+      ),
+    );
+    const classes = html.match(/<div class="(MuiPaper-root[^"]+)"/)[1].split(/\s+/);
+    const cssClass = classes.find((token) => token.startsWith('css-'));
+    const selector = `.${cssClass}.Mui-expanded+.${cssClass}.Mui-expanded::before`;
+    if (!html.includes(selector)) throw Error('Changed original expanded adjacency selector');
+    return { cssClass, expanded: classes.includes('Mui-expanded'), selector };
+  };
+  const left = observe(a),
+    right = observe(b);
+  sourceClassContracts.push({
+    name,
+    a,
+    b,
+    left,
+    right,
+    hidesBefore: left.expanded && right.expanded && left.cssClass === right.cssClass,
+  });
+}
+
 const destination = 'tests/fixtures/mui-accordion-9.5.0.json';
 await writeFile(
   destination,
@@ -467,6 +878,13 @@ await writeFile(
       classUtility,
       classContracts,
       defaultClassContracts,
+      rootArguments,
+      slotConstructorContracts,
+      slotReadContracts,
+      transitionClassContracts,
+      refOrderContracts,
+      styleValueReadContracts,
+      sourceClassContracts,
       fixtures,
     }),
     {

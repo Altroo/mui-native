@@ -2,9 +2,10 @@
  * Copyright (c) MUI contributors. See NOTICE and upstream/accordion.json.
  * Native contracts: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 import type React from 'react';
-import type { ViewInstance, ViewProps } from 'react-native';
-import type { SxProps, SlotProps } from '@altroo/mui-native-system';
-import type { PaperProps, BoxProps } from './layout';
+import type { View, ViewInstance, ViewProps } from 'react-native';
+import type { SxProps, SlotProps, Theme } from '@altroo/mui-native-system';
+import type { BoxProps } from './layout';
+import type { PaperProps, PaperOwnProps, PaperTypeMap } from './paperTypes';
 import type { CollapseProps } from './collapse';
 import type { ButtonBaseProps, ButtonBaseActivationEvent } from './buttonBase';
 import type {
@@ -28,8 +29,8 @@ export interface AccordionRegionSlotPropsOverrides {}
 export interface AccordionRootSlotProps
   extends Omit<PaperProps, 'component'>,
     React.RefAttributes<ViewInstance> {
-  component?: React.ComponentType<any>;
-  as?: React.ComponentType<any>;
+  component?: ConfiguredAccordionRoot | undefined;
+  as?: ConfiguredAccordionRoot | undefined;
   ownerState?: AccordionOwnerState;
 }
 export interface AccordionSlots {
@@ -47,7 +48,7 @@ export interface AccordionSlotsAndSlotProps {
       AccordionOwnerState
     >;
     transition?: SlotProps<
-      CollapseProps & AccordionTransitionSlotPropsOverrides,
+      CollapseProps & { ownerState?: AccordionOwnerState } & AccordionTransitionSlotPropsOverrides,
       AccordionOwnerState
     >;
     region?: SlotProps<
@@ -56,7 +57,9 @@ export interface AccordionSlotsAndSlotProps {
     >;
   };
 }
-export interface AccordionOwnProps extends AccordionSlotsAndSlotProps {
+export interface AccordionOwnProps
+  extends Omit<PaperOwnProps, 'children' | 'classes'>,
+    AccordionSlotsAndSlotProps {
   children: NonNullable<React.ReactNode>;
   classes?: Partial<AccordionClasses> | undefined;
   className?: string | undefined;
@@ -66,10 +69,69 @@ export interface AccordionOwnProps extends AccordionSlotsAndSlotProps {
   expanded?: boolean | undefined;
   onChange?: ((event: ButtonBaseActivationEvent, expanded: boolean) => void) | undefined;
 }
-export interface AccordionProps
-  extends Omit<PaperProps, 'children' | 'onChange' | 'component' | 'classes'>,
-    AccordionOwnProps {
-  component?: React.ComponentType<any>;
+type AccordionRoot = React.ComponentType<any> | 'div';
+type ConfiguredAccordionRoot =
+  | Extract<NonNullable<PaperProps['component']>, AccordionRoot>
+  | (React.ComponentClass<any> & (new (props: any) => ViewInstance));
+// Paper defines the shared native-host boundary, including the supported div
+// alias. Reuse it so Accordion cannot accept roots that Paper would reject.
+type NativeRoot<R extends AccordionRoot> = PaperTypeMap<{}, R>['defaultComponent'];
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+type RawRootProps<R extends AccordionRoot> = R extends 'div'
+  ? React.ComponentPropsWithRef<typeof View>
+  : R extends React.ComponentType<any>
+    ? React.ComponentPropsWithRef<R>
+    : never;
+// The named styled root consumes reserved props before reaching the selected
+// host. Keep optionality while checking native themes and alternate hosts.
+type ReservedRootProps<P> = {
+  [K in keyof P]: K extends 'theme'
+    ? Extract<P[K], Theme | undefined>
+    : K extends 'as'
+      ? Required<P>[K] extends infer R
+        ? R extends AccordionRoot
+          ? NativeRoot<R>
+          : R extends null | undefined
+            ? R
+            : never
+        : never
+      : P[K];
+};
+type RootProps<R extends AccordionRoot> = ReservedRootProps<RawRootProps<R>>;
+export interface AccordionTypeMap<
+  AdditionalProps = {},
+  RootComponent extends AccordionRoot = typeof View,
+> {
+  props: AdditionalProps & AccordionOwnProps;
+  defaultComponent: NativeRoot<RootComponent>;
+}
+export type AccordionProps<R extends AccordionRoot = typeof View, AdditionalProps = {}> = [
+  NativeRoot<R>,
+] extends [never]
+  ? never
+  : AccordionOwnProps &
+      AdditionalProps &
+      DistributiveOmit<
+        RootProps<R>,
+        keyof AccordionOwnProps | keyof AdditionalProps | 'component'
+      > & {
+        component?: (typeof View extends R ? ConfiguredAccordionRoot : R) | undefined;
+      };
+// The bivariant native-root constraint accepts wrappers with required data
+// without admitting declared browser refs. Infer R from component itself.
+export interface NativeAccordionComponent {
+  <R extends ConfiguredAccordionRoot = typeof View>(
+    props: AccordionOwnProps &
+      (
+        | (DistributiveOmit<RootProps<R>, keyof AccordionOwnProps | 'component'> & {
+            component?: R | undefined;
+          })
+        | (DistributiveOmit<RootProps<typeof View>, keyof AccordionOwnProps | 'component'> & {
+            component?: undefined;
+          })
+      ),
+  ): React.JSX.Element;
+  displayName?: string | undefined;
 }
 export interface AccordionOwnerState extends AccordionProps {
   expanded: boolean;

@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "status": "scoped-native-interactions-passed",
+  "validatedSourceCommit": "ea5dcfbb91aa3565ea7e3cb99022714c4bbba5e2",
+  "environment": {
+    "device": "Existing Android emulator",
+    "sdk": 37,
+    "model": "sdk_gphone64_arm64",
+    "configuration": "Debug",
+    "fontScale": 1,
+    "graphics": "SwiftShader software renderer"
+  },
+  "trackedSourceFilesMatchedToCommit": 470,
+  "appApkSHA256": "3accefd459e7722308d7e4205490f0c6dc2ec2fcf9132c8f53ffe7ae11ea12fe",
+  "testApkSHA256": "705c2758a7f93d03ffea669a3c4d616791dabac3909b4374e2b7827ffd2b7934",
+  "javascriptBundleSHA256": "b4e7f5cde9eef271d62a253db8402ae96180e712928aa1e04c507b02c34afc18",
+  "nativeReportSHA256": "761f88a50ae9aa8272fcfbc849619a7a32521e1868b1bbab058703f6511b9ef9",
+  "instrumentationSHA256": "fb985b9df80b7fdef95d004fd8b4df43eb16ac02e8f49fafc7b8bd823108c8ba",
+  "strictValidatorExitCode": 0,
+  "passedStages": [
+    "scene-ready",
+    "edited-local-note",
+    "delivery-closed-payment-open",
+    "retained-body-and-note",
+    "actions-activated",
+    "disabled-summary",
+    "help-mounted",
+    "help-read",
+    "help-unmounted",
+    "help-remounted-fresh",
+    "help-final-close"
+  ],
+  "qualifiedApplicationTouches": 11,
+  "inputQualification": {
+    "allTouchesInsideUsableViewport": true,
+    "allTouchesClearOfLogBoxNotifications": true,
+    "recordedObstructingNotifications": 1,
+    "notificationHandling": "Records the actual obstruction and closes only its own visible control. Future warnings remain enabled."
+  },
+  "measurements": [
+    {
+      "name": "delivery-initial",
+      "actual": 611,
+      "natural": 611
+    },
+    {
+      "name": "delivery-closed",
+      "actual": 0,
+      "natural": 611
+    },
+    {
+      "name": "payment-open",
+      "actual": 324,
+      "natural": 324
+    },
+    {
+      "name": "delivery-reopened",
+      "actual": 611,
+      "natural": 611
+    }
+  ],
+  "verifiedBehavior": [
+    "Local note editing and the same native editor survive controlled collapse/reopen.",
+    "Actions activate and the disabled Summary receives a qualified touch without changing controlled expansion.",
+    "The independent Help body changes local state, closes, then remounts with fresh state and closes again.",
+    "The edited sibling and controlled change count remain preserved after the independent lifecycle."
+  ],
+  "originalSessionRestored": true,
+  "limits": [
+    "This verifies the maintained interaction scenario on this debug emulator snapshot at font scale 1.",
+    "It does not independently inspect CSS-peer runtime metadata/counters or establish Android first-frame selector paint.",
+    "Screen-reader traversal, wider text/direction matrices and calibrated Release performance remain separate gates.",
+    "The development notification is recorded; its underlying warning is not classified or resolved by this test."
+  ]
+}

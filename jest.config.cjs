@@ -6,11 +6,19 @@ module.exports = {
   // Unpacked consumer archives must not become duplicate Haste packages.
   modulePathIgnorePatterns: ['<rootDir>/.cache/'],
   moduleNameMapper: {
+    '^@altroo/mui-native-host/internal/css-peer$':
+      '<rootDir>/packages/native-host/src/internal/css-peer',
+    '^@altroo/mui-native-host/internal/structural-root$':
+      '<rootDir>/packages/native-host/src/internal/structural-root',
     // Internal first-party imports must share source context and style carriers.
     '^@altroo/mui-native/internal/card-content$':
       '<rootDir>/packages/material/src/internal/card-content',
     '^@altroo/mui-native-host/internal/native-keys$':
       '<rootDir>/packages/native-host/src/internal/native-keys',
+    '^@altroo/mui-native-host/internal/structural-observation$':
+      '<rootDir>/packages/native-host/src/internal/structural-observation',
+    '^@altroo/mui-native-host/internal/pressable-presentation$':
+      '<rootDir>/packages/native-host/src/internal/pressable-presentation',
     '^@altroo/mui-native-host/internal/owned-view$':
       '<rootDir>/packages/native-host/src/internal/owned-view',
     '^@altroo/mui-native-system/internal/generated-paragraph$':

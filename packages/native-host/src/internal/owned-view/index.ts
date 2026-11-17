@@ -5,7 +5,7 @@ export { createOwnedStyleBootstrap } from '../../ownedStyleMetadata';
 export type { GeneratedTextOrigin } from '../../ownedStyleMetadata';
 export { OwnedStructuralHost, usePrelayoutActivation } from '../../ownedStructuralHost';
 export type { StructuralProps, StructuralView } from '../../ownedStructuralHost';
-export { encodeStylePair } from '../../ownedStyleEncoding';
+export { encodeStylePair, encodeStructuralCases } from '../../ownedStyleEncoding';
 export type { OwnedStyleProfile, OwnedProgramme } from '../../ownedStyleTypes';
 // Explicit preparation adapters may observe status; the host receives acquire only.
 export { structuralStyleActivation as createOwnedStyleActivation } from '../../structuralStyleActivation';

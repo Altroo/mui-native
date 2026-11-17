@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "status": "passed-scoped-stock-traits-and-synchronized-native-checks",
+  "validatedSourceCommit": "31c2f76c27b2a40e87547c926972e2cc69f24685",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontProfile": "normal"
+  },
+  "traitContract": {
+    "reference": "React Native 0.88.1 ViewShadowNode.cpp",
+    "sourceBaseline": "packages/native-host/structural-observation-baseline.json",
+    "differentialTest": "packages/native-host/tests/owned-view-traits.test.mjs",
+    "scope": "Exact pinned stock initializer and production helper, using finite framework doubles; isolated properties, relative zero zIndex conjunction, border edges, resets and combinations."
+  },
+  "synchronizedVoiceOver": {
+    "ownedRuns": [
+      {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "nativeConfiguration": "Release",
+        "bundleSHA256": "9032ae832772b93b016181d9a0043f7c855313c6433495cb5f417044b1e8e105",
+        "collectorSHA256": "6737a97776942b0e192a55c2e81fbb8b273e158a07ec82b84cee85714d8ebe34",
+        "testExecutableSHA256": "bc61048870ac4fed437c3ec4130227ce4a475f5e1884bff2da88e840e8b3ae55",
+        "trackedSourceFilesMatchedToCommit": 464,
+        "originalSessionRestored": true
+      },
+      {
+        "passedTests": 1,
+        "failedTests": 0,
+        "skippedTests": 0,
+        "nativeConfiguration": "Release",
+        "bundleSHA256": "9032ae832772b93b016181d9a0043f7c855313c6433495cb5f417044b1e8e105",
+        "collectorSHA256": "6737a97776942b0e192a55c2e81fbb8b273e158a07ec82b84cee85714d8ebe34",
+        "testExecutableSHA256": "bc61048870ac4fed437c3ec4130227ce4a475f5e1884bff2da88e840e8b3ae55",
+        "trackedSourceFilesMatchedToCommit": 464,
+        "originalSessionRestored": true
+      }
+    ],
+    "ordinaryControl": {
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0,
+      "nativeConfiguration": "Release",
+      "bundleSHA256": "ef850a9f42841f5b7f528ca5624bf678b27ab3ee57c43c2d520894f16975264d",
+      "collectorSHA256": "6737a97776942b0e192a55c2e81fbb8b273e158a07ec82b84cee85714d8ebe34",
+      "testExecutableSHA256": "bc61048870ac4fed437c3ec4130227ce4a475f5e1884bff2da88e840e8b3ae55",
+      "trackedSourceFilesMatchedToCommit": 463,
+      "originalSessionRestored": true
+    },
+    "ordinaryControlMethod": "Filter only optional structuralCases and parentStructuralCases capability metadata before immutable JS bootstrap, preserving the matching native base profile and current library source.",
+    "assertions": [
+      "Native target exposes expanded accessibility value and is hittable before navigation.",
+      "Payment activates exactly once; the refocus search retains its eight-step bound.",
+      "Closed delivery editor/actions are excluded; payment values are traversed; disabled Return remains collapsed."
+    ]
+  },
+  "groupingSeparators": {
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "nativeConfiguration": "Release",
+    "bundleSHA256": "02eee224d6703e0cf3bc61553bf74b19993eb8f4f220f310760eff58fc77937a",
+    "collectorSHA256": "6737a97776942b0e192a55c2e81fbb8b273e158a07ec82b84cee85714d8ebe34",
+    "testExecutableSHA256": "bc61048870ac4fed437c3ec4130227ce4a475f5e1884bff2da88e840e8b3ae55",
+    "trackedSourceFilesMatchedToCommit": 457,
+    "originalSessionRestored": true,
+    "recordedFrames": 452,
+    "qualifiedCompleteGroups": 122,
+    "invalidGroupFrames": 0,
+    "configurations": [
+      "default-0",
+      "default-1",
+      "default-2",
+      "default-3",
+      "default-4",
+      "forwarded-0",
+      "forwarded-1",
+      "forwarded-2",
+      "forwarded-3",
+      "forwarded-4"
+    ],
+    "captureSHA256": "1503e877cfd2e00d6df8445fe7e848ba6b01e7c5dcc6e39d24659f5bb2087798",
+    "captureQualified": true
+  },
+  "androidCompilation": {
+    "exitCode": 0,
+    "configuration": "Debug",
+    "architecture": "arm64-v8a",
+    "offline": true,
+    "sourceUnchanged": true,
+    "runtimeTested": false
+  },
+  "limits": [
+    "These VoiceOver passes qualify the synchronized native scenario. Earlier unsynchronized refocus trials failed; their cause and immediate-input focus behavior are not established.",
+    "Trait parity repairs the stock mounting contract; it is not claimed as a proven VoiceOver focus repair.",
+    "Diagnostic readiness observations include XCTest query overhead and are not app latency or performance measurements.",
+    "Recorded complete-group separator visibility does not establish every display frame or GPU deadlines.",
+    "Stock View JS alias/text ancestry normalization, expanded source-class adjacency, conditional text, exact motion start, broader device/platform matrices and calibrated performance remain completion gates."
+  ]
+}

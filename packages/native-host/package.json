@@ -54,6 +54,26 @@
       "types": "./dist/internal/native-keys/index.d.ts",
       "react-native": "./src/internal/native-keys/index.ts",
       "default": "./dist/internal/native-keys/index.js"
+    },
+    "./internal/structural-observation": {
+      "types": "./dist/internal/structural-observation/index.d.ts",
+      "react-native": "./src/internal/structural-observation/index.ts",
+      "default": "./dist/internal/structural-observation/index.js"
+    },
+    "./internal/pressable-presentation": {
+      "types": "./dist/internal/pressable-presentation/index.d.ts",
+      "react-native": "./src/internal/pressable-presentation/index.ts",
+      "default": "./dist/internal/pressable-presentation/index.js"
+    },
+    "./internal/structural-root": {
+      "types": "./dist/internal/structural-root/index.d.ts",
+      "react-native": "./src/internal/structural-root/index.ts",
+      "default": "./dist/internal/structural-root/index.js"
+    },
+    "./internal/css-peer": {
+      "types": "./dist/internal/css-peer/index.d.ts",
+      "react-native": "./src/internal/css-peer/index.ts",
+      "default": "./dist/internal/css-peer/index.js"
     }
   },
   "dependencies": {},
@@ -75,7 +95,8 @@
         "AltrooMUIPortalHost": "AltrooMUIPortalHostComponentView",
         "AltrooMUIPortalCanvas": "AltrooMUIPortalCanvasComponentView",
         "AltrooMUITextInput": "AltrooMUITextInputComponentView",
-        "AltrooMUIStructuralView": "AltrooMUIStructuralViewComponentView"
+        "AltrooMUIStructuralView": "AltrooMUIStructuralViewComponentView",
+        "AltrooMUITextColorMarker": "AltrooMUITextColorMarkerComponentView"
       },
       "modulesProvider": {
         "AltrooStructuralObserver": "AltrooStructuralObserverProvider",

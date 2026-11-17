@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { Easing as NativeEasing, type ViewStyle } from 'react-native';
 import {
   diagnostic,
@@ -88,8 +89,16 @@ export interface NativeOpacityTiming {
 // factory timing overrides without claiming a general CSS engine.
 export function nativePropertyTiming(
   declaration: string,
-  fallback: NativeOpacityTiming,
-  property: 'opacity' | 'transform' | 'height' | 'width' | 'stroke-dashoffset',
+  fallback: NativeOpacityTiming | (() => NativeOpacityTiming),
+  property:
+    | 'opacity'
+    | 'transform'
+    | 'min-height'
+    | 'height'
+    | 'width'
+    | 'stroke-dashoffset'
+    | 'margin'
+    | 'background-color',
 ): NativeOpacityTiming {
   if (declaration.trim() === 'none') return { duration: 0, delay: 0, easing: 'linear' };
   const clauses = declaration.split(/,(?![^()]*\))/);
@@ -99,11 +108,11 @@ export function nativePropertyTiming(
   const match = clause
     ?.trim()
     .match(
-      /^(?:opacity|transform|height|width|stroke-dashoffset|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
+      /^(?:opacity|transform|min-height|height|width|stroke-dashoffset|margin|background-color|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
     );
   if (!match) {
     diagnostic('transition-create', `Unsupported native ${property} transition: ${declaration}`);
-    return fallback;
+    return typeof fallback === 'function' ? fallback() : fallback;
   }
   return {
     duration: nativeMilliseconds(match[1]),

@@ -1,9 +1,8 @@
 /* Collapse contracts and slot structure adapt MIT-licensed Material UI 9.5.0.
  * Copyright (c) MUI contributors. See NOTICE and upstream/collapse.json.
- * Native measurement and animation: Copyright (c) 2026 Altroo and contributors. */
+ * Native measurement and animation: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 import React, {
   forwardRef,
-  useCallback,
   useContext,
   useInsertionEffect,
   useLayoutEffect,
@@ -123,6 +122,26 @@ function liveGeometry(
 }
 
 /** Named slot styles and text inheritance stay inside the actual native subtree. */
+// React retains an effect's cleanup until teardown. Keep that cleanup outside
+// the render scope that also owns slot props and children.
+function mountFrame(alive: React.RefObject<boolean>) {
+  alive.current = true;
+  return () => {
+    alive.current = false;
+  };
+}
+function mountSurface(
+  alive: React.RefObject<boolean>,
+  animation: React.RefObject<Animated.CompositeAnimation | undefined>,
+  value: Animated.Value,
+) {
+  alive.current = true;
+  return () => {
+    alive.current = false;
+    animation.current?.stop();
+    value.stopAnimation();
+  };
+}
 const Frame = forwardRef<
   ViewInstance,
   {
@@ -146,12 +165,7 @@ const Frame = forwardRef<
     committed.current = identity;
   });
   const alive = useRef(true);
-  useLayoutEffect(() => {
-    alive.current = true;
-    return () => {
-      alive.current = false;
-    };
-  }, []);
+  useLayoutEffect(() => mountFrame(alive), []);
   const computed = useComponentStyle('MuiCollapse', { ...owner }, sx, {
     ...nativeTextStyleContext(parent, style, theme),
     slot,
@@ -336,14 +350,7 @@ function Surface({
   useLayoutEffect(() => {
     if (ready) previouslyMeasured.current = true;
   }, [ready]);
-  useLayoutEffect(() => {
-    alive.current = true;
-    return () => {
-      alive.current = false;
-      animation.current?.stop();
-      value.stopAnimation();
-    };
-  }, [value]);
+  useLayoutEffect(() => mountSurface(alive, animation, value), [value]);
   useLayoutEffect(() => {
     animation.current?.stop();
     animation.current = undefined;
@@ -479,6 +486,18 @@ function Surface({
   );
 }
 
+// The native ref must stay stable without retaining the render's original
+// props/children through the measurement effect's shared closure environment.
+function createWrapperCapture(
+  wrapper: React.RefObject<ViewInstance | null>,
+  setNode: React.Dispatch<React.SetStateAction<ViewInstance | null>>,
+) {
+  return (node: ViewInstance | null) => {
+    wrapper.current = node;
+    setNode(node);
+  };
+}
+
 export const Collapse: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<CollapseProps> & React.RefAttributes<ViewInstance>
 > & { muiSupportAuto: true } = Object.assign(
@@ -505,10 +524,10 @@ export const Collapse: React.ForwardRefExoticComponent<
       wrapper = useRef<ViewInstance | null>(null);
     const rootHandle = useForkRef(root, forwardedRef);
     const [wrapperNode, setWrapperNode] = useState<ViewInstance | null>(null);
-    const captureWrapper = useCallback((node: ViewInstance | null) => {
-      wrapper.current = node;
-      setWrapperNode(node);
-    }, []);
+    const captureWrapper = useMemo(
+      () => createWrapperCapture(wrapper, setWrapperNode),
+      [wrapper, setWrapperNode],
+    );
     const slotOwner = { ...props, orientation, collapsedSize } as CollapseOwnerState;
     const resolved = {
       root: resolveSlotProps(props.slotProps?.root, slotOwner) ?? {},

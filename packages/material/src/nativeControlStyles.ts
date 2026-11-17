@@ -3,9 +3,12 @@ import { StyleSheet, type StyleProp } from 'react-native';
 import {
   nativeStyleBorderDeclarations,
   applyNativeBorderStyle,
+  applyNativeTextMetrics,
+  nativeStyleTextMetrics,
   type NativeStyle,
 } from '@altroo/mui-native-system';
 import { nativeInsets } from './nativeInsets';
+import { nativeColorLayer } from '@altroo/mui-native-system/internal/prepared-style';
 import { nativeInlineBorderBase, nativeInlineSideMapper } from './nativeInlineBorders';
 
 const horizontalInsetSides = [
@@ -97,6 +100,15 @@ export function mergeNativeRootStyle(
     ? nativeStyleBorderDeclarations([computed, { direction }])
     : computed;
   const base = nativeInlineBorderBase(matching, inline, direction);
+  // RN prefers the modern image field over its legacy alias. A genuine
+  // legacy declaration must still replace lower-priority generated CSS paint,
+  // including an empty array or an explicit native reset.
+  if (
+    inline &&
+    Object.hasOwn(inline, 'experimental_backgroundImage') &&
+    !Object.hasOwn(inline, 'backgroundImage')
+  )
+    Reflect.deleteProperty(base, 'backgroundImage');
   if (inline?.gap != null) {
     delete base.rowGap;
     delete base.columnGap;
@@ -133,5 +145,17 @@ export function mergeNativeRootStyle(
   // Fabric can replace logical edges with defined physical aliases during its
   // global RTL swap. Keep computed CSS protection intact and let Yoga resolve
   // the original native shorthand/specific edges instead of synthesizing sides.
-  return applyNativeBorderStyle(nativeStyleBorderDeclarations([base, inline]));
+  return applyNativeBorderStyle(
+    nativeStyleBorderDeclarations([base, nativeColorLayer(inline, 'authored')]),
+  );
+}
+
+/** Retained cache refreshes keep native direction/metrics without owning caller props. */
+export function nativeRootStylePainter(direction: 'ltr' | 'rtl', inline: StyleProp<NativeStyle>) {
+  return (computed: NativeStyle): NativeStyle => {
+    const merged = mergeNativeRootStyle(direction, computed, inline);
+    return (
+      applyNativeTextMetrics(merged, computed, nativeStyleTextMetrics([computed, inline])) ?? merged
+    );
+  };
 }
