@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "b3baf5d7d167a486eb7558467441e36b2df4932c1e3c55bab4ae125c2875228a",
+  "nativeSourceSha256": "38628f8abb4d4c2d03e1b49af88e482584c33f469bfa8ff9dcf4992b1b3b06d8",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -183200,6 +183200,61 @@
         "Partial",
         "Record"
       ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "RunningTrack",
+      "file": "src/accordionMotion.ts",
+      "line": 27,
+      "kind": "type",
+      "members": [
+        {
+          "name": "endKey",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "endKey: string;",
+          "line": 28,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "reverseKey",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "reverseKey: string;",
+          "line": 29,
+          "kind": "property",
+          "type": "string"
+        },
+        {
+          "name": "shortening",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "shortening: number;",
+          "line": 30,
+          "kind": "property",
+          "type": "number"
+        },
+        {
+          "name": "easedProgress",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "easedProgress: number;",
+          "line": 31,
+          "kind": "property",
+          "type": "number"
+        }
+      ],
+      "references": [],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"
     },

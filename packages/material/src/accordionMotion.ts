@@ -24,6 +24,12 @@ type Coordinate =
   | 'blue'
   | 'alpha';
 type Vector = Partial<Record<Coordinate, number>>;
+type RunningTrack = {
+  endKey: string;
+  reverseKey: string;
+  shortening: number;
+  easedProgress: number;
+};
 const colorCoordinates = ['red', 'green', 'blue', 'alpha'] as const;
 function colorVector(color: NativeStyle['backgroundColor']): Vector {
   const packed = processColor(color ?? 'transparent');
@@ -96,6 +102,7 @@ function useMotionTrack(
   const key = JSON.stringify(target);
   const timingKey = JSON.stringify(timing);
   const current = useRef(target);
+  const running = useRef<RunningTrack | null>(null);
   const mounted = useRef(false);
   const identity = useRef(resetKey);
   const [presentation, setPresentation] = useState(target);
@@ -111,6 +118,7 @@ function useMotionTrack(
       same ||
       !Object.keys(endpoint).length
     ) {
+      running.current = null;
       identity.current = resetKey;
       mounted.current = true;
       current.current = endpoint;
@@ -121,21 +129,37 @@ function useMotionTrack(
     // A declaration entering/leaving the finite numeric domain has no prior
     // interpolable sample. Apply that change directly, including native resets.
     if (keys.some((name) => from[name] === undefined)) {
+      running.current = null;
       current.current = endpoint;
       setPresentation(endpoint);
       return;
     }
     let active = true;
     let frame: number | undefined;
-    const track = JSON.parse(timingKey!) as NativeOpacityTiming;
+    const track = JSON.parse(timingKey) as NativeOpacityTiming;
+    const previous = running.current;
+    const reversing = previous?.reverseKey === key ? previous : undefined;
+    // CSS shortens an interrupted return trip by the distance already covered.
+    // Use the eased progress of the same sample from which we resume.
+    const shortening = reversing
+      ? Math.min(1, Math.abs(1 + (reversing.easedProgress - 1) * reversing.shortening))
+      : 1;
+    const motion: RunningTrack = {
+      endKey: key,
+      reverseKey: reversing?.endKey ?? JSON.stringify(from),
+      shortening,
+      easedProgress: 0,
+    };
+    const duration = track.duration * shortening;
+    running.current = motion;
     const start = performance.now() + track.delay;
     const easing = nativeEasing(track.easing);
     const tick = (now: number) => {
       if (!active) return;
       const elapsed = now - start;
-      const progress =
-        elapsed < 0 ? 0 : track.duration > 0 ? Math.min(1, elapsed / track.duration) : 1;
+      const progress = elapsed < 0 ? 0 : duration > 0 ? Math.min(1, elapsed / duration) : 1;
       const value = easing(progress);
+      motion.easedProgress = value;
       const next = Object.fromEntries(
         keys.map((name) => [
           name,
@@ -143,10 +167,12 @@ function useMotionTrack(
         ]),
       ) as Vector;
       current.current = next;
+      if (progress === 1) running.current = null;
       setPresentation(next);
-      if (progress < 1) frame = requestAnimationFrame(tick);
+      if (progress < 1 && active) frame = requestAnimationFrame(tick);
     };
-    if (track.duration === 0 && track.delay === 0) {
+    if (duration === 0 && track.delay === 0) {
+      running.current = null;
       current.current = endpoint;
       setPresentation(endpoint);
     } else frame = requestAnimationFrame(tick);
@@ -212,33 +238,27 @@ export function useAccordionMotion(
             ? 'margin'
             : property,
     );
-    const color =
+    const secondary =
       property === 'before' || property === 'summary' ? timing('background-color') : scalar;
-    return { scalar, color };
+    return { scalar, secondary };
   }, [theme, property, sourceTiming]);
-  const scalarTarget = Object.fromEntries(
-    Object.entries(target).filter(
-      ([name]) => !colorCoordinates.includes(name as (typeof colorCoordinates)[number]),
-    ),
+  // Margin longhands can retarget or reverse independently, just like opacity and color.
+  const secondaryCoordinate = (name: string) =>
+    name === 'marginBottom' || colorCoordinates.includes(name as (typeof colorCoordinates)[number]);
+  const primaryTarget = Object.fromEntries(
+    Object.entries(target).filter(([name]) => !secondaryCoordinate(name)),
   ) as Vector;
-  const colorTarget = Object.fromEntries(
-    Object.entries(target).filter(([name]) =>
-      colorCoordinates.includes(name as (typeof colorCoordinates)[number]),
-    ),
+  const secondaryTarget = Object.fromEntries(
+    Object.entries(target).filter(([name]) => secondaryCoordinate(name)),
   ) as Vector;
-  const scalar = useMotionTrack(scalarTarget, timing?.scalar, reduced, resetKey);
-  const color = useMotionTrack(
-    colorTarget,
-    property === 'before' || property === 'summary' ? timing?.color : undefined,
-    reduced,
-    resetKey,
-  );
-  const presentation = { ...scalar, ...color };
+  const primary = useMotionTrack(primaryTarget, timing?.scalar, reduced, resetKey);
+  const secondary = useMotionTrack(secondaryTarget, timing?.secondary, reduced, resetKey);
+  const presentation = { ...primary, ...secondary };
   if (
     !property ||
     reduced ||
     !timing ||
-    [timing.scalar, timing.color].every((track) => track.duration === 0 && track.delay === 0)
+    [timing.scalar, timing.secondary].every((track) => track.duration === 0 && track.delay === 0)
   )
     return;
   // Return presentation changes only. The caller keeps the original prepared text/border

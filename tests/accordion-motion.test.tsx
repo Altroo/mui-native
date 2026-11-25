@@ -81,24 +81,65 @@ test('source duration produces intermediate native margins and an exact endpoint
   advance(100);
   expect(hook.result.current).toMatchObject({ marginTop: 20, marginBottom: 20 });
 });
-test('rapid reversal starts at the currently presented rotation and cancels the old endpoint', () => {
+test('rapid reversal starts at the presented rotation and shortens its duration', () => {
   const hook = renderHook(
     ({ degrees }: { degrees: number }) =>
       useStyle({ transform: [{ rotate: `${degrees}deg` }] }, theme, 'transform'),
     { initialProps: { degrees: 0 } },
   );
   hook.rerender({ degrees: 180 });
-  advance(50);
+  advance(48);
   const mid = turn(hook.result.current);
-  expect(mid).toBeGreaterThan(0);
-  expect(mid).toBeLessThan(180);
+  expect(mid).toBeCloseTo(86.4);
   hook.rerender({ degrees: 0 });
   expect(turn(hook.result.current)).toBe(mid);
-  advance(20);
-  expect(turn(hook.result.current)).toBeGreaterThan(0);
-  expect(turn(hook.result.current)).toBeLessThan(mid);
-  advance(200);
+  advance(16);
+  expect(turn(hook.result.current)).toBeCloseTo(57.6);
+  advance(32);
   expect(turn(hook.result.current)).toBe(0);
+});
+test('only reversing to a prior endpoint shortens a running rotation', () => {
+  const hook = renderHook(
+    ({ degrees }: { degrees: number }) =>
+      useStyle({ transform: [{ rotate: `${degrees}deg` }] }, theme, 'transform'),
+    { initialProps: { degrees: 0 } },
+  );
+  hook.rerender({ degrees: 180 });
+  advance(48);
+  hook.rerender({ degrees: 0 });
+  advance(16);
+  hook.rerender({ degrees: 180 });
+  // The return trip starts 32% of the way to 180 degrees, so it lasts 68 ms.
+  advance(64);
+  expect(turn(hook.result.current)).toBeCloseTo(172.8);
+  advance(16);
+  expect(turn(hook.result.current)).toBe(180);
+
+  hook.rerender({ degrees: 0 });
+  advance(48);
+  const mid = turn(hook.result.current);
+  hook.rerender({ degrees: 120 });
+  advance(64);
+  expect(turn(hook.result.current)).toBeCloseTo(mid + (120 - mid) * 0.64);
+  advance(48);
+  expect(turn(hook.result.current)).toBe(120);
+});
+test('a reversing top margin keeps the continuing bottom margin on its own clock', () => {
+  const hook = renderHook(
+    (style: { marginTop: number; marginBottom: number }) => useStyle(style, theme, 'margin'),
+    { initialProps: { marginTop: 0, marginBottom: 0 } },
+  );
+  hook.rerender({ marginTop: 100, marginBottom: 100 });
+  advance(48);
+  hook.rerender({ marginTop: 0, marginBottom: 100 });
+  advance(16);
+  expect(hook.result.current.marginTop).toBeCloseTo(32);
+  expect(hook.result.current.marginBottom).toBeCloseTo(64);
+  advance(32);
+  expect(hook.result.current.marginTop).toBe(0);
+  expect(hook.result.current.marginBottom).toBeCloseTo(96);
+  advance(16);
+  expect(hook.result.current.marginBottom).toBe(100);
 });
 test('theme transition factories control the delay and timing', () => {
   const factory = jest.fn(() => 'transform 200ms linear 80ms');

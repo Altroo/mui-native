@@ -74,7 +74,7 @@ Accordion and Summary compose the original utility identifiers with supplied cla
 
 Panels derive rounded edges and expansion margins from actual native sibling order and type. The divider follows MUI's separator rules, including adjacent expanded panels sharing the same generated root styles. Paper/Box terminals and transparent ref-forwarding wrappers retain their own final CSS and inline precedence.
 
-Outer margins, Summary minimum height/content margins, icon rotation and separator opacity/color use theme transition timing. Rapid reversal continues from the presented value; reduced motion applies the endpoint. Changing gutters preserves Summary content state and refs. A theme `focusVisible` policy replaces the default Summary focus background.
+Outer margins, Summary minimum height/content margins, icon rotation and separator opacity/color use theme transition timing. An interrupted reversal continues from the last presented value with a shorter duration based on the eased distance already traveled. Top and bottom margins keep independent progress. Reduced motion applies the endpoint. Changing gutters preserves Summary content state and refs. A theme `focusVisible` policy replaces the default Summary focus background.
 
 External browser stylesheets, HTML element roots and DOM refs require native equivalents. The native API includes Paper-compatible polymorphic roots; native refs intentionally differ from DOM refs. First-frame paint, broader grouping/motion and screen-reader matrices, and calibrated release performance remain completion gates. No full compatibility or completion claim is made.
 
