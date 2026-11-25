@@ -29,6 +29,7 @@ type Metadata = Readonly<{
   inheritedTextColors: boolean;
   inheritedTextMetrics: boolean;
   inheritedTextFonts: boolean;
+  inheritedTextAlignment: boolean;
 }>;
 type Outcome = Readonly<{ metadata: Metadata; error?: never } | { error: Error; metadata?: never }>;
 export type OwnedStyleBootstrap = Readonly<{
@@ -40,6 +41,7 @@ export type OwnedStyleBootstrap = Readonly<{
   supportsInheritedTextColors(): boolean;
   supportsInheritedTextMetrics(): boolean;
   supportsInheritedTextFonts(): boolean;
+  supportsInheritedTextAlignment(): boolean;
 }>;
 type Expected = Readonly<{ rn: string; platform: string; styleKeys: string }>;
 // One canonical native module object has one immutable read for this JS runtime.
@@ -163,10 +165,15 @@ function parse(raw: unknown): Metadata {
     inheritedTextMetrics:
       Object.hasOwn(value, 'inheritedTextMetrics') &&
       (value.inheritedTextMetrics === 'stock-text-metrics-v2' ||
-        value.inheritedTextMetrics === 'stock-text-metrics-v3'),
+        value.inheritedTextMetrics === 'stock-text-metrics-v3' ||
+        value.inheritedTextMetrics === 'stock-text-metrics-v4-alignment'),
     inheritedTextFonts:
       Object.hasOwn(value, 'inheritedTextMetrics') &&
-      value.inheritedTextMetrics === 'stock-text-metrics-v3',
+      (value.inheritedTextMetrics === 'stock-text-metrics-v3' ||
+        value.inheritedTextMetrics === 'stock-text-metrics-v4-alignment'),
+    inheritedTextAlignment:
+      Object.hasOwn(value, 'inheritedTextMetrics') &&
+      value.inheritedTextMetrics === 'stock-text-metrics-v4-alignment',
     peerStyleIdentity:
       Object.hasOwn(value, 'structuralCases') && value.structuralCases === 'first-last-of-type-v2',
     parentStructuralCases:
@@ -207,6 +214,7 @@ export function createOwnedStyleBootstrap(
   let inheritedTextColors = false;
   let inheritedTextMetrics = false;
   let inheritedTextFonts = false;
+  let inheritedTextAlignment = false;
   const originFailure = fail(
     'generated paragraph origin is unavailable or unsupported; rebuild the matching native app',
   );
@@ -229,6 +237,7 @@ export function createOwnedStyleBootstrap(
     inheritedTextColors = parentStructuralCases && outcome.metadata.inheritedTextColors;
     inheritedTextMetrics = inheritedTextColors && outcome.metadata.inheritedTextMetrics;
     inheritedTextFonts = inheritedTextMetrics && outcome.metadata.inheritedTextFonts;
+    inheritedTextAlignment = inheritedTextFonts && outcome.metadata.inheritedTextAlignment;
     generatedTextOrigin = outcome.metadata.generatedTextOrigin;
   } catch (error) {
     failure = toFailure(error);
@@ -240,6 +249,7 @@ export function createOwnedStyleBootstrap(
     supportsInheritedTextColors: () => inheritedTextColors,
     supportsInheritedTextMetrics: () => inheritedTextMetrics,
     supportsInheritedTextFonts: () => inheritedTextFonts,
+    supportsInheritedTextAlignment: () => inheritedTextAlignment,
     requireProfile() {
       if (failure) throw failure;
       // The only successful initialization branch publishes this immutable profile.

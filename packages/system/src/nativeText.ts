@@ -65,12 +65,18 @@ const relativeLineHeights = new WeakMap<object, number>();
 const cssTextMetrics = new WeakMap<object, Record<string, unknown>>();
 // A synthesized inherited ratio is not an authored constant declaration.
 const inheritedMetricRatios = new WeakSet<object>();
+const inheritedAlignments = new WeakSet<object>();
+/** Preserve the origin of alignment materialized by an intermediate scope. */
+export function nativeAlignmentIsInherited(style: object): boolean {
+  return inheritedAlignments.has(style);
+}
 const relativeMetricKeys = ['fontSize', 'lineHeight', 'letterSpacing', 'textAlign'] as const;
 // Preserve authored CSS metrics across library-generated style arrays. Literal native
 // styles clear that provenance and retain their absolute React Native semantics.
 export function nativeStyleTextMetrics(style: StyleProp<TextStyle>): Record<string, unknown> {
   const metrics: Record<string, unknown> = {};
   let inheritedHeight = false;
+  let inheritedAlignment = false;
   const visit = (entry: StyleProp<TextStyle>) => {
     if (Array.isArray(entry)) {
       for (const child of entry) visit(child);
@@ -84,14 +90,17 @@ export function nativeStyleTextMetrics(style: StyleProp<TextStyle>): Record<stri
         if (authored && Object.hasOwn(authored, key)) {
           metrics[key] = authored[key];
           if (key === 'lineHeight') inheritedHeight = inheritedMetricRatios.has(flat);
+          if (key === 'textAlign') inheritedAlignment = inheritedAlignments.has(flat);
         } else {
           delete metrics[key];
           if (key === 'lineHeight') inheritedHeight = false;
+          if (key === 'textAlign') inheritedAlignment = false;
         }
       }
   };
   visit(style);
   if (inheritedHeight) inheritedMetricRatios.add(metrics);
+  if (inheritedAlignment) inheritedAlignments.add(metrics);
   return metrics;
 }
 export function applyNativeTextMetrics<T extends TextStyle>(
@@ -108,6 +117,7 @@ export function applyNativeTextMetrics<T extends TextStyle>(
     }
   cssTextMetrics.set(adjusted, { ...metrics });
   if (inheritedMetricRatios.has(metrics)) inheritedMetricRatios.add(adjusted);
+  if (inheritedAlignments.has(metrics)) inheritedAlignments.add(adjusted);
   const ratio = relativeLineHeights.get(resolved);
   if (ratio !== undefined) relativeLineHeights.set(adjusted, ratio);
   return adjusted;
@@ -162,6 +172,7 @@ export function nativeTextAlignmentStyle<T extends TextStyle | null | undefined>
   // Keep emitted styles recognizable if a composing library root processes them
   // again. This marker stays in the existing weak metadata, never in native props.
   cssTextMetrics.set(native, { ...metrics, textAlign: alignment, emittedTextAlign: physical });
+  if (inheritedAlignments.has(style)) inheritedAlignments.add(native);
   return native;
 }
 type Length = readonly [relative: boolean, value: number];
@@ -306,7 +317,17 @@ export function normalizeTextStyle(
 ): Record<string, unknown> {
   const inheritedMetricHeight =
     !!context.captureMetricPlan && inheritedMetricRatios.has(context.nativeTextMetrics ?? {});
-  input = { ...input, ...context.nativeTextMetrics };
+  const inlineInheritsAlignment =
+    !!context.nativeTextMetrics && inheritedAlignments.has(context.nativeTextMetrics);
+  const localAlignment = input.textAlign;
+  const ownAlignment =
+    inlineInheritsAlignment &&
+    localAlignment != null &&
+    localAlignment !== 'inherit' &&
+    localAlignment !== 'unset'
+      ? { textAlign: localAlignment }
+      : undefined;
+  input = { ...input, ...context.nativeTextMetrics, ...ownAlignment };
   const output = { ...input };
   let rootFont: number | undefined;
   const rem =
@@ -397,7 +418,10 @@ export function normalizeTextStyle(
     ownDirection === 'rtl' || ownDirection === 'ltr'
       ? ownDirection
       : (context.parentDirection ?? theme.direction);
+  const authoredAlignment =
+    inlineInheritsAlignment && !ownAlignment ? undefined : (output.textAlign ?? undefined);
   const alignment = output.textAlign ?? context.parentTextAlign;
+  if (alignment !== undefined && authoredAlignment === undefined) inheritedAlignments.add(output);
   if (alignment === 'left' || alignment === 'right') output.textAlign = alignment;
   if (alignment === 'start') output.textAlign = direction === 'rtl' ? 'right' : 'left';
   if (alignment === 'end') output.textAlign = direction === 'rtl' ? 'left' : 'right';
@@ -506,7 +530,7 @@ export function normalizeTextStyle(
     metricPlans.set(output, Object.freeze({ rootSize: rem, fallbackSize, step }));
   }
 
-  retainNativeFontPlan(output);
+  retainNativeFontPlan(output, authoredAlignment);
   if (tracksNativeTextContext(context))
     retainNativeTextNormalization(output, {
       rootFont,

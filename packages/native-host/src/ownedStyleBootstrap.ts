@@ -29,6 +29,7 @@ export const supportsParentStructuralCases = bootstrap.supportsParentStructuralC
 export const supportsInheritedTextColors = bootstrap.supportsInheritedTextColors;
 export const supportsInheritedTextMetrics = bootstrap.supportsInheritedTextMetrics;
 export const supportsInheritedTextFonts = bootstrap.supportsInheritedTextFonts;
+export const supportsInheritedTextAlignment = bootstrap.supportsInheritedTextAlignment;
 
 /** Full CSS peers require the newer matching binary, independently of positional v1. */
 export const supportsPeerStyleIdentity = bootstrap.supportsPeerStyleIdentity;

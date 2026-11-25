@@ -52,7 +52,8 @@ using Tag = int;
 using SurfaceId = int;
 using ComponentHandle = const void *;
 using SharedColor = std::optional<unsigned>;
-struct TextAttributes { std::string fontFamily; std::optional<int> fontWeight,fontStyle,fontVariant; std::optional<std::string> fontVariationSettings; SharedColor foregroundColor; Float fontSize{std::numeric_limits<Float>::quiet_NaN()}, lineHeight{std::numeric_limits<Float>::quiet_NaN()}, letterSpacing{std::numeric_limits<Float>::quiet_NaN()}; };
+enum class TextAlignment { Natural, Left, Center, Right, Justified, Start, End };
+struct TextAttributes { std::optional<TextAlignment> alignment; std::string fontFamily; std::optional<int> fontWeight,fontStyle,fontVariant; std::optional<std::string> fontVariationSettings; SharedColor foregroundColor; Float fontSize{std::numeric_limits<Float>::quiet_NaN()}, lineHeight{std::numeric_limits<Float>::quiet_NaN()}, letterSpacing{std::numeric_limits<Float>::quiet_NaN()}; };
 inline std::atomic<int> rawParses{0}, cloneCalls{0}, failCloneAt{0};
 inline bool rejectParsing = false;
 inline std::atomic<std::size_t> observedChildEntries{0};
@@ -913,16 +914,16 @@ int preservedMetricControls(){try{
 // Exact production typed evaluator/resolver. Actual RN conversion and paint have separate gates.
 #include "MetricControls.cpp"
 namespace font=altroo::text_fonts;
-font::State ordinaryFont(){font::State value;value.attributes.fontFamily="System";value.attributes.fontWeight=400;value.attributes.fontStyle=0;value.attributes.fontVariant=0;value.attributes.fontVariationSettings="'wght' 400";return value;}
-font::Step selectedFont(){font::Step step;step.owns=31;step.state=ordinaryFont();step.state.attributes.fontFamily="Times New Roman";step.state.attributes.fontWeight=700;step.state.attributes.fontStyle=1;step.state.attributes.fontVariant=1;step.state.attributes.fontVariationSettings="'wght' 700";return step;}
-auto fontMarker(Tag tag=6,std::vector<font::Step> steps={},std::string owner="source",std::string key="fonts",std::uint8_t blocked=0){
- auto packet=std::make_shared<font::Presentation>();packet->binding={std::move(owner),std::move(key),std::move(steps)};packet->ordinary=ordinaryFont();packet->ordinary.blocked=blocked;
+font::State ordinaryFont(){font::State value;value.attributes.fontFamily="System";value.attributes.fontWeight=400;value.attributes.fontStyle=0;value.attributes.fontVariant=0;value.attributes.fontVariationSettings="'wght' 400";value.attributes.alignment=TextAlignment::Left;return value;}
+font::Step selectedFont(){font::Step step;step.owns=font::allFields;step.state=ordinaryFont();step.state.attributes.fontFamily="Times New Roman";step.state.attributes.fontWeight=700;step.state.attributes.fontStyle=1;step.state.attributes.fontVariant=1;step.state.attributes.fontVariationSettings="'wght' 700";step.state.cssAlignment=font::CssAlignment::End;return step;}
+auto fontMarker(Tag tag=6,std::vector<font::Step> steps={},std::string owner="source",std::string key="fonts",std::uint8_t blocked=0,std::uint8_t alignmentDirections=0){
+ auto packet=std::make_shared<font::Presentation>();packet->binding={std::move(owner),std::move(key),std::move(steps)};packet->ordinary=ordinaryFont();packet->ordinary.blocked=blocked;packet->alignmentDirections=alignmentDirections;
  auto props=std::make_shared<altroo::text_color::MarkerProps>();props->fonts=packet;return node<ColorMarker>(tag,props);
 }
 auto fontGlyph(std::vector<Node> children){auto props=std::make_shared<ViewProps>();props->textAttributes=ordinaryFont().attributes;props->textAttributes.fontSize=19;props->textAttributes.lineHeight=27;props->textAttributes.letterSpacing=2;props->textAttributes.foregroundColor=0x0000ffu;props->nativeId="font-glyph";return node<ParagraphShadowNode>(4,props,std::move(children));}
 auto fontSource(std::vector<Node> children){
  auto source=colorSource(std::move(children),false);auto data=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(source->getConcreteProps().prepared);
- auto bank=std::make_shared<font::Bank>();bank->key="fonts";bank->base=ordinaryFont();bank->ordinary={ordinaryFont(),31};
+ auto bank=std::make_shared<font::Bank>();bank->key="fonts";bank->base=ordinaryFont();bank->ordinary={ordinaryFont(),font::allFields};
  for(unsigned index=0;index<8;++index)bank->cases[index]=(index&2)?selectedFont():bank->ordinary;
  data->textFonts=bank;return source;
 }
@@ -933,17 +934,31 @@ int main(){try{
  auto selected=resolve(accepted);const auto &attributes=metricAttributes(selected);const auto &actual=paragraphIn(selected);
  check(font::equalFields(attributes,selectedFont().state.attributes,31),"all five selected typed fonts share structural facts");
  check(selected.decisions[0].bottom==102,"fonts and geometry select the same source case");
+ check(attributes.alignment==TextAlignment::Right,"LTR resolves authored CSS end");
+ for(const auto flags:std::array<std::uint8_t,4>{0,1,2,3}){
+  const auto sample=metricAttributes(resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6,{},"source","fonts",0,flags)})}),other})));
+  const auto expected=(flags==1||flags==2)?TextAlignment::Left:TextAlignment::Right;
+  check(sample.alignment==expected,"CSS direction and actual native paragraph direction are independent");
+ }
  check(actual.getTag()==glyph->getTag()&&actual.getFamilyShared()==glyph->getFamilyShared(),"actual Paragraph identity stays exact");
  check(actual.getProps()->nativeId=="font-glyph"&&actual.getChildren()==glyph->getChildren(),"nativeID/rawText/marker are retained");
  check(attributes.fontSize==19&&attributes.lineHeight==27&&attributes.letterSpacing==2&&attributes.foregroundColor==0x0000ffu,"numeric/color ownership is not overwritten by font copying");
  check(font::equalFields(glyph->getConcreteProps().textAttributes,ordinaryFont().attributes,31),"accepted sealed font props are untouched");
  check(resolve(selected.root).root==selected.root,"font selection is idempotent");
  auto moved=resolve(root({other,selected.root->getChildren()[0]}));const auto &restored=static_cast<const ParagraphShadowNode&>(*moved.root->getChildren()[1]->getChildren()[0]);
- check(font::equalFields(restored.getConcreteProps().textAttributes,ordinaryFont().attributes,31),"retained reorder restores the ordinary font case");
+ check(font::equalFields(restored.getConcreteProps().textAttributes,ordinaryFont().attributes,font::allFields),"retained reorder restores ordinary fonts and alignment");
  check(restored.getFamilyShared()==glyph->getFamilyShared(),"reorder preserves Text family");
  auto retained=selected.root->getChildren()[0]->getChildren()[0];
- check(font::equalFields(metricAttributes(resolve(root({colorSource({retained},false),other}))),ordinaryFont().attributes,31),"source withdrawal restores ordinary without any React font delta");
+ check(font::equalFields(metricAttributes(resolve(root({colorSource({retained},false),other}))),ordinaryFont().attributes,font::allFields),"source withdrawal restores ordinary alignment too");
  auto reparented=resolve(root({retained}));check(font::equalFields(static_cast<const ParagraphShadowNode&>(*reparented.root->getChildren()[0]).getConcreteProps().textAttributes,ordinaryFont().attributes,31),"leaving source ancestry restores ordinary");
+ font::Step nativeAlign;nativeAlign.owns=font::alignmentField;nativeAlign.state.attributes.alignment=TextAlignment::Left;
+ const auto authored=metricAttributes(resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6,{nativeAlign})})}),other})));
+ check(authored.alignment==TextAlignment::Left&&authored.fontWeight==700,"authored native left keeps its native meaning");
+ nativeAlign.state.attributes.alignment.reset();
+ const auto reset=metricAttributes(resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6,{nativeAlign})})}),other})));
+ check(!reset.alignment&&reset.fontWeight==700,"authored null resets align alone");
+ const auto legacy=metricAttributes(resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6,{},"source","fonts",font::alignmentField)})}),other})));
+ check(legacy.alignment==TextAlignment::Left&&legacy.fontWeight==700,"legacy marker stays authoritative for original fields only");
  font::Step nativeFamily;nativeFamily.owns=1;nativeFamily.state.attributes.fontFamily="System";
  auto barrier=metricAttributes(resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6,{nativeFamily})})}),other})));
  check(barrier.fontFamily=="System"&&barrier.fontWeight==700&&barrier.fontStyle==1,"same-valued authored family blocks only family");
@@ -969,6 +984,7 @@ int main(){try{
  auto virtualText=node<TextShadowNode>(7,virtualProps,{raw(8),fontMarker(9)});auto enclosing=fontGlyph({virtualText});
  auto virtualResult=resolve(root({fontSource({enclosing}),other}));const auto &virtualSelected=static_cast<const TextShadowNode&>(*paragraphIn(virtualResult).getChildren()[0]);
  check(font::equalFields(virtualSelected.getConcreteProps().textAttributes,selectedFont().state.attributes,31),"virtual Text selects all typed font fields");
+ check(virtualSelected.getConcreteProps().textAttributes.alignment==TextAlignment::Right,"alignment reaches the retained virtual Text");
  check(virtualSelected.getFamilyShared()==virtualText->getFamilyShared()&&paragraphIn(virtualResult).getFamilyShared()==enclosing->getFamilyShared(),"virtual selection retains paragraph and span families");
  auto inner=structuralTarget(20);auto innerData=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(inner->getConcreteProps().prepared);innerData->owner="inner";
  auto innerBank=std::make_shared<font::Bank>();innerBank->key="inner-fonts";innerBank->base=ordinaryFont();innerBank->parent=font::Binding{"source","fonts",{nativeFamily}};innerData->textFonts=innerBank;

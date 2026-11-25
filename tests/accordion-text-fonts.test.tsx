@@ -34,6 +34,7 @@ jest.mock('../packages/native-host/src/ownedStyleBootstrap', () => {
     supportsInheritedTextColors: () => true,
     supportsInheritedTextMetrics: () => true,
     supportsInheritedTextFonts: () => true,
+    supportsInheritedTextAlignment: () => true,
     supportsPeerStyleIdentity: () => false,
     supportsStructuralCases: () => true,
     supportsParentStructuralCases: () => true,
@@ -49,10 +50,16 @@ jest.mock('../packages/native-host/src/ownedStructuralCases', () => ({
     encode: require('../packages/native-host/src/ownedStyleEncoding').encodeStructuralCases,
   },
 }));
-import { Text, StyleSheet, type TextStyle } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  unstable_TextAncestorContext as TextAncestorContext,
+  type TextStyle,
+} from 'react-native';
 import { render, cleanup } from '@testing-library/react-native';
 import {
   Accordion,
+  AccordionDetails,
   AccordionSummary,
   Typography,
   Box,
@@ -69,7 +76,7 @@ import {
 import { nativeFontStep } from '../packages/system/src/nativeFontSources';
 const theme = createTheme({ motion: { reducedMotion: 'always' } });
 afterEach(cleanup);
-function scene(children: React.ReactNode, extra = {}) {
+function scene(children: React.ReactNode, extra = {}, inheritAlignment = false) {
   return (
     <ThemeProvider theme={theme}>
       <Accordion
@@ -88,12 +95,16 @@ function scene(children: React.ReactNode, extra = {}) {
           ...extra,
         }}
       >
-        <AccordionSummary>{children}</AccordionSummary>
+        <AccordionSummary
+          slotProps={inheritAlignment ? { content: { sx: { textAlign: 'inherit' } } } : undefined}
+        >
+          {children}
+        </AccordionSummary>
       </Accordion>
     </ThemeProvider>
   );
 }
-function selected(tree: ReturnType<typeof render>, id: string, facts = 2) {
+function selectedState(tree: ReturnType<typeof render>, id: string, facts: number) {
   const programme = tree.getByTestId('panel').props.ownedProgramme;
   const bank = programme.textFonts;
   expect(bank).toBeDefined();
@@ -102,8 +113,95 @@ function selected(tree: ReturnType<typeof render>, id: string, facts = 2) {
   expect(packet.key).toBe(bank.key);
   let state: NativeFontState = applyNativeFontStep(bank.base, bank.cases[facts]);
   for (const step of packet.steps as NativeFontStep[]) state = applyNativeFontStep(state, step);
-  return state.values.slice(0, 3);
+  return state;
 }
+function selected(tree: ReturnType<typeof render>, id: string, facts = 2) {
+  return selectedState(tree, id, facts).values.slice(0, 3);
+}
+test('logical alignment selects with geometry while genuine native alignment remains authored', () => {
+  const renderScene = (ownAlign: boolean) =>
+    scene(
+      <>
+        <Typography testID="inherited" variant="inherit">
+          Aligned text
+        </Typography>
+        <Typography
+          testID="authored"
+          variant="inherit"
+          style={ownAlign ? { textAlign: 'left' } : undefined}
+        >
+          Aligned text
+        </Typography>
+        <Box sx={{ textAlign: 'start' }}>
+          <Typography testID="passive" variant="inherit">
+            Aligned text
+          </Typography>
+        </Box>
+        <Typography variant="inherit">
+          <TextAncestorContext.Provider value={true}>
+            <Typography testID="virtual" variant="inherit" sx={{ direction: 'ltr' }}>
+              Aligned text
+            </Typography>
+          </TextAncestorContext.Provider>
+        </Typography>
+      </>,
+      {
+        direction: 'rtl',
+        textAlign: 'start',
+        '&:first-of-type': { textAlign: 'end', fontWeight: 700, minHeight: 80 },
+      },
+      true,
+    );
+  const tree = render(renderScene(true));
+  const programme = tree.getByTestId('panel').props.ownedProgramme;
+  expect(programme.cases.map((candidate: { minHeight: number }) => candidate.minHeight)).toEqual([
+    48, 48, 80, 80, 48, 48, 80, 80,
+  ]);
+  expect(selectedState(tree, 'inherited', 0).values[5]).toBe('css-start');
+  expect(selectedState(tree, 'inherited', 2).values[5]).toBe('css-end');
+  expect(selectedState(tree, 'authored', 2).values[5]).toBe('left');
+  expect(selectedState(tree, 'passive', 2).values[5]).toBe('css-start');
+  expect(selectedState(tree, 'authored', 2).values[1]).toBe('700');
+  const packet = (id: string) =>
+    tree.getByTestId(id).findByType('ColorMarker' as never).props.fontProgramme;
+  expect(packet('inherited').alignmentDirections).toBe(3);
+  expect(packet('inherited').ordinary.values[5]).toBe('left');
+  expect(packet('virtual').alignmentDirections).toBe(2);
+  expect(selectedState(tree, 'virtual', 2).values[5]).toBe('css-end');
+  tree.rerender(renderScene(false));
+  expect(selectedState(tree, 'authored', 2).values[5]).toBe('css-end');
+});
+test('an inner Accordion keeps the inherited alignment recipe from its exact source', () => {
+  const tree = render(
+    <ThemeProvider theme={theme}>
+      <Accordion
+        expanded
+        testID="outer"
+        sx={{ textAlign: 'start', '&:first-of-type': { textAlign: 'end' } }}
+      >
+        <AccordionSummary>Outer</AccordionSummary>
+        <AccordionDetails>
+          <Accordion testID="inner">
+            <AccordionSummary>
+              <Typography testID="nested" variant="inherit">
+                Nested
+              </Typography>
+            </AccordionSummary>
+          </Accordion>
+        </AccordionDetails>
+      </Accordion>
+    </ThemeProvider>,
+  );
+  const outer = tree.getByTestId('outer').props.ownedProgramme;
+  const inner = tree.getByTestId('inner').props.ownedProgramme;
+  const bank = inner.textFonts;
+  expect(bank.parent.owner).toBe(outer.owner);
+  expect(bank.parent.key).toBe(outer.textFonts.key);
+  const incoming = applyNativeFontStep(outer.textFonts.base, outer.textFonts.cases[2]);
+  const base = bank.parent.steps.reduce(applyNativeFontStep, incoming);
+  const selected = applyNativeFontStep(base, bank.cases[2]);
+  expect(selected.values[5]).toBe('css-end');
+});
 test('conditional fonts share native geometry cases while inherited Text retains its source binding', () => {
   const tree = render(
     scene(
@@ -176,7 +274,7 @@ test('nested native font values are barriers without an extra array or record tr
     fontVariant: variants,
     fontVariationSettings: variation,
   });
-  expect(step.values).toEqual(['System', null, null, null, null]);
+  expect(step.values).toEqual(['System', null, null, null, null, null]);
   expect(step.owns).toBe(25);
   expect(step.blocked).toBe(24);
   expect(reads).not.toHaveBeenCalled();
@@ -332,7 +430,7 @@ test('retained opaque native font leaves update and return to scalar and cleared
   const reset = current().findByType('ColorMarker' as never).props.fontProgramme;
   expect(reset.ordinary.blocked).toBe(0);
   expect(reset.steps.at(-1).owns & 24).toBe(24);
-  expect(reset.steps.at(-1).values.slice(3)).toEqual([null, null]);
+  expect(reset.steps.at(-1).values.slice(3, 5)).toEqual([null, null]);
 });
 
 test('unknown default font fields retain the real ordinary emission instead of assuming a platform family', () => {

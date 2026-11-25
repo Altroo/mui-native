@@ -7,6 +7,7 @@ export {
   supportsNativeTextColors,
   supportsNativeTextMetrics,
   supportsNativeTextFonts,
+  nativeTextTransportKeys,
   encodeNativeFontBank,
   prepareNativeTextColorBank,
 } from '../../nativeTextColorMarker';

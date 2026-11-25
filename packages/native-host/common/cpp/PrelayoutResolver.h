@@ -421,8 +421,10 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
       const auto managed = static_cast<std::uint8_t>(altroo::text_fonts::allFields & ~selected.blocked);
       if (fonts && fontBinding->binding.owner == fonts->owner && fontBinding->binding.key == fonts->bank->key) {
         const auto inherited = altroo::text_fonts::applySteps(fonts->selected, fontBinding->binding.steps);
-        altroo::text_fonts::copyFields(selected.attributes, inherited.attributes,
-          static_cast<std::uint8_t>(managed & ~inherited.blocked));
+        const auto inheritedFields = static_cast<std::uint8_t>(managed & ~inherited.blocked);
+        altroo::text_fonts::copyFields(selected.attributes, inherited.attributes, inheritedFields);
+        if (inheritedFields & altroo::text_fonts::alignmentField)
+          selected.attributes.alignment = altroo::text_fonts::emittedAlignment(inherited, fontBinding->alignmentDirections);
       }
       if (!altroo::text_fonts::equalFields(current, selected.attributes, managed)) {
         change.fontMask = managed;

@@ -750,7 +750,7 @@ final class AccordionTextMetricsProbeUITests: XCTestCase {
       let naturalHeight = try XCTUnwrap(report["naturalHeight"] as? Bool)
       let fontAttributes = try XCTUnwrap(report["fontAttributes"] as? Bool)
       let fontScenario = report["fontScenario"] as? String
-      let fontScenarios = ["composite", "family", "variant", "variation"]
+      let fontScenarios = ["composite", "family", "variant", "variation", "alignment"]
       XCTAssertTrue(fontScenario.map { fontScenarios.contains($0) } ?? true)
       XCTAssertEqual(fontAttributes, fontScenario != nil)
       XCTAssertFalse(naturalHeight && fontAttributes, "Keep natural-height and font-selection probes independent")
@@ -786,8 +786,14 @@ final class AccordionTextMetricsProbeUITests: XCTestCase {
         if fontAttributes {
           let smallLine = try XCTUnwrap(texts["small"]?["line"] as? [String: Double])
           let largeLine = try XCTUnwrap(texts["large"]?["line"] as? [String: Double])
-          XCTAssertGreaterThan(abs(try XCTUnwrap(smallLine["width"]) - (try XCTUnwrap(largeLine["width"]))), 0.5,
-            "The independent native font cases must be distinguishable")
+          if fontScenario == "alignment" {
+            let delta = try XCTUnwrap(largeLine["x"]) - (try XCTUnwrap(smallLine["x"]))
+            XCTAssertGreaterThan(id == "b" ? -delta : delta, 10,
+              "Independent stock Text controls distinguish both alignment edges in their paragraph direction")
+          } else {
+            XCTAssertGreaterThan(abs(try XCTUnwrap(smallLine["width"]) - (try XCTUnwrap(largeLine["width"]))), 0.5,
+              "The independent native font cases must be distinguishable")
+          }
           if variation {
             let unsetLine = try XCTUnwrap(texts["default-axis"]?["line"] as? [String: Double])
             for control in [smallLine, largeLine] {
@@ -798,6 +804,7 @@ final class AccordionTextMetricsProbeUITests: XCTestCase {
         }
         // Actual fixed-font native text supplies the reference, including OS font metrics.
         let fields = ["width", "height", "ascender", "descender", "capHeight", "xHeight"]
+          + (fontScenario == "alignment" ? ["x"] : [])
         for key in fields {
           XCTAssertEqual(try XCTUnwrap(inheritedLine[key]), try XCTUnwrap(expectedLine[key]), accuracy: 0.5,
             "Inherited glyph differs from its authored native control: " + id + "/" + key)

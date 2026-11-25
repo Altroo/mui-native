@@ -3,17 +3,20 @@
 // no wrapper, host replacement, nativeID change or late runtime discovery.
 import { useRef } from 'react';
 import type { ColorValue } from 'react-native';
-import type {
-  NativeFontPresentation,
-  NativeFontState,
-  NativeFontStep,
-  NativeFontBank,
+import {
+  nativeFontKeys,
+  nativeFontAndAlignmentKeys,
+  type NativeFontPresentation,
+  type NativeFontState,
+  type NativeFontStep,
+  type NativeFontBank,
 } from './nativeTextFontData';
 import type { NativeMetricPresentation } from './nativeTextMetricData';
 import {
   supportsInheritedTextColors,
   supportsInheritedTextMetrics,
   supportsInheritedTextFonts,
+  supportsInheritedTextAlignment,
   requireOwnedStyleProfile,
 } from './ownedStyleBootstrap';
 import { ownedStructuralCases } from './ownedStructuralCases';
@@ -43,6 +46,13 @@ export const supportsNativeTextFonts =
   supportsNativeTextMetrics &&
   typeof supportsInheritedTextFonts === 'function' &&
   supportsInheritedTextFonts();
+const supportsTextAlignment =
+  supportsNativeTextFonts &&
+  typeof supportsInheritedTextAlignment === 'function' &&
+  supportsInheritedTextAlignment();
+export const nativeTextTransportKeys = supportsTextAlignment
+  ? nativeFontAndAlignmentKeys
+  : nativeFontKeys;
 // Opaque platform/dynamic color objects stay on their ordinary RN path. They
 // are never replayed through an extra processor or treated as inheritance proof.
 function scalar(value: unknown): value is string | number | null | undefined {
@@ -131,6 +141,9 @@ export function NativeTextColorMarker({
                   key: fonts.binding?.key ?? '',
                   steps: fonts.binding?.steps.map(encodeFontStep) ?? [],
                   ordinary: encodeFontState(fonts.ordinary),
+                  ...(fonts.alignmentDirections === undefined
+                    ? {}
+                    : { alignmentDirections: fonts.alignmentDirections }),
                 }
               : null,
           }

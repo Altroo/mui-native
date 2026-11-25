@@ -34,7 +34,7 @@ type TextLayoutEvent = Parameters<NonNullable<TextProps['onTextLayout']>>[0];
 type TextLayoutLine = TextLayoutEvent['nativeEvent']['lines'][number];
 type Job = { cancelled: boolean; frame?: number; timeout?: ReturnType<typeof setTimeout> };
 type Mode = 'default' | 'forwarded';
-type FontScenario = 'composite' | 'family' | 'variant' | 'variation';
+type FontScenario = 'composite' | 'family' | 'variant' | 'variation' | 'alignment';
 type Id = 'a' | 'b' | 'c';
 type Kind = 'inherited' | 'small' | 'large' | 'explicit' | 'default-axis';
 type ControlKind = Exclude<Kind, 'inherited' | 'default-axis'>;
@@ -42,7 +42,7 @@ type CounterHandle = { bump(): void; read(): number };
 type Rect = { x: number; y: number; width: number; height: number };
 type Line = Pick<
   TextLayoutLine,
-  'width' | 'height' | 'ascender' | 'descender' | 'capHeight' | 'xHeight'
+  'x' | 'width' | 'height' | 'ascender' | 'descender' | 'capHeight' | 'xHeight'
 >;
 type Targets = {
   observationRevision: number;
@@ -167,11 +167,24 @@ const variationRootStyle = {
     fontVariationSettings: "'wght' 900",
   },
 };
+const alignmentRootStyle = {
+  ...rootStyle,
+  fontSize: '20px',
+  fontFamily: 'system-ui',
+  direction: 'ltr',
+  textAlign: 'start',
+  '&:first-of-type': {
+    ...rootStyle['&:first-of-type'],
+    fontSize: '20px',
+    textAlign: 'end',
+  },
+};
 const rootFontStyles = {
   composite: fontRootStyle,
   family: familyRootStyle,
   variant: variantRootStyle,
   variation: variationRootStyle,
+  alignment: alignmentRootStyle,
 };
 // Genuine native arrays/records reach stock Text without CSS normalization.
 const nativeFontStyles = {
@@ -213,8 +226,19 @@ const fontControls: Record<FontScenario, Record<ControlKind, TextStyle>> = {
     large: { fontFamily: 'System', ...axisOverrides.heavy },
     explicit: {},
   },
+  alignment: {
+    small: { fontFamily: 'System', textAlign: 'left' },
+    large: { fontFamily: 'System', textAlign: 'right' },
+    explicit: { textAlign: 'left' },
+  },
 };
-const fontGlyphs = { composite: 'Mm12', family: 'W1', variant: '111', variation: 'M1' };
+const fontGlyphs = {
+  composite: 'Mm12',
+  family: 'W1',
+  variant: '111',
+  variation: 'M1',
+  alignment: 'Mm12',
+};
 const Slot = forwardRef<ViewInstance, BoxProps>(function Slot(props, ref) {
   return <Box {...props} ref={ref} />;
 });
@@ -305,7 +329,12 @@ const Row = memo(function Row({
       style={{ backgroundColor: paint[id] }}
     >
       <AccordionSummary
-        slotProps={{ content: { style: { margin: 0, gap: 4, alignItems: 'center' } } }}
+        slotProps={{
+          content: {
+            ...(fontScenario === 'alignment' ? { sx: { textAlign: 'inherit' } } : {}),
+            style: { margin: 0, gap: 4, alignItems: 'center' },
+          },
+        }}
       >
         {(fontScenario === 'variation' ? variationKinds : kinds).map((kind) => (
           <Glyph
@@ -369,12 +398,13 @@ function Glyph({
       const line = event.nativeEvent.lines[0];
       targets.lines.delete(key);
       if (!line || event.nativeEvent.lines.length !== 1) return;
-      const { width, height, ascender, descender, capHeight, xHeight } = line;
-      if (![width, height, ascender, descender, capHeight, xHeight].every(Number.isFinite)) return;
+      const { x, width, height, ascender, descender, capHeight, xHeight } = line;
+      if (![x, width, height, ascender, descender, capHeight, xHeight].every(Number.isFinite))
+        return;
       targets.lines.set(key, {
         tag,
         revision,
-        line: { width, height, ascender, descender, capHeight, xHeight },
+        line: { x, width, height, ascender, descender, capHeight, xHeight },
       });
     },
     [key, targets],
@@ -387,7 +417,11 @@ function Glyph({
   };
   const checkInlineOverride =
     fontScenario !== undefined && fontScenario !== 'composite' && kind === 'explicit';
-  const glyph = fontScenario ? fontGlyphs[fontScenario] : 'MMMM';
+  const rtlAlignment = fontScenario === 'alignment' && id === 'b';
+  const paragraphStyle = rtlAlignment ? { direction: 'rtl' as const } : undefined;
+  // Direction-only cache collisions are independent of this fixed-direction probe.
+  // Keep the raw text identical among controls within each direction.
+  const glyph = rtlAlignment ? 'Tt24' : fontScenario ? fontGlyphs[fontScenario] : 'MMMM';
   // Independent core Text controls bypass CSS font and metric normalization.
   if (kind !== 'inherited' && !checkInlineOverride)
     return (
@@ -396,6 +430,7 @@ function Glyph({
         style={{
           width: 60,
           color: '#000',
+          ...paragraphStyle,
           ...(fontScenario
             ? {
                 ...(kind === 'default-axis'
@@ -416,8 +451,9 @@ function Glyph({
     );
   // Keep one override path in each retained row while its selector state changes.
   const variationOverride = fontScenario === 'variation' && kind === 'explicit';
-  const throughView = variationOverride && id === 'b';
-  const throughVirtualText = variationOverride && id === 'c';
+  const scopedOverride = variationOverride || (fontScenario === 'alignment' && kind === 'explicit');
+  const throughView = scopedOverride && id === 'b';
+  const throughVirtualText = scopedOverride && id === 'c';
   const inlineStyle = checkInlineOverride
     ? variationOverride
       ? axisOverrides[axisOverride]
@@ -431,6 +467,7 @@ function Glyph({
       style={{
         width: 60,
         color: '#000',
+        ...paragraphStyle,
         ...(!throughView ? inlineStyle : undefined),
       }}
     >

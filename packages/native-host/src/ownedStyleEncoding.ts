@@ -6,6 +6,11 @@ import attributes, {
 import { create } from 'react-native/Libraries/ReactNative/ReactFabricPublicInstance/ReactNativeAttributePayload';
 import { Platform, ReactNativeVersion } from 'react-native';
 import { ownedStyleVocabulary as vocabulary } from './ownedStyleVocabulary';
+import {
+  nativeFontAndAlignmentKeys,
+  nativeFontKeys,
+  type NativeFontValues,
+} from './nativeTextFontData';
 import type { OwnedStyleProfile } from './ownedStyleMetadata';
 
 // Cache the public bundled-JS version once; no deprecated package import or native version lookup.
@@ -122,17 +127,14 @@ export function encodeAdjacentCases(
  */
 export function encodeNativeFontValues(
   profile: OwnedStyleProfile,
-  values: import('./nativeTextFontData').NativeFontValues,
+  values: NativeFontValues,
 ): readonly unknown[] {
   // Reuse profile validation without broadening the View style vocabulary.
   encodeCandidates(profile, [{}]);
-  const keys = [
-    'fontFamily',
-    'fontWeight',
-    'fontStyle',
-    'fontVariant',
-    'fontVariationSettings',
-  ] as const;
+  const keys =
+    values.length === nativeFontAndAlignmentKeys.length
+      ? nativeFontAndAlignmentKeys
+      : nativeFontKeys;
   const style = Object.fromEntries(
     keys.flatMap((key, index) => (values[index] === null ? [] : [[key, values[index]]])),
   );

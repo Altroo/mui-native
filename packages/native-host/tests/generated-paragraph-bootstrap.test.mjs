@@ -466,6 +466,7 @@ for (const shape of ['base', 'raw', 'origin', 'both']) {
       assert.deepEqual(Object.keys(boot).sort(), [
         'requireGeneratedTextOrigin',
         'requireProfile',
+        'supportsInheritedTextAlignment',
         'supportsInheritedTextColors',
         'supportsInheritedTextFonts',
         'supportsInheritedTextMetrics',
@@ -845,6 +846,7 @@ test('stock Text metrics require exact version, color and parent capabilities', 
           'stock-text-metrics-v2',
           'stock-text-metrics-v3',
           'stock-text-metrics-v4',
+          'stock-text-metrics-v4-alignment',
         ]) {
           const data = metadata();
           if (structural) data.structuralCases = structural;
@@ -866,13 +868,22 @@ test('stock Text metrics require exact version, color and parent capabilities', 
             !!structural &&
             !!parent &&
             !!color &&
-            (metrics === 'stock-text-metrics-v2' || metrics === 'stock-text-metrics-v3');
+            [
+              'stock-text-metrics-v2',
+              'stock-text-metrics-v3',
+              'stock-text-metrics-v4-alignment',
+            ].includes(metrics);
           assert.equal(boot.supportsInheritedTextMetrics(), wanted);
-          const fonts = wanted && metrics === 'stock-text-metrics-v3';
+          const fonts =
+            wanted &&
+            (metrics === 'stock-text-metrics-v3' || metrics === 'stock-text-metrics-v4-alignment');
+          const alignment = fonts && metrics === 'stock-text-metrics-v4-alignment';
           assert.equal(boot.supportsInheritedTextFonts(), fonts);
+          assert.equal(boot.supportsInheritedTextAlignment(), alignment);
           data.inheritedTextMetrics = 'changed-after-capture';
           assert.equal(boot.supportsInheritedTextMetrics(), wanted);
           assert.equal(boot.supportsInheritedTextFonts(), fonts);
+          assert.equal(boot.supportsInheritedTextAlignment(), alignment);
           assert.equal(calls, 1);
         }
 });

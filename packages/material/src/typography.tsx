@@ -1,6 +1,7 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import {
   nativeFontPlan,
+  nativeAlignmentIsInherited,
   nativeFontStep,
   retainNativeFontScope,
 } from '@altroo/mui-native-system/internal/prepared-style';
@@ -246,10 +247,11 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
       ...(paragraph ? { marginBottom: 16 } : gutterBottom ? { marginBottom: '0.35em' } : {}),
     },
   });
+  const authoredMetrics = nativeStyleTextMetrics(authored);
   const adjustedNativeStyle = applyNativeTextMetrics(
     StyleSheet.flatten(authored) ?? undefined,
     resolved as TextStyle,
-    nativeStyleTextMetrics(authored),
+    authoredMetrics,
   );
   const finalStyle = applyNativeBorderStyle(
     nativeStyleBorderDeclarations([
@@ -275,7 +277,15 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
     context,
     parent,
     context.style,
-    fontPlan ? [fontPlan, nativeFontStep(adjustedNativeStyle ?? {}, true)] : [],
+    fontPlan
+      ? [
+          fontPlan,
+          nativeFontStep(adjustedNativeStyle ?? {}, true, {
+            cssValue: authoredMetrics.textAlign,
+            inherited: nativeAlignmentIsInherited(authoredMetrics),
+          }),
+        ]
+      : [],
   );
   const metricPlan = nativeMetricPlan(resolved);
   const metricBasis = nativeMetricBasis(resolved);
@@ -299,6 +309,11 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
   inheritNativeTextColorBinding(context, parent, finalStyle);
   useNativeTextScopeRoot(root, context);
   const trackChildren = useNativeTextChildRoots();
+  const presentation = nativeTextAlignmentStyle(
+    finalStyle,
+    context.textAlign,
+    context.paragraphDirection,
+  );
   if (typeof mapped === 'string' && !textTags.has(mapped))
     diagnostic(
       'typography-component',
@@ -323,17 +338,13 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
           accessibilityRole={native.accessibilityRole ?? (native.role ? undefined : role)}
           numberOfLines={noWrap ? 1 : native.numberOfLines}
           ellipsizeMode={native.ellipsizeMode ?? (noWrap ? 'tail' : undefined)}
-          style={nativeTextAlignmentStyle(
-            finalStyle,
-            context.textAlign,
-            context.paragraphDirection,
-          )}
+          style={presentation}
         >
           {Component === Text
             ? nativeTextColorChildren(
                 renderNativeTextChildren(native.children, theme, context, trackChildren),
                 context,
-                finalStyle,
+                presentation,
               )
             : renderNativeTextChildren(native.children, theme, context, trackChildren)}
         </Component>

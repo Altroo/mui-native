@@ -72,6 +72,7 @@ import {
   applyNativeTextMetrics,
   getTextStyleInheritance,
   nativeTextAlignmentStyle,
+  nativeAlignmentIsInherited,
   nativeTextParagraphDirection,
   type NativeCssTextAlign,
 } from './nativeText';
@@ -127,6 +128,8 @@ function resolveScope(
   const metrics = nativeStyleTextMetrics(style);
   // Literal RN lineHeight is an absolute length, unlike a CSS unitless ratio.
   if (!Object.hasOwn(metrics, 'lineHeight')) delete text.lineHeight;
+  // Flattening exposes inherited physical alignment as a value, not a declaration.
+  if (nativeAlignmentIsInherited(metrics)) delete text.textAlign;
   const context = trackNativeTextContext(nativeTextStyleContext(parent, style, theme));
   const normalized = normalizeTextStyle(
     text as Record<string, unknown>,
@@ -192,7 +195,16 @@ function resolveScope(
     value,
     parent,
     inherited,
-    fontPlan ? [fontPlan, nativeFontStep(adjusted)] : [],
+    fontPlan
+      ? [
+          fontPlan,
+          nativeFontStep(adjusted, false, {
+            cssValue: metrics.textAlign,
+            captureReset: true,
+            inherited: nativeAlignmentIsInherited(metrics),
+          }),
+        ]
+      : [],
   );
   const metricPlan = nativeMetricPlan(normalized);
   retainNativeMetricScope(

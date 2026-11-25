@@ -235,6 +235,29 @@ inline folly::dynamic runTextColorProbe(const PropsParserContext &context,
   require(altroo::text_fonts::prepareBank(context, fontBank)->parent->steps.size() == 1, "Exact parent font binding prepares");
   fontBank["cases"].pop_back();
   reject([&]{ (void)altroo::text_fonts::prepareBank(context, fontBank); });
+  namespace fonts = altroo::text_fonts;
+  require(fontActive->fonts->ordinary.blocked == fonts::alignmentField, "Legacy marker leaves paragraph alignment unmanaged");
+  auto alignStep = fontStep;
+  alignStep["values"].push_back("css-end");
+  alignStep["owns"] = fonts::allFields;
+  const auto align = fonts::prepareStep(context, alignStep).state;
+  require(fonts::emittedAlignment(align, 0) == TextAlignment::Right &&
+      fonts::emittedAlignment(align, 1) == TextAlignment::Left &&
+      fonts::emittedAlignment(align, 2) == TextAlignment::Left &&
+      fonts::emittedAlignment(align, 3) == TextAlignment::Right, "Logical alignment resolves scope and native paragraph directions");
+  alignStep["values"][5] = "left";
+  require(fonts::emittedAlignment(fonts::prepareStep(context, alignStep).state, 3) == TextAlignment::Left,
+      "Genuine native alignment remains stock");
+  auto alignMarker = fontBinding;
+  alignMarker["ordinary"]["values"].push_back("left");
+  alignMarker["alignmentDirections"] = 3;
+  require(clone(fontActive, D::object("fontProgramme", alignMarker))->fonts->alignmentDirections == 3,
+      "Six-field marker prepares its bounded alignment context");
+  alignMarker["alignmentDirections"] = 4;
+  reject([&]{ (void)clone(fontActive, D::object("fontProgramme", alignMarker)); });
+  alignMarker["alignmentDirections"] = 0;
+  alignMarker["ordinary"]["values"][5] = "css-end";
+  reject([&]{ (void)clone(fontActive, D::object("fontProgramme", alignMarker)); });
   return D::object("schema", 1)("checks", int64_t(colorChecks))("metricChecks", int64_t(metricChecks))
       ("fontChecks", int64_t(checks - beforeFonts))
 

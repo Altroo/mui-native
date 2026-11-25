@@ -30,10 +30,11 @@ import {
   supportsNativeTextColors,
   supportsNativeTextMetrics,
   supportsNativeTextFonts,
-  nativeFontKeys,
+  nativeTextTransportKeys,
   prepareNativeFontBank,
   encodeNativeFontBank,
   type NativeFontBank,
+  type NativeFontState,
   prepareNativeMetricBank,
   type OwnedMetricBank,
   type NativeMetricStep,
@@ -52,6 +53,7 @@ import {
   nativeMetricBinding,
   nativeMetricState,
   nativeFontStep,
+  nativeAlignmentIsInherited,
   nativeFontBinding,
   nativeFontState,
 } from '@altroo/mui-native-system/internal/prepared-style';
@@ -113,6 +115,10 @@ function sameFacet(a: Record<string, unknown>, b: Record<string, unknown>): bool
 const colorBanks = new WeakMap<object, OwnedTextColorBank>();
 const metricBanks = new WeakMap<object, OwnedMetricBank>();
 const fontBanks = new WeakMap<object, NativeFontBank>();
+const unknownFontBase: NativeFontState = Object.freeze({
+  values: Object.freeze(nativeTextTransportKeys.map(() => null)) as NativeFontState['values'],
+  blocked: (1 << nativeTextTransportKeys.length) - 1,
+});
 const metricKeys = new Set(['fontSize', 'lineHeight', 'letterSpacing']);
 function withoutMetrics(value: Record<string, unknown>) {
   return Object.fromEntries(Object.entries(value).filter(([key]) => !metricKeys.has(key)));
@@ -190,18 +196,25 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
         )
       : undefined;
   const differentFonts = cases.some((value) =>
-    nativeFontKeys.some((key) => !Object.is(ordinary.text.style[key], value.text.style[key])),
+    nativeTextTransportKeys.some(
+      (key) =>
+        !Object.is(ordinary.text.style[key], value.text.style[key]) ||
+        !Object.is(ordinary.text.metrics[key], value.text.metrics[key]),
+    ),
   );
   const parentFonts = nativeFontBinding(input.parent);
   // Default font inheritance is already present in each real Text's ordinary
   // emission. Unknown base fields use that packet instead of rereading theme
   // getters or assuming a platform default; authored case fields clear the bit.
-  const fontBase = nativeFontState(input.parent) ?? {
-    values: [null, null, null, null, null] as const,
-    blocked: 31,
-  };
-  const fontOrdinary = nativeFontStep(ordinary.metricInput.presentation);
-  const fontCases = cases.map((value) => nativeFontStep(value.metricInput.presentation));
+  const fontBase = nativeFontState(input.parent) ?? unknownFontBase;
+  const fontStep = ({ metricInput }: typeof ordinary) =>
+    nativeFontStep(metricInput.presentation, false, {
+      cssValue: metricInput.metrics.textAlign,
+      inherited: nativeAlignmentIsInherited(metricInput.metrics),
+      captureReset: true,
+    });
+  const fontOrdinary = fontStep(ordinary);
+  const fontCases = cases.map(fontStep);
   const fontBank =
     supportsNativeTextFonts && (differentFonts || parentFonts) && fontBase
       ? prepareNativeFontBank(fontCases, fontOrdinary, fontBase, parentFonts)
@@ -211,7 +224,7 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
   // be recreated without replaying the caller's nested data through processing.
   const fontFields = fontBank
     ? new Set(
-        nativeFontKeys.filter((_key, index) =>
+        nativeTextTransportKeys.filter((_key, index) =>
           [fontOrdinary, ...fontCases].every((step) => !(step.blocked & (1 << index))),
         ),
       )
