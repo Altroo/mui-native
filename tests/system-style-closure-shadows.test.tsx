@@ -115,6 +115,20 @@ test('invalid indices and unsupported shadow syntax diagnose without erasing ear
   }
 });
 
+test('shadow lengths preserve signed integer, leading fraction, and trailing point forms', () => {
+  const theme = createTheme({ cssRootFontSize: 20 });
+  expect(
+    resolveSx({ fontSize: '20px', textShadow: '-.5px +2px .1em #123456' }, theme),
+  ).toMatchObject({
+    textShadowColor: '#123456',
+    textShadowOffset: { width: -0.5, height: 2 },
+    textShadowRadius: 2,
+  });
+  expect(resolveSx({ boxShadow: '2.px -.25rem 3px #123456' }, theme)).toEqual({
+    boxShadow: '2.px -5px 3px #123456',
+  });
+});
+
 test('CSS textShadow maps a single shadow with signed offsets and final foreground', () => {
   const theme = createTheme({ cssRootFontSize: 20 });
   expect(

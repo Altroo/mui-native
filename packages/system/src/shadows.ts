@@ -108,7 +108,8 @@ function parseShadow(input: string, rem: number, textOnly = false): ParsedShadow
         if (lengths.length) endedLengths = true;
         output.push(String(color));
       } else {
-        const match = token.match(/^([+-]?(?:\d+\.?\d*|\.\d+))(px|rem|em)?$/);
+        // A decimal point separates the two digit runs.
+        const match = token.match(/^([+-]?(?:\d+(?:\.\d*)?|\.\d+))(px|rem|em)?$/);
         if (
           !match ||
           endedLengths ||
