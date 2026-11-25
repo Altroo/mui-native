@@ -12,6 +12,16 @@ const require = createRequire(import.meta.url),
   { transformSync } = require('esbuild');
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const vocabulary = { keys: ['width', 'opacity'], sha256: 'reviewed-vocabulary' };
+// Load the real scalar transport data in a separate, import-free context.
+const fontData = { exports: {} };
+const fontDataSource = await readFile(
+  join(root, 'packages/native-host/src/nativeTextFontData.ts'),
+  'utf8',
+);
+vm.runInNewContext(
+  transformSync(fontDataSource, { loader: 'ts', format: 'cjs', target: 'esnext' }).code,
+  { module: fontData, exports: fontData.exports },
+);
 const profile = (rn = '0.88.1') => ({
   rn,
   platform: 'ios',
@@ -57,6 +67,7 @@ function load(source, options = {}) {
             },
           };
         if (name === './ownedStyleVocabulary') return { ownedStyleVocabulary: vocabulary };
+        if (name === './nativeTextFontData') return fontData.exports;
         if (name === './style-vocabulary.json') return options.catalogVocabulary ?? vocabulary;
         throw Error('Unexpected or deprecated runtime import: ' + name);
       },
