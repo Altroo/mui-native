@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "status": "scoped-regression-passed",
+  "validatedSourceCommit": "97e1c35208083425161ac9cfc95df5d9ecf2b604",
+  "runtimeCapability": "stock-text-metrics-v3",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS 27.0",
+    "configuration": "Release",
+    "pixelRatio": 3
+  },
+  "retainedVariation": {
+    "fixture": "tests/native/fixtures/AccordionTextMetricsProbe.tsx",
+    "fontScenario": "variation",
+    "roots": ["default Paper", "forwarded Box"],
+    "nativeControls": ["System wght 100", "System wght 900", "System default axis"],
+    "overridePaths": [
+      "direct Typography",
+      "Box scope",
+      "parent Typography with virtual Typography child"
+    ],
+    "stages": "Select and withdraw first-of-type on retained rows, change the native record from 100 to 900, remove it, then restore 100 and reorder against the conflicting selector.",
+    "retainedRootAndTextTags": true,
+    "matchingSourceAppAndTestAcrossProfiles": true,
+    "profiles": [
+      {
+        "fontProfile": "normal",
+        "fontScale": 1,
+        "nativeCasesPassed": 2,
+        "nativeCasesSkipped": 0,
+        "endpointReceipts": 20,
+        "rowComparisons": 120,
+        "lineFieldsCompared": 720,
+        "sourceSnapshotFilesMatched": 481,
+        "sourceSHA256": "88d7c562d0a7d18f9da4e0bc65329e9a574bfc6f5f1f43471ee9b281a1fd4b9e",
+        "runSHA256": "e2a321c32a630c7f073220f06d9840c34807e63cc2e054f40e71170c3b62f409",
+        "buildSHA256": "b33f5c41e3fd4588e1ace1899608f112626851988181f6dfa4bffaacf8c2aad1",
+        "displayReplay": {
+          "decodedFrames": 517,
+          "qualifiedGroups": 158,
+          "invalidGroups": 0,
+          "configurations": 20,
+          "inheritedAndExplicitGlyphComparisons": 948,
+          "scannerSHA256": "9ef95f13c2a21b0ec4bed51fecc6d55a418d5bb15ff667c8501d5227ef44d831",
+          "analysisSHA256": "51a53b531dc6c1cda79ac8438c8ad166545a61ee97cf5afea27fd18f3001067e",
+          "recordingSHA256": "32d7b40e79b4ba9c2ad6c670174329098fc8e54b66f7612b8ff54568af03d436"
+        }
+      },
+      {
+        "fontProfile": "enlarged",
+        "fontScale": 3.571,
+        "nativeCasesPassed": 2,
+        "nativeCasesSkipped": 0,
+        "endpointReceipts": 20,
+        "rowComparisons": 120,
+        "lineFieldsCompared": 720,
+        "sourceSnapshotFilesMatched": 481,
+        "sourceSHA256": "88d7c562d0a7d18f9da4e0bc65329e9a574bfc6f5f1f43471ee9b281a1fd4b9e",
+        "runSHA256": "4fb0cdbb7e985c7f4e4da8216a638296f5e15d4575419d2e3e69cda59a3f3e35",
+        "buildSHA256": "b33f5c41e3fd4588e1ace1899608f112626851988181f6dfa4bffaacf8c2aad1",
+        "displayReplay": {
+          "decodedFrames": 489,
+          "qualifiedGroups": 170,
+          "invalidGroups": 0,
+          "configurations": 20,
+          "inheritedAndExplicitGlyphComparisons": 1020,
+          "scannerSHA256": "9ef95f13c2a21b0ec4bed51fecc6d55a418d5bb15ff667c8501d5227ef44d831",
+          "analysisSHA256": "d29bec03a3ecda25826a6a0e598fbd144179a42e0cc32e9bf7abb34ffe09f453",
+          "recordingSHA256": "167d2997329f5c481ccce695d1654e1f067f171dac3a779ca859d6ff97583481"
+        }
+      }
+    ]
+  },
+  "firstUseNativeConversion": {
+    "status": "passed",
+    "nativeCases": 1,
+    "retainedMarkerEpochs": 4,
+    "fontDescriptorChecks": 33,
+    "preservedColorChecks": 32,
+    "preservedMetricChecks": 46,
+    "sourceSnapshotFilesMatched": 481,
+    "originalSessionRestored": true,
+    "ordinaryConversionOnly": true,
+    "buildSHA256": "aaa95bb0740ceea2e8b32e3a590eb8bd0e408cb22109630664ff94a8ca40f29a",
+    "runSHA256": "2213155637a76a6d4124f1be44c5e75fa635b05fb28dbad8854bff2eef6dd5ef"
+  },
+  "originalSessionsRestored": true,
+  "remainingLimits": [
+    "Frame analysis covers independently qualified groups using surrounding geometry and stage markers. The capture does not establish a timing deadline.",
+    "Isolated recorded glyph evidence here covers the variable weight axis. Other font facets have separately scoped controls.",
+    "Virtual Text is measured through the retained outer native Text.",
+    "Android rendering, other style fields, calibrated performance and full Accordion compatibility remain under verification."
+  ],
+  "sourceBindings": {
+    "ios-font-live-normal-2026-11-25-01": {
+      "trackedFiles": 480,
+      "localEntryFiles": 1
+    },
+    "ios-font-live-enlarged-2026-11-25-01": {
+      "trackedFiles": 480,
+      "localEntryFiles": 1
+    },
+    "ios-font-descriptor-current-2026-11-25-01": {
+      "trackedFiles": 480,
+      "localEntryFiles": 1
+    }
+  }
+}
