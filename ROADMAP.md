@@ -1,6 +1,6 @@
 # MUI Native delivery roadmap
 
-Current priority: [finish the easiest existing unfinished component or API](docs/completion-plan.md) to its full agreed native contract, one family at a time, before adding new components. The queue separates software work, locally executable verification and external validation.
+Current priority: [finish Accordion, the first unfinished component in README order](docs/completion-plan.md), to its full agreed native contract before moving to another component. The queue separates software work, locally executable verification and external validation.
 
 Updated: 2026-11-13. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
 
