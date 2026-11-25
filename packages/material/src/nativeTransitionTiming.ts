@@ -102,6 +102,7 @@ function parseNativeTransitionTiming(
   clause: string | undefined,
   fallback: NativeOpacityTiming | (() => NativeOpacityTiming),
   property: NativeTransitionProperty,
+  allowNegativeDelay = false,
 ): NativeOpacityTiming {
   const match = clause
     ?.trim()
@@ -112,10 +113,14 @@ function parseNativeTransitionTiming(
     diagnostic('transition-create', `Unsupported native ${property} transition: ${declaration}`);
     return typeof fallback === 'function' ? fallback() : fallback;
   }
+  const offset = match[3];
   return {
     duration: nativeMilliseconds(match[1]),
     easing: match[2],
-    delay: nativeMilliseconds(match[3]),
+    delay:
+      allowNegativeDelay && offset?.startsWith('-')
+        ? -nativeMilliseconds(offset.slice(1))
+        : nativeMilliseconds(offset),
   };
 }
 
@@ -151,7 +156,7 @@ export function nativeMatchingPropertyTiming(
     });
   return clause === undefined
     ? undefined
-    : parseNativeTransitionTiming(declaration, clause, fallback, property);
+    : parseNativeTransitionTiming(declaration, clause, fallback, property, true);
 }
 
 export const nativeOpacityTiming = (declaration: string, fallback: NativeOpacityTiming) =>

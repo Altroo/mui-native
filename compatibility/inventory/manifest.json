@@ -10774,7 +10774,7 @@
       "packages/material/src/accordionClasses.ts": "323982f2b25031ccbc0d1b13235083d314350441beba51e75d7b64a425b63170",
       "packages/material/src/AccordionDetails/accordionDetailsClasses/index.ts": "6bfce352f6decf4238bb1b8da9385aa09bc6ddcfbf3a5785fdc886b7cd949102",
       "packages/material/src/AccordionDetails/index.ts": "5b3c386a23eaae03678ac3ee4d2bf0b2e6b0cf8e8e8a6eca3f87a61323a3c141",
-      "packages/material/src/accordionMotion.ts": "27e9b2de8500463da63ad8281e65481253c434232d6d52b1ae1a7d976045349e",
+      "packages/material/src/accordionMotion.ts": "fae8e5194e177467544315f78c420e060bc731357a5036e9062d2b59d77209ab",
       "packages/material/src/accordionRootMotion.tsx": "d56fbdb9dfc4bc488efec51a5fc97e9a3bc418b1a81204fdbcdf9f5c9801f3dd",
       "packages/material/src/accordionStructuralRoot.tsx": "4282346ca734d968837afe7475ca011a2ea7ecbb07830ec711af7754f607ab8c",
       "packages/material/src/accordionStructure.ts": "9c25388b102b3d58e94935ca004cdb82602be18cc0a7e7ce9686372c20717aaf",
@@ -10963,7 +10963,7 @@
       "packages/material/src/nativeSvgChildren.tsx": "692f95bd935182f7af541521d36f5bf6c8c3bbd47914131a1db763fb6abcb4be",
       "packages/material/src/NativeTransition.tsx": "a4769a904b537587c21a1c3cdfe728b8c2646c6e2af8e4279c19f0b180647675",
       "packages/material/src/NativeTransitionSurface.tsx": "8b6ec86f054fb7702a3439da34bed48a9fdfba80985c6ae9fac2aac27a445391",
-      "packages/material/src/nativeTransitionTiming.ts": "e33c09f40c94289464b8932a64c1cedda98962124dd7946a78def3cbb618fc0e",
+      "packages/material/src/nativeTransitionTiming.ts": "c3f1a131f0da3d179e55d82fb382f03022422a38e346218ce25ea9fba80d21ad",
       "packages/material/src/notchedOutlineGeometry.ts": "5444da512fd4193836ac51a75c7afd37235b3b25c1defb4fc533f01aa0e9579c",
       "packages/material/src/OutlinedInput/index.ts": "def45dc15be298ea7eb34c3573df021ad1b653d5d8e1933d958beb3edae46375",
       "packages/material/src/paper.tsx": "06d8ca9090e2bef3ee14c5e26fda6868dceb262db38f274f152bb5d563783ac1",
@@ -11231,7 +11231,7 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "3099020f38fe13e4c1eb5b64cfd76e14726fe2a4452145be1246df87c966c040",
+      "nativeSourceSha256": "e3f46157360b1b00f89ff7b547a09b2d1abb0086c376a3802e4836e95e8a3329",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
@@ -11243,7 +11243,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "113c362d90b0ab9f46ce6519347562c337c888cd01825c99800bad5afd97d203"
+      "sha256": "141a5fef863c828411374e4d44f8119dbd41367fe3f60908f8bdec76beff6d3a"
     },
     {
       "package": "@mui/system",

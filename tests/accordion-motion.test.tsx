@@ -246,6 +246,48 @@ test('the last matching clause wins and removing one margin preserves the other 
   expect(hook.result.current).toMatchObject({ marginTop: 100, marginBottom: 64 });
 });
 
+test('a negative delay presents the elapsed part of the transition immediately', () => {
+  const selected = timingTheme('margin 100ms linear -32ms');
+  const hook = renderHook(
+    ({ margin }: { margin: number }) => useStyle({ marginTop: margin }, selected, 'margin'),
+    { initialProps: { margin: 0 } },
+  );
+  hook.rerender({ margin: 100 });
+  expect(hook.result.current.marginTop).toBeCloseTo(32);
+  advance(16);
+  expect(hook.result.current.marginTop).toBeCloseTo(48);
+  advance(64);
+  expect(hook.result.current.marginTop).toBe(100);
+});
+
+test('a negative delay that consumes the duration applies the endpoint without a frame', () => {
+  const selected = timingTheme('margin 100ms linear -0.2s');
+  const hook = renderHook(
+    ({ margin }: { margin: number }) => useStyle({ marginTop: margin }, selected, 'margin'),
+    { initialProps: { margin: 0 } },
+  );
+  hook.rerender({ margin: 100 });
+  expect(hook.result.current.marginTop).toBe(100);
+  expect(jest.getTimerCount()).toBe(0);
+});
+
+test('an interrupted reversal scales both the new duration and its negative delay', () => {
+  const selected = timingTheme('margin 100ms linear -20ms');
+  const hook = renderHook(
+    ({ margin }: { margin: number }) => useStyle({ marginTop: margin }, selected, 'margin'),
+    { initialProps: { margin: 0 } },
+  );
+  hook.rerender({ margin: 100 });
+  advance(16);
+  expect(hook.result.current.marginTop).toBeCloseTo(36);
+  hook.rerender({ margin: 0 });
+  expect(hook.result.current.marginTop).toBeCloseTo(28.8);
+  advance(16);
+  expect(hook.result.current.marginTop).toBeCloseTo(12.8);
+  advance(16);
+  expect(hook.result.current.marginTop).toBe(0);
+});
+
 test('reduced motion interrupts immediately and leaves no pending frame', () => {
   const reduced = createTheme({ motion: { reducedMotion: 'always' } });
   const hook = renderHook(

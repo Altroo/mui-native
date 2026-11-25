@@ -155,7 +155,11 @@ function useMotionTrack(
     };
     const duration = track.duration * shortening;
     running.current = motion;
-    const start = performance.now() + track.delay;
+    // Reversal scales a negative delay along with duration. A positive delay
+    // remains an authored wait before presenting the first moving sample.
+    const delay = track.delay < 0 ? track.delay * shortening : track.delay;
+    const now = performance.now();
+    const start = now + delay;
     const easing = nativeEasing(track.easing);
     const tick = (now: number) => {
       if (!active) return;
@@ -174,11 +178,12 @@ function useMotionTrack(
       setPresentation(next);
       if (progress < 1 && active) frame = requestAnimationFrame(tick);
     };
-    if (duration === 0 && track.delay === 0) {
+    if (duration + delay <= 0) {
       running.current = null;
       current.current = endpoint;
       setPresentation(endpoint);
-    } else frame = requestAnimationFrame(tick);
+    } else if (delay < 0) tick(now);
+    else frame = requestAnimationFrame(tick);
     return () => {
       active = false;
       if (frame !== undefined) cancelAnimationFrame(frame);
