@@ -85,30 +85,28 @@ export interface NativeOpacityTiming {
   delay: number;
   easing: string;
 }
-// Translate only the supported native property or all clause. Preserve theme
-// factory timing overrides without claiming a general CSS engine.
-export function nativePropertyTiming(
+type NativeTransitionProperty =
+  | 'opacity'
+  | 'transform'
+  | 'min-height'
+  | 'height'
+  | 'width'
+  | 'stroke-dashoffset'
+  | 'margin'
+  | 'margin-top'
+  | 'margin-bottom'
+  | 'background-color';
+
+function parseNativeTransitionTiming(
   declaration: string,
+  clause: string | undefined,
   fallback: NativeOpacityTiming | (() => NativeOpacityTiming),
-  property:
-    | 'opacity'
-    | 'transform'
-    | 'min-height'
-    | 'height'
-    | 'width'
-    | 'stroke-dashoffset'
-    | 'margin'
-    | 'background-color',
+  property: NativeTransitionProperty,
 ): NativeOpacityTiming {
-  if (declaration.trim() === 'none') return { duration: 0, delay: 0, easing: 'linear' };
-  const clauses = declaration.split(/,(?![^()]*\))/);
-  const clause =
-    clauses.find((value) => new RegExp('^\\s*' + property + '(?:\\s|$)').test(value)) ??
-    clauses.find((value) => /^\s*all(?:\s|$)/.test(value));
   const match = clause
     ?.trim()
     .match(
-      /^(?:opacity|transform|min-height|height|width|stroke-dashoffset|margin|background-color|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
+      /^(?:opacity|transform|min-height|height|width|stroke-dashoffset|margin(?:-top|-bottom)?|background-color|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
     );
   if (!match) {
     diagnostic('transition-create', `Unsupported native ${property} transition: ${declaration}`);
@@ -119,6 +117,41 @@ export function nativePropertyTiming(
     easing: match[2],
     delay: nativeMilliseconds(match[3]),
   };
+}
+
+// Other native animations retain the fallback supplied by their caller.
+export function nativePropertyTiming(
+  declaration: string,
+  fallback: NativeOpacityTiming | (() => NativeOpacityTiming),
+  property: NativeTransitionProperty,
+): NativeOpacityTiming {
+  if (declaration.trim() === 'none') return { duration: 0, delay: 0, easing: 'linear' };
+  const clauses = declaration.split(/,(?![^()]*\))/);
+  const clause =
+    clauses.find((value) => new RegExp('^\\s*' + property + '(?:\\s|$)').test(value)) ??
+    clauses.find((value) => /^\s*all(?:\s|$)/.test(value));
+  return parseNativeTransitionTiming(declaration, clause, fallback, property);
+}
+
+// An absent match cancels an Accordion track. A matching zero duration still
+// keeps an existing track eligible. CSS selects the last matching clause.
+export function nativeMatchingPropertyTiming(
+  declaration: string,
+  fallback: () => NativeOpacityTiming,
+  property: NativeTransitionProperty,
+): NativeOpacityTiming | undefined {
+  const shorthand = property === 'margin-top' || property === 'margin-bottom' ? 'margin' : null;
+  const clause = declaration
+    .toLowerCase()
+    .split(/,(?![^()]*\))/)
+    .reverse()
+    .find((value) => {
+      const name = value.trim().split(/\s+/, 1)[0];
+      return name === property || name === shorthand || name === 'all';
+    });
+  return clause === undefined
+    ? undefined
+    : parseNativeTransitionTiming(declaration, clause, fallback, property);
 }
 
 export const nativeOpacityTiming = (declaration: string, fallback: NativeOpacityTiming) =>

@@ -163,6 +163,89 @@ test('theme transition factories control the delay and timing', () => {
   advance(200);
   expect(turn(hook.result.current)).toBe(180);
 });
+const timingTheme = (declaration: string) =>
+  createTheme({
+    motion: { reducedMotion: 'never' },
+    transitions: { create: () => declaration },
+  });
+
+test('timing-only theme updates preserve an active margin clock through delay and motion', () => {
+  const initial = timingTheme('margin 100ms linear 32ms');
+  const slower = timingTheme('margin 200ms ease-in 128ms');
+  const instant = timingTheme('margin 0ms linear');
+  const hook = renderHook(
+    ({ margin, selected }: { margin: number; selected: Theme }) =>
+      useStyle({ marginTop: margin }, selected, 'margin'),
+    { initialProps: { margin: 0, selected: initial } },
+  );
+  hook.rerender({ margin: 100, selected: initial });
+  advance(16);
+  hook.rerender({ margin: 100, selected: slower });
+  advance(64);
+  expect(hook.result.current.marginTop).toBeCloseTo(48);
+  hook.rerender({ margin: 100, selected: instant });
+  advance(16);
+  expect(hook.result.current.marginTop).toBeCloseTo(64);
+  advance(48);
+  expect(hook.result.current.marginTop).toBe(100);
+  hook.rerender({ margin: 200, selected: instant });
+  expect(hook.result.current.marginTop).toBe(200);
+  expect(jest.getTimerCount()).toBe(0);
+});
+
+test('a new target takes the latest transition timing', () => {
+  const initial = timingTheme('margin 100ms linear');
+  const slower = timingTheme('margin 200ms linear');
+  const hook = renderHook(
+    ({ margin, selected }: { margin: number; selected: Theme }) =>
+      useStyle({ marginTop: margin }, selected, 'margin'),
+    { initialProps: { margin: 0, selected: initial } },
+  );
+  hook.rerender({ margin: 100, selected: initial });
+  advance(48);
+  hook.rerender({ margin: 148, selected: slower });
+  expect(hook.result.current.marginTop).toBeCloseTo(48);
+  advance(32);
+  expect(hook.result.current.marginTop).toBeCloseTo(64);
+});
+
+test.each(['none', 'opacity 200ms linear'])(
+  'removing a matching transition with %s applies the endpoint and cancels its clock',
+  (declaration) => {
+    const initial = timingTheme('margin 100ms linear');
+    const removed = timingTheme(declaration);
+    const hook = renderHook(
+      ({ margin, selected }: { margin: number; selected: Theme }) =>
+        useStyle({ marginTop: margin }, selected, 'margin'),
+      { initialProps: { margin: 0, selected: initial } },
+    );
+    hook.rerender({ margin: 100, selected: initial });
+    advance(48);
+    hook.rerender({ margin: 100, selected: removed });
+    expect(hook.result.current.marginTop).toBe(100);
+    expect(jest.getTimerCount()).toBe(0);
+    hook.rerender({ margin: 100, selected: initial });
+    expect(jest.getTimerCount()).toBe(0);
+  },
+);
+
+test('the last matching clause wins and removing one margin preserves the other clock', () => {
+  const initial = timingTheme('margin 200ms linear, all 100ms linear');
+  const bottomOnly = timingTheme('margin-bottom 300ms linear');
+  const hook = renderHook(
+    ({ margin, selected }: { margin: number; selected: Theme }) =>
+      useStyle({ marginTop: margin, marginBottom: margin }, selected, 'margin'),
+    { initialProps: { margin: 0, selected: initial } },
+  );
+  hook.rerender({ margin: 100, selected: initial });
+  advance(48);
+  expect(hook.result.current).toMatchObject({ marginTop: 48, marginBottom: 48 });
+  hook.rerender({ margin: 100, selected: bottomOnly });
+  expect(hook.result.current).toMatchObject({ marginTop: 100, marginBottom: 48 });
+  advance(16);
+  expect(hook.result.current).toMatchObject({ marginTop: 100, marginBottom: 64 });
+});
+
 test('reduced motion interrupts immediately and leaves no pending frame', () => {
   const reduced = createTheme({ motion: { reducedMotion: 'always' } });
   const hook = renderHook(

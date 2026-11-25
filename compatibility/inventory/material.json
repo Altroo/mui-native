@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native",
-  "nativeSourceSha256": "38628f8abb4d4c2d03e1b49af88e482584c33f469bfa8ff9dcf4992b1b3b06d8",
+  "nativeSourceSha256": "3099020f38fe13e4c1eb5b64cfd76e14726fe2a4452145be1246df87c966c040",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -208224,6 +208224,16 @@
           "type": "string"
         }
       ],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native"
+    },
+    {
+      "name": "NativeTransitionProperty",
+      "file": "src/nativeTransitionTiming.ts",
+      "line": 88,
+      "kind": "type",
+      "members": [],
       "references": [],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native"

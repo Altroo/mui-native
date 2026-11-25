@@ -1,13 +1,13 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 // Finite Accordion presentation clock. Keep caller callbacks and prepared CSS
 // outside frame updates; this hook changes only finite native presentation.
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffectEvent, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { processColor } from 'react-native';
 import type { NativeStyle, Theme } from '@altroo/mui-native-system';
 import { useNativeReducedMotion } from './motionPreference';
 import {
   nativeEasing,
-  nativePropertyTiming,
+  nativeMatchingPropertyTiming,
   type NativeOpacityTiming,
 } from './nativeTransitionTiming';
 
@@ -100,7 +100,10 @@ function useMotionTrack(
   resetKey: object | null | undefined,
 ): Vector {
   const key = JSON.stringify(target);
-  const timingKey = JSON.stringify(timing);
+  const hasTiming = timing !== undefined;
+  // Only a new target reads new timing. Committed timing changes leave the
+  // running clock alone as long as its property still has a matching clause.
+  const readTiming = useEffectEvent(() => timing);
   const current = useRef(target);
   const running = useRef<RunningTrack | null>(null);
   const mounted = useRef(false);
@@ -108,12 +111,13 @@ function useMotionTrack(
   const [presentation, setPresentation] = useState(target);
   useLayoutEffect(() => {
     const endpoint = JSON.parse(key) as Vector;
+    const track = readTiming();
     const from = current.current;
     const same = JSON.stringify(from) === key;
     if (
       !mounted.current ||
       identity.current !== resetKey ||
-      !timingKey ||
+      !track ||
       reduced ||
       same ||
       !Object.keys(endpoint).length
@@ -136,7 +140,6 @@ function useMotionTrack(
     }
     let active = true;
     let frame: number | undefined;
-    const track = JSON.parse(timingKey) as NativeOpacityTiming;
     const previous = running.current;
     const reversing = previous?.reverseKey === key ? previous : undefined;
     // CSS shortens an interrupted return trip by the distance already covered.
@@ -180,9 +183,10 @@ function useMotionTrack(
       active = false;
       if (frame !== undefined) cancelAnimationFrame(frame);
     };
-  }, [key, timingKey, reduced, resetKey]);
+  }, [key, hasTiming, reduced, resetKey]);
   // A new physical element starts at its own endpoint. Keep body components
   // mounted; only this presentation cell changes ownership.
+  if (!hasTiming) return {};
   return identity.current === resetKey ? presentation : target;
 }
 /** Cancel/reverse from the latest presented sample, never from an old endpoint.
@@ -223,24 +227,16 @@ export function useAccordionMotion(
       delay: 0,
       easing: theme.transitions.easing.easeInOut,
     });
-    const timing = (
-      name: 'margin' | 'transform' | 'opacity' | 'background-color' | 'min-height',
-    ) =>
+    const timing = (name: Parameters<typeof nativeMatchingPropertyTiming>[2]) =>
       typeof declaration === 'string'
-        ? nativePropertyTiming(declaration, fallback, name)
-        : { duration: 0, delay: 0, easing: 'linear' };
-    const scalar = timing(
-      property === 'before'
-        ? 'opacity'
-        : property === 'summary'
-          ? 'min-height'
-          : property === 'root'
-            ? 'margin'
-            : property,
-    );
-    const secondary =
-      property === 'before' || property === 'summary' ? timing('background-color') : scalar;
-    return { scalar, secondary };
+        ? nativeMatchingPropertyTiming(declaration, fallback, name)
+        : undefined;
+    if (property === 'before')
+      return { primary: timing('opacity'), secondary: timing('background-color') };
+    if (property === 'summary')
+      return { primary: timing('min-height'), secondary: timing('background-color') };
+    if (property === 'transform') return { primary: timing('transform') };
+    return { primary: timing('margin-top'), secondary: timing('margin-bottom') };
   }, [theme, property, sourceTiming]);
   // Margin longhands can retarget or reverse independently, just like opacity and color.
   const secondaryCoordinate = (name: string) =>
@@ -251,16 +247,10 @@ export function useAccordionMotion(
   const secondaryTarget = Object.fromEntries(
     Object.entries(target).filter(([name]) => secondaryCoordinate(name)),
   ) as Vector;
-  const primary = useMotionTrack(primaryTarget, timing?.scalar, reduced, resetKey);
+  const primary = useMotionTrack(primaryTarget, timing?.primary, reduced, resetKey);
   const secondary = useMotionTrack(secondaryTarget, timing?.secondary, reduced, resetKey);
   const presentation = { ...primary, ...secondary };
-  if (
-    !property ||
-    reduced ||
-    !timing ||
-    [timing.scalar, timing.secondary].every((track) => track.duration === 0 && track.delay === 0)
-  )
-    return;
+  if (!property || reduced || (!timing?.primary && !timing?.secondary)) return;
   // Return presentation changes only. The caller keeps the original prepared text/border
   // layers intact, including relative metrics and CSS start/end provenance.
   const selected = presentation;
