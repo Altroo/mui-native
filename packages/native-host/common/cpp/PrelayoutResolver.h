@@ -89,9 +89,16 @@ struct MetricSource {
   std::shared_ptr<const altroo::text_metrics::Bank> bank;
   std::optional<altroo::text_metrics::State> selected;
 };
+struct FontSource {
+  std::string owner;
+  std::shared_ptr<const altroo::text_fonts::Bank> bank;
+  altroo::text_fonts::State selected;
+};
 struct TextChange {
   bool hasColor{};
   SharedColor color{};
+  std::uint8_t fontMask{};
+  TextAttributes fonts;
   bool hasMetrics{};
   std::array<altroo::text_metrics::Number, 3> metrics{};
 };
@@ -227,7 +234,8 @@ inline bool observedPeerMatch(const altroo::owned_transport_proof::PreparedData 
 inline void scan(const SharedNode &node, const ShadowNode *parent,
                  const ShadowNode *grandparent, std::size_t depth, Plan &plan,
                  const ColorSource *inheritedColor = nullptr,
-                 const MetricSource *inheritedMetrics = nullptr) {
+                 const MetricSource *inheritedMetrics = nullptr,
+                 const FontSource *inheritedFonts = nullptr) {
   if (!node)
     throw std::invalid_argument("Null candidate child");
   if (depth > maxDepth || ++plan.counts.scanned > maxNodes)
@@ -241,6 +249,8 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
   const ColorSource *color = inheritedColor;
   std::optional<MetricSource> ownMetrics;
   const MetricSource *metrics = inheritedMetrics;
+  std::optional<FontSource> ownFonts;
+  const FontSource *fonts = inheritedFonts;
   if (const auto *target =
           dynamic_cast<const AltrooStructuralViewShadowNode *>(node.get())) {
     if (target->getConcreteProps().prepared &&
@@ -316,6 +326,16 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
         ownMetrics.emplace(MetricSource{props.prepared->owner, bank, std::move(selected)});
         metrics = &*ownMetrics;
       }
+      if (!projected && !props.prepared->owner.empty() && props.prepared->textFonts) {
+        const auto &bank = props.prepared->textFonts;
+        auto base = bank->base;
+        if (bank->parent && inheritedFonts && bank->parent->owner == inheritedFonts->owner &&
+            bank->parent->key == inheritedFonts->bank->key)
+          base = altroo::text_fonts::applySteps(inheritedFonts->selected, bank->parent->steps);
+        ownFonts.emplace(FontSource{props.prepared->owner, bank,
+          altroo::text_fonts::apply(std::move(base), facts < 8 ? bank->cases[facts] : bank->ordinary)});
+        fonts = &*ownFonts;
+      }
       const bool last = facts != ordinary && (facts & 1);
       if (props.prepared->programme == altroo::owned_transport_proof::Programme::Numeric &&
           (!std::isfinite(props.normalPaddingBottom) ||
@@ -345,6 +365,7 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
   if (paragraph || text) {
     const altroo::text_color::ColorBinding *binding = nullptr;
     const altroo::text_metrics::Presentation *metricBinding = nullptr;
+    const altroo::text_fonts::Presentation *fontBinding = nullptr;
     for (const auto &child : children) {
       const auto *marker = dynamic_cast<const altroo::text_color::ColorMarkerShadowNode *>(child.get());
       if (!marker) continue;
@@ -353,6 +374,10 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
       if (props.prepared) {
         if (binding) throw std::invalid_argument("Duplicate native text color binding");
         binding = props.prepared.get();
+      }
+      if (props.fonts) {
+        if (fontBinding) throw std::invalid_argument("Duplicate native font binding");
+        fontBinding = props.fonts.get();
       }
       if (props.metrics) {
         if (metricBinding) throw std::invalid_argument("Duplicate native text metric binding");
@@ -389,10 +414,25 @@ inline void scan(const SharedNode &node, const ShadowNode *parent,
         change.hasMetrics = true; change.metrics = std::move(selected);
       }
     }
-    if (change.hasColor || change.hasMetrics) plan.textChanges.emplace(node.get(), std::move(change));
+    if (fontBinding) {
+      // Ordinary emitted props are retained independently of selected COW props.
+      // Opaque native leaves stay owned by their original RN conversion.
+      auto selected = fontBinding->ordinary;
+      const auto managed = static_cast<std::uint8_t>(altroo::text_fonts::allFields & ~selected.blocked);
+      if (fonts && fontBinding->binding.owner == fonts->owner && fontBinding->binding.key == fonts->bank->key) {
+        const auto inherited = altroo::text_fonts::applySteps(fonts->selected, fontBinding->binding.steps);
+        altroo::text_fonts::copyFields(selected.attributes, inherited.attributes,
+          static_cast<std::uint8_t>(managed & ~inherited.blocked));
+      }
+      if (!altroo::text_fonts::equalFields(current, selected.attributes, managed)) {
+        change.fontMask = managed;
+        change.fonts = std::move(selected.attributes);
+      }
+    }
+    if (change.hasColor || change.hasMetrics || change.fontMask) plan.textChanges.emplace(node.get(), std::move(change));
   }
   for (std::size_t index = 0; index < children.size(); ++index)
-    scan(children[index], node.get(), parent, depth + 1, plan, color, metrics);
+    scan(children[index], node.get(), parent, depth + 1, plan, color, metrics, fonts);
 }
 struct Rewritten {
   SharedNode node;
@@ -426,6 +466,7 @@ inline Rewritten rewrite(const SharedNode &node, Plan &plan) {
       auto props = std::make_shared<ParagraphProps>(paragraph->getConcreteProps());
       const auto &change = textChoice->second;
       if (change.hasColor) props->textAttributes.foregroundColor = change.color;
+      if (change.fontMask) altroo::text_fonts::copyFields(props->textAttributes, change.fonts, change.fontMask);
       if (change.hasMetrics) {
         props->textAttributes.fontSize = altroo::text_metrics::attribute(change.metrics[0]);
         props->textAttributes.lineHeight = altroo::text_metrics::attribute(change.metrics[1]);
@@ -437,6 +478,7 @@ inline Rewritten rewrite(const SharedNode &node, Plan &plan) {
       auto props = std::make_shared<TextProps>(text->getConcreteProps());
       const auto &change = textChoice->second;
       if (change.hasColor) props->textAttributes.foregroundColor = change.color;
+      if (change.fontMask) altroo::text_fonts::copyFields(props->textAttributes, change.fonts, change.fontMask);
       if (change.hasMetrics) {
         props->textAttributes.fontSize = altroo::text_metrics::attribute(change.metrics[0]);
         props->textAttributes.lineHeight = altroo::text_metrics::attribute(change.metrics[1]);

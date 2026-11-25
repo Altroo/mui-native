@@ -97,3 +97,11 @@ export {
   nativeMetricTypographyTail,
   retainNativeMetricScope,
 } from '../../nativeMetricSources';
+
+export {
+  nativeFontPlan,
+  nativeFontStep,
+  nativeFontBinding,
+  nativeFontState,
+  retainNativeFontScope,
+} from '../../nativeFontSources';

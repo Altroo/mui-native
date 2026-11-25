@@ -1,4 +1,9 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import {
+  nativeFontPlan,
+  nativeFontStep,
+  retainNativeFontScope,
+} from '@altroo/mui-native-system/internal/prepared-style';
 // Typography composition adapts MIT Material UI 9.5.0. See NOTICE and upstream/typography-contract.json.
 import {
   inheritNativeTextColorBinding,
@@ -265,6 +270,13 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
     ),
     ...(direction ? { direction } : {}),
   };
+  const fontPlan = nativeFontPlan(resolved);
+  retainNativeFontScope(
+    context,
+    parent,
+    context.style,
+    fontPlan ? [fontPlan, nativeFontStep(adjustedNativeStyle ?? {}, true)] : [],
+  );
   const metricPlan = nativeMetricPlan(resolved);
   const metricBasis = nativeMetricBasis(resolved);
   retainNativeMetricScope(

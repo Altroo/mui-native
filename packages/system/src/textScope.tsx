@@ -1,4 +1,11 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import {
+  nativeFontPlan,
+  nativeFontStep,
+  nativeFontPresentation,
+  retainNativeFontScope,
+  retainNativeFontBinding,
+} from './nativeFontSources';
 import React, { createContext, useContext, useId, useMemo, useRef } from 'react';
 import {
   Text,
@@ -180,6 +187,13 @@ function resolveScope(
     ...(paragraphDirection ? { paragraphDirection } : {}),
     ...(inheritance.textAlign ? { textAlign: inheritance.textAlign } : {}),
   };
+  const fontPlan = nativeFontPlan(normalized);
+  retainNativeFontScope(
+    value,
+    parent,
+    inherited,
+    fontPlan ? [fontPlan, nativeFontStep(adjusted)] : [],
+  );
   const metricPlan = nativeMetricPlan(normalized);
   retainNativeMetricScope(
     value,
@@ -242,6 +256,10 @@ export interface NativeTextScopeProps {
   colorBinding?: NativeTextColorBinding | undefined;
   /** Finite metric source at the actual cooperating root. */
   metricBinding?: NativeMetricBinding | undefined;
+  /** Owned primitive font source, omitted for older native binaries. */
+  fontBinding?:
+    | import('@altroo/mui-native-host/internal/structural-root').NativeFontBinding
+    | undefined;
   /** Native root owned by this scope; used for physical Portal inheritance. */
   rootRef?: React.RefObject<object | null>;
   content?: React.ReactNode;
@@ -259,6 +277,7 @@ export function NativeTextScope({
   reset = false,
   colorBinding,
   metricBinding,
+  fontBinding,
   rootRef,
   content,
   children,
@@ -272,10 +291,11 @@ export function NativeTextScope({
       : undefined;
   const resolved = useMemo(
     () => resolveScope(theme, parent, style, kind, owningParagraph),
-    [theme, parent, style, kind, owningParagraph, colorBinding, metricBinding],
+    [theme, parent, style, kind, owningParagraph, colorBinding, metricBinding, fontBinding],
   );
   if (colorBinding) retainNativeTextColorBinding(resolved.value, colorBinding);
   if (metricBinding) retainNativeMetricBinding(resolved.value, metricBinding);
+  if (fontBinding) retainNativeFontBinding(resolved.value, fontBinding);
   // Equivalent style arrays must not broadcast a fresh inheritance context.
   // Nested groups inside a custom Portal otherwise feed their own publications.
   const stable = useRef(resolved.value);
@@ -402,6 +422,7 @@ export function nativeTextColorChildren(
       <NativeTextColorMarker
         binding={nativeTextColorBinding(scope)}
         color={style.color}
+        fonts={nativeFontPresentation(scope, style)}
         metrics={nativeMetricPresentation(scope, style)}
       />
     </>
@@ -434,6 +455,7 @@ function GeneratedParagraph(props: { children: string; style: StyleProp<TextStyl
           <NativeTextColorMarker
             binding={original && scope ? nativeTextColorBinding(scope) : undefined}
             color={(nativeStyle as TextStyle).color}
+            fonts={nativeFontPresentation(original ? scope : undefined, nativeStyle as TextStyle)}
             metrics={nativeMetricPresentation(
               original ? scope : undefined,
               nativeStyle as TextStyle,

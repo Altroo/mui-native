@@ -52,7 +52,7 @@ using Tag = int;
 using SurfaceId = int;
 using ComponentHandle = const void *;
 using SharedColor = std::optional<unsigned>;
-struct TextAttributes { SharedColor foregroundColor; Float fontSize{std::numeric_limits<Float>::quiet_NaN()}, lineHeight{std::numeric_limits<Float>::quiet_NaN()}, letterSpacing{std::numeric_limits<Float>::quiet_NaN()}; };
+struct TextAttributes { std::string fontFamily; std::optional<int> fontWeight,fontStyle,fontVariant; std::optional<std::string> fontVariationSettings; SharedColor foregroundColor; Float fontSize{std::numeric_limits<Float>::quiet_NaN()}, lineHeight{std::numeric_limits<Float>::quiet_NaN()}, letterSpacing{std::numeric_limits<Float>::quiet_NaN()}; };
 inline std::atomic<int> rawParses{0}, cloneCalls{0}, failCloneAt{0};
 inline bool rejectParsing = false;
 inline std::atomic<std::size_t> observedChildEntries{0};
@@ -248,6 +248,7 @@ struct SameNameWrongHandle final : ConcreteViewShadowNode<duplicateName> {using 
 #pragma once
 #include "Framework.h"
 #include "NativeMetricData.h"
+#include "NativeFontData.h"
 namespace altroo::text_color {
 struct ColorParent {std::string owner,key;};
 struct ColorBank { std::optional<ColorParent> parent;std::string key; std::array<facebook::react::SharedColor,8> colors; facebook::react::SharedColor ordinary; };
@@ -266,7 +267,7 @@ struct Pair {
  std::uint8_t ordinaryIndex()const{return static_cast<std::uint8_t>(count());}
  const auto& at(std::uint8_t facts)const{return structural()?cases.at(facts):(facts&1?last:normal);}
 };
-struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;std::shared_ptr<const PeerIdentity> peer;std::optional<PeerObservation> observation;Programme programme{Programme::Numeric};std::shared_ptr<const altroo::text_color::ColorBank> textColors;std::uint16_t textColorBarriers{511};std::shared_ptr<const altroo::text_metrics::Bank> textMetrics;};
+struct Prepared {std::shared_ptr<const facebook::react::ViewProps> unselected;Pair candidates;bool parentSelector{};std::string owner;std::shared_ptr<const PeerIdentity> peer;std::optional<PeerObservation> observation;Programme programme{Programme::Numeric};std::shared_ptr<const altroo::text_color::ColorBank> textColors;std::uint16_t textColorBarriers{511};std::shared_ptr<const altroo::text_metrics::Bank> textMetrics;std::shared_ptr<const altroo::text_fonts::Bank> textFonts;};
 using PreparedData=Prepared;
 struct OwnedProps : facebook::react::ViewProps {
  double normalPaddingBottom{16},lastPaddingBottom{24};bool selectedLast{};std::uint8_t selectedCase{};
@@ -292,13 +293,15 @@ struct AltrooStructuralViewShadowNode final : ConcreteViewShadowNode<ownedName,a
 #include "AltrooStructuralViewShadowNode.h"
 #include "StructuralComponentName.h"
 namespace altroo::text_color {
-struct MarkerProps : facebook::react::ViewProps {std::shared_ptr<const ColorBinding> prepared;std::shared_ptr<const altroo::text_metrics::Presentation> metrics;};
+struct MarkerProps : facebook::react::ViewProps {std::shared_ptr<const ColorBinding> prepared;std::shared_ptr<const altroo::text_metrics::Presentation> metrics;std::shared_ptr<const altroo::text_fonts::Presentation> fonts;};
 struct ColorMarkerShadowNode : facebook::react::ConcreteViewShadowNode<facebook::react::AltrooTextColorMarkerName,MarkerProps> {
  using ConcreteViewShadowNode::ConcreteViewShadowNode;
  static facebook::react::ShadowNodeTraits BaseTraits(){return {};}
 };
 }
 `,
+  'adapter/react/renderer/attributedstring/TextAttributes.h':
+    '#pragma once\n#include "Framework.h"\n',
   'adapter/react/renderer/graphics/Float.h': String.raw`#pragma once
 #include "Framework.h"
 `,
@@ -818,7 +821,7 @@ auto metricSource(std::vector<Node> children){
  data->textMetrics=bank;return source;
 }
 const auto& metricAttributes(const Result& result){return paragraphIn(result).getConcreteProps().textAttributes;}
-int main(){try{
+int preservedMetricControls(){try{
  if(preservedColorControls()!=0)return 1;
  const int before=assertions;auto other=node<ViewShadowNode>(3,std::make_shared<ViewProps>());
  auto glyph=metricGlyph({raw(5),metricMarker(6)});auto source=metricSource({glyph});auto input=root({source,other});input->sealRecursive();
@@ -905,6 +908,83 @@ int main(){try{
  std::cout<<"{\"metricAssertions\":"<<assertions-before<<",\"nativeExecution\":false}\n";return 0;
 }catch(const std::exception&e){std::cerr<<"text metric finite failure: "<<e.what()<<'\n';return 1;}}
 `,
+  // language=TEXT
+  'FontControls.cpp': String.raw`// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Exact production typed evaluator/resolver. Actual RN conversion and paint have separate gates.
+#include "MetricControls.cpp"
+namespace font=altroo::text_fonts;
+font::State ordinaryFont(){font::State value;value.attributes.fontFamily="System";value.attributes.fontWeight=400;value.attributes.fontStyle=0;value.attributes.fontVariant=0;value.attributes.fontVariationSettings="'wght' 400";return value;}
+font::Step selectedFont(){font::Step step;step.owns=31;step.state=ordinaryFont();step.state.attributes.fontFamily="Times New Roman";step.state.attributes.fontWeight=700;step.state.attributes.fontStyle=1;step.state.attributes.fontVariant=1;step.state.attributes.fontVariationSettings="'wght' 700";return step;}
+auto fontMarker(Tag tag=6,std::vector<font::Step> steps={},std::string owner="source",std::string key="fonts",std::uint8_t blocked=0){
+ auto packet=std::make_shared<font::Presentation>();packet->binding={std::move(owner),std::move(key),std::move(steps)};packet->ordinary=ordinaryFont();packet->ordinary.blocked=blocked;
+ auto props=std::make_shared<altroo::text_color::MarkerProps>();props->fonts=packet;return node<ColorMarker>(tag,props);
+}
+auto fontGlyph(std::vector<Node> children){auto props=std::make_shared<ViewProps>();props->textAttributes=ordinaryFont().attributes;props->textAttributes.fontSize=19;props->textAttributes.lineHeight=27;props->textAttributes.letterSpacing=2;props->textAttributes.foregroundColor=0x0000ffu;props->nativeId="font-glyph";return node<ParagraphShadowNode>(4,props,std::move(children));}
+auto fontSource(std::vector<Node> children){
+ auto source=colorSource(std::move(children),false);auto data=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(source->getConcreteProps().prepared);
+ auto bank=std::make_shared<font::Bank>();bank->key="fonts";bank->base=ordinaryFont();bank->ordinary={ordinaryFont(),31};
+ for(unsigned index=0;index<8;++index)bank->cases[index]=(index&2)?selectedFont():bank->ordinary;
+ data->textFonts=bank;return source;
+}
+int main(){try{
+ if(preservedMetricControls()!=0)return 1;
+ const int before=assertions;auto other=node<ViewShadowNode>(3,std::make_shared<ViewProps>());
+ auto glyph=fontGlyph({raw(5),fontMarker()});auto source=fontSource({glyph});auto accepted=root({source,other});accepted->sealRecursive();
+ auto selected=resolve(accepted);const auto &attributes=metricAttributes(selected);const auto &actual=paragraphIn(selected);
+ check(font::equalFields(attributes,selectedFont().state.attributes,31),"all five selected typed fonts share structural facts");
+ check(selected.decisions[0].bottom==102,"fonts and geometry select the same source case");
+ check(actual.getTag()==glyph->getTag()&&actual.getFamilyShared()==glyph->getFamilyShared(),"actual Paragraph identity stays exact");
+ check(actual.getProps()->nativeId=="font-glyph"&&actual.getChildren()==glyph->getChildren(),"nativeID/rawText/marker are retained");
+ check(attributes.fontSize==19&&attributes.lineHeight==27&&attributes.letterSpacing==2&&attributes.foregroundColor==0x0000ffu,"numeric/color ownership is not overwritten by font copying");
+ check(font::equalFields(glyph->getConcreteProps().textAttributes,ordinaryFont().attributes,31),"accepted sealed font props are untouched");
+ check(resolve(selected.root).root==selected.root,"font selection is idempotent");
+ auto moved=resolve(root({other,selected.root->getChildren()[0]}));const auto &restored=static_cast<const ParagraphShadowNode&>(*moved.root->getChildren()[1]->getChildren()[0]);
+ check(font::equalFields(restored.getConcreteProps().textAttributes,ordinaryFont().attributes,31),"retained reorder restores the ordinary font case");
+ check(restored.getFamilyShared()==glyph->getFamilyShared(),"reorder preserves Text family");
+ auto retained=selected.root->getChildren()[0]->getChildren()[0];
+ check(font::equalFields(metricAttributes(resolve(root({colorSource({retained},false),other}))),ordinaryFont().attributes,31),"source withdrawal restores ordinary without any React font delta");
+ auto reparented=resolve(root({retained}));check(font::equalFields(static_cast<const ParagraphShadowNode&>(*reparented.root->getChildren()[0]).getConcreteProps().textAttributes,ordinaryFont().attributes,31),"leaving source ancestry restores ordinary");
+ font::Step nativeFamily;nativeFamily.owns=1;nativeFamily.state.attributes.fontFamily="System";
+ auto barrier=metricAttributes(resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6,{nativeFamily})})}),other})));
+ check(barrier.fontFamily=="System"&&barrier.fontWeight==700&&barrier.fontStyle==1,"same-valued authored family blocks only family");
+ font::Step nativeNormal;nativeNormal.owns=6;nativeNormal.state.attributes.fontWeight=400;nativeNormal.state.attributes.fontStyle=0;
+ auto normal=metricAttributes(resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6,{nativeNormal})})}),other})));
+ check(normal.fontFamily=="Times New Roman"&&normal.fontWeight==400&&normal.fontStyle==0,"explicit normal weight/style remain authored resets");
+ font::Step clear;clear.owns=31;
+ auto cleared=metricAttributes(resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6,{clear})})}),other})));
+ check(cleared.fontFamily.empty()&&!cleared.fontWeight&&!cleared.fontStyle&&!cleared.fontVariant&&!cleared.fontVariationSettings,"null/undefined emission restores stock unset fields");
+ for(const auto &[owner,key]:std::vector<std::pair<std::string,std::string>>{{"source","stale"},{"foreign","fonts"},{"",""}}){
+  const auto value=metricAttributes(resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6,{},owner,key)})}),other})));
+  check(font::equalFields(value,ordinaryFont().attributes,31),"stale foreign or unbound marker keeps ordinary fields");
+ }
+ font::Step opaque;opaque.owns=24;opaque.state.blocked=24;
+ auto opaqueResult=metricAttributes(resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6,{opaque})})}),other})));
+ check(opaqueResult.fontFamily=="Times New Roman"&&opaqueResult.fontVariant==0&&opaqueResult.fontVariationSettings=="'wght' 400","opaque passive fields retain ordinary conversion while unrelated fonts select");
+ auto opaqueMarker=fontMarker(6,{},"source","fonts",24);auto opaqueGlyph=fontGlyph({raw(5),opaqueMarker});
+ auto opaqueProps=std::static_pointer_cast<ViewProps>(std::const_pointer_cast<Props>(opaqueGlyph->getProps()));opaqueProps->textAttributes.fontVariant=9;opaqueProps->textAttributes.fontVariationSettings="native processed record";
+ auto untouched=metricAttributes(resolve(root({fontSource({opaqueGlyph}),other})));
+ check(untouched.fontVariant==9&&untouched.fontVariationSettings=="native processed record","opaque emitted fields remain owned by actual RN props");
+ check(untouched.fontFamily=="Times New Roman","opaque emitted fields do not block unrelated selected family");
+ auto virtualProps=std::make_shared<ViewProps>();virtualProps->textAttributes=ordinaryFont().attributes;
+ auto virtualText=node<TextShadowNode>(7,virtualProps,{raw(8),fontMarker(9)});auto enclosing=fontGlyph({virtualText});
+ auto virtualResult=resolve(root({fontSource({enclosing}),other}));const auto &virtualSelected=static_cast<const TextShadowNode&>(*paragraphIn(virtualResult).getChildren()[0]);
+ check(font::equalFields(virtualSelected.getConcreteProps().textAttributes,selectedFont().state.attributes,31),"virtual Text selects all typed font fields");
+ check(virtualSelected.getFamilyShared()==virtualText->getFamilyShared()&&paragraphIn(virtualResult).getFamilyShared()==enclosing->getFamilyShared(),"virtual selection retains paragraph and span families");
+ auto inner=structuralTarget(20);auto innerData=std::const_pointer_cast<altroo::owned_transport_proof::Prepared>(inner->getConcreteProps().prepared);innerData->owner="inner";
+ auto innerBank=std::make_shared<font::Bank>();innerBank->key="inner-fonts";innerBank->base=ordinaryFont();innerBank->parent=font::Binding{"source","fonts",{nativeFamily}};innerData->textFonts=innerBank;
+ inner->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{fontGlyph({raw(5),fontMarker(6,{},"inner","inner-fonts")})});
+ auto nested=resolve(root({fontSource({inner}),other}));const auto nestedAttrs=static_cast<const ParagraphShadowNode&>(*nested.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes;
+ check(nestedAttrs.fontFamily=="System"&&nestedAttrs.fontWeight==700,"nested source composes a prepared passive family barrier");
+ innerBank->parent->key="stale";auto staleParent=resolve(root({fontSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*staleParent.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.fontWeight==400,"stale parent key falls back to exact ordinary base");
+ inner->children=std::make_shared<const std::vector<Node>>(std::vector<Node>{glyph});
+ auto nearest=resolve(root({fontSource({inner}),other}));
+ check(static_cast<const ParagraphShadowNode&>(*nearest.root->getChildren()[0]->getChildren()[0]->getChildren()[0]).getConcreteProps().textAttributes.fontFamily=="System","a marker cannot skip the nearest source for a matching outer key");
+ rejectWithoutClone([&]{resolve(root({fontSource({fontGlyph({raw(5),fontMarker(6),fontMarker(7)})}),other}));},"duplicate font markers reject before mutation");
+ check(rawParses==0,"font evaluation performs no raw conversion");
+ std::cout<<"{\"fontAssertions\":"<<assertions-before<<",\"nativeExecution\":false}\n";return 0;
+}catch(const std::exception&e){std::cerr<<"text font finite failure: "<<e.what()<<'\n';return 1;}}
+`,
 };
 for (const [profile, defines] of [
   ['android', ['-DANDROID']],
@@ -924,6 +1004,7 @@ for (const [profile, defines] of [
         for (const header of [
           'PrelayoutResolver.h',
           'NativeMetricData.h',
+          'NativeFontData.h',
           'GeneratedParagraphOrigin.h',
           'StructuralComponentName.h',
         ]) {
@@ -949,7 +1030,7 @@ for (const [profile, defines] of [
             ...defines,
             '-I' + isolatedProduction,
             '-I' + path.join(temp, 'adapter'),
-            path.join(temp, 'MetricControls.cpp'),
+            path.join(temp, 'FontControls.cpp'),
             '-o',
             output,
           ],
@@ -966,7 +1047,7 @@ for (const [profile, defines] of [
           .trim()
           .split('\n')
           .map((row) => JSON.parse(row));
-        assert.equal(rows.length, 5);
+        assert.equal(rows.length, 6);
         assert.equal(rows[1].generatedAssertions, 105);
         assert.equal(rows[1].nativeExecution, false);
         assert.equal(rows[2].siblingAssertions, 780);
@@ -975,6 +1056,8 @@ for (const [profile, defines] of [
         assert.equal(rows[3].nativeExecution, false);
         assert.ok(rows[4].metricAssertions >= 35);
         assert.equal(rows[4].nativeExecution, false);
+        assert.ok(rows[5].fontAssertions >= 25);
+        assert.equal(rows[5].nativeExecution, false);
       } finally {
         await rm(temp, { recursive: true, force: true });
       }

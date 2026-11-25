@@ -97,6 +97,8 @@
     "ReactAndroid/src/main/java/com/facebook/react/views/text/TextAttributeProps.kt": "2312b2a52222046737ce93a67dda418d3bbb2db92f7005a06f2f35fecc30ba39",
     "ReactAndroid/src/main/java/com/facebook/react/views/text/TextLayoutManager.kt": "5f0e46a199d851ab3e23790678563650a72ed4dab7d52a2db96349a73abad8ce",
     "ReactAndroid/src/main/java/com/facebook/react/views/text/internal/span/CustomLineHeightSpan.kt": "e1d8e9d6df9be11b9231597e63ae07eb2d45c95bcfd626ef4c5746c15b09026d",
-    "ReactAndroid/src/main/java/com/facebook/react/common/ReactConstants.kt": "d201a06d203cea0bfe9efedaef7b7687a6a5b4dfd5792c7965a1ea3a5b6745ae"
+    "ReactAndroid/src/main/java/com/facebook/react/common/ReactConstants.kt": "d201a06d203cea0bfe9efedaef7b7687a6a5b4dfd5792c7965a1ea3a5b6745ae",
+    "ReactCommon/react/renderer/attributedstring/conversions.h": "99aa2dca910603c5615dab82fc8b4ba65cc20432feb2f7842670f985dd417d49",
+    "ReactCommon/react/renderer/attributedstring/primitives.h": "6a430aec7b07c862e442fd91d93472754323d4a7df402f14b2aff290d3a9fe63"
   }
 }

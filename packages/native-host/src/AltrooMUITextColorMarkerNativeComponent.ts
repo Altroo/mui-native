@@ -4,6 +4,7 @@ import { codegenNativeComponent, type ViewProps, type CodegenTypes } from 'react
 export interface NativeProps extends ViewProps {
   colorProgramme?: CodegenTypes.UnsafeMixed;
   metricProgramme?: CodegenTypes.UnsafeMixed;
+  fontProgramme?: CodegenTypes.UnsafeMixed;
 }
 export default codegenNativeComponent<NativeProps>('AltrooMUITextColorMarker', {
   interfaceOnly: true,

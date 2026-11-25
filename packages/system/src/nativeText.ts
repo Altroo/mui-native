@@ -1,4 +1,5 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import { retainNativeFontPlan } from './nativeFontSources';
 import { copyNativeBorderStyle } from './borders';
 import { tracksNativeTextContext, retainNativeTextNormalization } from './nativeTextProvenance';
 import { I18nManager, Platform, StyleSheet, type StyleProp, type TextStyle } from 'react-native';
@@ -505,6 +506,7 @@ export function normalizeTextStyle(
     metricPlans.set(output, Object.freeze({ rootSize: rem, fallbackSize, step }));
   }
 
+  retainNativeFontPlan(output);
   if (tracksNativeTextContext(context))
     retainNativeTextNormalization(output, {
       rootFont,

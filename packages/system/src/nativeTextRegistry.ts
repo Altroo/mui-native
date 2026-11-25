@@ -3,6 +3,7 @@ import { useLayoutEffect, useEffect, useRef, useMemo, useCallback } from 'react'
 import type { RefObject, Ref, RefCallback } from 'react';
 import type { NativeTextScopeValue } from './textScope';
 import { equalNativeTextColorBinding } from './nativeColorSources';
+import { equalNativeFontBindings } from './nativeFontSources';
 import { equalNativeMetricBindings } from './nativeMetricSources';
 type Node = {
   readonly parentNode?: unknown;
@@ -48,7 +49,8 @@ export function equalNativeTextScopeValue(
   if (
     Object.getPrototypeOf(a) !== Object.getPrototypeOf(b) ||
     !equalNativeTextColorBinding(a, b) ||
-    !equalNativeMetricBindings(a, b)
+    !equalNativeMetricBindings(a, b) ||
+    !equalNativeFontBindings(a, b)
   )
     return false;
   if (seen.has(a)) return seen.get(a) === b;

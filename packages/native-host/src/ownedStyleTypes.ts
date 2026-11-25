@@ -20,6 +20,7 @@ export interface OwnedStructuralProgramme {
   readonly textColors?: OwnedTextColorBank;
   readonly textColorBarriers?: number;
   readonly textMetrics?: OwnedMetricBank;
+  readonly textFonts?: ReturnType<typeof import('./nativeTextColorMarker').encodeNativeFontBank>;
 }
 export type OwnedTextColorBank = Readonly<{
   key: string;

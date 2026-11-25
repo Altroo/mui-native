@@ -664,7 +664,8 @@ final class TextColorMarkerProbeUITests: XCTestCase {
       XCTAssertEqual(report["nativeID"] as? String, "kept-public-native-id")
       let parser = try XCTUnwrap(report["parser"] as? [String: Any])
       XCTAssertGreaterThanOrEqual(try XCTUnwrap(parser["checks"] as? Int), 30)
-      XCTAssertGreaterThanOrEqual(try XCTUnwrap(parser["metricChecks"] as? Int), 35)
+      XCTAssertEqual(try XCTUnwrap(parser["metricChecks"] as? Int), 46)
+      XCTAssertGreaterThanOrEqual(try XCTUnwrap(parser["fontChecks"] as? Int), 30)
       XCTAssertEqual(parser["ordinaryConversionOnly"] as? Bool, true)
       XCTAssertEqual(parser["mountedOrDrawnProved"] as? Bool, false)
 
@@ -713,7 +714,22 @@ final class AccordionTextMetricsProbeUITests: XCTestCase {
     }
     var tags: [String: Int] = [:]
     var lineRevisions: [String: Int] = [:]
-    for stage in 0...4 {
+    let variation = receipt()?["fontScenario"] as? String == "variation"
+    func orderAt(_ step: Int) -> [String] {
+      if variation && [1, 2, 8].contains(step) { return ["b", "a", "c"] }
+      if step == 3 || step == 9 || (!variation && [1, 2].contains(step)) { return ["c", "a", "b"] }
+      return ["a", "b", "c"]
+    }
+    func inheritedControl(_ step: Int, _ id: String) -> String {
+      let hasBoundaries = step == 2 || (variation && step == 6)
+      return !hasBoundaries && id == orderAt(step).first ? "large" : "small"
+    }
+    func explicitControl(_ step: Int, _ id: String) -> String {
+      if variation && step == 5 { return "large" }
+      if variation && step == 6 { return inheritedControl(step, id) }
+      return "small"
+    }
+    for stage in 0...(variation ? 9 : 4) {
       if stage > 0 {
         if stage == 1 {
           node("accordion-metric-bump").tap()
@@ -732,36 +748,69 @@ final class AccordionTextMetricsProbeUITests: XCTestCase {
       XCTAssertEqual(report["mode"] as? String, mode)
       XCTAssertEqual(report["stage"] as? Int, stage)
       let naturalHeight = try XCTUnwrap(report["naturalHeight"] as? Bool)
-      XCTAssertEqual(try XCTUnwrap(report["fontScale"] as? Double), 1, accuracy: 0.01)
+      let fontAttributes = try XCTUnwrap(report["fontAttributes"] as? Bool)
+      let fontScenario = report["fontScenario"] as? String
+      let fontScenarios = ["composite", "family", "variant", "variation"]
+      XCTAssertTrue(fontScenario.map { fontScenarios.contains($0) } ?? true)
+      XCTAssertEqual(fontAttributes, fontScenario != nil)
+      XCTAssertFalse(naturalHeight && fontAttributes, "Keep natural-height and font-selection probes independent")
+      XCTAssertEqual(fontScenario == "variation", variation)
+      let fontScale = try XCTUnwrap(report["fontScale"] as? Double)
+      let enlarged = variation && fontScale > 1.01
+      XCTAssertEqual(fontScale, enlarged ? 3.571 : 1, accuracy: 0.01)
       let rows = try XCTUnwrap(report["rows"] as? [[String: Any]])
       XCTAssertEqual(Set(rows.compactMap { $0["id"] as? String }), Set(["a", "b", "c"]))
       XCTAssertEqual(rows.count, 3)
-      let order = stage == 0 || stage == 4 ? ["a", "b", "c"] : ["c", "a", "b"]
+      let order = orderAt(stage)
+      let kinds = ["inherited", "small", "large", "explicit"] + (variation ? ["default-axis"] : [])
       var positions: [String: Double] = [:]
       for row in rows {
         let id = try XCTUnwrap(row["id"] as? String)
-        let first = stage != 2 && id == order.first
+        let first = inheritedControl(stage, id) == "large"
         let rootTag = try XCTUnwrap(row["tag"] as? Int)
         XCTAssertGreaterThan(rootTag, 0)
         if stage == 0 { tags[id] = rootTag } else { XCTAssertEqual(rootTag, tags[id]) }
         XCTAssertEqual(row["nativeType"] as? String, "RN:AltrooMUIStructuralView")
-        XCTAssertEqual(row["renders"] as? Int, 1, "The row component must not rerender to repair its captured input")
+        XCTAssertEqual(row["renders"] as? Int, variation ? 1 + max(0, min(stage, 7) - 4) : 1,
+          "Only explicit override changes may rerender retained rows")
         XCTAssertEqual(row["count"] as? Int, id == "b" && stage > 0 ? 1 : 0)
         let frame = try XCTUnwrap(row["frame"] as? [String: Double])
         XCTAssertEqual(try XCTUnwrap(frame["height"]), first ? 128 : 96, accuracy: 1)
         XCTAssertEqual(Double(node("accordion-metric-root-" + id).frame.height), try XCTUnwrap(frame["height"]), accuracy: 1)
         positions[id] = try XCTUnwrap(frame["y"])
         let texts = try XCTUnwrap(row["text"] as? [String: [String: Any]])
-        let expected = try XCTUnwrap(texts[first ? "large" : "small"])
+        let expected = try XCTUnwrap(texts[inheritedControl(stage, id)])
         let expectedLine = try XCTUnwrap(expected["line"] as? [String: Double])
         let inherited = try XCTUnwrap(texts["inherited"])
         let inheritedLine = try XCTUnwrap(inherited["line"] as? [String: Double])
+        if fontAttributes {
+          let smallLine = try XCTUnwrap(texts["small"]?["line"] as? [String: Double])
+          let largeLine = try XCTUnwrap(texts["large"]?["line"] as? [String: Double])
+          XCTAssertGreaterThan(abs(try XCTUnwrap(smallLine["width"]) - (try XCTUnwrap(largeLine["width"]))), 0.5,
+            "The independent native font cases must be distinguishable")
+          if variation {
+            let unsetLine = try XCTUnwrap(texts["default-axis"]?["line"] as? [String: Double])
+            for control in [smallLine, largeLine] {
+              XCTAssertGreaterThan(abs(try XCTUnwrap(control["width"]) - (try XCTUnwrap(unsetLine["width"]))), 0.5,
+                "Each native variation record must be distinguishable from default System text")
+            }
+          }
+        }
         // Actual fixed-font native text supplies the reference, including OS font metrics.
-        for key in ["width", "height", "ascender", "descender", "capHeight", "xHeight"] {
+        let fields = ["width", "height", "ascender", "descender", "capHeight", "xHeight"]
+        for key in fields {
           XCTAssertEqual(try XCTUnwrap(inheritedLine[key]), try XCTUnwrap(expectedLine[key]), accuracy: 0.5,
             "Inherited glyph differs from its authored native control: " + id + "/" + key)
         }
-        for kind in ["inherited", "small", "large", "explicit"] {
+        if fontAttributes && fontScenario != "composite" {
+          let explicit = try XCTUnwrap(texts["explicit"]?["line"] as? [String: Double])
+          let ordinary = try XCTUnwrap(texts[explicitControl(stage, id)]?["line"] as? [String: Double])
+          for key in fields {
+            XCTAssertEqual(try XCTUnwrap(explicit[key]), try XCTUnwrap(ordinary[key]), accuracy: 0.5,
+              "An explicitly authored native font value must survive selector changes: " + id + "/" + key)
+          }
+        }
+        for (column, kind) in kinds.enumerated() {
           let text = try XCTUnwrap(texts[kind])
           let tag = try XCTUnwrap(text["tag"] as? Int)
           XCTAssertGreaterThan(tag, 0)
@@ -770,10 +819,10 @@ final class AccordionTextMetricsProbeUITests: XCTestCase {
           let revision = try XCTUnwrap(text["lineRevision"] as? Int)
           XCTAssertGreaterThan(revision, 0)
           if stage > 0 {
-            let previousOrder = stage - 1 == 0 ? ["a", "b", "c"] : ["c", "a", "b"]
-            let previouslyFirst = stage - 1 != 2 && id == previousOrder.first
-            if kind == "inherited" && first != previouslyFirst {
-              XCTAssertGreaterThan(revision, try XCTUnwrap(lineRevisions[key]), "A changed inherited font requires a fresh native line event")
+            let inheritedChanged = kind == "inherited" && inheritedControl(stage, id) != inheritedControl(stage - 1, id)
+            let explicitChanged = kind == "explicit" && variation && explicitControl(stage, id) != explicitControl(stage - 1, id)
+            if inheritedChanged || explicitChanged {
+              XCTAssertGreaterThan(revision, try XCTUnwrap(lineRevisions[key]), "A changed font requires a fresh native line event")
             } else {
               XCTAssertGreaterThanOrEqual(revision, try XCTUnwrap(lineRevisions[key]))
             }
@@ -782,17 +831,27 @@ final class AccordionTextMetricsProbeUITests: XCTestCase {
           if stage == 0 { tags[key] = tag } else { XCTAssertEqual(tag, tags[key], "Text host must remain retained") }
           let nativeFrame = try XCTUnwrap(text["frame"] as? [String: Double])
           XCTAssertEqual(try XCTUnwrap(nativeFrame["width"]), 60, accuracy: 0.5)
-          let column = try XCTUnwrap(["inherited", "small", "large", "explicit"].firstIndex(of: kind))
           XCTAssertEqual(try XCTUnwrap(nativeFrame["x"]) - (try XCTUnwrap(frame["x"])), Double(16 + column * 64), accuracy: 1)
           XCTAssertGreaterThanOrEqual(try XCTUnwrap(nativeFrame["y"]), try XCTUnwrap(frame["y"]))
-          XCTAssertLessThanOrEqual(try XCTUnwrap(nativeFrame["y"]) + (try XCTUnwrap(nativeFrame["height"])), (try XCTUnwrap(frame["y"])) + 48.5)
+          let height = try XCTUnwrap(nativeFrame["height"])
+          let summaryBottom = try XCTUnwrap(frame["y"]) + (enlarged ? max(48.5, height + 0.5) : 48.5)
+          XCTAssertLessThanOrEqual(try XCTUnwrap(nativeFrame["y"]) + height, summaryBottom)
+          if enlarged {
+            let controlKind = kind == "inherited" ? inheritedControl(stage, id)
+              : kind == "explicit" ? explicitControl(stage, id) : "small"
+            let controlFrame = try XCTUnwrap(texts[controlKind]?["frame"] as? [String: Double])
+            let controlHeight = try XCTUnwrap(controlFrame["height"])
+            XCTAssertGreaterThan(controlHeight, 30, "The stock native line box must grow under accessibility scaling")
+            XCTAssertEqual(height, controlHeight, accuracy: 1)
+            continue
+          }
           // A natural-height reference is independent core Text with no lineHeight.
           // Compare native event geometry, rather than approximating a font ratio.
           let naturalLine = try XCTUnwrap((texts["large"]?["line"]) as? [String: Double])
           let largeHeight = naturalHeight ? try XCTUnwrap(naturalLine["height"]) : 18
           XCTAssertGreaterThan(largeHeight, 0)
           XCTAssertLessThan(largeHeight, 24)
-          let expectedHeight: Double = kind == "inherited" ? (first ? largeHeight : 12) : kind == "large" ? largeHeight : kind == "small" ? 12 : 13
+          let expectedHeight: Double = fontAttributes ? 15 : kind == "inherited" ? (first ? largeHeight : 12) : kind == "large" ? largeHeight : kind == "small" ? 12 : 13
           XCTAssertEqual(try XCTUnwrap(nativeFrame["height"]), expectedHeight, accuracy: 1)
         }
       }

@@ -29,6 +29,11 @@ import {
   prepareNativeTextColorBank,
   supportsNativeTextColors,
   supportsNativeTextMetrics,
+  supportsNativeTextFonts,
+  nativeFontKeys,
+  prepareNativeFontBank,
+  encodeNativeFontBank,
+  type NativeFontBank,
   prepareNativeMetricBank,
   type OwnedMetricBank,
   type NativeMetricStep,
@@ -46,6 +51,9 @@ import {
   nativeMetricBasis,
   nativeMetricBinding,
   nativeMetricState,
+  nativeFontStep,
+  nativeFontBinding,
+  nativeFontState,
 } from '@altroo/mui-native-system/internal/prepared-style';
 
 const reportRuntimeError: Parameters<
@@ -104,6 +112,7 @@ function sameFacet(a: Record<string, unknown>, b: Record<string, unknown>): bool
 }
 const colorBanks = new WeakMap<object, OwnedTextColorBank>();
 const metricBanks = new WeakMap<object, OwnedMetricBank>();
+const fontBanks = new WeakMap<object, NativeFontBank>();
 const metricKeys = new Set(['fontSize', 'lineHeight', 'letterSpacing']);
 function withoutMetrics(value: Record<string, unknown>) {
   return Object.fromEntries(Object.entries(value).filter(([key]) => !metricKeys.has(key)));
@@ -180,7 +189,36 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
           parentMetrics,
         )
       : undefined;
-  const facet = metricsBank ? withoutMetrics : (value: Record<string, unknown>) => value;
+  const differentFonts = cases.some((value) =>
+    nativeFontKeys.some((key) => !Object.is(ordinary.text.style[key], value.text.style[key])),
+  );
+  const parentFonts = nativeFontBinding(input.parent);
+  // Default font inheritance is already present in each real Text's ordinary
+  // emission. Unknown base fields use that packet instead of rereading theme
+  // getters or assuming a platform default; authored case fields clear the bit.
+  const fontBase = nativeFontState(input.parent) ?? {
+    values: [null, null, null, null, null] as const,
+    blocked: 31,
+  };
+  const fontOrdinary = nativeFontStep(ordinary.metricInput.presentation);
+  const fontCases = cases.map((value) => nativeFontStep(value.metricInput.presentation));
+  const fontBank =
+    supportsNativeTextFonts && (differentFonts || parentFonts) && fontBase
+      ? prepareNativeFontBank(fontCases, fontOrdinary, fontBase, parentFonts)
+      : undefined;
+  // Unknown inherited fields fall back to each Text's ordinary native props.
+  // Only an authored opaque case is unsupported: its alternative value cannot
+  // be recreated without replaying the caller's nested data through processing.
+  const fontFields = fontBank
+    ? new Set(
+        nativeFontKeys.filter((_key, index) =>
+          [fontOrdinary, ...fontCases].every((step) => !(step.blocked & (1 << index))),
+        ),
+      )
+    : new Set<string>();
+  const metricFacet = metricsBank ? withoutMetrics : (value: Record<string, unknown>) => value;
+  const facet = (value: Record<string, unknown>) =>
+    Object.fromEntries(Object.entries(metricFacet(value)).filter(([key]) => !fontFields.has(key)));
   const differentText = cases.some(
     (value) =>
       ordinary.text.direction !== value.text.direction ||
@@ -194,6 +232,7 @@ export function prepareAccordionStructuralCases(input: Input): readonly NativeSt
   }
   const views = cases.map((value) => value.view);
   if (metricsBank) metricBanks.set(views, metricsBank);
+  if (fontBank) fontBanks.set(views, fontBank);
   const barriers = [...cases, ordinary].reduce(
     (mask, value, index) => mask | (value.colorBarrier ? 1 << index : 0),
     0,
@@ -238,12 +277,14 @@ export function AccordionRootTextScope({
   const marker = useContext(AccordionStructuralRootContext);
   const bank = cases ? colorBanks.get(cases) : undefined;
   const metrics = cases ? metricBanks.get(cases) : undefined;
+  const fonts = cases ? fontBanks.get(cases) : undefined;
   const source = owner ?? marker;
   return (
     <NativeTextScope
       {...props}
       colorBinding={source && bank ? { owner: source, key: bank.key } : undefined}
       metricBinding={source && metrics ? { owner: source, key: metrics.key, steps: [] } : undefined}
+      fontBinding={source && fonts ? { owner: source, key: fonts.key, steps: [] } : undefined}
     />
   );
 }
@@ -308,6 +349,9 @@ export function AccordionStructuralView({
               : {}),
             ...(!basis && owner && cases && metricBanks.has(cases)
               ? { textMetrics: metricBanks.get(cases)! }
+              : {}),
+            ...(!basis && owner && cases && fontBanks.has(cases)
+              ? { textFonts: encodeNativeFontBank(fontBanks.get(cases)!) }
               : {}),
             ...(!basis && owner && cases && colorBanks.has(cases)
               ? { textColors: colorBanks.get(cases)! }

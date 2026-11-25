@@ -164,7 +164,79 @@ inline folly::dynamic runTextColorProbe(const PropsParserContext &context,
 #endif
   auto tinyHeight = metricBinding; tinyHeight["ordinary"][1] = -1e-100;
   reject([&]{ (void)clone(metricActive, D::object("metricProgramme", tinyHeight)); });
-  return D::object("schema", 1)("checks", int64_t(colorChecks))("metricChecks", int64_t(checks - colorChecks))
+  const auto metricChecks = checks - colorChecks;
+  const auto beforeFonts = checks;
+  // Font values use the real stock converters and current native parsing mode.
+  const D smallCaps = css ? D("small-caps") : D::array("small-caps");
+  const D tabular = css ? D("tabular-nums") : D::array("tabular-nums");
+  const D fontValues = D::array("System", "400", "normal", smallCaps, "'wght' 400");
+  const D fontState = D::object("values", fontValues)("blocked", 0);
+  const D fontStep = D::object("values", fontValues)("blocked", 0)("owns", 31);
+  const D fontBinding = D::object("schema", 1)("profile", owned_channel::nativeProfile())
+      ("owner", "source")("key", "fonts")("steps", D::array(fontStep))("ordinary", fontState);
+  auto fontActive = clone(empty, D::object("fontProgramme", fontBinding));
+  require(fontActive->fonts && fontActive->fonts->binding.owner == "source", "Actual descriptor prepares font source");
+  const auto &font = fontActive->fonts->ordinary.attributes;
+  require(font.fontFamily == "System", "Stock family is retained");
+  require(font.fontWeight == FontWeight::Weight400, "Stock weight converter is used");
+  require(font.fontStyle == FontStyle::Normal, "Stock normal style remains authored");
+  require(font.fontVariant == FontVariant::SmallCaps, "Stock variant converter matches native parsing mode");
+  require(font.fontVariationSettings == "'wght' 400", "Processed variation string remains exact");
+  auto fontOmitted = clone(fontActive, D::object("nativeID", "font-retained"));
+  require(fontOmitted->fonts == fontActive->fonts, "Omitted font programme shares immutable preparation");
+  auto nextFont = fontBinding; nextFont["ordinary"]["values"][0] = "Times New Roman";
+  auto fontReplaced = clone(fontOmitted, D::object("fontProgramme", nextFont));
+  require(fontReplaced->fonts->ordinary.attributes.fontFamily == "Times New Roman" && font.fontFamily == "System", "Font replacement preserves accepted props");
+  auto fontCleared = clone(fontReplaced, D::object("fontProgramme", nullptr));
+  require(!fontCleared->fonts && !clone(fontCleared, D::object())->fonts, "Font removal remains cleared on omission");
+  auto nullFonts = fontBinding; nullFonts["owner"] = ""; nullFonts["key"] = "";
+  nullFonts["ordinary"]["values"] = D::array(nullptr, nullptr, nullptr, nullptr, nullptr);
+  auto fontReset = clone(fontActive, D::object("fontProgramme", nullFonts));
+  const auto &unset = fontReset->fonts->ordinary.attributes;
+  require(unset.fontFamily.empty() && !unset.fontWeight && !unset.fontStyle && !unset.fontVariant && !unset.fontVariationSettings, "Native font unset stays distinct from explicit defaults");
+  auto selectedStep = fontStep; selectedStep["values"] = D::array("Times New Roman", "700", "italic", tabular, "'wght' 700");
+  const auto preparedFontStep = altroo::text_fonts::prepareStep(context, selectedStep);
+  require(preparedFontStep.state.attributes.fontWeight == FontWeight::Weight700, "Selected bold weight is typed");
+  require(preparedFontStep.state.attributes.fontStyle == FontStyle::Italic, "Selected italic is typed");
+  require(preparedFontStep.state.attributes.fontVariant == FontVariant::TabularNums, "Selected tabular variant is typed");
+  const auto selectedFont = altroo::text_fonts::apply(fontActive->fonts->ordinary, preparedFontStep);
+  require(selectedFont.attributes.fontFamily == "Times New Roman" && selectedFont.attributes.fontVariationSettings == "'wght' 700", "Prepared selection copies font fields");
+  auto blockedFont = fontStep; blockedFont["values"][3] = nullptr; blockedFont["values"][4] = nullptr; blockedFont["blocked"] = 24;
+  require(altroo::text_fonts::prepareStep(context, blockedFont).state.blocked == 24, "Opaque native fields prepare as barriers without payload leaves");
+  for (const auto &schema : {D(true), D("1"), D(2), D(nullptr)}) {
+    auto bad = fontBinding; bad["schema"] = schema;
+    reject([&]{ (void)clone(fontActive, D::object("fontProgramme", bad)); });
+  }
+  for (const auto &mask : {D(-1), D(32), D(1.00000001)}) {
+    auto bad = fontStep; bad["owns"] = mask;
+    reject([&]{ (void)altroo::text_fonts::prepareStep(context, bad); });
+  }
+  auto badBlocked = blockedFont; badBlocked["owns"] = 1;
+  reject([&]{ (void)altroo::text_fonts::prepareStep(context, badBlocked); });
+  auto leaked = blockedFont; leaked["values"][3] = smallCaps;
+  reject([&]{ (void)altroo::text_fonts::prepareStep(context, leaked); });
+  auto wrongFontProfile = fontBinding; wrongFontProfile["profile"]["rn"] = "stale";
+  reject([&]{ (void)clone(fontActive, D::object("fontProgramme", wrongFontProfile)); });
+  auto extraFont = fontBinding; extraFont["extra"] = 1;
+  reject([&]{ (void)clone(fontActive, D::object("fontProgramme", extraFont)); });
+  auto partialFont = fontBinding; partialFont["key"] = "";
+  reject([&]{ (void)clone(fontActive, D::object("fontProgramme", partialFont)); });
+  auto longFontKey = fontBinding; longFontKey["key"] = std::string(4097, 'x');
+  reject([&]{ (void)clone(fontActive, D::object("fontProgramme", longFontKey)); });
+  auto longFontPath = fontBinding;
+  for (int index = 0; index < 128; ++index) longFontPath["steps"].push_back(fontStep);
+  reject([&]{ (void)clone(fontActive, D::object("fontProgramme", longFontPath)); });
+  auto badFontValue = fontBinding; badFontValue["ordinary"]["values"][0] = D::object("opaque", 1);
+  reject([&]{ (void)clone(fontActive, D::object("fontProgramme", badFontValue)); });
+  D fontCases = D::array(); for (int index = 0; index < 8; ++index) fontCases.push_back(index & 2 ? selectedStep : fontStep);
+  D fontBank = D::object("key", "fonts")("base", fontState)("ordinary", fontStep)("cases", fontCases)("parent", nullptr);
+  require(altroo::text_fonts::prepareBank(context, fontBank)->cases.size() == 8, "Actual font bank prepares every structural case");
+  fontBank["parent"] = D::object("owner", "parent")("key", "parent-fonts")("steps", D::array(fontStep));
+  require(altroo::text_fonts::prepareBank(context, fontBank)->parent->steps.size() == 1, "Exact parent font binding prepares");
+  fontBank["cases"].pop_back();
+  reject([&]{ (void)altroo::text_fonts::prepareBank(context, fontBank); });
+  return D::object("schema", 1)("checks", int64_t(colorChecks))("metricChecks", int64_t(metricChecks))
+      ("fontChecks", int64_t(checks - beforeFonts))
 
       ("ordinaryConversionOnly", true)("mountedOrDrawnProved", false);
 }

@@ -116,3 +116,26 @@ export function encodeAdjacentCases(
     throw new TypeError('Owned adjacent style requires sixteen cases');
   return encodeCandidates(profile, styles);
 }
+
+/** Text.js preprocessing on fresh scalar snapshots, followed by the captured RN codec.
+ * Native arrays/records never enter this path; their fields remain ordinary-owned.
+ */
+export function encodeNativeFontValues(
+  profile: OwnedStyleProfile,
+  values: import('./nativeTextFontData').NativeFontValues,
+): readonly unknown[] {
+  // Reuse profile validation without broadening the View style vocabulary.
+  encodeCandidates(profile, [{}]);
+  const keys = [
+    'fontFamily',
+    'fontWeight',
+    'fontStyle',
+    'fontVariant',
+    'fontVariationSettings',
+  ] as const;
+  const style = Object.fromEntries(
+    keys.flatMap((key, index) => (values[index] === null ? [] : [[key, values[index]]])),
+  );
+  const encoded = create({ style }, { style: attributes }) ?? {};
+  return Object.freeze(keys.map((key) => encoded[key] ?? null));
+}

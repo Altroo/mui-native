@@ -28,6 +28,7 @@ type Metadata = Readonly<{
   peerStyleIdentity: boolean;
   inheritedTextColors: boolean;
   inheritedTextMetrics: boolean;
+  inheritedTextFonts: boolean;
 }>;
 type Outcome = Readonly<{ metadata: Metadata; error?: never } | { error: Error; metadata?: never }>;
 export type OwnedStyleBootstrap = Readonly<{
@@ -38,6 +39,7 @@ export type OwnedStyleBootstrap = Readonly<{
   supportsPeerStyleIdentity(): boolean;
   supportsInheritedTextColors(): boolean;
   supportsInheritedTextMetrics(): boolean;
+  supportsInheritedTextFonts(): boolean;
 }>;
 type Expected = Readonly<{ rn: string; platform: string; styleKeys: string }>;
 // One canonical native module object has one immutable read for this JS runtime.
@@ -160,7 +162,11 @@ function parse(raw: unknown): Metadata {
       value.inheritedTextColors === 'stock-text-color-v1',
     inheritedTextMetrics:
       Object.hasOwn(value, 'inheritedTextMetrics') &&
-      value.inheritedTextMetrics === 'stock-text-metrics-v2',
+      (value.inheritedTextMetrics === 'stock-text-metrics-v2' ||
+        value.inheritedTextMetrics === 'stock-text-metrics-v3'),
+    inheritedTextFonts:
+      Object.hasOwn(value, 'inheritedTextMetrics') &&
+      value.inheritedTextMetrics === 'stock-text-metrics-v3',
     peerStyleIdentity:
       Object.hasOwn(value, 'structuralCases') && value.structuralCases === 'first-last-of-type-v2',
     parentStructuralCases:
@@ -200,6 +206,7 @@ export function createOwnedStyleBootstrap(
   let peerStyleIdentity = false;
   let inheritedTextColors = false;
   let inheritedTextMetrics = false;
+  let inheritedTextFonts = false;
   const originFailure = fail(
     'generated paragraph origin is unavailable or unsupported; rebuild the matching native app',
   );
@@ -221,6 +228,7 @@ export function createOwnedStyleBootstrap(
     peerStyleIdentity = parentStructuralCases && outcome.metadata.peerStyleIdentity;
     inheritedTextColors = parentStructuralCases && outcome.metadata.inheritedTextColors;
     inheritedTextMetrics = inheritedTextColors && outcome.metadata.inheritedTextMetrics;
+    inheritedTextFonts = inheritedTextMetrics && outcome.metadata.inheritedTextFonts;
     generatedTextOrigin = outcome.metadata.generatedTextOrigin;
   } catch (error) {
     failure = toFailure(error);
@@ -231,6 +239,7 @@ export function createOwnedStyleBootstrap(
     supportsPeerStyleIdentity: () => peerStyleIdentity,
     supportsInheritedTextColors: () => inheritedTextColors,
     supportsInheritedTextMetrics: () => inheritedTextMetrics,
+    supportsInheritedTextFonts: () => inheritedTextFonts,
     requireProfile() {
       if (failure) throw failure;
       // The only successful initialization branch publishes this immutable profile.

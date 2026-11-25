@@ -16,6 +16,7 @@ import {
   View,
   type TextInstance,
   type TextProps,
+  type TextStyle,
   type ViewInstance,
 } from 'react-native';
 import {
@@ -33,8 +34,10 @@ type TextLayoutEvent = Parameters<NonNullable<TextProps['onTextLayout']>>[0];
 type TextLayoutLine = TextLayoutEvent['nativeEvent']['lines'][number];
 type Job = { cancelled: boolean; frame?: number; timeout?: ReturnType<typeof setTimeout> };
 type Mode = 'default' | 'forwarded';
+type FontScenario = 'composite' | 'family' | 'variant' | 'variation';
 type Id = 'a' | 'b' | 'c';
-type Kind = 'inherited' | 'small' | 'large' | 'explicit';
+type Kind = 'inherited' | 'small' | 'large' | 'explicit' | 'default-axis';
+type ControlKind = Exclude<Kind, 'inherited' | 'default-axis'>;
 type CounterHandle = { bump(): void; read(): number };
 type Rect = { x: number; y: number; width: number; height: number };
 type Line = Pick<
@@ -58,7 +61,7 @@ type RowReceipt = {
   frame: Rect;
   count: number;
   renders: number;
-  text: Record<Kind, TextReceipt>;
+  text: Partial<Record<Kind, TextReceipt>>;
 };
 type Report = {
   schemaVersion: 1;
@@ -68,15 +71,43 @@ type Report = {
   mode: Mode;
   stage: number;
   naturalHeight: boolean;
+  fontAttributes: boolean;
+  fontScenario?: FontScenario;
   phase: 'idle' | 'sampling' | 'complete' | 'error';
   rows: RowReceipt[];
   error?: string;
 };
 const ids = ['a', 'b', 'c'] as const;
-const kinds = ['inherited', 'small', 'large', 'explicit'] as const;
+const kinds: readonly Kind[] = ['inherited', 'small', 'large', 'explicit'];
+const variationKinds: readonly Kind[] = [...kinds, 'default-axis'];
 const theme = createTheme({ motion: { reducedMotion: 'always' } });
+const familyTheme = createTheme({
+  motion: { reducedMotion: 'always' },
+  typography: { fontFamily: 'Courier New' },
+});
 const paint = { a: '#ef9a9a', b: '#a5d6a7', c: '#90caf9' };
-const stagePaint = ['#b71c1c', '#4a148c', '#006064', '#e65100', '#212121'];
+const stagePaint = [
+  '#b71c1c',
+  '#4a148c',
+  '#006064',
+  '#e65100',
+  '#212121',
+  '#283593',
+  '#004d40',
+  '#880e4f',
+  '#33691e',
+  '#3e2723',
+];
+type AxisOverride = 'light' | 'heavy' | 'inherit';
+const axisOverrides: Record<AxisOverride, TextStyle | undefined> = {
+  light: { fontVariationSettings: { wght: 100 } },
+  heavy: { fontVariationSettings: { wght: 900 } },
+  inherit: undefined,
+};
+// Keep fixture controls readable across profiles while the test glyphs scale normally.
+function probeLabel(label: string, scenario?: FontScenario) {
+  return scenario === 'variation' ? <Text allowFontScaling={false}>{label}</Text> : label;
+}
 const rootStyle = {
   fontSize: '16px',
   lineHeight: 1.5,
@@ -84,16 +115,123 @@ const rootStyle = {
   '&:first-of-type': { fontSize: '24px', minHeight: 128, borderTopLeftRadius: 12 },
   '&::before': { display: 'none' },
 };
+// Keep numeric metrics constant so native font selection is independently observable.
+const fontRootStyle = {
+  ...rootStyle,
+  fontSize: '20px',
+  fontFamily: 'system-ui',
+  fontWeight: 400,
+  fontStyle: 'normal',
+  fontVariant: 'small-caps',
+  fontVariationSettings: "'wght' 400",
+  '&:first-of-type': {
+    ...rootStyle['&:first-of-type'],
+    fontSize: '20px',
+    fontFamily: 'serif',
+    fontWeight: 700,
+    fontStyle: 'italic',
+    fontVariant: 'tabular-nums',
+    fontVariationSettings: "'wght' 700",
+  },
+};
+// Only the selector authors a family. The ordinary branch uses the theme family.
+const familyRootStyle = {
+  ...rootStyle,
+  fontSize: '20px',
+  '&:first-of-type': {
+    ...rootStyle['&:first-of-type'],
+    fontSize: '20px',
+    fontFamily: 'serif',
+  },
+};
+const variantRootStyle = {
+  ...rootStyle,
+  fontSize: '20px',
+  fontFamily: 'system-ui',
+  fontVariant: 'tabular-nums',
+  '&:first-of-type': {
+    ...rootStyle['&:first-of-type'],
+    fontSize: '20px',
+    fontVariant: 'proportional-nums',
+  },
+};
+// Change only the variable weight axis, leaving the ordinary fontWeight fixed.
+const variationRootStyle = {
+  ...rootStyle,
+  fontSize: '20px',
+  fontFamily: 'system-ui',
+  fontVariationSettings: "'wght' 100",
+  '&:first-of-type': {
+    ...rootStyle['&:first-of-type'],
+    fontSize: '20px',
+    fontVariationSettings: "'wght' 900",
+  },
+};
+const rootFontStyles = {
+  composite: fontRootStyle,
+  family: familyRootStyle,
+  variant: variantRootStyle,
+  variation: variationRootStyle,
+};
+// Genuine native arrays/records reach stock Text without CSS normalization.
+const nativeFontStyles = {
+  small: {
+    fontFamily: 'System',
+    fontWeight: '400',
+    fontStyle: 'normal',
+    fontVariant: ['small-caps'],
+    fontVariationSettings: { wght: 400 },
+  },
+  large: {
+    fontFamily: 'Times New Roman',
+    fontWeight: '700',
+    fontStyle: 'italic',
+    fontVariant: ['tabular-nums'],
+    fontVariationSettings: { wght: 700 },
+  },
+  explicit: {
+    fontFamily: 'System',
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontVariant: ['lining-nums'],
+    fontVariationSettings: { wght: 500 },
+  },
+} satisfies Record<ControlKind, TextStyle>;
+const courier = { fontFamily: 'Courier New' } satisfies TextStyle;
+const tabular = { fontFamily: 'System', fontVariant: ['tabular-nums'] } satisfies TextStyle;
+const lightAxis = axisOverrides.light;
+const fontControls: Record<FontScenario, Record<ControlKind, TextStyle>> = {
+  composite: nativeFontStyles,
+  family: { small: courier, large: { fontFamily: 'Times New Roman' }, explicit: courier },
+  variant: {
+    small: tabular,
+    large: { fontFamily: 'System', fontVariant: ['proportional-nums'] },
+    explicit: tabular,
+  },
+  variation: {
+    small: { fontFamily: 'System', ...lightAxis },
+    large: { fontFamily: 'System', ...axisOverrides.heavy },
+    explicit: {},
+  },
+};
+const fontGlyphs = { composite: 'Mm12', family: 'W1', variant: '111', variation: 'M1' };
 const Slot = forwardRef<ViewInstance, BoxProps>(function Slot(props, ref) {
   return <Box {...props} ref={ref} />;
 });
-const Counter = forwardRef<CounterHandle, { id: Id }>(function Counter({ id }, ref) {
+const Counter = forwardRef<CounterHandle, { id: Id; scale: boolean }>(function Counter(
+  { id, scale },
+  ref,
+) {
   const [count, setCount] = useState(0);
   useImperativeHandle(ref, () => ({ bump: () => setCount((old) => old + 1), read: () => count }), [
     count,
   ]);
   return (
-    <Text testID={`accordion-metric-counter-${id}`} style={{ fontSize: 10, lineHeight: 14 }}>
+    <Text
+      allowFontScaling={scale}
+      testID={`accordion-metric-counter-${id}`}
+      style={{ fontSize: 10, lineHeight: 14 }}
+    >
       {id.toUpperCase()} {count}
     </Text>
   );
@@ -105,11 +243,15 @@ const Row = memo(function Row({
   mode,
   targets,
   naturalHeight,
+  fontScenario,
+  axisOverride,
 }: {
   id: Id;
   mode: Mode;
   targets: Targets;
   naturalHeight: boolean;
+  fontScenario?: FontScenario;
+  axisOverride: AxisOverride;
 }) {
   targets.renders.set(id, (targets.renders.get(id) ?? 0) + 1);
   targets.observationRevision++;
@@ -151,37 +293,51 @@ const Row = memo(function Row({
       expanded
       slotProps={{ transition: { timeout: 0 } }}
       sx={
-        naturalHeight
-          ? {
-              ...rootStyle,
-              '&:first-of-type': { ...rootStyle['&:first-of-type'], lineHeight: 'normal' },
-            }
-          : rootStyle
+        fontScenario
+          ? rootFontStyles[fontScenario]
+          : naturalHeight
+            ? {
+                ...rootStyle,
+                '&:first-of-type': { ...rootStyle['&:first-of-type'], lineHeight: 'normal' },
+              }
+            : rootStyle
       }
       style={{ backgroundColor: paint[id] }}
     >
       <AccordionSummary
         slotProps={{ content: { style: { margin: 0, gap: 4, alignItems: 'center' } } }}
       >
-        {kinds.map((kind) => (
-          <Glyph key={kind} id={id} kind={kind} targets={targets} naturalHeight={naturalHeight} />
+        {(fontScenario === 'variation' ? variationKinds : kinds).map((kind) => (
+          <Glyph
+            key={kind}
+            id={id}
+            kind={kind}
+            targets={targets}
+            naturalHeight={naturalHeight}
+            fontScenario={fontScenario}
+            axisOverride={axisOverride}
+          />
         ))}
       </AccordionSummary>
-      <Counter ref={counterRef} id={id} />
+      <Counter ref={counterRef} id={id} scale={fontScenario !== 'variation'} />
     </Accordion>
   );
 });
-/** Three authored controls distinguish relative inheritance from absolute native paint. */
+/** Compare inherited and explicitly authored Text with independent core Text controls. */
 function Glyph({
   id,
   kind,
   targets,
   naturalHeight,
+  fontScenario,
+  axisOverride,
 }: {
   id: Id;
   kind: Kind;
   targets: Targets;
   naturalHeight: boolean;
+  fontScenario?: FontScenario;
+  axisOverride: AxisOverride;
 }) {
   const key = id + ':' + kind;
   const ref = useCallback(
@@ -229,32 +385,59 @@ function Glyph({
     nativeID: `accordion-metric-${key}`,
     testID: `accordion-metric-${key}`,
   };
-  // Independent native numeric controls bypass CSS metric normalization.
-  if (kind !== 'inherited')
+  const checkInlineOverride =
+    fontScenario !== undefined && fontScenario !== 'composite' && kind === 'explicit';
+  const glyph = fontScenario ? fontGlyphs[fontScenario] : 'MMMM';
+  // Independent core Text controls bypass CSS font and metric normalization.
+  if (kind !== 'inherited' && !checkInlineOverride)
     return (
       <Text
         {...common}
         style={{
           width: 60,
           color: '#000',
-          fontSize: kind === 'small' ? 8 : kind === 'large' ? 12 : 10,
-          lineHeight:
-            kind === 'small' ? 12 : kind === 'large' ? (naturalHeight ? undefined : 18) : 13,
+          ...(fontScenario
+            ? {
+                ...(kind === 'default-axis'
+                  ? { fontFamily: 'System' }
+                  : fontControls[fontScenario][kind]),
+                fontSize: 10,
+                lineHeight: 15,
+              }
+            : {
+                fontSize: kind === 'small' ? 8 : kind === 'large' ? 12 : 10,
+                lineHeight:
+                  kind === 'small' ? 12 : kind === 'large' ? (naturalHeight ? undefined : 18) : 13,
+              }),
         }}
       >
-        MMMM
+        {glyph}
       </Text>
     );
-  return (
+  // Keep one override path in each retained row while its selector state changes.
+  const variationOverride = fontScenario === 'variation' && kind === 'explicit';
+  const throughView = variationOverride && id === 'b';
+  const throughVirtualText = variationOverride && id === 'c';
+  const inlineStyle = checkInlineOverride
+    ? variationOverride
+      ? axisOverrides[axisOverride]
+      : fontControls[fontScenario].explicit
+    : undefined;
+  const text = (
     <Typography
       {...common}
       variant="inherit"
       sx={{ fontSize: '0.5em' }}
-      style={{ width: 60, color: '#000' }}
+      style={{
+        width: 60,
+        color: '#000',
+        ...(!throughView ? inlineStyle : undefined),
+      }}
     >
-      MMMM
+      {throughVirtualText ? <Typography variant="inherit">{glyph}</Typography> : glyph}
     </Typography>
   );
+  return throughView ? <Box style={inlineStyle}>{text}</Box> : text;
 }
 function measure(node: ViewInstance | TextInstance): Promise<Rect> {
   return new Promise((resolve, reject) =>
@@ -265,13 +448,17 @@ function measure(node: ViewInstance | TextInstance): Promise<Rect> {
     }),
   );
 }
-async function rowReceipt(id: Id, targets: Targets): Promise<RowReceipt> {
+async function rowReceipt(
+  id: Id,
+  targets: Targets,
+  fontScenario?: FontScenario,
+): Promise<RowReceipt> {
   const root = targets.roots.get(id),
     counter = targets.counters.get(id);
   const tag = root ? findNodeHandle(root) : null;
   if (!root || !counter || !tag) throw new Error('Detached native metric root');
-  const text = {} as Record<Kind, TextReceipt>;
-  for (const kind of kinds) {
+  const text: RowReceipt['text'] = {};
+  for (const kind of fontScenario === 'variation' ? variationKinds : kinds) {
     const key = id + ':' + kind,
       node = targets.texts.get(key),
       observation = targets.lines.get(key);
@@ -299,7 +486,15 @@ async function rowReceipt(id: Id, targets: Targets): Promise<RowReceipt> {
     text,
   };
 }
-function Panel({ mode, naturalHeight }: { mode: Mode; naturalHeight: boolean }) {
+function Panel({
+  mode,
+  naturalHeight,
+  fontScenario,
+}: {
+  mode: Mode;
+  naturalHeight: boolean;
+  fontScenario?: FontScenario;
+}) {
   const targets = useRef<Targets>({
     observationRevision: 0,
     roots: new Map(),
@@ -318,6 +513,8 @@ function Panel({ mode, naturalHeight }: { mode: Mode; naturalHeight: boolean }) 
     mode,
     stage,
     naturalHeight,
+    fontAttributes: fontScenario !== undefined,
+    fontScenario,
   };
   const [report, setReport] = useState<Report>({ ...metadata, phase: 'idle', rows: [] });
   const job = useRef<Job | null>(null);
@@ -355,7 +552,7 @@ function Panel({ mode, naturalHeight }: { mode: Mode; naturalHeight: boolean }) 
       // Every ref, counter handle and native line change advances this private
       // revision. Recheck after ALL async measurements, including root frames.
       const observed = targets.observationRevision;
-      void Promise.all(ids.map((id) => rowReceipt(id, targets))).then(
+      void Promise.all(ids.map((id) => rowReceipt(id, targets, fontScenario))).then(
         (rows) => {
           if (current.cancelled) return;
           if (targets.observationRevision !== observed) {
@@ -382,7 +579,18 @@ function Panel({ mode, naturalHeight }: { mode: Mode; naturalHeight: boolean }) 
     );
     current.frame = requestAnimationFrame(collect);
   };
-  const order = stage === 0 || stage === 4 ? ids : (['c', 'a', 'b'] as const);
+  // Each variation row must enter the selector case at least once to test its override.
+  const variation = fontScenario === 'variation';
+  const order =
+    (variation && stage === 8) || (variation && (stage === 1 || stage === 2))
+      ? (['b', 'a', 'c'] as const)
+      : stage === 3 || (!variation && (stage === 1 || stage === 2)) || stage === 9
+        ? (['c', 'a', 'b'] as const)
+        : ids;
+  const boundaries = stage === 2 || (variation && stage === 6);
+  // The first five stages keep row props stable. Only deliberate override changes rerender.
+  const axisOverride: AxisOverride = stage === 5 ? 'heavy' : stage === 6 ? 'inherit' : 'light';
+  const lastStage = variation ? 9 : 4;
   const sampling = report.phase === 'sampling';
   return (
     <View style={{ gap: 12 }}>
@@ -392,20 +600,20 @@ function Panel({ mode, naturalHeight }: { mode: Mode; naturalHeight: boolean }) 
           disabled={sampling}
           onClick={() => targets.counters.get('b')?.bump()}
         >
-          B +1
+          {probeLabel('B +1', fontScenario)}
         </Button>
         <Button
           testID="accordion-metric-next"
-          disabled={sampling || stage === 4}
+          disabled={sampling || stage === lastStage}
           onClick={() => {
             setStage(stage + 1);
             setReport({ ...metadata, stage: stage + 1, phase: 'idle', rows: [] });
           }}
         >
-          Next
+          {probeLabel('Next', fontScenario)}
         </Button>
         <Button testID="accordion-metric-capture" disabled={sampling} onClick={capture}>
-          Capture
+          {probeLabel('Capture', fontScenario)}
         </Button>
       </View>
       <View collapsable={false}>
@@ -413,7 +621,7 @@ function Panel({ mode, naturalHeight }: { mode: Mode; naturalHeight: boolean }) 
         <View style={{ height: 6, backgroundColor: stagePaint[stage] }} />
       </View>
       <View collapsable={false}>
-        {stage === 2 ? (
+        {boundaries ? (
           <View
             key="leading"
             collapsable={false}
@@ -421,9 +629,17 @@ function Panel({ mode, naturalHeight }: { mode: Mode; naturalHeight: boolean }) 
           />
         ) : null}
         {order.map((id) => (
-          <Row key={id} id={id} mode={mode} targets={targets} naturalHeight={naturalHeight} />
+          <Row
+            key={id}
+            id={id}
+            mode={mode}
+            targets={targets}
+            naturalHeight={naturalHeight}
+            fontScenario={fontScenario}
+            axisOverride={axisOverride}
+          />
         ))}
-        {stage === 2 ? (
+        {boundaries ? (
           <View
             key="trailing"
             collapsable={false}
@@ -444,12 +660,15 @@ function Panel({ mode, naturalHeight }: { mode: Mode; naturalHeight: boolean }) 
 }
 export function AccordionTextMetricsProbe({
   naturalHeight = false,
-}: { naturalHeight?: boolean } = {}) {
+  fontScenario,
+}: { naturalHeight?: boolean; fontScenario?: FontScenario } = {}) {
   const [selection, setSelection] = useState({ mode: 'default' as Mode, epoch: 0 });
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={fontScenario === 'family' ? familyTheme : theme}>
       <View style={{ flex: 1, padding: 24, paddingTop: 64, backgroundColor: '#fff', gap: 12 }}>
-        <Text style={{ fontSize: 18 }}>Accordion inherited text metrics</Text>
+        <Text allowFontScaling={fontScenario !== 'variation'} style={{ fontSize: 18 }}>
+          {fontScenario ? 'Accordion inherited fonts' : 'Accordion inherited text metrics'}
+        </Text>
         <View style={{ flexDirection: 'row', gap: 12 }}>
           {(['default', 'forwarded'] as const).map((mode) => (
             <Button
@@ -457,16 +676,26 @@ export function AccordionTextMetricsProbe({
               testID={`accordion-metric-mode-${mode}`}
               onClick={() => setSelection((old) => ({ mode, epoch: old.epoch + 1 }))}
             >
-              {mode}
+              {probeLabel(mode, fontScenario)}
             </Button>
           ))}
         </View>
         {naturalHeight ? (
           <Box sx={{ fontSize: '16px', lineHeight: 4 }}>
-            <Panel key={selection.epoch} mode={selection.mode} naturalHeight />
+            <Panel
+              key={selection.epoch}
+              mode={selection.mode}
+              naturalHeight
+              fontScenario={fontScenario}
+            />
           </Box>
         ) : (
-          <Panel key={selection.epoch} mode={selection.mode} naturalHeight={false} />
+          <Panel
+            key={selection.epoch}
+            mode={selection.mode}
+            naturalHeight={false}
+            fontScenario={fontScenario}
+          />
         )}
       </View>
     </ThemeProvider>

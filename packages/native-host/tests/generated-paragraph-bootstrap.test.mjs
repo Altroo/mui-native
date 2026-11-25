@@ -467,6 +467,7 @@ for (const shape of ['base', 'raw', 'origin', 'both']) {
         'requireGeneratedTextOrigin',
         'requireProfile',
         'supportsInheritedTextColors',
+        'supportsInheritedTextFonts',
         'supportsInheritedTextMetrics',
         'supportsParentStructuralCases',
         'supportsPeerStyleIdentity',
@@ -842,6 +843,8 @@ test('stock Text metrics require exact version, color and parent capabilities', 
           'stock-text-metrics-v0',
           'stock-text-metrics-v1',
           'stock-text-metrics-v2',
+          'stock-text-metrics-v3',
+          'stock-text-metrics-v4',
         ]) {
           const data = metadata();
           if (structural) data.structuralCases = structural;
@@ -859,10 +862,17 @@ test('stock Text metrics require exact version, color and parent capabilities', 
             expected,
           );
           boot.requireProfile();
-          const wanted = !!structural && !!parent && !!color && metrics === 'stock-text-metrics-v2';
+          const wanted =
+            !!structural &&
+            !!parent &&
+            !!color &&
+            (metrics === 'stock-text-metrics-v2' || metrics === 'stock-text-metrics-v3');
           assert.equal(boot.supportsInheritedTextMetrics(), wanted);
+          const fonts = wanted && metrics === 'stock-text-metrics-v3';
+          assert.equal(boot.supportsInheritedTextFonts(), fonts);
           data.inheritedTextMetrics = 'changed-after-capture';
           assert.equal(boot.supportsInheritedTextMetrics(), wanted);
+          assert.equal(boot.supportsInheritedTextFonts(), fonts);
           assert.equal(calls, 1);
         }
 });

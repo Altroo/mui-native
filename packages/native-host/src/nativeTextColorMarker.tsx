@@ -3,10 +3,17 @@
 // no wrapper, host replacement, nativeID change or late runtime discovery.
 import { useRef } from 'react';
 import type { ColorValue } from 'react-native';
+import type {
+  NativeFontPresentation,
+  NativeFontState,
+  NativeFontStep,
+  NativeFontBank,
+} from './nativeTextFontData';
 import type { NativeMetricPresentation } from './nativeTextMetricData';
 import {
   supportsInheritedTextColors,
   supportsInheritedTextMetrics,
+  supportsInheritedTextFonts,
   requireOwnedStyleProfile,
 } from './ownedStyleBootstrap';
 import { ownedStructuralCases } from './ownedStructuralCases';
@@ -17,12 +24,13 @@ function capture() {
   const Native = (
     require('./AltrooMUITextColorMarkerNativeComponent') as typeof import('./AltrooMUITextColorMarkerNativeComponent')
   ).default;
-  const { encodeStylePair, encodeStructuralCases } =
+  const { encodeStylePair, encodeStructuralCases, encodeNativeFontValues } =
     require('./ownedStyleEncoding') as typeof import('./ownedStyleEncoding');
   return Object.freeze({
     Native,
     encodeStylePair,
     encodeStructuralCases,
+    encodeNativeFontValues,
     profile: requireOwnedStyleProfile(),
     activation: ownedStructuralCases.activation,
   });
@@ -31,6 +39,10 @@ const runtime = capture();
 export const supportsNativeTextColors = !!runtime;
 export const supportsNativeTextMetrics =
   !!runtime && typeof supportsInheritedTextMetrics === 'function' && supportsInheritedTextMetrics();
+export const supportsNativeTextFonts =
+  supportsNativeTextMetrics &&
+  typeof supportsInheritedTextFonts === 'function' &&
+  supportsInheritedTextFonts();
 // Opaque platform/dynamic color objects stay on their ordinary RN path. They
 // are never replayed through an extra processor or treated as inheritance proof.
 function scalar(value: unknown): value is string | number | null | undefined {
@@ -65,19 +77,43 @@ export function prepareNativeTextColorBank(
   if (key.length > 4096) return;
   return Object.freeze({ key, colors: values, ordinary: base, parent: parent ?? null });
 }
+function encodeFontState(value: NativeFontState) {
+  if (!runtime) throw Error('Native font codec is unavailable');
+  return {
+    values: runtime.encodeNativeFontValues(runtime.profile, value.values),
+    blocked: value.blocked,
+  };
+}
+function encodeFontStep(value: NativeFontStep) {
+  return { ...encodeFontState(value), owns: value.owns };
+}
+function encodeFontBinding(value: NonNullable<NativeFontPresentation['binding']>) {
+  return { owner: value.owner, key: value.key, steps: value.steps.map(encodeFontStep) };
+}
+export function encodeNativeFontBank(value: NativeFontBank) {
+  return {
+    key: value.key,
+    base: encodeFontState(value.base),
+    ordinary: encodeFontStep(value.ordinary),
+    cases: value.cases.map(encodeFontStep),
+    parent: value.parent ? encodeFontBinding(value.parent) : null,
+  };
+}
 export function NativeTextColorMarker({
   binding,
   color,
   metrics,
+  fonts,
 }: {
   binding?: NativeTextColorBinding | undefined;
   color?: ColorValue | undefined;
   metrics?: NativeMetricPresentation | undefined;
+  fonts?: NativeFontPresentation | undefined;
 }) {
   // A retained Text can leave its last source root while keeping COW props.
   // Keep its reset lease through unmount, including a later inactive binding.
   const hasOwnedColor = useRef(false);
-  if (binding || metrics?.binding) hasOwnedColor.current = true;
+  if (binding || metrics?.binding || fonts?.binding) hasOwnedColor.current = true;
   usePrelayoutActivation(hasOwnedColor.current ? runtime?.activation : undefined);
   if (!runtime) return null;
   const ordinary = scalar(color)
@@ -85,6 +121,20 @@ export function NativeTextColorMarker({
     : undefined;
   return (
     <runtime.Native
+      {...(supportsNativeTextFonts
+        ? {
+            fontProgramme: fonts
+              ? {
+                  schema: 1,
+                  profile: runtime.profile,
+                  owner: fonts.binding?.owner ?? '',
+                  key: fonts.binding?.key ?? '',
+                  steps: fonts.binding?.steps.map(encodeFontStep) ?? [],
+                  ordinary: encodeFontState(fonts.ordinary),
+                }
+              : null,
+          }
+        : {})}
       {...(supportsNativeTextMetrics
         ? {
             metricProgramme: metrics

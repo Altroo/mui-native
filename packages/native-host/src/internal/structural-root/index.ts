@@ -6,6 +6,8 @@ export {
   NativeTextColorMarker,
   supportsNativeTextColors,
   supportsNativeTextMetrics,
+  supportsNativeTextFonts,
+  encodeNativeFontBank,
   prepareNativeTextColorBank,
 } from '../../nativeTextColorMarker';
 export type { NativeTextColorBinding, OwnedTextColorBank } from '../../nativeTextColorMarker';
@@ -24,3 +26,18 @@ export {
   isNativeMetricScalar,
   isNativeMetricStep,
 } from '../../nativeTextMetricData';
+
+export {
+  nativeFontKeys,
+  isNativeFontStep,
+  applyNativeFontStep,
+  prepareNativeFontBank,
+} from '../../nativeTextFontData';
+export type {
+  NativeFontValues,
+  NativeFontState,
+  NativeFontStep,
+  NativeFontBinding,
+  NativeFontBank,
+  NativeFontPresentation,
+} from '../../nativeTextFontData';

@@ -4,6 +4,7 @@
 #pragma once
 #include "NativeTextColors.h"
 #include "NativeTextMetrics.h"
+#include "NativeTextFonts.h"
 #include <react/renderer/components/AltrooMuiNativeHostSpec/ShadowNodes.h>
 #include <react/renderer/components/text/TextEffectShadowNode.h>
 #include <react/renderer/components/view/conversions.h>
@@ -28,7 +29,9 @@ class ColorMarkerProps final : public TextEffectProps {
         prepared(colorProgramme == source.colorProgramme
                      ? source.prepared : prepareColorBinding(context, colorProgramme)),
         metricProgramme(convertRawProp(context, rawProps, "metricProgramme", source.metricProgramme, folly::dynamic(nullptr))),
-        metrics(metricProgramme == source.metricProgramme ? source.metrics : altroo::text_metrics::preparePresentation(metricProgramme)) {
+        metrics(metricProgramme == source.metricProgramme ? source.metrics : altroo::text_metrics::preparePresentation(metricProgramme)),
+        fontProgramme(convertRawProp(context, rawProps, "fontProgramme", source.fontProgramme, folly::dynamic(nullptr))),
+        fonts(fontProgramme == source.fontProgramme ? source.fonts : altroo::text_fonts::preparePresentation(context, fontProgramme)) {
     // This is metadata only, including for forged/legacy raw props.
     effectName.clear();
     effectProps = nullptr;
@@ -37,6 +40,8 @@ class ColorMarkerProps final : public TextEffectProps {
   std::shared_ptr<const ColorBinding> prepared;
   folly::dynamic metricProgramme{nullptr};
   std::shared_ptr<const altroo::text_metrics::Presentation> metrics;
+  folly::dynamic fontProgramme{nullptr};
+  std::shared_ptr<const altroo::text_fonts::Presentation> fonts;
 #ifdef RN_SERIALIZABLE_STATE
   ComponentName getDiffPropsImplementationTarget() const override {
     return "AltrooMUITextColorMarker";
@@ -48,6 +53,8 @@ class ColorMarkerProps final : public TextEffectProps {
       result["colorProgramme"] = colorProgramme;
     if (!before || metricProgramme != before->metricProgramme)
       result["metricProgramme"] = metricProgramme;
+    if (!before || fontProgramme != before->fontProgramme)
+      result["fontProgramme"] = fontProgramme;
     return result;
   }
 #endif
