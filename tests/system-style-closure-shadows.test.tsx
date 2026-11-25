@@ -10,6 +10,12 @@ import {
   type Theme,
 } from '../packages/system/src';
 
+import { nativeStyleBorderStyle } from '../packages/system/src/borders';
+import {
+  nativeStyleTextMetrics,
+  nativeTextShadowPresentation,
+} from '../packages/system/src/nativeText';
+
 afterEach(() => jest.restoreAllMocks());
 
 test('theme defaults retain all 25 pinned shadow tokens and independent arrays', () => {
@@ -107,6 +113,75 @@ test('invalid indices and unsupported shadow syntax diagnose without erasing ear
   } finally {
     reset();
   }
+});
+
+test('CSS textShadow maps a single shadow with signed offsets and final foreground', () => {
+  const theme = createTheme({ cssRootFontSize: 20 });
+  expect(
+    resolveSx([{ color: 'red', textShadow: '-0.5rem 2px 3px' }, { color: 'blue' }], theme),
+  ).toEqual({
+    color: 'blue',
+    textShadowColor: 'blue',
+    textShadowOffset: { width: -10, height: 2 },
+    textShadowRadius: 3,
+  });
+  const color = PlatformColor('labelColor');
+  expect(
+    resolveSx({ textShadow: '0 1px 2px currentColor' }, theme, {
+      nativeStyle: { color },
+    }),
+  ).toEqual({
+    textShadowColor: color,
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  });
+});
+
+test('textShadow none clears the native fields and unrepresentable declarations preserve the cascade', () => {
+  const theme = createTheme();
+  const baseline = { textShadow: 'rgba(1, 2, 3, 0.4) 0 2px 4px' };
+  expect(resolveSx([baseline, { textShadow: 'none' }], theme)).toEqual({
+    textShadowColor: 'transparent',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 0,
+  });
+
+  const collect = jest.fn();
+  const restore = configureDiagnostics(collect);
+  try {
+    const invalid = [
+      '0 2px red, 0 4px blue',
+      '0 2px 1px 0 red',
+      'inset 0 2px red',
+      '0 2px -1px red',
+    ];
+    for (const textShadow of invalid) {
+      expect(resolveSx([baseline, { textShadow }], theme)).toEqual({
+        textShadowColor: 'rgba(1, 2, 3, 0.4)',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 4,
+      });
+    }
+    expect(collect.mock.calls.map(([event]) => event.code)).toEqual(
+      invalid.map(() => 'text-shadow'),
+    );
+  } finally {
+    restore();
+  }
+});
+
+test('resolving the shadow foreground retains CSS border and text-alignment provenance', () => {
+  const style = resolveSx(
+    { border: '4px none black', textAlign: 'start', textShadow: '0 2px 4px' },
+    createTheme(),
+    { deferTextShadowColor: true },
+  );
+  expect(nativeStyleBorderStyle(style)).toBe('none');
+  expect(nativeStyleTextMetrics(style)).toMatchObject({ textAlign: 'start' });
+  const painted = nativeTextShadowPresentation(style, style, 'purple');
+  expect(painted.textShadowColor).toBe('purple');
+  expect(nativeStyleBorderStyle(painted)).toBe('none');
+  expect(nativeStyleTextMetrics(painted)).toMatchObject({ textAlign: 'start' });
 });
 
 test('Android 28 preserves outset shadows and rejects the entire unsupported inset declaration', () => {

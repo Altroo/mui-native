@@ -56,6 +56,25 @@ const nativeTextOnlyKeys = new Set([
 export function isNativeTextStyleProperty(key: string) {
   return nativeTextOnlyKeys.has(key);
 }
+/** Resolve an inherited CSS shadow against the foreground of the emitting Text. */
+export function nativeTextShadowPresentation<T extends TextStyle>(
+  style: T,
+  inherited: TextStyle,
+  fallback: NonNullable<TextStyle['color']>,
+): T {
+  if (inherited.textShadowColor !== 'currentColor') return style;
+  const textShadowColor = inherited.color ?? fallback;
+  if (style.textShadowColor === textShadowColor) return style;
+  const painted = copyNativeBorderStyle(style, { ...style, textShadowColor });
+  const metrics = cssTextMetrics.get(style);
+  if (metrics) cssTextMetrics.set(painted, metrics);
+  const lineHeight = relativeLineHeights.get(style);
+  if (lineHeight !== undefined) relativeLineHeights.set(painted, lineHeight);
+  if (inheritedMetricRatios.has(style)) inheritedMetricRatios.add(painted);
+  if (inheritedAlignments.has(style)) inheritedAlignments.add(painted);
+  copyNativeMetricPlan(style, painted);
+  return painted;
+}
 export function inheritedTextStyle(style: TextStyle): TextStyle {
   return Object.fromEntries(
     Object.entries(style).filter(([key]) => inheritedKeys.has(key)),

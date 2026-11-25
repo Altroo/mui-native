@@ -76,6 +76,8 @@ Panels derive rounded edges and expansion margins from actual native sibling ord
 
 Outer margins, Summary minimum height/content margins, icon rotation and separator opacity/color use theme transition timing. An interrupted reversal continues from the last presented value with a shorter duration based on the eased distance already traveled. Top and bottom margins keep independent progress. A running transition keeps its original timing while the property still has a matching declaration. Changing the target uses the current timing. A negative delay starts at the elapsed portion of the transition. Removing the property or enabling reduced motion applies the endpoint. Changing gutters preserves Summary content state and refs. A theme `focusVisible` policy replaces the default Summary focus background.
 
+A single CSS `text-shadow` with px or rem lengths maps to native Text. An omitted color or `currentColor` uses the foreground of each text host, including descendants that set their own color. Use `text-shadow: none` to clear the shadow. React Native exposes one shadow per text style. Multiple layers and conditional structural shadow paint remain outside the verified behavior.
+
 External browser stylesheets, HTML element roots and DOM refs require native equivalents. The native API includes Paper-compatible polymorphic roots; native refs intentionally differ from DOM refs. First-frame paint, broader grouping/motion and screen-reader matrices, and calibrated release performance remain completion gates. No full compatibility or completion claim is made.
 
 ## AccordionActions

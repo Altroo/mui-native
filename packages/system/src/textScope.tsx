@@ -72,6 +72,7 @@ import {
   applyNativeTextMetrics,
   getTextStyleInheritance,
   nativeTextAlignmentStyle,
+  nativeTextShadowPresentation,
   nativeAlignmentIsInherited,
   nativeTextParagraphDirection,
   type NativeCssTextAlign,
@@ -104,6 +105,7 @@ export function nativeTextStyleContext(
     nativeStyle: flattenNativeTextInput(style, StyleSheet.flatten) ?? undefined,
     nativeTextMetrics: nativeStyleTextMetrics(style),
     inheritOnly: true,
+    deferTextShadowColor: true,
     captureMetricPlan: supportsNativeTextMetrics && !!nativeMetricBinding(parent),
   };
   retainNativeTextInputContext(context, style);
@@ -234,7 +236,11 @@ function resolveScope(
     copyNativeBorderStyle(
       flat,
       kind === 'text'
-        ? nativeTextAlignmentStyle(native, value.textAlign, paragraphDirection ?? direction)
+        ? nativeTextShadowPresentation(
+            nativeTextAlignmentStyle(native, value.textAlign, paragraphDirection ?? direction),
+            value.style,
+            theme.palette.text.primary,
+          )
         : native,
     ),
   );
@@ -495,12 +501,16 @@ export function renderNativeTextChildren(
   let run: string[] = [];
   const flush = () => {
     if (run.length) {
-      const style = nativeTextAlignmentStyle(
-        scope.literalStyle ?? scope.style,
-        scope.textAlign,
-        scope.paragraphDirection ??
-          scope.direction ??
-          nativeTextParagraphDirection(undefined, undefined, false),
+      const style = nativeTextShadowPresentation(
+        nativeTextAlignmentStyle(
+          scope.literalStyle ?? scope.style,
+          scope.textAlign,
+          scope.paragraphDirection ??
+            scope.direction ??
+            nativeTextParagraphDirection(undefined, undefined, false),
+        ),
+        scope.style,
+        theme.palette.text.primary,
       );
       const element = (
         <GeneratedParagraph key={'native-text:' + result.length} style={style}>

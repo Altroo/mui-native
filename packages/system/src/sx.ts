@@ -56,7 +56,7 @@ import {
   applyNativeTextMetrics,
   type NativeTextContext,
 } from './nativeText';
-import { nativeBoxShadow, bindShadowColor } from './shadows';
+import { nativeBoxShadow, bindShadowColor, nativeTextShadow } from './shadows';
 import {
   nativeStyledStyles,
   registeredNativeCssProgrammes,
@@ -84,6 +84,8 @@ export interface NativeStyleTarget {
 }
 export type { NativePreparedStyle } from './nativeStyledMetadata';
 export type StyleContext = NativeTextContext & {
+  /** @internal Keep a CSS foreground reference until the actual Text emits its style. */
+  deferTextShadowColor?: boolean;
   /** @internal Complete source constructor CSS, independent of native geometry. */
   baseProgramme?: string;
   /** @internal This preparation owns an actual styled source class. */
@@ -296,6 +298,12 @@ function prepareStyle(
         emit(node, key, resolved || value, mode);
       });
       if (shadow) setStyle(target, 'boxShadow', shadow);
+      return;
+    }
+    if (key === 'textShadow') {
+      emit(node, key, value, mode);
+      const shadow = nativeTextShadow(value, theme.cssRootFontSize ?? 16);
+      if (shadow) setStyle(target, key, shadow);
       return;
     }
     if (key === 'border') {
@@ -776,7 +784,7 @@ function finishRules(
       if (protectGeometry && (key === 'start' || key === 'end'))
         key = (key === 'start') !== rtl ? 'left' : 'right';
       if (value == null) continue;
-      if (key === 'boxShadow' || key === 'border') {
+      if (key === 'boxShadow' || key === 'border' || key === 'textShadow') {
         if (key === 'border')
           for (const expanded of Object.keys(value as Record<string, unknown>))
             for (const edge of edges) delete result['border' + edge + expanded.slice(6)];
@@ -850,6 +858,8 @@ function finishRules(
     ...edges.map((edge) => 'border' + edge + 'Color'),
   ])
     if (normalized[key] === 'currentColor') normalized[key] = borderPaint;
+  if (!context.deferTextShadowColor && normalized.textShadowColor === 'currentColor')
+    normalized.textShadowColor = borderPaint;
   normalized.boxShadow = bindShadowColor(
     normalized.boxShadow as ViewStyle['boxShadow'],
     borderPaint as NonNullable<TextStyle['color']>,

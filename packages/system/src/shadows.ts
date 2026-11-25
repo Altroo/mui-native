@@ -79,12 +79,13 @@ export const defaultShadows: Shadows = [
 ];
 
 type ParsedShadow = { source: string; layers: BoxShadowValue[] };
-function parseShadow(input: string, rem: number): ParsedShadow | undefined {
+function parseShadow(input: string, rem: number, textOnly = false): ParsedShadow | undefined {
   if (input.trim() === 'none') return { source: 'none', layers: [] };
   const layers: BoxShadowValue[] = [];
   const normalized: string[] = [];
   let needsNormalization = /\drem\b/.test(input);
   for (const layer of input.replace(/\n/g, ' ').split(/,(?![^()]*\))/)) {
+    if (textOnly && layers.length) return undefined;
     const tokens = layer.trim().split(/\s+(?![^()]*\))/);
     const lengths: number[] = [];
     let color: ColorValue | undefined;
@@ -93,7 +94,7 @@ function parseShadow(input: string, rem: number): ParsedShadow | undefined {
     const output: string[] = [];
     for (const token of tokens) {
       if (token === 'inset') {
-        if (inset) return undefined;
+        if (inset || textOnly) return undefined;
         inset = true;
         if (lengths.length) endedLengths = true;
         output.push(token);
@@ -104,7 +105,7 @@ function parseShadow(input: string, rem: number): ParsedShadow | undefined {
         output.push(String(color));
       } else {
         const match = token.match(/^([+-]?(?:\d+\.?\d*|\.\d+))(px|rem)?$/);
-        if (!match || endedLengths || lengths.length === 4) return undefined;
+        if (!match || endedLengths || lengths.length === (textOnly ? 3 : 4)) return undefined;
         const value = Number(match[1]) * (match[2] === 'rem' ? rem : 1);
         if (!Number.isFinite(value) || (!match[2] && value !== 0)) return undefined;
         lengths.push(value);
@@ -129,6 +130,32 @@ function parseShadow(input: string, rem: number): ParsedShadow | undefined {
   return layers.length
     ? { source: needsNormalization ? normalized.join(', ') : input, layers }
     : undefined;
+}
+
+// Fabric exposes one text shadow without inset or spread.
+export function nativeTextShadow(value: unknown, rem: number): Record<string, unknown> | undefined {
+  const keyword = typeof value === 'string' ? value.trim().toLowerCase() : undefined;
+  if (keyword === 'inherit' || keyword === 'unset')
+    return { textShadowColor: keyword, textShadowOffset: keyword, textShadowRadius: keyword };
+  const parsed =
+    keyword === 'initial'
+      ? { layers: [] }
+      : typeof value === 'string'
+        ? parseShadow(keyword === 'none' ? keyword : value, rem, true)
+        : undefined;
+  if (!parsed) {
+    diagnostic(
+      'text-shadow',
+      'Native textShadow supports one shadow with px or rem offsets and blur.',
+    );
+    return;
+  }
+  const layer = parsed.layers[0];
+  return {
+    textShadowColor: layer?.color ?? 'transparent',
+    textShadowOffset: { width: layer?.offsetX ?? 0, height: layer?.offsetY ?? 0 },
+    textShadowRadius: layer?.blurRadius ?? 0,
+  };
 }
 
 export function nativeBoxShadow(

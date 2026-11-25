@@ -110,3 +110,5 @@ export {
   nativeFontState,
   retainNativeFontScope,
 } from '../../nativeFontSources';
+
+export { nativeTextShadowPresentation } from '../../nativeText';

@@ -47,7 +47,10 @@ import {
   type TypographyVariant,
 } from '@altroo/mui-native-system';
 import { mergeNativeRootStyle } from './nativeControlStyles';
-import { nativeColorLayer } from '@altroo/mui-native-system/internal/prepared-style';
+import {
+  nativeColorLayer,
+  nativeTextShadowPresentation,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
 import { NativeButtonGroupRules } from './buttonGroupContext';
 import { getTypographyUtilityClass, type TypographyClasses } from './typographyClasses';
@@ -262,8 +265,20 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
   const ownDirection = nativeStyle?.direction ?? resolved.direction;
   const direction =
     ownDirection === 'ltr' || ownDirection === 'rtl' ? ownDirection : parent?.direction;
+  const inherited = getTextStyleInheritance(
+    resolved as TextStyle,
+    parent?.style,
+    adjustedNativeStyle,
+  );
+  // A cleared native foreground on virtual Text exposes the enclosing Text's
+  // actual foreground. Keep that used color for descendant currentColor.
+  const parentColor = hasTextAncestor && parent?.nativeText ? parent.style.color : undefined;
   const context = {
-    ...getTextStyleInheritance(resolved as TextStyle, parent?.style, adjustedNativeStyle),
+    ...inherited,
+    style:
+      inherited.style.color == null && parentColor != null
+        ? { ...inherited.style, color: parentColor }
+        : inherited.style,
     nativeText: true,
     paragraphDirection: nativeTextParagraphDirection(
       direction,
@@ -309,10 +324,10 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
   inheritNativeTextColorBinding(context, parent, finalStyle);
   useNativeTextScopeRoot(root, context);
   const trackChildren = useNativeTextChildRoots();
-  const presentation = nativeTextAlignmentStyle(
-    finalStyle,
-    context.textAlign,
-    context.paragraphDirection,
+  const presentation = nativeTextShadowPresentation(
+    nativeTextAlignmentStyle(finalStyle, context.textAlign, context.paragraphDirection),
+    context.style,
+    theme.palette.text.primary,
   );
   if (typeof mapped === 'string' && !textTags.has(mapped))
     diagnostic(

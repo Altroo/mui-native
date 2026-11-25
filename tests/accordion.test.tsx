@@ -9,6 +9,7 @@ import {
   TextInput,
   StyleSheet,
   type PressableProps,
+  unstable_TextAncestorContext as TextAncestorContext,
   type ViewInstance,
 } from 'react-native';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
@@ -17,6 +18,7 @@ import {
   AccordionSummary,
   AccordionDetails,
   AccordionActions,
+  Typography,
   ButtonBase,
   Collapse,
   accordionClasses,
@@ -76,6 +78,66 @@ function tree(props: Partial<AccordionProps> = {}, child: React.ReactNode = 'Det
     </ThemeProvider>
   );
 }
+test('inherited CSS text shadow binds currentColor at each Accordion text host', () => {
+  const scene = (color: string) => (
+    <ThemeProvider theme={theme}>
+      <Accordion defaultExpanded>
+        <AccordionSummary>Account</AccordionSummary>
+        <AccordionDetails sx={{ color: 'red', textShadow: '1px 2px 3px' }}>
+          <Typography variant="inherit" testID="content-shadow" sx={{ color }}>
+            Child
+            <Typography variant="inherit" testID="nested-shadow" sx={{ color: 'green' }}>
+              Nested
+            </Typography>
+            <TextAncestorContext.Provider value={true}>
+              <Typography
+                variant="inherit"
+                testID="reset-foreground-shadow"
+                style={{ color: undefined }}
+              >
+                Reset foreground
+              </Typography>
+            </TextAncestorContext.Provider>
+          </Typography>
+          <Text testID="raw-shadow" style={{ color: 'orange' }}>
+            Raw
+          </Text>
+          <Typography
+            variant="inherit"
+            testID="native-shadow"
+            style={{ textShadowColor: 'purple' }}
+          >
+            Override
+          </Typography>
+          <Typography variant="inherit" testID="cleared-shadow" sx={{ textShadow: 'none' }}>
+            Reset
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+    </ThemeProvider>
+  );
+  const { rerender } = render(scene('blue'));
+  const style = (testID: string) => StyleSheet.flatten(screen.getByTestId(testID).props.style);
+  expect(style('content-shadow')).toMatchObject({
+    textShadowColor: 'blue',
+    textShadowOffset: { width: 1, height: 2 },
+    textShadowRadius: 3,
+  });
+  expect(style('nested-shadow')).toMatchObject({ textShadowColor: 'green' });
+  expect(style('reset-foreground-shadow')).toMatchObject({ textShadowColor: 'blue' });
+  expect(style('raw-shadow')).toMatchObject({ textShadowColor: 'orange' });
+  expect(style('native-shadow')).toMatchObject({ textShadowColor: 'purple' });
+  expect(style('cleared-shadow')).toMatchObject({
+    textShadowColor: 'transparent',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 0,
+  });
+  rerender(scene('black'));
+  expect(style('content-shadow').textShadowColor).toBe('black');
+  expect(style('nested-shadow').textShadowColor).toBe('green');
+  expect(style('reset-foreground-shadow').textShadowColor).toBe('black');
+});
+
 test('Summary forwards custom required props while keeping Accordion activation', () => {
   const Tracking = forwardRef<
     ViewInstance,
