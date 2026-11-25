@@ -138,6 +138,60 @@ test('inherited CSS text shadow binds currentColor at each Accordion text host',
   expect(style('reset-foreground-shadow').textShadowColor).toBe('black');
 });
 
+test('Accordion preserves the declaring font basis of an inherited em shadow', () => {
+  const scene = (fontSize: number) => (
+    <ThemeProvider theme={theme}>
+      <Accordion defaultExpanded>
+        <AccordionSummary>Account</AccordionSummary>
+        <AccordionDetails sx={{ fontSize: '20px', textShadow: '0.5em -0.25em 0.1em' }}>
+          <Typography
+            variant="inherit"
+            testID="inherited-em-shadow"
+            sx={{ fontSize, color: 'blue' }}
+          >
+            Inherited
+          </Typography>
+          <Typography
+            variant="inherit"
+            testID="local-em-shadow"
+            sx={{ fontSize, color: 'green', textShadow: '0.5em -0.25em 0.1em' }}
+          >
+            Local
+          </Typography>
+          <Typography
+            variant="inherit"
+            testID="native-em-shadow"
+            sx={{ fontSize, textShadow: 'red 1em 1em 1em' }}
+            style={{ textShadowColor: 'purple', textShadowRadius: 0 }}
+          >
+            Native override
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+    </ThemeProvider>
+  );
+  const { rerender } = render(scene(12));
+  const style = (testID: string) => StyleSheet.flatten(screen.getByTestId(testID).props.style);
+  expect(style('inherited-em-shadow')).toMatchObject({
+    fontSize: 12,
+    textShadowColor: 'blue',
+    textShadowOffset: { width: 10, height: -5 },
+    textShadowRadius: 2,
+  });
+  expect(style('local-em-shadow')).toMatchObject({
+    textShadowColor: 'green',
+    textShadowOffset: { width: 6, height: -3 },
+  });
+  expect(style('native-em-shadow')).toMatchObject({
+    textShadowColor: 'purple',
+    textShadowOffset: { width: 12, height: 12 },
+    textShadowRadius: 0,
+  });
+  rerender(scene(16));
+  expect(style('inherited-em-shadow').textShadowOffset).toEqual({ width: 10, height: -5 });
+  expect(style('local-em-shadow').textShadowOffset).toEqual({ width: 8, height: -4 });
+});
+
 test('Summary forwards custom required props while keeping Accordion activation', () => {
   const Tracking = forwardRef<
     ViewInstance,

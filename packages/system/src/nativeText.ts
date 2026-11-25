@@ -8,6 +8,7 @@ import { diagnostic } from './diagnostics';
 import { supportsNativeTextMetrics } from '@altroo/mui-native-host/internal/structural-root';
 import type { NativeMetricStep } from '@altroo/mui-native-host/internal/structural-root';
 import { defaultTypographyFontFamily } from './typography';
+import { resolveNativeTextShadowOffset } from './shadows';
 
 export type NativeCssTextAlign = 'left' | 'right' | 'start' | 'end';
 export type NativeTextContext = {
@@ -355,7 +356,8 @@ export function normalizeTextStyle(
       ? ((rootFont = theme.cssRootFontSize) ?? 16)
       : 16;
   const parentSize = context.parentTextStyle?.fontSize ?? rem;
-  const ownSize = size(input.fontSize, parentSize, rem);
+  const declaredSize = size(input.fontSize, parentSize, rem);
+  const ownSize = declaredSize !== undefined && declaredSize >= 0 ? declaredSize : undefined;
   const bodyFont = theme.typography.body1?.fontSize;
   const fallbackSize = size(bodyFont, parentSize, rem) ?? rem;
   const nativeSize = Object.hasOwn(context.nativeTextMetrics ?? {}, 'fontSize')
@@ -374,7 +376,7 @@ export function normalizeTextStyle(
     delete output[key];
   };
   if (output.fontSize !== undefined) {
-    if (ownSize === undefined || ownSize < 0) invalid('fontSize');
+    if (ownSize === undefined) invalid('fontSize');
     else output.fontSize = ownSize;
   }
   if (output.fontFamily !== undefined) {
@@ -428,9 +430,14 @@ export function normalizeTextStyle(
     if (spacing === undefined) invalid('letterSpacing');
     else output.letterSpacing = spacing;
   }
+  if (output.textShadowOffset !== undefined)
+    output.textShadowOffset = resolveNativeTextShadowOffset(output.textShadowOffset, effectiveSize);
   for (const [key, value] of Object.entries(output))
-    if (value && typeof value === 'object' && 'emLength' in value)
-      output[key] = Number(value.emLength) * effectiveSize;
+    if (value && typeof value === 'object' && 'emLength' in value) {
+      const length = Number(value.emLength) * effectiveSize;
+      if (key === 'textShadowRadius' && (!Number.isFinite(length) || length < 0)) invalid(key);
+      else output[key] = length;
+    }
   const nativeDirection = context.nativeStyle?.direction;
   const ownDirection = nativeDirection ?? input.direction;
   const direction =

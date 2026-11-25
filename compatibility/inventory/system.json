@@ -12,7 +12,7 @@
   "scope": "stable-community",
   "support": "unverified",
   "nativePackage": "@altroo/mui-native-system",
-  "nativeSourceSha256": "3ea0b1759777c3f3359f0118945fa441e759a66d5d16108cb8041c03a02631ce",
+  "nativeSourceSha256": "8c209a6eafbe60573df2cb4e181df2201c5d00d2d0fd602ab2d1dddeb0f7c89c",
   "exportMap": {
     "./package.json": "./package.json",
     ".": {
@@ -6960,7 +6960,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "applyNativeTextMetrics",
           "kind": "value",
-          "line": 125
+          "line": 126
         }
       ]
     },
@@ -7301,7 +7301,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "getTextStyleInheritance",
           "kind": "value",
-          "line": 144
+          "line": 145
         }
       ]
     },
@@ -7312,7 +7312,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "inheritedTextStyle",
           "kind": "value",
-          "line": 78
+          "line": 79
         }
       ]
     },
@@ -7323,7 +7323,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "isNativeTextStyleProperty",
           "kind": "value",
-          "line": 56
+          "line": 57
         }
       ]
     },
@@ -7499,7 +7499,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "nativeStyleTextMetrics",
           "kind": "value",
-          "line": 95
+          "line": 96
         }
       ]
     },
@@ -7510,7 +7510,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "nativeTextAlignmentStyle",
           "kind": "value",
-          "line": 174
+          "line": 175
         }
       ]
     },
@@ -7521,7 +7521,7 @@
           "module": "@altroo/mui-native-system:src/nativeText.ts",
           "name": "nativeTextParagraphDirection",
           "kind": "value",
-          "line": 160
+          "line": 161
         }
       ]
     },
@@ -12888,7 +12888,7 @@
         {
           "name": "Shadows",
           "file": "src/shadows.ts",
-          "line": 15,
+          "line": 16,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -13378,7 +13378,7 @@
         {
           "name": "Shadows",
           "file": "src/shadows.ts",
-          "line": 15,
+          "line": 16,
           "package": "@altroo/mui-native-system"
         }
       ]
@@ -19268,7 +19268,7 @@
     {
       "name": "NativeCssTextAlign",
       "file": "src/nativeText.ts",
-      "line": 12,
+      "line": 13,
       "kind": "type",
       "members": [],
       "references": [],
@@ -19278,7 +19278,7 @@
     {
       "name": "NativeTextContext",
       "file": "src/nativeText.ts",
-      "line": 13,
+      "line": 14,
       "kind": "type",
       "members": [
         {
@@ -19288,7 +19288,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentTextStyle?: TextStyle;",
-          "line": 14,
+          "line": 15,
           "kind": "property",
           "type": "TextStyle"
         },
@@ -19299,7 +19299,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentLineHeight?: number;",
-          "line": 15,
+          "line": 16,
           "kind": "property",
           "type": "number"
         },
@@ -19310,7 +19310,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentDirection?: 'ltr' | 'rtl' | undefined;",
-          "line": 16,
+          "line": 17,
           "kind": "property",
           "type": "'ltr' | 'rtl' | undefined"
         },
@@ -19321,7 +19321,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "parentTextAlign?: NativeCssTextAlign | undefined;",
-          "line": 17,
+          "line": 18,
           "kind": "property",
           "type": "NativeCssTextAlign | undefined"
         },
@@ -19332,7 +19332,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeTextMetrics?: Record<string, unknown>;",
-          "line": 18,
+          "line": 19,
           "kind": "property",
           "type": "Record<string, unknown>"
         },
@@ -19343,7 +19343,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "inheritOnly?: boolean;",
-          "line": 19,
+          "line": 20,
           "kind": "property",
           "type": "boolean"
         },
@@ -19354,7 +19354,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "captureMetricPlan?: boolean;",
-          "line": 21,
+          "line": 22,
           "kind": "property",
           "type": "boolean"
         },
@@ -19365,7 +19365,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "nativeStyle?: TextStyle;",
-          "line": 22,
+          "line": 23,
           "kind": "property",
           "type": "TextStyle"
         }
@@ -19381,7 +19381,7 @@
     {
       "name": "Length",
       "file": "src/nativeText.ts",
-      "line": 197,
+      "line": 198,
       "kind": "type",
       "members": [],
       "references": [],
@@ -19391,7 +19391,7 @@
     {
       "name": "ParsedLength",
       "file": "src/nativeText.ts",
-      "line": 198,
+      "line": 199,
       "kind": "type",
       "members": [],
       "references": [],
@@ -19862,7 +19862,7 @@
     {
       "name": "Shadows",
       "file": "src/shadows.ts",
-      "line": 15,
+      "line": 16,
       "kind": "type",
       "members": [],
       "references": [],
@@ -19870,9 +19870,66 @@
       "package": "@altroo/mui-native-system"
     },
     {
+      "name": "ShadowLength",
+      "file": "src/shadows.ts",
+      "line": 82,
+      "kind": "type",
+      "members": [],
+      "references": [],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
+      "name": "ParsedShadowLayer",
+      "file": "src/shadows.ts",
+      "line": 83,
+      "kind": "type",
+      "members": [
+        {
+          "name": "lengths",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "lengths: ShadowLength[];",
+          "line": 83,
+          "kind": "property",
+          "type": "ShadowLength[]"
+        },
+        {
+          "name": "color",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "color: ColorValue;",
+          "line": 83,
+          "kind": "property",
+          "type": "ColorValue"
+        },
+        {
+          "name": "inset",
+          "optional": false,
+          "readonly": false,
+          "computed": false,
+          "memberKind": "TSPropertySignature",
+          "declaration": "inset: boolean",
+          "line": 83,
+          "kind": "property",
+          "type": "boolean"
+        }
+      ],
+      "references": [
+        "ColorValue",
+        "ShadowLength"
+      ],
+      "inheritanceResolved": false,
+      "package": "@altroo/mui-native-system"
+    },
+    {
       "name": "ParsedShadow",
       "file": "src/shadows.ts",
-      "line": 81,
+      "line": 84,
       "kind": "type",
       "members": [
         {
@@ -19882,7 +19939,7 @@
           "computed": false,
           "memberKind": "TSPropertySignature",
           "declaration": "source: string;",
-          "line": 81,
+          "line": 84,
           "kind": "property",
           "type": "string"
         },
@@ -19892,14 +19949,14 @@
           "readonly": false,
           "computed": false,
           "memberKind": "TSPropertySignature",
-          "declaration": "layers: BoxShadowValue[]",
-          "line": 81,
+          "declaration": "layers: ParsedShadowLayer[]",
+          "line": 84,
           "kind": "property",
-          "type": "BoxShadowValue[]"
+          "type": "ParsedShadowLayer[]"
         }
       ],
       "references": [
-        "BoxShadowValue"
+        "ParsedShadowLayer"
       ],
       "inheritanceResolved": false,
       "package": "@altroo/mui-native-system"

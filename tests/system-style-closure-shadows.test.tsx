@@ -137,6 +137,56 @@ test('CSS textShadow maps a single shadow with signed offsets and final foregrou
   });
 });
 
+test('font-relative textShadow uses the final CSS and native font size', () => {
+  const theme = createTheme({ cssRootFontSize: 16 });
+  const shadow = 'red 0.5em -0.25em 0.125rem';
+  expect(
+    resolveSx([{ fontSize: '12px', textShadow: shadow }, { fontSize: '20px' }], theme),
+  ).toMatchObject({
+    fontSize: 20,
+    textShadowColor: 'red',
+    textShadowOffset: { width: 10, height: -5 },
+    textShadowRadius: 2,
+  });
+  expect(
+    resolveSx({ fontSize: '24px', textShadow: '1em -1px 0.1em' }, theme, {
+      nativeStyle: { fontSize: 30 },
+    }),
+  ).toMatchObject({
+    textShadowOffset: { width: 30, height: -1 },
+    textShadowRadius: 3,
+  });
+});
+
+test('invalid CSS font size leaves the inherited font basis for em shadow lengths', () => {
+  const collect = jest.fn();
+  const restore = configureDiagnostics(collect);
+  try {
+    const result = resolveSx({ fontSize: '-10px', textShadow: '0 0 1em red' }, createTheme(), {
+      parentTextStyle: { fontSize: 18 },
+    });
+    expect(result).toMatchObject({
+      textShadowColor: 'red',
+      textShadowOffset: { width: 0, height: 0 },
+      textShadowRadius: 18,
+    });
+    expect(result.fontSize).toBeUndefined();
+    expect(collect.mock.calls.map(([event]) => event.code)).toEqual(['typography-value']);
+  } finally {
+    restore();
+  }
+});
+
+test('an inherited shadow replaces an earlier declaration in the same cascade', () => {
+  const theme = createTheme();
+  const local = { textShadow: 'red 0.5em 1em' };
+  expect(resolveSx([local, { textShadow: 'inherit' }], theme)).toEqual({});
+  expect(resolveSx([{ textShadow: 'inherit' }, local], theme)).toMatchObject({
+    textShadowColor: 'red',
+    textShadowOffset: { width: 8, height: 16 },
+  });
+});
+
 test('textShadow none clears the native fields and unrepresentable declarations preserve the cascade', () => {
   const theme = createTheme();
   const baseline = { textShadow: 'rgba(1, 2, 3, 0.4) 0 2px 4px' };
@@ -154,6 +204,7 @@ test('textShadow none clears the native fields and unrepresentable declarations 
       '0 2px 1px 0 red',
       'inset 0 2px red',
       '0 2px -1px red',
+      '0 2px -1em red',
     ];
     for (const textShadow of invalid) {
       expect(resolveSx([baseline, { textShadow }], theme)).toEqual({

@@ -11,6 +11,7 @@ import {
   type ViewStyle,
 } from 'react-native';
 import { diagnostic } from './diagnostics';
+import { nativeRelativeLength } from './nativeTextConditions';
 
 export type Shadows = [
   'none',
@@ -78,16 +79,19 @@ export const defaultShadows: Shadows = [
   createShadow(0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8),
 ];
 
-type ParsedShadow = { source: string; layers: BoxShadowValue[] };
+type ShadowLength = readonly [amount: number, relativeToFont: boolean];
+type ParsedShadowLayer = { lengths: ShadowLength[]; color: ColorValue; inset: boolean };
+type ParsedShadow = { source: string; layers: ParsedShadowLayer[] };
+const deferredTextShadowOffsets = new WeakMap<object, readonly [ShadowLength, ShadowLength]>();
 function parseShadow(input: string, rem: number, textOnly = false): ParsedShadow | undefined {
   if (input.trim() === 'none') return { source: 'none', layers: [] };
-  const layers: BoxShadowValue[] = [];
+  const layers: ParsedShadowLayer[] = [];
   const normalized: string[] = [];
   let needsNormalization = /\drem\b/.test(input);
   for (const layer of input.replace(/\n/g, ' ').split(/,(?![^()]*\))/)) {
     if (textOnly && layers.length) return undefined;
     const tokens = layer.trim().split(/\s+(?![^()]*\))/);
-    const lengths: number[] = [];
+    const lengths: ShadowLength[] = [];
     let color: ColorValue | undefined;
     let inset = false;
     let endedLengths = false;
@@ -104,27 +108,26 @@ function parseShadow(input: string, rem: number, textOnly = false): ParsedShadow
         if (lengths.length) endedLengths = true;
         output.push(String(color));
       } else {
-        const match = token.match(/^([+-]?(?:\d+\.?\d*|\.\d+))(px|rem)?$/);
-        if (!match || endedLengths || lengths.length === (textOnly ? 3 : 4)) return undefined;
+        const match = token.match(/^([+-]?(?:\d+\.?\d*|\.\d+))(px|rem|em)?$/);
+        if (
+          !match ||
+          endedLengths ||
+          (!textOnly && match[2] === 'em') ||
+          lengths.length === (textOnly ? 3 : 4)
+        )
+          return undefined;
         const value = Number(match[1]) * (match[2] === 'rem' ? rem : 1);
         if (!Number.isFinite(value) || (!match[2] && value !== 0)) return undefined;
-        lengths.push(value);
+        lengths.push([value, match[2] === 'em']);
         output.push(match[2] === 'rem' ? `${value}px` : token);
       }
     }
-    if (lengths.length < 2 || (lengths[2] ?? 0) < 0) return undefined;
+    if (lengths.length < 2 || (lengths[2]?.[0] ?? 0) < 0) return undefined;
     if (color === undefined) {
       output.push('currentColor');
       needsNormalization = true;
     }
-    layers.push({
-      offsetX: lengths[0],
-      offsetY: lengths[1],
-      blurRadius: lengths[2] ?? 0,
-      spreadDistance: lengths[3] ?? 0,
-      color: color ?? 'currentColor',
-      inset,
-    });
+    layers.push({ lengths, color: color ?? 'currentColor', inset });
     normalized.push(output.join(' '));
   }
   return layers.length
@@ -132,30 +135,47 @@ function parseShadow(input: string, rem: number, textOnly = false): ParsedShadow
     : undefined;
 }
 
-// Fabric exposes one text shadow without inset or spread.
+// Fabric exposes one text shadow without inset or spread. Expand the fields
+// in rule order and defer only the font-relative lengths.
 export function nativeTextShadow(value: unknown, rem: number): Record<string, unknown> | undefined {
-  const keyword = typeof value === 'string' ? value.trim().toLowerCase() : undefined;
-  if (keyword === 'inherit' || keyword === 'unset')
-    return { textShadowColor: keyword, textShadowOffset: keyword, textShadowRadius: keyword };
-  const parsed =
-    keyword === 'initial'
-      ? { layers: [] }
-      : typeof value === 'string'
-        ? parseShadow(keyword === 'none' ? keyword : value, rem, true)
-        : undefined;
-  if (!parsed) {
-    diagnostic(
-      'text-shadow',
-      'Native textShadow supports one shadow with px or rem offsets and blur.',
-    );
-    return;
+  if (typeof value === 'string') {
+    const keyword = value.trim().toLowerCase();
+    if (keyword === 'inherit' || keyword === 'unset')
+      return { textShadowColor: keyword, textShadowOffset: keyword, textShadowRadius: keyword };
+    if (keyword === 'none' || keyword === 'initial')
+      return {
+        textShadowColor: 'transparent',
+        textShadowOffset: { width: 0, height: 0 },
+        textShadowRadius: 0,
+      };
+    const layer = parseShadow(value, rem, true)?.layers[0];
+    if (layer) {
+      const [width, height, blur] = layer.lengths;
+      const textShadowOffset = {
+        width: width[1] ? nativeRelativeLength(width[0]) : width[0],
+        height: height[1] ? nativeRelativeLength(height[0]) : height[0],
+      };
+      if (width[1] || height[1]) deferredTextShadowOffsets.set(textShadowOffset, [width, height]);
+      return {
+        textShadowColor: layer.color,
+        textShadowOffset,
+        textShadowRadius: blur?.[1] ? nativeRelativeLength(blur[0]) : (blur?.[0] ?? 0),
+      };
+    }
   }
-  const layer = parsed.layers[0];
-  return {
-    textShadowColor: layer?.color ?? 'transparent',
-    textShadowOffset: { width: layer?.offsetX ?? 0, height: layer?.offsetY ?? 0 },
-    textShadowRadius: layer?.blurRadius ?? 0,
-  };
+  diagnostic('text-shadow', 'Native textShadow supports one shadow with px, rem or em lengths.');
+}
+
+// Only System-created offsets can contain pending em lengths. Native inline
+// offsets keep their own shape, units and read behavior.
+export function resolveNativeTextShadowOffset(value: unknown, fontSize: number): unknown {
+  const lengths = value && typeof value === 'object' ? deferredTextShadowOffsets.get(value) : null;
+  if (!lengths) return value;
+  const [width, height] = lengths.map(([amount, relative]) =>
+    relative ? amount * fontSize : amount,
+  );
+  if (Number.isFinite(width) && Number.isFinite(height)) return { width, height };
+  diagnostic('text-shadow', 'Native textShadow offsets must resolve to finite numbers.');
 }
 
 export function nativeBoxShadow(
@@ -229,8 +249,14 @@ export function bindShadowColor(
     return value.replace(/\bcurrentColor\b/gi, color);
   }
   // Native dynamic/semantic colors cannot be serialized into a CSS string.
-  return parseShadow(value, 1)?.layers.map((layer) => ({
-    ...layer,
-    color: layer.color === 'currentColor' ? color : layer.color,
-  }));
+  return parseShadow(value, 1)?.layers.map(
+    (layer): BoxShadowValue => ({
+      offsetX: layer.lengths[0][0],
+      offsetY: layer.lengths[1][0],
+      blurRadius: layer.lengths[2]?.[0] ?? 0,
+      spreadDistance: layer.lengths[3]?.[0] ?? 0,
+      color: layer.color === 'currentColor' ? color : layer.color,
+      inset: layer.inset,
+    }),
+  );
 }
