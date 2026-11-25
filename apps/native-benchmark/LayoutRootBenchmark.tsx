@@ -1,12 +1,14 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type RefCallback } from 'react';
 import {
+  I18nManager,
   Platform,
   Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
+  useWindowDimensions,
   type ViewInstance,
 } from 'react-native';
 import {
@@ -22,7 +24,13 @@ import {
   type Theme,
 } from '@mui/material';
 
-export type LayoutRootBenchmarkFamily = 'form-group' | 'list-item-avatar' | 'button-group';
+import { AccordionBenchmarkRow } from './AccordionBenchmarkRow';
+
+export type LayoutRootBenchmarkFamily =
+  | 'form-group'
+  | 'list-item-avatar'
+  | 'button-group'
+  | 'accordion';
 
 export interface LayoutRootBenchmarkProps {
   mode?: 'rn' | 'mui';
@@ -104,6 +112,11 @@ const themes = (['light', 'dark'] as const).map((mode) =>
       },
     },
   }),
+);
+
+// The endpoint-only Accordion comparison excludes every finite presentation clock.
+const accordionThemes = themes.map((theme) =>
+  createTheme({ ...theme, motion: { ...theme.motion, reducedMotion: 'always' } }),
 );
 
 /** Both modes own real local action state; parent updates must preserve it. */
@@ -231,7 +244,21 @@ const LayoutBenchmarkRow = memo(function LayoutBenchmarkRow({
         ]
       : undefined;
   const measured =
-    family === 'button-group' && mode === 'mui' ? (
+    family === 'accordion' ? (
+      <AccordionBenchmarkRow
+        mode={mode}
+        expanded={row}
+        disabled={error}
+        alternateStyle={alternateStyle}
+        theme={theme}
+        rootRef={rootRef}
+        testID={identify(`layout-root-row-${id}`)}
+        labelID={identify(`layout-root-label-${id}`)}
+        detailID={identify(`layout-root-detail-${id}`)}
+        label={`Row ${String(index + 1).padStart(3, '0')}`}
+        detail={`Stage ${String(epoch % 16).padStart(2, '0')}`}
+      />
+    ) : family === 'button-group' && mode === 'mui' ? (
       <ButtonGroup
         ref={rootRef}
         testID={identify(`layout-root-row-${id}`)}
@@ -319,7 +346,7 @@ export function LayoutRootBenchmark({
   if (!Number.isFinite(rowCount)) throw new RangeError('Layout benchmark rowCount must be finite.');
   if (
     !['rn', 'mui'].includes(mode) ||
-    !['form-group', 'list-item-avatar', 'button-group'].includes(family) ||
+    !['form-group', 'list-item-avatar', 'button-group', 'accordion'].includes(family) ||
     !['mount', 'update'].includes(operation)
   )
     throw new RangeError('Unknown layout benchmark configuration.');
@@ -364,7 +391,7 @@ export function LayoutRootBenchmark({
     error = Math.floor(epoch / 2) % 2 === 1,
     alternateTheme = Math.floor(epoch / 4) % 2 === 1,
     alternateStyle = Math.floor(epoch / 8) % 2 === 1;
-  const theme = themes[Number(alternateTheme)];
+  const theme = (family === 'accordion' ? accordionThemes : themes)[Number(alternateTheme)];
   const content = useMemo(
     () =>
       Array.from({ length: rows }, (_, index) => (
@@ -402,9 +429,13 @@ export function LayoutRootBenchmark({
   const completedRows = [...epochs.current.values()].filter((value) => value === epoch).length;
   const activeRows = counts.mounts - counts.cleanups,
     activeRoots = counts.rootAttachments - counts.rootCleanups;
+  const { fontScale } = useWindowDimensions();
   const receipt = {
     schemaVersion: 1,
     workload: 'layout-root-v1',
+    fontScale,
+    globalRtl: I18nManager.isRTL,
+    swapInRtl: I18nManager.doLeftAndRightSwapInRTL,
     cohortId,
     sourceId: process.env.EXPO_PUBLIC_MUI_BENCHMARK_SOURCE_ID ?? 'unidentified',
     dev: __DEV__,

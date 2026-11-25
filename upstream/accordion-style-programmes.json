@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "description": "Original Accordion/Paper constructor and override resolver CSS identity, independent of native paint.",
+  "reference": {
+    "name": "@mui/material",
+    "version": "9.5.0",
+    "sourceCommit": "1c3f8b4903f21cfad12c102edb3db4ceba2e8c8c",
+    "integrity": "sha512-QgqvdVjZoKxP8E8SBxYY6LrdV+kw00moXweZQWBbMMdifPKZAGfUaaXhGKIca6fjKnCL6HJIe/AWWCpqNvyHVw==",
+    "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
+    "sourceFiles": {
+      "Accordion/Accordion.js": "3da6eb8f19e614bac7428c77920abb8b5a92c70b85aa0452bc2e549ead99cf79",
+      "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
+      "transitions/utils.js": "62edd7542cb0c79e408341c4fa61642c43c9b4c00a2f8cfc9d595472b5ccf347",
+      "styles/reducedMotion.js": "3a80a30b233bb4ab252fd858b921992ca072e015cae638b79d71e7f281795394"
+    }
+  },
+  "generator": {
+    "source": "scripts/reference/accordion-style-programmes.mjs",
+    "sha256": "2b21821e381a4c42d24c45f6cecffff95fcf6e98fd58708fca86fb38eecec535"
+  },
+  "generatedSha256": "416eba23fc871645e508cf8ba52a760ff04ac8cf9d396bce6bca6c141ed4cb34",
+  "localFiles": ["packages/material/src/nativeAccordionCss.ts"]
+}

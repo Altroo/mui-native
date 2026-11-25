@@ -30,9 +30,11 @@
       "className/index.js": "fcf3ba681b65a1b9feaf53f06890e56ef4e01d43478b404b10d7437773fff603",
       "Paper/Paper.js": "45fed300080409022659fbb677e6d7628c0230e25ff8a8edcde0097544e9ab32",
       "Paper/paperClasses.js": "a1018d4c7cdc4390e25ef889da1889eb7c13d19111d3465f25320dc1f5550f01",
+      "Box/Box.js": "306d78c5254c68f321b72999149d084a76903e4b45797999cc9f71eea80b79ce",
       "ButtonBase/ButtonBase.js": "5c0f687f728936c09a5b4618adf3d3eb99cf4d5456ece7502d8acdbea4f25c1b",
       "ButtonBase/buttonBaseClasses.js": "f670c87c82a17f16c18a6b79e01f09976d61026b6005d07cd6e9526672e3abcf",
-      "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa"
+      "styles/rootShouldForwardProp.js": "f0cc54ba2a509f99d79c934d545be245ed75eb0764a894cedd736de60295abaa",
+      "styles/slotShouldForwardProp.js": "94273fe410b5da39daf022f286c2d746538878d094694eab5307d0eb6bd3501c"
     }
   },
   "classUtils": {
@@ -44,7 +46,9 @@
     "sourceFiles": {
       "generateUtilityClass/generateUtilityClass.js": "ddf52016f0aa3f5cad9cecb3224a76ea74b1788e252777b3c6c81b4f07534574",
       "ClassNameGenerator/ClassNameGenerator.js": "8aa703e2a9d085d4eb371742ec22fedc25fd54f956b827c1ae0eea2b493c7da0",
-      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374"
+      "composeClasses/composeClasses.js": "6fe561498f56a586cdcd02742d5dae63ccdfdd8b6532246679fa869912da8374",
+      "mergeSlotProps/mergeSlotProps.js": "e5b9e904c10645212f6a7e58eaf4616acfe924ce6945e6705568fb018a84f54d",
+      "appendOwnerState/appendOwnerState.js": "5f3e28895ab6fb9d6eacf3d0919554c02c81884b3abd6bcc4ee86a6f70fbb75e"
     }
   },
   "localFiles": [

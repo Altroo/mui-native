@@ -11,6 +11,11 @@ const here = path.dirname(fileURLToPath(import.meta.url)),
   root = process.env.MUI_NATIVE_TEST_ROOT ?? path.resolve(here, '../../..');
 const req = createRequire(root + '/package.json'),
   deps = createRequire(root + '/node_modules/.pnpm/node_modules/package.json');
+/**
+ * Read a TypeScript module as source text for the isolated bootstrap evaluator.
+ * @param {string} name
+ * @returns {string}
+ */
 const source = (name) => fs.readFileSync(path.resolve(here, '../src', name + '.ts'), 'utf8');
 const compile = (name) =>
   req('@babel/core').transformSync(source(name), {
@@ -458,7 +463,17 @@ for (const shape of ['base', 'raw', 'origin', 'both']) {
       const boot = fresh()(() => native(data), expected);
       assert.equal(boot.requireProfile().rn, '0.88.1');
       assert.equal(Object.hasOwn(boot, 'requireLiteralRawText'), false);
-      assert.deepEqual(Object.keys(boot).sort(), ['requireGeneratedTextOrigin', 'requireProfile']);
+      assert.deepEqual(Object.keys(boot).sort(), [
+        'requireGeneratedTextOrigin',
+        'requireProfile',
+        'supportsInheritedTextAlignment',
+        'supportsInheritedTextColors',
+        'supportsInheritedTextFonts',
+        'supportsInheritedTextMetrics',
+        'supportsParentStructuralCases',
+        'supportsPeerStyleIdentity',
+        'supportsStructuralCases',
+      ]);
       if (shape === 'origin' || shape === 'both') {
         const contract = boot.requireGeneratedTextOrigin();
         assert.equal(contract.schema, 1);
@@ -717,4 +732,158 @@ test('global wrapper no longer exposes retired raw readiness', () => {
   result.requireGeneratedTextOrigin();
   assert.equal(Object.hasOwn(result, 'requireOwnedLiteralRawText'), false);
   assert.equal(calls, 1);
+});
+
+test('structural case capability is additive and remains native-free after initialization', () => {
+  for (const capability of [
+    undefined,
+    'unknown',
+    'first-last-of-type-v1',
+    'first-last-of-type-v2',
+  ]) {
+    const data = metadata();
+    if (capability !== undefined) data.structuralCases = capability;
+    let calls = 0;
+    const boot = fresh()(
+      () => ({
+        getStructuralStyleMetadata() {
+          calls++;
+          return JSON.stringify(data);
+        },
+      }),
+      expected,
+    );
+    boot.requireProfile();
+    assert.equal(
+      boot.supportsStructuralCases(),
+      ['first-last-of-type-v1', 'first-last-of-type-v2'].includes(capability),
+    );
+    assert.equal(
+      boot.supportsStructuralCases(),
+      ['first-last-of-type-v1', 'first-last-of-type-v2'].includes(capability),
+    );
+    assert.equal(calls, 1);
+  }
+  assert.equal(fresh()(() => null, expected).supportsStructuralCases(), false);
+});
+
+test('parent projection capability is additive and requires supported structural cases', () => {
+  for (const base of [undefined, 'first-last-of-type-v1'])
+    for (const parent of [undefined, 'unknown', 'parent-structural-facts-v1']) {
+      const data = metadata();
+      if (base !== undefined) data.structuralCases = base;
+      if (parent !== undefined) data.parentStructuralCases = parent;
+      const boot = fresh()(() => native(data), expected);
+      boot.requireProfile();
+      assert.equal(
+        boot.supportsParentStructuralCases(),
+        base === 'first-last-of-type-v1' && parent === 'parent-structural-facts-v1',
+      );
+    }
+});
+
+test('CSS peer support is immutable, distinct from v1 and requires parent projection', () => {
+  for (const structuralCases of [
+    undefined,
+    'unknown',
+    'first-last-of-type-v1',
+    'first-last-of-type-v2',
+  ])
+    for (const parentStructuralCases of [undefined, 'unknown', 'parent-structural-facts-v1']) {
+      const data = { ...metadata(), structuralCases, parentStructuralCases };
+      let calls = 0;
+      const boot = fresh()(
+        () => ({
+          getStructuralStyleMetadata() {
+            calls++;
+            return JSON.stringify(data);
+          },
+        }),
+        expected,
+      );
+      const wanted =
+        structuralCases === 'first-last-of-type-v2' &&
+        parentStructuralCases === 'parent-structural-facts-v1';
+      assert.equal(boot.supportsPeerStyleIdentity(), wanted);
+      data.structuralCases = 'unknown';
+      assert.equal(boot.supportsPeerStyleIdentity(), wanted);
+      assert.equal(boot.requireProfile().rn, '0.88.1');
+      assert.equal(calls, 1);
+    }
+  assert.equal(fresh()(() => null, expected).supportsPeerStyleIdentity(), false);
+});
+
+// New color readiness is additive and requires the physical parent selector ABI.
+test('stock Text color capability requires its exact version and parent selectors', () => {
+  for (const structural of [undefined, 'first-last-of-type-v1', 'first-last-of-type-v2']) {
+    for (const parent of [undefined, 'parent-structural-facts-v1']) {
+      for (const color of [undefined, false, 'stock-text-color-v0', 'stock-text-color-v1']) {
+        const data = metadata();
+        if (structural !== undefined) data.structuralCases = structural;
+        if (parent !== undefined) data.parentStructuralCases = parent;
+        if (color !== undefined) data.inheritedTextColors = color;
+        const boot = fresh()(() => native(data), expected);
+        assert.equal(boot.requireProfile().rn, '0.88.1');
+        assert.equal(
+          boot.supportsInheritedTextColors(),
+          !!structural && !!parent && color === 'stock-text-color-v1',
+        );
+      }
+    }
+  }
+});
+
+// Metric recipes require all predecessor capabilities and are captured once.
+test('stock Text metrics require exact version, color and parent capabilities', () => {
+  for (const structural of [undefined, 'first-last-of-type-v2'])
+    for (const parent of [undefined, 'parent-structural-facts-v1'])
+      for (const color of [undefined, 'stock-text-color-v1'])
+        for (const metrics of [
+          undefined,
+          false,
+          'stock-text-metrics-v0',
+          'stock-text-metrics-v1',
+          'stock-text-metrics-v2',
+          'stock-text-metrics-v3',
+          'stock-text-metrics-v4',
+          'stock-text-metrics-v4-alignment',
+        ]) {
+          const data = metadata();
+          if (structural) data.structuralCases = structural;
+          if (parent) data.parentStructuralCases = parent;
+          if (color) data.inheritedTextColors = color;
+          if (metrics !== undefined) data.inheritedTextMetrics = metrics;
+          let calls = 0;
+          const boot = fresh()(
+            () => ({
+              getStructuralStyleMetadata() {
+                calls++;
+                return JSON.stringify(data);
+              },
+            }),
+            expected,
+          );
+          boot.requireProfile();
+          const wanted =
+            !!structural &&
+            !!parent &&
+            !!color &&
+            [
+              'stock-text-metrics-v2',
+              'stock-text-metrics-v3',
+              'stock-text-metrics-v4-alignment',
+            ].includes(metrics);
+          assert.equal(boot.supportsInheritedTextMetrics(), wanted);
+          const fonts =
+            wanted &&
+            (metrics === 'stock-text-metrics-v3' || metrics === 'stock-text-metrics-v4-alignment');
+          const alignment = fonts && metrics === 'stock-text-metrics-v4-alignment';
+          assert.equal(boot.supportsInheritedTextFonts(), fonts);
+          assert.equal(boot.supportsInheritedTextAlignment(), alignment);
+          data.inheritedTextMetrics = 'changed-after-capture';
+          assert.equal(boot.supportsInheritedTextMetrics(), wanted);
+          assert.equal(boot.supportsInheritedTextFonts(), fonts);
+          assert.equal(boot.supportsInheritedTextAlignment(), alignment);
+          assert.equal(calls, 1);
+        }
 });

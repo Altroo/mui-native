@@ -40,6 +40,7 @@ export {
 
 export { nativeTextIntentStyleServices } from '../../nativeTextConditions';
 export { normalizeTextStyle } from '../../nativeText';
+export { useNativeTextScopeRoot } from '../../nativeTextRegistry';
 export { nativeTextElementProvenance } from '../../nativeTextProvenance';
 export type { NativeTextProvenance, NativeTextNormalization } from '../../nativeTextProvenance';
 
@@ -70,3 +71,44 @@ export {
 } from '../../nativeStyleCacheScope';
 
 export { useNativeDefaultPropsSource, useNativeSourceDefaultProps } from '../../defaultProps';
+
+export {
+  NativeStructuralFactsContext,
+  useNativeStructuralFacts,
+} from '../../nativeStructuralFacts';
+export type { NativeStructuralFacts } from '../../nativeStructuralFacts';
+
+export { nativeMemoType } from '../../nativeMemoInterop';
+
+export { nativeCssClassIdentities } from '../../nativeCssPeerIdentity';
+export type { NativeStyleClassIdentity } from '../../nativeCssPeerIdentity';
+
+export { NativeCssPeerView } from '../../nativeCssPeerView';
+
+export { nativeColorLayer, nativeColorSource } from '../../nativeColorSources';
+
+export { inheritNativeTextColorBinding, nativeTextColorBinding } from '../../nativeColorSources';
+export { nativeTextColorChildren } from '../../textScope';
+
+export {
+  nativeMetricPlan,
+  nativeMetricBasis,
+  nativeMetricViewPlan,
+  nativeAlignmentIsInherited,
+} from '../../nativeText';
+export {
+  nativeMetricBinding,
+  nativeMetricState,
+  nativeMetricTypographyTail,
+  retainNativeMetricScope,
+} from '../../nativeMetricSources';
+
+export {
+  nativeFontPlan,
+  nativeFontStep,
+  nativeFontBinding,
+  nativeFontState,
+  retainNativeFontScope,
+} from '../../nativeFontSources';
+
+export { nativeTextShadowPresentation } from '../../nativeText';

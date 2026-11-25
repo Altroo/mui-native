@@ -1,0 +1,335 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+// Exact candidate-bank header with finite parser/props doubles. No RN mounting claim.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { mkdtemp, writeFile, copyFile, mkdir, rm, readFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+const execute = promisify(execFile);
+const framework = String.raw`
+#pragma once
+#include <map>
+#include <memory>
+#include <string>
+#include <vector>
+#include <cstddef>
+#include <cstdint>
+#include <limits>
+#include <cmath>
+namespace folly {
+struct dynamic {
+  bool array{}, null{}, boolean{}; int kind{}; double number{}; std::string text; std::vector<dynamic> values; std::map<std::string,dynamic> fields;
+  dynamic()=default; dynamic(std::nullptr_t):null(true){}
+  bool isNull()const{return null;} double asDouble()const{return number;}
+  bool isObject()const{return !array&&!null&&kind==0;}
+  bool isNumber()const{return kind==3;}
+  bool isBool()const{return kind==1;} bool isString()const{return kind==2;}
+  bool asBool()const{return boolean;}
+  const std::string& getString()const{return text;}
+  std::size_t count(const char* key)const{return fields.count(key);}
+  const dynamic& at(const char* key)const{return fields.at(key);}
+  bool isArray()const{return array;} std::size_t size()const{return array?values.size():fields.size();}
+  const dynamic& operator[](std::size_t i)const{return values.at(i);}
+  dynamic& operator[](const char* key){return fields[key];}
+  auto begin()const{return values.begin();} auto end()const{return values.end();}
+  bool operator==(const dynamic&)const=default;
+};
+}
+namespace facebook::react {
+struct PropsParserContext {};
+struct RawProps {folly::dynamic value;explicit RawProps(folly::dynamic input):value(std::move(input)){};};
+struct Props {using Shared=std::shared_ptr<const Props>;virtual ~Props()=default;};
+struct AltrooMUIStructuralViewProps:Props {
+  int value; mutable bool sealed{}; folly::dynamic ownedProgramme{nullptr};
+  explicit AltrooMUIStructuralViewProps(int input):value(input){}
+  void seal()const{sealed=true;}
+};
+inline int parses{};
+struct ModelDescriptor {
+  std::shared_ptr<const Props> cloneProps(const PropsParserContext&,
+      const std::shared_ptr<const AltrooMUIStructuralViewProps>&,RawProps raw)const {
+    ++parses;return std::make_shared<const AltrooMUIStructuralViewProps>(raw.value.number);
+  }
+};
+}
+namespace altroo::owned_channel {using ConversionDescriptor=facebook::react::ModelDescriptor;}
+`;
+const program = String.raw`
+#include "PreparedOwnedCandidates.h"
+#include <iostream>
+using namespace facebook::react;
+using namespace altroo::owned_adapter_proof;
+void require(bool value){if(!value)throw std::runtime_error("candidate-bank assertion failed");}
+int main(){try{
+  altroo::owned_channel::ConversionDescriptor descriptor;PropsParserContext context;
+  auto baseline=std::make_shared<const AltrooMUIStructuralViewProps>(999);
+  for(const std::size_t count:{8,16}){
+    folly::dynamic input;input.array=true;input.values.resize(count);
+    for(std::size_t i=0;i<count;++i)input.values[i].number=i%3;
+    parses=0;auto bank=prepareStructural(descriptor,context,baseline,input);
+    require(bank.structural()&&bank.count()==count&&bank.ordinaryIndex()==count);
+    require(parses==3);
+    for(std::size_t i=0;i<count;++i){
+      require(bank.at(i)->value==int(i%3)&&bank.at(i)->sealed);
+      if(i>=3)require(bank.at(i)==bank.at(i-3));
+    }
+    require(baseline->value==999&&!baseline->sealed);
+    bool rejected=false;try{bank.at(bank.ordinaryIndex());}catch(const std::invalid_argument&){rejected=true;}
+    require(rejected);
+    if(count==16)require(bank.at(8)->value==2&&bank.at(8)!=baseline);
+  }
+  for(const std::size_t count:{0,1,7,9,15,17}){
+    folly::dynamic input;input.array=true;input.values.resize(count);parses=0;
+    bool rejected=false;try{prepareStructural(descriptor,context,baseline,input);}catch(const std::invalid_argument&){rejected=true;}
+    require(rejected&&parses==0);
+  }
+  PreparedViewCandidates legacy;legacy.normal=baseline;legacy.last=std::make_shared<const AltrooMUIStructuralViewProps>(24);
+  require(!legacy.structural()&&legacy.count()==8&&legacy.ordinaryIndex()==8);
+  require(legacy.at(6)==baseline&&legacy.at(7)==legacy.last);
+  std::cout<<"PASS exact bounded candidate bank; finite conversion doubles\n";
+}catch(const std::exception&e){std::cerr<<e.what()<<'\n';return 1;}}
+`;
+test('bounded candidate banks keep index8 distinct from ordinary fallback and deduplicate sealed leaves', async (t) => {
+  const scratch = await mkdtemp(join(tmpdir(), 'mui-candidate-bank-'));
+  t.after(() => rm(scratch, { recursive: true, force: true }));
+  await mkdir(join(scratch, 'react/renderer/core'), { recursive: true });
+  await writeFile(join(scratch, 'GeneratedConversion.h'), framework);
+  await writeFile(join(scratch, 'react/renderer/core/RawProps.h'), '#pragma once\n');
+  await copyFile(
+    new URL('../common/cpp/PreparedOwnedCandidates.h', import.meta.url),
+    join(scratch, 'PreparedOwnedCandidates.h'),
+  );
+  await writeFile(join(scratch, 'check.cpp'), program);
+  await execute(
+    process.env.CXX || 'clang++',
+    [
+      '-std=c++20',
+      '-Wall',
+      '-Wextra',
+      '-Werror',
+      '-fsanitize=address,undefined',
+      '-fno-omit-frame-pointer',
+      '-I' + scratch,
+      join(scratch, 'check.cpp'),
+      '-o',
+      join(scratch, 'check'),
+    ],
+    { timeout: 30000 },
+  );
+  const result = await execute(join(scratch, 'check'), [], { timeout: 10000 });
+  assert.match(result.stdout, /PASS exact bounded candidate bank/);
+});
+
+// Exercise the exact production descriptor method, not a second dispatch rule.
+// Conversion/validation are explicit doubles; bank conversion uses the real header.
+test('the descriptor routes schema3 through structural preparation', async (t) => {
+  const scratch = await mkdtemp(join(tmpdir(), 'mui-candidate-dispatch-'));
+  t.after(() => rm(scratch, { recursive: true, force: true }));
+  const source = await readFile(
+    new URL('../common/cpp/OwnedPropsTransport.h', import.meta.url),
+    'utf8',
+  );
+  const start = source.indexOf('  Props::Shared cloneProps(');
+  const end = source.indexOf('  OwnedProps::Shared replaceNumeric(', start);
+  assert(start > 0 && end > start);
+  const method = source.slice(start, end).replace(' const override {', ' const {');
+  const model = String.raw`
+#include "PreparedOwnedCandidates.h"
+#include <iostream>
+using namespace facebook::react;
+namespace altroo::owned_channel {inline bool fullProgramme(const folly::dynamic& value){return !value.isNull();}}
+// Color parsing is outside this schema-routing control and must never run.
+namespace altroo::text_color {
+struct ColorBank {};
+inline std::shared_ptr<const ColorBank> prepareColorBank(const PropsParserContext&,const folly::dynamic&) {
+  throw std::logic_error("Unexpected color parsing in schema-only control");
+}
+}
+namespace altroo::text_metrics {
+struct Bank {};
+inline std::shared_ptr<const Bank> prepareBank(const folly::dynamic&) {
+  throw std::logic_error("Unexpected metric parsing in schema-only control");
+}
+}
+namespace altroo::text_fonts {
+struct Bank {};
+inline std::shared_ptr<const Bank> prepareBank(const PropsParserContext&,const folly::dynamic&) {
+  throw std::logic_error("Unexpected font parsing in schema-only control");
+}
+}
+using Generated=AltrooMUIStructuralViewProps;
+using GeneratedShared=std::shared_ptr<const Generated>;
+using Pair=altroo::owned_adapter_proof::PreparedViewCandidates;
+enum class Programme {Numeric,ExplicitPair,PeerOnly};
+struct Prepared {Programme programme;GeneratedShared unselected;Pair candidates;std::shared_ptr<const altroo::text_color::ColorBank> textColors;std::shared_ptr<const altroo::text_metrics::Bank> textMetrics;std::shared_ptr<const altroo::text_fonts::Bank> textFonts;};
+struct OwnedProps:Props {using Shared=std::shared_ptr<const OwnedProps>;std::shared_ptr<const Prepared> prepared;bool selectedLast{};};
+struct Descriptor {
+  using ConverterCore=altroo::owned_channel::ConversionDescriptor;
+  ConverterCore converter_;GeneratedShared incoming;
+  GeneratedShared convertCurrent(const PropsParserContext&,const OwnedProps::Shared&,RawProps)const{return incoming;}
+  OwnedProps::Shared finish(GeneratedShared value,Pair pair,Programme kind,const OwnedProps::Shared&,bool=false,std::string={},std::shared_ptr<const altroo::text_color::ColorBank> colors={},std::shared_ptr<const altroo::text_metrics::Bank> metrics={},std::shared_ptr<const altroo::text_fonts::Bank> fonts={})const{
+    auto out=std::make_shared<OwnedProps>();out->prepared=std::make_shared<const Prepared>(Prepared{kind,std::move(value),std::move(pair),std::move(colors),std::move(metrics),std::move(fonts)});return out;
+  }
+  OwnedProps::Shared numericFromBaseline(const PropsParserContext&,GeneratedShared value,const OwnedProps::Shared& source)const{
+    Pair pair;pair.normal=pair.last=value;return finish(value,std::move(pair),Programme::Numeric,source);
+  }
+__METHOD__
+};
+int main(){try{
+  for(const int schema:{1,2,3,4}){
+    auto baseline=std::make_shared<Generated>(999);auto& p=baseline->ownedProgramme;p.null=false;p["schema"].number=schema;
+    if(schema==1){p["normal"].number=16;p["last"].number=24;}
+    else if(schema!=4) {auto& cases=p["cases"];cases.array=true;cases.values.resize(schema==3?16:8);for(std::size_t i=0;i<cases.size();++i)cases.values[i].number=int(i);}
+    Descriptor descriptor;descriptor.incoming=baseline;
+    auto result=std::static_pointer_cast<const OwnedProps>(descriptor.cloneProps({},nullptr,RawProps(folly::dynamic{})));
+    if(!result->prepared||result->prepared->candidates.structural()!=(schema!=1)||result->prepared->candidates.count()!=std::size_t(schema==4?1:schema==3?16:8))throw std::runtime_error("wrong descriptor structural dispatch");
+  }
+  std::cout<<"PASS exact descriptor schema dispatch; finite conversion/validation doubles\n";
+}catch(const std::exception&e){std::cerr<<e.what()<<'\n';return 1;}}
+`;
+  await mkdir(join(scratch, 'react/renderer/core'), { recursive: true });
+  await writeFile(join(scratch, 'GeneratedConversion.h'), framework);
+  await writeFile(join(scratch, 'react/renderer/core/RawProps.h'), '#pragma once\n');
+  await copyFile(
+    new URL('../common/cpp/PreparedOwnedCandidates.h', import.meta.url),
+    join(scratch, 'PreparedOwnedCandidates.h'),
+  );
+  for (const mutant of [false, true]) {
+    const actualMethod = mutant
+      ? method.replace('schema == 2.0 || schema == 3.0', 'schema == 2.0')
+      : method;
+    if (mutant) assert.notEqual(actualMethod, method);
+    await writeFile(join(scratch, 'dispatch.cpp'), model.replace('__METHOD__', actualMethod));
+    await execute(
+      process.env.CXX || 'clang++',
+      [
+        '-std=c++20',
+        '-Wall',
+        '-Wextra',
+        '-Werror',
+        '-fsanitize=address,undefined',
+        '-fno-omit-frame-pointer',
+        '-I' + scratch,
+        join(scratch, 'dispatch.cpp'),
+        '-o',
+        join(scratch, 'dispatch'),
+      ],
+      { timeout: 30000 },
+    );
+    if (mutant) await assert.rejects(execute(join(scratch, 'dispatch'), [], { timeout: 10000 }));
+    else
+      assert.match(
+        (await execute(join(scratch, 'dispatch'), [], { timeout: 10000 })).stdout,
+        /PASS exact descriptor schema dispatch/,
+      );
+  }
+});
+
+// Exact parser/reuse functions, with a finite JSON carrier. SDK validation is separate.
+test('native peer identity validates bounds, distinguishes unknown, and shares immutable snapshots', async (t) => {
+  const scratch = await mkdtemp(join(tmpdir(), 'mui-peer-identity-'));
+  t.after(() => rm(scratch, { recursive: true, force: true }));
+  const programme = await readFile(
+    new URL('../common/cpp/OwnedProgramme.h', import.meta.url),
+    'utf8',
+  );
+  const transport = await readFile(
+    new URL('../common/cpp/OwnedPropsTransport.h', import.meta.url),
+    'utf8',
+  );
+  const begin = programme.indexOf('struct PeerClassIdentity');
+  const end = programme.indexOf('inline bool fullProgramme(', begin);
+  const sharedBegin = transport.indexOf(
+    '  static std::shared_ptr<const altroo::owned_channel::PeerStyleIdentity> sharedPeer(',
+  );
+  const sharedEnd = transport.indexOf('  PreparedData(GeneratedShared current', sharedBegin);
+  assert(begin > 0 && end > begin && sharedBegin > 0 && sharedEnd > sharedBegin);
+  const model = String.raw`
+#include "GeneratedConversion.h"
+#include <optional>
+#include <stdexcept>
+#include <iostream>
+namespace altroo::owned_channel {
+__PARSER__
+}
+using GeneratedShared=std::shared_ptr<const facebook::react::AltrooMUIStructuralViewProps>;
+struct PreparedData {
+  GeneratedShared unselected;
+  std::shared_ptr<const altroo::owned_channel::PeerStyleIdentity> peer;
+__SHARED__
+};
+void check(bool value){if(!value)throw std::runtime_error("peer identity assertion failed");}
+folly::dynamic boolean(bool value){folly::dynamic out;out.kind=1;out.boolean=value;return out;}
+folly::dynamic text(std::string value){folly::dynamic out;out.kind=2;out.text=std::move(value);return out;}
+folly::dynamic peer(std::size_t count,std::string css="height:4px;"){
+  folly::dynamic out;out["expanded"]=boolean(true);out["classes"].array=true;
+  for(std::size_t i=0;i<count;++i){folly::dynamic token;token["cacheKey"]=text("css");token["css"]=text(css);token["eligible"]=boolean(i==0);out["classes"].values.push_back(std::move(token));}
+  return out;
+}
+GeneratedShared baseline(folly::dynamic identity){
+  auto out=std::make_shared<facebook::react::AltrooMUIStructuralViewProps>(999);out->ownedProgramme.null=false;out->ownedProgramme["peer"]=std::move(identity);return out;
+}
+int main(){try{
+  auto input=baseline(peer(2));auto first=PreparedData::sharedPeer(input,nullptr);
+  check(first&&first->expanded&&first->classes.size()==2&&first->classes[0].eligible&&!first->classes[1].eligible);
+  PreparedData previous{input,first};
+  auto same=PreparedData::sharedPeer(baseline(peer(2)),&previous);check(same==first);
+  auto changed=PreparedData::sharedPeer(baseline(peer(2,"height:8px;")),&previous);
+  check(changed!=first&&changed->classes[0].css=="height:8px;"&&first->classes[0].css=="height:4px;");
+  check(!PreparedData::sharedPeer(baseline(folly::dynamic(nullptr)),&previous));
+  check(!PreparedData::sharedPeer(nullptr,&previous));
+  auto empty=PreparedData::sharedPeer(baseline(peer(0)),nullptr);check(empty&&empty->classes.empty());
+  check(PreparedData::sharedPeer(baseline(peer(64)),nullptr)->classes.size()==64);
+  bool countRejected=false;try{PreparedData::sharedPeer(baseline(peer(65)),nullptr);}catch(const std::invalid_argument&){countRejected=true;}check(countRejected);
+  const std::size_t limit=1024*1024;
+  check(PreparedData::sharedPeer(baseline(peer(1,std::string(limit-3,'a'))),nullptr)!=nullptr);
+  bool bytesRejected=false;try{PreparedData::sharedPeer(baseline(peer(1,std::string(limit-2,'a'))),nullptr);}catch(const std::length_error&){bytesRejected=true;}check(bytesRejected);
+  auto malformed=peer(1);malformed["expanded"]=text("true");bool typeRejected=false;
+  try{PreparedData::sharedPeer(baseline(malformed),nullptr);}catch(const std::invalid_argument&){typeRejected=true;}check(typeRejected);
+  folly::dynamic observation;observation["expanded"]=boolean(true);
+  for(const char* key:{"surface","subject","parent","previous"}){observation[key].kind=3;observation[key].number=1;}
+  folly::dynamic bound;bound["observation"]=observation;
+  auto parsed=altroo::owned_channel::peerObservation(bound);check(parsed&&parsed->subject==1&&parsed->expanded);
+  for(const char* key:{"surface","subject","parent","previous"}){
+    for(const double invalid:{-1.0,0.5,double(std::numeric_limits<std::int32_t>::max())+1,std::numeric_limits<double>::infinity(),std::numeric_limits<double>::quiet_NaN()}){
+      auto bad=observation;bad[key].number=invalid;bool rejected=false;
+      try{altroo::owned_channel::requirePeerObservation(bad);}catch(const std::invalid_argument&){rejected=true;}check(rejected);
+    }
+  }
+  observation["previous"].number=0;altroo::owned_channel::requirePeerObservation(observation);
+  auto bad=observation;bad["subject"].number=0;bool zeroRejected=false;
+  try{altroo::owned_channel::requirePeerObservation(bad);}catch(const std::invalid_argument&){zeroRejected=true;}check(zeroRejected);
+  bad=observation;bad["expanded"]=text("true");bool flagRejected=false;
+  try{altroo::owned_channel::requirePeerObservation(bad);}catch(const std::invalid_argument&){flagRejected=true;}check(flagRejected);
+  bound["observation"]=folly::dynamic(nullptr);check(!altroo::owned_channel::peerObservation(bound));
+  std::cout<<"PASS exact native peer parser and shared lifetime controls\n";
+}catch(const std::exception&e){std::cerr<<e.what()<<'\n';return 1;}}
+`;
+  await writeFile(join(scratch, 'GeneratedConversion.h'), framework);
+  await writeFile(
+    join(scratch, 'peer.cpp'),
+    model
+      .replace('__PARSER__', programme.slice(begin, end))
+      .replace('__SHARED__', transport.slice(sharedBegin, sharedEnd)),
+  );
+  await execute(
+    process.env.CXX || 'clang++',
+    [
+      '-std=c++20',
+      '-Wall',
+      '-Wextra',
+      '-Werror',
+      '-fsanitize=address,undefined',
+      '-fno-omit-frame-pointer',
+      '-I' + scratch,
+      join(scratch, 'peer.cpp'),
+      '-o',
+      join(scratch, 'peer'),
+    ],
+    { timeout: 30000 },
+  );
+  const result = await execute(join(scratch, 'peer'), [], { timeout: 10000 });
+  assert.match(result.stdout, /PASS exact native peer parser/);
+});

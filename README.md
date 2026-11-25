@@ -21,11 +21,11 @@ I started MUI Native to address that gap: preserve familiar MUI component APIs a
 
 ## Status
 
-Updated: **13 November 2026**. These are **staged implementation estimates**, not percentages of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
+Milestone audit: **13 November 2026**. Accordion tracking corrected: **25 November 2026**. Remaining percentage labels are **historical evidence stages**, not measured fractions of supported props, time remaining or verified MUI compatibility. ✅ Completed scope · 🔧 In progress · 🗺️ Planned.
 
 These tables describe development on `main`. Check the [release changelog](CHANGELOG.md) for version-specific package contents; development on `main` can precede npm publication.
 
-The [completion plan](docs/completion-plan.md) lists every existing partial entry and prioritizes closing its concrete implementation and validation gaps before adding new components.
+The [completion plan](docs/completion-plan.md) lists every existing partial entry and prioritizes closing its concrete implementation and validation gaps before adding new components. Accordion is the active closure. Its historical 75% label was an evidence milestone, not a calculated completion fraction; the [acceptance status](docs/accordion.md#completion-status) records verified scope and open gates without inventing a replacement percentage.
 
 For component/module rows: **0%** = not implemented, **25%** = prototype/subset, **50%** = an implemented subset with source-backed contract and installed-consumer coverage, **75%** = that coverage plus scoped iOS and Android interaction evidence, **100%** = the agreed full contract and release gates are complete. Foundation rows describe their explicitly bounded work. No component family is certified as fully compatible.
 
@@ -54,7 +54,7 @@ Expand a family to see individual entries. Percentages link to the implementatio
 
 | State | Part                        |                                         Progress | What it means                                                                                                                                                                                                                                               |
 | ----- | --------------------------- | -----------------------------------------------: | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🔧    | **Accordion**               |                         [75%](docs/accordion.md) | Controlled/uncontrolled expansion, four slots and retained Collapse have source, consumer and scoped iOS/Android evidence. Development after 0.0.7; full native matrices remain.                                                                            |
+| 🔧    | **Accordion**               |                 [In progress](docs/accordion.md) | Source/consumer contracts and scoped iOS grouping, recorded geometry/separators, motion, synchronized VoiceOver, RTL and enlarged-text cases pass. View aliases, adjacency/text paint, immediate-focus behavior, platform matrices and performance remain.  |
 | 🔧    | **AccordionActions**        |                         [75%](docs/accordion.md) | Native end-aligned actions, spacing, theme styles and refs have source/consumer and scoped iOS/Android checks. Development after 0.0.7; full native matrices remain.                                                                                        |
 | 🔧    | **AccordionDetails**        |                 [75%](docs/accordion-details.md) | Dedicated root/classes/defaults/types and strict installed consumers pass; retained body edits pass native integration. Direct standalone matrices remain.                                                                                                  |
 | 🔧    | **AccordionSummary**        |                         [75%](docs/accordion.md) | Native ButtonBase activation, expanded/disabled state, slots and refs have source/consumer and scoped iOS/Android checks. Development after 0.0.7; full native matrices remain.                                                                             |

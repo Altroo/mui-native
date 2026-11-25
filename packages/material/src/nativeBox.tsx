@@ -32,10 +32,18 @@ import {
   refreshNativeStyle,
   refreshNativeRootPreparation,
 } from '@altroo/mui-native-system/internal/prepared-style';
+import { useNativeStructuralFacts } from '@altroo/mui-native-system/internal/prepared-style';
 import { THEME_ID } from './themeProvider';
 import { mergeNativeRootStyle } from './nativeControlStyles';
+import { useAccordionRootMotion, renderAccordionRootMotion } from './accordionRootMotion';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
 import { NativeButtonGroupRules } from './buttonGroupContext';
+import {
+  AccordionStructuralView,
+  AccordionRootTextScope,
+  createAccordionStructuralPreparation,
+  useAccordionStructuralRoot,
+} from './accordionStructuralRoot';
 import { boxClasses } from './boxClasses';
 import { unstable_ClassNameGenerator } from './classNameGenerator';
 import type { NativeBoxComponent, NativeBoxRootProps } from './boxTypes';
@@ -58,6 +66,9 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
     const forwardedStyle = useNativeRootStyleForward(boxRoot, inProps.className);
     const { root, ref } = useNativeTextRootRef(forwarded),
       nativeRef = useNativeStyleRef(root, ref);
+    const structuralFacts = useNativeStructuralFacts(root);
+    const rootMotion = useAccordionRootMotion();
+    const structuralRoot = useAccordionStructuralRoot(inProps.className);
     // Box is anonymous to styled/theme defaults: it must never resolve MuiBox.
     const input = separateNativeRootProps(inProps),
       props = input.props;
@@ -111,10 +122,11 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
         ...nativeTextStyleContext(parent, style, theme),
         width,
         classes,
+        ...structuralFacts,
         ancestors: nativeStyleAncestors(rules, { classes }),
         protectPhysicalGeometry: true,
       },
-      handoff !== null || !terminal,
+      handoff !== null || !terminal || structuralRoot,
     );
     const paint = (next: NativeStyle) => {
       const merged = mergeNativeRootStyle(parent?.direction ?? theme.direction, next, authored);
@@ -130,6 +142,7 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
         ...nativeTextStyleContext(parent, style, theme),
         width,
         classes,
+        ...structuralFacts,
         protectPhysicalGeometry: true,
       };
       const preparation = handoff.prepare({
@@ -150,19 +163,21 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
                 style={current.presentation}
                 content={children}
               >
-                {(presentation, content) => (
-                  <NativeRootHandoffContext.Provider value={null}>
-                    {handoff.render({
-                      preparation: current,
-                      hostProps: native,
-                      nativeRef,
-                      children: content,
-                      presentation,
-                      theme,
-                      classes,
-                    })}
-                  </NativeRootHandoffContext.Provider>
-                )}
+                {(resolvedStyle, content) =>
+                  renderAccordionRootMotion(rootMotion, root, resolvedStyle, (presentation) => (
+                    <NativeRootHandoffContext.Provider value={null}>
+                      {handoff.render({
+                        preparation: current,
+                        hostProps: native,
+                        nativeRef,
+                        children: content,
+                        presentation,
+                        theme,
+                        classes,
+                      })}
+                    </NativeRootHandoffContext.Provider>
+                  ))
+                }
               </NativeTextScope>
             );
           }}
@@ -170,39 +185,82 @@ export const Box: NativeBoxComponent = forwardRef<ViewInstance, NativeBoxRootPro
         handoff?.retained,
       );
     }
+    const structuralPreparation =
+      structuralRoot && Root === View
+        ? createAccordionStructuralPreparation({
+            theme,
+            parent,
+            programme,
+            direction: parent?.direction ?? theme.direction,
+            context: {
+              styleCache,
+              width,
+              classes,
+              ...structuralFacts,
+              ...nativeTextStyleContext(parent, style, theme),
+              protectPhysicalGeometry: true,
+            },
+          })
+        : undefined;
     return clearNativeRootStyleForward(
       forwardedStyle,
       <NativeCssRootBoundary style={computed} registerClass={!terminal}>
-        {() => (
-          <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
-            <NativeTextScope
-              rootRef={root}
-              theme={theme}
-              style={refreshNativeStyle(finalStyle)}
-              content={children}
-            >
-              {(style, content) => (
-                <Root
-                  {...native}
-                  {...(Root === View ? {} : { className: rootClass })}
-                  ref={nativeRef}
-                  style={
-                    terminal
-                      ? style
-                      : retainNativeRootCss(
-                          authored,
-                          programme,
-                          Object.hasOwn(props, 'style'),
-                          style,
-                        )
-                  }
-                >
-                  {content}
-                </Root>
-              )}
-            </NativeTextScope>
-          </NativeStyleScope>
-        )}
+        {() => {
+          const structuralCases = structuralPreparation
+            ? refreshNativeRootPreparation(structuralPreparation)
+            : undefined;
+          return (
+            <NativeStyleScope root={root} theme={theme} classes={classes} prepared={prepared}>
+              <AccordionRootTextScope
+                cases={structuralCases}
+                rootRef={root}
+                theme={theme}
+                style={refreshNativeStyle(finalStyle)}
+                content={children}
+              >
+                {(resolvedStyle, content) =>
+                  renderAccordionRootMotion(
+                    rootMotion,
+                    root,
+                    resolvedStyle,
+                    (style, presentation) =>
+                      Root === View ? (
+                        <AccordionStructuralView
+                          {...native}
+                          cases={structuralCases}
+                          prepared={prepared}
+                          classNames={classes}
+                          nativeRef={nativeRef}
+                          presentation={presentation}
+                          style={style}
+                        >
+                          {content}
+                        </AccordionStructuralView>
+                      ) : (
+                        <Root
+                          {...native}
+                          {...(Root === View ? {} : { className: rootClass })}
+                          ref={nativeRef}
+                          style={
+                            terminal
+                              ? style
+                              : retainNativeRootCss(
+                                  authored,
+                                  programme,
+                                  Object.hasOwn(props, 'style'),
+                                  style,
+                                )
+                          }
+                        >
+                          {content}
+                        </Root>
+                      ),
+                  )
+                }
+              </AccordionRootTextScope>
+            </NativeStyleScope>
+          );
+        }}
       </NativeCssRootBoundary>,
     );
   },

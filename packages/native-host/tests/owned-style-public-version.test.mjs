@@ -12,6 +12,16 @@ const require = createRequire(import.meta.url),
   { transformSync } = require('esbuild');
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const vocabulary = { keys: ['width', 'opacity'], sha256: 'reviewed-vocabulary' };
+// Load the real scalar transport data in a separate, import-free context.
+const fontData = { exports: {} };
+const fontDataSource = await readFile(
+  join(root, 'packages/native-host/src/nativeTextFontData.ts'),
+  'utf8',
+);
+vm.runInNewContext(
+  transformSync(fontDataSource, { loader: 'ts', format: 'cjs', target: 'esnext' }).code,
+  { module: fontData, exports: fontData.exports },
+);
 const profile = (rn = '0.88.1') => ({
   rn,
   platform: 'ios',
@@ -52,10 +62,12 @@ function load(source, options = {}) {
           return {
             create(payload) {
               calls.push(payload);
+              options.process?.(payload, calls.length);
               return { ...payload.style };
             },
           };
         if (name === './ownedStyleVocabulary') return { ownedStyleVocabulary: vocabulary };
+        if (name === './nativeTextFontData') return fontData.exports;
         if (name === './style-vocabulary.json') return options.catalogVocabulary ?? vocabulary;
         throw Error('Unexpected or deprecated runtime import: ' + name);
       },
@@ -64,7 +76,14 @@ function load(source, options = {}) {
     transformSync(source, { loader: 'ts', format: 'cjs', target: 'esnext' }).code,
     context,
   );
-  return { encode: module.exports.encodeStylePair, calls, reads: () => reads, api };
+  return {
+    encode: module.exports.encodeStylePair,
+    cases: module.exports.encodeStructuralCases,
+    adjacent: module.exports.encodeAdjacentCases,
+    calls,
+    reads: () => reads,
+    api,
+  };
 }
 for (const [name, path] of [
   ['library', 'packages/native-host/src/ownedStyleEncoding.ts'],
@@ -214,5 +233,76 @@ test('catalog vocabulary retains package-relative verified React Native sources'
       source.sha256,
       source.path,
     );
+  }
+});
+
+const structuralSource = await readFile(
+  join(root, 'packages/native-host/src/ownedStyleEncoding.ts'),
+  'utf8',
+);
+test('structural encoding resets the union across all eight cases', () => {
+  const m = load(structuralSource);
+  const input = Array.from({ length: 8 }, (_, index) =>
+    index === 2 ? { width: 80 } : index === 4 ? { opacity: 0.25 } : {},
+  );
+  const values = JSON.parse(JSON.stringify(m.cases(profile(), input)));
+  assert.equal(m.calls.length, 8);
+  for (let index = 0; index < 8; index++)
+    assert.deepEqual(values[index], {
+      width: index === 2 ? 80 : null,
+      opacity: index === 4 ? 0.25 : null,
+    });
+});
+test('structural encoding snapshots all branches before the first processor', () => {
+  const input = Array.from({ length: 8 }, (_, width) => ({ width }));
+  const m = load(structuralSource, {
+    process(_payload, call) {
+      if (call === 1) input[7].width = 999;
+    },
+  });
+  assert.equal(m.cases(profile(), input)[7].width, 7);
+});
+test('structural encoding rejects incomplete or oversized truth tables before processing', () => {
+  for (const size of [0, 2, 7, 9]) {
+    const m = load(structuralSource);
+    assert.throws(
+      () =>
+        m.cases(
+          profile(),
+          Array.from({ length: size }, () => ({})),
+        ),
+      /eight cases/,
+    );
+    assert.equal(m.calls.length, 0);
+  }
+});
+
+// The high adjacency bit must preserve the same processing and reset semantics.
+test('adjacent encoding snapshots and resets the complete sixteen-case bank', () => {
+  const input = Array.from({ length: 16 }, (_, width) =>
+    width === 15 ? { opacity: 0.5 } : { width },
+  );
+  const m = load(structuralSource, {
+    process(_payload, call) {
+      if (call === 1) input[14].width = 999;
+    },
+  });
+  const values = m.adjacent(profile(), input);
+  assert.equal(values[14].width, 14);
+  assert.equal(values[14].opacity, null);
+  assert.equal(values[15].width, null);
+  assert.equal(values[15].opacity, 0.5);
+  assert.equal(m.calls.length, 16);
+  for (const size of [0, 8, 15, 17]) {
+    const invalid = load(structuralSource);
+    assert.throws(
+      () =>
+        invalid.adjacent(
+          profile(),
+          Array.from({ length: size }, () => ({})),
+        ),
+      /sixteen cases/,
+    );
+    assert.equal(invalid.calls.length, 0);
   }
 });

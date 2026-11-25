@@ -20,3 +20,16 @@ export const requireOwnedStyleProfile = bootstrap.requireProfile;
 
 /** Generated stock-paragraph origin; same immutable module read, no activation. */
 export const requireGeneratedTextOrigin = bootstrap.requireGeneratedTextOrigin;
+
+/** Additive native support; old development binaries retain their ordinary path. */
+export const supportsStructuralCases = bootstrap.supportsStructuralCases;
+
+/** Parent-projected pseudo targets require the matching native selector capability. */
+export const supportsParentStructuralCases = bootstrap.supportsParentStructuralCases;
+export const supportsInheritedTextColors = bootstrap.supportsInheritedTextColors;
+export const supportsInheritedTextMetrics = bootstrap.supportsInheritedTextMetrics;
+export const supportsInheritedTextFonts = bootstrap.supportsInheritedTextFonts;
+export const supportsInheritedTextAlignment = bootstrap.supportsInheritedTextAlignment;
+
+/** Full CSS peers require the newer matching binary, independently of positional v1. */
+export const supportsPeerStyleIdentity = bootstrap.supportsPeerStyleIdentity;

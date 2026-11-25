@@ -124,7 +124,7 @@ test('New sample resets a completed 16-epoch cohort while advances retain its ex
 
 test('family selection cycles through all real workloads with fresh cohorts', () => {
   const tree = render(<LayoutRootBenchmarkExample rowCount={2} />);
-  for (const family of ['list-item-avatar', 'button-group', 'form-group']) {
+  for (const family of ['list-item-avatar', 'button-group', 'accordion', 'form-group']) {
     const previous = controller(tree).cohortId;
     fireEvent.press(tree.getByTestId('layout-root-controller-family'));
     expect(controller(tree).family).toBe(family);

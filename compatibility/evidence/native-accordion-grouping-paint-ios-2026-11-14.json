@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "status": "reproduced-defect",
+  "validatedSourceCommit": "6ccb1a82be8d5cfea474d156fde24d42dc52e525",
+  "environment": {
+    "device": "iPhone18Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontScale": 1,
+    "pixelRatio": 3
+  },
+  "nativeEndpointChecks": {
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0
+  },
+  "capture": {
+    "qualified": true,
+    "recordingExitCode": 0,
+    "bytes": 14384492,
+    "sha256": "ad85ab519b2f2d80bf204868999d63f7eccc3642e33cf6c3b24f40521eb000fa",
+    "nativeAppExecutableSHA256": "bd7969109267c5d25da8d7e78a1a9d931b87bbe22ec4230c54eef1910a65e92e",
+    "bundleSHA256": "342b18ef1a3872fb35627f466efa86cd53babeaaadef0b5219e3a904fd5a9ea4",
+    "swiftCollectorSHA256": "1721c85e2a8cf391e60a7830d095bd9d63842121cfcf92f451daacb864b945ed",
+    "sourceFingerprint": "6c71d03c44d753833b3c9d6c31aff28ce4f6e97a639a28ce4cc3859bd9d4505f",
+    "originalSessionRestored": true
+  },
+  "recordedFrameChecks": {
+    "frames": 508,
+    "qualifiedCompleteGroupFrames": 127,
+    "unqualifiedCompleteGroupFrames": 0,
+    "invalidFrames": [
+      {
+        "bounded": false,
+        "frame": 318,
+        "heights": [99.66666666666667, 79, 48.333333333333336],
+        "mode": "default",
+        "order": ["c", "a", "b"],
+        "seconds": 20,
+        "stage": 1,
+        "valid": false
+      },
+      {
+        "bounded": true,
+        "frame": 325,
+        "heights": [79, 47.333333333333336, 99.66666666666667],
+        "mode": "default",
+        "order": ["c", "a", "b"],
+        "seconds": 22.985,
+        "stage": 2,
+        "valid": false
+      },
+      {
+        "bounded": false,
+        "frame": 461,
+        "heights": [99.66666666666667, 79, 48.333333333333336],
+        "mode": "forwarded",
+        "order": ["c", "a", "b"],
+        "seconds": 42.385,
+        "stage": 1,
+        "valid": false
+      },
+      {
+        "bounded": true,
+        "frame": 468,
+        "heights": [79, 47.333333333333336, 99.66666666666667],
+        "mode": "forwarded",
+        "order": ["c", "a", "b"],
+        "seconds": 45.335,
+        "stage": 2,
+        "valid": false
+      },
+      {
+        "bounded": false,
+        "frame": 475,
+        "heights": [47.333333333333336, 47, 48.333333333333336],
+        "mode": "forwarded",
+        "order": ["c", "a", "b"],
+        "seconds": 48.36666666666667,
+        "stage": 3,
+        "valid": false
+      },
+      {
+        "bounded": false,
+        "frame": 482,
+        "heights": [47.333333333333336, 99.66666666666667, 79.66666666666667],
+        "mode": "forwarded",
+        "order": ["a", "b", "c"],
+        "seconds": 51.285,
+        "stage": 4,
+        "valid": false
+      }
+    ],
+    "observedCases": [
+      "default-0",
+      "default-1",
+      "default-2",
+      "default-3",
+      "default-4",
+      "forwarded-0",
+      "forwarded-1",
+      "forwarded-2",
+      "forwarded-3",
+      "forwarded-4"
+    ]
+  },
+  "limits": [
+    "The scan covers recorded complete groups with independent mode/stage markers.",
+    "Recording does not prove coverage of every display frame, GPU presentation deadlines or physical devices.",
+    "Color spans allow2points of compression/separator tolerance; the stale heights differ20-52points."
+  ]
+}

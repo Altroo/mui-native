@@ -23,7 +23,9 @@ import { directionOf, mergeNativeRootStyle } from './nativeControlStyles';
 import type { CardContentBackendInput } from './cardContentRuntime';
 // Snapshot genuine native values once for both counterfactual outputs. This
 // carrier belongs to the canonical System metadata module.
-function snapshotProgram(style: StyleProp<NativeStyle>): StyleProp<NativeStyle> {
+export function snapshotNativeStyleProgramme(
+  style: StyleProp<NativeStyle>,
+): StyleProp<NativeStyle> {
   const sheets: NativePreparedSheet[] = [];
   const native: StyleProp<NativeStyle>[] = [];
   const visit = (layer: StyleProp<NativeStyle>) => {
@@ -88,7 +90,7 @@ export function compileCandidates(input: CardContentBackendInput) {
     ancestors: _ancestors,
     ...context
   } = input.styleContext;
-  const programme = snapshotProgram(input.styleProgram);
+  const programme = snapshotNativeStyleProgramme(input.styleProgram);
   const resolve = (lastChild: boolean) => {
     const { computed, authored } = componentRootStyle(input.theme, '', {}, undefined, programme, {
       ...context,

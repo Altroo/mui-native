@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "status": "scoped-regression-passed",
+  "validatedSourceCommit": "6fdebeefb597da8f4f880733f3b281743c731daf",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontScale": 1,
+    "pixelRatio": 3
+  },
+  "passedEndpointTests": 2,
+  "failedEndpointTests": 0,
+  "skippedTests": 0,
+  "qualifiedEndpointReceipts": 10,
+  "analyzedFrames": 509,
+  "qualifiedCompleteGroups": 101,
+  "invalidGroupFrames": 0,
+  "configurations": [
+    "default-0",
+    "default-1",
+    "default-2",
+    "default-3",
+    "default-4",
+    "forwarded-0",
+    "forwarded-1",
+    "forwarded-2",
+    "forwarded-3",
+    "forwarded-4"
+  ],
+  "qualification": "Independent mode/stage bars and complete row fills qualify groups before checking text. Native receipts separately bind disjoint 64-point glyph windows, exact retained root/glyph tags and local counters. Every qualified group requires the green control and same-valued explicit-blue control as well as the expected inherited color.",
+  "implementation": "Finite scalar color banks on the actual source root, with authored-case barriers and an exact parent-source binding. Empty TextEffect-derived markers bind stock Text to immutable source identity and ordinary reset data. Native copy-on-write selection precedes stock paragraph layout; refs and native IDs remain on core Text.",
+  "trackedSourceFilesMatchedToCommit": 472,
+  "runtimeCapability": "stock-text-color-v1",
+  "bundleSHA256": "c80cbeac471673783428853653b5008c6f109475359b09f7ad086a19ee3d7597",
+  "testExecutableSHA256": "5149c60bc8e14116469ba86d3f1425e7208c41eebba01d4759ad4388e09cc0b1",
+  "captureSHA256": "7240ecb60cbe3a2c0f856f720c564b93273cfd96543a4f5f273dbf5308afd586",
+  "paintReportSHA256": "60a56e4d186facbb69878ee3c0a5ebdf0591722402d1cd3d005699c08c20d8df",
+  "scannerSourceSHA256": "c112942fa460a57dc62548f339e8041fe7289fea085d637ff9c364be13c5b473",
+  "scannerExecutableSHA256": "231b2c45584430ac767bf8766549e89fe33c6da99eee20f9881058c1607efdaf",
+  "collectorSHA256": "df3d8f2c46a2cb2bbead4ba3fd7da535c6673dec085a5c2658a496a73fa7432e",
+  "fixture": "tests/native/fixtures/AccordionGroupingProbe.tsx",
+  "fixtureOptions": {
+    "scenario": "position",
+    "boundaryPeer": "view",
+    "textPaint": true
+  },
+  "controlledBeforeFix": {
+    "sourceCommit": "b23601db9a92c14f090451ba809a18d9f2e721da",
+    "analyzedFrames": 500,
+    "qualifiedCompleteGroups": 113,
+    "invalidGroupFrames": 8,
+    "sameScannerSource": true
+  },
+  "parserAndFirstUse": {
+    "passedTests": 1,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "epochs": 4,
+    "actualNativeParserChecks": 32,
+    "nativeSourceFilesMatchedToCommit": 55,
+    "ordinaryConversionOnly": true,
+    "textRefNativeIDAndLineFrameParity": true,
+    "nativeSurfaceForConstructorDiagnostics": 0,
+    "runSHA256": "80fd824380bb8fa430abf3b666322845b9c6e42297fe5f75ec8ebdec79a4f9f7"
+  },
+  "originalSessionRestored": true,
+  "remainingLimits": [
+    "Android color-path verification",
+    "opaque platform and dynamic color values",
+    "conditional inherited text metrics",
+    "unknown noncooperating custom roots and peers",
+    "wider motion and first-frame matrices",
+    "calibrated Release memory and performance",
+    "full Accordion completion"
+  ],
+  "parityClaim": false,
+  "performanceClaim": false
+}

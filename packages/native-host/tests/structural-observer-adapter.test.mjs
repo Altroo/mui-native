@@ -8,6 +8,8 @@ import { spawnSync } from 'node:child_process';
 
 // Compile the actual adapter bytes against a finite framework scheduling double.
 // Actual RN declarations are checked separately with both platform SDK headers.
+// C++ is compiled below by the host compiler; keep JS injection out of this literal.
+// language=TEXT
 const framework = String.raw`
 #pragma once
 #include <algorithm>
@@ -125,6 +127,8 @@ private:
 }
 namespace altroo::owned_channel {inline std::string structuralStyleMetadata(){throw std::logic_error("Unexpected style metadata");}}
 `;
+// C++ is compiled below by the host compiler; keep JS injection out of this literal.
+// language=TEXT
 const probe = String.raw`
 #include "AltrooStructuralObserver.h"
 #include <iostream>

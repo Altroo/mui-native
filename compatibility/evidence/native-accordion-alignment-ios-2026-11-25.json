@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "status": "scoped-regression-passed",
+  "validatedSourceCommit": "ccbcb5984f3dc0b84882fc306d934b36a9339a13",
+  "runtimeCapability": "stock-text-metrics-v4-alignment",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS 27.0",
+    "configuration": "Release",
+    "fontScale": 1
+  },
+  "retainedAlignment": {
+    "fixture": "tests/native/fixtures/AccordionTextMetricsProbe.tsx",
+    "roots": ["default Paper", "forwarded Box"],
+    "overridePaths": ["direct Typography", "Box scope", "nested Typography"],
+    "nativeControls": ["left", "right"],
+    "conditions": [
+      "initial first child",
+      "retained reorder",
+      "boundary withdrawal",
+      "restored matching cases"
+    ],
+    "retainedRootAndTextTags": true,
+    "sourceSnapshotFilesMatched": 481,
+    "buildSHA256": "eafdb62f8c8923d76cbd9d2a101f223e319baf8db83e5c922df9be6a1bbe7394",
+    "runSHA256": "cdb6867e5d1b7a6f0e794430a51cdd40d0db55bb19a72eaeaa70be9ba4614cd1",
+    "testCases": 2,
+    "stageReceipts": 10,
+    "rows": 30,
+    "comparisonCount": 60,
+    "paragraphDirections": ["ltr", "rtl"],
+    "minimumControlDistanceDp": 31.81,
+    "receipts": [
+      {
+        "mode": "default",
+        "stage": 0,
+        "receiptSHA256": "41ffd447accdce5efdbd3c7bd59b43889f3a445720ea3f8d8a0c7fb57e481302"
+      },
+      {
+        "mode": "default",
+        "stage": 1,
+        "receiptSHA256": "87111b70c7a866b861fb81ea18c561448e3eac16df76a88b30a0541112daada7"
+      },
+      {
+        "mode": "default",
+        "stage": 2,
+        "receiptSHA256": "59c779172323fda75c2c5d324e360964d5948f4af1c1db54e917888a4ddcca3d"
+      },
+      {
+        "mode": "default",
+        "stage": 3,
+        "receiptSHA256": "149a08d2fb57a21c8c3593cc2b7e592da97f5823c39fc6ee496067b8151c8c6a"
+      },
+      {
+        "mode": "default",
+        "stage": 4,
+        "receiptSHA256": "b3702421c960fcfae479d6b8cad5eb84f1bd74100af1eed9151d4c0f2c7b7ebb"
+      },
+      {
+        "mode": "forwarded",
+        "stage": 0,
+        "receiptSHA256": "dc9af9b684ef8fbc1f8c8636c11e3292cb8f4f6f9476f057d695f4075dd89a6d"
+      },
+      {
+        "mode": "forwarded",
+        "stage": 1,
+        "receiptSHA256": "59be7ee12e5ff54acc48c00c3bc30bd7d4658f54e99fc416f26492f4520c995e"
+      },
+      {
+        "mode": "forwarded",
+        "stage": 2,
+        "receiptSHA256": "32c7489a895ab4601604f23dfb0b9170f4beb87f957a1296605db735ec67a7d0"
+      },
+      {
+        "mode": "forwarded",
+        "stage": 3,
+        "receiptSHA256": "081cee62b8e4e0ca352135936b8ef341e4394aa4558bb0712fcd65627033d53b"
+      },
+      {
+        "mode": "forwarded",
+        "stage": 4,
+        "receiptSHA256": "3907c65a1e2b6df097d91d1e75178d2d7c1ab0929068fb7ac07a7cac5ec40fb6"
+      }
+    ]
+  },
+  "remaining": [
+    "Conditional paragraph direction and same-text direction changes",
+    "Generated text alignment during selector changes",
+    "Android and enlarged-text alignment verification",
+    "Text transform, decoration and shadow compatibility"
+  ]
+}

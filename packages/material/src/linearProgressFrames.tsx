@@ -21,7 +21,12 @@ import {
   type StyleProp,
 } from 'react-native';
 import Svg, { Circle, Defs, Pattern, RadialGradient, Rect, Stop } from 'react-native-svg';
-import { useNativeTextContext, type NativeStyle } from '@altroo/mui-native-system';
+import {
+  useNativeTextContext,
+  type NativeStyle,
+  type NativePreparedStyle,
+} from '@altroo/mui-native-system';
+import { NativeCssPeerView } from '@altroo/mui-native-system/internal/prepared-style';
 import { useNativeReducedMotion } from './motionPreference';
 import { nativeEasing, nativePropertyTiming } from './nativeTransitionTiming';
 import { nativeProgressTransformList } from './circularProgressTransform';
@@ -31,12 +36,16 @@ const Viewport = createContext(0);
 export function LinearProgressRootFrame({
   native,
   nodeRef,
+  prepared,
+  classNames,
   style,
   inheritTrack,
   children,
 }: {
   native: Record<string, unknown>;
   nodeRef: React.Ref<ViewInstance>;
+  prepared: NativePreparedStyle;
+  classNames: readonly string[];
   style: StyleProp<NativeStyle>;
   inheritTrack: boolean;
   children: React.ReactNode;
@@ -44,9 +53,11 @@ export function LinearProgressRootFrame({
   const [width, setWidth] = useState(0);
   const inherited = useNativeTextContext();
   return (
-    <View
+    <NativeCssPeerView
       {...native}
       ref={nodeRef}
+      prepared={prepared}
+      classNames={classNames}
       style={style}
       onLayout={(event) => {
         const next = event.nativeEvent.layout.width;
@@ -66,7 +77,7 @@ export function LinearProgressRootFrame({
         />
       ) : null}
       <Viewport.Provider value={width}>{children}</Viewport.Provider>
-    </View>
+    </NativeCssPeerView>
   );
 }
 

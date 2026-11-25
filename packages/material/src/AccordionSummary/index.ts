@@ -6,6 +6,7 @@ export {
 } from '../accordion';
 export type {
   AccordionSummaryProps,
+  AccordionSummaryTypeMap,
   AccordionSummaryOwnProps,
   AccordionSummaryOwnerState,
   AccordionSummarySlots,

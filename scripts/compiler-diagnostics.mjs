@@ -2,12 +2,16 @@
 import { execFileSync, spawn, spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { setInterval, clearInterval } from 'node:timers';
 
 const prefix = '[declaration compiler]';
 const safeInteger = (value) =>
   /^\d+$/.test(value) && Number.isSafeInteger(Number(value)) ? Number(value) : null;
 
-/** Read only numeric memory counters. Paths and arbitrary file contents stay private. */
+/**
+ * Read only numeric memory counters. Paths and arbitrary file contents stay private.
+ * @param {(file: string, encoding: 'utf8') => string} [read]
+ */
 export function compilerMemorySnapshot(read = readFileSync) {
   const text = (file) => {
     try {
@@ -45,7 +49,18 @@ export function compilerMemorySnapshot(read = readFileSync) {
   return snapshot;
 }
 
-/** Scope diagnostics and Go's soft budget to declaration generation only. */
+/**
+ * Scope diagnostics and Go's soft budget to declaration generation only.
+ * @param {object} [options]
+ * @param {string} [options.file]
+ * @param {readonly string[]} [options.args]
+ * @param {NodeJS.ProcessEnv} [options.env]
+ * @param {boolean} [options.diagnostics]
+ * @param {(message: string) => void} [options.log]
+ * @param {(file: string, encoding: 'utf8') => string} [options.read]
+ * @param {boolean} [options.useTime]
+ * @returns {Promise<void>}
+ */
 export async function runDeclarationCompiler({
   file = 'pnpm',
   args = ['exec', 'tsc', '-p', 'tsconfig.build.json'],

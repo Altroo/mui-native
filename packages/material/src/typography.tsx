@@ -1,5 +1,19 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
+import {
+  nativeFontPlan,
+  nativeAlignmentIsInherited,
+  nativeFontStep,
+  retainNativeFontScope,
+} from '@altroo/mui-native-system/internal/prepared-style';
 // Typography composition adapts MIT Material UI 9.5.0. See NOTICE and upstream/typography-contract.json.
+import {
+  inheritNativeTextColorBinding,
+  nativeTextColorChildren,
+  nativeMetricPlan,
+  nativeMetricBasis,
+  nativeMetricTypographyTail,
+  retainNativeMetricScope,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { useTheme, useComponentRootStyle } from './themeProvider';
 import React, { forwardRef, useContext } from 'react';
 import {
@@ -26,11 +40,17 @@ import {
   applyNativeTextMetrics,
   nativeTextAlignmentStyle,
   nativeTextParagraphDirection,
+  nativeStyleBorderDeclarations,
+  applyNativeBorderStyle,
   diagnostic,
   type SxProps,
   type TypographyVariant,
 } from '@altroo/mui-native-system';
 import { mergeNativeRootStyle } from './nativeControlStyles';
+import {
+  nativeColorLayer,
+  nativeTextShadowPresentation,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
 import { NativeButtonGroupRules } from './buttonGroupContext';
 import { getTypographyUtilityClass, type TypographyClasses } from './typographyClasses';
@@ -216,9 +236,11 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
     inheritOnly: variant === 'inherit',
     baseStyle: {
       margin: 0,
-      ...(variant === 'inherit' || color === 'inherit'
+      // Parent text is composed below. It must not become an authored CSS
+      // declaration just because the native fallback already knows its value.
+      ...(variant === 'inherit' || color === 'inherit' || parent?.style.color != null
         ? {}
-        : { color: parent?.style.color ?? theme.palette.text.primary }),
+        : { color: theme.palette.text.primary }),
       ...(variant !== 'inherit' && variantStyle && typeof variantStyle === 'object'
         ? variantStyle
         : {}),
@@ -228,20 +250,35 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
       ...(paragraph ? { marginBottom: 16 } : gutterBottom ? { marginBottom: '0.35em' } : {}),
     },
   });
+  const authoredMetrics = nativeStyleTextMetrics(authored);
   const adjustedNativeStyle = applyNativeTextMetrics(
     StyleSheet.flatten(authored) ?? undefined,
     resolved as TextStyle,
-    nativeStyleTextMetrics(authored),
+    authoredMetrics,
   );
-  const finalStyle = StyleSheet.flatten([
-    parent && !parent.nativeText ? parent.style : undefined,
-    mergeNativeRootStyle(textContext.parentDirection, resolved, adjustedNativeStyle),
-  ]);
+  const finalStyle = applyNativeBorderStyle(
+    nativeStyleBorderDeclarations([
+      parent && !parent.nativeText ? nativeColorLayer(parent.style, 'inherited') : undefined,
+      mergeNativeRootStyle(textContext.parentDirection, resolved, adjustedNativeStyle),
+    ]),
+  );
   const ownDirection = nativeStyle?.direction ?? resolved.direction;
   const direction =
     ownDirection === 'ltr' || ownDirection === 'rtl' ? ownDirection : parent?.direction;
+  const inherited = getTextStyleInheritance(
+    resolved as TextStyle,
+    parent?.style,
+    adjustedNativeStyle,
+  );
+  // A cleared native foreground on virtual Text exposes the enclosing Text's
+  // actual foreground. Keep that used color for descendant currentColor.
+  const parentColor = hasTextAncestor && parent?.nativeText ? parent.style.color : undefined;
   const context = {
-    ...getTextStyleInheritance(resolved as TextStyle, parent?.style, adjustedNativeStyle),
+    ...inherited,
+    style:
+      inherited.style.color == null && parentColor != null
+        ? { ...inherited.style, color: parentColor }
+        : inherited.style,
     nativeText: true,
     paragraphDirection: nativeTextParagraphDirection(
       direction,
@@ -250,9 +287,48 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
     ),
     ...(direction ? { direction } : {}),
   };
+  const fontPlan = nativeFontPlan(resolved);
+  retainNativeFontScope(
+    context,
+    parent,
+    context.style,
+    fontPlan
+      ? [
+          fontPlan,
+          nativeFontStep(adjustedNativeStyle ?? {}, true, {
+            cssValue: authoredMetrics.textAlign,
+            inherited: nativeAlignmentIsInherited(authoredMetrics),
+          }),
+        ]
+      : [],
+  );
+  const metricPlan = nativeMetricPlan(resolved);
+  const metricBasis = nativeMetricBasis(resolved);
+  retainNativeMetricScope(
+    context,
+    parent,
+    context.style,
+    context.lineHeight,
+    metricPlan && metricBasis
+      ? [
+          metricPlan,
+          nativeMetricTypographyTail(
+            adjustedNativeStyle ?? {},
+            nativeStyleTextMetrics(adjustedNativeStyle),
+            metricBasis,
+          ),
+        ]
+      : undefined,
+  );
   setNativeTextScopeParent(context, parent);
+  inheritNativeTextColorBinding(context, parent, finalStyle);
   useNativeTextScopeRoot(root, context);
   const trackChildren = useNativeTextChildRoots();
+  const presentation = nativeTextShadowPresentation(
+    nativeTextAlignmentStyle(finalStyle, context.textAlign, context.paragraphDirection),
+    context.style,
+    theme.palette.text.primary,
+  );
   if (typeof mapped === 'string' && !textTags.has(mapped))
     diagnostic(
       'typography-component',
@@ -277,13 +353,15 @@ export const Typography: NativeTypographyRootComponent = forwardRef<
           accessibilityRole={native.accessibilityRole ?? (native.role ? undefined : role)}
           numberOfLines={noWrap ? 1 : native.numberOfLines}
           ellipsizeMode={native.ellipsizeMode ?? (noWrap ? 'tail' : undefined)}
-          style={nativeTextAlignmentStyle(
-            finalStyle,
-            context.textAlign,
-            context.paragraphDirection,
-          )}
+          style={presentation}
         >
-          {renderNativeTextChildren(native.children, theme, context, trackChildren)}
+          {Component === Text
+            ? nativeTextColorChildren(
+                renderNativeTextChildren(native.children, theme, context, trackChildren),
+                context,
+                presentation,
+              )
+            : renderNativeTextChildren(native.children, theme, context, trackChildren)}
         </Component>
       </NativeTextStyleContext.Provider>
     </NativeStyleScope>

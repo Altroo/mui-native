@@ -4,7 +4,8 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { compileFunction } from 'node:vm';
 import { parseSync } from '@babel/core';
-import { format, resolveConfig } from 'prettier';
+import prettier from 'prettier';
+const { format, resolveConfig } = prettier;
 const sourceFiles = [
   'createTheme/createSpacing.js',
   'createTheme/createSpacing.d.ts',

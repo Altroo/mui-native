@@ -2,7 +2,8 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
-import * as prettier from 'prettier';
+import prettier from 'prettier';
+const { format: prettierFormat, resolveConfig: prettierResolveConfig } = prettier;
 import { loadReference } from './load.mjs';
 
 // Original source/SSR observations. Emitted CSS is not computed browser layout.
@@ -218,8 +219,8 @@ const data = {
   getter,
 };
 const fixture = 'tests/fixtures/mui-card-content-9.5.0.json';
-const config = await prettier.resolveConfig(fixture);
-const bytes = await prettier.format(
+const config = await prettierResolveConfig(fixture);
+const bytes = await prettierFormat(
   JSON.stringify(data, (_key, value) => (value === undefined ? '$undefined' : value)),
   { ...config, parser: 'json' },
 );

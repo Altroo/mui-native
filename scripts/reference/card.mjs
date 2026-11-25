@@ -2,7 +2,8 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
-import * as prettier from 'prettier';
+import prettier from 'prettier';
+const { format: prettierFormat, resolveConfig: prettierResolveConfig } = prettier;
 import { loadReference } from './load.mjs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -412,8 +413,8 @@ const data = {
   getter,
   unusedThrow: error,
 };
-const config = await prettier.resolveConfig('tests/fixtures/mui-card-9.5.0.json'),
-  format = (value) => prettier.format(JSON.stringify(value), { ...config, parser: 'json' });
+const config = await prettierResolveConfig('tests/fixtures/mui-card-9.5.0.json'),
+  format = (value) => prettierFormat(JSON.stringify(value), { ...config, parser: 'json' });
 const bytes = await format(data),
   fixture = 'tests/fixtures/mui-card-9.5.0.json';
 const provenance = {

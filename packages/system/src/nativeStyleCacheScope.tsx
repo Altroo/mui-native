@@ -31,8 +31,15 @@ export function NativeStyleCacheProvider({
   return <CacheContext.Provider value={value}>{children}</CacheContext.Provider>;
 }
 export const useNativeStyleCache = () => useContext(CacheContext);
-export function useNativeStyleCacheRevision() {
-  return useSyncExternalStore(registry.subscribe, registry.snapshot, registry.snapshot);
+const ignoreCacheUpdates = () => () => {};
+const inactiveCacheRevision = () => 0;
+/** Cooperating terminals already refresh prepared CSS inside their own boundary. */
+export function useNativeStyleCacheRevision(enabled = true) {
+  return useSyncExternalStore(
+    enabled ? registry.subscribe : ignoreCacheUpdates,
+    enabled ? registry.snapshot : inactiveCacheRevision,
+    enabled ? registry.snapshot : inactiveCacheRevision,
+  );
 }
 /** Source programmes are owned before the arbitrary tag renders native state. */
 export function NativeCssRootBoundary({

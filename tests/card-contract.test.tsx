@@ -1,6 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { nativeStyleCallback } from './helpers/nativeStyleCallback';
-import { createRef, forwardRef, useState } from 'react';
+import { createRef, forwardRef, useState, type ComponentType } from 'react';
 import { cleanup, fireEvent, render } from '@testing-library/react-native';
 import {
   View,
@@ -576,16 +576,16 @@ test.each(original.reserved.production)(
         ownerStyle: owner?.style ?? null,
       };
     };
-    let Custom: React.ComponentType<any>;
+    let Custom: ComponentType<any>;
     const host = (kind: string) =>
       forwardRef<
         ViewInstance,
         ViewProps & {
           className?: string;
           theme?: ReturnType<typeof createTheme>;
-          as?: React.ComponentType<any> | null;
+          as?: ComponentType<any> | null;
           ownerState?: Record<string, unknown> | null;
-          component?: React.ComponentType<any>;
+          component?: ComponentType<any>;
           elevation?: number;
         }
       >((p, r) => {

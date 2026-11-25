@@ -1,3 +1,4 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { Easing as NativeEasing, type ViewStyle } from 'react-native';
 import {
   diagnostic,
@@ -84,32 +85,78 @@ export interface NativeOpacityTiming {
   delay: number;
   easing: string;
 }
-// Translate only the supported native property or all clause. Preserve theme
-// factory timing overrides without claiming a general CSS engine.
+type NativeTransitionProperty =
+  | 'opacity'
+  | 'transform'
+  | 'min-height'
+  | 'height'
+  | 'width'
+  | 'stroke-dashoffset'
+  | 'margin'
+  | 'margin-top'
+  | 'margin-bottom'
+  | 'background-color';
+
+function parseNativeTransitionTiming(
+  declaration: string,
+  clause: string | undefined,
+  fallback: NativeOpacityTiming | (() => NativeOpacityTiming),
+  property: NativeTransitionProperty,
+  allowNegativeDelay = false,
+): NativeOpacityTiming {
+  const match = clause
+    ?.trim()
+    .match(
+      /^(?:opacity|transform|min-height|height|width|stroke-dashoffset|margin(?:-top|-bottom)?|background-color|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
+    );
+  if (!match) {
+    diagnostic('transition-create', `Unsupported native ${property} transition: ${declaration}`);
+    return typeof fallback === 'function' ? fallback() : fallback;
+  }
+  const offset = match[3];
+  return {
+    duration: nativeMilliseconds(match[1]),
+    easing: match[2],
+    delay:
+      allowNegativeDelay && offset?.startsWith('-')
+        ? -nativeMilliseconds(offset.slice(1))
+        : nativeMilliseconds(offset),
+  };
+}
+
+// Other native animations retain the fallback supplied by their caller.
 export function nativePropertyTiming(
   declaration: string,
-  fallback: NativeOpacityTiming,
-  property: 'opacity' | 'transform' | 'height' | 'width' | 'stroke-dashoffset',
+  fallback: NativeOpacityTiming | (() => NativeOpacityTiming),
+  property: NativeTransitionProperty,
 ): NativeOpacityTiming {
   if (declaration.trim() === 'none') return { duration: 0, delay: 0, easing: 'linear' };
   const clauses = declaration.split(/,(?![^()]*\))/);
   const clause =
     clauses.find((value) => new RegExp('^\\s*' + property + '(?:\\s|$)').test(value)) ??
     clauses.find((value) => /^\s*all(?:\s|$)/.test(value));
-  const match = clause
-    ?.trim()
-    .match(
-      /^(?:opacity|transform|height|width|stroke-dashoffset|all)\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s))\s+(cubic-bezier\([^)]*\)|linear|ease(?:-in-out|-in|-out)?)(?:\s+(-?(?:\d+\.?\d*|\.\d+)(?:ms|s)))?$/,
-    );
-  if (!match) {
-    diagnostic('transition-create', `Unsupported native ${property} transition: ${declaration}`);
-    return fallback;
-  }
-  return {
-    duration: nativeMilliseconds(match[1]),
-    easing: match[2],
-    delay: nativeMilliseconds(match[3]),
-  };
+  return parseNativeTransitionTiming(declaration, clause, fallback, property);
+}
+
+// An absent match cancels an Accordion track. A matching zero duration still
+// keeps an existing track eligible. CSS selects the last matching clause.
+export function nativeMatchingPropertyTiming(
+  declaration: string,
+  fallback: () => NativeOpacityTiming,
+  property: NativeTransitionProperty,
+): NativeOpacityTiming | undefined {
+  const shorthand = property === 'margin-top' || property === 'margin-bottom' ? 'margin' : null;
+  const clause = declaration
+    .toLowerCase()
+    .split(/,(?![^()]*\))/)
+    .reverse()
+    .find((value) => {
+      const name = value.trim().split(/\s+/, 1)[0];
+      return name === property || name === shorthand || name === 'all';
+    });
+  return clause === undefined
+    ? undefined
+    : parseNativeTransitionTiming(declaration, clause, fallback, property, true);
 }
 
 export const nativeOpacityTiming = (declaration: string, fallback: NativeOpacityTiming) =>

@@ -1,5 +1,6 @@
+// Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Platform } from 'react-native';
 import { render, screen } from '@testing-library/react-native';
 import {
   createTheme,
@@ -393,24 +394,36 @@ test('inherit preserves untracked native Text and computed Button parent attribu
     lineHeight: 24.5,
   });
 });
-test('an inherited normal line-height reset produces an actionable native limitation diagnostic', () => {
-  const record = jest.fn();
-  const reset = configureDiagnostics(record);
-  try {
-    render(
-      <Typography sx={{ lineHeight: 2 }}>
-        <Typography variant="inherit" sx={{ lineHeight: 'normal' }}>
-          Reset
-        </Typography>
-      </Typography>,
-    );
-    expect(record).toHaveBeenCalledWith(
-      expect.objectContaining({ code: 'typography-inheritance' }),
-    );
-  } finally {
-    reset();
-  }
-});
+test.each(['ios', 'android'] as const)(
+  'normal resets inherited height using stock %s semantics',
+  (platform) => {
+    const os = jest.replaceProperty(Platform, 'OS', platform);
+    const record = jest.fn();
+    const reset = configureDiagnostics(record);
+    try {
+      render(
+        <Typography sx={{ fontSize: '20px', lineHeight: 2 }}>
+          <Typography variant="inherit" testID="normal" sx={{ lineHeight: 'normal' }}>
+            Reset
+            <Typography variant="inherit" testID="normal-child" sx={{ fontSize: '0.5em' }}>
+              Child
+            </Typography>
+          </Typography>
+        </Typography>,
+      );
+      expect(screen.getByTestId('normal')).toHaveStyle({
+        lineHeight: platform === 'android' ? -1 : 0,
+      });
+      expect(screen.getByTestId('normal-child')).toHaveStyle({ fontSize: 10 });
+      expect(record).not.toHaveBeenCalledWith(
+        expect.objectContaining({ code: 'typography-inheritance' }),
+      );
+    } finally {
+      reset();
+      os.restore();
+    }
+  },
+);
 
 test('styled Typography preserves unitless metadata when handing normalized styles to native Typography', () => {
   const Styled = styled(Typography)({ fontSize: 40, lineHeight: 1.5 });

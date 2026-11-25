@@ -1,6 +1,6 @@
 # MUI Native delivery roadmap
 
-Current priority: [finish the easiest existing unfinished component or API](docs/completion-plan.md) to its full agreed native contract, one family at a time, before adding new components. The queue separates software work, locally executable verification and external validation.
+Current priority: [finish Accordion, the first unfinished component in README order](docs/completion-plan.md), to its full agreed native contract before moving to another component. The queue separates software work, locally executable verification and external validation.
 
 Updated: 2026-11-13. Priority: maximum compatibility with existing MUI app code, even when it takes longer.
 
@@ -80,7 +80,7 @@ The separate [Android Popper release benchmark](docs/performance-popper.md) now 
 
 Native [Collapse](docs/collapse.md) now supplies the retained height/width transition foundation for later Accordion, Stepper and tree integration. It includes measured timing, lifecycle/slot/import contracts and scoped iOS/Android checks. Physical-device, screen-reader, font/RTL and calibrated-performance matrices remain open; this does not complete those dependent components.
 
-Native [Accordion](docs/accordion.md) now composes Summary, Details and Actions with controlled/uncontrolled expansion, source-defined callback/slot priority, native refs, keyboard activation and retained Collapse content. Original-runtime comparisons, installed-consumer checks and scoped iOS/Android interactions cover this subset. It is included in `0.0.8-prealpha.0`; grouping/animation policies, full inherited/polymorphic contracts, physical accessibility/font/RTL and calibrated performance remain open.
+Native [Accordion](docs/accordion.md) composes Summary, Details and Actions with controlled/uncontrolled expansion, source-defined callback/slot priority, polymorphic Paper roots, native refs, grouping and finite motion. Development adds source/installed-consumer contracts and scoped iOS RTL/largest-text checks beyond the earlier subset in `0.0.8-prealpha.0`. Recorded native grouping geometry now passes with qualified selector hosts. Scoped inherited-color, numeric text and natural-height reset regressions now pass iOS checks with retained native identity, including normal and largest-text reset/scaling controls. Conditional inherited alignment passes the Release iPhone checks in fixed LTR and RTL paragraphs with retained roots and explicit native overrides. Live direction changes, broader text and separator/cascade paint matrices, exact motion-start timing, native accessibility and calibrated performance remain open.
 
 Native [SvgIcon and factories](docs/svg-icon.md) now share actual SVG rendering, source-ordered presentation/theme contracts and typed root/deep imports with the icon package. Original-browser and installed-consumer checks cover the `0.0.8-prealpha.0` implementation. Scoped iOS/Android scene checks verify sizes, palette events, native refs and visible font samples; Android also checks actual paint and text pixels. The [complete pinned artwork and import catalog](docs/material-icons.md) is implemented separately. Fill transitions, complete inherited renderer contracts and physical accessibility/font/RTL/performance gates remain unfinished.
 

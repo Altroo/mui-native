@@ -10,6 +10,12 @@ import {
   type Theme,
 } from '../packages/system/src';
 
+import { nativeStyleBorderStyle } from '../packages/system/src/borders';
+import {
+  nativeStyleTextMetrics,
+  nativeTextShadowPresentation,
+} from '../packages/system/src/nativeText';
+
 afterEach(() => jest.restoreAllMocks());
 
 test('theme defaults retain all 25 pinned shadow tokens and independent arrays', () => {
@@ -107,6 +113,140 @@ test('invalid indices and unsupported shadow syntax diagnose without erasing ear
   } finally {
     reset();
   }
+});
+
+test('shadow lengths preserve signed integer, leading fraction, and trailing point forms', () => {
+  const theme = createTheme({ cssRootFontSize: 20 });
+  expect(
+    resolveSx({ fontSize: '20px', textShadow: '-.5px +2px .1em #123456' }, theme),
+  ).toMatchObject({
+    textShadowColor: '#123456',
+    textShadowOffset: { width: -0.5, height: 2 },
+    textShadowRadius: 2,
+  });
+  expect(resolveSx({ boxShadow: '2.px -.25rem 3px #123456' }, theme)).toEqual({
+    boxShadow: '2.px -5px 3px #123456',
+  });
+});
+
+test('CSS textShadow maps a single shadow with signed offsets and final foreground', () => {
+  const theme = createTheme({ cssRootFontSize: 20 });
+  expect(
+    resolveSx([{ color: 'red', textShadow: '-0.5rem 2px 3px' }, { color: 'blue' }], theme),
+  ).toEqual({
+    color: 'blue',
+    textShadowColor: 'blue',
+    textShadowOffset: { width: -10, height: 2 },
+    textShadowRadius: 3,
+  });
+  const color = PlatformColor('labelColor');
+  expect(
+    resolveSx({ textShadow: '0 1px 2px currentColor' }, theme, {
+      nativeStyle: { color },
+    }),
+  ).toEqual({
+    textShadowColor: color,
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  });
+});
+
+test('font-relative textShadow uses the final CSS and native font size', () => {
+  const theme = createTheme({ cssRootFontSize: 16 });
+  const shadow = 'red 0.5em -0.25em 0.125rem';
+  expect(
+    resolveSx([{ fontSize: '12px', textShadow: shadow }, { fontSize: '20px' }], theme),
+  ).toMatchObject({
+    fontSize: 20,
+    textShadowColor: 'red',
+    textShadowOffset: { width: 10, height: -5 },
+    textShadowRadius: 2,
+  });
+  expect(
+    resolveSx({ fontSize: '24px', textShadow: '1em -1px 0.1em' }, theme, {
+      nativeStyle: { fontSize: 30 },
+    }),
+  ).toMatchObject({
+    textShadowOffset: { width: 30, height: -1 },
+    textShadowRadius: 3,
+  });
+});
+
+test('invalid CSS font size leaves the inherited font basis for em shadow lengths', () => {
+  const collect = jest.fn();
+  const restore = configureDiagnostics(collect);
+  try {
+    const result = resolveSx({ fontSize: '-10px', textShadow: '0 0 1em red' }, createTheme(), {
+      parentTextStyle: { fontSize: 18 },
+    });
+    expect(result).toMatchObject({
+      textShadowColor: 'red',
+      textShadowOffset: { width: 0, height: 0 },
+      textShadowRadius: 18,
+    });
+    expect(result.fontSize).toBeUndefined();
+    expect(collect.mock.calls.map(([event]) => event.code)).toEqual(['typography-value']);
+  } finally {
+    restore();
+  }
+});
+
+test('an inherited shadow replaces an earlier declaration in the same cascade', () => {
+  const theme = createTheme();
+  const local = { textShadow: 'red 0.5em 1em' };
+  expect(resolveSx([local, { textShadow: 'inherit' }], theme)).toEqual({});
+  expect(resolveSx([{ textShadow: 'inherit' }, local], theme)).toMatchObject({
+    textShadowColor: 'red',
+    textShadowOffset: { width: 8, height: 16 },
+  });
+});
+
+test('textShadow none clears the native fields and unrepresentable declarations preserve the cascade', () => {
+  const theme = createTheme();
+  const baseline = { textShadow: 'rgba(1, 2, 3, 0.4) 0 2px 4px' };
+  expect(resolveSx([baseline, { textShadow: 'none' }], theme)).toEqual({
+    textShadowColor: 'transparent',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 0,
+  });
+
+  const collect = jest.fn();
+  const restore = configureDiagnostics(collect);
+  try {
+    const invalid = [
+      '0 2px red, 0 4px blue',
+      '0 2px 1px 0 red',
+      'inset 0 2px red',
+      '0 2px -1px red',
+      '0 2px -1em red',
+    ];
+    for (const textShadow of invalid) {
+      expect(resolveSx([baseline, { textShadow }], theme)).toEqual({
+        textShadowColor: 'rgba(1, 2, 3, 0.4)',
+        textShadowOffset: { width: 0, height: 2 },
+        textShadowRadius: 4,
+      });
+    }
+    expect(collect.mock.calls.map(([event]) => event.code)).toEqual(
+      invalid.map(() => 'text-shadow'),
+    );
+  } finally {
+    restore();
+  }
+});
+
+test('resolving the shadow foreground retains CSS border and text-alignment provenance', () => {
+  const style = resolveSx(
+    { border: '4px none black', textAlign: 'start', textShadow: '0 2px 4px' },
+    createTheme(),
+    { deferTextShadowColor: true },
+  );
+  expect(nativeStyleBorderStyle(style)).toBe('none');
+  expect(nativeStyleTextMetrics(style)).toMatchObject({ textAlign: 'start' });
+  const painted = nativeTextShadowPresentation(style, style, 'purple');
+  expect(painted.textShadowColor).toBe('purple');
+  expect(nativeStyleBorderStyle(painted)).toBe('none');
+  expect(nativeStyleTextMetrics(painted)).toMatchObject({ textAlign: 'start' });
 });
 
 test('Android 28 preserves outset shadows and rejects the entire unsupported inset declaration', () => {

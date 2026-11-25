@@ -14,6 +14,10 @@ inline std::string structuralStyleMetadata() {
       ("hostABI", "owned-view-programme-v1")
       ("errorNotification", "async-once-per-generation-v1")
       ("ownedProgrammeProfile", nativeProfile())
+      ("structuralCases", "first-last-of-type-v2")
+      ("parentStructuralCases", "parent-structural-facts-v1")
+      ("inheritedTextColors", "stock-text-color-v1")
+      ("inheritedTextMetrics", "stock-text-metrics-v4-alignment")
       ("generatedTextOrigin", folly::dynamic::object("schema", 1.0)
           ("nativeIDPrefix", std::string(generated_text_origin::nativeIDPrefix))));
 }

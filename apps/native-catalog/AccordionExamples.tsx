@@ -1,12 +1,14 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
   AccordionActions,
   Button,
+  Box,
   Stack,
   TextField,
   Typography,
@@ -58,15 +60,13 @@ export function AccordionExamples() {
   const theme = useTheme();
   const [active, setActive] = useState<string | false>('delivery');
   const [saved, setSaved] = useState(false);
+  const [rtl, setRtl] = useState(false);
   const [changes, setChanges] = useState(0);
   const [phases, setPhases] = useState({ delivery: 'open', payment: 'closed' });
   const phase = (panel: 'delivery' | 'payment', value: string) =>
     setPhases((old) => ({ ...old, [panel]: value }));
-  const indicator = (
-    <Typography accessible={false} style={{ fontSize: 24, lineHeight: 24 }}>
-      ⌄
-    </Typography>
-  );
+  // A native SVG has no text glyph to leak into the Summary's computed label.
+  const indicator = <ExpandMore />;
   const panel = { borderColor: theme.palette.divider, borderWidth: 1, shadowOpacity: 0 };
   return (
     <ScrollView
@@ -86,7 +86,17 @@ export function AccordionExamples() {
             section without losing your note.
           </Typography>
         </View>
-        <View style={{ gap: 1 }}>
+        <Button
+          testID="accordion-direction"
+          size="small"
+          variant="outlined"
+          style={{ alignSelf: 'flex-start' }}
+          accessibilityLabel={`Layout direction: ${rtl ? 'right to left' : 'left to right'}`}
+          onClick={() => setRtl((value) => !value)}
+        >
+          {rtl ? 'Right to left' : 'Left to right'}
+        </Button>
+        <Box sx={{ direction: rtl ? 'rtl' : 'ltr' }} style={{ gap: 1 }}>
           <Typography variant="caption" color="text.secondary" sx={{ mb: 1 }}>
             ORDER NV-0482 · REVIEW
           </Typography>
@@ -115,6 +125,10 @@ export function AccordionExamples() {
           >
             <AccordionSummary
               testID="accordion-delivery-summary"
+              slotProps={{
+                content: { testID: 'accordion-delivery-content' },
+                expandIconWrapper: { testID: 'accordion-delivery-icon' },
+              }}
               id="delivery-summary"
               aria-controls="delivery-region"
               expandIcon={indicator}
@@ -178,22 +192,59 @@ export function AccordionExamples() {
             </AccordionSummary>
             <AccordionDetails>
               <View style={{ gap: 12 }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Typography variant="body2" color="text.secondary">
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between',
+                    gap: 8,
+                  }}
+                >
+                  <Typography
+                    testID="accordion-subtotal-label"
+                    variant="body2"
+                    color="text.secondary"
+                  >
                     Subtotal
                   </Typography>
-                  <Typography variant="body2">640.00 MAD</Typography>
+                  <Typography testID="accordion-subtotal-value" variant="body2">
+                    640.00 MAD
+                  </Typography>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Typography variant="body2" color="text.secondary">
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between',
+                    gap: 8,
+                  }}
+                >
+                  <Typography
+                    testID="accordion-delivery-label"
+                    variant="body2"
+                    color="text.secondary"
+                  >
                     Delivery
                   </Typography>
-                  <Typography variant="body2">30.00 MAD</Typography>
+                  <Typography testID="accordion-delivery-value" variant="body2">
+                    30.00 MAD
+                  </Typography>
                 </View>
                 <View style={{ height: 1, backgroundColor: theme.palette.divider }} />
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                  <Typography variant="subtitle2">Total</Typography>
-                  <Typography variant="subtitle2">670.00 MAD</Typography>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between',
+                    gap: 8,
+                  }}
+                >
+                  <Typography testID="accordion-total-label" variant="subtitle2">
+                    Total
+                  </Typography>
+                  <Typography testID="accordion-total-value" variant="subtitle2">
+                    670.00 MAD
+                  </Typography>
                 </View>
               </View>
             </AccordionDetails>
@@ -213,12 +264,19 @@ export function AccordionExamples() {
                 </Typography>
               </View>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails testID="accordion-disabled-details">
               Return instructions become available after delivery.
             </AccordionDetails>
           </Accordion>
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', gap: 12 }}>
+        </Box>
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            gap: 12,
+          }}
+        >
           <Typography
             testID="accordion-status"
             variant="caption"

@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "status": "reproduced-separator-paint-defect",
+  "validatedSourceCommit": "885b333eb460d48d21226b15420348df20555309",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontScale": 1,
+    "pixelRatio": 3
+  },
+  "nativeEndpointChecks": {
+    "passedTests": 2,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "qualifiedReceipts": 10,
+    "retainedRootNativeType": "RN:AltrooMUIStructuralView"
+  },
+  "capture": {
+    "qualified": true,
+    "recordingExitCode": 0,
+    "bytes": 11102886,
+    "sha256": "d43960bdaa756d74bb137cd6383322ea25cf7b2cc42a738854a069db95dc667c",
+    "bundleSHA256": "9b3aabc72948ff7459229624aba7efc528c866ab8b40cd5db931cf8b8247b3d2",
+    "swiftCollectorSHA256": "4fcec88d2b6ecea42f86a0d947f67080a69d4df110230514b1d29b8f7c06c130",
+    "testExecutableSHA256": "e152ed042a55ead26aef2a33d61764e3b986557e7dd1c7df3e43c17422c3c4cd",
+    "trackedSourceFilesMatchedToCommit": 455,
+    "sourceFingerprint": "d81d8c45195c2bf8a2ce0e627e732266426111505d26ccbbc85b874aeae28723",
+    "originalSessionRestored": true
+  },
+  "recordedFrameChecks": {
+    "frames": 457,
+    "qualifiedCompleteGroupFrames": 125,
+    "unqualifiedCompleteGroupFrames": 0,
+    "invalidGroupFrames": 8,
+    "observedCases": [
+      "default-0",
+      "default-1",
+      "default-2",
+      "default-3",
+      "default-4",
+      "forwarded-0",
+      "forwarded-1",
+      "forwarded-2",
+      "forwarded-3",
+      "forwarded-4"
+    ]
+  },
+  "limits": [
+    "The scan covers recorded complete collapsed groups qualified by independent mode/stage bars, not every display frame or GPU deadline.",
+    "A four-point magenta ornament magnifies the existing separator while retaining its source display and opacity rules. This is separator visibility evidence, not full row geometry.",
+    "Expanded source-class adjacency, conditional text, exact motion-start timing, Android runtime and calibrated performance remain separate gates."
+  ]
+}

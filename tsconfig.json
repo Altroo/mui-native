@@ -38,6 +38,18 @@
       ],
       "@altroo/mui-native-host/internal/native-keys": [
         "./packages/native-host/src/internal/native-keys/index.ts"
+      ],
+      "@altroo/mui-native-host/internal/structural-observation": [
+        "./packages/native-host/src/internal/structural-observation/index.ts"
+      ],
+      "@altroo/mui-native-host/internal/pressable-presentation": [
+        "./packages/native-host/src/internal/pressable-presentation/index.ts"
+      ],
+      "@altroo/mui-native-host/internal/structural-root": [
+        "./packages/native-host/src/internal/structural-root/index.ts"
+      ],
+      "@altroo/mui-native-host/internal/css-peer": [
+        "./packages/native-host/src/internal/css-peer/index.ts"
       ]
     },
     "customConditions": ["react-native"],

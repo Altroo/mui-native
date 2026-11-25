@@ -15,6 +15,20 @@ const initial = {
   themeSx: false,
   nativeReset: false,
 };
+/** Readonly finite inputs used by the reader and generated source.
+ * @type {ReadonlyArray<{
+ *   readonly name: string,
+ *   readonly raisedInput: string,
+ *   readonly elevationInput: string,
+ *   readonly paperDefault: boolean,
+ *   readonly cardDefault: boolean,
+ *   readonly dark: boolean,
+ *   readonly square: boolean,
+ *   readonly outlined: boolean,
+ *   readonly themeSx: boolean,
+ *   readonly nativeReset: boolean,
+ * }>}
+ */
 export const cardInputs = Object.freeze(
   [
     initial,
@@ -49,7 +63,7 @@ export const cardInputs = Object.freeze(
       nativeReset: true,
     },
     { ...initial, name: 'restored' },
-  ].map(Object.freeze),
+  ].map((input) => Object.freeze(input)),
 );
 export const cardStates = Object.freeze(cardInputs.map(({ name }) => name));
 export const cardPictures = Object.freeze(cardStates.map((name) => name + '.png'));
@@ -208,7 +222,7 @@ const same = (a, b) =>
       Object.keys(a).every((k) => same(a[k], b[k])));
 const rect = (r) =>
   exact(r, ['x', 'y', 'width', 'height']) &&
-  Object.values(r).every((v) => finite(v) && Math.abs(v) <= 100000) &&
+  Object.values(r).every((v) => typeof v === 'number' && finite(v) && Math.abs(v) <= 100000) &&
   r.width > 0 &&
   r.height > 0;
 const argb = (hex) => (0xff000000 + parseInt(hex.slice(1), 16)) >>> 0;

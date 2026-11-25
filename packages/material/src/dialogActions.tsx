@@ -16,6 +16,12 @@ import {
 import { useTheme, THEME_ID } from './themeProvider';
 import { useForkRef } from './utils/refs';
 import { NativeStyleScope, nativeStyleAncestors, useNativeStyleRef } from './nativeStyleScope';
+import {
+  NativeCssPeerView,
+  NativeCssRootBoundary,
+  refreshNativeStyle,
+  useNativeStyleCache,
+} from '@altroo/mui-native-system/internal/prepared-style';
 import { NativeButtonGroupRules } from './buttonGroupContext';
 import type { BoxProps } from './boxTypes';
 import { getDialogActionsUtilityClass } from './dialogActionsClasses';
@@ -98,6 +104,9 @@ export const DialogActions: NativeDialogActionsComponent = forwardRef<
   // including undefined selecting the default View rather than component.
   const selectedRoot = Object.hasOwn(props, 'as') ? as || View : Component;
   const Root = (selectedRoot === 'div' ? View : selectedRoot) as React.ComponentType<any>;
+  // Publish accepted CSS on the existing View leaf; custom roots keep their contract.
+  const Host = (Root === View ? NativeCssPeerView : Root) as React.ComponentType<any>;
+  const styleCache = useNativeStyleCache();
   const mergedRef = useForkRef(ref, slotRef);
   const { root: scopeRoot, ref: scopeRef } = useNativeTextRootRef(mergedRef);
   const nativeRef = useNativeStyleRef(scopeRoot, scopeRef);
@@ -135,6 +144,8 @@ export const DialogActions: NativeDialogActionsComponent = forwardRef<
     sx,
     preparedStyle,
     {
+      styleCache,
+      sourceClass: Root === View,
       ...nativeTextStyleContext(parent, style, theme),
       width,
       slot: 'root',
@@ -172,25 +183,31 @@ export const DialogActions: NativeDialogActionsComponent = forwardRef<
   );
   // Keep native array precedence: an inline gap does not erase a named columnGap.
   return (
-    <NativeStyleScope root={scopeRoot} theme={theme} classes={tokens} prepared={prepared}>
-      <NativeTextScope
-        rootRef={scopeRoot}
-        theme={theme}
-        style={[resolved, authored]}
-        content={children}
-      >
-        {(rootStyle, content) => (
-          <Root
-            {...native}
-            nativeID={id ?? native.nativeID}
-            {...(Root === View ? {} : { className: rootClass, ownerState: owner })}
-            ref={nativeRef}
-            style={rootStyle}
+    <NativeCssRootBoundary style={resolved} registerClass={false}>
+      {() => (
+        <NativeStyleScope root={scopeRoot} theme={theme} classes={tokens} prepared={prepared}>
+          <NativeTextScope
+            rootRef={scopeRoot}
+            theme={theme}
+            style={[refreshNativeStyle(resolved), authored]}
+            content={children}
           >
-            {content}
-          </Root>
-        )}
-      </NativeTextScope>
-    </NativeStyleScope>
+            {(rootStyle, content) => (
+              <Host
+                {...native}
+                nativeID={id ?? native.nativeID}
+                {...(Root === View
+                  ? { prepared, classNames: tokens }
+                  : { className: rootClass, ownerState: owner })}
+                ref={nativeRef}
+                style={rootStyle}
+              >
+                {content}
+              </Host>
+            )}
+          </NativeTextScope>
+        </NativeStyleScope>
+      )}
+    </NativeCssRootBoundary>
   );
 }) as NativeDialogActionsComponent;

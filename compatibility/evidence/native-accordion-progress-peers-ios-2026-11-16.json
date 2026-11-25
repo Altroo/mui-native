@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "status": "scoped-regression-passed",
+  "validatedSourceCommit": "e538289502ccf6a8d3ae880a412321063c1470ad",
+  "environment": {
+    "device": "iPhone 18 Pro simulator",
+    "os": "iOS27.0",
+    "configuration": "Release",
+    "fontProfile": "normal"
+  },
+  "passedEndpointTests": 2,
+  "failedEndpointTests": 0,
+  "skippedTests": 0,
+  "requiredBoundaryPeers": {
+    "default": "circular",
+    "forwarded": "linear"
+  },
+  "qualifiedEndpointReceipts": 10,
+  "actualBoundaryNativeType": "RN:AltrooMUIStructuralView",
+  "runtimeCapability": "first-last-of-type-v2",
+  "runtimeReceiptRequirements": [
+    "peerSelectors true",
+    "owned roots, ornaments and inserted progress boundary",
+    "active resolver",
+    "zero errors",
+    "nonzero attempts and changed candidates",
+    "retained root tags and local counters",
+    "boundary removed after stage3"
+  ],
+  "bundleSHA256": "1aa221af9f23fd8a2a8f68e64e0e038e0c4501aed3125984b19d75ad8af469a2",
+  "collectorSHA256": "9b1f725af2f9de8faec69f4e934205c41928c2d028e0f9167e25f08aa167b0b5",
+  "testExecutableSHA256": "9021f93264e1be07bb025e8feea2a50070a2d36a4f81834c81d40ce621e916ea",
+  "trackedSourceFilesMatchedToCommit": 461,
+  "captureSHA256": "e3b436f59a126701ff2ddeb06cee2772c977e197fca24b9eb4aeac40ac97c0b8",
+  "scannerSourceSHA256": "a7e0cecf9c5ce61149f89daaa6802f6374e3c4c13b0c25058caef07c02796c76",
+  "scannerExecutableSHA256": "95778e7f1ab61cc6c147d69548afee79a6bb701272c076b567084334eb381121",
+  "paintReportSHA256": "25979fc68f86f55c22dcb0b2eaba98c057e6ed4fbdeade130cbaa0c1022a45ad",
+  "analyzedFrames": 434,
+  "qualifiedCompleteGroups": 105,
+  "invalidGroupFrames": 0,
+  "configurations": [
+    "default-0",
+    "default-1",
+    "default-2",
+    "default-3",
+    "default-4",
+    "forwarded-0",
+    "forwarded-1",
+    "forwarded-2",
+    "forwarded-3",
+    "forwarded-4"
+  ],
+  "pixelRatio": 3,
+  "qualification": "Independent mode/stage bars and complete row fills qualify groups. Boundary paint and expected separator states are checked afterward. All ten endpoint receipts separately require default/Circular or forwarded/Linear identity.",
+  "originalSessionRestored": true,
+  "componentCompletionClaimed": false,
+  "limits": [
+    "This covers determinate CircularProgress and LinearProgress boundaries in the maintained default Paper and forwarded Box Accordion adjacency scenarios. It does not establish every component combination.",
+    "The Circular boundary authors width and transform to create the horizontal scan band; source separator opacity is intentionally overridden to expose display suppression.",
+    "Recorded groups do not establish every display frame, native progress animation, exact Accordion animation-start timing, conditional inherited text timing, Android paint, broader accessibility or calibrated performance.",
+    "Separate renderer controls verify loop lifecycle, measured bar geometry, CSS cache expiry and retained refs with host doubles; they do not measure device animation or native heap behavior.",
+    "Unknown Text, SVG and noncooperating custom peers retain the documented limitations."
+  ]
+}

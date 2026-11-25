@@ -1,8 +1,8 @@
 # Completion plan for existing modules
 
-The current priority is to finish the easiest existing unfinished component or API to its full agreed native contract before moving to another family. The partial-row inventory retains the 7 November 2026 audit, including the merged Divider contract and finite native validation at `6e223c98`; completion priorities and theme-reading evidence were updated on 10 November 2026.
+The active closure is Accordion, the first unfinished component in README order. Finish its complete agreed native contract before moving to another component or opening a new component pull request. The partial-row inventory retains the 7 November 2026 audit, including the merged Divider contract and finite native validation at `6e223c98`; completion priorities and theme-reading evidence were updated on 10 November 2026.
 
-There are **66 rows at 50% or 75%**: 59 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. There are also **15 rows at 25%**: five Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
+The retained audit recorded **66 rows at 50% or 75%**: 59 Material entries, six System/styling entries and the native rendering foundation. The renderless RtlProvider and both DefaultPropsProvider entries are complete within their [RTL](rtl-provider.md) and [default-prop context](default-props-provider.md) contracts. It also recorded **15 rows at 25%**: five Material entries, nine Community X entries and the cross-cutting native validation matrix. The full pinned icon artwork/import catalog is complete separately from its shared SvgIcon rendering gates. Those prototypes remain in this plan. The percentages below are the existing evidence stages, not measured fractions of code written.
 
 ## Completion rules
 
@@ -12,7 +12,7 @@ Keep three independent checklists: implementation gaps, locally executable verif
 
 Finish each selected family's implementation and local checks within its workstream before moving that workstream to another family. Select one family at a time. A required dependency must be necessary for that family and have explicit exit conditions; supporting infrastructure and CI work must not displace its closure. Do not promote a row merely because it was rendered indirectly by a later component. Do not add a new zero-percent component to avoid completing an existing dependency.
 
-## Current wrapper closure: FormGroup
+## Previous wrapper validation: FormGroup
 
 The finite source, utility/type, import, defaults/style and installed-consumer contract is documented in [FormGroup](form-group.md). Normal/enlarged native geometry and live state/ref checks pass on both simulators. Root callback dispatch and Android owned-child keyboard capture/cancellation have dedicated native evidence. Owned-child focus/blur now passes on iOS and Android with retained roots and duplicate suppression.
 
@@ -54,6 +54,8 @@ Source after `0.0.8-prealpha.0` corrects repeated ButtonGroup theme callback eva
 
 ## Ordered completion queue
 
+Accordion is the active selection. The dependency ordering below is a retained planning reference; it does not supersede finishing Accordion first. Its former 75% label is an evidence stage, not a calculated completion fraction. See its [acceptance status](accordion.md#completion-status).
+
 The full pinned icon catalog and the finite RtlProvider/DefaultPropsProvider contracts are complete. The existing [Material and System theme-reading hooks](theme-reading.md) are also complete within their finite native context contracts. The [theme-prop hooks](theme-props.md) complete their separate finite context/default/type contracts; the already completed direct default-resolution helpers are not counted again. Prioritize the smallest remaining existing API whose full contract can be closed now, then small existing wrappers with executable closure gates. The table below records the larger dependency order; it does not require exhausting a large styling subsystem before closing an independent small API. ButtonGroup input/scroll latency and broader optimized-workload gates remain open; they are not discarded by completing an independent renderless provider or icon catalog.
 
 | Order | Existing family                                                                                              | Concrete exit work                                                                                                                                                                                                      |
@@ -84,7 +86,7 @@ The entries below enumerate the 81 current partial status rows and the separatel
 
 | Existing entry          | Current evidence stage | Guide                                                                    |
 | ----------------------- | ---------------------: | ------------------------------------------------------------------------ |
-| Accordion               |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
+| Accordion               |            In progress | [Scope and remaining work](../docs/accordion.md)                         |
 | AccordionActions        |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
 | AccordionDetails        |                    75% | [Scope and remaining work](../docs/accordion-details.md)                 |
 | AccordionSummary        |                    75% | [Scope and remaining work](../docs/accordion.md)                         |
