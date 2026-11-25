@@ -62,6 +62,8 @@ Accordion exposes `root`, `heading`, `transition` and `region` slots. Summary ex
 
 `component` and a slot's `as`/`component` change its native terminal while retaining the named constructor. Replacing a slot through `slots` transfers styling to that constructor: it receives the selected raw `sx`, native styles and owner state. An explicit `slots.root={ButtonBase}` also replaces Summary's constructor. Root-slot refs attach before the forwarded ref, and both receive cleanup.
 
+`AccordionSummaryProps` and `AccordionSummaryTypeMap` are available from the Material root and the AccordionSummary import path. When `component` selects a custom native root, Summary keeps that root's required props and native ref type. Typed theme defaults and styled Summary wrappers also accept native roots.
+
 Summary `id` and `aria-controls` map to the region's native ID and `aria-labelledby`. Explicit region slot props replace those defaults. Summary exposes native expanded/disabled accessibility state. Complete VoiceOver/TalkBack behavior and heading semantics still require a device matrix.
 
 ## Styling and boundaries

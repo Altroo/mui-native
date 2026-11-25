@@ -2,7 +2,7 @@
  * Copyright (c) MUI contributors. See NOTICE and upstream/accordion.json.
  * Native contracts: Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT */
 import type React from 'react';
-import type { View, ViewInstance, ViewProps } from 'react-native';
+import type { Pressable, View, ViewInstance, ViewProps } from 'react-native';
 import type { SxProps, SlotProps, Theme } from '@altroo/mui-native-system';
 import type { BoxProps } from './layout';
 import type { PaperProps, PaperOwnProps, PaperTypeMap } from './paperTypes';
@@ -179,10 +179,65 @@ export interface AccordionSummaryOwnProps extends AccordionSummarySlotsAndSlotPr
   expandIcon?: React.ReactNode;
   'aria-controls'?: string | undefined;
 }
-export interface AccordionSummaryProps
-  extends Omit<ButtonBaseProps, 'children' | 'classes'>,
-    AccordionSummaryOwnProps {
-  children?: React.ReactNode;
+type AccordionSummaryRoot = React.ComponentType<any>;
+type ConfiguredSummaryRoot =
+  | Extract<ConfiguredAccordionRoot, AccordionSummaryRoot>
+  | { call(props: React.RefAttributes<ViewInstance>): React.ReactNode }['call'];
+type AccordionSummaryBaseProps = AccordionSummaryOwnProps &
+  Omit<ButtonBaseProps, keyof AccordionSummaryOwnProps | 'children' | 'component' | 'ref'> & {
+    children?: React.ReactNode;
+  };
+export interface AccordionSummaryTypeMap<
+  AdditionalProps = {},
+  RootComponent extends AccordionSummaryRoot = typeof Pressable,
+> {
+  props: AdditionalProps & AccordionSummaryBaseProps;
+  defaultComponent: NativeRoot<RootComponent>;
+}
+export type AccordionSummaryProps<
+  R extends AccordionSummaryRoot = typeof Pressable,
+  AdditionalProps = {},
+> = [NativeRoot<R>] extends [never]
+  ? never
+  : AccordionSummaryBaseProps &
+      AdditionalProps &
+      DistributiveOmit<
+        RootProps<R>,
+        keyof AccordionSummaryBaseProps | keyof AdditionalProps | 'component'
+      > & {
+        component?: (typeof Pressable extends R ? ConfiguredSummaryRoot : R) | undefined;
+      };
+
+type OrdinarySummaryProps = Omit<AccordionSummaryProps, 'component'> & { component?: undefined };
+// An ordinary branch of a conditional spread cannot satisfy a custom root's props.
+type InferredSummaryProps<P extends AccordionSummaryProps> = P extends unknown
+  ? [NonNullable<P['component']>] extends [never]
+    ? OrdinarySummaryProps
+    : NonNullable<P['component']> extends infer R extends AccordionSummaryRoot
+      ? AccordionSummaryProps<R>
+      : never
+  : never;
+type KeysOf<T> = T extends unknown ? keyof T : never;
+type InferredSummaryKeys<P extends AccordionSummaryProps> = P extends unknown
+  ? KeysOf<InferredSummaryProps<P>>
+  : never;
+
+export interface NativeAccordionSummaryComponent
+  extends Omit<React.ForwardRefExoticComponent<AccordionSummaryProps>, never> {
+  // Infer the selected root from component and preserve its required native props.
+  <R extends AccordionSummaryRoot = typeof Pressable>(
+    props: AccordionSummaryProps<NoInfer<R>> & {
+      component?: (R & NativeRoot<NoInfer<R>>) | undefined;
+    },
+  ): React.JSX.Element;
+  (props: OrdinarySummaryProps): React.JSX.Element;
+  // Expose native configured roots to theme and styled props extraction without
+  // a broad callable fallback that could ignore a root-specific prop on a spread.
+  <P extends AccordionSummaryProps>(
+    props: P &
+      NoInfer<InferredSummaryProps<P>> &
+      Record<Exclude<keyof P, NoInfer<InferredSummaryKeys<P>>>, never>,
+  ): React.JSX.Element;
 }
 export interface AccordionSummaryOwnerState
   extends Omit<AccordionSummaryProps, 'slots' | 'slotProps'> {

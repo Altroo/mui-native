@@ -1,5 +1,6 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { nativeStyleCallback } from './helpers/nativeStyleCallback';
+import type { ComponentType } from 'react';
 import { cleanup, render, fireEvent, act } from '@testing-library/react-native';
 import { StyleSheet, Text, type StyleProp } from 'react-native';
 import {
@@ -17,6 +18,7 @@ import {
   type NativeStyleCache,
   type NativeStyle,
   type ButtonBaseActions,
+  type AccordionSummaryProps,
   type ButtonBaseState,
   alpha,
   componentRootStyle,
@@ -313,7 +315,11 @@ test.each(['MuiIconButton', 'MuiMenuItem', 'MuiAccordionSummary'] as const)(
         },
       },
     });
-    const Component =
+    // This shared case only uses the common ButtonBase surface. Each control
+    // keeps its own overloads for component-specific props.
+    const Component: ComponentType<
+      Pick<AccordionSummaryProps, 'children' | 'testID' | 'sx' | 'style'>
+    > =
       name === 'MuiIconButton' ? IconButton : name === 'MuiMenuItem' ? MenuItem : AccordionSummary;
     const element = (
       <Component

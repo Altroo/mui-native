@@ -10765,7 +10765,7 @@
       "packages/icons/src/ZoomOutSharp/index.ts": "9cddbf3cd084349d582f124b3fcd68a23fa75ccad808f14f84cda4bab2428eed",
       "packages/icons/src/ZoomOutTwoTone/index.ts": "c66203f5be3a21bc0de38541d8537b8227b743f60129dca75feff78e65c8ba32",
       "packages/material/package.json": "bf2741a997bdcbdb2fe095e85d6c2e82edc0325bde6ffb72fbcb9d329f410134",
-      "packages/material/src/accordion.tsx": "34188ecccc5df9eff8a21262fb171913eb9edfbc06493086c61fccd25aabd231",
+      "packages/material/src/accordion.tsx": "734dc062ccc7a0b8fe72c84ec8a29e33a8d2f4d2b5eff2b1156255614d740b8b",
       "packages/material/src/Accordion/accordionClasses/index.ts": "7bd64e00bf10c8bb5b05ecba5fa2b85e18eb8eab54de23cd011038d951a9ed4c",
       "packages/material/src/Accordion/index.ts": "294e49767548b28701ec7effd0492c9ddfd3f25e1c8d6a566be1c5385ec9f06d",
       "packages/material/src/AccordionActions/accordionActionsClasses/index.ts": "5be3181aa79737e2f61160eb2334e3dae5855d1bf258a98707dcbacf52e22dec",
@@ -10779,8 +10779,8 @@
       "packages/material/src/accordionStructuralRoot.tsx": "00ad087f94e7878827008b081e1370ac66d4d4714bd7f7ace7822092bc456e6b",
       "packages/material/src/accordionStructure.ts": "9c25388b102b3d58e94935ca004cdb82602be18cc0a7e7ce9686372c20717aaf",
       "packages/material/src/AccordionSummary/accordionSummaryClasses/index.ts": "a1ee4f1833e324b76e3a0e29b18cb8a24bb891db3a592c2910155b7d250bbc82",
-      "packages/material/src/AccordionSummary/index.ts": "a1e78905c2777f68e7c03205e7280086c1a93cba0567c7977b105a8d954840a9",
-      "packages/material/src/accordionTypes.ts": "258ea1cc5bbb5097a072afec7defdea5f9a599dc0607ff6d3bd0c5004494e3cc",
+      "packages/material/src/AccordionSummary/index.ts": "ef74d6430bead41496b1ef0524cc18c439fd68de64696e075744134b4e910361",
+      "packages/material/src/accordionTypes.ts": "ccc3f7259d70d3abcaaba6d7f0e68cc3ac66a698b0eea81f06aa9b258dd9d305",
       "packages/material/src/Alert/index.ts": "8c0a7b0a9ca5279bfd70b8db2e05b7d7e7f2a468c119ca83b3dc14fc6b8ca9df",
       "packages/material/src/autocomplete.tsx": "2830282e90dc0921fa700f6b960a613c0e05f3ece70363954034137b61b6cf74",
       "packages/material/src/Autocomplete/autocompleteClasses/index.ts": "67ed9e7c5e018685d2bc70f0b0a61d731d9b174c236839d5afc7f27573773bd7",
@@ -11209,7 +11209,7 @@
   },
   "documentation": {
     "path": "docs/coverage.md",
-    "sha256": "c35de729bb21b83bcbd0338db0127561c5da31e94401e58049d1c8dcc71ffbc5"
+    "sha256": "7b50b697bfd582c71daa76ff35476b5dae744ef8d71596bfabf7082519d6696c"
   },
   "referenceDependencies": [
     {
@@ -11231,11 +11231,11 @@
       "apiSnapshotSha256": "fa15edda870dcc80b940fa720270e8055811a7c7b2a46e845e02d99b6ec9db45",
       "licenseSha256": "4c57cedbef546270e5648786682f633b2e6ae62c8862a45797bcb6d0bffda98d",
       "channel": "stable",
-      "nativeSourceSha256": "9eea04a2c3b0b1b8fca6619baaab3a5c6d9d1330047fdee8ce8978f5174bec7c",
+      "nativeSourceSha256": "1d5090afe05fe13936e453966ed88f6f612ce35921d1aff2bdbcff169c0e65a3",
       "declarationFiles": 1288,
       "publishedImportPaths": 155,
       "resolvedRootExports": 1492,
-      "locallyDeclaredRootNames": 529,
+      "locallyDeclaredRootNames": 530,
       "directMembers": 4046,
       "eventDeclarations": 112,
       "slotDeclarations": 219,
@@ -11243,7 +11243,7 @@
       "syntaxReviewItems": 48,
       "verifiedParity": 0,
       "inventory": "compatibility/inventory/material.json",
-      "sha256": "26293ee22ce271d8043e8a87516403c81ce84a884cc93a9a39dfd829dc61dabb"
+      "sha256": "9dad6c186db3ca82af28547f76126b3049cd73baab7349e9fca451f2ce41883a"
     },
     {
       "package": "@mui/system",

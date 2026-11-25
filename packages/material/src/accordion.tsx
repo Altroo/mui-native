@@ -99,6 +99,7 @@ import { mergeNativeRootStyle, nativeRootStylePainter } from './nativeControlSty
 import type {
   AccordionProps,
   NativeAccordionComponent,
+  NativeAccordionSummaryComponent,
   AccordionRootSlotProps,
   AccordionOwnerState,
   AccordionSummaryProps,
@@ -1048,7 +1049,7 @@ const AccordionImpl: React.ForwardRefExoticComponent<
 
 export const Accordion: NativeAccordionComponent = AccordionImpl as NativeAccordionComponent;
 
-export const AccordionSummary: React.ForwardRefExoticComponent<
+const AccordionSummaryImpl: React.ForwardRefExoticComponent<
   React.PropsWithoutRef<AccordionSummaryProps> & React.RefAttributes<ViewInstance>
 > = forwardRef<ViewInstance, AccordionSummaryProps>(function AccordionSummary(inProps, forwarded) {
   const { props, style: preparedStyle } = useNativeRootProps({
@@ -1429,6 +1430,8 @@ export const AccordionSummary: React.ForwardRefExoticComponent<
     </NativeCssInsertionScope>
   );
 });
+
+export const AccordionSummary = AccordionSummaryImpl as NativeAccordionSummaryComponent;
 
 interface NativeAccordionDetailsComponent
   extends Omit<

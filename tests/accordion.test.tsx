@@ -1,7 +1,16 @@
 // Copyright (c) 2026 Altroo and contributors. SPDX-License-Identifier: MIT
 import { nativeStyleCallback } from './helpers/nativeStyleCallback';
 import React, { forwardRef, useState, useRef, useImperativeHandle } from 'react';
-import { I18nManager, View, Text, TextInput, StyleSheet, type ViewInstance } from 'react-native';
+import {
+  I18nManager,
+  Pressable,
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  type PressableProps,
+  type ViewInstance,
+} from 'react-native';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import {
   Accordion,
@@ -67,6 +76,32 @@ function tree(props: Partial<AccordionProps> = {}, child: React.ReactNode = 'Det
     </ThemeProvider>
   );
 }
+test('Summary forwards custom required props while keeping Accordion activation', () => {
+  const Tracking = forwardRef<
+    ViewInstance,
+    PressableProps & { tracking: string; className?: string }
+  >(({ tracking, className: _className, ...props }, ref) => (
+    <Pressable {...props} nativeID={tracking} ref={ref} />
+  ));
+  const onChange = jest.fn();
+  const ref = React.createRef<ViewInstance>();
+  render(
+    <ThemeProvider theme={theme}>
+      <Accordion onChange={onChange}>
+        <AccordionSummary component={Tracking} tracking="reported" ref={ref} testID="tracked">
+          Account
+        </AccordionSummary>
+        <AccordionDetails>Details</AccordionDetails>
+      </Accordion>
+    </ThemeProvider>,
+  );
+  const summary = screen.getByTestId('tracked');
+  expect(summary.props.nativeID).toBe('reported');
+  expect(ref.current).not.toBeNull();
+  fireEvent.press(summary, event());
+  expect(onChange).toHaveBeenCalledTimes(1);
+  expect(onChange.mock.calls[0]?.[1]).toBe(true);
+});
 test('publishes the four pinned class vocabularies including shared state names', () => {
   expect({
     Accordion: accordionClasses,
